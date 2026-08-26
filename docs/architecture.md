@@ -1,0 +1,61 @@
+# Kiến trúc VinaBook
+
+## Sơ đồ tổng thể
+
+```mermaid
+flowchart LR
+    U[Trình duyệt khách] --> S[bookstore-ui]
+    A[Trình duyệt admin] --> AD[angular-admin]
+    S -->|/api| API[VinaBookStore]
+    AD -->|/api + /notification| API
+    API --> DB[(MySQL book)]
+    API --> SMTP[SMTP]
+    API -.->|tùy cấu hình| AI[AI provider]
+    S --> LS[(localStorage)]
+```
+
+## Storefront
+
+Storefront là một `AppModule` eager-loaded. Routes ánh xạ tới `pages/`; header, footer, product card và chatbot nằm trong `components/`; guard/interceptor nằm trong `core/`; toast/directive nằm trong `shared/`.
+
+`ProductService.getProducts()` tải `GET /api/products` một lần và cache bằng `shareReplay(1)`. `SearchService` lọc trên catalog cache. Category được lọc bằng `categoryId`, không dựa vào tên hiển thị.
+
+`HomepageService` tải cấu hình trình bày từ `GET /api/homepage`. Backend lưu một bản JSON có version mềm trong bảng `homepage_config` (bản ghi id `1`), nhờ đó thêm thuộc tính trình bày không phải đổi nhiều cột. Storefront ghép cấu hình này với catalog/category thật; admin cập nhật cùng nguồn bằng `PUT /api/homepage`.
+
+Các service state trình duyệt tự hydrate từ `localStorage`. Cart đổi scope khi user hiện tại thay đổi; order service chỉ sync các dòng được chọn sang backend lúc checkout.
+
+`ChatbotService` gọi một contract duy nhất là `POST /api/chat`. Backend `AiGateway` chuyển contract này sang OpenAI Responses, OpenAI-compatible Chat Completions, Gemini hoặc Anthropic. Catalog liên quan được lấy từ MySQL và chèn vào prompt có giới hạn; Angular chỉ nhận câu trả lời đã chuẩn hóa và thẻ sách. Chế độ local ở cả backend và storefront giúp chatbot không bị vô hiệu khi provider ngoài gặp lỗi.
+
+## Backend và bảo mật
+
+Spring Security xác thực JWT stateless. Public gồm đăng nhập/đăng ký, đọc catalog/cấu hình trang chủ và chat hỗ trợ khách. `GET /api/homepage`, `GET /api/chat/status`, `POST /api/chat` là public; `PUT /api/homepage` và các endpoint quản trị khác yêu cầu `ROLE_ADMIN`; endpoint user yêu cầu `ROLE_USER` hoặc admin tùy nghiệp vụ. Chat public có validation và rate limit theo IP.
+
+Đối với user/cart/order/review/favorites, backend đối chiếu principal trong JWT bằng `CurrentUserAccess`. ID/email từ request không tự tạo quyền truy cập. Giá dòng hàng được tính lại từ product trong database; checkout và chuyển trạng thái order có transaction/state guard, kiểm tra tồn kho trước khi ghi và hoàn tất đơn theo kiểu idempotent.
+
+`User.password` và reset token là write-only trong JSON. Response đăng nhập không chứa bcrypt hash.
+
+Reset mật khẩu phát hành token JWT riêng có `purpose=password-reset`, hạn 15 phút và bị xóa sau lần dùng thành công. WebSocket `/notification` kiểm tra token admin tại handshake và chỉ cho phép origin admin đã cấu hình.
+
+## Production
+
+```text
+HTTPS origin
+├── /                 -> Angular SPA
+├── /api/*            -> Spring Boot :8080
+└── /notification     -> Spring Boot WebSocket
+```
+
+Khi chạy profile `prod`, SQL debug và `open-in-view` bị tắt, schema dùng `ddl-auto=validate`, còn `JWT_SECRET` là biến môi trường bắt buộc. Database và SMTP cũng phải được inject qua biến môi trường. CORS không thay thế authorization.
+
+## Thiết kế giao diện
+
+Storefront dùng design token chung với theme editorial làm mặc định:
+
+- Be Vietnam Pro cho UI/body, Playfair Display cho tiêu đề lớn;
+- nền stone sáng, chữ ink gần đen, accent terracotta;
+- radius vừa, border mảnh, shadow tiết chế;
+- theme switcher cho phép đổi editorial/ocean/forest/berry và lưu lựa chọn trên thiết bị;
+- motion có hỗ trợ `prefers-reduced-motion`;
+- control có label/focus/keyboard semantics và ảnh có alt phù hợp.
+
+Bộ skill dành cho trợ lý không nằm trong source runtime; chỉ component/service theme thực sự được Angular sử dụng được giữ lại.
