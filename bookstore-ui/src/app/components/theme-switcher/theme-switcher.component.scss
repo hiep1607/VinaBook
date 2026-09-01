@@ -31,7 +31,6 @@
 }
 
 .theme-panel {
-  animation: theme-in .16s var(--ease);
   background: var(--c-surface);
   border: 1px solid var(--c-border);
   border-radius: var(--radius-lg);
@@ -42,6 +41,19 @@
   position: fixed;
   width: 240px;
   z-index: 1000;
+}
+
+.theme-wash {
+  border-radius: 50%;
+  bottom: 22px;
+  height: 52px;
+  left: 22px;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  transform: scale(0);
+  width: 52px;
+  z-index: 990;
 }
 
 .theme-panel-head,
@@ -115,16 +127,24 @@
   font-weight: 700;
 }
 
-@keyframes theme-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 @media (max-width: 768px) {
-  /* Theme switcher chuyển vào drawer menu mobile (header) ở ≤768px —
-     FAB nổi góc trái bị ẩn để không chiếm góc nội dung. */
-  .theme-fab,
+  .theme-fab {
+    left: calc(14px + env(safe-area-inset-left, 0px));
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px) + var(--fab-lift, 0px));
+    height: 44px;
+    width: 44px;
+  }
+
   .theme-panel {
-    display: none !important;
+    bottom: calc(68px + env(safe-area-inset-bottom, 0px) + var(--fab-lift, 0px));
+    left: calc(14px + env(safe-area-inset-left, 0px));
+    max-width: calc(100vw - 28px);
+  }
+
+  .theme-wash {
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    height: 44px;
+    left: calc(14px + env(safe-area-inset-left, 0px));
+    width: 44px;
   }
 }

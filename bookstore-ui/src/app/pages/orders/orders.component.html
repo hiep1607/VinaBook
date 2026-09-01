@@ -6,15 +6,7 @@
       Đơn hàng của tôi
     </h1>
 
-    <div *ngIf="loading" class="orders-skeleton" role="status" aria-label="Đang tải đơn hàng">
-      <div class="skeleton-card order-skeleton-card" *ngFor="let s of [0, 1, 2]">
-        <div class="skeleton-box skeleton-line"></div>
-        <div class="skeleton-box skeleton-line short"></div>
-        <div class="skeleton-box skeleton-line"></div>
-        <div class="skeleton-box skeleton-line short"></div>
-        <div class="skeleton-box skeleton-line"></div>
-      </div>
-    </div>
+    <p *ngIf="loading" class="orders-message" role="status">Đang tải đơn hàng...</p>
 
     <div *ngIf="loadError" class="orders-message error" role="alert">
       <p>Không tải được đơn hàng. Vui lòng kiểm tra kết nối rồi thử lại.</p>
@@ -133,10 +125,6 @@
           {{ order.total | number }}đ
 
         </strong>
-
-        <a class="detail-link" [routerLink]="['/orders', order.id]">
-          Xem chi tiết →
-        </a>
 
       </div>
 

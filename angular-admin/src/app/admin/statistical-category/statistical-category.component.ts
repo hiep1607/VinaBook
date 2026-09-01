@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Chart, registerables } from 'chart.js';
-import { CategoryBestSeller } from '../../models/category-best-seller';
+import { CategoryBestSeller } from '../../common/CategoryBestSeller';
 import { PageService } from '../../services/page.service';
 import { StatisticalService } from '../../services/statistical.service';
 

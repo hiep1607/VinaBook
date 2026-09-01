@@ -22,10 +22,10 @@ describe('AppComponent', () => {
     expect(app.title).toEqual('veggie-shop-admin');
   });
 
-  it('should render the application outlet', () => {
+  it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('router-outlet')).toBeTruthy();
+    expect(compiled.querySelector('.content span').textContent).toContain('veggie-shop-admin app is running!');
   });
 });

@@ -1,12 +1,12 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { NotificationService } from 'src/app/services/notification.service';
+import { MotionService } from 'src/app/services/motion.service';
 import { ReviewService } from 'src/app/services/review.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
-import { FlyToCartService } from 'src/app/services/fly-to-cart.service';
 
 @Component({
   selector: 'app-product-card',
@@ -29,8 +29,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
     public authService: AuthService,
     private cartService: CartService,
     private notification: NotificationService,
-    private elementRef: ElementRef,
-    private flyToCart: FlyToCartService
+    private motion: MotionService
   ) {}
 
   ngOnInit(): void {
@@ -57,8 +56,26 @@ export class ProductCardComponent implements OnInit, OnDestroy {
     );
   }
 
-  goToDetail(): void {
-    this.router.navigate(['/product', this.product.id]);
+  async goToDetail(event: MouseEvent): Promise<void> {
+    if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) {
+      return;
+    }
+
+    event.preventDefault();
+    const card = (event.currentTarget as HTMLElement).closest('.product-card');
+    const cover = card?.querySelector('.product-image img') as HTMLImageElement | null;
+    const readyToNavigate = await this.motion.prepareBookRouteTransition(cover);
+    if (readyToNavigate) {
+      await this.router.navigate(['/product', this.product.id]);
+    }
+  }
+
+  restoreOriginalCover(event: Event): void {
+    const image = event.currentTarget as HTMLImageElement;
+    const original = (this.product.originalImage || '').trim();
+    if (original && image.src !== original) {
+      image.src = original;
+    }
   }
 
   displayStars(rating: number): string {
@@ -81,9 +98,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
     }
 
     this.cartService.addToCart(this.product);
-    this.flyToCart.fly(
-      (this.elementRef.nativeElement as HTMLElement).querySelector<HTMLImageElement>('.product-image img')
-    );
+    this.motion.addToCart(event.currentTarget as HTMLElement);
     this.notification.success('Đã thêm vào giỏ hàng');
   }
 
@@ -100,6 +115,8 @@ export class ProductCardComponent implements OnInit, OnDestroy {
       this.authService.currentUser.email,
       this.product.id
     );
+
+    this.motion.bump(event.currentTarget as HTMLElement);
 
     this.notification.success(
       added ? 'Đã thêm vào danh sách yêu thích ♥' : 'Đã xóa khỏi danh sách yêu thích'

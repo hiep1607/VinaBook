@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/services/notification.service';
+import { MotionService } from 'src/app/services/motion.service';
 
 @Component({
   selector: 'app-cart',
@@ -14,7 +15,8 @@ cartItems: any[] = [];
 constructor(
   public cartService: CartService,
   private router: Router,
-  private notification: NotificationService
+  private notification: NotificationService,
+  private motion: MotionService
 )
  {
 
@@ -22,23 +24,29 @@ constructor(
     this.cartService.getCartItems();
 
 }
+  
 
-
-increase(item: any) {
+increase(item: any, event: MouseEvent) {
 
   item.quantity++;
 
   this.cartService.saveCart();
+  this.motion.bump(
+    (event.currentTarget as HTMLElement).closest('.quantity-box') as HTMLElement | null
+  );
 
 }
 
-decrease(item: any) {
+decrease(item: any, event: MouseEvent) {
 
   if (item.quantity > 1) {
 
     item.quantity--;
 
     this.cartService.saveCart();
+    this.motion.bump(
+      (event.currentTarget as HTMLElement).closest('.quantity-box') as HTMLElement | null
+    );
 
   }
 
@@ -83,12 +91,12 @@ getShippingFee() {
   return this.getSubtotal() >= 300000 ? 0 : 20000;
 
 }
-removeItem(item: any) {
-
-  this.cartService.removeItem(item);
-
-  this.cartItems =
-    this.cartService.getCartItems();
+removeItem(item: any, event: MouseEvent) {
+  const row = (event.currentTarget as HTMLElement).closest('.cart-item') as HTMLElement | null;
+  this.motion.removeItem(row, () => {
+    this.cartService.removeItem(item);
+    this.cartItems = this.cartService.getCartItems();
+  });
 
 }
 

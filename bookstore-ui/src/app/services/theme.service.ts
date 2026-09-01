@@ -11,15 +11,15 @@ export interface Theme {
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
 
-  private readonly storageKey = 'theme';
+  // Versioned once for the forest-night redesign so stale saved themes do not hide it.
+  private readonly storageKey = 'theme-v2';
   private readonly defaultTheme = 'editorial';
 
   readonly themes: Theme[] = [
-    { id: 'editorial', name: 'VinaBook hiện đại', primary: '#123f32', accent: '#b9471d', bg: '#f6f8f7' },
-    { id: 'ocean', name: 'Đại dương', primary: '#155e75', accent: '#0e7490', bg: '#f8fafc' },
-    { id: 'forest', name: 'Rừng xanh', primary: '#166534', accent: '#a16207', bg: '#f7f8f5' },
-    { id: 'berry', name: 'Mận chín', primary: '#831843', accent: '#e11d48', bg: '#fdfafb' },
-    { id: 'dark', name: 'Ban đêm', primary: '#168563', accent: '#f97316', bg: '#101613' }
+    { id: 'editorial', name: 'Thư viện đêm', primary: '#0f6b45', accent: '#d7a63b', bg: '#031a12' },
+    { id: 'ocean', name: 'Đại dương tối giản', primary: '#155e75', accent: '#0e7490', bg: '#f8fafc' },
+    { id: 'forest', name: 'Thư viện rừng', primary: '#166534', accent: '#a16207', bg: '#f7f8f5' },
+    { id: 'berry', name: 'Mận chín trẻ trung', primary: '#831843', accent: '#e11d48', bg: '#fdfafb' }
   ];
 
   current = this.defaultTheme;

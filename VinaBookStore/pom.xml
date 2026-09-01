@@ -13,7 +13,7 @@
     <artifactId>VinaBook</artifactId>
     <version>1.0</version>
     <name>VinaBook</name>
-    <description>VinaBook</description>
+    <description>MartfuryShop</description>
     <properties>
         <java.version>17</java.version>
         <!-- BỔ SUNG: Khai báo phiên bản Lombok hiện đại để tương thích với JDK 17 -->

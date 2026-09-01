@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { Product } from '../../models/product';
+import { Product } from '../../common/Product';
 import { PageService } from '../../services/page.service';
 import { ProductService } from '../../services/product.service';
 import Swal from 'sweetalert2';
@@ -50,10 +50,10 @@ export class ProductComponent implements OnInit {
       cancelButtonText: 'Không'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.productService.delete(id).subscribe(() => {
+        this.productService.delete(id).subscribe(data => {
           this.ngOnInit();
           this.toastr.success('Xoá thành công!', 'Hệ thống');
-        }, () => {
+        }, error => {
           this.toastr.error('Xoá thất bại, đã xảy ra lỗi!', 'Hệ thống');
         })
       }

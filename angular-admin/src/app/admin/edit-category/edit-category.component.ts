@@ -2,12 +2,13 @@ import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@an
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { Category } from '../../models/category';
+import { Category } from '../../common/Category';
 import { CategoryService } from '../../services/category.service';
 
 @Component({
   selector: 'app-edit-category',
   templateUrl: './edit-category.component.html',
+  styleUrls: ['./edit-category.component.css']
 })
 export class EditCategoryComponent implements OnInit {
 
@@ -46,7 +47,7 @@ export class EditCategoryComponent implements OnInit {
 
   update() {
     if (this.postForm.valid) {
-      this.categoryService.put(this.id, this.postForm.value).subscribe(() => {
+      this.categoryService.put(this.id, this.postForm.value).subscribe(data => {
         this.modalService.dismissAll();
         this.toastr.success('Cập nhật thành công!', 'Hệ thống');
         this.editFinish.emit('done');

@@ -8,6 +8,7 @@ import {
 import { Subscription } from 'rxjs';
 
 import { FabCollisionService } from 'src/app/services/fab-collision.service';
+import { MotionService } from 'src/app/services/motion.service';
 import { Theme, ThemeService } from 'src/app/services/theme.service';
 
 @Component({
@@ -18,6 +19,8 @@ import { Theme, ThemeService } from 'src/app/services/theme.service';
 export class ThemeSwitcherComponent implements AfterViewInit, OnDestroy {
 
   @ViewChild('themeFabBtn') private themeFabBtn?: ElementRef<HTMLButtonElement>;
+  @ViewChild('themePanel') private themePanel?: ElementRef<HTMLElement>;
+  @ViewChild('themeWash', { static: true }) private themeWash?: ElementRef<HTMLElement>;
 
   open = false;
 
@@ -25,7 +28,8 @@ export class ThemeSwitcherComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     public themeService: ThemeService,
-    private collision: FabCollisionService
+    private collision: FabCollisionService,
+    private motion: MotionService
   ) {}
 
   /** Nâng FAB lên trên CTA khi có va chạm ở mobile (xem FabCollisionService). */
@@ -52,10 +56,22 @@ export class ThemeSwitcherComponent implements AfterViewInit, OnDestroy {
 
   toggle(): void {
     this.open = !this.open;
+    if (this.open) {
+      setTimeout(() => {
+        const panel = this.themePanel?.nativeElement;
+        if (panel) {
+          this.motion.openPanel(panel);
+        }
+      });
+    }
   }
 
-  pick(id: string): void {
-    this.themeService.setTheme(id);
+  pick(theme: Theme): void {
+    this.motion.transitionTheme(
+      this.themeWash?.nativeElement || null,
+      theme.primary,
+      () => this.themeService.setTheme(theme.id)
+    );
     this.open = false;
   }
 }

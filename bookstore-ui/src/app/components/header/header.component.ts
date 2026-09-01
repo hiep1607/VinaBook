@@ -14,7 +14,6 @@ import { CartService } from 'src/app/services/cart.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { SearchHistoryService } from 'src/app/services/search-history.service';
 import { SearchService, SuggestionItem } from 'src/app/services/search.service';
-import { ThemeService } from 'src/app/services/theme.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
 
 @Component({
@@ -34,12 +33,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isMobile = false;
   showMobileNav = false;
 
-  /** Hàng tìm kiếm trên mobile: mặc định thu gọn, mở bằng nút tìm kiếm. */
-  mobileSearchOpen = false;
-
   @ViewChild('searchBoxRef') searchBoxRef!: ElementRef;
   @ViewChild('categoryMenuRef') categoryMenuRef!: ElementRef;
-  @ViewChild('mobileMenuBtn') mobileMenuBtn?: ElementRef<HTMLButtonElement>;
 
   private debounceTimer: any;
   private dropdownCloseTimer: any;
@@ -50,12 +45,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public authService: AuthService,
     public wishlistService: WishlistService,
     public searchService: SearchService,
-    public themeService: ThemeService,
     private searchHistory: SearchHistoryService,
     private categoryService: CategoryService,
     private route: ActivatedRoute,
-    private router: Router,
-    private host: ElementRef
+    private router: Router
   ) {
     this.isMobile = window.innerWidth < 768;
   }
@@ -65,69 +58,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isMobile = window.innerWidth < 768;
     if (!this.isMobile) {
       this.showMobileNav = false;
-      this.mobileSearchOpen = false;
     }
   }
 
   toggleMobileNav(): void {
     this.showMobileNav = !this.showMobileNav;
-    if (this.showMobileNav) {
-      this.mobileSearchOpen = false;
-      // Chuyển focus vào mục đầu của drawer sau khi render.
-      setTimeout(() => {
-        const first = document.querySelector<HTMLAnchorElement>('#primary-navigation a');
-        first?.focus();
-      });
-    }
   }
 
-  closeMobileNav(refocusTrigger = true): void {
-    const wasOpen = this.showMobileNav;
+  closeMobileNav(): void {
     this.showMobileNav = false;
-    // Trả focus về nút mở menu để bàn phím không bị "rơi" xuống body.
-    if (wasOpen && refocusTrigger) {
-      setTimeout(() => this.mobileMenuBtn?.nativeElement?.focus());
-    }
-  }
-
-  toggleMobileSearch(): void {
-    this.mobileSearchOpen = !this.mobileSearchOpen;
-    if (this.mobileSearchOpen) {
-      setTimeout(() => {
-        const input = document.querySelector<HTMLInputElement>('#site-search');
-        input?.focus();
-      });
-    }
-  }
-
-  /** Chọn theme ngay trong drawer mobile. */
-  pickTheme(id: string): void {
-    this.themeService.setTheme(id);
-  }
-
-  /** Escape đóng drawer/dropdown — hỗ trợ người dùng bàn phím. */
-  @HostListener('document:keydown.escape')
-  onEscape(): void {
-    if (this.showMobileNav) {
-      this.closeMobileNav();
-      return;
-    }
-    this.showSuggestions = false;
-    this.showCategoryDropdown = false;
-  }
-
-  cartBump = false;
-
-  private bumpTimer: any;
-
-  private bumpCartBadge(): void {
-    this.cartBump = false;
-    clearTimeout(this.bumpTimer);
-    // Nhờ change detection chạy xong rồi mới bật lại class để animation chạy lại được
-    setTimeout(() => {
-      this.cartBump = true;
-      this.bumpTimer = setTimeout(() => { this.cartBump = false; }, 500);
-    });
   }
 
   ngOnInit(): void {
@@ -136,10 +75,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }));
     this.subscriptions.add(this.route.queryParams.subscribe(params => {
       this.activeCategory = params['categoryId'] ? parseInt(params['categoryId'], 10) : null;
-    }));
-    // Badge giỏ hàng nảy nhẹ mỗi khi có thêm/xóa sản phẩm (micro-interaction)
-    this.subscriptions.add(this.cartService.changes$.subscribe(() => {
-      this.bumpCartBadge();
     }));
   }
 
@@ -153,15 +88,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
-
-    // Drawer mobile: bấm ra ngoài header (kể cả backdrop) thì đóng.
-    if (
-      this.showMobileNav &&
-      !this.host.nativeElement.contains(target)
-    ) {
-      this.closeMobileNav(false);
-      return;
-    }
 
     if (
       this.searchBoxRef &&

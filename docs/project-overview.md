@@ -31,7 +31,8 @@ book/
 ├── angular-admin/      # Admin Angular
 ├── VinaBookStore/      # Spring Boot API
 ├── docs/               # Tài liệu hiện hành
-├── db/                 # Seed dump + script dữ liệu có chủ đích (xem db/README.md)
+├── database.sql        # Database seed/dump
+├── *_fix.sql           # Script dữ liệu có chủ đích
 └── README.md           # Hướng dẫn chạy workspace
 ```
 

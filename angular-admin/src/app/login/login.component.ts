@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
-import { Customer } from '../models/customer';
-import { Login } from '../models/login';
+import { Customer } from '../common/Customer';
+import { Login } from '../common/Login';
 import { AuthService } from '../services/auth.service';
 import { CustomerService } from '../services/customer.service';
 import { SessionService } from '../services/session.service';
@@ -85,7 +85,7 @@ export class LoginComponent implements OnInit {
           }
         })
       },
-      () => {
+      error => {
         Swal.fire({
           icon: 'error',
           title: 'Đăng nhập thất bại!',

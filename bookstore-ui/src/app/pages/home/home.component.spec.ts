@@ -9,7 +9,6 @@ import { ProductCardComponent } from 'src/app/components/product-card/product-ca
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CategoryService } from 'src/app/services/category.service';
-import { FlyToCartService } from 'src/app/services/fly-to-cart.service';
 import { HomepageService } from 'src/app/services/homepage.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -70,8 +69,7 @@ describe('HomeComponent — sách đã xem gần đây (P2)', () => {
           useValue: { isLoggedIn: () => false, currentUser: { email: '' } }
         },
         { provide: WishlistService, useValue: { isInWishlist: () => false, getCount: () => 0 } },
-        { provide: CartService, useValue: { addToCart: () => undefined } },
-        { provide: FlyToCartService, useValue: { fly: () => undefined } }
+        { provide: CartService, useValue: { addToCart: () => undefined } }
       ]
     });
   });

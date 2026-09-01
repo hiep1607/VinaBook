@@ -79,6 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/api/auth/send-mail-forgot-password-token")
 				.permitAll()
 				.antMatchers(HttpMethod.GET, "/api/auth/logout").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/send-mail/otp").permitAll()
 				.antMatchers("/forgot-password", "/forgot-password/**").permitAll()
 				// handshake WebSocket thông báo — trình duyệt không gắn được header JWT khi mở kết nối
 				.antMatchers("/notification").permitAll()

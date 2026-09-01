@@ -6,11 +6,7 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:8080',
   wsUrl: 'ws://localhost:8080/notification',
-  storefrontUrl: 'http://localhost:4200',
-  // Legacy local-development endpoint (tai khoan Cloudinary cua template cu).
-  // Khi trien khai production, thay bang Cloudinary account/preset cua du an
-  // qua environment.prod.ts. KHONG BAO GIO dat API secret vao Angular.
-  cloudinaryUploadUrl: 'https://api.cloudinary.com/v1_1/martfury/image/upload'
+  storefrontUrl: 'http://localhost:4200'
 };
 
 /*

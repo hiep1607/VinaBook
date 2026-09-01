@@ -1,7 +1,12 @@
-header {
+:host {
+  display: block;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 1100;
+}
+
+header {
+  position: relative;
 }
 
 /* =========================
@@ -10,7 +15,7 @@ header {
 
 .top-header,
 .navbar {
-  background: var(--c-header-bg, rgba(255, 255, 255, 0.96));
+  background: rgba(255, 255, 255, 0.96);
   border-bottom: 1px solid var(--c-border);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
@@ -427,29 +432,6 @@ header {
   border: 2px solid var(--c-surface);
 }
 
-/* Micro-interaction: badge nảy nhẹ khi giỏ hàng thay đổi */
-.cart-badge.bump {
-  animation: cart-bump 480ms var(--ease);
-}
-
-@keyframes cart-bump {
-  0%   { transform: scale(1); }
-  35%  { transform: scale(1.45); }
-  60%  { transform: scale(0.9); }
-  100% { transform: scale(1); }
-}
-
-/* Micro-interaction: icon giỏ "hạ cánh" khi ghost sách bay tới */
-.cart-icon.cart-landed {
-  animation: cart-land 400ms var(--ease);
-}
-
-@keyframes cart-land {
-  0%   { transform: scale(1); }
-  40%  { transform: scale(0.86); }
-  100% { transform: scale(1); }
-}
-
 /* =========================
    USER BOX
 ========================= */
@@ -638,17 +620,10 @@ header {
   display: none;
 }
 
-/* Nút tìm kiếm trên mobile (desktop luôn ẩn vì search bar luôn hiện) */
-.mobile-search-btn {
-  display: none;
-}
-
 @media (max-width: 768px) {
-  /* Header mobile gọn: một hàng logo + actions; hàng tìm kiếm chỉ mở khi cần */
   .top-header {
     height: auto;
-    min-height: 60px;
-    padding: 6px 0;
+    padding: 12px 0;
   }
 
   .container {
@@ -656,81 +631,47 @@ header {
   }
 
   .header-wrapper {
-    flex-wrap: nowrap;
-    gap: 10px;
-    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
   .logo {
     min-width: unset;
-    flex-shrink: 1;
-    gap: 8px;
-  }
-
-  .logo img {
-    width: 34px;
-    height: 34px;
-  }
-
-  .logo-text h2 {
-    font-size: 18px;
   }
 
   .logo-text p {
     display: none;
   }
 
-  /* Tìm kiếm thu gọn trên mobile — mở bằng nút .mobile-search-btn */
   .search-wrapper {
-    display: none;
-    order: unset;
-    flex-basis: auto;
-  }
-
-  .search-wrapper.open {
     order: 3;
     flex-basis: 100%;
-    display: block;
-    margin-top: 8px;
   }
 
-  .mobile-search-btn,
+  .header-actions {
+    gap: 6px;
+    margin-left: auto;
+  }
+
+  .navbar-wrapper {
+    gap: 6px;
+    justify-content: flex-start;
+    padding: 0 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
   .mobile-menu-btn {
     align-items: center;
     background: transparent;
     border: 1px solid var(--c-border);
     border-radius: var(--radius-sm);
     color: var(--c-fg);
-    cursor: pointer;
     display: inline-flex;
-    height: 44px;
+    height: 40px;
     justify-content: center;
-    width: 44px;
-    flex-shrink: 0;
-  }
-
-  .mobile-search-btn:focus-visible,
-  .mobile-menu-btn:focus-visible {
-    outline: 2px solid var(--c-primary);
-    outline-offset: 2px;
-  }
-
-  .header-actions {
-    gap: 6px;
-    margin-left: auto;
-    flex-shrink: 0;
-  }
-
-  /* =========================
-     DRAWER MENU MOBILE (dọc)
-     Thay cho hàng cuộn ngang cũ.
-  ========================= */
-
-  .mobile-nav-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(15, 23, 42, 0.45);
-    z-index: 998;
+    width: 40px;
   }
 
   .navbar {
@@ -739,203 +680,48 @@ header {
 
   .navbar.mobile-open {
     display: block;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: min(320px, 86vw);
-    height: 100vh;
-    height: 100dvh;
-    z-index: 999;
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    box-shadow: var(--shadow-lg);
-    animation: drawer-in 220ms var(--ease);
   }
 
-  .navbar-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
-    gap: 2px;
-    height: auto;
-    padding: 12px 12px calc(20px + env(safe-area-inset-bottom, 0px));
-  }
-
-  .mobile-nav-close {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    min-height: 44px;
-    margin-bottom: 8px;
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-sm);
-    background: transparent;
-    color: var(--c-fg);
-    font: inherit;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-  }
-
-  .mobile-nav-close:focus-visible {
-    outline: 2px solid var(--c-primary);
-    outline-offset: 2px;
-  }
-
-  /* Mục điều hướng dọc: full-width, vùng chạm ≥48px */
-  .navbar-wrapper a {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    min-height: 48px;
-    padding: 0 12px;
-    border-radius: var(--radius-sm);
-    color: var(--c-fg);
-    font-size: 15px;
-    white-space: normal;
-  }
-
-  .navbar-wrapper a::after {
+  .navbar-wrapper::-webkit-scrollbar {
     display: none;
   }
 
-  .navbar-wrapper a:hover {
-    background: var(--c-muted);
-  }
-
-  .navbar-wrapper a.active {
-    background: var(--c-muted);
-    color: var(--c-primary);
-  }
-
-  /* Thể loại trong drawer */
-  .category-menu {
-    height: auto;
-    width: 100%;
-  }
-
+  /* Mỗi mục là vùng chạm ≥44px, có padding ngang để dễ bấm khi cuộn ngang */
+  .navbar-wrapper a,
   .category-toggle {
-    width: 100%;
-    min-height: 48px;
-    justify-content: space-between;
-    padding: 0 12px;
-    border-radius: var(--radius-sm);
-    color: var(--c-fg);
-    font-size: 15px;
+    font-size: 14px;
+    flex-shrink: 0;
+    white-space: nowrap;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
   }
 
-  .category-toggle::after {
-    display: none;
+  /* Gạch chân active đặt lại đáy cho khớp chiều cao mục mobile */
+  .navbar-wrapper a::after {
+    bottom: 8px;
   }
 
   .category-dropdown {
-    position: static;
-    transform: none;
-    opacity: 1;
-    visibility: hidden;
-    display: none;
-    max-height: none;
+    position: fixed;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px 20px 0 0;
+    max-height: 70vh;
     width: 100%;
     min-width: unset;
-    border: none;
-    box-shadow: none;
-    background: transparent;
-    padding: 0 0 4px 16px;
+    transform: translateY(100%);
   }
 
   .category-dropdown.open {
-    display: block;
-    visibility: visible;
-    transform: none;
+    transform: translateY(0);
   }
 
   .category-item {
-    padding: 12px 10px;
-    font-size: 14.5px;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-  }
-
-  /* Chọn theme trong drawer */
-  .drawer-theme {
-    margin-top: 14px;
-    padding-top: 12px;
-    border-top: 1px solid var(--c-border);
-  }
-
-  .drawer-theme-title {
-    display: block;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--c-muted-fg);
-    margin-bottom: 8px;
-  }
-
-  .drawer-theme-options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
-  }
-
-  .drawer-theme-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 44px;
-    padding: 0 10px;
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-sm);
-    background: transparent;
-    color: var(--c-fg);
-    font: inherit;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    text-align: left;
-  }
-
-  .drawer-theme-btn.active {
-    border-color: var(--c-primary);
-    color: var(--c-primary);
-    background: var(--c-muted);
-  }
-
-  .theme-dot {
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    border: 1px solid var(--c-border);
-    flex-shrink: 0;
-  }
-
-  .drawer-theme-btn:focus-visible,
-  .category-toggle:focus-visible,
-  .navbar-wrapper a:focus-visible {
-    outline: 2px solid var(--c-primary);
-    outline-offset: 2px;
-  }
-}
-
-@keyframes drawer-in {
-  from { transform: translateX(100%); }
-  to   { transform: translateX(0); }
-}
-
-@media (min-width: 769px) {
-  .mobile-nav-backdrop,
-  .mobile-nav-close {
-    display: none !important;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .navbar.mobile-open {
-    animation: none;
+    padding: 16px 14px;
+    font-size: 16px;
   }
 }

@@ -25,7 +25,7 @@
 
         <!-- SEARCH -->
 
-        <div class="search-wrapper" #searchBoxRef [class.open]="mobileSearchOpen">
+        <div class="search-wrapper" #searchBoxRef>
 
           <div class="search-box">
 
@@ -144,18 +144,6 @@
 
         <div class="header-actions">
 
-          <!-- Nút mở/đóng hàng tìm kiếm trên mobile (desktop luôn hiện) -->
-          <button
-            type="button"
-            class="mobile-search-btn"
-            (click)="toggleMobileSearch()"
-            [attr.aria-expanded]="mobileSearchOpen"
-            aria-controls="site-search"
-            [attr.aria-label]="mobileSearchOpen ? 'Đóng tìm kiếm' : 'Mở tìm kiếm'"
-          >
-            <lucide-icon name="search"></lucide-icon>
-          </button>
-
           <a
             *ngIf="!authService.isLoggedIn()"
             routerLink="/login"
@@ -193,11 +181,10 @@
 
           <!-- CART -->
 
-          <a routerLink="/cart" class="cart-icon" aria-label="Giỏ hàng" id="header-cart-btn">
+          <a routerLink="/cart" class="cart-icon" aria-label="Giỏ hàng">
             <lucide-icon name="shopping-cart"></lucide-icon>
             <span
               class="cart-badge"
-              [class.bump]="cartBump"
               *ngIf="cartService.getCartCount() > 0"
             >
               {{ cartService.getCartCount() }}
@@ -207,11 +194,10 @@
           <button
             type="button"
             class="mobile-menu-btn"
-            #mobileMenuBtn
             (click)="toggleMobileNav()"
             [attr.aria-expanded]="showMobileNav"
             aria-controls="primary-navigation"
-            [attr.aria-label]="showMobileNav ? 'Đóng menu' : 'Mở menu'"
+            aria-label="Mở hoặc đóng menu"
           >
             <lucide-icon name="menu"></lucide-icon>
           </button>
@@ -226,29 +212,11 @@
 
   <!-- NAVBAR -->
 
-  <!-- Nền mờ phía sau drawer mobile; bấm ra ngoài để đóng -->
-  <div
-    class="mobile-nav-backdrop"
-    *ngIf="showMobileNav"
-    (click)="closeMobileNav()"
-    aria-hidden="true"
-  ></div>
-
   <div id="primary-navigation" class="navbar" [class.mobile-open]="showMobileNav">
 
     <div class="container">
 
-      <div class="navbar-wrapper" role="navigation" aria-label="Điều hướng chính">
-
-        <button
-          type="button"
-          class="mobile-nav-close"
-          (click)="closeMobileNav()"
-          aria-label="Đóng menu điều hướng"
-        >
-          <lucide-icon name="x"></lucide-icon>
-          Đóng
-        </button>
+      <div class="navbar-wrapper">
 
         <a
           routerLink="/"
@@ -309,24 +277,6 @@
         <a routerLink="/about" routerLinkActive="active" (click)="closeMobileNav()">Giới thiệu</a>
 
         <a routerLink="/contact" routerLinkActive="active" (click)="closeMobileNav()">Liên hệ</a>
-
-        <!-- Chọn theme trong drawer mobile (FAB theme bị ẩn ở mobile) -->
-        <div class="drawer-theme" *ngIf="isMobile">
-          <span class="drawer-theme-title">Giao diện</span>
-          <div class="drawer-theme-options">
-            <button
-              type="button"
-              *ngFor="let t of themeService.themes"
-              class="drawer-theme-btn"
-              [class.active]="themeService.current === t.id"
-              (click)="pickTheme(t.id)"
-              [attr.aria-pressed]="themeService.current === t.id"
-            >
-              <span class="theme-dot" [style.background]="t.primary" aria-hidden="true"></span>
-              {{ t.name }}
-            </button>
-          </div>
-        </div>
 
       </div>
 

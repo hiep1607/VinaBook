@@ -2,13 +2,14 @@ import { Component, EventEmitter, OnInit, Output, TemplateRef } from '@angular/c
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { Customer } from '../../models/customer';
+import { Customer } from '../../common/Customer';
 import { CustomerService } from '../../services/customer.service';
 import { UploadService } from '../../services/upload.service';
 
 @Component({
   selector: 'app-add-customer',
   templateUrl: './add-customer.component.html',
+  styleUrls: ['./add-customer.component.css']
 })
 export class AddCustomerComponent implements OnInit {
 
@@ -44,7 +45,7 @@ export class AddCustomerComponent implements OnInit {
     if (this.postForm.valid) {
       this.customer = this.postForm.value;
       this.customer.image = this.image;
-      this.customerService.post(this.customer).subscribe(() => {
+      this.customerService.post(this.customer).subscribe(data => {
         this.toastr.success('Thêm thành công', 'Hệ thống');
         this.modalService.dismissAll();
         this.saveFinish.emit('done');

@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ChatMessage } from '../../models/chat-message';
-import { Customer } from '../../models/customer';
-import { Notification } from '../../models/notification';
+import { ChatMessage } from '../../common/ChatMessage';
+import { Customer } from '../../common/Customer';
+import { Notification } from '../../common/Notification';
 import { CustomerService } from '../../services/customer.service';
 import { NotificationService } from '../../services/notification.service';
 import { SessionService } from '../../services/session.service';
+import { WebSocketService } from '../../services/web-socket.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -41,7 +42,7 @@ export class HeaderComponent implements OnInit {
       this.user = data as Customer;
       this.name = this.user.name;
       this.image = this.user.image;
-    }, () => {
+    }, error => {
       this.toastr.error('Đã xảy ra lỗi', 'Hệ thống');
       this.sessionService.signOut();
       this.router.navigate(['/login']);
@@ -65,14 +66,15 @@ export class HeaderComponent implements OnInit {
   }
 
   readed(id: number) {
-    this.notificationService.readed(id).subscribe(() => {
+    this.notificationService.readed(id).subscribe(data => {
       this.getAllNotification();
     })
   }
 
   readAll() {
     for (const i of this.notifications) {
-      this.notificationService.readed(i.id).subscribe()
+      this.notificationService.readed(i.id).subscribe(data => {
+      })
     }
     this.getAllNotification();
   }
@@ -86,8 +88,11 @@ export class HeaderComponent implements OnInit {
   }
 
   openWebSocket() {
-    const token = this.sessionService.getToken() || '';
-    this.webSocket = new WebSocket(environment.wsUrl + '?token=' + encodeURIComponent(token));
+    this.webSocket = new WebSocket(environment.wsUrl);
+
+    this.webSocket.onopen = (event) => {
+      // console.log('Open: ', event);
+    };
 
     this.webSocket.onmessage = (event) => {
       const chatMessageDto = JSON.parse(event.data);
@@ -98,6 +103,9 @@ export class HeaderComponent implements OnInit {
       this.chatMessages.push(chatMessageDto);
     };
 
+    this.webSocket.onclose = (event) => {
+      // console.log('Close: ', event);
+    };
   }
 
   closeWebSocket() {

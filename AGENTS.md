@@ -21,14 +21,8 @@ npm start
 npm run build
 npx tsc -p tsconfig.spec.json --noEmit
 
-# Backend — bắt buộc đặt JWT_SECRET trước khi test/run (thiếu sẽ fail khi khởi động).
-# Sinh secret ngẫu nhiên trong bộ nhớ, KHÔNG hardcode giá trị vào repository.
+# Backend
 cd VinaBookStore
-$jwtBytes = New-Object byte[] 64
-$jwtRng = [System.Security.Cryptography.RandomNumberGenerator]::Create()
-$jwtRng.GetBytes($jwtBytes)
-$jwtRng.Dispose()
-$env:JWT_SECRET = [Convert]::ToBase64String($jwtBytes)
 $env:JAVA_HOME = "C:\Program Files\Eclipse Adoptium\jdk-17.0.19.10-hotspot"
 .\mvnw.cmd test
 .\mvnw.cmd spring-boot:run

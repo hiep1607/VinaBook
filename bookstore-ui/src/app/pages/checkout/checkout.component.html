@@ -3,7 +3,7 @@
     <h1 class="checkout-title display-title" appReveal="up">Thanh toán</h1>
 
     <form class="checkout-wrapper" (ngSubmit)="placeOrder()" #checkoutForm="ngForm">
-      <div class="checkout-form">
+      <div class="checkout-form" appReveal="left">
         <div class="form-box">
           <h2>Thông tin giao hàng</h2>
 
@@ -38,7 +38,7 @@
             </button>
           </fieldset>
 
-          <div *ngIf="showNewForm" class="new-address">
+          <div *ngIf="showNewForm" class="new-address" appReveal="scale">
             <div class="form-group">
               <label for="shipping-label">Nhãn địa chỉ</label>
               <input
@@ -123,7 +123,7 @@
               [class.selected]="selectedPayment === method.code"
               [class.unavailable]="!method.available"
               [disabled]="!method.available || placing"
-              (click)="selectPayment(method)"
+              (click)="selectPayment(method, $event)"
               [attr.aria-pressed]="selectedPayment === method.code"
             >
               <span class="payment-mark" [attr.data-method]="method.code">{{ method.short }}</span>
@@ -147,7 +147,7 @@
         </div>
       </div>
 
-      <aside class="checkout-summary" aria-label="Tóm tắt đơn hàng">
+      <aside class="checkout-summary" aria-label="Tóm tắt đơn hàng" appReveal="right">
         <h2>Đơn hàng</h2>
 
         <div class="summary-row">
@@ -180,11 +180,13 @@
         </div>
 
         <button
+          #placeOrderButton
           type="submit"
           class="place-order-btn"
-          [disabled]="placing || cartItems.length === 0"
+          [class.success]="orderPlaced"
+          [disabled]="placing || orderPlaced || cartItems.length === 0"
         >
-          {{ placing ? 'Đang xử lý...' : (selectedPayment === 'COD' ? 'Đặt hàng' : 'Tiếp tục thanh toán') }}
+          {{ orderPlaced ? 'Đặt hàng thành công' : (placing ? 'Đang xử lý...' : (selectedPayment === 'COD' ? 'Đặt hàng' : 'Tiếp tục thanh toán')) }}
         </button>
 
         <p class="summary-safe">Không lưu thông tin thẻ hoặc mật khẩu ví trên VinaBook.</p>

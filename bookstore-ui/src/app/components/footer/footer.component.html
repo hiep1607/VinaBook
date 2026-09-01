@@ -23,17 +23,12 @@
           <a routerLink="/profile">Tài khoản</a>
         </div>
 
-        <!-- Kết nối: chỉ render khi có URL thật trong environment.socialLinks -->
-        <div class="footer-column" *ngIf="socialLinks.length > 0">
+        <div class="footer-column">
           <h3>Kết nối</h3>
-          <a
-            *ngFor="let link of socialLinks"
-            [href]="link.url"
-            target="_blank"
-            rel="noopener noreferrer nofollow"
-          >
-            {{ link.label }}
-          </a>
+          <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">YouTube</a>
+          <a href="https://www.tiktok.com" target="_blank" rel="noopener noreferrer">TikTok</a>
         </div>
       </nav>
     </div>

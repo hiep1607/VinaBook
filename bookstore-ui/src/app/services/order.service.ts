@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { forkJoin, Observable, of } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
@@ -46,31 +46,6 @@ export class OrderService {
         );
 
         return forkJoin(withItems);
-
-      })
-    );
-
-  }
-
-  /**
-   * Chi tiết một đơn theo ID — dùng cho trang /orders/:id.
-   * Không có endpoint riêng nên lấy danh sách đơn rồi lọc theo ordersId;
-   * không tìm thấy thì trả lỗi để trang hiển thị trạng thái 404 riêng.
-   */
-  getOrder(email: string, orderId: number): Observable<any> {
-
-    return this.http.get<any[]>(this.api + '/api/orders/user/' + email).pipe(
-      switchMap(orders => {
-
-        const found = (orders || []).find(o => Number(o.ordersId) === Number(orderId));
-
-        if (!found) {
-          return throwError(new Error('ORDER_NOT_FOUND'));
-        }
-
-        return this.http.get<any[]>(this.api + '/api/orderDetail/order/' + found.ordersId).pipe(
-          map(details => this.mapOrder(found, details))
-        );
 
       })
     );

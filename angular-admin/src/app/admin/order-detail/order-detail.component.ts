@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@an
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { Order } from '../../models/order';
-import { OrderDetail } from '../../models/order-detail';
+import { Order } from '../../common/Order';
+import { OrderDetail } from '../../common/OrderDetail';
 import { OrderService } from '../../services/order.service';
 import Swal from 'sweetalert2';
 
@@ -63,7 +63,7 @@ export class OrderDetailComponent implements OnInit {
       cancelButtonText: 'Không'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.orderService.deliver(this.orderId).subscribe(() => {
+        this.orderService.deliver(this.orderId).subscribe(data => {
           this.toastr.success('Xác nhận thành công!', 'Hệ thống');
           this.updateFinish.emit('done');
           this.modalService.dismissAll();
@@ -83,7 +83,7 @@ export class OrderDetailComponent implements OnInit {
       cancelButtonText: 'Không'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.orderService.cancel(this.orderId).subscribe(() => {
+        this.orderService.cancel(this.orderId).subscribe(data => {
           this.toastr.success('Huỷ thành công!', 'Hệ thống');
           this.updateFinish.emit('done');
           this.modalService.dismissAll();
@@ -103,7 +103,7 @@ export class OrderDetailComponent implements OnInit {
       cancelButtonText: 'Không'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.orderService.success(this.orderId).subscribe(() => {
+        this.orderService.success(this.orderId).subscribe(data => {
           this.toastr.success('Xác nhận thành công!', 'Hệ thống');
           this.updateFinish.emit('done');
           this.modalService.dismissAll();

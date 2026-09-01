@@ -419,6 +419,12 @@
   background: var(--c-primary-hover);
 }
 
+.place-order-btn.success,
+.place-order-btn.success:disabled {
+  background: #15803d;
+  opacity: 1;
+}
+
 .place-order-btn:disabled {
   cursor: not-allowed;
   opacity: 0.58;

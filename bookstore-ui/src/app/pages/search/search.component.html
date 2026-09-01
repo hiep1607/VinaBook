@@ -37,49 +37,16 @@
 
     <!-- FILTER BAR -->
 
-    <div class="filter-toolbar" *ngIf="!loading && !loadError">
-
-      <!-- Mobile: nút mở/đóng panel bộ lọc -->
-      <button
-        type="button"
-        class="filter-toggle"
-        (click)="filterPanelOpen = !filterPanelOpen"
-        [attr.aria-expanded]="filterPanelOpen"
-        aria-controls="search-filter-panel"
-      >
-        Bộ lọc
-        <span class="filter-count" *ngIf="hasActiveFilters">{{ activeFilterCount() }}</span>
-        <lucide-icon name="chevron-down"></lucide-icon>
-      </button>
-
-      <!-- Sort (luôn hiện) -->
-      <div class="sort-box">
-        <label for="search-sort">Sắp xếp:</label>
-        <select
-          id="search-sort"
-          [ngModel]="sortOrder"
-          (ngModelChange)="setSortOrder($event)"
-        >
-          <option value="default">Mặc định</option>
-          <option value="price-asc">Giá thấp → cao</option>
-          <option value="price-desc">Giá cao → thấp</option>
-        </select>
-      </div>
-
-    </div>
-
-    <!-- PANEL BỘ LỌC: desktop luôn mở, mobile collapse qua nút Bộ lọc -->
-    <div id="search-filter-panel" class="filter-panel" [class.open]="filterPanelOpen" *ngIf="!loading && !loadError">
+    <div class="filter-bar" *ngIf="!loading && !loadError">
 
       <!-- CATEGORY CHIPS -->
 
-      <div class="chips" role="group" aria-label="Lọc theo thể loại">
+      <div class="chips">
 
         <button
           type="button"
           class="chip"
           [class.active]="activeCategory === ''"
-          [attr.aria-pressed]="activeCategory === ''"
           (click)="setCategory('')"
         >
           Tất cả
@@ -90,7 +57,6 @@
           class="chip"
           *ngFor="let cat of categories"
           [class.active]="activeCategory === cat"
-          [attr.aria-pressed]="activeCategory === cat"
           (click)="setCategory(cat)"
         >
           {{ cat }}
@@ -98,143 +64,38 @@
 
       </div>
 
-      <!-- FILTERS DỰA TRÊN DỮ LIỆU THẬT -->
-      <div class="filter-extras">
-        <label class="filter-check">
-          <input
-            type="checkbox"
-            [checked]="promoOnly"
-            (change)="togglePromo()"
-          />
-          Đang khuyến mãi
-        </label>
+      <!-- SORT -->
 
-        <label class="filter-check">
-          <input
-            type="checkbox"
-            [checked]="inStockOnly"
-            (change)="toggleInStock()"
-          />
-          Còn hàng
-        </label>
+      <div class="sort-box">
 
-        <div class="price-range">
-          <label for="min-price">Giá từ</label>
-          <input
-            id="min-price"
-            name="minPrice"
-            type="number"
-            min="0"
-            placeholder="0đ"
-            [(ngModel)]="minPrice"
-          />
-          <label for="max-price">đến</label>
-          <input
-            id="max-price"
-            name="maxPrice"
-            type="number"
-            min="0"
-            placeholder="∞"
-            [(ngModel)]="maxPrice"
-          />
-          <button
-            type="button"
-            class="price-apply-btn"
-            (click)="applyPriceRange(minPrice, maxPrice)"
-            [disabled]="priceInputsInvalid"
-          >
-            Áp dụng
-          </button>
-        </div>
+        <label for="search-sort">Sắp xếp:</label>
+
+        <select
+          id="search-sort"
+          [(ngModel)]="sortOrder"
+          (ngModelChange)="setSortOrder($event)"
+        >
+          <option value="default">Mặc định</option>
+          <option value="price-asc">Giá thấp → cao</option>
+          <option value="price-desc">Giá cao → thấp</option>
+        </select>
+
       </div>
 
     </div>
 
-    <!-- FILTER ĐANG ÁP DỤNG + XÓA -->
-    <div class="active-filters" *ngIf="!loading && !loadError && hasActiveFilters">
-      <span class="active-filters-label">Bộ lọc:</span>
+    <!-- RESULTS GRID -->
 
-      <button type="button" class="active-chip" *ngIf="activeCategory" (click)="clearFilter('category')">
-        {{ activeCategory }} ✕
-        <span class="sr-only">Xóa bộ lọc thể loại</span>
-      </button>
-
-      <button type="button" class="active-chip" *ngIf="promoOnly" (click)="clearFilter('promo')">
-        Đang khuyến mãi ✕
-        <span class="sr-only">Xóa bộ lọc khuyến mãi</span>
-      </button>
-
-      <button type="button" class="active-chip" *ngIf="inStockOnly" (click)="clearFilter('stock')">
-        Còn hàng ✕
-        <span class="sr-only">Xóa bộ lọc còn hàng</span>
-      </button>
-
-      <button
-        type="button"
-        class="active-chip"
-        *ngIf="minPrice !== null || maxPrice !== null"
-        (click)="clearFilter('price')"
-      >
-        {{ minPrice !== null || maxPrice !== null ? 'Khoảng giá' : '' }} ✕
-        <span class="sr-only">Xóa bộ lọc khoảng giá</span>
-      </button>
-
-      <button type="button" class="clear-all-filters" (click)="clearAllFilters()">
-        Xóa tất cả bộ lọc
-      </button>
-    </div>
-
-    <!-- RESULTS GRID: chỉ render tối đa pageSize sản phẩm mỗi trang -->
-
-    <div class="search-grid" *ngIf="!loading && !loadError && pagedProducts.length > 0">
+    <div class="search-grid" *ngIf="!loading && !loadError && sortedProducts.length > 0">
 
       <app-product-card
-        *ngFor="let product of pagedProducts; let i = index"
+        *ngFor="let product of sortedProducts; let i = index"
         [product]="product"
         appReveal="up"
         [revealDelay]="(i % 4) * 70"
       ></app-product-card>
 
     </div>
-
-    <!-- PAGINATION -->
-    <nav
-      class="pagination"
-      *ngIf="!loading && !loadError && totalPages > 1"
-      aria-label="Phân trang kết quả tìm kiếm"
-    >
-      <button
-        type="button"
-        class="page-btn page-prev"
-        (click)="goToPage(page - 1)"
-        [disabled]="page <= 1"
-        aria-label="Trang trước"
-      >
-        ‹ Trước
-      </button>
-
-      <button
-        type="button"
-        class="page-btn"
-        *ngFor="let p of totalPagesArray()"
-        (click)="goToPage(p)"
-        [class.current]="p === page"
-        [attr.aria-current]="p === page ? 'page' : null"
-        [attr.aria-label]="'Trang ' + p"
-      >
-        {{ p }}
-      </button>
-
-      <button
-        type="button"
-        class="page-btn page-next"
-        (click)="goToPage(page + 1)"
-        [disabled]="page >= totalPages"
-        aria-label="Trang sau"
-      >
-        Sau ›
-      </button>
-    </nav>
 
     <!-- EMPTY STATE -->
 
@@ -245,16 +106,16 @@
       <p class="empty-title">Không tìm thấy sản phẩm nào</p>
 
       <p class="empty-hint" *ngIf="keyword">
-        Thử tìm với từ khóa khác hoặc bỏ bớt bộ lọc
+        Thử tìm với từ khóa khác hoặc bỏ bộ lọc thể loại
       </p>
 
       <button
         type="button"
         class="reset-btn"
-        *ngIf="hasActiveFilters"
-        (click)="clearAllFilters()"
+        *ngIf="activeCategory"
+        (click)="setCategory('')"
       >
-        Xóa tất cả bộ lọc
+        Xóa bộ lọc thể loại
       </button>
 
     </div>

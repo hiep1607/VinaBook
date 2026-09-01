@@ -12,7 +12,7 @@
                 <mat-label>Tìm kiếm</mat-label>
                 <input matInput type="text" (keyup)="search($event)" />
             </mat-form-field>
-
+            
             <button mat-raised-button color="primary" style="float: right;" (click)="exporter.exportTable('csv', {fileName:'Danh sách đánh giá'})">Xuất Excel</button>
 
             <table mat-table matTableExporter #exporter="matTableExporter" [hiddenColumns]="[2,6]" [dataSource]="listData" matSort class="mat-elevation-z8">

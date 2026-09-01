@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { Rate } from '../../models/rate';
+import { Rate } from '../../common/Rate';
 import { PageService } from '../../services/page.service';
 import { RateService } from '../../services/rate.service';
 import Swal from 'sweetalert2';
@@ -51,7 +51,7 @@ export class RateComponent implements OnInit {
       cancelButtonText: 'Không'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.rateService.delete(id).subscribe(() => {
+        this.rateService.delete(id).subscribe(data => {
           this.ngOnInit();
           this.toastr.success('Xoá thành công!', 'Hệ thống');
         }, error => {

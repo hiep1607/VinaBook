@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.transaction.annotation.Transactional;
 
 import vn.fs.entity.Cart;
 import vn.fs.entity.CartDetail;
@@ -92,7 +91,6 @@ public class OrderApi {
 	}
 
 	@PostMapping("/{email}")
-	@Transactional
 	public ResponseEntity<Order> checkout(@PathVariable("email") String email, @RequestBody Cart cart,
 			@RequestParam(value = "paymentMethod", defaultValue = "COD") String paymentMethod) {
 		if (!access.ownsEmail(email)) {
@@ -114,15 +112,10 @@ public class OrderApi {
 		}
 		Double amount = 0.0;
 		for (CartDetail i : items) {
-			if (i.getQuantity() <= 0 || i.getProduct() == null) {
+			if (i.getQuantity() <= 0 || i.getProduct() == null
+					|| i.getQuantity() > i.getProduct().getQuantity()) {
 				return ResponseEntity.badRequest().build();
 			}
-			Product product = productRepository.findByProductIdAndStatusTrue(i.getProduct().getProductId());
-			if (product == null || i.getQuantity() > product.getQuantity()) {
-				return ResponseEntity.badRequest().build();
-			}
-			i.setProduct(product);
-			i.setPrice(lineTotal(product, i.getQuantity()));
 			amount += i.getPrice();
 		}
 		if (amount > 0 && amount < 300000) {
@@ -146,6 +139,7 @@ public class OrderApi {
 			OrderDetail orderDetail = new OrderDetail(0L, i.getQuantity(), i.getPrice(), i.getProduct(), order);
 			orderDetailRepository.save(orderDetail);
 		}
+//		cartDetailRepository.deleteByCart(cart);
 		for (CartDetail i : items) {
 			cartDetailRepository.delete(i);
 		}
@@ -154,15 +148,11 @@ public class OrderApi {
 	}
 
 	@PutMapping("cancel/{orderId}")
-	@Transactional
 	public ResponseEntity<Void> cancel(@PathVariable("orderId") Long id) {
 		if (!orderRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
 		Order order = orderRepository.findById(id).get();
-		if (order.getStatus() != 0) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-		}
 		if ("PAID".equals(order.getPaymentStatus()) && !"COD".equals(order.getPaymentMethod())) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
@@ -173,15 +163,11 @@ public class OrderApi {
 	}
 
 	@PutMapping("deliver/{orderId}")
-	@Transactional
 	public ResponseEntity<Void> deliver(@PathVariable("orderId") Long id) {
 		if (!orderRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
 		Order order = orderRepository.findById(id).get();
-		if (order.getStatus() != 0) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-		}
 		if (!"COD".equals(paymentMethod(order)) && !"PAID".equals(paymentStatus(order))) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
@@ -192,22 +178,12 @@ public class OrderApi {
 	}
 
 	@PutMapping("success/{orderId}")
-	@Transactional
 	public ResponseEntity<Void> success(@PathVariable("orderId") Long id) {
 		if (!orderRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
 		Order order = orderRepository.findById(id).get();
-		if (order.getStatus() == 2) {
-			return ResponseEntity.ok().build();
-		}
-		if (order.getStatus() != 1) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-		}
 		if (!"COD".equals(paymentMethod(order)) && !"PAID".equals(paymentStatus(order))) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-		}
-		if (!hasEnoughStock(order)) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
 		order.setStatus(2);
@@ -247,21 +223,6 @@ public class OrderApi {
 				productRepository.save(product);
 			}
 		}
-	}
-
-	private boolean hasEnoughStock(Order order) {
-		for (OrderDetail detail : orderDetailRepository.findByOrder(order)) {
-			Product product = productRepository.findByProductIdAndStatusTrue(detail.getProduct().getProductId());
-			if (product == null || detail.getQuantity() <= 0 || product.getQuantity() < detail.getQuantity()) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	private Double lineTotal(Product product, int quantity) {
-		double unit = Math.round(product.getPrice() * (100 - product.getDiscount()) / 100);
-		return unit * quantity;
 	}
 
 }

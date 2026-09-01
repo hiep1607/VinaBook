@@ -3,15 +3,18 @@ import {
   Directive,
   ElementRef,
   Input,
-  OnDestroy,
-  Renderer2
+  OnDestroy
 } from '@angular/core';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 /**
  * Hiệu ứng "reveal khi cuộn" — phần tử mờ + dịch chuyển nhẹ, khi lọt vào
  * khung nhìn thì hiện ra mượt mà (như các trang landing cao cấp).
  *
- * Dùng IntersectionObserver nên rất nhẹ, không nghe scroll thủ công.
+ * Dùng GSAP ScrollTrigger để reveal đồng nhất và tự cleanup theo component.
  *
  * Cách dùng:
  *   <div appReveal>...</div>                  // trượt lên mặc định
@@ -32,46 +35,53 @@ export class RevealDirective implements AfterViewInit, OnDestroy {
   /** Độ trễ (ms) — dùng để tạo hiệu ứng so le (stagger) giữa các phần tử. */
   @Input() revealDelay = 0;
 
-  private observer?: IntersectionObserver;
+  private context?: gsap.Context;
 
-  constructor(
-    private el: ElementRef<HTMLElement>,
-    private renderer: Renderer2
-  ) {}
+  constructor(private el: ElementRef<HTMLElement>) {}
 
   ngAfterViewInit(): void {
     const host = this.el.nativeElement;
-    const dir = this.from || 'up';
+    const reduceMotion = typeof window !== 'undefined'
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    this.renderer.addClass(host, 'reveal');
-    this.renderer.addClass(host, `reveal--${dir}`);
-
-    if (this.revealDelay) {
-      this.renderer.setStyle(host, 'transition-delay', `${this.revealDelay}ms`);
-    }
-
-    // Trình duyệt cũ / SSR không có IntersectionObserver → hiện luôn.
-    if (typeof IntersectionObserver === 'undefined') {
-      this.renderer.addClass(host, 'reveal--in');
+    if (reduceMotion) {
+      gsap.set(host, { autoAlpha: 1, clearProps: 'transform' });
       return;
     }
 
-    this.observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            this.renderer.addClass(host, 'reveal--in');
-            this.observer?.unobserve(host);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
-    );
+    const offsets: { [key: string]: gsap.TweenVars } = {
+      up: { y: 24 },
+      down: { y: -24 },
+      left: { x: -32 },
+      right: { x: 32 },
+      scale: { scale: 0.96 }
+    };
+    const start = offsets[this.from || 'up'] || offsets.up;
 
-    this.observer.observe(host);
+    this.context = gsap.context(() => {
+      gsap.fromTo(
+        host,
+        { autoAlpha: 0, ...start },
+        {
+          autoAlpha: 1,
+          x: 0,
+          y: 0,
+          scale: 1,
+          duration: 0.68,
+          delay: this.revealDelay / 1000,
+          ease: 'power3.out',
+          clearProps: 'transform,opacity,visibility,willChange',
+          scrollTrigger: {
+            trigger: host,
+            start: 'top 88%',
+            once: true
+          }
+        }
+      );
+    }, host);
   }
 
   ngOnDestroy(): void {
-    this.observer?.disconnect();
+    this.context?.revert();
   }
 }

@@ -14,7 +14,7 @@ export class StatisticalService {
   getByMothOfYear(year: number) {
     return this.httpClient.get(this.url + '/' + year);
   }
-
+  
   getInventory() {
     return this.httpClient.get(this.url + '/get-inventory');
   }

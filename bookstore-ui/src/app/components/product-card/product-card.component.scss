@@ -43,10 +43,14 @@
 }
 
 .product-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  padding: 12px;
+  display: block;
+  width: auto;
+  height: calc(100% - 24px);
+  aspect-ratio: 7 / 10;
+  margin: 12px auto;
+  object-fit: cover;
+  border-radius: 3px;
+  box-shadow: 0 14px 28px rgba(3, 31, 21, 0.18);
   transition: transform 420ms var(--ease);
 }
 

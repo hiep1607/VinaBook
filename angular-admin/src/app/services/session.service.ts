@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Login } from '../models/login';
+import { Login } from '../common/Login';
 import jwt_decode from 'jwt-decode';
 
 const TOKEN_KEY = 'auth-token';

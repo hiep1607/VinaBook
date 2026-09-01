@@ -4,12 +4,10 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { LoginComponent } from './pages/login/login.component';
-import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { OrdersComponent } from './pages/orders/orders.component';
-import { OrderDetailComponent } from './pages/order-detail/order-detail.component';
 import { SearchComponent } from './pages/search/search.component';
 import { WishlistComponent } from './pages/wishlist/wishlist.component';
 import { CategoryComponent } from './pages/category/category.component';
@@ -44,8 +42,6 @@ const routes: Routes = [
 
   { path: 'login', component: LoginComponent, data: { pageTitle: 'Đăng nhập' } },
 
-  { path: 'forgot-password', component: ForgotPasswordComponent, data: { pageTitle: 'Quên mật khẩu' } },
-
   { path: 'register', component: RegisterComponent, data: { pageTitle: 'Đăng ký' } },
 
   { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard], data: { pageTitle: 'Thanh toán' } },
@@ -55,8 +51,6 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { pageTitle: 'Tài khoản' } },
 
   { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard], data: { pageTitle: 'Đơn hàng' } },
-
-  { path: 'orders/:id', component: OrderDetailComponent, canActivate: [AuthGuard], data: { pageTitle: 'Chi tiết đơn hàng' } },
 
   { path: 'search', component: SearchComponent, data: { pageTitle: 'Tìm kiếm' } },
 

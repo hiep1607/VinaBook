@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import vn.fs.entity.User;
-import vn.fs.config.JwtUtils;
 import vn.fs.repository.UserRepository;
 
 @Controller
@@ -30,13 +29,10 @@ public class ResetPasswordController {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 
-	@Autowired
-	JwtUtils jwtUtils;
-
 	@GetMapping("{token}")
 	public String resetPassword(Model map, @PathVariable("token") String token) {
 		User user = userRepository.findByToken(token);
-		if (!valid(user, token)) {
+		if (user == null) {
 			return "redirect:/forgot-password/error";
 		}
 		map.addAttribute("name", user.getName());
@@ -49,33 +45,29 @@ public class ResetPasswordController {
 
 	@PostMapping
 	public String reset(@RequestParam("password") String password, @RequestParam("confirm") String confirm,
-			@RequestParam("email") String email, @RequestParam("token") String token,
+			@RequestParam("email") String email, @RequestParam("name") String name, @RequestParam("token") String token,
 			Model map) {
-		User user = userRepository.findByToken(token);
-		if (!valid(user, token) || !user.getEmail().equalsIgnoreCase(email)) {
-			return "redirect:/forgot-password/error";
-		}
 		if (password.length() < 6) {
 			map.addAttribute("password", password);
 			map.addAttribute("confirm", confirm);
 			map.addAttribute("errorPassword", "error");
-			map.addAttribute("name", user.getName());
-			map.addAttribute("email", user.getEmail());
+			map.addAttribute("name", name);
+			map.addAttribute("email", email);
 			map.addAttribute("token", token);
 			return "/reset-password";
 		}
 		if (!password.equals(confirm)) {
 			map.addAttribute("errorConfirm", "error");
-			map.addAttribute("name", user.getName());
-			map.addAttribute("email", user.getEmail());
+			map.addAttribute("name", name);
+			map.addAttribute("email", email);
 			map.addAttribute("password", password);
 			map.addAttribute("confirm", confirm);
 			map.addAttribute("token", token);
 			return "/reset-password";
 		}
+		User user = userRepository.findByToken(token);
 		user.setPassword(passwordEncoder.encode(password));
 		user.setStatus(true);
-		user.setToken(null);
 		userRepository.save(user);
 		return "redirect:/forgot-password/done";
 	}
@@ -88,10 +80,6 @@ public class ResetPasswordController {
 	@GetMapping("/error")
 	public String error() {
 		return "/error";
-	}
-
-	private boolean valid(User user, String token) {
-		return user != null && jwtUtils.validatePasswordResetToken(token, user.getEmail());
 	}
 
 }

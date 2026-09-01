@@ -9,7 +9,7 @@ import { AppComponent } from './app.component';
 import { AdminModule } from './admin/admin.module';
 import { LoginComponent } from './login/login.component';
 import { LoginModule } from './login/login.module';
-import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { AuthInterceptor } from './helper/AuthInterceptor';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },

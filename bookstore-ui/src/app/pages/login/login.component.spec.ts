@@ -22,14 +22,4 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('toggleShowPassword đổi trạng thái hiện/ẩn mật khẩu', () => {
-    expect(component.showPassword).toBe(false);
-
-    component.toggleShowPassword();
-    expect(component.showPassword).toBe(true);
-
-    component.toggleShowPassword();
-    expect(component.showPassword).toBe(false);
-  });
 });

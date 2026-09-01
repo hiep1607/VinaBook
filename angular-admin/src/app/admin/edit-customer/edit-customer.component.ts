@@ -2,13 +2,14 @@ import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@an
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { Customer } from '../../models/customer';
+import { Customer } from '../../common/Customer';
 import { CustomerService } from '../../services/customer.service';
 import { UploadService } from '../../services/upload.service';
 
 @Component({
   selector: 'app-edit-customer',
   templateUrl: './edit-customer.component.html',
+  styleUrls: ['./edit-customer.component.css']
 })
 export class EditCustomerComponent implements OnInit {
 
@@ -29,7 +30,7 @@ export class EditCustomerComponent implements OnInit {
       'userId': new FormControl(0),
       'email': new FormControl(null, [Validators.minLength(4), Validators.email, Validators.required]),
       'name': new FormControl(null, [Validators.minLength(4), Validators.required]),
-      'password': new FormControl('', [Validators.minLength(6)]),
+      'password': new FormControl(null, [Validators.minLength(6), Validators.required]),
       'address': new FormControl(null, [Validators.minLength(4), Validators.required, Validators.pattern('(0)[0-9]{9}')]),
       'phone': new FormControl(null, [Validators.minLength(4), Validators.required]),
       'gender': new FormControl(true),
@@ -48,7 +49,7 @@ export class EditCustomerComponent implements OnInit {
       this.customer = this.postForm.value;
       this.customer.image = this.image;
 
-      this.customerService.update(this.id, this.customer).subscribe(() => {
+      this.customerService.update(this.id, this.customer).subscribe(data => {
         this.toastr.success('Cập nhật thành công!', 'Hệ thống');
         this.editFinish.emit('done');
       })
@@ -65,7 +66,7 @@ export class EditCustomerComponent implements OnInit {
         'userId': new FormControl(this.customer.userId),
         'email': new FormControl(this.customer.email, [Validators.minLength(4), Validators.email, Validators.required]),
         'name': new FormControl(this.customer.name, [Validators.minLength(4), Validators.required]),
-        'password': new FormControl('', [Validators.minLength(6)]),
+        'password': new FormControl(this.customer.password, [Validators.minLength(6), Validators.required]),
         'address': new FormControl(this.customer.address, [Validators.minLength(4), Validators.required]),
         'phone': new FormControl(this.customer.phone, [Validators.minLength(4), Validators.required, Validators.pattern('(0)[0-9]{9}')]),
         'gender': new FormControl(this.customer.gender),
@@ -74,7 +75,7 @@ export class EditCustomerComponent implements OnInit {
         'token': new FormControl(this.customer.token),
       })
       this.image = this.customer.image;
-    }, () => {
+    }, error => {
       this.toastr.error('Lỗi truy xuất dữ liệu! ', 'Hệ thống');
     })
   }

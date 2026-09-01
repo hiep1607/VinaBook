@@ -4,12 +4,11 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ChatMessage } from '../../models/chat-message';
-import { Order } from '../../models/order';
+import { ChatMessage } from '../../common/ChatMessage';
+import { Order } from '../../common/Order';
 import { OrderService } from '../../services/order.service';
 import { PageService } from '../../services/page.service';
 import { environment } from 'src/environments/environment';
-import { SessionService } from '../../services/session.service';
 
 @Component({
   selector: 'app-order',
@@ -30,8 +29,8 @@ export class OrderComponent implements OnInit {
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private pageService: PageService, private toastr: ToastrService, private orderService: OrderService, route: ActivatedRoute, private sessionService: SessionService) {
-    route.params.subscribe(() => {
+  constructor(private pageService: PageService, private toastr: ToastrService, private orderService: OrderService, private route: ActivatedRoute) {
+    route.params.subscribe(val => {
       this.ngOnInit();
     })
   }
@@ -98,11 +97,18 @@ export class OrderComponent implements OnInit {
   }
 
   openWebSocket() {
-    const token = this.sessionService.getToken() || '';
-    this.webSocket = new WebSocket(environment.wsUrl + '?token=' + encodeURIComponent(token));
+    this.webSocket = new WebSocket(environment.wsUrl);
 
-    this.webSocket.onmessage = () => {
+    this.webSocket.onopen = (event) => {
+      // console.log('Open: ', event);
+    };
+
+    this.webSocket.onmessage = (event) => {
       this.getAllOrder();
+    };
+
+    this.webSocket.onclose = (event) => {
+      // console.log('Close: ', event);
     };
   }
 

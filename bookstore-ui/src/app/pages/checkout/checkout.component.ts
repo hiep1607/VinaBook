@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AddressService } from 'src/app/services/address.service';
@@ -7,6 +7,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { OrderService } from 'src/app/services/order.service';
 import { PaymentService } from 'src/app/services/payment.service';
+import { MotionService } from 'src/app/services/motion.service';
 
 @Component({
   selector: 'app-checkout',
@@ -15,12 +16,15 @@ import { PaymentService } from 'src/app/services/payment.service';
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
 
+  @ViewChild('placeOrderButton') placeOrderButton?: ElementRef<HTMLButtonElement>;
+
   readonly freeShippingThreshold = 300000;
 
   cartItems: any[] = [];
   addresses: any[] = [];
   selectedAddress: any = null;
   placing = false;
+  orderPlaced = false;
   mode = 'form';
   showNewForm = false;
   saveToProfile = true;
@@ -48,7 +52,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private addressService: AddressService,
     private paymentService: PaymentService,
     private router: Router,
-    private notification: NotificationService
+    private notification: NotificationService,
+    private motion: MotionService
   ) {}
 
   ngOnInit(): void {
@@ -84,9 +89,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     );
   }
 
-  selectPayment(method: any): void {
+  selectPayment(method: any, event?: MouseEvent): void {
     if (method.available && !this.placing) {
       this.selectedPayment = method.code;
+      this.motion.bump(event?.currentTarget as HTMLElement | undefined);
     }
   }
 
@@ -195,8 +201,10 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.cartService.clearBuyNowItem();
           if (this.selectedPayment === 'COD') {
             this.placing = false;
+            this.orderPlaced = true;
             this.notification.success('Đặt hàng thành công');
-            this.router.navigate(['/orders']);
+            this.motion.orderSuccess(this.placeOrderButton?.nativeElement)
+              .then(() => this.router.navigate(['/orders']));
             return;
           }
 

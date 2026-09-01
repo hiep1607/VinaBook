@@ -30,11 +30,9 @@ Các service state trình duyệt tự hydrate từ `localStorage`. Cart đổi 
 
 Spring Security xác thực JWT stateless. Public gồm đăng nhập/đăng ký, đọc catalog/cấu hình trang chủ và chat hỗ trợ khách. `GET /api/homepage`, `GET /api/chat/status`, `POST /api/chat` là public; `PUT /api/homepage` và các endpoint quản trị khác yêu cầu `ROLE_ADMIN`; endpoint user yêu cầu `ROLE_USER` hoặc admin tùy nghiệp vụ. Chat public có validation và rate limit theo IP.
 
-Đối với user/cart/order/review/favorites, backend đối chiếu principal trong JWT bằng `CurrentUserAccess`. ID/email từ request không tự tạo quyền truy cập. Giá dòng hàng được tính lại từ product trong database; checkout và chuyển trạng thái order có transaction/state guard, kiểm tra tồn kho trước khi ghi và hoàn tất đơn theo kiểu idempotent.
+Đối với user/cart/order/review, backend đối chiếu principal trong JWT bằng `CurrentUserAccess`. ID/email từ request không tự tạo quyền truy cập. Giá dòng hàng được tính lại từ product trong database và order kiểm tra tồn kho trước khi ghi.
 
 `User.password` và reset token là write-only trong JSON. Response đăng nhập không chứa bcrypt hash.
-
-Reset mật khẩu phát hành token JWT riêng có `purpose=password-reset`, hạn 15 phút và bị xóa sau lần dùng thành công. WebSocket `/notification` kiểm tra token admin tại handshake và chỉ cho phép origin admin đã cấu hình.
 
 ## Production
 
@@ -45,7 +43,7 @@ HTTPS origin
 └── /notification     -> Spring Boot WebSocket
 ```
 
-Khi chạy profile `prod`, SQL debug và `open-in-view` bị tắt, schema dùng `ddl-auto=validate`, còn `JWT_SECRET` là biến môi trường bắt buộc. Database và SMTP cũng phải được inject qua biến môi trường. CORS không thay thế authorization.
+JWT secret, database và SMTP phải được inject qua biến môi trường. CORS không thay thế authorization.
 
 ## Thiết kế giao diện
 

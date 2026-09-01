@@ -252,27 +252,6 @@
   color: #1c1917;
 }
 
-/* Link sang trang chi tiết đơn /orders/:id */
-.detail-link {
-  display: inline-block;
-  margin-left: 18px;
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--c-accent);
-  transition: color var(--duration-fast) var(--ease), transform var(--duration-fast) var(--ease);
-}
-
-.detail-link:hover {
-  transform: translateX(2px);
-}
-
-/* Skeleton khi tải danh sách — dùng class skeleton toàn cục */
-.orders-skeleton .order-skeleton-card {
-  width: 100%;
-  min-height: 180px;
-  margin-bottom: 24px;
-}
-
 @media (max-width: 600px) {
   .order-top {
     align-items: flex-start;

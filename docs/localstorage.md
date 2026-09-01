@@ -12,7 +12,6 @@ Storefront dùng `localStorage` cho state nhẹ hoặc dữ liệu chưa chuyể
 | `cart_migration_owner` | Email đã nhận giỏ hàng legacy | Migration |
 | `wishlist_{email}` | `number[]` product IDs | Theo tài khoản |
 | `search_history` | `string[]`, tối đa 8 | Theo thiết bị |
-| `vinabook_recently_viewed` | Mảng product ID (`number[]`), tối đa 8, mới xem nhất trước | Theo thiết bị |
 | `theme` | `editorial`, `ocean`, `forest` hoặc `berry` | Theo thiết bị |
 
 `currentUser` không được chứa password plaintext, bcrypt hash hoặc reset token. JWT hết hạn/sai format bị `AuthService` xóa khi kiểm tra phiên.

@@ -31,27 +31,15 @@
 
       <label for="login-password">Mật khẩu</label>
 
-      <div class="password-field">
-        <input
-          id="login-password"
-          name="password"
-          [type]="showPassword ? 'text' : 'password'"
-          autocomplete="current-password"
-          placeholder="Mật khẩu"
-          [(ngModel)]="password"
-          required
-        />
-
-        <button
-          type="button"
-          class="password-toggle"
-          (click)="toggleShowPassword()"
-          [attr.aria-label]="showPassword ? 'Ẩn mật khẩu' : 'Hiện mật khẩu'"
-          [attr.aria-pressed]="showPassword"
-        >
-          <lucide-icon [name]="showPassword ? 'eye-off' : 'eye'"></lucide-icon>
-        </button>
-      </div>
+      <input
+        id="login-password"
+        name="password"
+        type="password"
+        autocomplete="current-password"
+        placeholder="Mật khẩu"
+        [(ngModel)]="password"
+        required
+      />
 
     </div>
 
@@ -59,14 +47,12 @@
       {{ errorMessage }}
     </p>
 
-    <a routerLink="/forgot-password" class="forgot-link">Quên mật khẩu?</a>
-
     <button
       type="submit"
       class="auth-btn"
-      [disabled]="loginForm.invalid || loggingIn"
+      [disabled]="loginForm.invalid"
     >
-      {{ loggingIn ? 'Đang đăng nhập...' : 'Đăng nhập' }}
+      Đăng nhập
     </button>
     </form>
 

@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -71,9 +70,6 @@ public class UserApi {
 	@Autowired
 	SendMailService sendMailService;
 
-	@Value("${payment.backend-url:http://localhost:8080}")
-	String backendUrl;
-
 	@GetMapping
 	public ResponseEntity<List<User>> getAll() {
 		return ResponseEntity.ok(userRepository.findByStatusTrue());
@@ -113,7 +109,7 @@ public class UserApi {
 		user.setRoles(roles);
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user.setToken(null);
+		user.setToken(jwtUtils.doGenerateToken(user.getEmail()));
 		User u = userRepository.save(user);
 		Cart c = new Cart(0L, 0.0, u.getAddress(), u.getPhone(), u);
 		cartRepository.save(c);
@@ -165,26 +161,11 @@ public class UserApi {
 		if (!id.equals(user.getUserId())) {
 			return ResponseEntity.badRequest().build();
 		}
-		User stored = userRepository.findById(id).get();
-		if (user.getName() != null) {
-			stored.setName(user.getName());
-		}
-		if (user.getPhone() != null) {
-			stored.setPhone(user.getPhone());
-		}
-		if (user.getAddress() != null) {
-			stored.setAddress(user.getAddress());
-		}
-		if (user.getGender() != null) {
-			stored.setGender(user.getGender());
-		}
-		if (user.getImage() != null) {
-			stored.setImage(user.getImage());
-		}
-		if (user.getPassword() != null && !user.getPassword().trim().isEmpty()) {
-			stored.setPassword(passwordEncoder.encode(user.getPassword()));
-		}
-		return ResponseEntity.ok(userRepository.save(stored));
+		Set<AppRole> roles = new HashSet<>();
+		roles.add(new AppRole(2, null));
+
+		user.setRoles(roles);
+		return ResponseEntity.ok(userRepository.save(user));
 	}
 
 	@DeleteMapping("{id}")
@@ -234,7 +215,7 @@ public class UserApi {
 				passwordEncoder.encode(signupRequest.getPassword()), signupRequest.getPhone(),
 				signupRequest.getAddress(), signupRequest.getGender(), signupRequest.getStatus(),
 				signupRequest.getImage(), signupRequest.getRegisterDate(),
-				null);
+				jwtUtils.doGenerateToken(signupRequest.getEmail()));
 		Set<AppRole> roles = new HashSet<>();
 		roles.add(new AppRole(1, null));
 
@@ -255,23 +236,18 @@ public class UserApi {
 	public ResponseEntity<String> sendToken(@RequestBody String email) {
 
 		if (!userRepository.existsByEmail(email)) {
-			// Keep the response indistinguishable so this endpoint cannot be used
-			// to enumerate registered customer addresses.
-			return ResponseEntity.ok().build();
+			return ResponseEntity.notFound().build();
 		}
 		User user = userRepository.findByEmail(email).get();
-		String token = jwtUtils.generatePasswordResetToken(user.getEmail());
-		user.setToken(token);
-		userRepository.save(user);
+		String token = user.getToken();
 		sendMaiToken(email, token, "Reset mật khẩu");
 		return ResponseEntity.ok().build();
 
 	}
 
 	public void sendMaiToken(String email, String token, String title) {
-		String publicUrl = backendUrl.replaceAll("/+$", "");
 		String body = "\r\n" + "    <h2>Hãy nhấp vào link để thay đổi mật khẩu của bạn</h2>\r\n"
-				+ "    <a href=\"" + publicUrl + "/forgot-password/" + token + "\">Đổi mật khẩu</a>";
+				+ "    <a href=\"http://localhost:8080/forgot-password/" + token + "\">Đổi mật khẩu</a>";
 		sendMailService.queue(email, title, body);
 	}
 

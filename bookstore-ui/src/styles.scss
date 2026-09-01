@@ -15,12 +15,14 @@
 
   --c-bg: #f6f8f7;
   --c-surface: #ffffff;
-  --c-header-bg: rgba(255, 255, 255, 0.96);
   --c-fg: #15221d;
   --c-muted-fg: #66736d;
   --c-muted: #edf1ef;
   --c-border: #dfe6e2;
   --c-danger: #dc2626;
+  --page-bg:
+    radial-gradient(circle at 8% 0%, rgba(185, 71, 29, 0.05), transparent 28rem),
+    #f6f8f7;
 
   --font-heading: 'Be Vietnam Pro', 'Segoe UI', sans-serif;
   --font-body: 'Be Vietnam Pro', 'Segoe UI', sans-serif;
@@ -57,6 +59,17 @@ html[data-theme='ocean'] {
   --c-muted-fg: #64748b;
   --c-muted: #f1f5f9;
   --c-border: #e2e8f0;
+  --font-display: 'Be Vietnam Pro', 'Segoe UI', sans-serif;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --shadow-sm: 0 2px 10px rgba(8, 51, 68, 0.05);
+  --shadow-md: 0 16px 38px rgba(8, 51, 68, 0.09);
+  --shadow-lg: 0 28px 72px rgba(8, 51, 68, 0.13);
+  --page-bg:
+    radial-gradient(circle at 92% 0%, rgba(14, 116, 144, 0.09), transparent 34rem),
+    #f8fafc;
 }
 
 html[data-theme='forest'] {
@@ -73,6 +86,18 @@ html[data-theme='forest'] {
   --c-muted-fg: #6b7280;
   --c-muted: #f3f4f6;
   --c-border: #e5e7eb;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --radius-xl: 14px;
+  --shadow-sm: 0 2px 8px rgba(5, 46, 22, 0.06);
+  --shadow-md: 0 14px 34px rgba(5, 46, 22, 0.1);
+  --shadow-lg: 0 28px 68px rgba(5, 46, 22, 0.15);
+  --page-bg:
+    linear-gradient(rgba(22, 101, 52, 0.025) 1px, transparent 1px),
+    #f7f8f5;
+  --page-bg-size: 100% 32px;
 }
 
 html[data-theme='berry'] {
@@ -89,31 +114,17 @@ html[data-theme='berry'] {
   --c-muted-fg: #6b7280;
   --c-muted: #f6f3f4;
   --c-border: #ece7e9;
-}
-
-/* Theme tối — giữ cùng hệ token, chỉ đảo bảng màu; xanh logo vẫn là primary. */
-html[data-theme='dark'] {
-  color-scheme: dark;
-  --c-primary: #1a9a72;
-  --c-primary-hover: #157d5c;
-  --c-primary-deep: #06281d;
-  --c-accent: #f97316;
-  --c-accent-hover: #ea580c;
-  --c-accent-soft: rgba(249, 115, 22, 0.14);
-  --c-stone: #8b968f;
-
-  --c-bg: #101613;
-  --c-surface: #18211c;
-  --c-header-bg: rgba(16, 22, 19, 0.92);
-  --c-fg: #e8efeb;
-  --c-muted-fg: #9aa8a0;
-  --c-muted: #202a25;
-  --c-border: #2a3630;
-  --c-danger: #f87171;
-
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
-  --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 24px 64px rgba(0, 0, 0, 0.5);
+  --font-display: 'Be Vietnam Pro', 'Segoe UI', sans-serif;
+  --radius-sm: 14px;
+  --radius-md: 18px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --shadow-sm: 0 3px 12px rgba(80, 7, 36, 0.06);
+  --shadow-md: 0 16px 40px rgba(80, 7, 36, 0.1);
+  --shadow-lg: 0 30px 76px rgba(80, 7, 36, 0.15);
+  --page-bg:
+    radial-gradient(circle at 8% 4%, rgba(225, 29, 72, 0.08), transparent 28rem),
+    #fdfafb;
 }
 
 * {
@@ -125,7 +136,8 @@ html[data-theme='dark'] {
 html,
 body {
   font-family: var(--font-body);
-  background: var(--c-bg);
+  background: var(--page-bg, var(--c-bg));
+  background-size: var(--page-bg-size, auto);
   color: var(--c-fg);
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
@@ -141,7 +153,6 @@ h1, h2, h3, h4, h5, h6,
 }
 
 body {
-  /* 'clip' thay cho 'hidden': overflow-x:hidden trên body làm vỡ position:sticky của header */
   overflow-x: clip;
   line-height: 1.6;
   min-width: 320px;
@@ -323,26 +334,6 @@ button:focus-visible {
 }
 
 /* =========================
-   FLY TO CART GHOST
-   Bìa sách thu nhỏ bay vào icon giỏ hàng (appended vào body).
-========================= */
-
-.fly-to-cart-ghost {
-  position: fixed;
-  z-index: 10000;
-  width: 56px;
-  height: 72px;
-  border-radius: var(--radius-sm);
-  background-color: var(--c-surface);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  box-shadow: var(--shadow-md);
-  pointer-events: none;
-  will-change: transform, opacity;
-}
-
-/* =========================
    API ERROR PANEL
 ========================= */
 
@@ -381,25 +372,6 @@ button:focus-visible {
    Phần tử ẩn nhẹ + dịch chuyển, hiện ra mượt khi lọt vào khung nhìn.
 ========================= */
 
-.reveal {
-  opacity: 0;
-  transition:
-    opacity var(--duration-slow) var(--ease),
-    transform var(--duration-slow) var(--ease);
-  will-change: opacity, transform;
-}
-
-.reveal--up    { transform: translateY(22px); }
-.reveal--down  { transform: translateY(-22px); }
-.reveal--left  { transform: translateX(-28px); }
-.reveal--right { transform: translateX(28px); }
-.reveal--scale { transform: scale(0.97); }
-
-.reveal--in {
-  opacity: 1;
-  transform: none;
-}
-
 /* =========================
    DISPLAY TITLE — serif sang trọng
 ========================= */
@@ -417,21 +389,7 @@ button:focus-visible {
   min-height: 45vh;
 }
 
-.route-stage > router-outlet + * {
-  display: block;
-  animation: route-enter 420ms var(--ease) both;
-}
-
-@keyframes route-enter {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
+.route-stage > router-outlet + * { display: block; }
 
 /* Người dùng tắt chuyển động: hiện ngay, không animate (tránh kẹt opacity:0) */
 @media (prefers-reduced-motion: reduce) {
@@ -447,14 +405,7 @@ button:focus-visible {
     transition-duration: .01ms !important;
   }
 
-  .reveal {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-
-  .route-stage > router-outlet + * {
-    animation: none !important;
-  }
+  .route-stage > router-outlet + * { animation: none !important; }
 }
 
 /* Sticky buy bar trang chi tiết sách (mobile): chừa khoảng đáy để bar không đè footer. */
@@ -463,3 +414,5 @@ button:focus-visible {
     padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px));
   }
 }
+
+@import 'styles/vinabook-night';

@@ -1,31 +1,8 @@
-<div
-  class="detail-skeleton container"
-  *ngIf="loading"
-  role="status"
-  aria-label="Đang tải thông tin sách"
->
-
-  <div class="skeleton-card">
-    <div class="skeleton-box skeleton-cover"></div>
-    <div class="skeleton-box skeleton-line"></div>
-    <div class="skeleton-box skeleton-line short"></div>
-  </div>
-
-  <div class="detail-skeleton-info">
-    <div class="skeleton-box skeleton-line title"></div>
-    <div class="skeleton-box skeleton-line short"></div>
-    <div class="skeleton-box skeleton-line"></div>
-    <div class="skeleton-box skeleton-line short"></div>
-    <div class="skeleton-box skeleton-line price"></div>
-    <div class="skeleton-box skeleton-line"></div>
-  </div>
-
-</div>
+<div class="detail-state" *ngIf="loading" role="status">Đang tải thông tin sách...</div>
 
 <div class="detail-state error" *ngIf="loadError" role="alert">
   Không tải được thông tin sách. <a routerLink="/books">Quay lại danh mục</a>
 </div>
-
 <section class="detail-page" *ngIf="product && !loading">
 
   <div class="container">
@@ -61,15 +38,15 @@
 
       <div class="detail-image" appReveal="left">
 
-        <img
-          [src]="product.image"
-          [alt]="product.name"
-          loading="eager"
-          decoding="async"
-          fetchpriority="high"
-          width="480"
-          height="640"
-        />
+        <app-book-3d-viewer
+          [coverImage]="product.image"
+          [originalCoverImage]="product.originalImage"
+          [title]="product.name"
+          [author]="product.author"
+          [description]="product.description"
+          [productId]="product.id"
+          [category]="product.category"
+        ></app-book-3d-viewer>
 
       </div>
 
@@ -77,9 +54,25 @@
 
       <div class="detail-info" appReveal="right">
 
-        <span class="detail-badge" *ngIf="product.discount > 0">
-          Giảm {{ product.discount }}%
-        </span>
+        <div class="detail-meta-row">
+          <span class="detail-badge" *ngIf="product.discount > 0">
+            Giảm {{ product.discount }}%
+          </span>
+
+          <!-- Dynamic average rating -->
+
+          <div class="rating" *ngIf="reviewCount > 0">
+            <span class="stars-display">
+              {{ displayStars(averageRating) }}
+            </span>
+            <span class="rating-value">{{ averageRating }}</span>
+            <span class="rating-count">({{ reviewCount }} đánh giá)</span>
+          </div>
+
+          <div class="rating no-reviews-yet" *ngIf="reviewCount === 0">
+            Chưa có đánh giá
+          </div>
+        </div>
 
         <h1>
           {{ product.name }}
@@ -88,28 +81,6 @@
         <p class="author">
           Tác giả: {{ product.author }}
         </p>
-
-        <!-- Dynamic average rating -->
-
-        <div class="rating" *ngIf="reviewCount > 0">
-
-          <span class="stars-display">
-            {{ displayStars(averageRating) }}
-          </span>
-
-          <span class="rating-value">
-            {{ averageRating }}
-          </span>
-
-          <span class="rating-count">
-            ({{ reviewCount }} đánh giá)
-          </span>
-
-        </div>
-
-        <div class="rating no-reviews-yet" *ngIf="reviewCount === 0">
-          Chưa có đánh giá
-        </div>
 
         <div class="price-box">
 
@@ -129,71 +100,73 @@
 
         </p>
 
-        <!-- QUANTITY -->
+        <div class="purchase-box">
+          <!-- QUANTITY -->
 
-        <div class="qty-row">
+          <div class="qty-row">
 
-          <span class="qty-label">Số lượng:</span>
+            <span class="qty-label">Số lượng:</span>
 
-          <div class="qty-stepper">
+            <div class="qty-stepper">
 
-            <button
-              type="button"
-              (click)="decreaseQty()"
-              [disabled]="qty <= 1"
-              aria-label="Giảm số lượng"
-            >
-              <lucide-icon name="minus"></lucide-icon>
-            </button>
+              <button
+                type="button"
+                (click)="decreaseQty()"
+                [disabled]="qty <= 1"
+                aria-label="Giảm số lượng"
+              >
+                <lucide-icon name="minus"></lucide-icon>
+              </button>
 
-            <span class="qty-value">{{ qty }}</span>
+              <span class="qty-value">{{ qty }}</span>
 
-            <button
-              type="button"
-              (click)="increaseQty()"
-              [disabled]="qty >= maxQty"
-              aria-label="Tăng số lượng"
-            >
-              <lucide-icon name="plus"></lucide-icon>
-            </button>
+              <button
+                type="button"
+                (click)="increaseQty()"
+                [disabled]="qty >= maxQty"
+                aria-label="Tăng số lượng"
+              >
+                <lucide-icon name="plus"></lucide-icon>
+              </button>
+
+            </div>
+
+            <span class="stock-hint" *ngIf="product.quantity > 0">
+              Còn {{ product.quantity }} cuốn
+            </span>
+
+            <span class="stock-hint out" *ngIf="maxQty === 0">Hết hàng</span>
 
           </div>
 
-          <span class="stock-hint" *ngIf="product.quantity > 0">
-            Còn {{ product.quantity }} cuốn
-          </span>
+          <div #ctaActions class="actions">
 
-          <span class="stock-hint out" *ngIf="maxQty === 0">Hết hàng</span>
+            <button
+              type="button"
+              class="buy-btn"
+              (click)="buyNow()"
+              [disabled]="maxQty === 0"
+            >
+              Mua ngay
+            </button>
 
-        </div>
+            <button type="button" class="cart-btn" (click)="addToCart()" [disabled]="maxQty === 0">
+              Thêm giỏ hàng
+            </button>
 
-        <div #ctaActions class="actions">
+            <button
+              type="button"
+              class="wishlist-btn"
+              [class.active]="isWishlisted"
+              (click)="toggleWishlist()"
+              [title]="isWishlisted ? 'Xóa khỏi danh sách yêu thích' : 'Thêm vào danh sách yêu thích'"
+              [attr.aria-label]="isWishlisted ? 'Xóa khỏi danh sách yêu thích' : 'Thêm vào danh sách yêu thích'"
+            >
+              <lucide-icon name="heart" [attr.fill]="isWishlisted ? 'currentColor' : 'none'"></lucide-icon>
+              {{ isWishlisted ? 'Đã yêu thích' : 'Yêu thích' }}
+            </button>
 
-         <button
-            type="button"
-            class="buy-btn"
-            (click)="buyNow()"
-            [disabled]="maxQty === 0"
-          >
-            Mua ngay
-          </button>
-
-         <button type="button" class="cart-btn" (click)="addToCart()" [disabled]="maxQty === 0">
-            Thêm giỏ hàng
-          </button>
-
-          <button
-            type="button"
-            class="wishlist-btn"
-            [class.active]="isWishlisted"
-            (click)="toggleWishlist()"
-            [title]="isWishlisted ? 'Xóa khỏi danh sách yêu thích' : 'Thêm vào danh sách yêu thích'"
-            [attr.aria-label]="isWishlisted ? 'Xóa khỏi danh sách yêu thích' : 'Thêm vào danh sách yêu thích'"
-          >
-            <lucide-icon name="heart" [attr.fill]="isWishlisted ? 'currentColor' : 'none'"></lucide-icon>
-            {{ isWishlisted ? 'Đã yêu thích' : 'Yêu thích' }}
-          </button>
-
+          </div>
         </div>
 
       </div>

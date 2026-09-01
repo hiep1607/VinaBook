@@ -40,7 +40,6 @@ export interface HomepageConfig {
     buttonRoute: string;
   };
 }
-
 export interface ProductHomepageSection {
   visible: boolean;
   overline: string;

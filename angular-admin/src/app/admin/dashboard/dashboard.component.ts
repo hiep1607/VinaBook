@@ -1,34 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { ToastrService } from 'ngx-toastr';
-import { ChatMessage } from '../../models/chat-message';
-import { Customer } from '../../models/customer';
-import { Order } from '../../models/order';
-import { Statistical } from '../../models/statistical';
+import { ChatMessage } from '../../common/ChatMessage';
+import { Customer } from '../../common/Customer';
+import { Order } from '../../common/Order';
+import { Statistical } from '../../common/Statistical';
 import { CustomerService } from '../../services/customer.service';
 import { OrderService } from '../../services/order.service';
 import { PageService } from '../../services/page.service';
 import { StatisticalService } from '../../services/statistical.service';
 import { environment } from 'src/environments/environment';
-import { SessionService } from '../../services/session.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
 
-  orderHandle = 0;
-  customerLength = 0;
-  orders: Order[] = [];
-  customers: Customer[] = [];
+  orderHandle!: number;
+  customerLength!: number;
+  orders!: Order[];
+  customers!: Customer[];
 
-  statistical: Statistical[] = [];
+  statistical!: Statistical[];
   labels: string[] = [];
   data: number[] = [];
   year: number = 2021;
   myChartBar !: Chart;
-  countYears: number[] = [];
+  countYears!: number[];
 
   revenueYearNow!: number;
   revenueMonthNow!: number;
@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit {
   webSocket!: WebSocket;
   chatMessages: ChatMessage[] = [];
 
-  constructor(private pageService: PageService, private toastr: ToastrService, private orderService: OrderService, private customerService: CustomerService, private statisticalService: StatisticalService, private sessionService: SessionService) { }
+  constructor(private pageService: PageService, private toastr: ToastrService, private orderService: OrderService, private customerService: CustomerService, private statisticalService: StatisticalService) { }
 
   ngOnInit(): void {
     this.openWebSocket();
@@ -112,7 +112,7 @@ export class DashboardComponent implements OnInit {
           this.orderHandle++;
         }
       }
-    }, () => {
+    }, error => {
       this.toastr.error('Lỗi server', 'Hệ thống');
     })
   }
@@ -121,7 +121,7 @@ export class DashboardComponent implements OnInit {
     this.customerService.getAll().subscribe(data => {
       this.customers = data as Customer[];
       this.customerLength = this.customers.length;
-    }, () => {
+    }, error => {
       this.toastr.error('Lỗi server', 'Hệ thống');
     })
   }
@@ -192,18 +192,23 @@ export class DashboardComponent implements OnInit {
   }
 
   openWebSocket() {
-    const token = this.sessionService.getToken() || '';
-    this.webSocket = new WebSocket(environment.wsUrl + '?token=' + encodeURIComponent(token));
+    this.webSocket = new WebSocket(environment.wsUrl);
 
-    this.webSocket.onmessage = () => {
+    this.webSocket.onopen = (event) => {
+      // console.log('Open: ', event);
+    };
+
+    this.webSocket.onmessage = (event) => {
       this.getAllOrder();
+    };
+
+    this.webSocket.onclose = (event) => {
+      // console.log('Close: ', event);
     };
   }
 
   closeWebSocket() {
-    if (this.webSocket && this.webSocket.readyState < WebSocket.CLOSING) {
-      this.webSocket.close();
-    }
+    this.webSocket.close();
   }
 
 }

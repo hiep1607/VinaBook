@@ -12,6 +12,7 @@ import { HomepageService } from 'src/app/services/homepage.service';
 import { RecentlyViewedService } from 'src/app/services/recently-viewed.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { DEFAULT_HOMEPAGE_CONFIG, HomepageConfig } from 'src/app/models/homepage-config';
+import { MotionService } from 'src/app/services/motion.service';
 
 @Component({
   selector: 'app-home',
@@ -46,7 +47,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private homepageService: HomepageService,
     private recentlyViewed: RecentlyViewedService,
     private notification: NotificationService,
-    private router: Router
+    private router: Router,
+    private motion: MotionService
   ) {}
 
   ngOnInit(): void {
@@ -182,8 +184,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.router.navigate(['/category', categoryId]);
   }
 
-  goToProduct(id: number): void {
-    this.router.navigate(['/product', id]);
+  async goToProduct(id: number, source?: Event): Promise<void> {
+    const cover = source?.currentTarget instanceof HTMLImageElement
+      ? source.currentTarget
+      : null;
+    this.stopHeroRotation();
+    const readyToNavigate = await this.motion.prepareBookRouteTransition(cover);
+    if (readyToNavigate) {
+      await this.router.navigate(['/product', id]);
+    }
   }
 
   @ViewChild('productSlider')

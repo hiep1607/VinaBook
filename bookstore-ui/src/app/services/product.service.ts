@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { CoverImageService } from './cover-image.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,10 @@ export class ProductService {
   /** Catalog từ backend, map về shape storefront, cache 1 lần cho cả app */
   private products$!: Observable<any[]>;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(
+    private httpClient: HttpClient,
+    private coverImages: CoverImageService
+  ) { }
 
   /**
    * Chuyển product backend (productId, price gốc + discount %, category object)
@@ -33,7 +37,8 @@ export class ProductService {
       price: price,
       oldPrice: oldPrice,
       discount: p.discount,
-      image: p.image,
+      image: this.coverImages.normalize(p.image),
+      originalImage: p.image,
       description: p.description,
       quantity: p.quantity,
       sold: p.sold,

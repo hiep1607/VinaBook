@@ -20,13 +20,12 @@ yarn-error.log*
 # ---- IDE ----
 .idea/
 .vscode/
+.jpb/
+**/.jpb/
 *.iml
 
-# IntelliJ/JPA Buddy metadata
-**/.jpb/
-
-# IDE-generated manifest placed incorrectly in Java source
-/VinaBookStore/src/main/java/META-INF/MANIFEST.MF
+# ---- IDE-generated Java metadata ----
+**/src/main/java/META-INF/MANIFEST.MF
 
 # ---- Local assistant / agent files ----
 .claude/
@@ -55,6 +54,3 @@ Thumbs.db
 
 # ---- Bản copy lồng nhau (không đưa vào repo) ----
 /book/
-
-# ---- Runtime logs ----
-.run-logs/

@@ -14,7 +14,9 @@
 
 <div
   class="cart-item"
-  *ngFor="let item of cartItems"
+  *ngFor="let item of cartItems; let i = index"
+  appReveal="left"
+  [revealDelay]="(i % 5) * 55"
 >
 
   <input
@@ -58,7 +60,7 @@
 
     <button
       type="button"
-      (click)="decrease(item)"
+      (click)="decrease(item, $event)"
       [attr.aria-label]="'Giảm số lượng ' + item.name"
     >
       -
@@ -70,7 +72,7 @@
 
     <button
       type="button"
-      (click)="increase(item)"
+      (click)="increase(item, $event)"
       [attr.aria-label]="'Tăng số lượng ' + item.name"
     >
       +
@@ -80,7 +82,7 @@
 <button
   type="button"
   class="remove-btn"
-  (click)="removeItem(item)"
+  (click)="removeItem(item, $event)"
   [attr.aria-label]="'Xóa ' + item.name + ' khỏi giỏ hàng'"
 >
   Xóa
@@ -95,7 +97,7 @@
       </div>
       <!-- RIGHT -->
 
-      <div class="summary-box" *ngIf="cartItems.length > 0">
+      <div class="summary-box" *ngIf="cartItems.length > 0" appReveal="right">
 
         <h3>
           Tóm tắt đơn hàng

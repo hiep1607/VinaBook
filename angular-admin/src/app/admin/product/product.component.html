@@ -11,7 +11,7 @@
             <mat-form-field>
                 <mat-label>Tìm kiếm</mat-label>
                 <input matInput type="text" (keyup)="search($event)" />
-            </mat-form-field>
+            </mat-form-field>            
             <button mat-raised-button color="primary" class="ml-3" style="float: right;" (click)="exporter.exportTable('csv', {fileName:'Danh sách sản phẩm'})">Xuất Excel</button>
             <app-add-product style="float: right;" (saveFinish)="finish()"></app-add-product>
 

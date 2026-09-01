@@ -1,7 +1,11 @@
-<div class="theme-panel" *ngIf="open" role="dialog" aria-label="Chọn phong cách giao diện">
+<div #themeWash class="theme-wash" aria-hidden="true"></div>
+
+<div #themePanel class="theme-panel" *ngIf="open" role="dialog" aria-label="Chọn phong cách giao diện">
   <div class="theme-panel-head">
     <strong>Phong cách</strong>
-    <button type="button" class="theme-close" (click)="toggle()" aria-label="Đóng">✕</button>
+    <button type="button" class="theme-close" (click)="toggle()" aria-label="Đóng">
+      <lucide-icon name="x"></lucide-icon>
+    </button>
   </div>
 
   <button
@@ -9,7 +13,7 @@
     class="theme-option"
     *ngFor="let theme of themes"
     [class.active]="themeService.current === theme.id"
-    (click)="pick(theme.id)"
+    (click)="pick(theme)"
   >
     <span class="theme-swatch" [style.background]="theme.bg" aria-hidden="true">
       <span class="dot" [style.background]="theme.primary"></span>

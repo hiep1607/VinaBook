@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
 
 import { AuthService } from './auth.service';
 
@@ -9,10 +8,6 @@ export class CartService {
   buyNowItem: any = null;
   items: any[] = [];
 
-  /** Phát ra mỗi khi giỏ đổi (thêm/xóa/cập nhật) — header dùng để bump badge. */
-  private changeSource = new Subject<void>();
-  readonly changes$ = this.changeSource.asObservable();
-
   private loadedKey = '';
 
   constructor(private authService: AuthService) {}
@@ -20,7 +15,6 @@ export class CartService {
   saveCart(): void {
     this.ensureScope();
     localStorage.setItem(this.loadedKey, JSON.stringify(this.items));
-    this.changeSource.next();
   }
 
   addToCart(product: any, qty: number = 1): void {

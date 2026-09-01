@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output, TemplateRef } from '@an
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { Category } from '../../models/category';
-import { Product } from '../../models/product';
+import { Category } from '../../common/Category';
+import { Product } from '../../common/Product';
 import { CategoryService } from '../../services/category.service';
 import { ProductService } from '../../services/product.service';
 import { UploadService } from '../../services/upload.service';
@@ -58,7 +58,7 @@ export class EditProductComponent implements OnInit {
       this.product.category = new Category(this.postForm.value.categoryId, '');
       this.product.image = this.image;
 
-      this.productService.update(this.product, this.id).subscribe(() => {
+      this.productService.update(this.product, this.id).subscribe(data => {
         this.toastr.success('Cập nhật thành công!', 'Hệ thống');
         this.editFinish.emit('done');
       })
@@ -85,7 +85,7 @@ export class EditProductComponent implements OnInit {
         'sold': new FormControl(this.product.sold),
       })
       this.image = this.product.image;
-    }, () => {
+    }, error => {
       this.toastr.error('Lỗi truy xuất dữ liệu! ', 'Hệ thống');
     })
   }
@@ -93,7 +93,7 @@ export class EditProductComponent implements OnInit {
   getCategories() {
     this.categoryService.getAll().subscribe(data => {
       this.categories = data as Category[];
-    }, () => {
+    }, error => {
       this.toastr.error('Lỗi truy xuất dữ liệu, bấm f5!', 'Hệ thống');
     })
   }

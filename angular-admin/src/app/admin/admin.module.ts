@@ -34,7 +34,7 @@ import { EditCustomerComponent } from './edit-customer/edit-customer.component';
 import { AuthGuard } from '../guard/auth.guard';
 import { OrderModule } from 'ngx-order-pipe';
 import { StatisticalCategoryComponent } from './statistical-category/statistical-category.component';
-import { BestsellerComponent } from './bestseller/bestseller.component';
+import { SoldestComponent } from './soldest/soldest.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { HomepageComponent } from './homepage/homepage.component';
@@ -52,16 +52,7 @@ const routes: Routes = [
       { path: 'rate', component: RateComponent, canActivate: [AuthGuard] },
       { path: 'inventory', component: InventoryComponent, canActivate: [AuthGuard] },
       { path: 'statistical-category', component: StatisticalCategoryComponent, canActivate: [AuthGuard] },
-      {
-        path: 'bestseller',
-        component: BestsellerComponent,
-        canActivate: [AuthGuard]
-      },
-      {
-        path: 'soldest',
-        redirectTo: 'bestseller',
-        pathMatch: 'full'
-      },
+      { path: 'soldest', component: SoldestComponent, canActivate: [AuthGuard] },
       { path: 'order', component: OrderComponent, canActivate: [AuthGuard] }
     ]
   }
@@ -90,7 +81,7 @@ const routes: Routes = [
     EditProductComponent,
     EditCustomerComponent,
     StatisticalCategoryComponent,
-    BestsellerComponent,
+    SoldestComponent,
     HomepageComponent
   ],
   imports: [

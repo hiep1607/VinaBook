@@ -1,4 +1,6 @@
+import { DOCUMENT } from '@angular/common';
 import {
+  AfterViewChecked,
   Component,
   ElementRef,
   HostListener,
@@ -6,11 +8,9 @@ import {
   NgZone,
   OnDestroy,
   OnInit,
-  ViewChild,
-  AfterViewChecked
+  ViewChild
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { DOCUMENT } from '@angular/common';
 
 import {
   ActivatedRoute,
@@ -24,10 +24,10 @@ import { ReviewService } from 'src/app/services/review.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
-import { FlyToCartService } from 'src/app/services/fly-to-cart.service';
 import { RecentlyViewedService } from 'src/app/services/recently-viewed.service';
+import { MotionService } from 'src/app/services/motion.service';
+import { Book3dViewerComponent } from 'src/app/components/book-3d-viewer/book-3d-viewer.component';
 
-/** Sticky buy bar chỉ dành cho mobile/tablet nhỏ (khớp media query trong SCSS). */
 const STICKY_BAR_MAX_WIDTH = 768;
 
 @Component({
@@ -40,6 +40,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
   @ViewChild('relatedSlider') relatedSlider?: ElementRef<HTMLElement>;
   @ViewChild('ctaActions') ctaActions?: ElementRef<HTMLElement>;
   @ViewChild('stickyBar') stickyBarEl?: ElementRef<HTMLElement>;
+  @ViewChild(Book3dViewerComponent) bookViewer?: Book3dViewerComponent;
 
   product: any;
 
@@ -54,12 +55,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
   // Số lượng mua (stepper)
   qty = 1;
 
-  /** Sticky buy bar đang hiển thị (mobile + CTA gốc rời viewport). */
   stickyBarVisible = false;
-
-  /** Ghi nhớ trạng thái nhìn thấy gần nhất của CTA gốc để tính lại khi resize. */
   private originalCtaVisible = true;
-
   private stickyObserver?: IntersectionObserver;
 
   // Phân trang đánh giá
@@ -84,10 +81,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
     private notification: NotificationService,
     public wishlistService: WishlistService,
     private productService: ProductService,
-    private elementRef: ElementRef,
-    private flyToCart: FlyToCartService,
     private zone: NgZone,
     private recentlyViewed: RecentlyViewedService,
+    private motion: MotionService,
     @Inject(DOCUMENT) private doc: Document
   ) {}
 
@@ -117,12 +113,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
         this.loadUserReview();
         this.loadRelatedBooks();
 
-        // P2: ghi nhận sách đã xem — chỉ sau khi product tải thành công.
-        // Component tái sử dụng giữa các route /product/:id nên ID mới
-        // được ghi nhận qua chính subscription paramMap hiện có (không trùng).
         this.recentlyViewed.add(id);
-
-        // DOM đã render xong CTA gốc -> gắn IntersectionObserver cho sticky bar.
         setTimeout(() => this.setupStickyObserver());
 
       }, () => {
@@ -149,9 +140,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
     this.teardownStickyBar();
   }
 
-  // ---- sticky buy bar (mobile) ----
-
-  /** Resize/đổi hướng: tính lại trạng thái bar từ trạng thái CTA gốc đã biết. */
   @HostListener('window:resize')
   onViewportResize(): void {
     if (this.stickyObserver) {
@@ -159,10 +147,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
     }
   }
 
-  /**
-   * Quan sát cụm CTA gốc bằng IntersectionObserver (không polling).
-   * Chỉ tạo một lần; khi đổi sang sản phẩm khác, target không đổi nên tái sử dụng.
-   */
   private setupStickyObserver(): void {
     const target = this.ctaActions?.nativeElement;
 
@@ -172,7 +156,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
 
     this.stickyObserver = new IntersectionObserver(entries => {
       const visible = entries.some(entry => entry.isIntersecting);
-      // Callback của IO có thể chạy ngoài zone -> chủ động chạy lại CD.
       this.zone.run(() => this.applyStickyState(visible));
     }, { threshold: 0 });
 
@@ -180,10 +163,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
     this.applyStickyState(true);
   }
 
-  /**
-   * Bar chỉ hiện khi: viewport ≤768px + CTA gốc đã rời viewport + có sản phẩm.
-   * CTA gốc quay lại thì bar ẩn ngay.
-   */
   applyStickyState(originalCtaVisible: boolean): void {
     this.originalCtaVisible = originalCtaVisible;
 
@@ -192,7 +171,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
 
     if (next !== this.stickyBarVisible) {
       this.stickyBarVisible = next;
-      // Chừa khoảng trống cuối trang để bar không đè footer/review form.
       document.body.classList.toggle('has-sticky-buy-bar', next);
     }
   }
@@ -204,11 +182,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
     this.stickyBarVisible = false;
   }
 
-  /**
-   * Bar phải nằm trực tiếp dưới <body>: host component (và các wrapper route)
-   * mang transform từ hiệu ứng chuyển cảnh, khiến position:fixed bị "kẹt"
-   * trong ngữ cảnh đó và cuộn theo trang. Portal ra body là cách chắc chắn.
-   */
   ngAfterViewChecked(): void {
     const el = this.stickyBarEl?.nativeElement;
     if (el && this.stickyBarVisible && el.parentElement !== this.doc.body) {
@@ -450,9 +423,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
     }
 
     this.cartService.addToCart(this.product, this.qty);
-    this.flyToCart.fly(
-      (this.elementRef.nativeElement as HTMLElement).querySelector<HTMLImageElement>('.detail-image img')
-    );
+    this.motion.addToCart(this.bookViewer?.getMotionSource());
     this.notification.success('Đã thêm vào giỏ hàng');
 
   }

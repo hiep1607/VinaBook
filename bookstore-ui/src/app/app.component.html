@@ -2,7 +2,11 @@
 
 <app-toast></app-toast>
 
-<main class="route-stage">
+<div #routeCurtain class="route-curtain" aria-hidden="true">
+  <span>VinaBook</span>
+</div>
+
+<main #routeStage class="route-stage">
   <router-outlet></router-outlet>
 </main>
 

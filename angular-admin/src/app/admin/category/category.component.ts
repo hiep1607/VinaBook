@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { Category } from '../../models/category';
+import { Category } from '../../common/Category';
 import { CategoryService } from '../../services/category.service';
 import { PageService } from '../../services/page.service';
 import Swal from 'sweetalert2';
@@ -55,10 +55,10 @@ export class CategoryComponent implements OnInit {
       cancelButtonText: 'Không'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.categoryService.delete(id).subscribe(() => {
+        this.categoryService.delete(id).subscribe(data => {
           this.ngOnInit();
           this.toastr.success('Thông báo xoá thành công!', 'Hệ thống');
-        }, () => {
+        }, error => {
           this.toastr.error('Thông báo xoá thất bại, đã xảy ra lỗi!', 'Hệ thống');
         })
       }

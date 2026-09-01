@@ -487,7 +487,7 @@ export class ChatbotService {
     }
 
     // 4.4) Tra theo tác giả
-    const byAuthor = this.matchAuthor(q);
+    const byAuthor = this.matchAuthor(raw, q);
     if (byAuthor.length > 0) {
       this.remember({ lastProducts: byAuthor.slice(0, 4), lastIntent: 'author', offset: 4 });
       return this.showProducts(
@@ -627,7 +627,7 @@ export class ChatbotService {
   }
 
   /** Tra sách theo tác giả (khớp trên trường author, bỏ dấu). */
-  private matchAuthor(q: string): any[] {
+  private matchAuthor(raw: string, q: string): any[] {
     if (!this.hasAny(q, ['tac gia', 'cua ', 'viet boi', 'sang tac', 'author'])) {
       return [];
     }

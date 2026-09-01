@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ToastrService } from 'ngx-toastr';
-import { Customer } from '../../models/customer';
+import { Customer } from '../../common/Customer';
 import { CustomerService } from '../../services/customer.service';
 import { PageService } from '../../services/page.service';
 import { SessionService } from '../../services/session.service';
@@ -55,10 +55,10 @@ export class CustomerComponent implements OnInit {
       cancelButtonText: 'Không'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.customerService.delete(id).subscribe(() => {
+        this.customerService.delete(id).subscribe(data => {
           this.ngOnInit();
           this.toastr.success('Thông báo xoá thành công!', 'Hệ thống');
-        }, () => {
+        }, error => {
           this.toastr.error('Thông báo xoá thất bại, đã xảy ra lỗi!', 'Hệ thống');
         })
       }

@@ -142,7 +142,7 @@ export class AuthService {
           const body = this.toUserEntity();
           body.password = newPwd; // khác hash đang lưu → backend sẽ encode
           return this.http.put<any>(this.url + '/' + this.currentUser.userId, body).pipe(
-            map(() => {
+            map(updated => {
               this.persist();
               return { success: true };
             })
@@ -154,28 +154,6 @@ export class AuthService {
         }))
       );
 
-  }
-
-  // ===== QUÊN MẬT KHẨU =====
-
-  /**
-   * Yêu cầu backend gửi email chứa link đặt lại mật khẩu
-   * (POST /api/auth/send-mail-forgot-password-token, permitAll).
-   * Backend luôn trả 200 bất kể email có tồn tại hay không (chống dò email),
-   * nên UI cũng phải hiển thị thông báo trung tính như nhau.
-   * Việc đặt mật khẩu mới diễn ra trên trang /forgot-password/{token}
-   * do backend phục vụ từ link trong email — không qua Angular.
-   */
-  requestPasswordReset(email: string): Observable<boolean> {
-    return this.http
-      .post(this.url + '/send-mail-forgot-password-token', email, {
-        headers: { 'Content-Type': 'text/plain' },
-        responseType: 'text'
-      })
-      .pipe(
-        map(() => true),
-        catchError(() => of(false))
-      );
   }
 
   // ===== PHIÊN =====

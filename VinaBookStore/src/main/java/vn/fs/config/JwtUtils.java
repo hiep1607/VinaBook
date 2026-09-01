@@ -6,12 +6,14 @@
 */
 package vn.fs.config;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
@@ -34,9 +36,6 @@ public class JwtUtils {
 	@Value("${bezkoder.app.jwtExpirationMs}")
 	private int jwtExpirationMs;
 
-	@Value("${bezkoder.app.passwordResetExpirationMs:900000}")
-	private int passwordResetExpirationMs;
-
 	public String generateJwtToken(Authentication authentication) {
 
 		UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
@@ -50,31 +49,13 @@ public class JwtUtils {
 	}
 
 	public String doGenerateToken(String email) {
-		return generatePasswordResetToken(email);
-	}
+		Claims claims = Jwts.claims().setSubject(email);
+		claims.put("scopes", Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN")));
 
-	public String generatePasswordResetToken(String email) {
-		long now = System.currentTimeMillis();
-		return Jwts.builder()
-				.setSubject(email)
-				.setIssuer("vinabook-password-reset")
-				.setIssuedAt(new Date(now))
-				.setExpiration(new Date(now + passwordResetExpirationMs))
-				.claim("purpose", "password-reset")
-				.signWith(SignatureAlgorithm.HS512, jwtSecrect)
-				.compact();
-	}
-
-	public boolean validatePasswordResetToken(String token, String email) {
-		try {
-			Claims claims = Jwts.parser().setSigningKey(jwtSecrect).parseClaimsJws(token).getBody();
-			return email != null
-					&& email.equalsIgnoreCase(claims.getSubject())
-					&& "vinabook-password-reset".equals(claims.getIssuer())
-					&& "password-reset".equals(claims.get("purpose", String.class));
-		} catch (Exception ex) {
-			return false;
-		}
+		return Jwts.builder().setClaims(claims).setIssuer("http://devglan.com")
+				.setIssuedAt(new Date(System.currentTimeMillis()))
+				.setExpiration(new Date(System.currentTimeMillis() + 5 * 60 * 60 * 1000))
+				.signWith(SignatureAlgorithm.HS256, jwtSecrect).compact();
 	}
 
 	public String getEmailFromJwtToken(String token) {

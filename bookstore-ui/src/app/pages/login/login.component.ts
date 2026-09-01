@@ -20,12 +20,6 @@ export class LoginComponent {
 
   errorMessage = '';
 
-  /** Trạng thái hiện/ẩn mật khẩu trên ô nhập. */
-  showPassword = false;
-
-  /** Chống double-submit khi đang chờ backend. */
-  loggingIn = false;
-
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -33,24 +27,13 @@ export class LoginComponent {
     private route: ActivatedRoute
   ) {}
 
-  toggleShowPassword(): void {
-    this.showPassword = !this.showPassword;
-  }
-
   login() {
 
-    if (this.loggingIn) {
-      return;
-    }
-
     this.errorMessage = '';
-    this.loggingIn = true;
 
     this.authService
       .login(this.email, this.password)
       .subscribe(success => {
-
-        this.loggingIn = false;
 
         if (success) {
 

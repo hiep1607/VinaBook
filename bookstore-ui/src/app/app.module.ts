@@ -23,9 +23,7 @@ import {
   MessageCircle,
   Send,
   BookOpen,
-  Trash2,
-  Eye,
-  EyeOff
+  Trash2
 } from 'lucide-angular';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -37,14 +35,12 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 import { CartComponent } from './pages/cart/cart.component';
 import { LoginComponent } from './pages/login/login.component';
-import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { OrdersComponent } from './pages/orders/orders.component';
-import { OrderDetailComponent } from './pages/order-detail/order-detail.component';
 import { SearchComponent } from './pages/search/search.component';
 import { ToastComponent } from './shared/toast/toast.component';
 import { WishlistComponent } from './pages/wishlist/wishlist.component';
@@ -61,6 +57,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ThemeSwitcherComponent } from './components/theme-switcher/theme-switcher.component';
 import { PaymentResultComponent } from './pages/payment-result/payment-result.component';
+import { Book3dViewerComponent } from './components/book-3d-viewer/book-3d-viewer.component';
 
 @NgModule({
   declarations: [
@@ -69,14 +66,12 @@ import { PaymentResultComponent } from './pages/payment-result/payment-result.co
     ProductDetailComponent,
     CartComponent,
     LoginComponent,
-    ForgotPasswordComponent,
     RegisterComponent,
     CheckoutComponent,
     HeaderComponent,
     ProductCardComponent,
     ProfileComponent,
     OrdersComponent,
-    OrderDetailComponent,
     SearchComponent,
     ToastComponent,
     WishlistComponent,
@@ -90,7 +85,8 @@ import { PaymentResultComponent } from './pages/payment-result/payment-result.co
     FooterComponent,
     NotFoundComponent,
     ThemeSwitcherComponent,
-    PaymentResultComponent
+    PaymentResultComponent,
+    Book3dViewerComponent
   ],
 
   imports: [
@@ -123,9 +119,7 @@ import { PaymentResultComponent } from './pages/payment-result/payment-result.co
       MessageCircle,
       Send,
       BookOpen,
-      Trash2,
-      Eye,
-      EyeOff
+      Trash2
     }),
   ],
 
