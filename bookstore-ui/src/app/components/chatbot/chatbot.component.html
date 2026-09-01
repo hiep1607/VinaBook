@@ -51,7 +51,7 @@
 
       <div class="message-content">
         <div class="bubble" [class.user]="msg.from === 'user'">
-          <p class="bubble-text">{{ msg.text }}</p>
+          <p class="bubble-text">{{ msg.text }}<span class="stream-caret" *ngIf="msg.streaming" aria-hidden="true"></span></p>
         </div>
 
         <span class="answer-mode" *ngIf="msg.from === 'bot' && msg.fallback">
@@ -59,12 +59,7 @@
         </span>
 
         <div class="bot-products" *ngIf="msg.products?.length">
-          <button
-            type="button"
-            class="bot-product"
-            *ngFor="let p of msg.products"
-            (click)="openProduct(p)"
-          >
+          <article class="bot-product" *ngFor="let p of msg.products">
             <span class="product-cover">
               <img [src]="p.image" [alt]="'Bìa sách ' + p.name" loading="lazy" />
             </span>
@@ -76,17 +71,37 @@
                 <small *ngIf="p.discount > 0">Giảm {{ p.discount }}%</small>
               </span>
             </span>
+            <span class="bp-actions">
+              <button type="button" (click)="openProduct(p)">Xem sách</button>
+              <button
+                type="button"
+                class="primary"
+                *ngIf="actionFor(msg, p.id, 'ADD_TO_CART') as addAction"
+                [disabled]="addedProductIds.has(p.id)"
+                (click)="runAction(addAction, msg)"
+              >{{ addedProductIds.has(p.id) ? 'Đã thêm' : 'Thêm giỏ' }}</button>
+            </span>
+          </article>
+        </div>
+
+        <div class="inline-confirm" *ngIf="pendingAction?.message === msg">
+          <span>Thêm “{{ pendingAction?.product?.name }}” vào giỏ hàng?</span>
+          <div>
+            <button type="button" class="primary" (click)="confirmAddToCart()">Đồng ý</button>
+            <button type="button" (click)="cancelAction()">Hủy</button>
+          </div>
+        </div>
+
+        <div class="message-actions" *ngIf="genericActions(msg).length">
+          <button type="button" *ngFor="let action of genericActions(msg)" (click)="runAction(action, msg)">
+            {{ action.label }}
           </button>
         </div>
 
-        <div class="bot-payments" *ngIf="msg.payments?.length">
-          <div class="bot-payment" *ngFor="let pm of msg.payments">
-            <span class="pm-icon">{{ pm.icon }}</span>
-            <span class="pm-info">
-              <span class="pm-label">{{ pm.label }}</span>
-              <span class="pm-desc">{{ pm.description }}</span>
-            </span>
-          </div>
+        <div class="answer-feedback" *ngIf="msg.from === 'bot' && msg.messageId && !msg.streaming">
+          <span>{{ msg.feedback ? 'Đã ghi nhận' : 'Câu trả lời hữu ích?' }}</span>
+          <button type="button" [class.selected]="msg.feedback === 'positive'" [disabled]="!!msg.feedback" (click)="sendFeedback(msg, 'positive')" aria-label="Câu trả lời hữu ích">👍</button>
+          <button type="button" [class.selected]="msg.feedback === 'negative'" [disabled]="!!msg.feedback" (click)="sendFeedback(msg, 'negative')" aria-label="Câu trả lời chưa hữu ích">👎</button>
         </div>
 
         <div class="bot-chips" *ngIf="msg.chips?.length && isLast && !typing">
@@ -97,11 +112,16 @@
       </div>
     </div>
 
-    <div class="msg-row" *ngIf="typing" aria-label="Trợ lý đang trả lời">
+    <div class="msg-row" *ngIf="showTypingDots" aria-label="Trợ lý đang trả lời">
       <div class="assistant-mark" aria-hidden="true">
         <lucide-icon name="book-open" [size]="15"></lucide-icon>
       </div>
       <div class="bubble typing"><span></span><span></span><span></span></div>
+    </div>
+
+    <div class="chat-error" *ngIf="errorText" role="alert">
+      <span>{{ errorText }}</span>
+      <button type="button" (click)="retry()">Thử lại</button>
     </div>
   </div>
 

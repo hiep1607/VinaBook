@@ -71,6 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/api/homepage").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/chat/status").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/chat").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/chat/stream", "/api/chat/feedback").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/payments/methods", "/api/payments/vnpay/**",
 						"/api/payments/momo/return").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/payments/momo/ipn").permitAll()
@@ -110,6 +111,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.DELETE, "/api/categories/*").hasRole("ADMIN")
 				.antMatchers(HttpMethod.DELETE, "/api/rates/*").hasRole("ADMIN")
 				.antMatchers(HttpMethod.PUT, "/api/homepage").hasRole("ADMIN")
+				.antMatchers(HttpMethod.GET, "/api/chat/admin/**").hasRole("ADMIN")
 				.antMatchers("/api/statistical/**").hasRole("ADMIN")
 				.antMatchers("/api/notification/**").hasRole("ADMIN")
 				.antMatchers(HttpMethod.GET, "/api/orders", "/api/orders/*").hasRole("ADMIN")

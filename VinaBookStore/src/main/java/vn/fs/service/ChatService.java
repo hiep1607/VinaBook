@@ -1,72 +1,116 @@
 package vn.fs.service;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import vn.fs.config.CurrentUserAccess;
+import vn.fs.dto.chat.ChatActionDto;
+import vn.fs.dto.chat.ChatIntent;
 import vn.fs.dto.chat.ChatProductDto;
 import vn.fs.dto.chat.ChatRequestDto;
 import vn.fs.dto.chat.ChatResponseDto;
+import vn.fs.dto.chat.ChatSearchCriteriaDto;
 import vn.fs.dto.chat.ChatStatusDto;
+import vn.fs.dto.chat.ChatTurnDto;
 import vn.fs.entity.Product;
 import vn.fs.repository.ProductRepository;
 
 @Service
 public class ChatService {
-	private static final Logger LOGGER = LoggerFactory.getLogger(ChatService.class);
-
-	private static final Set<String> STOP_WORDS = new HashSet<>(Arrays.asList(
-			"toi", "minh", "ban", "sach", "cuon", "quyen", "cho", "voi", "mot", "nhung",
-			"cua", "la", "co", "khong", "nao", "gi", "ve", "tim", "muon", "can", "hay",
-			"giup", "vai", "chu", "de", "phu", "hop", "danh", "goi", "y"));
-
 	private final ProductRepository products;
 	private final AiGateway ai;
+	private final ChatIntentService intents;
+	private final ChatProductSearchService search;
+	private final ChatPolicyService policies;
+	private final ChatOrderSupportService orderSupport;
+	private final ChatAnalyticsService analytics;
+	private final CurrentUserAccess access;
 
-	public ChatService(ProductRepository products, AiGateway ai) {
+	public ChatService(ProductRepository products, AiGateway ai, ChatIntentService intents,
+			ChatProductSearchService search, ChatPolicyService policies,
+			ChatOrderSupportService orderSupport, ChatAnalyticsService analytics,
+			CurrentUserAccess access) {
 		this.products = products;
 		this.ai = ai;
+		this.intents = intents;
+		this.search = search;
+		this.policies = policies;
+		this.orderSupport = orderSupport;
+		this.analytics = analytics;
+		this.access = access;
 	}
 
 	@Transactional(readOnly = true)
 	public ChatResponseDto reply(ChatRequestDto request) {
+		long started = System.currentTimeMillis();
 		String question = request.getMessage().trim();
 		List<Product> catalog = products.findByStatusTrue();
-		List<Product> ranked = rankProducts(question, catalog);
-		List<Product> suggestedProducts = selectSuggestedProducts(question, catalog, ranked);
-		List<ChatProductDto> suggestions = suggestedProducts.stream()
-				.map(this::toDto)
-				.collect(Collectors.toList());
-		List<Product> promptCatalog = suggestions.isEmpty() ? List.of() : suggestedProducts;
+		ChatIntent intent = intents.classify(question);
+		ChatSearchCriteriaDto criteria = intents.criteria(question, catalog);
+		String normalized = intents.normalize(question);
+		if (isAlternativeRequest(normalized)) {
+			criteria = followUpCriteria(criteria, request, catalog);
+		}
+		List<Product> selected = search.search(question, intent, criteria, catalog);
+		List<Product> context = contextProducts(request, catalog);
+		if (intent == ChatIntent.COMPARE_BOOKS && selected.size() < 2 && context.size() >= 2) {
+			selected = context.stream().limit(3).collect(Collectors.toList());
+		}
+		if (intent == ChatIntent.DISCOVER_BOOKS && isAlternativeRequest(normalized) && !context.isEmpty()) {
+			List<Long> seen = context.stream().map(Product::getProductId).collect(Collectors.toList());
+			selected = selected.stream().filter(product -> !seen.contains(product.getProductId()))
+					.limit(4).collect(Collectors.toList());
+		}
+		if (intent == ChatIntent.UNKNOWN) {
+			List<Product> named = search.search(question, ChatIntent.PRODUCT_INFO, criteria, catalog);
+			if (!named.isEmpty()) {
+				intent = ChatIntent.PRODUCT_INFO;
+				selected = named;
+			}
+		}
+		if (isCategoryList(question)) selected = Collections.emptyList();
 
+		List<ChatProductDto> productDtos = selected.stream().map(this::toDto).collect(Collectors.toList());
+		boolean deterministic = intent == ChatIntent.POLICY || intent == ChatIntent.ORDER_SUPPORT;
 		boolean fallback = !ai.isConfigured();
+		String provider = fallback || deterministic ? "local" : ai.provider();
+		String model = fallback || deterministic ? "" : ai.model();
 		String answer;
-		if (ai.isConfigured()) {
+
+		if (intent == ChatIntent.ORDER_SUPPORT) {
+			answer = orderSupport.latestOrders();
+			fallback = false;
+		} else if (intent == ChatIntent.POLICY) {
+			answer = policies.answer(question);
+			fallback = false;
+		} else if (isCategoryList(question)) {
+			answer = categoryAnswer(catalog);
+			fallback = false;
+		} else if (ai.isConfigured()) {
 			try {
-				answer = ai.complete(systemPrompt(promptCatalog, catalog), request.getHistory(), question);
+				answer = ai.complete(systemPrompt(intent, criteria, selected, catalog.size()), request.getHistory(), question);
 			} catch (RuntimeException ex) {
-				LOGGER.warn("AI provider {} failed; using local fallback ({})", ai.provider(),
-						ex.getClass().getSimpleName());
 				fallback = true;
-				answer = localAnswer(question, suggestions, ranked);
+				provider = "local";
+				model = "";
+				answer = localAnswer(question, intent, selected, criteria);
 			}
 		} else {
-			answer = localAnswer(question, suggestions, ranked);
+			answer = localAnswer(question, intent, selected, criteria);
 		}
 
-		return new ChatResponseDto(answer, fallback ? "local" : ai.provider(),
-				fallback ? "" : ai.model(), fallback, suggestions, chips(question, suggestions));
+		List<String> chips = chips(intent, selected);
+		List<ChatActionDto> actions = actions(intent, selected);
+		String messageId = analytics.record(request.getSessionId(), intent, provider, fallback,
+				selected.size(), System.currentTimeMillis() - started);
+		return new ChatResponseDto(answer, provider, model, fallback, productDtos, chips,
+				messageId, intent, criteria, actions);
 	}
 
 	public ChatStatusDto status() {
@@ -74,262 +118,154 @@ public class ChatService {
 				ai.isConfigured() ? ai.model() : "", ai.isConfigured());
 	}
 
-	private String systemPrompt(List<Product> context, List<Product> fullCatalog) {
-		StringBuilder catalog = new StringBuilder();
-		for (Product product : context) {
-			catalog.append("- ID ").append(product.getProductId())
-					.append(": ").append(product.getName())
-					.append(" | tác giả: ").append(value(product.getAuthor(), "Đang cập nhật"))
-					.append(" | thể loại: ").append(category(product))
-					.append(" | giá bán: ").append(effectivePrice(product)).append("đ")
-					.append(" | tồn kho: ").append(product.getQuantity())
-					.append(" | mô tả: ").append(shortDescription(product.getDescription())).append("\n");
+	private String localAnswer(String question, ChatIntent intent, List<Product> selected,
+			ChatSearchCriteriaDto criteria) {
+		if (intent == ChatIntent.COMPARE_BOOKS) return comparison(selected);
+		if (intent == ChatIntent.PRODUCT_INFO && !selected.isEmpty()) return productInfo(question, selected.get(0));
+		if (intent == ChatIntent.DISCOVER_BOOKS) {
+			if (selected.isEmpty()) return "Mình chưa tìm thấy sách khớp hoàn toàn. Bạn thử nới khoảng giá hoặc mô tả rõ người đọc và chủ đề nhé.";
+			String need = criteria.getTopics().isEmpty() ? "nhu cầu của bạn" : String.join(", ", criteria.getTopics());
+			return "Mình chọn " + selected.size() + " cuốn phù hợp với " + need
+					+ ". Các gợi ý lấy trực tiếp từ catalog và đã được kiểm tra theo giá, thể loại, tồn kho hiện tại.";
 		}
-		String categories = fullCatalog.stream()
-				.map(this::category)
-				.filter(name -> !"Khác".equalsIgnoreCase(name))
-				.distinct()
-				.collect(Collectors.joining(", "));
-		return "Bạn là trợ lý mua sách của VinaBook. Trả lời bằng tiếng Việt tự nhiên, thân thiện, tối đa 160 từ. "
-				+ "Chỉ trả lời đúng điều khách đang hỏi; không tự gợi ý sách hoặc nhắc thêm chính sách không liên quan. "
-				+ "Dùng văn bản thuần, không dùng Markdown, tiêu đề hay dấu **. "
-				+ "Ưu tiên giúp khách chọn sách, hiểu chính sách và hoàn tất mua hàng. Chỉ khẳng định thông tin sản phẩm có trong danh sách catalog bên dưới; "
-				+ "nếu không đủ dữ liệu hãy nói rõ và đề nghị khách mở trang sản phẩm hoặc liên hệ hỗ trợ. "
-				+ "Không yêu cầu mật khẩu, mã OTP, số thẻ đầy đủ hoặc thông tin nhạy cảm. "
-				+ "Chính sách cố định: phí vận chuyển 20.000đ, miễn phí từ 300.000đ; giao dự kiến 2 đến 4 ngày làm việc; "
-				+ "đổi trả trong 7 ngày với sách lỗi in, rách hoặc giao sai; thanh toán gồm COD và các cổng trực tuyến đang được cửa hàng cấu hình. "
-				+ "Cách mua: mở trang sách, thêm vào giỏ hoặc mua ngay, kiểm tra giỏ, nhập địa chỉ, chọn thanh toán và xác nhận. "
-				+ "Khách đã đăng nhập xem trạng thái tại mục Đơn hàng; thông tin cá nhân và địa chỉ nằm trong trang cá nhân; hỗ trợ qua trang Liên hệ. "
-				+ "Catalog hiện có " + fullCatalog.size() + " đầu sách đang hoạt động. Các thể loại hiện có: "
-				+ value(categories, "Đang cập nhật") + ". "
-				+ "Không tự tạo mã giảm giá, trạng thái đơn hàng hay cam kết tồn kho. Khi gợi ý sách, chỉ chọn sách trong CATALOG LIÊN QUAN và nêu ngắn gọn lý do phù hợp. "
-				+ "Không đọc ID sản phẩm cho khách. Sau khi trả lời xong thì dừng; không tự mời đặt hàng, nhắc phí giao hàng, thanh toán hay liên hệ hỗ trợ nếu khách không hỏi.\n\n"
-				+ "CATALOG LIÊN QUAN:\n" + catalog;
+		if (intent == ChatIntent.SMALL_TALK) {
+			String q = intents.normalize(question);
+			if (q.contains("cam on")) return "Rất vui được giúp bạn. Hãy mô tả người đọc, chủ đề và ngân sách để mình chọn sách chính xác hơn.";
+			if (q.contains("ban la ai") || q.contains("lam duoc gi")) return "Mình là trợ lý mua sách VinaBook. Mình có thể tìm, so sánh sách, tư vấn theo ngân sách, giải đáp chính sách và tra cứu đơn hàng sau khi bạn đăng nhập.";
+			return "Chào bạn! Bạn đang tìm sách cho bản thân hay làm quà? Hãy cho mình biết chủ đề và ngân sách nhé.";
+		}
+		return "Mình chưa hiểu rõ yêu cầu. Bạn có thể hỏi: “Tìm sách tâm lý dưới 150k”, “So sánh hai cuốn” hoặc “Đơn hàng của tôi đang ở đâu?”.";
 	}
 
-	private List<Product> rankProducts(String question, List<Product> catalog) {
-		String normalized = normalize(question);
-		Set<String> tokens = Arrays.stream(normalized.split("\\s+"))
-				.filter(token -> token.length() > 1 && !STOP_WORDS.contains(token))
-				.collect(Collectors.toSet());
-		boolean sale = containsAny(normalized, "giam gia", "khuyen mai", "sale", "gia tot");
-		boolean newBooks = containsAny(normalized, "sach moi", "moi nhat", "vua ve");
-		boolean popular = containsAny(normalized, "ban chay", "pho bien", "sach hay", "goi y", "nen doc");
-
-		List<ScoredProduct> scored = new ArrayList<>();
-		for (Product product : catalog) {
-			String name = normalize(product.getName());
-			String author = normalize(product.getAuthor());
-			String category = normalize(category(product));
-			String description = normalize(product.getDescription());
-			int score = 0;
-			for (String token : tokens) {
-				if (name.contains(token)) score += 8;
-				if (author.contains(token)) score += 6;
-				if (category.contains(token)) score += 5;
-				if (description.contains(token)) score += 1;
-			}
-			if (sale) score += product.getDiscount() * 2;
-			if (popular) score += Math.min(50, Math.max(0, product.getSold()) / 2);
-			if (newBooks && product.getEnteredDate() != null) score += product.getEnteredDate().getYear() - 2000;
-			scored.add(new ScoredProduct(product, score));
+	private String productInfo(String question, Product product) {
+		String q = intents.normalize(question);
+		if (contains(q, "con hang", "ton kho", "bao nhieu ban", "bao nhieu cuon", "con may")) {
+			return product.getQuantity() > 0
+					? "Theo dữ liệu hiện tại, “" + product.getName() + "” còn " + product.getQuantity() + " cuốn. Số lượng có thể thay đổi khi có đơn hàng mới."
+					: "“" + product.getName() + "” hiện đang hết hàng.";
 		}
-		scored.sort(Comparator.comparingInt(ScoredProduct::getScore).reversed()
-				.thenComparing(item -> item.product.getSold(), Comparator.reverseOrder()));
-		return scored.stream().map(item -> item.product).collect(Collectors.toList());
+		if (contains(q, "gia", "bao nhieu tien", "giam")) {
+			return "“" + product.getName() + "” hiện có giá " + money(search.effectivePrice(product))
+					+ (product.getDiscount() > 0 ? ", giảm " + product.getDiscount() + "% từ " + money(Math.round(product.getPrice())) : ".");
+		}
+		String description = product.getDescription() == null || product.getDescription().trim().isEmpty()
+				? "Mô tả đang được cập nhật." : product.getDescription().trim();
+		return "“" + product.getName() + "” của " + value(product.getAuthor(), "tác giả đang cập nhật") + ". " + description;
 	}
 
-	private List<Product> selectSuggestedProducts(String question, List<Product> catalog, List<Product> ranked) {
-		String q = normalize(question);
-		List<Product> namedProducts = catalog.stream()
-				.filter(product -> isNamedInQuestion(q, product))
-				.limit(4)
-				.collect(Collectors.toList());
-		if (!namedProducts.isEmpty()) return namedProducts;
-
-		List<Product> catalogMatches = catalog.stream()
-				.filter(product -> matchesAuthorOrCategory(q, product))
-				.sorted(Comparator.comparingInt((Product product) -> ranked.indexOf(product)))
-				.limit(4)
-				.collect(Collectors.toList());
-		if (!catalogMatches.isEmpty()) return catalogMatches;
-
-		if (!isProductDiscoveryIntent(q)) return List.of();
-		if (isTopicDiscoveryIntent(q)) {
-			return ranked.stream()
-					.filter(product -> topicRelevance(q, product) >= 4)
-					.limit(4)
-					.collect(Collectors.toList());
+	private String comparison(List<Product> selected) {
+		if (selected.size() < 2) return "Bạn hãy nêu rõ ít nhất hai tên sách muốn so sánh, ví dụ: “So sánh Nhà Giả Kim và Đắc Nhân Tâm”.";
+		StringBuilder answer = new StringBuilder("So sánh nhanh:\n");
+		for (Product product : selected) {
+			answer.append("• ").append(product.getName()).append(": ")
+					.append(money(search.effectivePrice(product))).append(", ")
+					.append(category(product)).append(", ")
+					.append(product.getQuantity() > 0 ? "còn hàng" : "hết hàng").append(". ")
+					.append(shortDescription(product.getDescription())).append("\n");
 		}
-		return ranked.stream().limit(4).collect(Collectors.toList());
+		answer.append("Nếu ưu tiên ngân sách, chọn cuốn có giá thấp hơn; nếu ưu tiên nội dung, mở từng trang sách để xem mô tả chi tiết.");
+		return answer.toString();
 	}
 
-	private boolean isNamedInQuestion(String normalizedQuestion, Product product) {
-		String name = normalize(product.getName());
-		return name.length() >= 3 && normalizedQuestion.contains(name);
+	private String systemPrompt(ChatIntent intent, ChatSearchCriteriaDto criteria, List<Product> context, int total) {
+		String catalog = context.stream().map(product -> "- " + product.getName() + " | tác giả: "
+				+ value(product.getAuthor(), "Đang cập nhật") + " | thể loại: " + category(product)
+				+ " | giá: " + search.effectivePrice(product) + "đ | tồn: " + product.getQuantity()
+				+ " | mô tả: " + shortDescription(product.getDescription())).collect(Collectors.joining("\n"));
+		return "Bạn là trợ lý mua sách VinaBook. Trả lời tiếng Việt tự nhiên, tối đa 180 từ, văn bản thuần. "
+				+ "Ý định: " + intent.name() + ". Chỉ dùng catalog được cung cấp; không bịa sách, giá, tồn kho, mã giảm giá hay trạng thái đơn. "
+				+ "Nếu so sánh, nêu khác biệt về nội dung, đối tượng và giá. Nếu tư vấn, giải thích ngắn vì sao từng cuốn phù hợp. "
+				+ "Không hỏi mật khẩu, OTP, CVV hoặc số thẻ. Catalog có " + total + " sách. "
+				+ "Bộ lọc: minPrice=" + criteria.getMinPrice() + ", maxPrice=" + criteria.getMaxPrice()
+				+ ", category=" + criteria.getCategory() + ", topics=" + criteria.getTopics() + ".\nCATALOG LIÊN QUAN:\n" + catalog;
 	}
 
-	private boolean matchesAuthorOrCategory(String normalizedQuestion, Product product) {
-		String author = normalize(product.getAuthor());
-		String productCategory = normalize(category(product));
-		boolean authorMatch = author.length() >= 4 && normalizedQuestion.contains(author);
-		boolean categoryMatch = productCategory.length() >= 4
-				&& !"khac".equals(productCategory)
-				&& normalizedQuestion.contains(productCategory);
-		return authorMatch || categoryMatch;
+	private List<ChatActionDto> actions(ChatIntent intent, List<Product> selected) {
+		List<ChatActionDto> result = new ArrayList<>();
+		for (Product product : selected) {
+			result.add(new ChatActionDto("VIEW_PRODUCT", "Xem " + product.getName(), product.getProductId(), "/product/" + product.getProductId(), false));
+			if (product.getQuantity() > 0) result.add(new ChatActionDto("ADD_TO_CART", "Thêm vào giỏ", product.getProductId(), "", true));
+		}
+		if (intent == ChatIntent.ORDER_SUPPORT) {
+			if (access.currentEmail() == null) result.add(new ChatActionDto("LOGIN", "Đăng nhập", null, "/login", false));
+			else result.add(new ChatActionDto("VIEW_ORDERS", "Xem đơn hàng", null, "/orders", false));
+		}
+		return result;
 	}
 
-	private boolean isProductDiscoveryIntent(String q) {
-		boolean mentionsBook = containsAny(q, "sach", "cuon", "quyen", "tua");
-		boolean asksToFind = containsAny(q, "tim", "goi y", "tu van", "de xuat", "recommend");
-		boolean describesNeed = containsAny(q, "chu de", "the loai", "noi dung", "phu hop", "danh cho");
-		boolean asksWhatToRead = containsAny(q, "doc gi", "mua gi", "nen doc", "nen mua", "co gi doc");
-		return asksWhatToRead || (mentionsBook && (asksToFind || describesNeed)) || containsAny(q,
-				"goi y sach", "tu van sach", "sach nao", "cuon nao", "nen doc", "nen mua",
-				"tim sach", "tim cuon", "co sach", "danh sach sach", "sach ban chay",
-				"sach moi", "moi nhat", "sach hay", "sach giam gia", "dang giam gia",
-				"khuyen mai", "sach gia re", "sach re", "gia duoi", "gia tren", "tam gia",
-				"sach ve", "cuon khac", "sach khac", "con cuon nao", "con sach nao");
-	}
-
-	private boolean isTopicDiscoveryIntent(String q) {
-		return containsAny(q, "chu de", "noi dung", "sach ve", "cuon ve", "phu hop", "danh cho",
-				"phieu luu", "giao tiep", "phat trien ban than", "tre em", "tre nho", "thieu nhi",
-				"kinh doanh", "khoi nghiep", "trinh tham", "pha an", "tinh yeu", "lang man");
-	}
-
-	private int topicRelevance(String q, Product product) {
-		String searchable = normalize(value(product.getName(), "") + " "
-				+ value(product.getAuthor(), "") + " " + category(product) + " "
-				+ value(product.getDescription(), ""));
-		int score = (int) Arrays.stream(q.split("\\s+"))
-				.filter(token -> token.length() > 2 && !STOP_WORDS.contains(token))
-				.filter(searchable::contains)
-				.count();
-		boolean hasMappedTopic = containsAny(q, "phieu luu", "tre em", "tre nho", "phat trien ban than",
-				"giao tiep", "ung xu", "kinh doanh", "khoi nghiep", "trinh tham", "pha an",
-				"tinh yeu", "lang man");
-		int semanticScore = 0;
-		if (q.contains("phieu luu") && containsAny(searchable, "phieu luu", "hanh trinh", "kham pha", "du ky")) {
-			semanticScore += 4;
-		}
-		if (containsAny(q, "tre em", "tre nho") && searchable.contains("thieu nhi")) semanticScore += 4;
-		if (q.contains("phat trien ban than") && containsAny(searchable, "ky nang", "tam ly", "thoi quen")) semanticScore += 4;
-		if (containsAny(q, "giao tiep", "ung xu") && containsAny(searchable, "giao tiep", "ung xu", "doi nhan xu the")) semanticScore += 4;
-		if (containsAny(q, "kinh doanh", "khoi nghiep") && containsAny(searchable, "kinh doanh", "khoi nghiep", "kinh te")) semanticScore += 4;
-		if (containsAny(q, "trinh tham", "pha an") && containsAny(searchable, "trinh tham", "dieu tra", "pha an")) semanticScore += 4;
-		if (containsAny(q, "tinh yeu", "lang man") && containsAny(searchable, "tinh yeu", "lang man")) semanticScore += 4;
-		return hasMappedTopic ? semanticScore : score;
-	}
-
-	private String localAnswer(String question, List<ChatProductDto> suggestions, List<Product> ranked) {
-		String q = normalize(question);
-		Product mentioned = mentionedProduct(q, ranked);
-		if (mentioned != null && containsAny(q, "con bao nhieu", "bao nhieu ban", "bao nhieu cuon",
-				"con may", "ton kho", "so luong con", "con hang", "het hang")) {
-			if (mentioned.getQuantity() <= 0) {
-				return "Theo dữ liệu hiện tại, “" + mentioned.getName() + "” đang hết hàng. Bạn có thể kiểm tra lại sau vì tồn kho có thể thay đổi.";
-			}
-			return "Theo dữ liệu hiện tại, “" + mentioned.getName() + "” còn " + mentioned.getQuantity()
-					+ " cuốn. Số lượng có thể thay đổi khi có đơn hàng mới.";
-		}
-		if (mentioned != null && containsAny(q, "gia bao nhieu", "bao nhieu tien", "gia cua", "gia sach")) {
-			String discount = mentioned.getDiscount() > 0 ? " sau khi giảm " + mentioned.getDiscount() + "%" : "";
-			return "“" + mentioned.getName() + "” hiện có giá " + money(effectivePrice(mentioned)) + discount
-					+ ". Giá được lấy từ catalog tại thời điểm trả lời.";
-		}
-		if (mentioned != null && containsAny(q, "giam bao nhieu", "giam may", "khuyen mai bao nhieu")) {
-			return mentioned.getDiscount() > 0
-					? "“" + mentioned.getName() + "” đang giảm " + mentioned.getDiscount() + "%, còn " + money(effectivePrice(mentioned)) + "."
-					: "“" + mentioned.getName() + "” hiện không có giảm giá trong catalog.";
-		}
-		if (containsAny(q, "phi ship", "phi giao", "van chuyen", "giao hang", "bao lau nhan", "freeship")) {
-			return "Phí vận chuyển là 20.000đ và được miễn phí khi giá trị đơn từ 300.000đ. Thời gian giao dự kiến từ 2 đến 4 ngày làm việc, tùy khu vực.";
-		}
-		if (containsAny(q, "thanh toan", "cod", "vietqr", "vnpay", "momo", "chuyen khoan")) {
-			return "VinaBook hỗ trợ COD. VietQR, VNPay Sandbox và MoMo Test sẽ xuất hiện ở bước thanh toán khi cửa hàng đã cấu hình cổng tương ứng. API thanh toán xác minh mã đơn và số tiền ở backend.";
-		}
-		if (containsAny(q, "doi tra", "tra hang", "hoan tien", "sach loi", "sach rach", "giao sai")) {
-			return "Bạn có thể yêu cầu đổi trả trong 7 ngày nếu sách lỗi in, bị rách hoặc giao sai. Hãy giữ sách nguyên vẹn và liên hệ hỗ trợ để được hướng dẫn.";
-		}
-		if (containsAny(q, "don hang", "theo doi don", "trang thai don")) {
-			return "Bạn đăng nhập rồi mở mục Đơn hàng để xem trạng thái. Mình không thể tự xác nhận trạng thái đơn nếu chưa có dữ liệu tài khoản của bạn.";
-		}
-		if (containsAny(q, "mat khau", "otp", "so the", "cvv")) {
-			return "Bạn không nên gửi mật khẩu, mã OTP hoặc thông tin thẻ trong khung chat. Nếu cần hỗ trợ tài khoản, hãy dùng chức năng quên mật khẩu hoặc trang Liên hệ.";
-		}
-		if (!suggestions.isEmpty()) {
-			return "Mình đã chọn một số đầu sách phù hợp nhất từ catalog hiện tại. Bạn có thể mở từng cuốn bên dưới để xem mô tả, giá và tình trạng còn hàng.";
-		}
-		return "Mình có thể giúp bạn tìm sách theo thể loại, tác giả, khoảng giá hoặc giải đáp về giao hàng, thanh toán và đổi trả. Bạn thử mô tả thể loại hoặc mức giá mong muốn nhé.";
-	}
-
-	private List<String> chips(String question, List<ChatProductDto> suggestions) {
-		String q = normalize(question);
-		if (!suggestions.isEmpty()) return List.of("Còn cuốn khác không?", "Sách rẻ hơn");
-		if (containsAny(q, "phi ship", "phi giao", "van chuyen", "giao hang", "freeship")) {
-			return List.of("Có những cách thanh toán nào?", "Chính sách đổi trả");
-		}
-		if (containsAny(q, "thanh toan", "cod", "vietqr", "vnpay", "momo", "chuyen khoan")) {
-			return List.of("Phí giao hàng thế nào?", "Cách đặt hàng?");
-		}
-		if (containsAny(q, "doi tra", "tra hang", "hoan tien", "sach loi", "sach rach", "giao sai")) {
-			return List.of("Phí giao hàng thế nào?", "Liên hệ hỗ trợ");
-		}
-		return List.of();
+	private List<String> chips(ChatIntent intent, List<Product> selected) {
+		if (!selected.isEmpty()) return List.of("Còn cuốn khác không?", "So sánh các cuốn này", "Sách rẻ hơn");
+		if (intent == ChatIntent.POLICY) return List.of("Phí giao hàng thế nào?", "Có những cách thanh toán nào?", "Chính sách đổi trả");
+		if (intent == ChatIntent.ORDER_SUPPORT) return List.of("Đơn hàng của tôi", "Cách đặt hàng?");
+		return List.of("Gợi ý sách dưới 150k", "Tìm sách làm quà", "Có những thể loại nào?");
 	}
 
 	private ChatProductDto toDto(Product product) {
 		return new ChatProductDto(product.getProductId(), product.getName(), value(product.getAuthor(), "Đang cập nhật"),
-				category(product), effectivePrice(product), product.getPrice() == null ? 0 : product.getPrice(),
+				category(product), search.effectivePrice(product), product.getPrice() == null ? 0 : product.getPrice(),
 				product.getDiscount(), product.getQuantity(), product.getImage());
 	}
 
-	private Product mentionedProduct(String normalizedQuestion, List<Product> ranked) {
-		return ranked.stream()
-				.filter(product -> isNamedInQuestion(normalizedQuestion, product))
-				.findFirst()
-				.orElse(null);
+	private String categoryAnswer(List<Product> catalog) {
+		String categories = catalog.stream().map(this::category).filter(value -> !"Khác".equals(value)).distinct().sorted().collect(Collectors.joining(", "));
+		return "VinaBook hiện có các thể loại: " + categories + ". Bạn có thể chọn một thể loại và thêm ngân sách để mình gợi ý chính xác hơn.";
+	}
+
+	private boolean isCategoryList(String value) {
+		String q = intents.normalize(value);
+		return contains(q, "co nhung the loai", "the loai nao", "danh sach the loai");
+	}
+
+	private List<Product> contextProducts(ChatRequestDto request, List<Product> catalog) {
+		if (request.getContextProductIds() == null || request.getContextProductIds().isEmpty()) {
+			return Collections.emptyList();
+		}
+		List<Long> ids = request.getContextProductIds();
+		return catalog.stream().filter(product -> ids.contains(product.getProductId()))
+				.sorted((left, right) -> Integer.compare(ids.indexOf(left.getProductId()), ids.indexOf(right.getProductId())))
+				.collect(Collectors.toList());
+	}
+
+	private boolean isAlternativeRequest(String normalized) {
+		return contains(normalized, "cuon khac", "sach khac", "con cuon", "re hon");
+	}
+
+	private ChatSearchCriteriaDto followUpCriteria(ChatSearchCriteriaDto current, ChatRequestDto request,
+			List<Product> catalog) {
+		ChatSearchCriteriaDto previous = request.getHistory().stream()
+				.filter(turn -> "user".equals(turn.getRole()))
+				.map(ChatTurnDto::getContent)
+				.reduce((first, second) -> second)
+				.map(message -> intents.criteria(message, catalog))
+				.orElse(ChatSearchCriteriaDto.empty());
+		return new ChatSearchCriteriaDto(
+				current.getMinPrice() != null ? current.getMinPrice() : previous.getMinPrice(),
+				current.getMaxPrice() != null ? current.getMaxPrice() : previous.getMaxPrice(),
+				current.getCategory().isEmpty() ? previous.getCategory() : current.getCategory(),
+				current.getAuthor().isEmpty() ? previous.getAuthor() : current.getAuthor(),
+				current.getSort().isEmpty() ? previous.getSort() : current.getSort(),
+				current.getTopics().isEmpty() ? previous.getTopics() : current.getTopics());
+	}
+
+	private boolean contains(String value, String... options) {
+		for (String option : options) if (value.contains(option)) return true;
+		return false;
+	}
+
+	private String category(Product product) {
+		return product.getCategory() == null ? "Khác" : value(product.getCategory().getCategoryName(), "Khác");
+	}
+
+	private String value(String value, String fallback) {
+		return value == null || value.trim().isEmpty() ? fallback : value.trim();
+	}
+
+	private String shortDescription(String value) {
+		String description = value(value, "Chưa có mô tả").replaceAll("\\s+", " ");
+		return description.length() <= 150 ? description : description.substring(0, 147) + "...";
 	}
 
 	private String money(long amount) {
 		return String.format(Locale.forLanguageTag("vi-VN"), "%,dđ", amount);
-	}
-
-	private long effectivePrice(Product product) {
-		double price = product.getPrice() == null ? 0 : product.getPrice();
-		return Math.round(price * (100 - Math.max(0, product.getDiscount())) / 100);
-	}
-
-	private String category(Product product) {
-		return product.getCategory() == null ? "Khác" : value(product.getCategory().getCategoryName(), "Khác").trim();
-	}
-
-	private boolean containsAny(String value, String... options) {
-		return Arrays.stream(options).anyMatch(value::contains);
-	}
-
-	private String normalize(String value) {
-		if (value == null) return "";
-		return Normalizer.normalize(value, Normalizer.Form.NFD)
-				.replaceAll("\\p{M}", "")
-				.replace('đ', 'd').replace('Đ', 'D')
-				.toLowerCase(Locale.ROOT).trim();
-	}
-
-	private String value(String value, String fallback) {
-		return value == null || value.trim().isEmpty() ? fallback : value;
-	}
-
-	private String shortDescription(String description) {
-		String cleaned = value(description, "Chưa có mô tả").replaceAll("\\s+", " ").trim();
-		return cleaned.length() <= 240 ? cleaned : cleaned.substring(0, 237) + "...";
-	}
-
-	private static final class ScoredProduct {
-		private final Product product;
-		private final int score;
-		private ScoredProduct(Product product, int score) { this.product = product; this.score = score; }
-		private int getScore() { return score; }
 	}
 }

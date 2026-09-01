@@ -15,7 +15,7 @@
 - Wishlist theo tài khoản.
 - Profile: thông tin cá nhân, avatar local, địa chỉ, đổi mật khẩu, thống kê và đơn gần đây.
 - Tìm kiếm realtime, lịch sử tối đa 8 truy vấn.
-- Toast toàn cục, chatbot hội thoại có gợi ý sản phẩm từ catalog thật, trang giới thiệu, liên hệ qua email app và trang 404.
+- Toast toàn cục; chatbot V2 có SSE, phân loại ý định, lọc theo ngân sách/chủ đề/tác giả, so sánh và hỏi tiếp theo ngữ cảnh, chính sách từ backend, tra tối đa 3 đơn gần nhất theo JWT, thêm giỏ có xác nhận và feedback hữu ích/chưa hữu ích.
 - Header responsive, menu mobile, footer dùng chung và hỗ trợ keyboard/reduced motion ở các control chính.
 - Bộ đổi màu giao diện gồm editorial, ocean, forest và berry; lựa chọn được lưu trên thiết bị.
 - Giao diện storefront dùng hệ token modern editorial bám màu xanh logo, container 1280px thống nhất, chuyển cảnh route ngắn và scroll reveal bằng IntersectionObserver. Bìa sách dùng `object-fit: contain` để không cắt nội dung.
@@ -32,6 +32,7 @@
 - Quản lý review/rate.
 - JWT guard yêu cầu tài khoản có `ROLE_ADMIN`.
 - WebSocket notification từ backend.
+- Màn **Hiệu quả chatbot** tại `/admin/chatbot-analytics`: tổng lượt trả lời, fallback, độ trễ, mức hài lòng và phân bổ intent; chỉ tổng hợp metadata, không hiển thị nội dung hội thoại.
 
 ## Backend
 
@@ -44,6 +45,7 @@
 - Trạng thái thanh toán lưu riêng trên order, callback kiểm tra chữ ký, mã tham chiếu và số tiền trước khi ghi nhận.
 - Gateway chatbot chuẩn hóa OpenAI Responses, API tương thích OpenAI Chat Completions, Gemini và Anthropic; tự chuyển về bộ trả lời nội bộ khi chưa có key hoặc provider lỗi.
 - Prompt chatbot được grounding bằng catalog MySQL; endpoint giới hạn độ dài, lịch sử và tần suất theo IP, không công khai API key.
+- Chatbot tách intent/search/policy/order/analytics thành service độc lập; action trả về có kiểu để frontend không diễn giải câu chữ thành nghiệp vụ.
 
 ## Chưa hỗ trợ
 

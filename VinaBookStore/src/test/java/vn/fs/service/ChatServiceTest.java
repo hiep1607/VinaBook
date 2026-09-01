@@ -3,6 +3,10 @@ package vn.fs.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
@@ -16,9 +20,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import vn.fs.dto.chat.ChatRequestDto;
 import vn.fs.dto.chat.ChatResponseDto;
+import vn.fs.dto.chat.ChatTurnDto;
 import vn.fs.entity.Category;
 import vn.fs.entity.Product;
 import vn.fs.repository.ProductRepository;
+import vn.fs.config.CurrentUserAccess;
 
 @ExtendWith(MockitoExtension.class)
 class ChatServiceTest {
@@ -28,12 +34,20 @@ class ChatServiceTest {
 
 	@Mock
 	private AiGateway ai;
+	@Mock private ChatOrderSupportService orderSupport;
+	@Mock private ChatAnalyticsService analytics;
+	@Mock private CurrentUserAccess access;
 
 	private ChatService service;
 
 	@BeforeEach
 	void setUp() {
-		service = new ChatService(products, ai);
+		ChatIntentService intentService = new ChatIntentService();
+		service = new ChatService(products, ai, intentService,
+				new ChatProductSearchService(intentService), new ChatPolicyService(intentService),
+				orderSupport, analytics, access);
+		when(analytics.record(any(), any(), anyString(), anyBoolean(), anyInt(), anyLong()))
+				.thenReturn("message-id");
 		when(products.findByStatusTrue()).thenReturn(List.of(
 				product(57L, "Đắc Nhân Tâm", "Dale Carnegie", "Kỹ năng", 86000D, 18, 220),
 				product(58L, "Nhà Giả Kim", "Paulo Coelho", "Tiểu thuyết", 79000D, 20, 230)));
@@ -44,7 +58,7 @@ class ChatServiceTest {
 		when(ai.isConfigured()).thenReturn(false);
 		ChatResponseDto response = service.reply(request("Phí giao hàng thế nào?"));
 
-		assertThat(response.isFallback()).isTrue();
+		assertThat(response.isFallback()).isFalse();
 		assertThat(response.getProvider()).isEqualTo("local");
 		assertThat(response.getAnswer()).contains("20.000đ").contains("300.000đ");
 		assertThat(response.getProducts()).isEmpty();
@@ -96,7 +110,46 @@ class ChatServiceTest {
 		ChatResponseDto response = service.reply(request("Giúp tôi tìm vài cuốn sách chủ đề phiêu lưu"));
 
 		assertThat(response.getProducts()).isNotEmpty();
-		assertThat(response.getChips()).containsExactly("Còn cuốn khác không?", "Sách rẻ hơn");
+		assertThat(response.getChips()).containsExactly("Còn cuốn khác không?", "So sánh các cuốn này", "Sách rẻ hơn");
+	}
+
+	@Test
+	void followUpComparisonUsesProductsFromPreviousAnswer() {
+		when(ai.isConfigured()).thenReturn(false);
+		ChatRequestDto request = request("So sánh các cuốn này");
+		request.setContextProductIds(List.of(57L, 58L));
+
+		ChatResponseDto response = service.reply(request);
+
+		assertThat(response.getProducts()).extracting("name")
+				.containsExactly("Đắc Nhân Tâm", "Nhà Giả Kim");
+		assertThat(response.getAnswer()).contains("So sánh nhanh");
+	}
+
+	@Test
+	void followUpAlternativeExcludesPreviouslyShownProduct() {
+		when(ai.isConfigured()).thenReturn(false);
+		ChatRequestDto request = request("Còn cuốn khác không?");
+		request.setContextProductIds(List.of(57L));
+
+		ChatResponseDto response = service.reply(request);
+
+		assertThat(response.getProducts()).extracting("name").containsExactly("Nhà Giả Kim");
+	}
+
+	@Test
+	void followUpAlternativeKeepsPreviousTopicAndBudget() {
+		when(ai.isConfigured()).thenReturn(false);
+		ChatRequestDto request = request("Sách rẻ hơn");
+		request.setContextProductIds(List.of(57L));
+		request.setHistory(List.of(new ChatTurnDto("user", "Tìm sách giao tiếp dưới 150k")));
+
+		ChatResponseDto response = service.reply(request);
+
+		assertThat(response.getCriteria().getTopics()).containsExactly("giao tiếp");
+		assertThat(response.getCriteria().getMaxPrice()).isEqualTo(150000L);
+		assertThat(response.getCriteria().getSort()).isEqualTo("price-asc");
+		assertThat(response.getProducts()).isEmpty();
 	}
 
 	@Test
@@ -124,7 +177,7 @@ class ChatServiceTest {
 		ChatResponseDto response = service.reply(request("Bạn là ai?"));
 
 		assertThat(response.getProducts()).isEmpty();
-		assertThat(response.getChips()).isEmpty();
+		assertThat(response.getIntent()).isEqualTo(vn.fs.dto.chat.ChatIntent.SMALL_TALK);
 	}
 
 	@Test

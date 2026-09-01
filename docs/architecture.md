@@ -24,11 +24,13 @@ Storefront là một `AppModule` eager-loaded. Routes ánh xạ tới `pages/`; 
 
 Các service state trình duyệt tự hydrate từ `localStorage`. Cart đổi scope khi user hiện tại thay đổi; order service chỉ sync các dòng được chọn sang backend lúc checkout.
 
-`ChatbotService` gọi một contract duy nhất là `POST /api/chat`. Backend `AiGateway` chuyển contract này sang OpenAI Responses, OpenAI-compatible Chat Completions, Gemini hoặc Anthropic. Catalog liên quan được lấy từ MySQL và chèn vào prompt có giới hạn; Angular chỉ nhận câu trả lời đã chuẩn hóa và thẻ sách. Chế độ local ở cả backend và storefront giúp chatbot không bị vô hiệu khi provider ngoài gặp lỗi.
+`ChatbotService` là client mỏng: ưu tiên `POST /api/chat/stream` (SSE), tự hạ xuống `POST /api/chat` khi kết nối không hỗ trợ stream. Toàn bộ phân loại ý định, lọc giá/thể loại/tác giả, xếp hạng catalog, chính sách và fallback nằm ở backend để không có hai nguồn logic lệch nhau. `AiGateway` chuyển contract sang OpenAI Responses, OpenAI-compatible Chat Completions, Gemini hoặc Anthropic. Response có thẻ sách, quick replies và action có kiểu; thao tác thêm giỏ vẫn chạy qua `CartService` và cần xác nhận người dùng.
+
+Backend chỉ lưu telemetry tối thiểu trong `chat_events`: mã ngẫu nhiên của câu trả lời, mã phiên, intent, provider, fallback, số sản phẩm, độ trễ và feedback. Nội dung câu hỏi/câu trả lời không được lưu. Dashboard admin đọc số liệu tổng hợp qua endpoint chỉ dành cho `ROLE_ADMIN`.
 
 ## Backend và bảo mật
 
-Spring Security xác thực JWT stateless. Public gồm đăng nhập/đăng ký, đọc catalog/cấu hình trang chủ và chat hỗ trợ khách. `GET /api/homepage`, `GET /api/chat/status`, `POST /api/chat` là public; `PUT /api/homepage` và các endpoint quản trị khác yêu cầu `ROLE_ADMIN`; endpoint user yêu cầu `ROLE_USER` hoặc admin tùy nghiệp vụ. Chat public có validation và rate limit theo IP.
+Spring Security xác thực JWT stateless. Public gồm đăng nhập/đăng ký, đọc catalog/cấu hình trang chủ và chat hỗ trợ khách. `GET /api/homepage`, `GET /api/chat/status`, `POST /api/chat`, `/api/chat/stream` và `/api/chat/feedback` là public; `GET /api/chat/admin/**`, `PUT /api/homepage` và các endpoint quản trị khác yêu cầu `ROLE_ADMIN`. Endpoint user yêu cầu `ROLE_USER` hoặc admin tùy nghiệp vụ. Chat public có validation và rate limit theo IP. Khi có JWT hợp lệ, chatbot chỉ tra đơn của principal hiện tại, không nhận user ID/email tùy ý từ client.
 
 Đối với user/cart/order/review, backend đối chiếu principal trong JWT bằng `CurrentUserAccess`. ID/email từ request không tự tạo quyền truy cập. Giá dòng hàng được tính lại từ product trong database và order kiểm tra tồn kho trước khi ghi.
 

@@ -12,7 +12,7 @@ Mọi service đều `providedIn: 'root'`.
 | `CategoryService` | Cache danh sách category và tải một category |
 | `OrderService` | Sync cart được chọn, tạo đơn, tải đơn và order detail |
 | `PaymentService` | Tải phương thức khả dụng, tạo phiên thanh toán và đọc trạng thái đơn |
-| `ChatbotService` | Gọi `/api/chat`, chuẩn hóa thẻ sách và tự dùng FAQ nội bộ khi request lỗi |
+| `ChatbotService` | Client mỏng gọi SSE `/api/chat/stream`, fallback transport sang `/api/chat`, gửi ngữ cảnh product ID và feedback; không chứa rule nghiệp vụ trùng backend |
 | `ReviewService` | Tải/cache rate, upsert review, phát `changes$` |
 
 Base URL luôn ghép từ `environment.apiUrl`. Production để rỗng để gọi cùng origin.
@@ -34,6 +34,7 @@ Base URL luôn ghép từ `environment.apiUrl`. Production để rỗng để g�
 
 - `AuthInterceptor`: gắn bearer token cho request API.
 - Admin `HomepageService`: đọc `GET /api/homepage`, lưu `PUT /api/homepage` bằng JWT admin.
+- Admin `ChatAnalyticsService`: đọc metrics tổng hợp từ `/api/chat/admin/metrics` bằng JWT admin.
 - `NgrokSkipInterceptor`: header hỗ trợ môi trường tunnel dev.
 - `AuthGuard`: xóa phiên hỏng/hết hạn và redirect login với `returnUrl`.
 

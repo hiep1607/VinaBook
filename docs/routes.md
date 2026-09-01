@@ -32,3 +32,8 @@ Guard chỉ cải thiện UX; backend vẫn phải kiểm tra JWT, role và owne
 |---|---|---|
 | `GET` | `/api/chat/status` | Provider/model đang hoạt động, không chứa secret |
 | `POST` | `/api/chat` | Hỏi đáp, grounding catalog và gợi ý sách; rate limit theo IP |
+| `POST` | `/api/chat/stream` | Cùng contract, trả SSE `ready`/`chunk`/`done`; rate limit theo IP |
+| `POST` | `/api/chat/feedback` | Ghi nhận `positive`/`negative` theo `messageId` |
+| `GET` | `/api/chat/admin/metrics` | Số liệu tổng hợp chatbot; chỉ `ROLE_ADMIN` |
+
+Admin có route `/admin/chatbot-analytics`, được bảo vệ bởi `AuthGuard`; backend vẫn là lớp quyết định quyền cuối cùng.

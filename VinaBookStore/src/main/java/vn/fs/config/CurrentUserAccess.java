@@ -33,6 +33,16 @@ public class CurrentUserAccess {
 		return isAdmin() || ownsUserId(userId);
 	}
 
+	public String currentEmail() {
+		UserDetailsImpl current = current();
+		return current == null ? null : current.getEmail();
+	}
+
+	public Long currentUserId() {
+		UserDetailsImpl current = current();
+		return current == null ? null : current.getId();
+	}
+
 	private UserDetailsImpl current() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication == null || !(authentication.getPrincipal() instanceof UserDetailsImpl)) {

@@ -9,7 +9,8 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ChatbotService, ChatMessage } from 'src/app/services/chatbot.service';
+import { ChatAction, ChatbotService, ChatMessage, ChatProduct } from 'src/app/services/chatbot.service';
+import { CartService } from 'src/app/services/cart.service';
 import { FabCollisionService } from 'src/app/services/fab-collision.service';
 
 /**
@@ -32,6 +33,10 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
   draft = '';
   typing = false;
   messages: ChatMessage[] = [];
+  pendingAction?: { action: ChatAction; message: ChatMessage; product: ChatProduct };
+  readonly addedProductIds = new Set<number>();
+  errorText = '';
+  lastFailedInput = '';
 
   private shouldScroll = false;
   private readonly storageKey = 'vinabook_chat_session';
@@ -40,6 +45,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
 
   constructor(
     private chatbot: ChatbotService,
+    private cart: CartService,
     private router: Router,
     private collision: FabCollisionService
   ) {}
@@ -97,13 +103,33 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     this.persistMessages();
 
     this.typing = true;
+    this.errorText = '';
+    this.lastFailedInput = '';
     const history = this.messages.slice(0, -1);
-    this.request = this.chatbot.ask(value, history).subscribe(message => {
-      this.messages.push(message);
-      this.typing = false;
-      this.shouldScroll = true;
-      this.persistMessages();
-      setTimeout(() => this.chatInput?.nativeElement.focus(), 0);
+    let responseIndex = -1;
+    this.request = this.chatbot.ask(value, history).subscribe({
+      next: message => {
+        if (responseIndex < 0) {
+          responseIndex = this.messages.length;
+          this.messages.push(message);
+        } else {
+          this.messages[responseIndex] = message;
+        }
+        this.typing = !!message.streaming;
+        this.shouldScroll = true;
+        if (!message.streaming) this.persistMessages();
+      },
+      error: () => {
+        this.typing = false;
+        this.errorText = 'Trợ lý đang mất kết nối. Bạn có thể thử gửi lại câu hỏi.';
+        this.lastFailedInput = value;
+        this.shouldScroll = true;
+      },
+      complete: () => {
+        this.typing = false;
+        this.persistMessages();
+        setTimeout(() => this.chatInput?.nativeElement.focus(), 0);
+      }
     });
   }
 
@@ -117,6 +143,8 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
   clearConversation(): void {
     this.request?.unsubscribe();
     this.typing = false;
+    this.pendingAction = undefined;
+    this.errorText = '';
     this.messages = [this.chatbot.greeting()];
     sessionStorage.removeItem(this.storageKey);
     this.shouldScroll = true;
@@ -125,6 +153,64 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
   openProduct(product: any): void {
     this.router.navigate(['/product', product.id]);
     this.open = false;
+  }
+
+  actionFor(message: ChatMessage, productId: number, type: ChatAction['type']): ChatAction | undefined {
+    return message.actions?.find(action => action.productId === productId && action.type === type);
+  }
+
+  runAction(action: ChatAction, message: ChatMessage): void {
+    if (action.type === 'ADD_TO_CART' && action.productId) {
+      const product = message.products?.find(item => item.id === action.productId);
+      if (!product) return;
+      if (action.requiresConfirmation) {
+        this.pendingAction = { action, message, product };
+        this.shouldScroll = true;
+      } else {
+        this.addToCart(product);
+      }
+      return;
+    }
+    if (action.route) {
+      this.router.navigateByUrl(action.route);
+      this.open = false;
+    }
+  }
+
+  confirmAddToCart(): void {
+    if (!this.pendingAction) return;
+    this.addToCart(this.pendingAction.product);
+    this.pendingAction = undefined;
+  }
+
+  cancelAction(): void {
+    this.pendingAction = undefined;
+  }
+
+  sendFeedback(message: ChatMessage, value: 'positive' | 'negative'): void {
+    if (!message.messageId || message.feedback) return;
+    this.chatbot.feedback(message.messageId, value).subscribe({
+      next: () => {
+        message.feedback = value;
+        this.persistMessages();
+      }
+    });
+  }
+
+  retry(): void {
+    const value = this.lastFailedInput;
+    this.errorText = '';
+    this.lastFailedInput = '';
+    if (value) this.send(value);
+  }
+
+  genericActions(message: ChatMessage): ChatAction[] {
+    return (message.actions || []).filter(action => !action.productId);
+  }
+
+  get showTypingDots(): boolean {
+    const last = this.messages[this.messages.length - 1];
+    return this.typing && !last?.streaming;
   }
 
   trackByIndex(index: number): number {
@@ -138,6 +224,12 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     } catch {
       return [];
     }
+  }
+
+  private addToCart(product: ChatProduct): void {
+    this.cart.addToCart(product);
+    this.addedProductIds.add(product.id);
+    this.shouldScroll = true;
   }
 
   private persistMessages(): void {

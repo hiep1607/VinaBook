@@ -38,6 +38,7 @@ import { SoldestComponent } from './soldest/soldest.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { HomepageComponent } from './homepage/homepage.component';
+import { ChatAnalyticsComponent } from './chat-analytics/chat-analytics.component';
 
 const routes: Routes = [
   {
@@ -53,6 +54,7 @@ const routes: Routes = [
       { path: 'inventory', component: InventoryComponent, canActivate: [AuthGuard] },
       { path: 'statistical-category', component: StatisticalCategoryComponent, canActivate: [AuthGuard] },
       { path: 'soldest', component: SoldestComponent, canActivate: [AuthGuard] },
+      { path: 'chatbot-analytics', component: ChatAnalyticsComponent, canActivate: [AuthGuard] },
       { path: 'order', component: OrderComponent, canActivate: [AuthGuard] }
     ]
   }
@@ -82,7 +84,8 @@ const routes: Routes = [
     EditCustomerComponent,
     StatisticalCategoryComponent,
     SoldestComponent,
-    HomepageComponent
+    HomepageComponent,
+    ChatAnalyticsComponent
   ],
   imports: [
     CommonModule,

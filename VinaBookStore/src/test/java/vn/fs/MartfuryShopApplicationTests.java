@@ -32,4 +32,10 @@ class MartfuryShopApplicationTests {
 				.andExpect(status().isUnauthorized());
 	}
 
+	@Test
+	void chatbotMetricsRequiresAdminAuthentication() throws Exception {
+		mockMvc.perform(get("/api/chat/admin/metrics"))
+				.andExpect(status().isUnauthorized());
+	}
+
 }

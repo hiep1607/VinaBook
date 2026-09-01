@@ -34,4 +34,4 @@ Storefront dùng `localStorage` cho state nhẹ hoặc dữ liệu chưa chuyể
 
 ## sessionStorage
 
-Chatbot dùng `vinabook_chat_session` để giữ tối đa 24 tin nhắn trong tab hiện tại. Dữ liệu tự mất khi phiên tab kết thúc và không được dùng làm nguồn tin cậy. Không lưu API key hoặc secret trong browser storage.
+Chatbot dùng `vinabook_chat_session` để giữ tối đa 24 tin nhắn và `vinabook_chat_id` làm mã phiên ngẫu nhiên trong tab hiện tại. Dữ liệu tự mất khi phiên tab kết thúc và không được dùng làm nguồn tin cậy. Không lưu API key hoặc secret trong browser storage. Backend không lưu nội dung hội thoại; telemetry chỉ giữ metadata phục vụ metrics.

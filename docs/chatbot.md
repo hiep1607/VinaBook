@@ -1,6 +1,6 @@
 # Trợ lý VinaBook
 
-Chatbot dùng một API chung `POST /api/chat`. Angular không biết API key và không phụ thuộc trực tiếp vào cấu trúc response của bất kỳ hãng AI nào.
+Chatbot V2 dùng backend làm nguồn nghiệp vụ duy nhất. Angular không biết API key, không chứa bản sao FAQ/search rule và không phụ thuộc trực tiếp vào cấu trúc response của bất kỳ hãng AI nào.
 
 ## Chế độ hoạt động
 
@@ -73,10 +73,15 @@ Không commit API key vào `application.properties`, file Angular, GitHub hoặc
 ## Contract
 
 - `GET /api/chat/status`: trả provider, model và trạng thái AI; không bao giờ trả key hoặc base URL.
-- `POST /api/chat`: nhận `message` tối đa 1000 ký tự và tối đa 10 lượt `history`.
-- Response chuẩn hóa gồm `answer`, `provider`, `model`, `fallback`, `products` và `chips`.
+- `POST /api/chat`: contract JSON thông thường; nhận `message` tối đa 1000 ký tự, tối đa 10 lượt `history`, `sessionId` và tối đa 8 `contextProductIds`.
+- `POST /api/chat/stream`: cùng request, trả SSE theo thứ tự `ready`, nhiều `chunk`, rồi `done`. Storefront tự fallback về JSON nếu stream không khả dụng.
+- `POST /api/chat/feedback`: nhận `messageId`, `positive|negative` và comment tùy chọn tối đa 500 ký tự.
+- `GET /api/chat/admin/metrics`: tổng hợp intent, fallback, latency và feedback; bắt buộc `ROLE_ADMIN`.
+- Response chuẩn hóa gồm `answer`, `provider`, `model`, `fallback`, `products`, `chips`, `messageId`, `intent`, `criteria` và `actions`.
 
-Backend lấy catalog đang hoạt động từ MySQL, xếp hạng sách liên quan và đưa một context giới hạn vào prompt. Giá hiển thị được tính từ giá gốc và phần trăm giảm trong database. Nếu provider chưa cấu hình, timeout hoặc lỗi, backend trả lời bằng chế độ `local`; nếu cả request backend thất bại, bộ FAQ trong Angular tiếp quản.
+Backend lấy catalog đang hoạt động từ MySQL, xếp hạng sách liên quan và đưa một context giới hạn vào prompt. Giá hiển thị được tính từ giá gốc và phần trăm giảm trong database. Nếu provider chưa cấu hình, timeout hoặc lỗi, backend trả lời bằng chế độ `local`. Angular chỉ retry qua transport JSON và hiện trạng thái lỗi nếu backend không truy cập được; không tự bịa câu trả lời nghiệp vụ.
+
+Pipeline backend gồm `ChatIntentService` → `ChatProductSearchService` → policy/order handler → `AiGateway` hoặc local answer → typed actions → analytics. Intent hiện gồm tìm sách, thông tin sản phẩm, so sánh, chính sách, hỗ trợ đơn, chào hỏi và chưa nhận diện. Bộ eval có hơn 50 cách hỏi tiếng Việt có dấu/không dấu.
 
 Thẻ sản phẩm chỉ được đính kèm khi câu hỏi có ý định tìm/gợi ý/so sánh sách, nhắc đúng tên sách, tác giả hoặc thể loại có trong catalog. Câu hỏi về giao hàng, thanh toán, đổi trả, tài khoản hay trò chuyện thông thường không tự động hiện sách. Khi khách nhắc đúng một hoặc nhiều tên sách, response chỉ kèm các sách được nhắc tới thay vì thêm sản phẩm bán chạy không liên quan.
 
@@ -84,6 +89,8 @@ Bộ nhận diện hiểu các cách hỏi tự nhiên có từ chen giữa như
 
 Prompt AI nhận mô tả rút gọn của các sách liên quan và kiến thức về quy trình mua, tài khoản, đơn hàng, giao hàng, thanh toán, đổi trả để trả lời được nhiều cách hỏi hơn. Giao diện chỉ hiện quick replies ở tin nhắn bot mới nhất; các bộ nút cũ vẫn được lưu trong lịch sử nhưng không lặp lại trên màn hình.
 
+Các quick reply “Còn cuốn khác không?”, “Sách rẻ hơn” và “So sánh các cuốn này” gửi product ID của câu trả lời gần nhất làm ngữ cảnh. ID chỉ dùng để chọn lại catalog hiện hành; giá và tồn kho vẫn đọc lại từ database. Action `ADD_TO_CART` luôn mở xác nhận inline trước khi gọi `CartService`. Action đơn hàng chỉ tra dữ liệu khi JWT hợp lệ và dùng principal hiện tại; client không gửi email/user ID để chọn chủ sở hữu.
+
 Ở chế độ `local`, câu hỏi nêu đúng tên sách về tồn kho, giá hoặc phần trăm giảm được trả lời trực tiếp từ catalog. Số lượng luôn kèm lưu ý có thể thay đổi khi phát sinh đơn hàng mới.
 
-Lịch sử giao diện chỉ lưu trong `sessionStorage` của tab hiện tại với key `vinabook_chat_session`, tối đa 24 tin nhắn. Không gửi mật khẩu, OTP, số thẻ đầy đủ hoặc CVV vào chat.
+Lịch sử giao diện chỉ lưu trong `sessionStorage` của tab hiện tại với key `vinabook_chat_session`, tối đa 24 tin nhắn; `vinabook_chat_id` là mã phiên ngẫu nhiên. Backend không lưu câu hỏi hay câu trả lời: bảng `chat_events` chỉ có metadata vận hành và feedback. Không gửi mật khẩu, OTP, số thẻ đầy đủ hoặc CVV vào chat.

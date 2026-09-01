@@ -30,3 +30,4 @@ Tài liệu này chỉ giữ vấn đề còn hiệu lực. Các mô tả protot
 - Checkout demo QR/card bị gỡ; copy COD và phí ship được đồng bộ.
 - COD, VietQR, VNPay Sandbox và MoMo Test đã có luồng server-side; chữ ký và số tiền callback được xác thực trước khi đổi trạng thái.
 - Footer, 404, mobile menu, loading/error/empty state và accessibility chính đã được củng cố.
+- Chatbot đã gom rule về backend, có intent eval tiếng Việt, follow-up context, SSE/fallback transport, action xác nhận thêm giỏ, tra đơn theo principal, feedback và metrics admin không lưu nội dung chat.
