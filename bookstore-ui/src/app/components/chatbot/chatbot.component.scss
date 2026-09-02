@@ -12,7 +12,7 @@
   background: var(--c-primary);
   box-shadow: 0 14px 34px rgba(7, 31, 25, 0.24);
   cursor: pointer;
-  z-index: 1000;
+  z-index: 1300;
   transition: transform var(--duration-fast) var(--ease), background var(--duration-fast) ease,
     box-shadow var(--duration-fast) ease, bottom 140ms var(--ease);
 
@@ -24,16 +24,29 @@
 
   &:active { transform: translateY(0) scale(0.96); }
   &.active { background: var(--c-primary-deep); }
+
+  /* Closing is available in the panel header; do not leave a second floating
+     X over the page while the chat surface is open. */
+  &.active {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: scale(0.86);
+  }
 }
 
 .chat-panel {
   position: fixed;
   right: 24px;
-  bottom: 92px;
+  bottom: 24px;
   width: 400px;
   max-width: calc(100vw - 32px);
-  height: min(640px, calc(100vh - 124px));
-  min-height: 440px;
+  height: min(700px, calc(100vh - 142px));
+  min-width: 340px;
+  min-height: min(440px, calc(100vh - 142px));
+  max-width: min(720px, calc(100vw - 32px));
+  max-height: calc(100vh - 142px);
+  resize: both;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -42,7 +55,8 @@
   border: 1px solid var(--c-border);
   border-radius: 18px;
   box-shadow: 0 28px 72px rgba(7, 31, 25, 0.2);
-  z-index: 1000;
+  /* Keep the widget above the sticky storefront header as one complete surface. */
+  z-index: 1300;
   transform-origin: bottom right;
   animation: chat-in 220ms var(--ease);
 }
@@ -118,6 +132,18 @@
     transition: color var(--duration-fast) ease, background var(--duration-fast) ease;
 
     &:hover { color: #fff; background: rgba(255, 255, 255, 0.12); }
+  }
+
+  .new-chat-button {
+    width: auto;
+    min-width: 52px;
+    padding: 0 9px;
+    gap: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
   }
 }
 
@@ -490,19 +516,31 @@
     height: 48px;
   }
   .chat-panel {
-    inset:
-      calc(10px + env(safe-area-inset-top, 0px))
-      calc(10px + env(safe-area-inset-right, 0px))
-      calc(74px + env(safe-area-inset-bottom, 0px))
-      calc(10px + env(safe-area-inset-left, 0px));
-    width: auto;
-    height: auto;
+    top: calc(132px + env(safe-area-inset-top, 0px));
+    right: calc(10px + env(safe-area-inset-right, 0px));
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    left: auto;
+    width: calc(100vw - 20px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
+    height: calc(100vh - 150px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
     max-width: none;
+    min-width: 280px;
     min-height: 0;
+    max-height: none;
+    resize: both;
     border-radius: 16px;
   }
   .chat-body { padding: 16px 12px; }
   .message-content { width: calc(100% - 36px); }
+}
+
+@media (max-width: 430px) {
+  .chat-id small { display: none; }
+  .chat-actions .new-chat-button {
+    min-width: 34px;
+    padding: 0;
+
+    span { display: none; }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

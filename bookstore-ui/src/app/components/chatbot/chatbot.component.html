@@ -2,6 +2,8 @@
   class="chat-fab"
   #fabBtn
   [class.active]="open"
+  [attr.tabindex]="open ? -1 : 0"
+  [attr.aria-hidden]="open ? 'true' : null"
   (click)="toggle()"
   [attr.aria-expanded]="open"
   aria-controls="vinabook-chat-panel"
@@ -30,8 +32,15 @@
     </div>
 
     <div class="chat-actions">
-      <button type="button" (click)="clearConversation()" aria-label="Xóa cuộc trò chuyện" title="Xóa cuộc trò chuyện">
-        <lucide-icon name="trash-2" [size]="17"></lucide-icon>
+      <button
+        type="button"
+        class="new-chat-button"
+        (click)="startNewConversation()"
+        aria-label="Tạo cuộc trò chuyện mới"
+        title="Tạo cuộc trò chuyện mới"
+      >
+        <lucide-icon name="plus" [size]="17"></lucide-icon>
+        <span>Mới</span>
       </button>
       <button type="button" (click)="toggle()" aria-label="Đóng trợ lý" title="Đóng">
         <lucide-icon name="x" [size]="19"></lucide-icon>

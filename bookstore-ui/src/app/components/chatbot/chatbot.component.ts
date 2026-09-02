@@ -15,8 +15,9 @@ import { FabCollisionService } from 'src/app/services/fab-collision.service';
 
 /**
  * Widget trợ lý ảo nổi góc phải dưới. Hỏi đáp về sản phẩm, gợi ý sách và
- * giải đáp hình thức thanh toán. Logic ở ChatbotService (rule-based trên
- * catalog cache). Render ở app.component.html, hiển thị trên mọi trang.
+ * giải đáp hình thức thanh toán. Logic truy xuất và grounding nằm ở backend
+ * RAG; component này chỉ quản lý phiên hiển thị, thao tác giỏ hàng và focus.
+ * Render ở app.component.html, hiển thị trên mọi trang.
  */
 @Component({
   selector: 'app-chatbot',
@@ -140,7 +141,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     }
   }
 
-  clearConversation(): void {
+  startNewConversation(): void {
     this.request?.unsubscribe();
     this.typing = false;
     this.pendingAction = undefined;

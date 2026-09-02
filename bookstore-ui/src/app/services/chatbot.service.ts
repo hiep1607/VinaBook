@@ -114,7 +114,11 @@ export class ChatbotService {
               if (!event) continue;
               if (event.name === 'chunk') {
                 streamed += event.data.text || '';
+                if (controller.signal.aborted) return;
                 observer.next({ from: 'bot', text: streamed, streaming: true });
+                // Yield to the browser between chunks so Angular can paint each
+                // update instead of rendering the whole buffered SSE response at once.
+                await this.pause(20);
               } else if (event.name === 'done') {
                 observer.next(this.fromResponse(event.data as ChatApiResponse));
                 observer.complete();
@@ -200,5 +204,9 @@ export class ChatbotService {
       sessionStorage.setItem(this.sessionKey, id);
     }
     return id;
+  }
+
+  private pause(milliseconds: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, milliseconds));
   }
 }
