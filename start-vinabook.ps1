@@ -1,5 +1,6 @@
-param(
-    [switch]$NoBrowser
+﻿param(
+    [switch]$NoBrowser,
+    [switch]$SkipDatabase
 )
 
 $ErrorActionPreference = 'Stop'
@@ -60,7 +61,53 @@ function Test-Endpoint([string]$url) {
     }
 }
 
+function Ensure-MySqlService {
+    if ($SkipDatabase) {
+        Write-Host 'Bỏ qua kiểm tra MySQL theo tham số -SkipDatabase.' -ForegroundColor DarkGray
+        return
+    }
+
+    # Tên service có thể cấu hình trong .env.local nếu máy dùng tên khác.
+    $serviceNames = @()
+    if ($env:VINABOOK_MYSQL_SERVICE) { $serviceNames += $env:VINABOOK_MYSQL_SERVICE }
+    $serviceNames += @('MySQL80', 'MySQL', 'MariaDB')
+
+    $service = $null
+    foreach ($name in ($serviceNames | Select-Object -Unique)) {
+        try {
+            $service = Get-Service -Name $name -ErrorAction SilentlyContinue
+            if ($service) { break }
+        } catch { }
+    }
+
+    if (-not $service) {
+        Write-Host 'Không tìm thấy Windows service MySQL/MariaDB; tiếp tục với database hiện có (Docker, WSL hoặc máy khác).' -ForegroundColor Yellow
+        return
+    }
+
+    if ($service.Status -eq 'Running') {
+        Write-Host "MySQL đã chạy ($($service.Name))." -ForegroundColor DarkGray
+        return
+    }
+
+    try {
+        Start-Service -Name $service.Name -ErrorAction Stop
+    } catch {
+        throw "Tìm thấy service $($service.Name) nhưng không thể khởi động. Hãy mở PowerShell bằng quyền Administrator hoặc dùng -SkipDatabase."
+    }
+
+    $ready = $false
+    1..30 | ForEach-Object {
+        Start-Sleep -Seconds 1
+        $current = Get-Service -Name $service.Name -ErrorAction SilentlyContinue
+        if ($current -and $current.Status -eq 'Running') { $ready = $true; break }
+    }
+    if (-not $ready) { throw "MySQL ($($service.Name)) không sẵn sàng sau 30 giây." }
+    Write-Host "Đã khởi động MySQL ($($service.Name))." -ForegroundColor Cyan
+}
+
 if (-not (Test-Endpoint 'http://localhost:8080/api/chat/status')) {
+    Ensure-MySqlService
     $backendCommand = "Set-Location -LiteralPath '$backendRoot'; & '$maven' $($mavenArgs -join ' ')"
     Start-Process powershell.exe -WorkingDirectory $backendRoot -ArgumentList @('-NoProfile', '-NoExit', '-Command', $backendCommand) | Out-Null
     Write-Host 'Đang khởi động backend...' -ForegroundColor Cyan

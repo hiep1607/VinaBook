@@ -16,7 +16,7 @@ Yêu cầu: Node.js/npm tương thích Angular 12, Java 17 và MySQL.
 
 ### Chạy tất cả bằng một lệnh
 
-Sau khi đã có `VinaBookStore/.env.local`, chạy file `start-vinabook.cmd` ở thư mục root. Script sẽ tự nạp cấu hình AI, mở backend, mở storefront và mở trình duyệt tại `http://localhost:4200`. Nếu backend/frontend đã chạy thì script sẽ giữ nguyên phiên hiện tại, không tạo tiến trình trùng.
+Sau khi đã có `VinaBookStore/.env.local`, chạy file `start-vinabook.cmd` ở thư mục root. Script sẽ tự tìm và bật Windows service `MySQL80`, `MySQL` hoặc `MariaDB`, nạp cấu hình AI, mở backend, mở storefront và mở trình duyệt tại `http://localhost:4200`. Nếu backend/frontend đã chạy thì script sẽ giữ nguyên phiên hiện tại, không tạo tiến trình trùng.
 
 ```powershell
 .\start-vinabook.cmd
@@ -27,6 +27,14 @@ Sau khi đã có `VinaBookStore/.env.local`, chạy file `start-vinabook.cmd` �
 ```powershell
 .\start-vinabook.cmd -NoBrowser
 ```
+
+Nếu database chạy bằng Docker, WSL hoặc trên máy khác, bỏ qua bước dò Windows service:
+
+```powershell
+.\start-vinabook.cmd -SkipDatabase
+```
+
+Nếu service MySQL có tên riêng, thêm `VINABOOK_MYSQL_SERVICE=TenService` vào `VinaBookStore/.env.local`. Lần đầu có thể cần chạy PowerShell bằng quyền Administrator để Windows cho phép bật service.
 
 1. Tạo database `book` và import `database.sql` nếu máy chưa có dữ liệu.
 2. Chạy backend:
