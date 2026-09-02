@@ -2,6 +2,7 @@ package vn.fs.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.Collections;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import vn.fs.dto.chat.ChatIntent;
+import vn.fs.dto.chat.ChatSearchCriteriaDto;
 
 class ChatIntentServiceTest {
 	private final ChatIntentService service = new ChatIntentService();
@@ -23,6 +25,14 @@ class ChatIntentServiceTest {
 	@Test
 	void normalizesVietnameseDiacritics() {
 		assertThat(service.normalize("ĐẮC Nhân Tâm")).isEqualTo("dac nhan tam");
+	}
+
+	@Test
+	void doesNotTreatRequestedBookCountAsAThreeThousandDongBudget() {
+		ChatSearchCriteriaDto criteria = service.criteria("Tìm 3 sách pháp luật dưới 100k",
+				Collections.emptyList());
+
+		assertThat(criteria.getMaxPrice()).isEqualTo(100_000L);
 	}
 
 	private static Stream<Arguments> intentCases() {
@@ -41,6 +51,9 @@ class ChatIntentServiceTest {
 			Arguments.of("Tìm cuốn dưới 100 nghìn", ChatIntent.DISCOVER_BOOKS),
 			Arguments.of("Sách giá trên 200k", ChatIntent.DISCOVER_BOOKS),
 			Arguments.of("Tìm sách về giao tiếp", ChatIntent.DISCOVER_BOOKS),
+			Arguments.of("Có sách nào về pháp luật không?", ChatIntent.DISCOVER_BOOKS),
+			Arguments.of("Sách luật cho người không học luật", ChatIntent.DISCOVER_BOOKS),
+			Arguments.of("Tìm hiểu pháp lý doanh nghiệp", ChatIntent.DISCOVER_BOOKS),
 			Arguments.of("Sách thể loại trinh thám", ChatIntent.DISCOVER_BOOKS),
 			Arguments.of("Còn cuốn khác không?", ChatIntent.DISCOVER_BOOKS),
 			Arguments.of("Sách rẻ hơn", ChatIntent.DISCOVER_BOOKS),
@@ -50,6 +63,7 @@ class ChatIntentServiceTest {
 			Arguments.of("Cuốn nào tốt hơn?", ChatIntent.COMPARE_BOOKS),
 			Arguments.of("so sanh sapiens voi tu duy nhanh va cham", ChatIntent.COMPARE_BOOKS),
 			Arguments.of("Nhà Giả Kim giá bao nhiêu?", ChatIntent.PRODUCT_INFO),
+			Arguments.of("Giá Đắc Nhân Tâm bao nhiêu?", ChatIntent.PRODUCT_INFO),
 			Arguments.of("Cuốn này còn hàng không?", ChatIntent.PRODUCT_INFO),
 			Arguments.of("Tồn kho Đắc Nhân Tâm", ChatIntent.PRODUCT_INFO),
 			Arguments.of("Nội dung Sapiens là gì?", ChatIntent.PRODUCT_INFO),

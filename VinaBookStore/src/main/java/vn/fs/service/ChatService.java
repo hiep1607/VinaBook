@@ -26,20 +26,25 @@ public class ChatService {
 	private final ProductRepository products;
 	private final AiGateway ai;
 	private final ChatIntentService intents;
-	private final ChatProductSearchService search;
+	private final ChatQueryPlannerService planner;
+	private final ChatRetrievalService retrieval;
+	private final ChatGroundingService grounding;
 	private final ChatPolicyService policies;
 	private final ChatOrderSupportService orderSupport;
 	private final ChatAnalyticsService analytics;
 	private final CurrentUserAccess access;
 
 	public ChatService(ProductRepository products, AiGateway ai, ChatIntentService intents,
-			ChatProductSearchService search, ChatPolicyService policies,
+			ChatQueryPlannerService planner, ChatRetrievalService retrieval,
+			ChatGroundingService grounding, ChatPolicyService policies,
 			ChatOrderSupportService orderSupport, ChatAnalyticsService analytics,
 			CurrentUserAccess access) {
 		this.products = products;
 		this.ai = ai;
 		this.intents = intents;
-		this.search = search;
+		this.planner = planner;
+		this.retrieval = retrieval;
+		this.grounding = grounding;
 		this.policies = policies;
 		this.orderSupport = orderSupport;
 		this.analytics = analytics;
@@ -51,33 +56,34 @@ public class ChatService {
 		long started = System.currentTimeMillis();
 		String question = request.getMessage().trim();
 		List<Product> catalog = products.findByStatusTrue();
-		ChatIntent intent = intents.classify(question);
+		ChatIntent baseIntent = intents.classify(question);
 		ChatSearchCriteriaDto criteria = intents.criteria(question, catalog);
 		String normalized = intents.normalize(question);
 		if (isAlternativeRequest(normalized)) {
 			criteria = followUpCriteria(criteria, request, catalog);
 		}
-		List<Product> selected = search.search(question, intent, criteria, catalog);
-		List<Product> context = contextProducts(request, catalog);
-		if (intent == ChatIntent.COMPARE_BOOKS && selected.size() < 2 && context.size() >= 2) {
-			selected = context.stream().limit(3).collect(Collectors.toList());
-		}
-		if (intent == ChatIntent.DISCOVER_BOOKS && isAlternativeRequest(normalized) && !context.isEmpty()) {
-			List<Long> seen = context.stream().map(Product::getProductId).collect(Collectors.toList());
-			selected = selected.stream().filter(product -> !seen.contains(product.getProductId()))
-					.limit(4).collect(Collectors.toList());
-		}
-		if (intent == ChatIntent.UNKNOWN) {
-			List<Product> named = search.search(question, ChatIntent.PRODUCT_INFO, criteria, catalog);
+		ChatSearchCriteriaDto explicitCriteria = criteria;
+		ChatQueryPlan plan = planner.plan(question, request.getHistory(), catalog, baseIntent, criteria);
+		ChatIntent intent = plan.getIntent();
+		criteria = plan.getCriteria();
+		List<Product> selected = retrieval.retrieve(question, plan, catalog,
+				request.getContextProductIds(), isAlternativeRequest(normalized));
+		if (intent == ChatIntent.UNKNOWN && !selected.isEmpty()) {
+			List<Product> named = selected.stream().filter(product ->
+					normalized.contains(intents.normalize(product.getName()))).collect(Collectors.toList());
 			if (!named.isEmpty()) {
 				intent = ChatIntent.PRODUCT_INFO;
 				selected = named;
+				plan = new ChatQueryPlan(intent, criteria, plan.getSearchTerms(),
+						plan.getRequestedCount(), plan.isAiPlanned());
 			}
 		}
 		if (isCategoryList(question)) selected = Collections.emptyList();
 
-		List<ChatProductDto> productDtos = selected.stream().map(this::toDto).collect(Collectors.toList());
-		boolean deterministic = intent == ChatIntent.POLICY || intent == ChatIntent.ORDER_SUPPORT;
+		boolean deterministic = intent == ChatIntent.POLICY || intent == ChatIntent.ORDER_SUPPORT
+				|| intent == ChatIntent.SMALL_TALK || (intent == ChatIntent.UNKNOWN && selected.isEmpty())
+				|| (intent == ChatIntent.DISCOVER_BOOKS && selected.isEmpty())
+				|| isCategoryList(question) || isDeterministicProductInfo(question, intent, selected);
 		boolean fallback = !ai.isConfigured();
 		String provider = fallback || deterministic ? "local" : ai.provider();
 		String model = fallback || deterministic ? "" : ai.model();
@@ -92,19 +98,36 @@ public class ChatService {
 		} else if (isCategoryList(question)) {
 			answer = categoryAnswer(catalog);
 			fallback = false;
+		} else if (isDeterministicProductInfo(question, intent, selected)) {
+			answer = productInfo(question, selected.get(0));
+			fallback = false;
+		} else if (intent == ChatIntent.SMALL_TALK
+				|| ((intent == ChatIntent.UNKNOWN || intent == ChatIntent.DISCOVER_BOOKS) && selected.isEmpty())) {
+			answer = localAnswer(question, intent, selected, criteria);
+			fallback = false;
+			fallback = false;
 		} else if (ai.isConfigured()) {
 			try {
-				answer = ai.complete(systemPrompt(intent, criteria, selected, catalog.size()), request.getHistory(), question);
+				String raw = ai.complete(grounding.prompt(plan, selected, catalog.size()),
+						request.getHistory(), question);
+				ChatGroundingService.GroundedResult grounded = grounding.parse(raw, selected, intent);
+				if (!grounded.isValid()) throw new IllegalStateException("AI không trả dữ liệu RAG hợp lệ");
+				answer = grounded.getAnswer();
+				selected = grounded.getProducts();
 			} catch (RuntimeException ex) {
 				fallback = true;
 				provider = "local";
 				model = "";
+				if (intent == ChatIntent.DISCOVER_BOOKS) {
+					selected = retrieval.directMatches(question, explicitCriteria, selected);
+				}
 				answer = localAnswer(question, intent, selected, criteria);
 			}
 		} else {
 			answer = localAnswer(question, intent, selected, criteria);
 		}
 
+		List<ChatProductDto> productDtos = selected.stream().map(this::toDto).collect(Collectors.toList());
 		List<String> chips = chips(intent, selected);
 		List<ChatActionDto> actions = actions(intent, selected);
 		String messageId = analytics.record(request.getSessionId(), intent, provider, fallback,
@@ -125,8 +148,15 @@ public class ChatService {
 		if (intent == ChatIntent.DISCOVER_BOOKS) {
 			if (selected.isEmpty()) return "Mình chưa tìm thấy sách khớp hoàn toàn. Bạn thử nới khoảng giá hoặc mô tả rõ người đọc và chủ đề nhé.";
 			String need = criteria.getTopics().isEmpty() ? "nhu cầu của bạn" : String.join(", ", criteria.getTopics());
-			return "Mình chọn " + selected.size() + " cuốn phù hợp với " + need
-					+ ". Các gợi ý lấy trực tiếp từ catalog và đã được kiểm tra theo giá, thể loại, tồn kho hiện tại.";
+			StringBuilder answer = new StringBuilder("Mình đã kiểm tra catalog và chọn các sách phù hợp với ")
+					.append(need).append(":");
+			for (Product product : selected.stream().limit(5).collect(Collectors.toList())) {
+				answer.append("\n\n• “").append(product.getName()).append("” — ")
+						.append(money(retrieval.effectivePrice(product))).append(", ")
+						.append(product.getQuantity() > 0 ? "còn " + product.getQuantity() + " cuốn" : "hiện hết hàng")
+						.append(". ").append(shortDescription(product.getDescription()));
+			}
+			return answer.toString();
 		}
 		if (intent == ChatIntent.SMALL_TALK) {
 			String q = intents.normalize(question);
@@ -145,7 +175,7 @@ public class ChatService {
 					: "“" + product.getName() + "” hiện đang hết hàng.";
 		}
 		if (contains(q, "gia", "bao nhieu tien", "giam")) {
-			return "“" + product.getName() + "” hiện có giá " + money(search.effectivePrice(product))
+			return "“" + product.getName() + "” hiện có giá " + money(retrieval.effectivePrice(product))
 					+ (product.getDiscount() > 0 ? ", giảm " + product.getDiscount() + "% từ " + money(Math.round(product.getPrice())) : ".");
 		}
 		String description = product.getDescription() == null || product.getDescription().trim().isEmpty()
@@ -158,26 +188,13 @@ public class ChatService {
 		StringBuilder answer = new StringBuilder("So sánh nhanh:\n");
 		for (Product product : selected) {
 			answer.append("• ").append(product.getName()).append(": ")
-					.append(money(search.effectivePrice(product))).append(", ")
+					.append(money(retrieval.effectivePrice(product))).append(", ")
 					.append(category(product)).append(", ")
 					.append(product.getQuantity() > 0 ? "còn hàng" : "hết hàng").append(". ")
 					.append(shortDescription(product.getDescription())).append("\n");
 		}
 		answer.append("Nếu ưu tiên ngân sách, chọn cuốn có giá thấp hơn; nếu ưu tiên nội dung, mở từng trang sách để xem mô tả chi tiết.");
 		return answer.toString();
-	}
-
-	private String systemPrompt(ChatIntent intent, ChatSearchCriteriaDto criteria, List<Product> context, int total) {
-		String catalog = context.stream().map(product -> "- " + product.getName() + " | tác giả: "
-				+ value(product.getAuthor(), "Đang cập nhật") + " | thể loại: " + category(product)
-				+ " | giá: " + search.effectivePrice(product) + "đ | tồn: " + product.getQuantity()
-				+ " | mô tả: " + shortDescription(product.getDescription())).collect(Collectors.joining("\n"));
-		return "Bạn là trợ lý mua sách VinaBook. Trả lời tiếng Việt tự nhiên, tối đa 180 từ, văn bản thuần. "
-				+ "Ý định: " + intent.name() + ". Chỉ dùng catalog được cung cấp; không bịa sách, giá, tồn kho, mã giảm giá hay trạng thái đơn. "
-				+ "Nếu so sánh, nêu khác biệt về nội dung, đối tượng và giá. Nếu tư vấn, giải thích ngắn vì sao từng cuốn phù hợp. "
-				+ "Không hỏi mật khẩu, OTP, CVV hoặc số thẻ. Catalog có " + total + " sách. "
-				+ "Bộ lọc: minPrice=" + criteria.getMinPrice() + ", maxPrice=" + criteria.getMaxPrice()
-				+ ", category=" + criteria.getCategory() + ", topics=" + criteria.getTopics() + ".\nCATALOG LIÊN QUAN:\n" + catalog;
 	}
 
 	private List<ChatActionDto> actions(ChatIntent intent, List<Product> selected) {
@@ -202,7 +219,7 @@ public class ChatService {
 
 	private ChatProductDto toDto(Product product) {
 		return new ChatProductDto(product.getProductId(), product.getName(), value(product.getAuthor(), "Đang cập nhật"),
-				category(product), search.effectivePrice(product), product.getPrice() == null ? 0 : product.getPrice(),
+				category(product), retrieval.effectivePrice(product), product.getPrice() == null ? 0 : product.getPrice(),
 				product.getDiscount(), product.getQuantity(), product.getImage());
 	}
 
@@ -216,14 +233,11 @@ public class ChatService {
 		return contains(q, "co nhung the loai", "the loai nao", "danh sach the loai");
 	}
 
-	private List<Product> contextProducts(ChatRequestDto request, List<Product> catalog) {
-		if (request.getContextProductIds() == null || request.getContextProductIds().isEmpty()) {
-			return Collections.emptyList();
-		}
-		List<Long> ids = request.getContextProductIds();
-		return catalog.stream().filter(product -> ids.contains(product.getProductId()))
-				.sorted((left, right) -> Integer.compare(ids.indexOf(left.getProductId()), ids.indexOf(right.getProductId())))
-				.collect(Collectors.toList());
+	private boolean isDeterministicProductInfo(String question, ChatIntent intent, List<Product> selected) {
+		if (intent != ChatIntent.PRODUCT_INFO || selected.isEmpty()) return false;
+		String q = intents.normalize(question);
+		return contains(q, "con hang", "ton kho", "bao nhieu ban", "bao nhieu cuon", "con may",
+				"gia", "bao nhieu tien", "giam bao nhieu", "khuyen mai");
 	}
 
 	private boolean isAlternativeRequest(String normalized) {

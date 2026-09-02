@@ -18,6 +18,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import vn.fs.dto.chat.ChatRequestDto;
 import vn.fs.dto.chat.ChatResponseDto;
 import vn.fs.dto.chat.ChatTurnDto;
@@ -43,8 +45,11 @@ class ChatServiceTest {
 	@BeforeEach
 	void setUp() {
 		ChatIntentService intentService = new ChatIntentService();
+		ObjectMapper mapper = new ObjectMapper();
+		ChatRetrievalService retrieval = new ChatRetrievalService(intentService);
 		service = new ChatService(products, ai, intentService,
-				new ChatProductSearchService(intentService), new ChatPolicyService(intentService),
+				new ChatQueryPlannerService(ai, mapper, intentService), retrieval,
+				new ChatGroundingService(mapper, retrieval), new ChatPolicyService(intentService),
 				orderSupport, analytics, access);
 		when(analytics.record(any(), any(), anyString(), anyBoolean(), anyInt(), anyLong()))
 				.thenReturn("message-id");
@@ -198,14 +203,31 @@ class ChatServiceTest {
 		when(ai.isConfigured()).thenReturn(true);
 		when(ai.provider()).thenReturn("openai");
 		when(ai.model()).thenReturn("configured-model");
-		when(ai.complete(anyString(), anyList(), anyString())).thenReturn("Câu trả lời từ AI");
+		when(ai.complete(anyString(), anyList(), anyString())).thenReturn(
+				"{\"intent\":\"DISCOVER_BOOKS\",\"searchTerms\":[],\"topics\":[],\"requestedCount\":1}",
+				"{\"intro\":\"Mình đã kiểm tra catalog.\",\"recommendations\":[{\"productId\":57,\"reason\":\"Phù hợp để bắt đầu.\"}],\"closing\":\"\"}");
 
 		ChatResponseDto response = service.reply(request("Gợi ý sách hay"));
 
 		assertThat(response.isFallback()).isFalse();
 		assertThat(response.getProvider()).isEqualTo("openai");
 		assertThat(response.getModel()).isEqualTo("configured-model");
-		assertThat(response.getAnswer()).isEqualTo("Câu trả lời từ AI");
+		assertThat(response.getAnswer()).contains("Đắc Nhân Tâm").contains("70.520đ");
+	}
+
+	@Test
+	void discoveryCardsFollowBookNamesActuallyMentionedByAi() {
+		when(ai.isConfigured()).thenReturn(true);
+		when(ai.provider()).thenReturn("gemini");
+		when(ai.model()).thenReturn("configured-model");
+		when(ai.complete(anyString(), anyList(), anyString()))
+				.thenReturn(
+						"{\"intent\":\"DISCOVER_BOOKS\",\"searchTerms\":[],\"topics\":[],\"requestedCount\":1}",
+						"{\"intro\":\"Mình đã kiểm tra catalog.\",\"recommendations\":[{\"productId\":58,\"reason\":\"Phù hợp để bắt đầu đọc.\"}],\"closing\":\"\"}");
+
+		ChatResponseDto response = service.reply(request("Gợi ý sách hay"));
+
+		assertThat(response.getProducts()).extracting("name").containsExactly("Nhà Giả Kim");
 	}
 
 	private ChatRequestDto request(String message) {
