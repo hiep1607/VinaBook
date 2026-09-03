@@ -1,0 +1,50 @@
+<div class="reader" role="dialog" aria-modal="true" [attr.aria-label]="'Đọc thử ' + title" (click)="onBackdropClick($event)">
+  <button type="button" class="reader-close" aria-label="Đóng sách" (click)="close()">×</button>
+
+  <div
+    #canvasHost
+    class="book-scene"
+    [class.is-dragging]="dragging"
+    (pointerdown)="onPointerDown($event)"
+    (pointermove)="onPointerMove($event)"
+    (pointerup)="onPointerUp($event)"
+    (pointercancel)="onPointerUp($event)">
+    <div *ngIf="loading" class="book-loading" aria-live="polite">
+      <span></span>
+      <small>Đang mở sách…</small>
+    </div>
+
+    <div *ngIf="fallback" class="book-fallback">
+      <article class="fallback-page fallback-left" (click)="previous()">
+        <img
+          *ngIf="leftPage"
+          [src]="leftPage.imageUrl"
+          [alt]="'Trang ' + (currentIndex + 1)"
+          draggable="false">
+      </article>
+      <article class="fallback-page fallback-right" (click)="next()">
+        <img
+          *ngIf="rightPage"
+          [src]="rightPage.imageUrl"
+          [alt]="'Trang ' + (currentIndex + 2)"
+          draggable="false">
+      </article>
+    </div>
+
+    <button
+      type="button"
+      class="turn-zone turn-zone-left"
+      aria-label="Lật về trang trước"
+      [disabled]="!canPrevious"
+      (click)="previous()"></button>
+    <button
+      type="button"
+      class="turn-zone turn-zone-right"
+      aria-label="Lật sang trang sau"
+      [disabled]="!canNext"
+      (click)="next()"></button>
+  </div>
+
+  <div class="reader-status" aria-live="polite">{{ pageLabel }}</div>
+  <div *ngIf="hintVisible && !loading" class="reader-hint">Kéo mép trang để lật</div>
+</div>

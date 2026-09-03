@@ -131,6 +131,30 @@
   backdrop-filter: blur(10px);
 }
 
+.fallback-preview-button {
+  position: absolute;
+  bottom: 14px;
+  left: 16px;
+  z-index: 5;
+  min-height: 32px;
+  border: 1px solid color-mix(in srgb, var(--c-border) 82%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--c-surface) 90%, transparent);
+  padding: 0 12px;
+  color: var(--c-fg);
+  font: inherit;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+
+.fallback-preview-button:hover,
+.preview-button:hover {
+  border-color: var(--c-accent);
+  color: var(--c-accent);
+}
+
 .viewer-toolbar > span {
   display: flex;
   flex: 0 1 auto;

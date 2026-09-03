@@ -89,6 +89,10 @@ Hai Angular production build gọi API theo cùng origin. Web server cần:
 - đặt `DB_USERNAME`, `DB_PASSWORD`, `JWT_SECRET`, `MAIL_USERNAME`, `MAIL_PASSWORD` bằng biến môi trường;
 - không dùng secret mặc định local cho môi trường public.
 
+Backend local tự dùng profile `dev`. Khi deploy phải bật `SPRING_PROFILES_ACTIVE=prod` và khai báo đủ `DB_URL`, `DB_USERNAME`, `DB_PASSWORD`, `JWT_SECRET`, `FRONTEND_URL`, `BACKEND_PUBLIC_URL`. Profile production tắt SQL log, tắt Open Session in View và chỉ validate schema thay vì tự sửa schema.
+
+Mỗi pull request và mỗi lần push vào `main` đều chạy GitHub Actions để build/test storefront, backend và admin; test backend dùng MySQL 8.
+
 Thanh toán hỗ trợ COD, chuyển khoản VietQR, VNPay Sandbox và MoMo Test. COD hoạt động ngay; ba phương thức còn lại chỉ bật khi backend có đủ biến môi trường. Xem [hướng dẫn thanh toán](docs/payment.md). Phí giao hàng là `20.000đ`, miễn phí từ `300.000đ`.
 
 Chatbot mặc định chạy nội bộ, không cần API key. Có thể đổi qua OpenAI, API tương thích OpenAI, Gemini hoặc Anthropic chỉ bằng biến môi trường backend. Xem [hướng dẫn chatbot](docs/chatbot.md).

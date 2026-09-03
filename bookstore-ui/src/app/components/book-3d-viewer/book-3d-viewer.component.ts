@@ -7,12 +7,15 @@ import {
   OnChanges,
   OnDestroy,
   SimpleChanges,
-  ViewChild
+  ViewChild,
+  EventEmitter,
+  Output
 } from '@angular/core';
 import type * as ThreeTypes from 'three';
 import type { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import type { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry';
 import type { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment';
+import { gsap } from 'gsap';
 import { MotionService } from '../../services/motion.service';
 
 import {
@@ -43,6 +46,9 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
   @Input() pageCount: number | null = null;
   @Input() backImage = '';
   @Input() spineImage = '';
+  @Input() previewEnabled = false;
+
+  @Output() previewRequested = new EventEmitter<void>();
 
   @ViewChild('canvasHost', { static: true })
   canvasHost!: ElementRef<HTMLDivElement>;
@@ -64,6 +70,10 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
   private environmentTexture?: ThreeTypes.Texture;
   private controls?: OrbitControls;
   private bookGroup?: ThreeTypes.Group;
+  private frontSpineHingePivot?: ThreeTypes.Group;
+  private frontCoverPivot?: ThreeTypes.Group;
+  private openTimeline?: gsap.core.Timeline;
+  private bookOpen = false;
   private coverTexture?: ThreeTypes.Texture;
   private backTexture?: ThreeTypes.Texture;
   private spineTexture?: ThreeTypes.Texture;
@@ -115,6 +125,23 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
 
   private readonly onWindowResize = (): void => this.resizeRenderer();
 
+  private readonly onCanvasDoubleClick = (event: MouseEvent): void => {
+    event.preventDefault();
+    if (this.three && this.camera && this.bookGroup && this.renderer) {
+      const rect = this.renderer.domElement.getBoundingClientRect();
+      const pointer = new this.three.Vector2(
+        ((event.clientX - rect.left) / Math.max(rect.width, 1)) * 2 - 1,
+        -((event.clientY - rect.top) / Math.max(rect.height, 1)) * 2 + 1
+      );
+      const raycaster = new this.three.Raycaster();
+      raycaster.setFromCamera(pointer, this.camera);
+      if (!raycaster.intersectObject(this.bookGroup, true).length) {
+        return;
+      }
+    }
+    this.requestPreview();
+  };
+
   constructor(
     private zone: NgZone,
     private motion: MotionService
@@ -156,6 +183,8 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
   ngOnDestroy(): void {
     this.destroyed = true;
     this.textureVersion++;
+    this.openTimeline?.kill();
+    this.openTimeline = undefined;
 
     if (this.animationFrameId !== undefined) {
       cancelAnimationFrame(this.animationFrameId);
@@ -177,6 +206,7 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
 
     const canvas = this.renderer?.domElement;
     canvas?.removeEventListener('webglcontextlost', this.onContextLost);
+    canvas?.removeEventListener('dblclick', this.onCanvasDoubleClick);
 
     this.disposeBook();
     this.disposeSceneObjects();
@@ -204,6 +234,10 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
 
   resetView(): void {
     const THREE = this.three;
+    if (this.bookOpen) {
+      this.closeBook();
+      return;
+    }
     if (!this.controls || !this.bookGroup || !this.camera || !THREE) {
       return;
     }
@@ -231,6 +265,102 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
       this.controls.update();
     }
     this.lastInteractionAt = performance.now();
+  }
+
+  requestPreview(): void {
+    if (!this.previewEnabled) {
+      return;
+    }
+    if (!this.bookGroup || !this.frontSpineHingePivot || !this.frontCoverPivot || this.fallback) {
+      this.emitPreviewRequested();
+      return;
+    }
+    if (this.bookOpen) {
+      if (this.openTimeline?.isActive()) {
+        if (this.openTimeline.reversed()) {
+          this.openTimeline.play();
+        }
+        return;
+      }
+      this.emitPreviewRequested();
+      return;
+    }
+
+    this.openTimeline?.kill();
+    this.targetBookRotation = undefined;
+    this.targetCameraPosition = undefined;
+    this.targetControlTarget = undefined;
+    this.interacting = false;
+    if (this.controls) {
+      this.controls.enabled = false;
+    }
+
+    const reduced = this.reduceMotion;
+    this.bookOpen = true;
+    this.openTimeline = gsap.timeline({
+      paused: true,
+      defaults: { ease: 'power3.inOut' },
+      onReverseComplete: () => {
+        this.bookOpen = false;
+        if (this.controls) {
+          this.controls.enabled = true;
+          this.controls.update();
+        }
+        this.lastInteractionAt = performance.now();
+      }
+    });
+    this.openTimeline
+      .addLabel('focus')
+      .to(this.bookGroup.rotation, { x: -0.14, y: -0.08, duration: reduced ? 0 : 0.42 }, 'focus')
+      .to(this.bookGroup.position, { y: '+=0.04', duration: reduced ? 0 : 0.42 }, 'focus')
+      .addLabel('release-hinge', reduced ? 0 : 0.16)
+      .to(this.frontSpineHingePivot.rotation, {
+        y: -0.16,
+        duration: reduced ? 0 : 0.24,
+        ease: 'power2.out'
+      }, 'release-hinge')
+      .to(this.frontCoverPivot.rotation, {
+        y: -0.32,
+        duration: reduced ? 0 : 0.24,
+        ease: 'power2.out'
+      }, 'release-hinge')
+      .addLabel('open-cover', reduced ? 0 : 0.4)
+      .to(this.frontSpineHingePivot.rotation, {
+        y: -0.08,
+        duration: reduced ? 0 : 0.68,
+        ease: 'power3.inOut'
+      }, 'open-cover')
+      .to(this.frontCoverPivot.rotation, {
+        // Combined with the flexible hinge rotation, the cover finishes flat
+        // behind the book while both pieces stay joined at the same axis.
+        y: -Math.PI + 0.08,
+        duration: reduced ? 0 : 0.68,
+        onComplete: () => this.emitPreviewRequested()
+      }, 'open-cover')
+      .to(this.bookGroup.rotation, { z: 0, duration: reduced ? 0 : 0.52 }, 'open-cover+=0.08');
+
+    if (reduced) {
+      this.openTimeline.progress(1);
+    } else {
+      this.openTimeline.play();
+    }
+  }
+
+  closeBook(): void {
+    if (!this.openTimeline) {
+      return;
+    }
+    if (this.openTimeline.isActive()) {
+      this.openTimeline.reverse();
+      return;
+    }
+    if (this.bookOpen) {
+      this.openTimeline.reverse();
+    }
+  }
+
+  private emitPreviewRequested(): void {
+    this.zone.run(() => this.previewRequested.emit());
   }
 
   onFallbackImageError(): void {
@@ -289,6 +419,7 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
       this.renderer.domElement.className = 'book-canvas';
       this.renderer.domElement.setAttribute('aria-hidden', 'true');
       this.renderer.domElement.addEventListener('webglcontextlost', this.onContextLost);
+      this.renderer.domElement.addEventListener('dblclick', this.onCanvasDoubleClick);
       host.appendChild(this.renderer.domElement);
 
       this.setupEnvironment();
@@ -710,6 +841,7 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
     const pageHeight = height - coverOverhang * 2;
     const pageDepth = depth;
     const pageOffsetX = 0;
+    const spineLeftX = -width / 2;
     const pageBlock = new THREE.Mesh(
       this.createPageBlockGeometry(pageWidth, pageHeight, pageDepth),
       // RoundedBoxGeometry inherits BoxGeometry's six face groups. Applying
@@ -764,18 +896,33 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
     const frontCoverCenterZ = pageDepth / 2 + technicalGap + coverThickness / 2;
     const backCoverCenterZ = -frontCoverCenterZ;
     const coverOuterZ = pageDepth / 2 + technicalGap + coverThickness;
-    frontCover.position.z = frontCoverCenterZ;
+    // A paperback bends in two stages: the narrow glued hinge yields first,
+    // then the cover swings around it. Both pivots share the real front-spine
+    // seam, so the cover cannot orbit around the middle of the page block.
+    const frontSpineHingePivot = new THREE.Group();
+    frontSpineHingePivot.name = 'front-spine-hinge-pivot';
+    frontSpineHingePivot.position.set(spineLeftX, 0, frontCoverCenterZ);
+
+    const frontCoverPivot = new THREE.Group();
+    frontCoverPivot.name = 'front-cover-pivot';
+    frontCover.position.set(width / 2, 0, 0);
     frontCover.castShadow = true;
     frontCover.receiveShadow = true;
-    group.add(frontCover);
+    frontCoverPivot.add(frontCover);
 
     const frontFace = new THREE.Mesh(
       this.createWarpedCoverFaceGeometry(width, height, coverWarp),
       frontMaterial
     );
-    frontFace.position.z = coverOuterZ + BOOK_MODEL_CONFIG.coverBevel * 0.5;
+    frontFace.position.set(
+      width / 2,
+      0,
+      coverThickness / 2 + BOOK_MODEL_CONFIG.coverBevel * 0.5
+    );
     frontFace.castShadow = true;
-    group.add(frontFace);
+    frontCoverPivot.add(frontFace);
+    frontSpineHingePivot.add(frontCoverPivot);
+    group.add(frontSpineHingePivot);
 
     const backCover = new THREE.Mesh(
       new THREE.BoxGeometry(width, height, coverThickness, 1, 1, 1),
@@ -800,7 +947,6 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
     group.add(backFace);
 
     const spineBulge = pageDepth * BOOK_MODEL_CONFIG.spineBulgeRatio;
-    const spineLeftX = -width / 2;
     const spineTotalDepth = coverOuterZ * 2;
     const spine = new THREE.Mesh(
       this.createPaperbackSpineGeometry(spineLeftX, height, spineTotalDepth, spineBulge),
@@ -825,9 +971,10 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
       color: palette.dark,
       roughness: 0.9,
       metalness: 0,
-      envMapIntensity: 0.1
+      envMapIntensity: 0.1,
+      side: THREE.DoubleSide
     });
-    [-1, 1].forEach(side => {
+    [-1].forEach(side => {
       const hinge = new THREE.Mesh(
         new THREE.PlaneGeometry(BOOK_MODEL_CONFIG.hingeWidth, height - 0.018),
         hingeMaterial
@@ -844,6 +991,22 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
       group.add(hinge);
     });
 
+    const flexibleHingeWidth = Math.max(BOOK_MODEL_CONFIG.hingeWidth, height * 0.018);
+    const frontFlexibleHinge = new THREE.Mesh(
+      new THREE.PlaneGeometry(flexibleHingeWidth, height - 0.018),
+      hingeMaterial
+    );
+    frontFlexibleHinge.name = 'front-flexible-spine-hinge';
+    frontFlexibleHinge.position.set(
+      flexibleHingeWidth / 2,
+      0,
+      coverThickness / 2 + 0.0018
+    );
+    frontFlexibleHinge.castShadow = true;
+    frontSpineHingePivot.add(frontFlexibleHinge);
+
+    this.frontSpineHingePivot = frontSpineHingePivot;
+    this.frontCoverPivot = frontCoverPivot;
     this.bookGroup = group;
     this.scene.add(group);
     this.positionBookOnFloor();
@@ -1802,7 +1965,7 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
 
     this.controls?.update();
 
-    if (this.bookGroup && !this.reduceMotion) {
+    if (this.bookGroup && !this.reduceMotion && !this.bookOpen) {
       if (this.targetBookRotation) {
         const smoothing = 1 - Math.exp(-deltaSeconds * BOOK_MOTION_CONFIG.resetSmoothing);
         this.bookGroup.rotation.x += (this.targetBookRotation.x - this.bookGroup.rotation.x) * smoothing;
@@ -1839,6 +2002,14 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
   };
 
   private disposeBook(disposeTextures = true): void {
+    this.openTimeline?.kill();
+    this.openTimeline = undefined;
+    this.bookOpen = false;
+    this.frontSpineHingePivot = undefined;
+    this.frontCoverPivot = undefined;
+    if (this.controls) {
+      this.controls.enabled = true;
+    }
     if (this.bookGroup) {
       this.scene?.remove(this.bookGroup);
       this.disposeObject(this.bookGroup);

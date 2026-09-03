@@ -17,6 +17,13 @@ export class UploadService {
     return this.http.post('https://api.cloudinary.com/v1_1/martfury/image/upload', data)
   }
 
+  uploadPreviewPage(file: File): Observable<any> {
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', 'product-image');
+    return this.http.post('https://api.cloudinary.com/v1_1/martfury/image/upload', data);
+  }
+
   uploadCustomer(file: File): Observable<any> {
     const data = new FormData();
     data.append('file', file);

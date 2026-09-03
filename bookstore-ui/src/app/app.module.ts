@@ -58,6 +58,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ThemeSwitcherComponent } from './components/theme-switcher/theme-switcher.component';
 import { PaymentResultComponent } from './pages/payment-result/payment-result.component';
 import { Book3dViewerComponent } from './components/book-3d-viewer/book-3d-viewer.component';
+import { BookPreviewReaderComponent } from './components/book-preview-reader/book-preview-reader.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { Book3dViewerComponent } from './components/book-3d-viewer/book-3d-viewe
     NotFoundComponent,
     ThemeSwitcherComponent,
     PaymentResultComponent,
-    Book3dViewerComponent
+    Book3dViewerComponent,
+    BookPreviewReaderComponent
   ],
 
   imports: [

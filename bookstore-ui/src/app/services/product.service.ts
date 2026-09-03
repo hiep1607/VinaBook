@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { CoverImageService } from './cover-image.service';
+import { BookPreviewManifest } from '../models/book-preview';
 
 @Injectable({
   providedIn: 'root'
@@ -108,5 +109,10 @@ export class ProductService {
 
   getSuggest(categoryId: number, productId: number) {
     return this.httpClient.get(this.url + '/suggest/' + categoryId + '/' + productId);
+  }
+
+  /** Manifest nhỏ của các trang đọc thử; ảnh chỉ được trình duyệt tải khi reader mở. */
+  getPreview(productId: number): Observable<BookPreviewManifest> {
+    return this.httpClient.get<BookPreviewManifest>(`${this.url}/${productId}/preview`);
   }
 }

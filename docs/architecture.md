@@ -26,6 +26,8 @@ Các service state trình duyệt tự hydrate từ `localStorage`. Cart đổi 
 
 `ChatbotService` là client mỏng: ưu tiên `POST /api/chat/stream` (SSE), tự hạ xuống `POST /api/chat` khi kết nối không hỗ trợ stream. Toàn bộ phân loại ý định, lọc giá/thể loại/tác giả, xếp hạng catalog, chính sách và fallback nằm ở backend để không có hai nguồn logic lệch nhau. `AiGateway` chuyển contract sang OpenAI Responses, OpenAI-compatible Chat Completions, Gemini hoặc Anthropic. Response có thẻ sách, quick replies và action có kiểu; thao tác thêm giỏ vẫn chạy qua `CartService` và cần xác nhận người dùng.
 
+`ProductService.getPreview()` chỉ tải manifest đọc thử sau khi sản phẩm được mở. Các ảnh trang được quản trị trong bảng `product_preview_pages`; public API chỉ trả trang của sản phẩm đang hoạt động và đã bật đọc thử. `Book3dViewerComponent` giữ mô hình Three.js, dùng pivot ở gáy và GSAP timeline để mở bìa; `BookPreviewReaderComponent` là lớp đọc ảnh 2D có fallback cho thiết bị không có WebGL.
+
 Backend chỉ lưu telemetry tối thiểu trong `chat_events`: mã ngẫu nhiên của câu trả lời, mã phiên, intent, provider, fallback, số sản phẩm, độ trễ và feedback. Nội dung câu hỏi/câu trả lời không được lưu. Dashboard admin đọc số liệu tổng hợp qua endpoint chỉ dành cho `ROLE_ADMIN`.
 
 ## Backend và bảo mật
@@ -35,6 +37,8 @@ Spring Security xác thực JWT stateless. Public gồm đăng nhập/đăng ký
 Đối với user/cart/order/review, backend đối chiếu principal trong JWT bằng `CurrentUserAccess`. ID/email từ request không tự tạo quyền truy cập. Giá dòng hàng được tính lại từ product trong database và order kiểm tra tồn kho trước khi ghi.
 
 `User.password` và reset token là write-only trong JSON. Response đăng nhập không chứa bcrypt hash.
+
+Bản đọc thử không phải DRM: backend chỉ giới hạn 5–10 ảnh đã duyệt, kiểm tra MIME/URL, yêu cầu `ROLE_ADMIN` cho thao tác quản trị và không bao giờ trả file toàn bộ cuốn sách. Production phải chạy migration `VinaBookStore/src/main/resources/db/product-preview.sql` trước khi dùng vì JPA production đang ở chế độ `validate`.
 
 ## Production
 
@@ -46,6 +50,8 @@ HTTPS origin
 ```
 
 JWT secret, database và SMTP phải được inject qua biến môi trường. CORS không thay thế authorization.
+
+Backend mặc định dùng profile `dev` cho local. Deploy phải bật profile `prod`; profile này yêu cầu credential/URL public qua biến môi trường, tắt SQL log và `open-in-view`, đồng thời chỉ validate schema. GitHub Actions build/test hai ứng dụng Angular và chạy test Spring Boot với MySQL 8 trên pull request/push vào `main`.
 
 ## Thiết kế giao diện
 

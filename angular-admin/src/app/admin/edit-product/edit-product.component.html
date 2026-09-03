@@ -81,6 +81,37 @@
                     <textarea id="description" rows="4" [ngClass]="{'is-invalid':postForm.get('description')?.touched && postForm.get('description')?.invalid}" class="form-control" formControlName="description"></textarea>
                     <small class="invalid-feedback">Mô tả không được để trống</small>
                 </div>
+
+                <div class="preview-editor mt-3">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <label class="mb-0 font-weight-bold">Bản đọc thử (5–10 trang)</label>
+                        <span class="small text-muted">{{previewPages.length}}/10 trang</span>
+                    </div>
+                    <div class="custom-control custom-switch mb-2">
+                        <input type="checkbox" class="custom-control-input" id="previewEnabled" [(ngModel)]="previewEnabled" [ngModelOptions]="{standalone: true}">
+                        <label class="custom-control-label" for="previewEnabled">Cho phép khách đọc thử</label>
+                    </div>
+                    <div class="custom-control custom-checkbox mb-2">
+                        <input type="checkbox" class="custom-control-input" id="rightsConfirmed" [(ngModel)]="rightsConfirmed" [ngModelOptions]="{standalone: true}">
+                        <label class="custom-control-label small" for="rightsConfirmed">Tôi xác nhận có quyền công khai các trang này</label>
+                    </div>
+                    <div class="preview-pages" *ngIf="previewPages.length">
+                        <div class="preview-page-row" *ngFor="let page of previewPages; let i = index">
+                            <img [src]="page.imageUrl" [alt]="'Trang đọc thử ' + (i + 1)">
+                            <span class="small flex-grow-1">Trang {{i + 1}}<br><em *ngIf="page.originalPageNumber">Trang gốc {{page.originalPageNumber}}</em></span>
+                            <button type="button" class="btn btn-sm btn-light" (click)="movePreviewPage(i, -1)" [disabled]="i === 0" aria-label="Đưa lên">↑</button>
+                            <button type="button" class="btn btn-sm btn-light" (click)="movePreviewPage(i, 1)" [disabled]="i === previewPages.length - 1" aria-label="Đưa xuống">↓</button>
+                            <button type="button" class="btn btn-sm btn-light" (click)="startReplacePreviewPage(page)" [disabled]="previewUploading" aria-label="Đổi ảnh">↻</button>
+                            <button type="button" class="btn btn-sm btn-outline-danger" (click)="removePreviewPage(page)" aria-label="Xóa trang">×</button>
+                        </div>
+                    </div>
+                    <label for="previewPageFile" class="btn btn-outline-primary btn-sm mb-0" [class.disabled]="previewUploading || previewPages.length >= 10">
+                        {{previewUploading ? 'Đang tải…' : 'Thêm trang đọc thử'}}
+                    </label>
+                    <input id="previewPageFile" type="file" hidden accept="image/jpeg,image/png,image/webp" (change)="onPreviewFileSelect($event)" [disabled]="previewUploading || previewPages.length >= 10">
+                    <input id="replacePreviewPageFile" type="file" hidden accept="image/jpeg,image/png,image/webp" (change)="onPreviewReplaceSelect($event)" [disabled]="previewUploading">
+                    <small class="form-text text-muted">Ảnh JPG, PNG hoặc WebP, tối đa 8MB/trang. Có thể lưu sách trước rồi thêm trang sau.</small>
+                </div>
             </div>
         </form>
     </div>

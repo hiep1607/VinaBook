@@ -18,20 +18,20 @@ import { environment } from 'src/environments/environment';
 })
 export class DashboardComponent implements OnInit {
 
-  orderHandle!: number;
-  customerLength!: number;
-  orders!: Order[];
-  customers!: Customer[];
+  orderHandle = 0;
+  customerLength = 0;
+  orders: Order[] = [];
+  customers: Customer[] = [];
 
-  statistical!: Statistical[];
+  statistical: Statistical[] = [];
   labels: string[] = [];
   data: number[] = [];
   year: number = 2021;
   myChartBar !: Chart;
-  countYears!: number[];
+  countYears: number[] = [];
 
-  revenueYearNow!: number;
-  revenueMonthNow!: number;
+  revenueYearNow = 0;
+  revenueMonthNow = 0;
 
   webSocket!: WebSocket;
   chatMessages: ChatMessage[] = [];

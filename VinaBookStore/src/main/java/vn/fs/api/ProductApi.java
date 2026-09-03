@@ -89,6 +89,12 @@ public class ProductApi {
 		if (repo.existsById(product.getProductId())) {
 			return ResponseEntity.badRequest().build();
 		}
+		if (product.getPreviewEnabled() == null) {
+			product.setPreviewEnabled(Boolean.FALSE);
+		}
+		if (product.getPreviewRightsConfirmed() == null) {
+			product.setPreviewRightsConfirmed(Boolean.FALSE);
+		}
 		return ResponseEntity.ok(repo.save(product));
 	}
 
@@ -100,6 +106,10 @@ public class ProductApi {
 		if (!repo.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
+		Product stored = repo.findById(id).get();
+		product.setPreviewEnabled(product.getPreviewEnabled() == null ? stored.getPreviewEnabled() : product.getPreviewEnabled());
+		product.setPreviewRightsConfirmed(product.getPreviewRightsConfirmed() == null
+				? stored.getPreviewRightsConfirmed() : product.getPreviewRightsConfirmed());
 		return ResponseEntity.ok(repo.save(product));
 	}
 

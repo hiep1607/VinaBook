@@ -415,4 +415,10 @@ button:focus-visible {
   }
 }
 
+/* Reader là một không gian tập trung: không để bất kỳ nút nổi nào che lên trang sách. */
+body.preview-reader-open app-chatbot,
+body.preview-reader-open app-theme-switcher {
+  display: none !important;
+}
+
 @import 'styles/vinabook-night';

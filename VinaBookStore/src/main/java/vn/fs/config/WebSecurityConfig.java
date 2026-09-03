@@ -63,6 +63,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 
 				// ---- 1) CÔNG KHAI — duyệt catalog, đăng nhập/đăng ký, quên mật khẩu ----
+				.antMatchers(HttpMethod.GET, "/api/products/*/preview")
+				.permitAll()
 				.antMatchers(HttpMethod.GET, "/api/products", "/api/products/bestseller", "/api/products/latest",
 						"/api/products/rated", "/api/products/suggest/**", "/api/products/category/**",
 						"/api/products/*")
@@ -102,6 +104,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.PUT, "/api/rates").hasRole("USER")
 
 				// ---- 4) CHỈ ADMIN — quản trị catalog, đơn hàng, khách hàng, thống kê ----
+				.antMatchers("/api/admin/products/**").hasRole("ADMIN")
 				.antMatchers(HttpMethod.POST, "/api/products").hasRole("ADMIN")
 				.antMatchers(HttpMethod.PUT, "/api/products/*").hasRole("ADMIN")
 				.antMatchers(HttpMethod.DELETE, "/api/products/*").hasRole("ADMIN")
