@@ -44,6 +44,18 @@ public class ProductPreviewPage implements Serializable {
 	@Column(name = "image_url", nullable = false, length = 1000)
 	private String imageUrl;
 
+	@Column(length = 10)
+	private String contentType;
+	@Column(columnDefinition = "TEXT")
+	private String textContent;
+	@Column(length = 120)
+	private String heading;
+	@Column(length = 10)
+	private String fontFamily;
+	private Integer fontSize;
+	@Column(length = 10)
+	private String textAlign;
+
 	@Column(nullable = false)
 	private Boolean enabled = Boolean.TRUE;
 

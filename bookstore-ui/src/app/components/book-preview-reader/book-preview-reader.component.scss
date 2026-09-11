@@ -1,188 +1,52 @@
-:host {
-  position: fixed;
-  inset: 0;
-  z-index: 1200;
-}
-
+:host { display: contents; }
 .reader {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse at 50% 43%, rgba(205, 218, 211, .14), transparent 38%),
-    radial-gradient(ellipse at 50% 70%, rgba(7, 12, 11, .5), transparent 42%),
-    linear-gradient(145deg, #26312e, #111716 72%);
+  margin: auto; box-sizing: border-box; padding: 0; width: 100vw; height: 100vh; height: 100dvh;
+  max-width: none; max-height: none; border: 0; border-radius: 0;
+  color: #292723; background: #e7e5df; overflow: hidden;
 }
-
-.reader::before {
-  position: absolute;
-  inset: 0;
-  background-image:
-    repeating-linear-gradient(92deg, rgba(233, 239, 235, .01) 0, rgba(233, 239, 235, .01) 1px, transparent 1px, transparent 6px),
-    repeating-linear-gradient(4deg, rgba(8, 13, 12, .018) 0, rgba(8, 13, 12, .018) 1px, transparent 1px, transparent 8px);
-  content: '';
-  pointer-events: none;
-}
-
-.book-scene {
-  position: absolute;
-  inset: 0;
-  touch-action: none;
-  cursor: grab;
-  user-select: none;
-}
-
-.book-scene.is-dragging { cursor: grabbing; }
-
-.book-scene canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.reader-close {
-  position: absolute;
-  z-index: 20;
-  top: clamp(16px, 3vw, 30px);
-  right: clamp(16px, 3vw, 32px);
-  width: 38px;
-  height: 38px;
-  border: 1px solid rgba(255, 255, 255, .18);
-  border-radius: 50%;
-  background: rgba(17, 24, 22, .68);
-  color: rgba(242, 245, 242, .84);
-  font-size: 25px;
-  line-height: 1;
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  transition: background .2s ease, color .2s ease, transform .2s ease;
-}
-
-.reader-close:hover {
-  background: rgba(237, 242, 238, .13);
-  color: #f5f7f5;
-  transform: scale(1.04);
-}
-
-.turn-zone {
-  position: absolute;
-  z-index: 6;
-  top: 15%;
-  bottom: 15%;
-  width: 14%;
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
-.turn-zone-left { left: 3%; cursor: w-resize; }
-.turn-zone-right { right: 3%; cursor: e-resize; }
-.turn-zone:disabled { cursor: default; }
-
-.reader-status {
-  position: absolute;
-  z-index: 10;
-  bottom: clamp(18px, 3.2vh, 32px);
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgba(231, 236, 232, .7);
-  font: 600 11px/1.2 'Be Vietnam Pro', sans-serif;
-  letter-spacing: .12em;
-  pointer-events: none;
-}
-
-.reader-hint {
-  position: absolute;
-  z-index: 10;
-  bottom: clamp(43px, 6.8vh, 60px);
-  left: 50%;
-  transform: translateX(-50%);
-  color: rgba(226, 233, 228, .52);
-  font: 500 11px/1.2 'Be Vietnam Pro', sans-serif;
-  pointer-events: none;
-  animation: hint-pulse 2.4s ease-in-out infinite;
-}
-
-.book-loading {
-  position: absolute;
-  z-index: 8;
-  top: 50%;
-  left: 50%;
-  display: grid;
-  place-items: center;
-  gap: 12px;
-  transform: translate(-50%, -50%);
-  color: rgba(255, 255, 255, .64);
-  font: 500 11px/1.2 'Be Vietnam Pro', sans-serif;
-  letter-spacing: .08em;
-}
-
-.book-loading span {
-  width: 32px;
-  height: 24px;
-  border: 2px solid rgba(255, 255, 255, .38);
-  border-radius: 2px 8px 8px 2px;
-  animation: loading-book 1.1s ease-in-out infinite alternate;
-}
-
-.book-fallback {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: flex;
-  width: min(1000px, 90vw);
-  max-height: 78dvh;
-  aspect-ratio: 1.5;
-  transform: translate(-50%, -50%);
-  filter: drop-shadow(0 26px 25px rgba(0, 0, 0, .42));
-}
-
-.fallback-page {
-  position: relative;
-  width: 50%;
-  overflow: hidden;
-  background: #f4eddc;
-  box-shadow: inset 0 0 0 1px rgba(82, 61, 41, .2);
-}
-
-.fallback-left { border-radius: 13px 2px 2px 13px; }
-.fallback-right { border-radius: 2px 13px 13px 2px; }
-
-.fallback-page img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  background: #f4eddc;
-}
-
-@keyframes hint-pulse {
-  0%, 100% { opacity: .45; transform: translate(-50%, 0); }
-  50% { opacity: .9; transform: translate(-50%, -3px); }
-}
-
-@keyframes loading-book {
-  from { opacity: .45; transform: perspective(80px) rotateY(0deg); }
-  to { opacity: 1; transform: perspective(80px) rotateY(-18deg); }
-}
-
-@media (max-width: 700px) {
-  .reader {
-    background:
-      radial-gradient(ellipse at 50% 46%, rgba(205, 218, 211, .11), transparent 46%),
-      linear-gradient(145deg, #26312e, #111716 72%);
-  }
-
-  .reader-close { width: 36px; height: 36px; font-size: 23px; }
-  .turn-zone { width: 20%; }
-  .reader-hint { bottom: calc(52px + env(safe-area-inset-bottom, 0px)); }
-  .reader-status { bottom: calc(20px + env(safe-area-inset-bottom, 0px)); }
-  .book-fallback { width: 94vw; max-height: 72dvh; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reader-hint,
-  .book-loading span { animation: none; }
-
-  .reader-close { transition: none; }
+.reader[open] { display: flex; flex-direction: column; }
+.reader::backdrop { background: #232622e8; }
+header { flex: 0 0 62px; box-sizing: border-box; display: flex; justify-content: space-between; align-items: center; padding: 8px 24px; gap: 16px; }
+.book-title { min-width: 0; display: flex; align-items: baseline; gap: 14px; }
+header h2 { font: 500 18px/1.3 "Vina Reader", Georgia, serif; margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+header span { font-size: 12px; color: #5e5b55; }
+.header-actions { display: flex; align-items: center; gap: 12px; flex: 0 0 auto; }
+.page-count { font-variant-numeric: tabular-nums; }
+button { min-height: 44px; min-width: 44px; border: 1px solid #c3bfb4; border-radius: 6px; background: #f7f5ef; color: #292723; cursor: pointer; padding: 8px 12px; font: inherit; font-size: 13px; }
+button:hover:enabled, button[aria-pressed="true"] { background: #ded8cd; }
+button:focus-visible { outline: 3px solid #a95235; outline-offset: 2px; }
+button:disabled { opacity: .3; cursor: default; }
+.exit { font: 28px/1 Arial, sans-serif; border: 0; background: transparent; padding: 2px; }
+.settings-toggle { font: 20px/1 "Vina Reader", Georgia, serif; border: 0; background: transparent; }
+.reading-area { flex: 1 1 auto; min-height: 0; position: relative; margin: 0 44px 12px; }
+.book-scene { position: absolute; inset: 0; touch-action: none; cursor: grab; }
+.book-scene:active { cursor: grabbing; }
+.hidden { visibility: hidden; pointer-events: none; }
+.message { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #e7e5dff0; font-size: 15px; }
+.reading-2d { position: absolute; inset: 0; overflow: auto; overscroll-behavior: contain; padding: 12px; }
+.reading-2d article { min-width: 0; max-width: 900px; box-sizing: border-box; background: #f5f0e5; color: #242424; line-height: 1.65; margin: 0 auto; }
+.reading-2d img { width: 100%; height: auto; display: block; }
+.real-text { white-space: pre-wrap; overflow-wrap: anywhere; padding: 24px 40px 44px; margin: 0; }
+.reading-2d h3 { padding: 36px 40px 0; margin: 0; font: inherit; font-weight: 600; }
+.fallback-note { font-size: 13px; color: #67412e; }
+.page-turn { position: absolute; top: 50%; transform: translateY(-50%); font: 30px/1 "Vina Reader", Georgia, serif; background: transparent; border: 0; padding: 4px; }
+.previous { left: 0; } .next { right: 0; }
+.open-cover { position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); }
+footer { position: absolute; right: 20px; top: 62px; width: min(320px, calc(100% - 40px)); box-sizing: border-box; padding: 16px; background: #f7f5ef; border: 1px solid #c3bfb4; border-radius: 8px; box-shadow: 0 12px 36px #29272324; }
+.tools { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.hint { display: block; color: #5e5b55; margin-top: 12px; font-size: 12px; line-height: 1.5; }
+@media (max-width: 600px) {
+  header { padding: 6px 10px; flex-basis: 56px; gap: 6px; }
+  .book-title { display: block; }
+  header h2 { font-size: 16px; }
+  .book-title span { display: none; }
+  .header-actions { gap: 2px; }
+  .page-count { font-size: 11px; }
+  .reading-area { margin: 0 8px 8px; }
+  .page-turn { top: auto; bottom: 12px; transform: none; background: #f7f5ef; }
+  .previous { left: 12px; } .next { right: 12px; }
+  .reading-2d { padding: 4px 4px 60px; }
+  .real-text { padding: 20px 22px 32px; }
+  .reading-2d h3 { padding: 24px 22px 0; }
+  footer { top: 56px; right: 10px; }
 }

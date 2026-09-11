@@ -27,7 +27,6 @@ import { WishlistService } from 'src/app/services/wishlist.service';
 import { RecentlyViewedService } from 'src/app/services/recently-viewed.service';
 import { MotionService } from 'src/app/services/motion.service';
 import { Book3dViewerComponent } from 'src/app/components/book-3d-viewer/book-3d-viewer.component';
-import { BookPreviewPage } from 'src/app/models/book-preview';
 
 const STICKY_BAR_MAX_WIDTH = 768;
 
@@ -45,11 +44,10 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
 
   product: any;
 
-  previewPages: BookPreviewPage[] = [];
   previewOpen = false;
-  previewLoading = false;
-  private previousBodyOverflow = '';
-  private previousHtmlOverflow = '';
+  previewAvailable = false;
+  private previewSubscription?: Subscription;
+  private productSubscription?: Subscription;
 
   reviews: any[] = [];
 
@@ -106,7 +104,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
       this.loading = true;
       this.loadError = false;
 
-      this.subscriptions.add(this.productService.getProduct(id).subscribe(product => {
+      this.productSubscription?.unsubscribe();
+      this.productSubscription = this.productService.getProduct(id).subscribe(product => {
 
         this.product = product;
         this.loading = false;
@@ -117,9 +116,16 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
         }
 
         this.loadReviews();
+        this.previewSubscription = this.productService.getPreview(id).subscribe({
+          next: preview => {
+            this.previewAvailable = preview.enabled && preview.pageCount > 0 && preview.pages.some(page =>
+              page.enabled !== false && (page.contentType === 'text' ? !!page.textContent?.trim() : !!page.imageUrl));
+          },
+          error: () => { this.previewAvailable = false; }
+        });
         this.loadUserReview();
         this.loadRelatedBooks();
-        this.loadPreview(this.product.id);
+
 
         this.recentlyViewed.add(id);
         setTimeout(() => this.setupStickyObserver());
@@ -127,7 +133,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
       }, () => {
         this.loading = false;
         this.loadError = true;
-      }));
+      });
 
     }));
 
@@ -146,7 +152,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
     this.teardownStickyBar();
-    this.restorePreviewScroll();
+    this.doc.body.classList.remove('preview-reader-open');
+    this.productSubscription?.unsubscribe();
+    this.previewSubscription?.unsubscribe();
   }
 
   @HostListener('window:resize')
@@ -200,6 +208,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
 
   /** Trạng thái theo từng sản phẩm - phải xóa khi đổi sang sản phẩm khác */
   private resetState(): void {
+    this.previewSubscription?.unsubscribe();
+    this.previewAvailable = false;
     this.qty = 1;
     this.visibleReviewCount = 5;
     this.reviewContent = '';
@@ -207,62 +217,20 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
     this.hoverRating = 0;
     this.isEditing = false;
     this.relatedBooks = [];
-    this.previewPages = [];
     this.previewOpen = false;
-    this.previewLoading = false;
-    this.bookViewer?.closeBook();
-    this.restorePreviewScroll();
+    this.doc.body.classList.remove('preview-reader-open');
     window.scrollTo({ top: 0 });
   }
 
-  private loadPreview(productId: number): void {
-    this.previewPages = [];
-    this.previewLoading = true;
-    // Giữ component tương thích với các host/test doubles cũ chưa có endpoint mới.
-    if (typeof (this.productService as any).getPreview !== 'function') {
-      this.previewLoading = false;
-      return;
-    }
-    this.subscriptions.add(this.productService.getPreview(productId).subscribe(manifest => {
-      this.previewPages = manifest.enabled
-        ? (manifest.pages || []).filter(page => page.enabled !== false).slice(0, 10)
-        : [];
-      this.previewLoading = false;
-    }, () => {
-      // Bản đọc thử là tính năng bổ sung; lỗi manifest không được làm hỏng trang sản phẩm.
-      this.previewPages = [];
-      this.previewLoading = false;
-    }));
-  }
-
   onPreviewRequested(): void {
-    if (this.previewOpen) {
-      return;
-    }
-    if (!this.previewPages.length) {
-      this.notification.error('Sách này chưa có bản đọc thử');
-      return;
-    }
+    if (!this.product || this.previewOpen || !this.previewAvailable) { return; }
     this.previewOpen = true;
-    this.previousBodyOverflow = this.doc.body.style.overflow;
-    this.previousHtmlOverflow = this.doc.documentElement.style.overflow;
-    this.doc.body.style.overflow = 'hidden';
-    this.doc.documentElement.style.overflow = 'hidden';
     this.doc.body.classList.add('preview-reader-open');
   }
 
   closePreview(): void {
     this.previewOpen = false;
     this.doc.body.classList.remove('preview-reader-open');
-    this.doc.body.style.overflow = this.previousBodyOverflow;
-    this.doc.documentElement.style.overflow = this.previousHtmlOverflow;
-    this.bookViewer?.closeBook();
-  }
-
-  private restorePreviewScroll(): void {
-    this.doc.body.classList.remove('preview-reader-open');
-    this.doc.body.style.overflow = this.previousBodyOverflow;
-    this.doc.documentElement.style.overflow = this.previousHtmlOverflow;
   }
 
   private loadRelatedBooks(): void {

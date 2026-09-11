@@ -1,4 +1,4 @@
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 
 import { CheckoutComponent } from './checkout.component';
 
@@ -61,10 +61,40 @@ describe('CheckoutComponent', () => {
     expect(cartService.clearBuyNowItem).toHaveBeenCalled();
   });
 
+  it('chỉ hiển thị phương thức thanh toán đang khả dụng', () => {
+    expect(component.availablePaymentMethods.map(method => method.code)).toEqual(['COD']);
+    component.paymentMethods.find(method => method.code === 'MOMO').available = true;
+    expect(component.availablePaymentMethods.map(method => method.code)).toEqual(['COD', 'MOMO']);
+  });
+
   it('đưa người dùng về giỏ nếu không còn dòng hợp lệ', () => {
     component.ngOnInit();
 
     expect(notification.error).toHaveBeenCalled();
     expect(router.navigate).toHaveBeenCalledWith(['/cart']);
+  });
+
+  it('chờ tải giỏ từ máy chủ trước khi kết luận giỏ trống', async () => {
+    cartService.syncing = true;
+    cartService.flush = () => Promise.resolve().then(() => {
+      cartService.syncing = false;
+      cartService.getCartItems.and.returnValue([{ id: 7, selected: true }]);
+    });
+    component.ngOnInit();
+    expect(router.navigate).not.toHaveBeenCalled();
+    await Promise.resolve(); await Promise.resolve();
+    expect(component.cartItems.map(item => item.id)).toEqual([7]);
+  });
+
+  it('chỉ gửi một đơn khi bấm hai lần trong lúc đồng bộ giỏ', async () => {
+    let finish: () => void = () => {};
+    cartService.flush = () => new Promise<void>(resolve => finish = resolve);
+    component.shippingForm = { label: '', name: 'Kiểm thử', phone: '0900000000', street: '12 Nguyễn Trãi, Hà Nội' };
+    const order = (component as any).orderService.placeOrder;
+    order.and.returnValue(new Subject());
+    const first = component.placeOrder();
+    await component.placeOrder();
+    finish(); await first;
+    expect(order).toHaveBeenCalledTimes(1);
   });
 });

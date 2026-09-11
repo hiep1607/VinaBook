@@ -10,7 +10,7 @@ public class ChatTurnDto {
 	private String role;
 
 	@NotBlank
-	@Size(max = 1200)
+	@Size(max = 8000, message = "Mỗi tin nhắn lịch sử tối đa 8000 ký tự")
 	private String content;
 
 	public ChatTurnDto() { }

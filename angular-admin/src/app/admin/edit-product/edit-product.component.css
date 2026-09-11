@@ -65,3 +65,11 @@ label {
 
 .preview-page-row em { color: #858796; font-size: 10px; font-style: normal; }
 .preview-page-row .btn { padding: .15rem .4rem; }
+.text-thumb { width:42px; height:56px; flex:0 0 auto; display:grid; place-items:center; background:#f5f0e5; color:#242424; font:20px "Vina Reader",Georgia,serif; }
+.text-editor { border-top:1px solid #ccd0dc; padding-top:16px; }
+.text-editor textarea { color:#242424; font:16px/1.6 "Vina Reader",Georgia,serif; }
+.text-options { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:14px; }
+.text-proof { background:#f5f0e5; color:#242424; padding:28px; margin-top:12px; line-height:1.5; }
+.text-proof p { white-space:pre-wrap; overflow-wrap:anywhere; }
+.text-proof h6 { font:inherit; font-weight:600; }
+.preview-page-row { flex-wrap:wrap; }

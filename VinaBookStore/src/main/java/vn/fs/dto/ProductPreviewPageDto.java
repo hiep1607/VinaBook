@@ -13,4 +13,11 @@ public class ProductPreviewPageDto {
 	private Integer originalPageNumber;
 	private String imageUrl;
 	private Boolean enabled;
+	private String contentType;
+	private String textContent;
+	private String heading;
+	private String fontFamily;
+	private Integer fontSize;
+	private String textAlign;
+
 }

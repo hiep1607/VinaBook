@@ -1,15 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, Observable, of } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { forkJoin, Observable, of, throwError } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
-/**
- * Đơn hàng server-side (từ 2026-06-12).
- * Flow đặt hàng: lấy Cart backend của user → cập nhật địa chỉ/SĐT →
- * push các CartDetail đã chọn → POST /api/orders/{email} (backend tạo Order,
- * dọn cart details, gửi mail xác nhận). Đơn hiện trong trang admin ngay.
- */
+/** Đơn hàng server-side: quote tính giá/ship, confirm tạo đơn và giữ tồn kho. */
 @Injectable({
   providedIn: 'root'
 })
@@ -56,50 +51,27 @@ export class OrderService {
    * Đặt hàng: items là cart item local đã chọn
    * ({id, name, price (đã giảm), quantity, image,...}).
    */
-  placeOrder(
-    email: string,
-    street: string,
-    phone: string,
-    items: any[],
-    paymentMethod: string = 'COD'
-  ): Observable<any> {
+  private pendingQuotes = new Map<string, string>();
 
-    return this.http.get<any>(this.api + '/api/cart/user/' + email).pipe(
-      switchMap(cart => {
-
-        cart.address = street;
-        cart.phone = phone;
-        cart.amount = items.reduce(
-          (sum, i) => sum + Number(i.price) * i.quantity, 0
-        );
-
-        return this.http
-          .put<any>(this.api + '/api/cart/user/' + email, cart)
-          .pipe(map(() => cart));
-
-      }),
-      switchMap(cart => {
-
-        const pushes = items.map(i =>
-          this.http.post(this.api + '/api/cartDetail', {
-            quantity: i.quantity,
-            price: Number(i.price) * i.quantity,   // CartDetail.price = thành tiền dòng
-            product: { productId: i.id },
-            cart: { cartId: cart.cartId }
-          })
-        );
-
-        return forkJoin(pushes).pipe(map(() => cart));
-
-      }),
-      switchMap(cart =>
-        this.http.post(
-          this.api + '/api/orders/' + email + '?paymentMethod=' + encodeURIComponent(paymentMethod),
-          cart
-        )
-      )
-    );
-
+  placeOrder(email: string, street: string, phone: string, items: any[], paymentMethod = 'COD', fromCart = false, cartRevision = 0): Observable<any> {
+    const key = JSON.stringify([email, street, phone, items.map(i => [i.id, i.quantity, i.price]), paymentMethod, fromCart]);
+    const recipient = street.match(/\(Người nhận: (.*?)\)$/)?.[1] || 'Khách hàng';
+    const address = street.replace(/\s*\(Người nhận: .*?\)$/, '');
+    const expectedSubtotal = items.reduce((sum, i) => sum + Number(i.price) * i.quantity, 0);
+    const expectedTotal = expectedSubtotal + (expectedSubtotal > 0 && expectedSubtotal < 300000 ? 20000 : 0);
+    const saved = this.pendingQuotes.get(key);
+    const quote = saved ? of({token: saved, total: expectedTotal}) : this.http.post<any>(this.api + '/api/chat/checkout/quote', {
+      items: items.map(i => ({productId: i.id, quantity: i.quantity})), recipient, phone, street: address,
+      paymentMethod, fromCart, cartRevision
+    });
+    return quote.pipe(switchMap(q => {
+      if (q.total !== expectedTotal) throw new Error('Giá hoặc phí giao hàng đã thay đổi. Vui lòng tải lại giỏ và kiểm tra tổng tiền.');
+      this.pendingQuotes.set(key, q.token);
+      return this.http.post<any>(this.api + '/api/chat/checkout/' + encodeURIComponent(q.token) + '/confirm', {}).pipe(
+        map(result => { this.pendingQuotes.delete(key); return {ordersId: result.orderId}; }),
+        catchError(error => { if ([400,401,403,404,409,410].includes(error.status)) this.pendingQuotes.delete(key); return throwError(error); })
+      );
+    }));
   }
 
   /** Map order backend → shape mà orders page / profile đang dùng. */

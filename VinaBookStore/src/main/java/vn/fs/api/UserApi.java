@@ -215,7 +215,7 @@ public class UserApi {
 				passwordEncoder.encode(signupRequest.getPassword()), signupRequest.getPhone(),
 				signupRequest.getAddress(), signupRequest.getGender(), signupRequest.getStatus(),
 				signupRequest.getImage(), signupRequest.getRegisterDate(),
-				jwtUtils.doGenerateToken(signupRequest.getEmail()));
+				null); // Sign-in issues JWTs; this column is reserved for password-reset tokens.
 		Set<AppRole> roles = new HashSet<>();
 		roles.add(new AppRole(1, null));
 

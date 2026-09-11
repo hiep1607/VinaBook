@@ -57,6 +57,16 @@ class ChatRagServiceTest {
 				.doesNotContain("Đắc Nhân Tâm");
 	}
 
+	@Test void ranksOnlyProductsWithRealRatings() {
+		vn.fs.repository.RateRepository rates = org.mockito.Mockito.mock(vn.fs.repository.RateRepository.class);
+		org.mockito.Mockito.when(rates.averageRatings()).thenReturn(List.of(new Object[]{3L, 3.5D}, new Object[]{5L, 4.8D}, new Object[]{6L, 4.2D}));
+		retrieval.setRates(rates);
+		ChatSearchCriteriaDto criteria = new ChatSearchCriteriaDto(null, null, "", "", "rating", List.of());
+		criteria.setMinRating(4D);
+		assertThat(retrieval.retrieve("Tìm sách đánh giá cao", new ChatQueryPlan(ChatIntent.DISCOVER_BOOKS, criteria, List.of(), 3, false), catalog, List.of(), false))
+				.extracting(Product::getProductId).containsExactly(5L, 6L);
+	}
+
 	@Test
 	void rejectsBroadScienceMatchesWhenCatalogHasNoQuantumBook() {
 		ChatQueryPlan plan = new ChatQueryPlan(ChatIntent.DISCOVER_BOOKS,

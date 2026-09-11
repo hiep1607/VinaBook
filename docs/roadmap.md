@@ -36,6 +36,6 @@
 - [ ] Contact/ticket backend.
 - [ ] Đồng bộ avatar/address/wishlist theo tài khoản.
 - [ ] Email template, retry queue và trạng thái gửi.
-- [ ] Bản đọc thử 5–10 trang do admin duyệt, reader 2D và mở sách 3D bằng double-click (đã có khung triển khai, còn kiểm thử tích hợp).
+- [ ] Bản đọc thử 5–20 trang do admin duyệt, reader 2D và mở sách 3D bằng double-click (đã có khung triển khai, còn kiểm thử tích hợp).
 
 Mỗi mục chỉ được đánh dấu hoàn tất sau khi behavior, test và tài liệu cùng được cập nhật.

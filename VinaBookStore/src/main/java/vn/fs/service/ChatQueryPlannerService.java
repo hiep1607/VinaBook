@@ -36,7 +36,9 @@ public class ChatQueryPlannerService {
 			ChatIntent baseIntent, ChatSearchCriteriaDto baseCriteria) {
 		ChatQueryPlan fallback = new ChatQueryPlan(baseIntent, baseCriteria,
 				deterministicTerms(question, baseCriteria), requestedCount(question), false);
-		if (!ai.isConfigured() || !BOOK_INTENTS.contains(baseIntent)) return fallback;
+		if (!ai.isConfigured() || !BOOK_INTENTS.contains(baseIntent)
+				|| intents.isBudgetOnlyDiscovery(question) || !baseCriteria.getSort().isEmpty()
+				|| baseCriteria.getMinRating() != null) return fallback;
 
 		String categories = catalog.stream().filter(product -> product.getCategory() != null)
 				.map(product -> product.getCategory().getCategoryName()).filter(value -> value != null && !value.isBlank())
@@ -83,10 +85,11 @@ public class ChatQueryPlannerService {
 		addClean(topics, draft.topics, 12);
 		ChatSearchCriteriaDto criteria = new ChatSearchCriteriaDto(min, max, category, author, sort,
 				new ArrayList<>(topics));
+		criteria.setMinRating(base.getMinRating());
 
 		LinkedHashSet<String> terms = new LinkedHashSet<>(deterministicTerms(question, criteria));
 		addClean(terms, draft.searchTerms, 16);
-		int count = draft.requestedCount == null ? requestedCount(question) : draft.requestedCount;
+		int count = requestedCount(question);
 		return new ChatQueryPlan(finalIntent, criteria, new ArrayList<>(terms), count, true);
 	}
 
@@ -106,6 +109,7 @@ public class ChatQueryPlannerService {
 
 	private int requestedCount(String question) {
 		String q = intents.normalize(question);
+		if (q.matches(".*\\bhai\\s+(cuon|quyen|sach)\\b.*")) return 2;
 		java.util.regex.Matcher matcher = java.util.regex.Pattern
 				.compile("(?:goi y|gioi thieu|tim|chon)?\\s*(\\d{1,2})\\s*(?:cuon|quyen|sach)")
 				.matcher(q);
@@ -113,6 +117,7 @@ public class ChatQueryPlannerService {
 			try { return Math.max(1, Math.min(12, Integer.parseInt(matcher.group(1)))); }
 			catch (NumberFormatException ignored) { }
 		}
+		if (q.contains("re nhat") || q.contains("thap nhat") || q.contains("phu hop nhat") || q.contains("cao nhat")) return 1;
 		return 5;
 	}
 

@@ -17,6 +17,8 @@ import vn.fs.entity.Rate;
 
 @Repository
 public interface RateRepository extends JpaRepository<Rate, Long> {
+	@org.springframework.data.jpa.repository.Query("select r.product.productId, avg(r.rating) from Rate r where r.rating between 0 and 5 group by r.product.productId")
+	List<Object[]> averageRatings();
 
 	List<Rate> findAllByOrderByIdDesc();
 

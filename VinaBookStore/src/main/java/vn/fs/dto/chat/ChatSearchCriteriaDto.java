@@ -10,6 +10,9 @@ public class ChatSearchCriteriaDto {
 	private final String author;
 	private final String sort;
 	private final List<String> topics;
+	private Double minRating;
+	public Double getMinRating() { return minRating; }
+	public void setMinRating(Double value) { minRating = value; }
 
 	public ChatSearchCriteriaDto(Long minPrice, Long maxPrice, String category, String author,
 			String sort, List<String> topics) {

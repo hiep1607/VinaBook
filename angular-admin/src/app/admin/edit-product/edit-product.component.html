@@ -83,9 +83,10 @@
                 </div>
 
                 <div class="preview-editor mt-3">
+                    <p *ngIf="previewLoadError" role="alert">Không tải được bản đọc thử. <button type="button" class="btn btn-sm btn-light" (click)="getPreview()">Thử lại</button></p>
                     <div class="d-flex align-items-center justify-content-between mb-2">
-                        <label class="mb-0 font-weight-bold">Bản đọc thử (5–10 trang)</label>
-                        <span class="small text-muted">{{previewPages.length}}/10 trang</span>
+                        <label class="mb-0 font-weight-bold">Bản đọc thử (5–20 trang)</label>
+                        <span class="small text-muted">{{previewPages.length}}/{{maxPreviewPages}} trang</span>
                     </div>
                     <div class="custom-control custom-switch mb-2">
                         <input type="checkbox" class="custom-control-input" id="previewEnabled" [(ngModel)]="previewEnabled" [ngModelOptions]="{standalone: true}">
@@ -97,19 +98,43 @@
                     </div>
                     <div class="preview-pages" *ngIf="previewPages.length">
                         <div class="preview-page-row" *ngFor="let page of previewPages; let i = index">
-                            <img [src]="page.imageUrl" [alt]="'Trang đọc thử ' + (i + 1)">
-                            <span class="small flex-grow-1">Trang {{i + 1}}<br><em *ngIf="page.originalPageNumber">Trang gốc {{page.originalPageNumber}}</em></span>
-                            <button type="button" class="btn btn-sm btn-light" (click)="movePreviewPage(i, -1)" [disabled]="i === 0" aria-label="Đưa lên">↑</button>
-                            <button type="button" class="btn btn-sm btn-light" (click)="movePreviewPage(i, 1)" [disabled]="i === previewPages.length - 1" aria-label="Đưa xuống">↓</button>
-                            <button type="button" class="btn btn-sm btn-light" (click)="startReplacePreviewPage(page)" [disabled]="previewUploading" aria-label="Đổi ảnh">↻</button>
-                            <button type="button" class="btn btn-sm btn-outline-danger" (click)="removePreviewPage(page)" aria-label="Xóa trang">×</button>
+                            <span *ngIf="page.contentType === 'text'" class="text-thumb" aria-label="Trang văn bản">Aa</span>
+                            <img *ngIf="page.contentType !== 'text'" [src]="page.imageUrl" [alt]="'Trang đọc thử ' + (i + 1)">
+                            <span class="small flex-grow-1">Trang {{i + 1}}<small *ngIf="page.contentType === 'text'"> · Văn bản</small><br><em *ngIf="page.originalPageNumber">Trang gốc {{page.originalPageNumber}}</em></span>
+                            <button type="button" class="btn btn-sm btn-light" (click)="movePreviewPage(i, -1)" [disabled]="i === 0 || previewUploading || !!textDraft" aria-label="Đưa lên">↑</button>
+                            <button type="button" class="btn btn-sm btn-light" (click)="movePreviewPage(i, 1)" [disabled]="i === previewPages.length - 1 || previewUploading || !!textDraft" aria-label="Đưa xuống">↓</button>
+                            <button type="button" class="btn btn-sm btn-light" *ngIf="page.contentType !== 'text'" (click)="startReplacePreviewPage(page)" [disabled]="previewUploading || !!textDraft" aria-label="Đổi ảnh">↻</button>
+                            <button type="button" class="btn btn-sm btn-light" (click)="editTextPage(page)" [disabled]="previewUploading || !!textDraft" [attr.aria-label]="page.contentType === 'text' ? 'Sửa nội dung' : 'Thay bằng văn bản'">{{page.contentType === 'text' ? 'Sửa' : 'Nhập chữ'}}</button>
+                            <button type="button" class="btn btn-sm btn-outline-danger" (click)="removePreviewPage(page)" [disabled]="previewUploading || !!textDraft" aria-label="Xóa trang">×</button>
                         </div>
                     </div>
-                    <label for="previewPageFile" class="btn btn-outline-primary btn-sm mb-0" [class.disabled]="previewUploading || previewPages.length >= 10">
-                        {{previewUploading ? 'Đang tải…' : 'Thêm trang đọc thử'}}
+                    <button type="button" class="btn btn-primary btn-sm mr-2" (click)="editTextPage()" [disabled]="previewUploading || !!textDraft || previewLoadError || previewPages.length >= maxPreviewPages">Thêm trang văn bản</button>
+                    <label for="previewPageFile" class="btn btn-outline-primary btn-sm mb-0" [class.disabled]="previewUploading || !!textDraft || previewLoadError || previewPages.length >= maxPreviewPages">
+                        {{previewUploading ? 'Đang tải…' : 'Thêm trang ảnh'}}
                     </label>
-                    <input id="previewPageFile" type="file" hidden accept="image/jpeg,image/png,image/webp" (change)="onPreviewFileSelect($event)" [disabled]="previewUploading || previewPages.length >= 10">
+                    <input id="previewPageFile" type="file" hidden accept="image/jpeg,image/png,image/webp" (change)="onPreviewFileSelect($event)" [disabled]="previewUploading || !!textDraft || previewLoadError || previewPages.length >= maxPreviewPages">
                     <input id="replacePreviewPageFile" type="file" hidden accept="image/jpeg,image/png,image/webp" (change)="onPreviewReplaceSelect($event)" [disabled]="previewUploading">
+                    <section *ngIf="textDraft as draft" class="text-editor mt-3" aria-label="Soạn trang đọc thử">
+                      <h5>{{draft.previewPageId ? 'Sửa trang ' + draft.pageOrder : 'Trang văn bản mới'}}</h5>
+                      <p class="small">Trang được lưu riêng ngay khi bấm Lưu trang. Nếu thay trang ảnh bằng chữ, ảnh cũ chỉ được thay sau khi lưu thành công.</p>
+                      <label for="previewHeading">Tiêu đề trang (không bắt buộc)</label>
+                      <input id="previewHeading" class="form-control mb-2" maxlength="120" [(ngModel)]="draft.heading" [ngModelOptions]="{standalone:true}">
+                      <label for="previewText">Nội dung đọc thử</label>
+                      <textarea id="previewText" class="form-control" rows="10" maxlength="1000" [(ngModel)]="draft.textContent" [ngModelOptions]="{standalone:true}" aria-describedby="previewTextHelp"></textarea>
+                      <small id="previewTextHelp" class="form-text">Tối đa 1000 ký tự và 24 dòng/trang để chữ không bị thu nhỏ. Chia nội dung dài sang trang tiếp theo.</small>
+                      <div class="text-options">
+                        <div><label for="previewFont">Kiểu chữ</label><select id="previewFont" class="custom-select" [(ngModel)]="draft.fontFamily" [ngModelOptions]="{standalone:true}"><option value="serif">Sách in (Noto Serif)</option><option value="sans">Rõ nét (Arial)</option></select></div>
+                        <div><label for="previewSize">Cỡ chữ</label><select id="previewSize" class="custom-select" [(ngModel)]="draft.fontSize" [ngModelOptions]="{standalone:true}"><option [ngValue]="18">18</option><option [ngValue]="20">20</option><option [ngValue]="22">22</option></select></div>
+                        <div><label for="previewAlign">Căn lề</label><select id="previewAlign" class="custom-select" [(ngModel)]="draft.textAlign" [ngModelOptions]="{standalone:true}"><option value="left">Trái</option><option value="center">Giữa (thơ)</option></select></div>
+                        <div><label for="previewNumber">Số trang gốc</label><input id="previewNumber" class="form-control" type="number" min="1" [(ngModel)]="draft.originalPageNumber" [ngModelOptions]="{standalone:true}"></div>
+                      </div>
+                      <details class="mt-2"><summary>Xem trước nội dung</summary>
+                        <article class="text-proof" [style.font-family]="draft.fontFamily === 'sans' ? 'Arial, sans-serif' : 'Vina Reader, Georgia, serif'" [style.font-size.px]="draft.fontSize || 20" [style.text-align]="draft.textAlign || 'left'">
+                          <h6>{{draft.heading}}</h6><p>{{draft.textContent}}</p>
+                        </article>
+                      </details>
+                      <div class="mt-3"><button type="button" class="btn btn-primary btn-sm mr-2" [disabled]="!validTextDraft || previewUploading" (click)="saveTextPage()">{{previewUploading ? 'Đang lưu...' : 'Lưu trang'}}</button><button type="button" class="btn btn-light btn-sm" [disabled]="previewUploading" (click)="textDraft = undefined">Hủy soạn</button></div>
+                    </section>
                     <small class="form-text text-muted">Ảnh JPG, PNG hoặc WebP, tối đa 8MB/trang. Có thể lưu sách trước rồi thêm trang sau.</small>
                 </div>
             </div>
@@ -117,9 +142,9 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-light" (click)="d()">Hủy</button>
-        <button type="button" class="btn btn-primary px-4" [disabled]="postForm.invalid" (click)="update()">
+        <button type="button" class="btn btn-primary px-4" [disabled]="postForm.invalid || previewUploading || !!textDraft || previewLoadError" (click)="update()">
             <i class="fas fa-save mr-1"></i> Lưu thay đổi
         </button>
     </div>
 </ng-template>
-<a style="color: steelblue; cursor: pointer;" (click)="open(content)"><i class="fas fa-edit"></i></a>
+<button type="button" class="btn btn-link p-0" aria-label="Chỉnh sửa sách" (click)="open(content)"><i class="fas fa-edit" aria-hidden="true"></i></button>

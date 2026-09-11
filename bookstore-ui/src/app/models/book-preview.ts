@@ -3,6 +3,12 @@ export interface BookPreviewPage {
   pageOrder: number;
   originalPageNumber?: number;
   imageUrl: string;
+  contentType?: 'image' | 'text';
+  textContent?: string;
+  heading?: string;
+  fontFamily?: 'serif' | 'sans';
+  fontSize?: number;
+  textAlign?: 'left' | 'center';
   enabled?: boolean;
 }
 

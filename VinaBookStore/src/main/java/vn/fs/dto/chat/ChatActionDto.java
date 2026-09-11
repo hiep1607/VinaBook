@@ -1,6 +1,12 @@
 package vn.fs.dto.chat;
 
 public class ChatActionDto {
+    private Long orderId;
+    public Long getOrderId(){return orderId;}
+    public void setOrderId(Long value){orderId=value;}
+    private int quantity = 1;
+    public int getQuantity() { return quantity; }
+    public void setQuantity(int value) { quantity = value; }
 	private final String type;
 	private final String label;
 	private final Long productId;

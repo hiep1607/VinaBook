@@ -3,6 +3,9 @@ package vn.fs.dto.chat;
 import java.util.List;
 
 public class ChatResponseDto {
+    private java.util.Map<String, String> execution = java.util.Map.of();
+    public java.util.Map<String, String> getExecution() { return execution; }
+    public void setExecution(java.util.Map<String, String> value) { execution = value; }
 
 	private final String answer;
 	private final String provider;

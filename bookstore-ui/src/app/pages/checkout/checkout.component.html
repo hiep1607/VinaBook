@@ -117,7 +117,7 @@
 
           <div class="payment-list" [class.loading]="methodsLoading">
             <button
-              *ngFor="let method of paymentMethods"
+              *ngFor="let method of availablePaymentMethods"
               type="button"
               class="payment-option"
               [class.selected]="selectedPayment === method.code"
@@ -149,6 +149,14 @@
 
       <aside class="checkout-summary" aria-label="Tóm tắt đơn hàng" appReveal="right">
         <h2>Đơn hàng</h2>
+
+        <div class="summary-items">
+          <article class="summary-item" *ngFor="let item of cartItems">
+            <img [src]="item.image" [alt]="'Bìa sách ' + item.name" width="44" height="62">
+            <div><strong>{{ item.name }}</strong><span>{{ item.quantity }} × {{ item.price | number }}đ</span></div>
+            <strong>{{ item.quantity * item.price | number }}đ</strong>
+          </article>
+        </div>
 
         <div class="summary-row">
           <span>Tạm tính</span>

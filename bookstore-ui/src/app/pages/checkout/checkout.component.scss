@@ -479,3 +479,13 @@
     transition: none;
   }
 }
+.summary-items { margin: 16px 0 20px; display: grid; gap: 14px; }
+.summary-item {
+  display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 10px; align-items: start;
+  font-size: 13px;
+  img { object-fit: contain; border-radius: 4px; }
+  div { min-width: 0; }
+  div strong { display: block; line-height: 1.4; }
+  span { display: block; margin-top: 4px; color: var(--c-muted-fg); }
+  > strong { white-space: nowrap; }
+}

@@ -43,7 +43,13 @@ export class ProductService {
       description: p.description,
       quantity: p.quantity,
       sold: p.sold,
-      enteredDate: p.enteredDate
+      enteredDate: p.enteredDate,
+      pageCount: p.pageCount,
+      coverType: p.coverType,
+      width: p.width,
+      height: p.height,
+      spineImage: p.spineImage,
+      backImage: p.backImage
     };
   }
 

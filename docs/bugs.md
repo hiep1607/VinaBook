@@ -6,7 +6,7 @@ Tài liệu này chỉ giữ vấn đề còn hiệu lực. Các mô tả protot
 
 1. **Angular 12 đã cũ.** Admin có dependency tree legacy và cảnh báo `npm audit`; cần nâng cấp theo từng major, không dùng `npm audit fix --force`.
 2. **Test coverage còn mỏng.** Backend có smoke/security và service test; storefront chạy được 52 test, admin chạy được 38 smoke test, nhưng cả hai vẫn thiếu nhiều test nghiệp vụ sâu.
-3. **Cart chưa đồng bộ đa thiết bị.** Cart local chỉ được đẩy lên backend lúc checkout.
+3. **Dữ liệu cá nhân còn theo thiết bị.** Địa chỉ, wishlist và avatar chưa đồng bộ server; giỏ đã đồng bộ theo tài khoản.
 
 ## Ưu tiên trung bình
 
@@ -32,3 +32,6 @@ Tài liệu này chỉ giữ vấn đề còn hiệu lực. Các mô tả protot
 - Backend đã tách profile dev/prod; production không có secret/database mặc định, tắt SQL log và `open-in-view`.
 - CI build/test storefront, backend và admin; test backend dùng MySQL 8 trên pull request/push `main`.
 - State mua ngay được xóa khi rời checkout, kể cả khi chưa hoàn tất đơn.
+
+- 11/09/2026: giỏ server theo JWT có revision, migration một lần, báo xung đột; checkout dùng quote/confirm chung với chat, giữ tồn kho và chống xác nhận trùng; hủy đơn COD hợp lệ hoàn tồn kho.
+- Đăng ký không còn ghi JWT dài vào cột token dành cho đặt lại mật khẩu.

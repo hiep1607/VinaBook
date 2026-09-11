@@ -7,6 +7,8 @@
     </h1>
 
     <div class="cart-wrapper">
+      <p *ngIf="cartService.syncing" role="status">Đang đồng bộ giỏ hàng…</p>
+      <p *ngIf="cartService.syncError" role="alert">{{ cartService.syncError }} <button type="button" (click)="cartService.refresh()">Tải lại giỏ từ tài khoản</button></p>
 
       <!-- LEFT -->
 

@@ -40,6 +40,11 @@ import vn.fs.config.CurrentUserAccess;
 @RestController
 @RequestMapping("api/orders")
 public class OrderApi {
+	@Autowired vn.fs.service.OrderCancellationService cancellation;
+	@Autowired vn.fs.service.ChatCheckoutService checkoutService;
+	@Autowired vn.fs.service.CartSyncService cartSync;
+	@Autowired javax.validation.Validator validator;
+	@javax.persistence.PersistenceContext javax.persistence.EntityManager em;
 
 	@Autowired
 	OrderRepository orderRepository;
@@ -106,68 +111,37 @@ public class OrderApi {
 		if (storedCart.getUser() == null || !access.ownsUserId(storedCart.getUser().getUserId())) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
-		List<CartDetail> items = cartDetailRepository.findByCart(storedCart);
-		if (items.isEmpty()) {
-			return ResponseEntity.badRequest().build();
-		}
-		Double amount = 0.0;
-		for (CartDetail i : items) {
-			if (i.getQuantity() <= 0 || i.getProduct() == null
-					|| i.getQuantity() > i.getProduct().getQuantity()) {
-				return ResponseEntity.badRequest().build();
-			}
-			amount += i.getPrice();
-		}
-		if (amount > 0 && amount < 300000) {
-			amount += 20000;
-		}
-		String normalizedPaymentMethod = normalizePaymentMethod(paymentMethod);
-		if (normalizedPaymentMethod == null) {
-			return ResponseEntity.badRequest().build();
-		}
-		Order order = new Order();
-		order.setOrderDate(new Date());
-		order.setAmount(amount);
-		order.setAddress(storedCart.getAddress());
-		order.setPhone(storedCart.getPhone());
-		order.setStatus(0);
-		order.setPaymentMethod(normalizedPaymentMethod);
-		order.setPaymentStatus("COD".equals(normalizedPaymentMethod) ? "UNPAID" : "PENDING");
-		order.setUser(userRepository.findByEmail(email).get());
-		order = orderRepository.save(order);
-		for (CartDetail i : items) {
-			OrderDetail orderDetail = new OrderDetail(0L, i.getQuantity(), i.getPrice(), i.getProduct(), order);
-			orderDetailRepository.save(orderDetail);
-		}
-//		cartDetailRepository.deleteByCart(cart);
-		for (CartDetail i : items) {
-			cartDetailRepository.delete(i);
-		}
-		senMail.sendMailOrder(order);
-		return ResponseEntity.ok(order);
+        vn.fs.service.CartSyncService.Snapshot snapshot = cartSync.get();
+        vn.fs.service.ChatCheckoutService.Input input = new vn.fs.service.ChatCheckoutService.Input();
+        input.setItems(snapshot.items().stream().map(item -> {
+            vn.fs.service.CartSyncService.Line line = new vn.fs.service.CartSyncService.Line();
+            line.setProductId(item.id()); line.setQuantity(item.quantity()); return line;
+        }).collect(java.util.stream.Collectors.toList()));
+        input.setRecipient(storedCart.getUser().getName());
+        input.setStreet(storedCart.getAddress()); input.setPhone(storedCart.getPhone());
+        input.setPaymentMethod(normalizePaymentMethod(paymentMethod));
+        input.setFromCart(true); input.setCartRevision(snapshot.revision());
+        if (!validator.validate(input).isEmpty() || input.getItems().isEmpty()) return ResponseEntity.badRequest().build();
+        // Compatibility endpoint shares price, inventory and cart transaction with the storefront.
+        String token = checkoutService.quote(input).getToken();
+        Long id = checkoutService.confirm(token).get("orderId");
+        return ResponseEntity.ok(orderRepository.findById(id).orElseThrow());
 	}
 
 	@PutMapping("cancel/{orderId}")
 	public ResponseEntity<Void> cancel(@PathVariable("orderId") Long id) {
-		if (!orderRepository.existsById(id)) {
-			return ResponseEntity.notFound().build();
-		}
-		Order order = orderRepository.findById(id).get();
-		if ("PAID".equals(order.getPaymentStatus()) && !"COD".equals(order.getPaymentMethod())) {
-			return ResponseEntity.status(HttpStatus.CONFLICT).build();
-		}
-		order.setStatus(3);
-		orderRepository.save(order);
-		senMail.sendMailOrderCancel(order);
+		cancellation.cancelAsAdmin(id);
 		return ResponseEntity.ok().build();
 	}
 
 	@PutMapping("deliver/{orderId}")
+	@org.springframework.transaction.annotation.Transactional
 	public ResponseEntity<Void> deliver(@PathVariable("orderId") Long id) {
 		if (!orderRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		Order order = orderRepository.findById(id).get();
+		Order order = em.find(Order.class,id,javax.persistence.LockModeType.PESSIMISTIC_WRITE);
+		if(order.getStatus()==2 || order.getStatus()==3)return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		if (!"COD".equals(paymentMethod(order)) && !"PAID".equals(paymentStatus(order))) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
@@ -178,11 +152,14 @@ public class OrderApi {
 	}
 
 	@PutMapping("success/{orderId}")
+	@org.springframework.transaction.annotation.Transactional
 	public ResponseEntity<Void> success(@PathVariable("orderId") Long id) {
 		if (!orderRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
-		Order order = orderRepository.findById(id).get();
+		Order order = em.find(Order.class,id,javax.persistence.LockModeType.PESSIMISTIC_WRITE);
+		if(order.getStatus()==2)return ResponseEntity.ok().build();
+		if(order.getStatus()==3)return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		if (!"COD".equals(paymentMethod(order)) && !"PAID".equals(paymentStatus(order))) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).build();
 		}
@@ -215,10 +192,11 @@ public class OrderApi {
 
 	public void updateProduct(Order order) {
 		List<OrderDetail> listOrderDetail = orderDetailRepository.findByOrder(order);
+		listOrderDetail.sort(java.util.Comparator.comparing(d -> d.getProduct().getProductId()));
 		for (OrderDetail orderDetail : listOrderDetail) {
-			Product product = productRepository.findById(orderDetail.getProduct().getProductId()).get();
+			Product product = em.find(Product.class, orderDetail.getProduct().getProductId(), javax.persistence.LockModeType.PESSIMISTIC_WRITE);
 			if (product != null) {
-				product.setQuantity(product.getQuantity() - orderDetail.getQuantity());
+				if(!order.isStockReserved())product.setQuantity(product.getQuantity() - orderDetail.getQuantity());
 				product.setSold(product.getSold() + orderDetail.getQuantity());
 				productRepository.save(product);
 			}

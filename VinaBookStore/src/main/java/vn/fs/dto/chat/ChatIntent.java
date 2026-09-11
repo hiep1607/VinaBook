@@ -1,6 +1,7 @@
 package vn.fs.dto.chat;
 
 public enum ChatIntent {
+	PURCHASE,
 	DISCOVER_BOOKS,
 	PRODUCT_INFO,
 	COMPARE_BOOKS,

@@ -61,7 +61,7 @@ public class ChatApi {
 
 	@PostMapping(value = "stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public SseEmitter stream(@Valid @RequestBody ChatRequestDto request, HttpServletRequest servletRequest) {
-		SseEmitter emitter = new SseEmitter(35_000L);
+		SseEmitter emitter = new SseEmitter(90_000L);
 		String clientId = clientIp(servletRequest);
 		if (!rateLimiter.allow(clientId)) {
 			try {

@@ -47,6 +47,7 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
   @Input() backImage = '';
   @Input() spineImage = '';
   @Input() previewEnabled = false;
+  @Input() paused = false;
 
   @Output() previewRequested = new EventEmitter<void>();
 
@@ -159,6 +160,16 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes.paused) {
+      if (this.animationFrameId !== undefined) {
+        cancelAnimationFrame(this.animationFrameId); this.animationFrameId = undefined;
+      }
+      if (this.controls) { this.controls.enabled = !this.paused; }
+      if (!this.paused && this.initialized && !this.destroyed && this.renderer) {
+        this.lastFrameAt = performance.now();
+        this.zone.runOutsideAngular(() => this.renderLoop(this.lastFrameAt));
+      }
+    }
     if (!this.initialized || this.destroyed) {
       return;
     }
@@ -268,81 +279,11 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
   }
 
   requestPreview(): void {
-    if (!this.previewEnabled) {
-      return;
-    }
-    if (!this.bookGroup || !this.frontSpineHingePivot || !this.frontCoverPivot || this.fallback) {
+    if (this.previewEnabled) {
+      this.canvasHost.nativeElement.parentElement?.querySelector<HTMLButtonElement>(
+        '.preview-button, .fallback-preview-button'
+      )?.focus({ preventScroll: true });
       this.emitPreviewRequested();
-      return;
-    }
-    if (this.bookOpen) {
-      if (this.openTimeline?.isActive()) {
-        if (this.openTimeline.reversed()) {
-          this.openTimeline.play();
-        }
-        return;
-      }
-      this.emitPreviewRequested();
-      return;
-    }
-
-    this.openTimeline?.kill();
-    this.targetBookRotation = undefined;
-    this.targetCameraPosition = undefined;
-    this.targetControlTarget = undefined;
-    this.interacting = false;
-    if (this.controls) {
-      this.controls.enabled = false;
-    }
-
-    const reduced = this.reduceMotion;
-    this.bookOpen = true;
-    this.openTimeline = gsap.timeline({
-      paused: true,
-      defaults: { ease: 'power3.inOut' },
-      onReverseComplete: () => {
-        this.bookOpen = false;
-        if (this.controls) {
-          this.controls.enabled = true;
-          this.controls.update();
-        }
-        this.lastInteractionAt = performance.now();
-      }
-    });
-    this.openTimeline
-      .addLabel('focus')
-      .to(this.bookGroup.rotation, { x: -0.14, y: -0.08, duration: reduced ? 0 : 0.42 }, 'focus')
-      .to(this.bookGroup.position, { y: '+=0.04', duration: reduced ? 0 : 0.42 }, 'focus')
-      .addLabel('release-hinge', reduced ? 0 : 0.16)
-      .to(this.frontSpineHingePivot.rotation, {
-        y: -0.16,
-        duration: reduced ? 0 : 0.24,
-        ease: 'power2.out'
-      }, 'release-hinge')
-      .to(this.frontCoverPivot.rotation, {
-        y: -0.32,
-        duration: reduced ? 0 : 0.24,
-        ease: 'power2.out'
-      }, 'release-hinge')
-      .addLabel('open-cover', reduced ? 0 : 0.4)
-      .to(this.frontSpineHingePivot.rotation, {
-        y: -0.08,
-        duration: reduced ? 0 : 0.68,
-        ease: 'power3.inOut'
-      }, 'open-cover')
-      .to(this.frontCoverPivot.rotation, {
-        // Combined with the flexible hinge rotation, the cover finishes flat
-        // behind the book while both pieces stay joined at the same axis.
-        y: -Math.PI + 0.08,
-        duration: reduced ? 0 : 0.68,
-        onComplete: () => this.emitPreviewRequested()
-      }, 'open-cover')
-      .to(this.bookGroup.rotation, { z: 0, duration: reduced ? 0 : 0.52 }, 'open-cover+=0.08');
-
-    if (reduced) {
-      this.openTimeline.progress(1);
-    } else {
-      this.openTimeline.play();
     }
   }
 
@@ -1940,7 +1881,7 @@ export class Book3dViewerComponent implements AfterViewInit, OnChanges, OnDestro
   }
 
   private renderLoop = (now: number): void => {
-    if (this.destroyed || !this.renderer || !this.scene || !this.camera) {
+    if (this.paused || this.destroyed || !this.renderer || !this.scene || !this.camera) {
       return;
     }
 

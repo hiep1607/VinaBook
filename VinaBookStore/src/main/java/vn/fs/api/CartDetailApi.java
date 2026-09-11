@@ -34,6 +34,7 @@ import vn.fs.entity.Cart;
 @RestController
 @RequestMapping("api/cartDetail")
 public class CartDetailApi {
+	@javax.persistence.PersistenceContext javax.persistence.EntityManager em;
 
 	@Autowired
 	CartDetailRepository cartDetailRepository;
@@ -72,6 +73,7 @@ public class CartDetailApi {
 	}
 
 	@PostMapping()
+	@org.springframework.transaction.annotation.Transactional
 	public ResponseEntity<CartDetail> post(@RequestBody CartDetail detail) {
 		if (!cartRepository.existsById(detail.getCart().getCartId())) {
 			return ResponseEntity.notFound().build();
@@ -80,6 +82,7 @@ public class CartDetailApi {
 		if (cart.getUser() == null || !access.ownsUserId(cart.getUser().getUserId())) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
+		em.lock(cart, javax.persistence.LockModeType.PESSIMISTIC_WRITE);
 		Product product = productRepository.findByProductIdAndStatusTrue(detail.getProduct().getProductId());
 		if (product == null || detail.getQuantity() <= 0 || detail.getQuantity() > product.getQuantity()) {
 			return ResponseEntity.notFound().build();
@@ -91,11 +94,14 @@ public class CartDetailApi {
 				if (quantity > product.getQuantity()) {
 					return ResponseEntity.badRequest().build();
 				}
+				bump(cart);
 				item.setQuantity(quantity);
 				item.setPrice(lineTotal(product, quantity));
 				return ResponseEntity.ok(cartDetailRepository.save(item));
 			}
 		}
+		bump(cart);
+		detail.setCartDetailId(null);
 		detail.setCart(cart);
 		detail.setProduct(product);
 		detail.setPrice(lineTotal(product, detail.getQuantity()));
@@ -103,6 +109,7 @@ public class CartDetailApi {
 	}
 
 	@PutMapping()
+	@org.springframework.transaction.annotation.Transactional
 	public ResponseEntity<CartDetail> put(@RequestBody CartDetail detail) {
 		if (detail.getCartDetailId() == null || !cartDetailRepository.existsById(detail.getCartDetailId())) {
 			return ResponseEntity.notFound().build();
@@ -111,16 +118,20 @@ public class CartDetailApi {
 		if (!owns(stored)) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
+		em.lock(stored.getCart(), javax.persistence.LockModeType.PESSIMISTIC_WRITE);
+		em.refresh(stored);
 		int quantity = detail.getQuantity();
 		if (quantity <= 0 || quantity > stored.getProduct().getQuantity()) {
 			return ResponseEntity.badRequest().build();
 		}
+		bump(stored.getCart());
 		stored.setQuantity(quantity);
 		stored.setPrice(lineTotal(stored.getProduct(), quantity));
 		return ResponseEntity.ok(cartDetailRepository.save(stored));
 	}
 
 	@DeleteMapping("{id}")
+	@org.springframework.transaction.annotation.Transactional
 	public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
 		if (!cartDetailRepository.existsById(id)) {
 			return ResponseEntity.notFound().build();
@@ -129,9 +140,13 @@ public class CartDetailApi {
 		if (!owns(stored)) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
+		em.lock(stored.getCart(), javax.persistence.LockModeType.PESSIMISTIC_WRITE);
+		bump(stored.getCart());
 		cartDetailRepository.deleteById(id);
 		return ResponseEntity.ok().build();
 	}
+
+	private void bump(Cart cart) { cart.setSyncRevision(cart.getSyncRevision() + 1); cartRepository.save(cart); }
 
 	private boolean owns(CartDetail detail) {
 		return detail.getCart() != null && detail.getCart().getUser() != null

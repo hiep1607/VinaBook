@@ -100,7 +100,8 @@ removeItem(item: any, event: MouseEvent) {
 
 }
 
-goToCheckout(): void {
+async goToCheckout(): Promise<void> {
+  try { await this.cartService.flush(); } catch { this.notification.error('Chưa đồng bộ được giỏ. Vui lòng tải lại giỏ trước khi đặt hàng.'); return; }
   if (this.getSubtotal() <= 0) {
     this.notification.error('Vui lòng chọn ít nhất một sản phẩm để thanh toán');
     return;

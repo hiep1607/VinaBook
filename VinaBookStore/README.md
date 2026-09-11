@@ -10,7 +10,7 @@ Backend Spring Boot 2.6/Java 17 cho storefront và admin.
 - Catalog, category, cart checkout, order, review và thống kê qua JPA/MySQL.
 - WebSocket tại `/notification`.
 - Email xác nhận/quên mật khẩu khi cấu hình SMTP.
-- Bản đọc thử sách: admin quản lý 5–10 ảnh trang tại `/api/admin/products/{id}/preview`; khách chỉ nhận manifest đã bật tại `/api/products/{id}/preview`.
+- Bản đọc thử sách: admin quản lý 5–20 trang (ảnh hoặc văn bản) tại `/api/admin/products/{id}/preview`; khách chỉ nhận đúng các trang đã bật tại `/api/products/{id}/preview`.
 
 ## Chạy local
 

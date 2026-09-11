@@ -15,4 +15,5 @@ public class ChatStatusDto {
 	public String getProvider() { return provider; }
 	public String getModel() { return model; }
 	public boolean isAiEnabled() { return aiEnabled; }
+	public String getArchitecture() { return aiEnabled ? "tools-v4" : "dialogue-v3-local"; }
 }

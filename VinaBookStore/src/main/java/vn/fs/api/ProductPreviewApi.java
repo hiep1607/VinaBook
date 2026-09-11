@@ -33,7 +33,7 @@ import vn.fs.repository.ProductRepository;
 public class ProductPreviewApi {
 
 	private static final int MIN_PAGES = 5;
-	private static final int MAX_PAGES = 10;
+	private static final int MAX_PAGES = 20;
 
 	@Autowired
 	private ProductRepository productRepository;
@@ -72,18 +72,18 @@ public class ProductPreviewApi {
 		}
 		List<ProductPreviewPage> current = previewRepository.findByProductOrderByPageOrderAsc(product);
 		if (current.size() >= MAX_PAGES) {
-			return ResponseEntity.badRequest().body("Bản đọc thử tối đa 10 trang");
+			return ResponseEntity.badRequest().body("Bản đọc thử tối đa 20 trang");
 		}
 		if (current.stream().anyMatch(page -> page.getPageOrder().equals(request.getPageOrder()))) {
 			return ResponseEntity.badRequest().body("Thứ tự trang đã tồn tại");
 		}
-		if (!isImageUrl(request.getImageUrl())) {
+		if (!"text".equals(request.getContentType()) && !isImageUrl(request.getImageUrl())) {
 			return ResponseEntity.badRequest().body("Chỉ chấp nhận URL ảnh JPG, PNG hoặc WebP");
 		}
 
 		ProductPreviewPage page = new ProductPreviewPage();
 		page.setProduct(product);
-		page.setImageUrl(request.getImageUrl().trim());
+		applyContent(page, request);
 		page.setPageOrder(request.getPageOrder());
 		page.setOriginalPageNumber(request.getOriginalPageNumber());
 		page.setEnabled(!Boolean.FALSE.equals(request.getEnabled()));
@@ -102,7 +102,7 @@ public class ProductPreviewApi {
 		if (Boolean.TRUE.equals(request.getEnabled())) {
 			long enabledCount = pages.stream().filter(page -> !Boolean.FALSE.equals(page.getEnabled())).count();
 			if (enabledCount < MIN_PAGES || enabledCount > MAX_PAGES) {
-				return ResponseEntity.badRequest().body("Bản đọc thử phải có từ 5 đến 10 trang đang bật");
+				return ResponseEntity.badRequest().body("Bản đọc thử phải có từ 5 đến 20 trang đang bật");
 			}
 		}
 		product.setPreviewEnabled(Boolean.TRUE.equals(request.getEnabled()));
@@ -120,7 +120,7 @@ public class ProductPreviewApi {
 		if (page == null || page.getProduct() == null || !productId.equals(page.getProduct().getProductId())) {
 			return ResponseEntity.notFound().build();
 		}
-		if (!isImageUrl(request.getImageUrl())) {
+		if (!"text".equals(request.getContentType()) && !isImageUrl(request.getImageUrl())) {
 			return ResponseEntity.badRequest().body("Chỉ chấp nhận URL ảnh JPG, PNG hoặc WebP");
 		}
 		List<ProductPreviewPage> current = previewRepository.findByProductOrderByPageOrderAsc(page.getProduct());
@@ -128,7 +128,7 @@ public class ProductPreviewApi {
 				&& item.getPageOrder().equals(request.getPageOrder()))) {
 			return ResponseEntity.badRequest().body("Thứ tự trang đã tồn tại");
 		}
-		page.setImageUrl(request.getImageUrl().trim());
+		applyContent(page, request);
 		page.setPageOrder(request.getPageOrder());
 		page.setOriginalPageNumber(request.getOriginalPageNumber());
 		page.setEnabled(!Boolean.FALSE.equals(request.getEnabled()));
@@ -196,17 +196,33 @@ public class ProductPreviewApi {
 		boolean enabled = Boolean.TRUE.equals(product.getPreviewEnabled())
 				&& Boolean.TRUE.equals(product.getPreviewRightsConfirmed())
 				&& activePageCount >= MIN_PAGES && activePageCount <= MAX_PAGES;
-		return new ProductPreviewDto(product.getProductId(), enabled,
+		if (!admin && !enabled) { pageDtos = java.util.Collections.emptyList(); }
+		return new ProductPreviewDto(product.getProductId(), admin ? Boolean.TRUE.equals(product.getPreviewEnabled()) : enabled,
 				admin && Boolean.TRUE.equals(product.getPreviewRightsConfirmed()), pageDtos.size(), pageDtos);
 	}
 
 	private ProductPreviewPageDto toPageDto(ProductPreviewPage page) {
-		return new ProductPreviewPageDto(page.getPreviewPageId(), page.getPageOrder(), page.getOriginalPageNumber(), page.getImageUrl(), page.getEnabled());
+		return new ProductPreviewPageDto(page.getPreviewPageId(), page.getPageOrder(), page.getOriginalPageNumber(), page.getImageUrl(), page.getEnabled(),
+				page.getContentType() == null ? "image" : page.getContentType(),
+				page.getTextContent(), page.getHeading(), page.getFontFamily(), page.getFontSize(), page.getTextAlign());
+	}
+
+	private void applyContent(ProductPreviewPage page, ProductPreviewPageRequest request) {
+		boolean text = "text".equals(request.getContentType());
+		page.setContentType(text ? "text" : "image");
+		page.setImageUrl(text ? "" : request.getImageUrl().trim());
+		page.setTextContent(text ? request.getTextContent().trim() : null);
+		page.setHeading(text && request.getHeading() != null ? request.getHeading().trim() : null);
+		page.setFontFamily(text && "sans".equals(request.getFontFamily()) ? "sans" : "serif");
+		page.setFontSize(text && request.getFontSize() != null ? request.getFontSize() : 20);
+		page.setTextAlign(text && "center".equals(request.getTextAlign()) ? "center" : "left");
 	}
 
 	private boolean isImageUrl(String value) {
 		try {
-			String path = URI.create(value == null ? "" : value.trim()).getPath().toLowerCase();
+			String path = URI.create(value == null ? "" : value.trim()).getPath();
+			if (path == null || value == null) { return false; }
+			path = path.toLowerCase(java.util.Locale.ROOT);
 			return (path.endsWith(".jpg") || path.endsWith(".jpeg") || path.endsWith(".png") || path.endsWith(".webp"))
 					&& (value.startsWith("https://") || value.startsWith("http://"));
 		} catch (IllegalArgumentException ex) {

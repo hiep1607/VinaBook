@@ -16,6 +16,8 @@ import { ProductPreviewPage } from '../../common/ProductPreview';
 })
 export class EditProductComponent implements OnInit {
 
+  readonly maxPreviewPages = 20;
+
   product!: Product;
 
   selectFile!: File;
@@ -25,6 +27,33 @@ export class EditProductComponent implements OnInit {
   rightsConfirmed = false;
   previewUploading = false;
   replacingPage?: ProductPreviewPage;
+  textDraft?: ProductPreviewPage;
+  previewLoadError = false;
+
+  editTextPage(page?: ProductPreviewPage): void {
+    if (this.previewUploading || (!page && this.previewPages.length >= this.maxPreviewPages)) { return; }
+    this.textDraft = page ? { ...page, contentType: 'text', textContent: page.textContent || '' } : {
+      pageOrder: this.previewPages.length + 1, imageUrl: '', contentType: 'text',
+      textContent: '', heading: '', fontFamily: 'serif', fontSize: 20, textAlign: 'left', enabled: true
+    };
+  }
+  get validTextDraft(): boolean {
+    const text = this.textDraft?.textContent || '';
+    return !!text.trim() && text.length <= 1000 && text.split(/\r?\n/).length <= 24;
+  }
+  saveTextPage(): void {
+    if (!this.textDraft || !this.validTextDraft || this.previewUploading) { return; }
+    const draft = { ...this.textDraft, imageUrl: '' };
+    this.previewUploading = true;
+    const save = draft.previewPageId ? this.productService.updatePreviewPage(this.id, draft.previewPageId, draft)
+      : this.productService.addPreviewPage(this.id, draft);
+    save.subscribe(saved => {
+      this.previewPages = [...this.previewPages.filter(p => p.previewPageId !== saved.previewPageId), saved]
+        .sort((a,b) => a.pageOrder - b.pageOrder);
+      this.textDraft = undefined; this.previewUploading = false;
+      this.toastr.success('Đã lưu trang đọc thử.', 'Hệ thống');
+    }, () => { this.previewUploading = false; this.toastr.error('Không lưu được trang. Nội dung đang soạn vẫn được giữ lại.', 'Hệ thống'); });
+  }
 
   postForm: FormGroup;
   categories!: Category[];
@@ -56,6 +85,9 @@ export class EditProductComponent implements OnInit {
   }
 
   update() {
+    if (this.previewUploading || this.textDraft || this.previewLoadError) {
+      this.toastr.warning('Hãy lưu hoặc hủy trang đang soạn và tải đủ bản đọc thử trước.', 'Hệ thống'); return;
+    }
     if (!this.image) {
       this.toastr.warning('Hãy chọn ảnh bìa cho sách!', 'Hệ thống');
       return;
@@ -71,7 +103,7 @@ export class EditProductComponent implements OnInit {
           this.editFinish.emit('done');
           this.modalService.dismissAll();
         }, error => {
-          this.toastr.error(this.previewEnabled ? 'Không thể bật đọc thử: cần đủ 5–10 trang và xác nhận quyền.' : 'Lưu bản đọc thử thất bại!', 'Hệ thống');
+          this.toastr.error(this.previewEnabled ? 'Không thể bật đọc thử: cần đủ 5–20 trang và xác nhận quyền.' : 'Lưu bản đọc thử thất bại!', 'Hệ thống');
         });
       }, error => {
         this.toastr.error('Cập nhật thất bại!', 'Hệ thống');
@@ -107,11 +139,13 @@ export class EditProductComponent implements OnInit {
   }
 
   getPreview(): void {
+    this.previewLoadError = false;
     this.productService.getPreview(this.id).subscribe(data => {
       this.previewPages = (data.pages || []).sort((a, b) => a.pageOrder - b.pageOrder);
       this.previewEnabled = !!data.enabled;
       this.rightsConfirmed = !!data.rightsConfirmed;
     }, () => {
+      this.previewLoadError = true;
       this.previewPages = [];
       this.previewEnabled = false;
       this.rightsConfirmed = false;
@@ -129,8 +163,8 @@ export class EditProductComponent implements OnInit {
       this.toastr.warning('Chỉ nhận JPG, PNG, WebP tối đa 8MB.', 'Hệ thống');
       return;
     }
-    if (this.previewPages.length >= 10) {
-      this.toastr.warning('Bản đọc thử tối đa 10 trang.', 'Hệ thống');
+    if (this.previewPages.length >= this.maxPreviewPages) {
+      this.toastr.warning('Bản đọc thử tối đa 20 trang.', 'Hệ thống');
       return;
     }
     this.previewUploading = true;
@@ -175,7 +209,7 @@ export class EditProductComponent implements OnInit {
     this.previewUploading = true;
     this.uploadService.uploadPreviewPage(file).subscribe(response => {
       const replacement: ProductPreviewPage = {
-        ...page,
+        ...page, contentType: 'image', textContent: undefined,
         imageUrl: response.secure_url
       };
       this.productService.updatePreviewPage(this.id, page.previewPageId!, replacement).subscribe(saved => {
@@ -192,28 +226,32 @@ export class EditProductComponent implements OnInit {
   }
 
   removePreviewPage(page: ProductPreviewPage): void {
-    if (!page.previewPageId) {
+    if (this.previewUploading || this.textDraft || !page.previewPageId) {
       return;
     }
+    this.previewUploading = true;
     this.productService.deletePreviewPage(this.id, page.previewPageId).subscribe(() => {
+      this.previewUploading = false;
       this.previewPages = this.previewPages.filter(item => item.previewPageId !== page.previewPageId)
         .map((item, index) => ({ ...item, pageOrder: index + 1 }));
       this.toastr.success('Đã xóa trang đọc thử.', 'Hệ thống');
-    }, () => this.toastr.error('Xóa trang đọc thử thất bại.', 'Hệ thống'));
+    }, () => { this.previewUploading = false; this.toastr.error('Xóa trang đọc thử thất bại.', 'Hệ thống'); });
   }
 
   movePreviewPage(index: number, direction: -1 | 1): void {
     const nextIndex = index + direction;
-    if (nextIndex < 0 || nextIndex >= this.previewPages.length) {
+    if (this.previewUploading || this.textDraft || nextIndex < 0 || nextIndex >= this.previewPages.length) {
       return;
     }
-    const pages = [...this.previewPages];
+    const pages = this.previewPages.map(p => ({...p}));
     [pages[index], pages[nextIndex]] = [pages[nextIndex], pages[index]];
     pages.forEach((page, position) => page.pageOrder = position + 1);
-    this.previewPages = pages;
     const ids = pages.map(page => page.previewPageId).filter((id): id is number => !!id);
     if (ids.length === pages.length) {
-      this.productService.reorderPreviewPages(this.id, ids).subscribe();
+      this.previewUploading = true;
+      this.productService.reorderPreviewPages(this.id, ids).subscribe(data => {
+        this.previewPages = data.pages; this.previewUploading = false;
+      }, () => { this.previewUploading = false; this.getPreview(); this.toastr.error('Không lưu được thứ tự trang.', 'Hệ thống'); });
     }
   }
 

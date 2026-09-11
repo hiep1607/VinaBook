@@ -72,6 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/api/categories", "/api/categories/*").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/homepage").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/chat/status").permitAll()
+				.antMatchers("/api/chat/checkout/**").hasRole("USER")
 				.antMatchers(HttpMethod.POST, "/api/chat").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/chat/stream", "/api/chat/feedback").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/payments/methods", "/api/payments/vnpay/**",
@@ -95,6 +96,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 				// ---- 3) CHỈ KHÁCH ĐÃ ĐĂNG NHẬP (ROLE_USER) — giỏ hàng, đơn hàng, đánh giá của chính mình ----
 				.antMatchers(HttpMethod.GET, "/api/orders/user/**").hasRole("USER")
+				.antMatchers(HttpMethod.POST, "/api/orders/me/*/cancel").hasRole("USER")
 				.antMatchers(HttpMethod.GET, "/api/orderDetail/**").hasAnyRole("USER", "ADMIN")
 				.antMatchers(HttpMethod.POST, "/api/orders/*").hasRole("USER")
 				.antMatchers(HttpMethod.POST, "/api/payments/orders/*/start").hasRole("USER")

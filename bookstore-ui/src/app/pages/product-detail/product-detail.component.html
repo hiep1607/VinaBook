@@ -46,7 +46,8 @@
           [description]="product.description"
           [productId]="product.id"
           [category]="product.category"
-          [previewEnabled]="previewPages.length > 0"
+          [previewEnabled]="previewAvailable"
+          [paused]="previewOpen"
           (previewRequested)="onPreviewRequested()"
         ></app-book-3d-viewer>
 
@@ -300,8 +301,7 @@
 
 <app-book-preview-reader
   *ngIf="previewOpen"
-  [title]="product?.name || 'Bản đọc thử'"
-  [pages]="previewPages"
+  [product]="product"
   (closed)="closePreview()"
 ></app-book-preview-reader>
 

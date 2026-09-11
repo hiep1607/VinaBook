@@ -24,6 +24,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   addresses: any[] = [];
   selectedAddress: any = null;
   placing = false;
+  private preparing = false;
+  private destroyed = false;
   orderPlaced = false;
   mode = 'form';
   showNewForm = false;
@@ -57,6 +59,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.cartService.getCartItems();
+    if (this.cartService.syncing) {
+      this.cartService.flush().then(() => { if (!this.destroyed) this.ngOnInit(); }, () => {
+        this.formError = this.cartService.syncError || 'Chưa tải được giỏ hàng. Vui lòng quay lại giỏ hàng và thử lại.';
+      });
+      return;
+    }
     this.cartItems = this.cartService.buyNowItem
       ? [this.cartService.buyNowItem]
       : this.cartService.getCartItems().filter(item => item.selected);
@@ -101,7 +110,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     return selected ? selected.label : 'Thanh toán khi nhận hàng';
   }
 
+  get availablePaymentMethods(): any[] {
+    return this.paymentMethods.filter(method => method.available);
+  }
+
   ngOnDestroy(): void {
+    this.destroyed = true;
     this.cartService.clearBuyNowItem();
   }
 
@@ -153,7 +167,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     return this.getSubtotal() + this.getShipping();
   }
 
-  placeOrder(): void {
+  async placeOrder(): Promise<void> {
+    if (this.placing || this.preparing || this.orderPlaced) return;
+    this.preparing = true;
+    try { await this.cartService.flush(); } catch { this.formError = this.cartService.syncError || 'Chưa đồng bộ được giỏ hàng. Vui lòng kiểm tra lại.'; return; }
+    finally { this.preparing = false; }
+    if (this.destroyed) return;
     this.formError = '';
 
     let shippingAddress: any;
@@ -189,14 +208,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.placing = true;
 
     this.orderService
-      .placeOrder(this.email, addressLine, shippingAddress.phone, this.cartItems, this.selectedPayment)
+      .placeOrder(this.email, addressLine, shippingAddress.phone, this.cartItems, this.selectedPayment, !this.cartService.buyNowItem, this.cartService.serverRevision)
       .subscribe(
         (order: any) => {
           if (isNewAddress && this.saveToProfile) {
             this.addressService.addAddress(this.email, this.shippingForm);
           }
           if (!this.cartService.buyNowItem) {
-            this.cartItems.forEach(item => this.cartService.removeItem(item));
+            this.cartService.refresh();
           }
           this.cartService.clearBuyNowItem();
           if (this.selectedPayment === 'COD') {
@@ -227,9 +246,9 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             }
           );
         },
-        () => {
+        error => {
           this.placing = false;
-          this.formError = 'Đặt hàng thất bại. Vui lòng kiểm tra kết nối và thử lại';
+          this.formError = error?.error?.message || error?.message || 'Chưa xác nhận được kết quả đặt hàng. Vui lòng kiểm tra Đơn hàng trước khi đặt lại.';
           this.notification.error(this.formError);
         }
       );

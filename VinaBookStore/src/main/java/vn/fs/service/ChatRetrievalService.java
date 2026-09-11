@@ -40,9 +40,37 @@ public class ChatRetrievalService {
 			List.of("giao trinh", "hoc tap", "sinh vien", "nhap mon", "can ban"));
 
 	private final ChatIntentService intents;
+	private vn.fs.repository.RateRepository rates;
+	@org.springframework.beans.factory.annotation.Autowired
+	public void setRates(vn.fs.repository.RateRepository rates) { this.rates = rates; }
+
+	public List<Product> rated(List<Product> products, ChatSearchCriteriaDto criteria) {
+		if (criteria.getMinRating() == null && !"rating".equals(criteria.getSort())) return products;
+		java.util.Map<Long, Double> averages = new java.util.HashMap<>();
+		if (rates != null) for (Object[] row : rates.averageRatings())
+			averages.put(((Number) row[0]).longValue(), ((Number) row[1]).doubleValue());
+		java.util.stream.Stream<Product> stream = products.stream().filter(p -> averages.containsKey(p.getProductId())
+				&& averages.get(p.getProductId()) >= (criteria.getMinRating() == null ? 0 : criteria.getMinRating()));
+		if ("rating".equals(criteria.getSort())) stream = stream.sorted(Comparator
+				.comparingDouble((Product p) -> averages.get(p.getProductId())).reversed().thenComparing(Product::getProductId));
+		return stream.collect(Collectors.toList());
+	}
 
 	public ChatRetrievalService(ChatIntentService intents) {
 		this.intents = intents;
+	}
+
+	public Double averageRating(Product product) {
+		if (rates != null) for (Object[] row : rates.averageRatings())
+			if (((Number) row[0]).longValue() == product.getProductId()) return ((Number) row[1]).doubleValue();
+		return null;
+	}
+
+	public java.util.Map<Long,Double> ratingSnapshot() {
+		java.util.Map<Long,Double> result = new java.util.HashMap<>();
+		if (rates != null) for (Object[] row : rates.averageRatings())
+			result.put(((Number) row[0]).longValue(), ((Number) row[1]).doubleValue());
+		return result;
 	}
 
 	public List<Product> retrieve(String question, ChatQueryPlan plan, List<Product> catalog,
@@ -61,15 +89,30 @@ public class ChatRetrievalService {
 			List<Product> context = byIds(active, contextIds);
 			if (context.size() >= 2) return context;
 		}
+		String normalized = intents.normalize(question);
+		if (named.isEmpty() && plan.getIntent() == ChatIntent.PRODUCT_INFO
+				&& contextIds != null && (normalized.contains("cuon nay") || normalized.contains("sach nay")
+				|| normalized.contains("tac pham nay"))) {
+			// Multiple previous suggestions are ambiguous; do not silently choose one.
+			List<Product> context = byIds(active, contextIds);
+			return context.size() == 1 ? context : List.of();
+		}
+		// A product fact requires an identified title/reference, never the best fuzzy hit.
+		if (named.isEmpty() && plan.getIntent() == ChatIntent.PRODUCT_INFO) return List.of();
+		if (plan.getIntent() == ChatIntent.COMPARE_BOOKS && named.isEmpty()
+				&& normalized.matches(".*\\b(nay|do|vua|hon)\\b.*")) return List.of();
+		ChatExplicitFilters mandatory = new ChatExplicitFilters(intents);
+		active = active.stream().filter(p -> mandatory.matches(question, p)).collect(Collectors.toList());
 
 		ChatSearchCriteriaDto criteria = plan.getCriteria();
+		boolean budgetOnly = intents.isBudgetOnlyDiscovery(question) && criteria.getTopics().isEmpty()
+				&& criteria.getCategory().isEmpty() && criteria.getAuthor().isEmpty();
 		RetrievalTerms terms = expandedTerms(question, plan);
-		List<ScoredProduct> scored = score(active, terms, criteria, true);
-		if (scored.isEmpty()) {
-			// Lần hai nới category/author do AI suy luận, nhưng vẫn giữ ngân sách và yêu cầu liên quan.
-			scored = score(active, terms, criteria, false);
-		}
-		if (scored.isEmpty() && (isGenericDiscovery(plan, terms.scoring) || alternative)) {
+		boolean structured = !criteria.getSort().isEmpty() || criteria.getMinRating() != null;
+		List<ScoredProduct> scored = score(active, terms, criteria, !budgetOnly && (!structured || !criteria.getTopics().isEmpty()));
+		boolean unconstrained = criteria.getTopics().isEmpty() && criteria.getCategory().isEmpty()
+				&& criteria.getAuthor().isEmpty() && criteria.getMinPrice() == null && criteria.getMaxPrice() == null;
+		if (scored.isEmpty() && !structured && (isGenericDiscovery(plan, terms.scoring) || (alternative && unconstrained))) {
 			scored = active.stream().map(product -> new ScoredProduct(product,
 					Math.max(0, product.getSold()) + (product.getQuantity() > 0 ? 20 : 0)))
 					.collect(Collectors.toList());
@@ -79,13 +122,18 @@ public class ChatRetrievalService {
 			Set<Long> seen = new HashSet<>(contextIds);
 			scored = scored.stream().filter(item -> !seen.contains(item.product.getProductId()))
 					.collect(Collectors.toList());
+			if (normalized.contains("re hon")) {
+				long ceiling = byIds(active, contextIds).stream().mapToLong(this::effectivePrice).min().orElse(Long.MAX_VALUE);
+				scored = scored.stream().filter(item -> effectivePrice(item.product) < ceiling).collect(Collectors.toList());
+			}
 		}
 		applySort(scored, criteria.getSort());
 
 		int limit = Math.min(MAX_CANDIDATES, Math.max(12, plan.getRequestedCount() * 3));
 		if (plan.getIntent() == ChatIntent.PRODUCT_INFO) limit = 1;
 		if (plan.getIntent() == ChatIntent.COMPARE_BOOKS) limit = Math.max(2, Math.min(6, plan.getRequestedCount()));
-		return scored.stream().map(item -> item.product).distinct().limit(limit).collect(Collectors.toList());
+		return rated(scored.stream().map(item -> item.product).distinct().collect(Collectors.toList()), criteria)
+				.stream().limit(limit).collect(Collectors.toList());
 	}
 
 	/**
@@ -94,6 +142,13 @@ public class ChatRetrievalService {
 	 */
 	public List<Product> directMatches(String question, ChatSearchCriteriaDto criteria,
 			List<Product> candidates) {
+		if (intents.isBudgetOnlyDiscovery(question) && criteria.getTopics().isEmpty()
+				&& criteria.getCategory().isEmpty() && criteria.getAuthor().isEmpty()) {
+			return candidates.stream().filter(p ->
+					(criteria.getMinPrice() == null || effectivePrice(p) >= criteria.getMinPrice())
+					&& (criteria.getMaxPrice() == null || effectivePrice(p) <= criteria.getMaxPrice()))
+					.collect(Collectors.toList());
+		}
 		LinkedHashSet<String> anchors = new LinkedHashSet<>();
 		for (String topic : criteria.getTopics()) addTerm(anchors, topic);
 		addTerm(anchors, criteria.getCategory());
@@ -121,7 +176,9 @@ public class ChatRetrievalService {
 			boolean categoryMatch = categoryNeedle.isEmpty() || category.contains(categoryNeedle)
 					|| categoryNeedle.contains(category);
 			boolean authorMatch = authorNeedle.isEmpty() || author.equals(authorNeedle);
-			if (strictMetadata && (!categoryMatch || !authorMatch)) continue;
+			if (!categoryMatch || !authorMatch) continue;
+			String explicitTopic = intents.normalize(String.join(" ", criteria.getTopics()));
+			String bookText = intents.normalize(product.getName() + " " + product.getDescription() + " " + category);
 
 			int anchorValue = relevance(product, terms.anchors);
 			int value = relevance(product, terms.scoring);
@@ -129,7 +186,7 @@ public class ChatRetrievalService {
 			if (!authorNeedle.isEmpty() && authorMatch) value += 80;
 			boolean relevant = anchorValue >= MIN_ANCHOR_SCORE
 					|| (hasMetadataFilter && categoryMatch && authorMatch);
-			if (!relevant) continue;
+			if (strictMetadata && !relevant) continue;
 			if (product.getQuantity() > 0) value += 8;
 			else value -= 35;
 			result.add(new ScoredProduct(product, value));

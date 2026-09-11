@@ -1,4 +1,51 @@
+> Cập nhật 10/09/2026: luồng AI hiện dùng bộ điều phối tools v4. Xem [kiến trúc và cách thêm chức năng](chatbot-tools-v4.md). Phần bên dưới mô tả các lớp và luồng nền tảng trước v4.
+
 # Trợ lý VinaBook
+
+## Dialogue v3 — kiến trúc đang dùng (2026-09-10)
+
+Phần này thay thế pipeline V2 trong các mục lịch sử bên dưới. Không phải vector database hoặc GraphRAG.
+
+- `ChatService`: kiểm tra phạm vi/quyền → đọc trạng thái → giải sách/thao tác → lọc catalog → tối đa một lần gọi `ChatDialogueInterpreter` → kiểm tra ID → dựng nội dung và thẻ từ cùng sản phẩm. Planner/grounding V2 không còn được gọi trong runtime này.
+- `ChatDialogueMemory`: RAM tối đa 2.000 phiên, hết hạn sau 30 phút không hoạt động; khóa gồm principal xác thực và session ID. Giữ mục tiêu, trình độ, tiêu chí, shortlist, danh sách hiển thị, cuốn đang tập trung riêng biệt. Không lưu địa chỉ, phản hồi đơn hàng hoặc toàn transcript. Restart backend làm mất bộ nhớ này.
+- Frontend giữ session ID theo tài khoản trong sessionStorage, không tạo phiên mới chỉ vì reload. Nút Mới reset phiên; đổi tài khoản hủy request đang chạy và bỏ bản nháp/thông tin riêng khỏi màn hình.
+- `ChatCatalogQuery` lọc toàn catalog hoạt động trước khi sort/limit. Giá sau giảm, tồn kho, tác giả và rating lấy từ cửa hàng; không coi thiếu rating là 0 sao. `ChatMoney` không coi năm trong tên sách hay số lượng cuốn là ngân sách.
+- Mỗi lượt AI nhận tối đa 80 ứng viên, mô tả tối đa 1.100 ký tự/cuốn, lịch sử công khai có giới hạn. ID không hợp lệ bị từ chối. Giá/tên sách được server render. Phản hồi sai schema/ID dùng thông tin có thể đối chiếu, không khẳng định là Gemini mất kết nối.
+- `requestId` giữ nguyên khi SSE chuyển sang JSON; retry yêu cầu gần nhất không thực hiện lại chuyển trạng thái (ví dụ loại thêm sách). Tra đơn luôn đọc theo tài khoản, không cache câu trả lời đơn hàng trong bộ nhớ hội thoại.
+- Mua bằng lời nói mở bản nháp khi xác định một cuốn. Lựa chọn sách công khai của khách có thể tiếp tục sau đăng nhập trong cùng trang; không chuyển bản nháp/địa chỉ từ A sang B. Không có địa chỉ thì hỏi bổ sung lịch sự; nhiều địa chỉ thì hỏi chọn; một địa chỉ thì tự lập báo giá để xem lại.
+- Shipping chat xử lý cục bộ và đánh dấu private, không gửi AI. “ok” không tạo đơn; nút hoặc tin “xác nhận đặt hàng” sau báo giá mới chốt. Đổi sách/thông tin phải báo giá lại. Lưu địa chỉ opt-in, chỉ lưu sau thành công.
+- Checkout kiểm tra JWT, chủ báo giá, hạn 15 phút, giá/tồn kho và ghi đơn trong transaction; payment reference chống retry cùng đơn. Hiện hỗ trợ một đầu sách/bản nháp và COD; địa chỉ lưu theo tài khoản trên trình duyệt. Chưa có giỏ nhiều đầu sách, đồng bộ địa chỉ đa thiết bị hoặc kho báo giá dùng chung nhiều backend.
+- Khung chat gần hết chiều cao viewport; bảng so sánh dùng nội suy Angular (không HTML của AI), cuộn ngang trên màn hẹp; cập nhật stream theo nhóm nhỏ thay vì trì hoãn từng từ.
+
+Nguồn kiến thức chính vẫn là mô tả catalog, chưa có toàn văn/chỉ mục chương. Không hứa trả lời chính xác mọi câu hỏi sâu khi thiếu nguồn. Test tự động kiểm tra luồng/an toàn không tương đương điểm chất lượng tư vấn với model thật.
+
+Luồng chốt đơn nhận cả “đặt đơn giúp t”, “đặt hàng giúp mình”; khi xác định một sách, frontend mở bản nháp trực tiếp. Form giải thích mục đích thông tin giao hàng và yêu cầu kiểm tra lại trước xác nhận. Checkbox lưu địa chỉ mặc định không chọn; chỉ lưu sau khi đặt thành công, theo tài khoản trên trình duyệt, không gửi cho AI. Khi yêu cầu mua cuốn khác trong bản nháp chưa xác nhận, truy vấn lại sách; không thay đơn đang xử lý hoặc chưa rõ kết quả.
+
+## Lịch sử dài và lỗi transport (2026-09-08)
+
+Backend nhận tối đa 8000 ký tự mỗi tin lịch sử (10 tin/request). Frontend gửi tối đa 8 tin hoàn tất gần nhất, 8000 ký tự/tin và 24000 ký tự tổng; rút gọn bản gửi đi, không sửa nội dung hiển thị hoặc ID sách. Không cắt đôi surrogate UTF-16.
+
+HTTP 400/413, 401/403, 429 và lỗi kết nối có thông báo riêng. SSE nhận lỗi xác định thì không gửi lại qua JSON. Khi AI lỗi, câu trả lời local nêu trạng thái giới hạn lượt, timeout hoặc AI tạm thời không trả lời được. Kiểm thử: 90 test backend và 3 test frontend đạt; API đang chạy đã nhận lịch sử giả lập 8000 ký tự với câu hỏi POLICY xử lý local. Không gọi Gemini trong kiểm thử này.
+
+## Conversational RAG (2026-09-08)
+
+Pipeline hiện tại: giải tham chiếu hội thoại → lập kế hoạch → truy xuất catalog có ràng buộc → AI chọn lại ứng viên → dựng câu trả lời/thẻ từ cùng ID. Đây là nâng cấp RAG hội thoại trên bộ tìm từ khóa/ngữ nghĩa mở rộng hiện có, chưa phải vector database hay GraphRAG.
+
+- `ChatConversationContext` viết lại câu hỏi có “cuốn thứ hai”, “cuốn cuối”, “tóm tắt thêm” bằng tên sách xác minh từ catalog, theo thứ tự ID thẻ của lượt trước. Nhiều sách mà thiếu tham chiếu rõ thì hỏi lại; policy/đơn hàng không bị kéo vào ngữ cảnh sách.
+- Câu tìm sách mới đặt lại tiêu chí; các lượt hỏi sách khác giữ chủ đề/ngân sách qua nhiều lượt user trong lịch sử gửi lên (không có bộ nhớ dài hạn phía server).
+- Bộ lọc category/author do người dùng nêu không tự nới khi thiếu kết quả. Hỏi sách khác trong một chủ đề không tự bù bằng bestseller. “Rẻ hơn” phải có giá thấp hơn cuốn rẻ nhất trong nhóm trước.
+- AI vẫn nhận nhóm ứng viên rộng để chọn; giới hạn số gợi ý sau khi chọn, trước khi dựng nội dung và thẻ. Hỏi chi tiết không chèn giá/tồn kho vào bài phân tích; quick replies chuyển sang nội dung, độ khó đọc và giá.
+- 89 test chatbot đạt, gồm thứ tự tham chiếu, lịch sử nhiều lượt, ràng buộc giá, thiếu ngữ cảnh, đúng tên sách và thẻ khớp nội dung. Kiểm thử dùng AI mock; chưa đo chất lượng với provider thật. Nguồn kiến thức vẫn là mô tả catalog; không có toàn văn sách để chứng minh mọi chi tiết.
+
+## Sửa tư vấn nội dung và thẻ sách (2026-09-08)
+
+Bổ sung hồi quy câu “nói rõ hơn về cuốn luật lao động thực hành”: nhận tên sách trước khi lập kế hoạch tìm chủ đề; yêu cầu giải thích được chuyển sang PRODUCT_INFO. UNKNOWN không đính kèm thẻ ứng viên. 85 test chatbot đạt. Backend đã nạp lại với cấu hình Gemini hiện có và validate schema. Kiểm thử câu hỏi qua AI thật chưa thực hiện do cơ chế duyệt tự động chặn việc gửi câu hỏi/catalog tới provider ngoài.
+
+- Câu hỏi nội dung về Nhà Giả Kim không còn bị từ “giả” trong tên sách đưa vào handler giá. Handler giá nhận các cụm hỏi giá sau khi loại tên sách khỏi câu hỏi.
+- Ở chế độ local hoặc AI lỗi, danh sách thẻ và action được giới hạn theo đúng các sách xuất hiện trong câu trả lời (tối đa 5 gợi ý, 1 sách khi hỏi chi tiết).
+- “Cuốn này/sách này” dùng product ID của lượt trước khi chỉ có một sách; nhiều sách thì hỏi lại tên thay vì chọn ngẫu nhiên.
+- Prompt chi tiết nhận mô tả tối đa 6000 ký tự và cho phép giải thích nội dung dài hơn. Phân biệt kiến thức văn học phổ biến với dữ kiện catalog; không tự tạo trích dẫn, chương, số trang hay chi tiết ấn bản. Local nói rõ giới hạn dữ liệu.
+- Kiểm thử: 84 test chatbot đạt (intent, retrieval/grounding, service), gồm hồi quy tên sách bị nhầm thành giá, thẻ dư và ngữ cảnh một/nhiều cuốn. Provider được mock trong test; chưa xác minh chất lượng câu trả lời với dịch vụ AI thật cho bản sửa này.
 
 Chatbot V2 dùng backend làm nguồn nghiệp vụ duy nhất. Angular không biết API key, không chứa bản sao FAQ/search rule và không phụ thuộc trực tiếp vào cấu trúc response của bất kỳ hãng AI nào.
 
@@ -120,3 +167,25 @@ Các quick reply “Còn cuốn khác không?”, “Sách rẻ hơn” và “S
 Ở chế độ `local`, câu hỏi nêu đúng tên sách về tồn kho, giá hoặc phần trăm giảm được trả lời trực tiếp từ catalog. Số lượng luôn kèm lưu ý có thể thay đổi khi phát sinh đơn hàng mới.
 
 Lịch sử giao diện chỉ lưu trong `sessionStorage` của tab hiện tại với key `vinabook_chat_session`, tối đa 24 tin nhắn; `vinabook_chat_id` là mã phiên ngẫu nhiên. Backend không lưu câu hỏi hay câu trả lời: bảng `chat_events` chỉ có metadata vận hành và feedback. Không gửi mật khẩu, OTP, số thẻ đầy đủ hoặc CVV vào chat.
+
+## Mua hàng trong chat
+
+Lịch sử từ bản sửa phân tách tài khoản dùng key `vinabook_chat_session_v2:user:{email}`; khách chưa đăng nhập dùng key riêng `vinabook_chat_session_v2:guest`. Khi đổi tài khoản/đăng xuất: hủy stream, xóa nội dung đang gõ, lỗi, action, bản nháp và ngữ cảnh hiển thị; chỉ tải lịch sử của tài khoản mới, đồng thời đổi mã phiên chat. Lịch sử cũ ở key dùng chung bị xóa do không có owner để xác minh, không tự chuyển sang tài khoản đang đăng nhập. Đây là lưu trữ giao diện trong tab, không phải ranh giới bảo mật thay cho xác thực backend.
+
+- Intent PURCHASE nhận các câu mua/chốt/lấy sách, tên sách và tham chiếu theo thứ tự card. Không rõ sách thì hỏi chọn lại; không lấy sách trước đó thay cho tên không tìm thấy. Nhận diện mua hiện là rule tiếng Việt, không phụ thuộc Gemini và chưa bao phủ mọi cách diễn đạt.
+- Mỗi bản nháp hỗ trợ một đầu sách, số lượng 1–99 và COD. Người dùng phải đăng nhập. Không thay đổi giỏ hàng hiện có.
+- Dùng AddressService theo email hiện tại: một địa chỉ thì chuẩn bị quote; nhiều địa chỉ thì hỏi chọn (không tự chọn mặc định); chưa có thì hỏi tên, điện thoại, địa chỉ. Có thể nhập form hoặc trả lời tuần tự trong chat. Địa chỉ vẫn lưu theo thiết bị; thông tin nhập riêng trong chat không tự ghi vào sổ địa chỉ.
+- POST /api/chat/checkout/quote lấy giá và tồn kho từ server, tính phí 20.000đ, miễn phí từ 300.000đ. Chưa tạo order. Bản nháp hiển thị số lượng, người nhận, địa chỉ, COD, giá sách, phí ship và tổng tiền; có nút sửa/bỏ.
+- POST /api/chat/checkout/{token}/confirm chỉ được gọi khi bấm Xác nhận đặt hàng. JWT xác định owner. Order và OrderDetail ghi trong cùng transaction, kiểm tra lại giá/tồn kho. Retry cùng token trả lại mã đơn cũ, dùng paymentReference CHAT-{token} để khôi phục kết quả sau restart.
+- Khi mất mạng lúc xác nhận, giao diện khóa sửa/bỏ và retry cùng token. Sau khi tải lại trang cần kiểm tra Đơn hàng trước khi đặt lại. Các bản nháp chưa xác nhận nằm trong bộ nhớ backend, hết hạn sau 15 phút; restart làm mất bản nháp chưa chốt. Hiện thiết kế cho một backend instance; cần kho draft bền vững và unique idempotency key riêng trước khi scale nhiều instance.
+- Thông tin giao hàng của bản nháp không gửi AI, không lưu trong lịch sử chat; thông báo đơn hàng cũng loại khỏi history gửi AI/sessionStorage. Đổi tài khoản xóa bản nháp và thông báo riêng tư. Trong lúc lập bản nháp, câu hỏi phí giao hàng/giá/thanh toán được xử lý riêng, không gán vào trường giao hàng. Câu hỏi nội dung sách có thể tiếp tục dùng ngữ cảnh sách công khai, không kèm các tin nhắn riêng tư.
+- Đổi sách bằng “Đổi sang cuốn …” chỉ thay bản nháp khi xác định đúng một sách, giữ thông tin giao hàng đã nhập và lấy lại giá server. Có thể nhắn “lấy 2 cuốn”, “sửa địa chỉ”, “sửa số điện thoại”; dữ liệu không hợp lệ được hỏi lại. Nút xác nhận đặt hàng luôn là thao tác riêng, không tự tạo đơn từ câu “ok”. Hủy bản nháp cũng hủy phản hồi đổi sách đang chờ, tránh mở lại bản nháp cũ.
+- Khung chat desktop cao gần hết viewport, rộng 460px; bản nháp thu gọn được để đọc hội thoại. Tổng tiền và nút xác nhận đặt ngoài vùng cuộn, thông báo lỗi xác nhận tự mở lại bản nháp. Trên màn hình nhỏ khung chat co theo viewport và safe area.
+- Tra cứu “Đơn #123 sao rồi?” chỉ tìm trong đơn của principal hiện tại; không thấy sẽ hỏi kiểm tra mã. Trạng thái là dữ liệu cửa hàng, chưa có vị trí vận chuyển thời gian thực.
+- Giữ quy trình tồn kho hiện có: kiểm tra khi tạo, trừ khi hoàn thành đơn; chưa giữ chỗ tồn kho cho đơn chờ xử lý. Chưa thêm email xác nhận cho luồng chat. Thanh toán online và mua nhiều đầu sách vẫn dùng checkout thường.
+
+Kiểm thử checkout dùng repository/HTTP giả lập, không tạo đơn khách hàng thật.
+# Sửa truy vấn ngân sách và ý định mua tiếp nối
+
+- Truy vấn chỉ có ngân sách (ví dụ “Gợi ý sách dưới 150k”) lọc theo giá sau giảm, không bắt từ chỉ giá khớp tên/mô tả. Khi AI lỗi, kết quả hợp lệ vẫn được giữ. Truy vấn có chủ đề vẫn phải khớp chủ đề.
+- Câu mua rút gọn như “giúp t mua”, “mua ngay”, “chốt nhé” dùng danh sách sách đang được tham chiếu. Một sách mở bản nháp; nhiều sách hỏi chọn lại. Không thay tên sách không tồn tại bằng sách cũ; đặt hàng vẫn cần xác nhận riêng.

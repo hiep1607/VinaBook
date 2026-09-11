@@ -28,6 +28,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "orders")
 public class Order implements Serializable {
+	@javax.persistence.Column(nullable = false, columnDefinition = "boolean default false")
+	private boolean stockReserved;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
