@@ -73,9 +73,12 @@ class ChatDialogueFlowTest {
         assertThat(turn("a","Lập bảng so sánh hai cuốn này").getProducts()).hasSize(2);
     }
     @Test void accountAndSessionIsolation() {
+        when(access.currentUserId()).thenReturn(7L);
         when(access.currentEmail()).thenReturn("alice@test.invalid"); turn("same","Nói rõ về Luật Lao Động Thực Hành");
+        when(access.currentUserId()).thenReturn(8L);
         when(access.currentEmail()).thenReturn("bob@test.invalid");
         assertThat(turn("same","mua ngay").getProducts()).isEmpty();
+        when(access.currentUserId()).thenReturn(7L);
         when(access.currentEmail()).thenReturn("alice@test.invalid");
         assertThat(turn("new-session","mua ngay").getProducts()).isEmpty();
         assertThat(turn("same","mua ngay").getProducts()).extracting(ChatProductDto::getId).containsExactly(6L);

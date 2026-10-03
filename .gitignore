@@ -2,6 +2,9 @@
 node_modules/
 **/node_modules/
 
+# ---- Local launcher logs and isolated build output ----
+.run-logs/
+
 # ---- Build output (tự sinh) ----
 dist/
 **/dist/
@@ -54,3 +57,6 @@ Thumbs.db
 
 # ---- Bản copy lồng nhau (không đưa vào repo) ----
 /book/
+
+# Raw local database dump contains account data; use sanitized db/ seeds.
+/database.sql

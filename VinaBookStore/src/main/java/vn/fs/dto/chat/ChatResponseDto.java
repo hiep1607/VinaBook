@@ -32,9 +32,17 @@ public class ChatResponseDto {
 		this.actions = java.util.Collections.emptyList();
 	}
 
-	public ChatResponseDto(String answer, String provider, String model, boolean fallback,
-			List<ChatProductDto> products, List<String> chips, String messageId, ChatIntent intent,
-			ChatSearchCriteriaDto criteria, List<ChatActionDto> actions) {
+	@com.fasterxml.jackson.annotation.JsonCreator
+	public ChatResponseDto(@com.fasterxml.jackson.annotation.JsonProperty("answer") String answer,
+			@com.fasterxml.jackson.annotation.JsonProperty("provider") String provider,
+			@com.fasterxml.jackson.annotation.JsonProperty("model") String model,
+			@com.fasterxml.jackson.annotation.JsonProperty("fallback") boolean fallback,
+			@com.fasterxml.jackson.annotation.JsonProperty("products") List<ChatProductDto> products,
+			@com.fasterxml.jackson.annotation.JsonProperty("chips") List<String> chips,
+			@com.fasterxml.jackson.annotation.JsonProperty("messageId") String messageId,
+			@com.fasterxml.jackson.annotation.JsonProperty("intent") ChatIntent intent,
+			@com.fasterxml.jackson.annotation.JsonProperty("criteria") ChatSearchCriteriaDto criteria,
+			@com.fasterxml.jackson.annotation.JsonProperty("actions") List<ChatActionDto> actions) {
 		this.answer = answer;
 		this.provider = provider;
 		this.model = model;

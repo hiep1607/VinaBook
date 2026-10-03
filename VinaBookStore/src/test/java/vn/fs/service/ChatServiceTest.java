@@ -49,7 +49,7 @@ class ChatServiceTest {
 		service = new ChatService(products, ai, intentService,
 				retrieval, new ChatPolicyService(intentService),
 				orderSupport, analytics, access);
-		when(analytics.record(any(), any(), anyString(), anyBoolean(), anyInt(), anyLong()))
+		org.mockito.Mockito.lenient().when(analytics.record(any(), any(), anyString(), anyBoolean(), anyInt(), anyLong()))
 				.thenReturn("message-id");
 		when(products.findByStatusTrue()).thenReturn(List.of(
 				product(57L, "Đắc Nhân Tâm", "Dale Carnegie", "Kỹ năng", 86000D, 18, 220),
@@ -63,6 +63,84 @@ class ChatServiceTest {
 		assertThat(response.isFallback()).isFalse();
 		assertThat(response.getProvider()).isEqualTo("local");
 		assertThat(response.getAnswer()).contains("20.000đ").contains("300.000đ");
+		assertThat(response.getProducts()).isEmpty();
+	}
+
+	@Test
+	void providerFailureFallsBackToVerifiedStorePolicy() {
+		when(ai.isConfigured()).thenReturn(true);
+		ChatOrchestrator orchestrator = org.mockito.Mockito.mock(ChatOrchestrator.class);
+		when(orchestrator.reply(any(), any())).thenReturn(new ChatResponseDto(
+				"Mình đang gặp lỗi xử lý yêu cầu.", "gemini", "model", true, List.of(), List.of()));
+		service.setOrchestrator(orchestrator);
+
+		ChatResponseDto response = service.reply(request("Phí giao hàng thế nào?"));
+
+		assertThat(response.isFallback()).isTrue();
+		assertThat(response.getProvider()).isEqualTo("local");
+		assertThat(response.getAnswer()).contains("20.000đ").contains("300.000đ")
+				.doesNotContain("lỗi xử lý", "AI đủ tin cậy");
+	}
+
+	@Test
+	void orderPolicyQuestionsStayOnTopicWhenProviderFails() {
+		when(ai.isConfigured()).thenReturn(true);
+		ChatOrchestrator orchestrator = org.mockito.Mockito.mock(ChatOrchestrator.class);
+		when(orchestrator.reply(any(), any())).thenReturn(new ChatResponseDto(
+				"Mình đang gặp lỗi xử lý yêu cầu.", "gemini", "model", true, List.of(), List.of()));
+		service.setOrchestrator(orchestrator);
+
+		ChatResponseDto cancellation = service.reply(request("Làm sao hủy đơn?"));
+		assertThat(cancellation.getAnswer()).contains("hủy đơn").doesNotContain("AI đủ tin cậy");
+		assertThat(cancellation.getProducts()).isEmpty();
+
+		ChatResponseDto confirmation = service.reply(request("Khi nào thì đơn được xác nhận?"));
+		assertThat(confirmation.getAnswer()).contains("trạng thái xác nhận").doesNotContain("AI đủ tin cậy");
+		assertThat(confirmation.getProducts()).isEmpty();
+	}
+
+	@Test
+	void unclearQuestionAsksForContextInsteadOfShowingRandomBooksWhenProviderFails() {
+		when(ai.isConfigured()).thenReturn(true);
+		ChatOrchestrator orchestrator = org.mockito.Mockito.mock(ChatOrchestrator.class);
+		when(orchestrator.reply(any(), any())).thenReturn(new ChatResponseDto(
+				"Mình đang gặp lỗi xử lý yêu cầu.", "gemini", "model", true, List.of(), List.of()));
+		service.setOrchestrator(orchestrator);
+
+		ChatResponseDto response = service.reply(request("Tôi cần xử lý việc này như thế nào?"));
+		assertThat(response.getAnswer()).contains("Bạn muốn mình giúp").doesNotContain("AI đủ tin cậy");
+		assertThat(response.getProducts()).isEmpty();
+	}
+
+	@Test
+	void shortenedBookTitleStillFindsItsBookWhenProviderFails() {
+		when(ai.isConfigured()).thenReturn(true);
+		when(products.findByStatusTrue()).thenReturn(List.of(
+				product(81L, "Sherlock Holmes Toàn Tập - Tập 1", "Arthur Conan Doyle", "Trinh thám", 193500D, 0, 20)));
+		ChatOrchestrator orchestrator = org.mockito.Mockito.mock(ChatOrchestrator.class);
+		when(orchestrator.reply(any(), any())).thenReturn(new ChatResponseDto(
+				"Mình đang gặp lỗi xử lý yêu cầu.", "gemini", "model", true, List.of(), List.of()));
+		service.setOrchestrator(orchestrator);
+
+		ChatResponseDto response = service.reply(request("Sherlock Holmes có bản nào không shop?"));
+		assertThat(response.getProducts()).extracting("id").containsExactly(81L);
+		assertThat(response.getIntent()).isEqualTo(vn.fs.dto.chat.ChatIntent.DISCOVER_BOOKS);
+		assertThat(response.getAnswer()).contains("Sherlock Holmes Toàn Tập")
+				.doesNotContain("Bạn muốn mình giúp tìm sách", "mình chưa có đủ căn cứ");
+	}
+
+	@Test
+	void capabilityQuestionDoesNotTurnIntoRandomRecommendationsDuringProviderFailure() {
+		when(ai.isConfigured()).thenReturn(true);
+		ChatOrchestrator orchestrator = org.mockito.Mockito.mock(ChatOrchestrator.class);
+		when(orchestrator.reply(any(), any())).thenReturn(new ChatResponseDto(
+				"Mình đang gặp lỗi xử lý yêu cầu.", "gemini", "model", true, List.of(), List.of()));
+		service.setOrchestrator(orchestrator);
+
+		ChatResponseDto response = service.reply(request("Bạn có thể giúp tôi tìm hiểu những gì về sách trên VinaBook?"));
+
+		assertThat(response.isFallback()).isTrue();
+		assertThat(response.getAnswer()).contains("tìm và so sánh sách");
 		assertThat(response.getProducts()).isEmpty();
 	}
 
@@ -187,7 +265,7 @@ class ChatServiceTest {
 	void configuredProviderIsUsedWithoutExposingCredentials() {
 		when(ai.isConfigured()).thenReturn(true);
 		when(ai.provider()).thenReturn("openai");
-		when(ai.model()).thenReturn("configured-model");
+		when(ai.modelUsed()).thenReturn("configured-model");
 		when(ai.complete(anyString(), anyList(), anyString())).thenReturn(
 				"{\"intro\":\"Mình đã kiểm tra catalog.\",\"recommendations\":[{\"productId\":57,\"reason\":\"Phù hợp để bắt đầu.\"}],\"closing\":\"\"}");
 
@@ -200,10 +278,22 @@ class ChatServiceTest {
 	}
 
 	@Test
+	void specificBookRequestWithPhraseMotCuonSachHayReachesPlanner() {
+		when(ai.isConfigured()).thenReturn(true);
+		ChatOrchestrator orchestrator = org.mockito.Mockito.mock(ChatOrchestrator.class);
+		when(orchestrator.reply(any(), any())).thenReturn(new ChatResponseDto(
+				"Đã dùng chủ đề và ngân sách.", "gemini", "gemini-3.1-flash-lite", false, List.of(), List.of()));
+		service.setOrchestrator(orchestrator);
+		ChatResponseDto result = service.reply(request("Mình đang tìm một cuốn sách hay về phát triển bản thân, ngân sách khoảng 100k"));
+		assertThat(result.getProvider()).isEqualTo("gemini");
+		org.mockito.Mockito.verify(orchestrator).reply(any(), any());
+	}
+
+	@Test
 	void discoveryCardsFollowBookNamesActuallyMentionedByAi() {
 		when(ai.isConfigured()).thenReturn(true);
 		when(ai.provider()).thenReturn("gemini");
-		when(ai.model()).thenReturn("configured-model");
+		when(ai.modelUsed()).thenReturn("configured-model");
 		when(ai.complete(anyString(), anyList(), anyString()))
 				.thenReturn(
 						"{\"intro\":\"Mình đã kiểm tra catalog.\",\"recommendations\":[{\"productId\":58,\"reason\":\"Phù hợp để bắt đầu đọc.\"}],\"closing\":\"\"}");
@@ -221,14 +311,14 @@ class ChatServiceTest {
 		ChatResponseDto response = service.reply(request("Gợi ý sách giao tiếp"));
 		assertThat(response.getProducts()).hasSize(5);
 		response.getProducts().forEach(p -> assertThat(response.getAnswer()).contains(p.getName()));
-		assertThat(response.getActions()).hasSize(15);
+		assertThat(response.getActions()).hasSize(10);
 	}
 
 	@Test
 	void literaryQuestionAboutNhaGiaKimReachesAiInsteadOfPriceHandler() {
 		when(ai.isConfigured()).thenReturn(true);
 		when(ai.provider()).thenReturn("gemini");
-		when(ai.model()).thenReturn("test");
+		when(ai.modelUsed()).thenReturn("test");
 		when(ai.complete(anyString(), anyList(), anyString())).thenReturn(
 				"{\"intro\":\"Về thông điệp:\",\"recommendations\":[{\"productId\":58,\"reason\":\"Hành trình theo đuổi ước mơ.\"}]}");
 		ChatResponseDto response = service.reply(request("Thông điệp của Nhà Giả Kim là gì?"));
@@ -349,7 +439,7 @@ class ChatServiceTest {
 		ChatResponseDto response = service.reply(req);
 		assertThat(response.getIntent()).isEqualTo(vn.fs.dto.chat.ChatIntent.PURCHASE);
 		assertThat(response.getProducts()).extracting("id").containsExactly(58L);
-		assertThat(response.getAnswer()).contains("Xác nhận đặt hàng");
+		assertThat(response.getAnswer()).contains("bước thanh toán").doesNotContain("đã đặt đơn");
 	}
 
 	@Test
@@ -423,6 +513,19 @@ class ChatServiceTest {
 		assertThat(r.getProducts()).hasSize(2);
 		assertThat(r.getProducts().stream().mapToLong(p -> p.getPrice()).sum()).isLessThanOrEqualTo(150000L);
 		assertThat(r.getAnswer()).contains("Tổng tiền sách");
+	}
+	@Test void programmingBundlePrefersRelevantBooksWhenBudgetFits() {
+		Product java=product(71L,"Giáo Trình Lập Trình Java","Tác giả","Giáo trình",90000D,0,100);
+		java.setDescription("Học lập trình Java căn bản.");
+		Product algorithms=product(72L,"Cấu Trúc Dữ Liệu Và Giải Thuật","Tác giả","Giáo trình",80000D,0,90);
+		algorithms.setDescription("Cấu trúc dữ liệu và thuật toán cho người học lập trình.");
+		Product database=product(73L,"Cơ Sở Dữ Liệu","Tác giả","Giáo trình",70000D,0,80);
+		database.setDescription("Thiết kế cơ sở dữ liệu và ngôn ngữ SQL.");
+		Product science=product(74L,"10 Vạn Câu Hỏi Vì Sao","Tác giả","Khoa học",50000D,0,110);
+		science.setDescription("Khám phá thiên nhiên, cơ thể và công nghệ cho trẻ em.");
+		when(products.findByStatusTrue()).thenReturn(List.of(science,java,algorithms,database));
+		ChatResponseDto r=service.reply(request("Tôi có 300.000 đồng, chọn giúp tôi 2 cuốn sách học lập trình."));
+		assertThat(r.getProducts()).extracting("name").containsExactly(java.getName(),algorithms.getName());
 	}
 
 	@Test void buyingForLearningIsDiscoveryAndKeepsEnglishAcrossTurns() {

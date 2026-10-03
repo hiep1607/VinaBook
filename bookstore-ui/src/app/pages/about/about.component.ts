@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from 'src/app/services/category.service';
 import { ProductService } from 'src/app/services/product.service';
+import { StoreKnowledgeService, StoreSettings } from 'src/app/services/store-knowledge.service';
 
 @Component({
   selector: 'app-about',
@@ -11,6 +12,7 @@ export class AboutComponent implements OnInit {
 
   bookCount = 0;
   categoryCount = 0;
+  shippingSettings?: StoreSettings;
 
   reasons = [
     {
@@ -21,7 +23,7 @@ export class AboutComponent implements OnInit {
     {
       icon: '🚚',
       title: 'Giao hàng toàn quốc',
-      text: 'Đóng gói cẩn thận, giao nhanh trong 2-4 ngày, miễn phí vận chuyển cho đơn từ 300.000đ.'
+      text: 'Đang tải thông tin giao hàng.'
     },
     {
       icon: '💰',
@@ -31,13 +33,14 @@ export class AboutComponent implements OnInit {
     {
       icon: '🤝',
       title: 'Tận tâm với bạn đọc',
-      text: 'Đổi trả dễ dàng trong 7 ngày, hỗ trợ tư vấn chọn sách qua hotline và email.'
+      text: 'Hỗ trợ tư vấn chọn sách và giải đáp chính sách cửa hàng.'
     }
   ];
 
   constructor(
     private productService: ProductService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private knowledge: StoreKnowledgeService
   ) {}
 
   ngOnInit(): void {
@@ -49,6 +52,12 @@ export class AboutComponent implements OnInit {
       categories => this.categoryCount = categories.length,
       () => this.categoryCount = 0
     );
+    this.knowledge.get().subscribe(data => {
+      this.shippingSettings = data.settings;
+      this.reasons[1].text = StoreKnowledgeService.shippingText(data.settings);
+      const returns = data.policies.find(p => p.policyKey === 'returns');
+      if (returns) { this.reasons[3].text = returns.body; }
+    }, () => this.reasons[1].text = 'Thông tin giao hàng tạm thời chưa tải được.');
   }
 
 }

@@ -1,0 +1,978 @@
+[
+  {
+    "response": {
+      "answer": "Bạn luôn có thể thanh toán COD. VietQR, VNPay Sandbox và MoMo Test sẽ xuất hiện ở bước thanh toán khi cửa hàng đã cấu hình cổng tương ứng.",
+      "provider": "local",
+      "model": "",
+      "fallback": false,
+      "products": [],
+      "chips": [
+        "Phí giao hàng thế nào?",
+        "Có những cách thanh toán nào?",
+        "Chính sách đổi trả"
+      ],
+      "messageId": "f9bf0737-c52b-476a-8750-d24b54f9516a",
+      "intent": "POLICY",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": []
+      },
+      "actions": []
+    },
+    "latencyMs": 67,
+    "http": 200,
+    "request": {
+      "message": "Mình mới học lập trình, nên đọc Clean Code trước hay tìm cuốn khác dễ hơn?",
+      "history": [],
+      "sessionId": "evaluation-V01",
+      "contextProductIds": []
+    },
+    "id": "V01"
+  },
+  {
+    "response": {
+      "answer": "Chào bạn! Bạn đang tìm sách cho bản thân hay làm quà? Hãy cho mình biết chủ đề và ngân sách nhé.",
+      "provider": "local",
+      "model": "",
+      "fallback": true,
+      "products": [],
+      "chips": [
+        "Gợi ý sách dưới 150k",
+        "Tìm sách làm quà",
+        "Có những thể loại nào?"
+      ],
+      "messageId": "38b58cd8-5ec0-48f8-bd29-570a52589f08",
+      "intent": "SMALL_TALK",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "Sách thiếu nhi",
+        "author": "",
+        "sort": "",
+        "topics": [
+          "thiếu nhi"
+        ]
+      },
+      "actions": []
+    },
+    "latencyMs": 19,
+    "http": 200,
+    "request": {
+      "message": "Có sách thiếu nhi nào không?",
+      "history": [],
+      "sessionId": "evaluation-V02",
+      "contextProductIds": []
+    },
+    "id": "V02"
+  },
+  {
+    "response": {
+      "answer": "Mình chưa hiểu rõ yêu cầu. Bạn có thể hỏi: “Tìm sách tâm lý dưới 150k”, “So sánh hai cuốn” hoặc “Đơn hàng của tôi đang ở đâu?”.",
+      "provider": "local",
+      "model": "",
+      "fallback": true,
+      "products": [],
+      "chips": [
+        "Gợi ý sách dưới 150k",
+        "Tìm sách làm quà",
+        "Có những thể loại nào?"
+      ],
+      "messageId": "576fe57c-fdcd-4ad3-8f23-b524d3448e9f",
+      "intent": "UNKNOWN",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "Nguyễn Nhật Ánh",
+        "sort": "",
+        "topics": []
+      },
+      "actions": []
+    },
+    "latencyMs": 17,
+    "http": 200,
+    "request": {
+      "message": "Sách của Nguyễn Nhật Ánh có những gì?",
+      "history": [],
+      "sessionId": "evaluation-V03",
+      "contextProductIds": []
+    },
+    "id": "V03"
+  },
+  {
+    "response": {
+      "answer": "“Không Gia Đình” hiện có giá 125.400đ, giảm 5% từ 132.000đ",
+      "provider": "local",
+      "model": "",
+      "fallback": true,
+      "products": [
+        {
+          "id": 28,
+          "name": "Không Gia Đình",
+          "author": "Hector Malot",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 125400,
+          "oldPrice": 132000.0,
+          "discount": 5,
+          "quantity": 95,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319541/products/rdyankdh2hrze9o9kisp.webp"
+        }
+      ],
+      "chips": [
+        "Còn cuốn khác không?",
+        "So sánh các cuốn này",
+        "Sách rẻ hơn"
+      ],
+      "messageId": "6e9d31aa-1782-4906-8256-8bfcd0927ff4",
+      "intent": "PRODUCT_INFO",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": []
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Không Gia Đình",
+          "productId": 28,
+          "route": "/product/28",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 28,
+          "route": "",
+          "requiresConfirmation": true
+        }
+      ]
+    },
+    "latencyMs": 14,
+    "http": 200,
+    "request": {
+      "message": "Không Gia Đình có nội dung gì?",
+      "history": [],
+      "sessionId": "evaluation-V04",
+      "contextProductIds": []
+    },
+    "id": "V04"
+  },
+  {
+    "response": {
+      "answer": "“Đắc Nhân Tâm” hiện có giá 70.520đ, giảm 18% từ 86.000đ",
+      "provider": "local",
+      "model": "",
+      "fallback": true,
+      "products": [
+        {
+          "id": 57,
+          "name": "Đắc Nhân Tâm",
+          "author": "Dale Carnegie",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 70520,
+          "oldPrice": 86000.0,
+          "discount": 18,
+          "quantity": 220,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252580/products/lo4gmiaypwfzes99fouo.webp"
+        }
+      ],
+      "chips": [
+        "Còn cuốn khác không?",
+        "So sánh các cuốn này",
+        "Sách rẻ hơn"
+      ],
+      "messageId": "de253bf0-054e-4ce1-a2dc-cf63e7cd82d8",
+      "intent": "PRODUCT_INFO",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": []
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Đắc Nhân Tâm",
+          "productId": 57,
+          "route": "/product/57",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 57,
+          "route": "",
+          "requiresConfirmation": true
+        }
+      ]
+    },
+    "latencyMs": 58,
+    "http": 200,
+    "request": {
+      "message": "Đắc Nhân Tâm có đánh giá tốt không?",
+      "history": [],
+      "sessionId": "evaluation-V05",
+      "contextProductIds": []
+    },
+    "id": "V05"
+  },
+  {
+    "response": {
+      "answer": "Bạn hãy nêu rõ ít nhất hai tên sách muốn so sánh, ví dụ: “So sánh Nhà Giả Kim và Đắc Nhân Tâm”.",
+      "provider": "local",
+      "model": "",
+      "fallback": true,
+      "products": [],
+      "chips": [
+        "Gợi ý sách dưới 150k",
+        "Tìm sách làm quà",
+        "Có những thể loại nào?"
+      ],
+      "messageId": "c495184d-43b1-4c7a-bbc1-c9149b63ffd8",
+      "intent": "COMPARE_BOOKS",
+      "criteria": {
+        "minPrice": 8000,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": []
+      },
+      "actions": []
+    },
+    "latencyMs": 48,
+    "http": 200,
+    "request": {
+      "message": "Mình muốn tặng sách cho em nhỏ 8 tuổi, nên chọn cuốn nào cho phù hợp?",
+      "history": [],
+      "sessionId": "evaluation-V06",
+      "contextProductIds": []
+    },
+    "id": "V06"
+  },
+  {
+    "response": {
+      "answer": "Mình chọn 4 cuốn phù hợp với phát triển bản thân. Các gợi ý lấy trực tiếp từ catalog và đã được kiểm tra theo giá, thể loại, tồn kho hiện tại.",
+      "provider": "local",
+      "model": "",
+      "fallback": true,
+      "products": [
+        {
+          "id": 34,
+          "name": "Đường Xưa Mây Trắng",
+          "author": "Thích Nhất Hạnh",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 145200,
+          "oldPrice": 165000.0,
+          "discount": 12,
+          "quantity": 100,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254627/products/nofbu66aftcnqjh5mbbo.jpg"
+        },
+        {
+          "id": 55,
+          "name": "Tư Duy Nhanh Và Chậm",
+          "author": "Daniel Kahneman",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 151300,
+          "oldPrice": 178000.0,
+          "discount": 15,
+          "quantity": 200,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254927/products/o9xsf2ve0mmsrg2wkgmf.webp"
+        },
+        {
+          "id": 54,
+          "name": "Muôn Kiếp Nhân Sinh",
+          "author": "Nguyên Phong",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 154560,
+          "oldPrice": 168000.0,
+          "discount": 8,
+          "quantity": 190,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319150/products/spxjuedmhj78dovdcwfn.webp"
+        },
+        {
+          "id": 16,
+          "name": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+          "author": "Andrew Hunt & David Thomas",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 154000,
+          "oldPrice": 175000.0,
+          "discount": 12,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319839/products/emvvfbsijvpo4ctg0c2t.jpg"
+        }
+      ],
+      "chips": [
+        "Còn cuốn khác không?",
+        "So sánh các cuốn này",
+        "Sách rẻ hơn"
+      ],
+      "messageId": "56b39cbe-6247-4769-afd8-a227c482cfc0",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": 100000,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [
+          "phát triển bản thân"
+        ]
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Đường Xưa Mây Trắng",
+          "productId": 34,
+          "route": "/product/34",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 34,
+          "route": "",
+          "requiresConfirmation": true
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Tư Duy Nhanh Và Chậm",
+          "productId": 55,
+          "route": "/product/55",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 55,
+          "route": "",
+          "requiresConfirmation": true
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Muôn Kiếp Nhân Sinh",
+          "productId": 54,
+          "route": "/product/54",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 54,
+          "route": "",
+          "requiresConfirmation": true
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+          "productId": 16,
+          "route": "/product/16",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 16,
+          "route": "",
+          "requiresConfirmation": true
+        }
+      ]
+    },
+    "latencyMs": 45,
+    "http": 200,
+    "request": {
+      "message": "Mình đang tìm một cuốn sách hay về phát triển bản thân, ngân sách khoảng 100k, bạn gợi ý giúp mình vài cuốn được không?",
+      "history": [],
+      "sessionId": "evaluation-V07",
+      "contextProductIds": []
+    },
+    "id": "V07"
+  },
+  {
+    "response": {
+      "answer": "Mình chọn 4 cuốn phù hợp với nhu cầu của bạn. Các gợi ý lấy trực tiếp từ catalog và đã được kiểm tra theo giá, thể loại, tồn kho hiện tại.",
+      "provider": "local",
+      "model": "",
+      "fallback": true,
+      "products": [
+        {
+          "id": 7,
+          "name": "Luật Đất Đai Và Văn Bản Hướng Dẫn Thi Hành",
+          "author": "Bộ Tư Pháp",
+          "category": "Sách Chính trị – pháp luật",
+          "price": 110000,
+          "oldPrice": 110000.0,
+          "discount": 0,
+          "quantity": 80,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320083/products/ex49vpz8y05eonwc7cpj.webp"
+        },
+        {
+          "id": 42,
+          "name": "Từ Tốt Đến Vĩ Đại (Good to Great)",
+          "author": "Jim Collins",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 110400,
+          "oldPrice": 138000.0,
+          "discount": 20,
+          "quantity": 125,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255437/products/j3oaptaxefhhvvm4a3vk.webp"
+        },
+        {
+          "id": 6,
+          "name": "Cẩm Nang Pháp Lý Cho Doanh Nghiệp",
+          "author": "Trương Thanh Đức",
+          "category": "Sách Chính trị – pháp luật",
+          "price": 114750,
+          "oldPrice": 135000.0,
+          "discount": 15,
+          "quantity": 90,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320093/products/k3k09hlkujlxxjpvjcto.jpg"
+        },
+        {
+          "id": 14,
+          "name": "Việt Nam Sử Lược",
+          "author": "Trần Trọng Kim",
+          "category": "Sách Văn hóa xã hội – Lịch sử",
+          "price": 118750,
+          "oldPrice": 125000.0,
+          "discount": 5,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319897/products/h3ualgdbw1wvjmb87thi.webp"
+        }
+      ],
+      "chips": [
+        "Còn cuốn khác không?",
+        "So sánh các cuốn này",
+        "Sách rẻ hơn"
+      ],
+      "messageId": "a1a5fd6e-8108-4dc6-a472-6d4550797c22",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": 100000,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "price-asc",
+        "topics": []
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Luật Đất Đai Và Văn Bản Hướng Dẫn Thi Hành",
+          "productId": 7,
+          "route": "/product/7",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 7,
+          "route": "",
+          "requiresConfirmation": true
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Từ Tốt Đến Vĩ Đại (Good to Great)",
+          "productId": 42,
+          "route": "/product/42",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 42,
+          "route": "",
+          "requiresConfirmation": true
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Cẩm Nang Pháp Lý Cho Doanh Nghiệp",
+          "productId": 6,
+          "route": "/product/6",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 6,
+          "route": "",
+          "requiresConfirmation": true
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Việt Nam Sử Lược",
+          "productId": 14,
+          "route": "/product/14",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 14,
+          "route": "",
+          "requiresConfirmation": true
+        }
+      ]
+    },
+    "latencyMs": 41,
+    "http": 200,
+    "request": {
+      "message": "Sách rẻ hơn 100k",
+      "history": [],
+      "sessionId": "evaluation-V08",
+      "contextProductIds": []
+    },
+    "id": "V08"
+  },
+  {
+    "response": {
+      "answer": "Mình chọn 4 cuốn phù hợp với phiêu lưu. Các gợi ý lấy trực tiếp từ catalog và đã được kiểm tra theo giá, thể loại, tồn kho hiện tại.",
+      "provider": "local",
+      "model": "",
+      "fallback": true,
+      "products": [
+        {
+          "id": 13,
+          "name": "Dế Mèn Phiêu Lưu Ký",
+          "author": "Tô Hoài",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 50400,
+          "oldPrice": 56000.0,
+          "discount": 10,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+        },
+        {
+          "id": 28,
+          "name": "Không Gia Đình",
+          "author": "Hector Malot",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 125400,
+          "oldPrice": 132000.0,
+          "discount": 5,
+          "quantity": 95,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319541/products/rdyankdh2hrze9o9kisp.webp"
+        },
+        {
+          "id": 58,
+          "name": "Nhà Giả Kim",
+          "author": "Paulo Coelho",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 63200,
+          "oldPrice": 79000.0,
+          "discount": 20,
+          "quantity": 230,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252411/products/zdyuok0htjowbzf7lwpx.jpg"
+        },
+        {
+          "id": 56,
+          "name": "Sapiens: Lược Sử Loài Người",
+          "author": "Yuval Noah Harari",
+          "category": "Sách Văn hóa xã hội – Lịch sử",
+          "price": 160650,
+          "oldPrice": 189000.0,
+          "discount": 15,
+          "quantity": 180,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252589/products/cdcgqyejh8w71vtetrz0.webp"
+        }
+      ],
+      "chips": [
+        "Còn cuốn khác không?",
+        "So sánh các cuốn này",
+        "Sách rẻ hơn"
+      ],
+      "messageId": "771ad4ba-43af-434c-b9d0-2f912c264c39",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [
+          "phiêu lưu"
+        ]
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Dế Mèn Phiêu Lưu Ký",
+          "productId": 13,
+          "route": "/product/13",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 13,
+          "route": "",
+          "requiresConfirmation": true
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Không Gia Đình",
+          "productId": 28,
+          "route": "/product/28",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 28,
+          "route": "",
+          "requiresConfirmation": true
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Nhà Giả Kim",
+          "productId": 58,
+          "route": "/product/58",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 58,
+          "route": "",
+          "requiresConfirmation": true
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Sapiens: Lược Sử Loài Người",
+          "productId": 56,
+          "route": "/product/56",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 56,
+          "route": "",
+          "requiresConfirmation": true
+        }
+      ]
+    },
+    "latencyMs": 67,
+    "http": 200,
+    "request": {
+      "message": "Gợi ý sách phiêu lưu",
+      "history": [],
+      "sessionId": "evaluation-V09",
+      "contextProductIds": []
+    },
+    "id": "V09"
+  },
+  {
+    "response": {
+      "answer": "Mình chọn 4 cuốn phù hợp với phiêu lưu. Các gợi ý lấy trực tiếp từ catalog và đã được kiểm tra theo giá, thể loại, tồn kho hiện tại.",
+      "provider": "local",
+      "model": "",
+      "fallback": true,
+      "products": [
+        {
+          "id": 18,
+          "name": "Blockchain Fundamentals - Nền Tảng Công Nghệ Chuỗi Khối",
+          "author": "Don Tapscott",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 133400,
+          "oldPrice": 145000.0,
+          "discount": 8,
+          "quantity": 95,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319781/products/ptjxp427gba0zja7ivmv.jpg"
+        },
+        {
+          "id": 47,
+          "name": "Kinh Tế Học Hài Hước (Freakonomics)",
+          "author": "Steven D. Levitt & Stephen J. Dubner",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 124960,
+          "oldPrice": 142000.0,
+          "discount": 12,
+          "quantity": 105,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255169/products/t4ntwq8lymkoayiropbp.webp"
+        },
+        {
+          "id": 13,
+          "name": "Dế Mèn Phiêu Lưu Ký",
+          "author": "Tô Hoài",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 50400,
+          "oldPrice": 56000.0,
+          "discount": 10,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+        },
+        {
+          "id": 54,
+          "name": "Muôn Kiếp Nhân Sinh",
+          "author": "Nguyên Phong",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 154560,
+          "oldPrice": 168000.0,
+          "discount": 8,
+          "quantity": 190,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319150/products/spxjuedmhj78dovdcwfn.webp"
+        }
+      ],
+      "chips": [
+        "Còn cuốn khác không?",
+        "So sánh các cuốn này",
+        "Sách rẻ hơn"
+      ],
+      "messageId": "995d1d96-609f-430a-83b5-1fc1d631d5af",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [
+          "phiêu lưu"
+        ]
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Blockchain Fundamentals - Nền Tảng Công Nghệ Chuỗi Khối",
+          "productId": 18,
+          "route": "/product/18",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 18,
+          "route": "",
+          "requiresConfirmation": true
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Kinh Tế Học Hài Hước (Freakonomics)",
+          "productId": 47,
+          "route": "/product/47",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 47,
+          "route": "",
+          "requiresConfirmation": true
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Dế Mèn Phiêu Lưu Ký",
+          "productId": 13,
+          "route": "/product/13",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 13,
+          "route": "",
+          "requiresConfirmation": true
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Muôn Kiếp Nhân Sinh",
+          "productId": 54,
+          "route": "/product/54",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 54,
+          "route": "",
+          "requiresConfirmation": true
+        }
+      ]
+    },
+    "latencyMs": 56,
+    "http": 200,
+    "request": {
+      "message": "Còn cuốn khác không?",
+      "history": [
+        {
+          "content": "Gợi ý sách phiêu lưu",
+          "role": "user"
+        },
+        {
+          "content": "Mình chọn 4 cuốn phù hợp với phiêu lưu. Các gợi ý lấy trực tiếp từ catalog và đã được kiểm tra theo giá, thể loại, tồn kho hiện tại.",
+          "role": "assistant"
+        }
+      ],
+      "sessionId": "evaluation-V09",
+      "contextProductIds": [
+        null,
+        null,
+        null,
+        null
+      ]
+    },
+    "id": "V10"
+  },
+  {
+    "response": {
+      "answer": "So sánh nhanh:\n• Hoàng Tử Bé: 69.920đ, Sách thiếu nhi, còn hàng. Câu chuyện trong trẻo và sâu sắc về cậu hoàng tử nhỏ đến từ tiểu hành tinh B612. Tác phẩm văn học được yêu thích nhất nước Pháp, dành cho mọi lứa t...\n• Nhà Giả Kim: 63.200đ, Sách Truyện, tiểu thuyết, còn hàng. Hành trình của cậu chăn cừu Santiago đi tìm kho báu và khám phá vận mệnh đời mình. Câu chuyện truyền cảm hứng được dịch ra hơn 80 thứ tiếng.\nNếu ưu tiên ngân sách, chọn cuốn có giá thấp hơn; nếu ưu tiên nội dung, mở từng trang sách để xem mô tả chi tiết.",
+      "provider": "local",
+      "model": "",
+      "fallback": true,
+      "products": [
+        {
+          "id": 37,
+          "name": "Hoàng Tử Bé",
+          "author": "Antoine de Saint-Exupéry",
+          "category": "Sách thiếu nhi",
+          "price": 69920,
+          "oldPrice": 76000.0,
+          "discount": 8,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+        },
+        {
+          "id": 58,
+          "name": "Nhà Giả Kim",
+          "author": "Paulo Coelho",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 63200,
+          "oldPrice": 79000.0,
+          "discount": 20,
+          "quantity": 230,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252411/products/zdyuok0htjowbzf7lwpx.jpg"
+        }
+      ],
+      "chips": [
+        "Còn cuốn khác không?",
+        "So sánh các cuốn này",
+        "Sách rẻ hơn"
+      ],
+      "messageId": "aaf5fa3e-6f8b-4b11-9fd4-c3dc8c534481",
+      "intent": "COMPARE_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": []
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Hoàng Tử Bé",
+          "productId": 37,
+          "route": "/product/37",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 37,
+          "route": "",
+          "requiresConfirmation": true
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Nhà Giả Kim",
+          "productId": 58,
+          "route": "/product/58",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 58,
+          "route": "",
+          "requiresConfirmation": true
+        }
+      ]
+    },
+    "latencyMs": 51,
+    "http": 200,
+    "request": {
+      "message": "So sánh các cuốn này",
+      "history": [],
+      "sessionId": "evaluation-V11",
+      "contextProductIds": [
+        37,
+        58
+      ]
+    },
+    "id": "V11"
+  },
+  {
+    "response": {
+      "answer": "“Hoàng Tử Bé” của Antoine de Saint-Exupéry. Câu chuyện trong trẻo và sâu sắc về cậu hoàng tử nhỏ đến từ tiểu hành tinh B612. Tác phẩm văn học được yêu thích nhất nước Pháp, dành cho mọi lứa tuổi.",
+      "provider": "local",
+      "model": "",
+      "fallback": true,
+      "products": [
+        {
+          "id": 37,
+          "name": "Hoàng Tử Bé",
+          "author": "Antoine de Saint-Exupéry",
+          "category": "Sách thiếu nhi",
+          "price": 69920,
+          "oldPrice": 76000.0,
+          "discount": 8,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+        }
+      ],
+      "chips": [
+        "Còn cuốn khác không?",
+        "So sánh các cuốn này",
+        "Sách rẻ hơn"
+      ],
+      "messageId": "7c54897d-70c1-4001-bc44-d83a8acef86f",
+      "intent": "PRODUCT_INFO",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": []
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem Hoàng Tử Bé",
+          "productId": 37,
+          "route": "/product/37",
+          "requiresConfirmation": false
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm vào giỏ",
+          "productId": 37,
+          "route": "",
+          "requiresConfirmation": true
+        }
+      ]
+    },
+    "latencyMs": 61,
+    "http": 200,
+    "request": {
+      "message": "Thêm Hoàng Tử Bé vào giỏ",
+      "history": [],
+      "sessionId": "evaluation-V12",
+      "contextProductIds": [
+        37
+      ]
+    },
+    "id": "V12"
+  }
+]

@@ -13,8 +13,12 @@ public class ChatActionDto {
 	private final String route;
 	private final boolean requiresConfirmation;
 
-	public ChatActionDto(String type, String label, Long productId, String route,
-			boolean requiresConfirmation) {
+	@com.fasterxml.jackson.annotation.JsonCreator
+	public ChatActionDto(@com.fasterxml.jackson.annotation.JsonProperty("type") String type,
+			@com.fasterxml.jackson.annotation.JsonProperty("label") String label,
+			@com.fasterxml.jackson.annotation.JsonProperty("productId") Long productId,
+			@com.fasterxml.jackson.annotation.JsonProperty("route") String route,
+			@com.fasterxml.jackson.annotation.JsonProperty("requiresConfirmation") boolean requiresConfirmation) {
 		this.type = type;
 		this.label = label;
 		this.productId = productId;

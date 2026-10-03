@@ -1,0 +1,983 @@
+[
+  {
+    "id": "filter_refinement-1",
+    "question": "Giới thiệu 6 cuốn sách lập trình, giá mỗi cuốn tối đa 170k nhé.",
+    "status": 200,
+    "elapsedMs": 10844,
+    "response": {
+      "answer": "Bạn muốn 6 cuốn; mình tìm được 5 cuốn đúng yêu cầu. Tổng cộng có 5 lựa chọn; hiện chưa đủ 6 cuốn khác nhau trong các điều kiện này.\n\n**Sách đúng yêu cầu:**\n\n• “Clean Code - Mã Sạch Và Cách Viết” — 151.200đ · Robert C. Martin · Chưa có đánh giá\nPhù hợp để cải thiện kỹ năng viết code sạch và dễ bảo trì.\n\n• “The Pragmatic Programmer - Lập Trình Viên Thực Dụng” — 154.000đ · Andrew Hunt & David Thomas · Chưa có đánh giá\nHỗ trợ phát triển tư duy và kỹ năng nghề nghiệp thực tế.\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Trần Đình Quế · Chưa có đánh giá\nPhù hợp nếu bạn muốn bắt đầu học ngôn ngữ lập trình Java từ nền tảng.\n\n• “Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật” — 83.600đ · Đinh Mạnh Tường · Chưa có đánh giá\nCung cấp kiến thức căn bản về cấu trúc dữ liệu và thuật toán.\n\n• “Giáo Trình Cơ Sở Dữ Liệu” — 90.160đ · Phạm Thị Anh Lê · Chưa có đánh giá\nNền tảng về mô hình quan hệ, thiết kế CSDL, chuẩn hóa và ngôn ngữ SQL. Giáo trình cốt lõi cho sinh viên ngành công nghệ thông tin và hệ thống thông tin.\n\nBạn có thể lựa chọn tùy theo nhu cầu học sâu về ngôn ngữ, tư duy lập trình hay các khái niệm nền tảng.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 9,
+          "name": "Clean Code - Mã Sạch Và Cách Viết",
+          "author": "Robert C. Martin",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 151200,
+          "oldPrice": 168000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320053/products/bargnm2lw0ykyd3gqinf.webp"
+        },
+        {
+          "id": 16,
+          "name": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+          "author": "Andrew Hunt & David Thomas",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 154000,
+          "oldPrice": 175000.0,
+          "discount": 12,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319839/products/emvvfbsijvpo4ctg0c2t.jpg"
+        },
+        {
+          "id": 22,
+          "name": "Giáo Trình Lập Trình Java",
+          "author": "Trần Đình Quế",
+          "category": "Sách Giáo trình",
+          "price": 91800,
+          "oldPrice": 102000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319640/products/gz9tp9xsoujfkcglnftj.jpg"
+        },
+        {
+          "id": 20,
+          "name": "Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật",
+          "author": "Đinh Mạnh Tường",
+          "category": "Sách Giáo trình",
+          "price": 83600,
+          "oldPrice": 88000.0,
+          "discount": 5,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319743/products/x6ssqusalnhgpbux28uv.webp"
+        },
+        {
+          "id": 23,
+          "name": "Giáo Trình Cơ Sở Dữ Liệu",
+          "author": "Phạm Thị Anh Lê",
+          "category": "Sách Giáo trình",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 115,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319627/products/l9kqqextxr409kipn29q.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "bf585977-510e-418e-894b-6fa198217224",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": 170000,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 9,
+          "route": "/product/9",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 9,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 16,
+          "route": "/product/16",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 16,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 22,
+          "route": "/product/22",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 22,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 20,
+          "route": "/product/20",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 20,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 23,
+          "route": "/product/23",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 23,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      }
+    }
+  },
+  {
+    "id": "filter_refinement-2",
+    "question": "Chỉ lấy những cuốn dưới 100k thôi.",
+    "status": 200,
+    "elapsedMs": 14750,
+    "response": {
+      "answer": "Bạn muốn 6 cuốn; mình tìm được 3 cuốn đúng yêu cầu. Tổng cộng có 3 lựa chọn; hiện chưa đủ 6 cuốn khác nhau trong các điều kiện này.\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Trần Đình Quế · Chưa có đánh giá\nPhù hợp nếu bạn muốn bắt đầu với ngôn ngữ Java qua các kiến thức từ cơ bản đến lập trình giao diện.\n\n• “Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật” — 83.600đ · Đinh Mạnh Tường · Chưa có đánh giá\nPhù hợp để củng cố tư duy logic thông qua các cấu trúc dữ liệu và giải thuật nền tảng trong lập trình.\n\n• “Giáo Trình Cơ Sở Dữ Liệu” — 90.160đ · Phạm Thị Anh Lê · Chưa có đánh giá\nPhù hợp nếu bạn quan tâm đến việc quản lý, thiết kế dữ liệu và sử dụng ngôn ngữ SQL.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 22,
+          "name": "Giáo Trình Lập Trình Java",
+          "author": "Trần Đình Quế",
+          "category": "Sách Giáo trình",
+          "price": 91800,
+          "oldPrice": 102000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319640/products/gz9tp9xsoujfkcglnftj.jpg"
+        },
+        {
+          "id": 20,
+          "name": "Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật",
+          "author": "Đinh Mạnh Tường",
+          "category": "Sách Giáo trình",
+          "price": 83600,
+          "oldPrice": 88000.0,
+          "discount": 5,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319743/products/x6ssqusalnhgpbux28uv.webp"
+        },
+        {
+          "id": 23,
+          "name": "Giáo Trình Cơ Sở Dữ Liệu",
+          "author": "Phạm Thị Anh Lê",
+          "category": "Sách Giáo trình",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 115,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319627/products/l9kqqextxr409kipn29q.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "a7f116cb-08d8-4edc-83c5-62e8a35d99a5",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": 100000,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 22,
+          "route": "/product/22",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 22,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 20,
+          "route": "/product/20",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 20,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 23,
+          "route": "/product/23",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 23,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      }
+    }
+  },
+  {
+    "id": "filter_refinement-3",
+    "question": "Bỏ giới hạn giá, giữ nguyên chủ đề lập trình nhé.",
+    "status": 200,
+    "elapsedMs": 19656,
+    "response": {
+      "answer": "Mình chọn được 5 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Clean Code - Mã Sạch Và Cách Viết” — 151.200đ · Robert C. Martin · Chưa có đánh giá\nPhù hợp để cải thiện chất lượng mã nguồn, giúp code của bạn dễ đọc và bảo trì hiệu quả hơn.\n\n• “The Pragmatic Programmer - Lập Trình Viên Thực Dụng” — 154.000đ · Andrew Hunt & David Thomas · Chưa có đánh giá\nHướng tới việc xây dựng tư duy lập trình chuyên nghiệp và hình thành các thói quen làm việc bền vững.\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Trần Đình Quế · Chưa có đánh giá\nLà lựa chọn tốt nếu bạn muốn củng cố kiến thức nền tảng và kỹ năng lập trình với ngôn ngữ Java.\n\n• “Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật” — 83.600đ · Đinh Mạnh Tường · Chưa có đánh giá\nCung cấp các khái niệm cốt lõi cần thiết cho việc xử lý dữ liệu và tối ưu hóa giải thuật.\n\n• “Giáo Trình Cơ Sở Dữ Liệu” — 90.160đ · Phạm Thị Anh Lê · Chưa có đánh giá\nPhù hợp để nắm vững các kiến thức về quản trị, thiết kế cơ sở dữ liệu và sử dụng ngôn ngữ truy vấn.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 9,
+          "name": "Clean Code - Mã Sạch Và Cách Viết",
+          "author": "Robert C. Martin",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 151200,
+          "oldPrice": 168000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320053/products/bargnm2lw0ykyd3gqinf.webp"
+        },
+        {
+          "id": 16,
+          "name": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+          "author": "Andrew Hunt & David Thomas",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 154000,
+          "oldPrice": 175000.0,
+          "discount": 12,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319839/products/emvvfbsijvpo4ctg0c2t.jpg"
+        },
+        {
+          "id": 22,
+          "name": "Giáo Trình Lập Trình Java",
+          "author": "Trần Đình Quế",
+          "category": "Sách Giáo trình",
+          "price": 91800,
+          "oldPrice": 102000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319640/products/gz9tp9xsoujfkcglnftj.jpg"
+        },
+        {
+          "id": 20,
+          "name": "Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật",
+          "author": "Đinh Mạnh Tường",
+          "category": "Sách Giáo trình",
+          "price": 83600,
+          "oldPrice": 88000.0,
+          "discount": 5,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319743/products/x6ssqusalnhgpbux28uv.webp"
+        },
+        {
+          "id": 23,
+          "name": "Giáo Trình Cơ Sở Dữ Liệu",
+          "author": "Phạm Thị Anh Lê",
+          "category": "Sách Giáo trình",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 115,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319627/products/l9kqqextxr409kipn29q.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "4785bf7d-fe15-45ff-87af-8648c18b1a7c",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 9,
+          "route": "/product/9",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 9,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 16,
+          "route": "/product/16",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 16,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 22,
+          "route": "/product/22",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 22,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 20,
+          "route": "/product/20",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 20,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 23,
+          "route": "/product/23",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 23,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      }
+    }
+  },
+  {
+    "id": "filter_refinement-4",
+    "question": "Còn cuốn nào khác cùng chủ đề không?",
+    "status": 200,
+    "elapsedMs": 2250,
+    "response": {
+      "answer": "Mình đã kiểm tra lại các sách đang bán và loại những cuốn đã giới thiệu. Hiện chưa có cuốn nào khác đúng chủ đề hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn. Nếu muốn đổi hướng đọc, bạn cho mình một chủ đề khác nhé.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [],
+      "chips": [],
+      "messageId": "cca3dd7d-cee3-4fa3-93b9-276986852e9e",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "NEEDS_INPUT"
+      }
+    }
+  },
+  {
+    "id": "explicit_anchor-1",
+    "question": "Gợi ý vài cuốn sách trinh thám nhé.",
+    "status": 200,
+    "elapsedMs": 24156,
+    "response": {
+      "answer": "Mình chọn được 2 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nPhù hợp nếu bạn thích dạng truyện tranh theo chân nhân vật chính giải quyết các vụ án hóc búa với tình tiết biến hóa.\n\n• “Sherlock Holmes Toàn Tập - Tập 1” — 193.500đ · Arthur Conan Doyle · Chưa có đánh giá\nNhững vụ án ly kỳ của thám tử lừng danh phố Baker. Tài suy luận thiên tài của Sherlock Holmes đã làm say mê độc giả khắp thế giới hơn một thế kỷ qua.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 48,
+          "name": "Thám Tử Lừng Danh Conan - Tập 1",
+          "author": "Gosho Aoyama",
+          "category": "Sách thiếu nhi",
+          "price": 23750,
+          "oldPrice": 25000.0,
+          "discount": 5,
+          "quantity": 250,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+        },
+        {
+          "id": 26,
+          "name": "Sherlock Holmes Toàn Tập - Tập 1",
+          "author": "Arthur Conan Doyle",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 193500,
+          "oldPrice": 215000.0,
+          "discount": 10,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319589/products/ptjyfdchzgieobq2kuwg.webp"
+        }
+      ],
+      "chips": [],
+      "messageId": "fc539501-8c77-43db-885c-de3baa97431f",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 48,
+          "route": "/product/48",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 48,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 26,
+          "route": "/product/26",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 26,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      }
+    }
+  },
+  {
+    "id": "explicit_anchor-2",
+    "question": "Gợi ý thêm những cuốn khác tương tự Clean Code nhé.",
+    "status": 200,
+    "elapsedMs": 2203,
+    "response": {
+      "answer": "Mình đã kiểm tra lại các sách đang bán và loại những cuốn đã giới thiệu. Hiện chưa có cuốn nào khác đúng chủ đề hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn. Nếu muốn đổi hướng đọc, bạn cho mình một chủ đề khác nhé.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [],
+      "chips": [],
+      "messageId": "c229df54-d89c-4f81-8d58-577cdb23c261",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "NEEDS_INPUT"
+      }
+    }
+  },
+  {
+    "id": "explicit_anchor-3",
+    "question": "Còn cuốn nào khác cùng chủ đề không?",
+    "status": 200,
+    "elapsedMs": 2219,
+    "response": {
+      "answer": "Mình đã kiểm tra lại các sách đang bán và loại những cuốn đã giới thiệu. Hiện chưa có cuốn nào khác đúng chủ đề hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn. Nếu muốn đổi hướng đọc, bạn cho mình một chủ đề khác nhé.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [],
+      "chips": [],
+      "messageId": "b8fdb760-94ec-4e32-bcd9-58cf47cd7a23",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "NEEDS_INPUT"
+      }
+    }
+  },
+  {
+    "id": "topic_or-1",
+    "question": "Gợi ý vài cuốn trinh thám hoặc tình yêu, mỗi cuốn dưới 150k, tổng cộng tối đa 5 cuốn nhé.",
+    "status": 200,
+    "elapsedMs": 15719,
+    "response": {
+      "answer": "Bạn muốn 5 cuốn; mình tìm được 1 cuốn đúng yêu cầu. Tổng cộng có 1 lựa chọn; hiện chưa đủ 5 cuốn khác nhau trong các điều kiện này.\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nSách tập trung vào các tình tiết điều tra vụ án, đúng với yêu cầu tìm kiếm thể loại trinh thám của bạn.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 48,
+          "name": "Thám Tử Lừng Danh Conan - Tập 1",
+          "author": "Gosho Aoyama",
+          "category": "Sách thiếu nhi",
+          "price": 23750,
+          "oldPrice": 25000.0,
+          "discount": 5,
+          "quantity": 250,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+        }
+      ],
+      "chips": [],
+      "messageId": "7fb56575-30c2-4867-bcc2-1d3b2c8ff2f4",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": 150000,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 48,
+          "route": "/product/48",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 48,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      }
+    }
+  },
+  {
+    "id": "topic_or-2",
+    "question": "Còn cuốn nào khác cùng các chủ đề đó không?",
+    "status": 200,
+    "elapsedMs": 15031,
+    "response": {
+      "answer": "Mình đã kiểm tra lại các sách đang bán và loại những cuốn đã giới thiệu. Hiện chưa có cuốn nào khác đúng chủ đề hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn. Nếu muốn đổi hướng đọc, bạn cho mình một chủ đề khác nhé.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [],
+      "chips": [],
+      "messageId": "8793de87-bd19-4ddd-ad02-c621e809a2e0",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": 150000,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "NEEDS_INPUT"
+      }
+    }
+  },
+  {
+    "id": "multi_topic-1",
+    "question": "Gợi ý vài cuốn lập trình và vài cuốn trinh thám, tổng cộng không quá 5 cuốn nhé.",
+    "status": 200,
+    "elapsedMs": 16109,
+    "response": {
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn. Vì vậy mình chưa thể giới thiệu đủ 5 cuốn khác nhau. Nếu muốn đổi hướng đọc, bạn cho mình một chủ đề khác nhé.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [],
+      "chips": [],
+      "messageId": "d730d2aa-8e84-47ba-b466-9ca865bd977e",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {
+        "tool": "recommendBooks",
+        "status": "NEEDS_INPUT"
+      }
+    }
+  },
+  {
+    "id": "excluded_language-1",
+    "question": "Gợi ý sách lập trình, không lấy Java, chỉ lấy Python nhé.",
+    "status": 200,
+    "elapsedMs": 16531,
+    "response": {
+      "answer": "Hiện tại mình chưa tìm thấy cuốn sách nào chuyên về Python trong danh mục, nhưng có một số lựa chọn liên quan đến kỹ năng lập trình tổng quát mà bạn có thể tham khảo thêm:\n\nHiện mình chưa tìm được cuốn đúng chủ đề. Có 5 lựa chọn gần với hướng đọc đó để bạn cân nhắc:\n\n**Gợi ý gần chủ đề — các cuốn này chỉ đáp ứng một phần nhu cầu ban đầu:**\n\n• “Clean Code - Mã Sạch Và Cách Viết” — 151.200đ · Robert C. Martin · Chưa có đánh giá\nCuốn này cung cấp tư duy viết mã nguồn sạch, một kỹ năng cốt lõi có thể áp dụng cho bất kỳ ngôn ngữ lập trình nào, bao gồm Python.\nNội dung nhắc đến “lập trình”, gần với hướng đọc bạn đang tìm.\n\n• “The Pragmatic Programmer - Lập Trình Viên Thực Dụng” — 154.000đ · Andrew Hunt & David Thomas · Chưa có đánh giá\nĐây là tài liệu tập trung vào tư duy lập trình và thói quen nghề nghiệp, giúp cải thiện năng lực làm việc cho các kỹ sư phần mềm.\nNội dung nhắc đến “lập trình”, gần với hướng đọc bạn đang tìm.\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Trần Đình Quế · Chưa có đánh giá\nDù đây là tài liệu về Java, nó cung cấp các khái niệm nền tảng như hướng đối tượng (OOP) vốn cũng là những thành phần quan trọng trong Python.\nNội dung nhắc đến “lập trình”, gần với hướng đọc bạn đang tìm.\n\n• “Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật” — 83.600đ · Đinh Mạnh Tường · Chưa có đánh giá\nCác khái niệm về cấu trúc dữ liệu và thuật toán được đề cập ở đây là kiến thức nền tảng bắt buộc đối với bất kỳ lập trình viên nào, kể cả khi dùng Python.\nNội dung nhắc đến “thuật toán”, gần với hướng đọc bạn đang tìm.\n\n• “Giáo Trình Cơ Sở Dữ Liệu” — 90.160đ · Phạm Thị Anh Lê · Chưa có đánh giá\nViệc nắm vững cơ sở dữ liệu và SQL là kỹ năng bổ trợ cần thiết khi làm việc với các ứng dụng lập trình Python thực tế.\nNội dung nhắc đến “cơ sở dữ liệu”, gần với hướng đọc bạn đang tìm.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 9,
+          "name": "Clean Code - Mã Sạch Và Cách Viết",
+          "author": "Robert C. Martin",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 151200,
+          "oldPrice": 168000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320053/products/bargnm2lw0ykyd3gqinf.webp"
+        },
+        {
+          "id": 16,
+          "name": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+          "author": "Andrew Hunt & David Thomas",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 154000,
+          "oldPrice": 175000.0,
+          "discount": 12,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319839/products/emvvfbsijvpo4ctg0c2t.jpg"
+        },
+        {
+          "id": 22,
+          "name": "Giáo Trình Lập Trình Java",
+          "author": "Trần Đình Quế",
+          "category": "Sách Giáo trình",
+          "price": 91800,
+          "oldPrice": 102000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319640/products/gz9tp9xsoujfkcglnftj.jpg"
+        },
+        {
+          "id": 20,
+          "name": "Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật",
+          "author": "Đinh Mạnh Tường",
+          "category": "Sách Giáo trình",
+          "price": 83600,
+          "oldPrice": 88000.0,
+          "discount": 5,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319743/products/x6ssqusalnhgpbux28uv.webp"
+        },
+        {
+          "id": 23,
+          "name": "Giáo Trình Cơ Sở Dữ Liệu",
+          "author": "Phạm Thị Anh Lê",
+          "category": "Sách Giáo trình",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 115,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319627/products/l9kqqextxr409kipn29q.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "2f6279c3-476d-4ba9-be75-37b8f0626bf9",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 9,
+          "route": "/product/9",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 9,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 16,
+          "route": "/product/16",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 16,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 22,
+          "route": "/product/22",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 22,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 20,
+          "route": "/product/20",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 20,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 23,
+          "route": "/product/23",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 23,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      }
+    }
+  },
+  {
+    "id": "excluded_language-2",
+    "question": "Còn cuốn nào khác không? Không lấy Java nhé.",
+    "status": 200,
+    "elapsedMs": 2203,
+    "response": {
+      "answer": "Mình đã kiểm tra lại các sách đang bán và loại những cuốn đã giới thiệu. Hiện chưa có cuốn nào khác đúng chủ đề hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn. Nếu muốn đổi hướng đọc, bạn cho mình một chủ đề khác nhé.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [],
+      "chips": [],
+      "messageId": "9ce22639-3f53-4a9d-bdcd-688cd6676542",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "NEEDS_INPUT"
+      }
+    }
+  }
+]

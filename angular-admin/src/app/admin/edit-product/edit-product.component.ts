@@ -99,7 +99,7 @@ export class EditProductComponent implements OnInit {
 
       this.productService.update(this.product, this.id).subscribe(data => {
         this.productService.updatePreviewSettings(this.id, this.previewEnabled, this.rightsConfirmed).subscribe(() => {
-          this.toastr.success('Cập nhật thành công!', 'Hệ thống');
+          this.toastr.success((data as Product).status ? 'Cập nhật thành công!' : 'Đã lưu bản nháp. Hãy duyệt lại Hồ sơ AI để xuất bản.', 'Hệ thống');
           this.editFinish.emit('done');
           this.modalService.dismissAll();
         }, error => {
@@ -129,7 +129,7 @@ export class EditProductComponent implements OnInit {
         'description': new FormControl(this.product.description, Validators.required),
         'enteredDate': new FormControl(this.product.enteredDate),
         'categoryId': new FormControl(this.product.category.categoryId),
-        'status': new FormControl(1),
+        'status': new FormControl(this.product.status),
         'sold': new FormControl(this.product.sold),
       })
       this.image = this.product.image;

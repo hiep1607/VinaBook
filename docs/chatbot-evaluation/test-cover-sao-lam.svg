@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1200" viewBox="0 0 900 1200">
+<defs><linearGradient id="sky" x1="0" y1="0" x2="0.8" y2="1"><stop stop-color="#07152f"/><stop offset="1" stop-color="#234a78"/></linearGradient></defs>
+<rect width="900" height="1200" fill="url(#sky)"/>
+<circle cx="450" cy="420" r="145" fill="#d9e8ff" opacity=".92"/><circle cx="450" cy="420" r="185" fill="none" stroke="#8ec5ff" stroke-width="2" opacity=".55"/>
+<g fill="#fff"><circle cx="140" cy="155" r="5"/><circle cx="735" cy="185" r="4"/><circle cx="228" cy="330" r="3"/><circle cx="674" cy="355" r="5"/><circle cx="160" cy="570" r="4"/><circle cx="740" cy="625" r="3"/><circle cx="330" cy="690" r="4"/><circle cx="590" cy="760" r="5"/></g>
+<path d="M120 420 L450 420 L690 250" fill="none" stroke="#9bd2ff" stroke-width="3" opacity=".75"/><g fill="#9bd2ff"><circle cx="120" cy="420" r="9"/><circle cx="450" cy="420" r="9"/><circle cx="690" cy="250" r="9"/></g>
+<text x="450" y="910" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="64" font-weight="700" letter-spacing="3">NHẬT KÝ SAO LAM</text>
+<text x="450" y="980" text-anchor="middle" fill="#c7ddf7" font-family="Arial, sans-serif" font-size="32">QUAN SÁT BẦU TRỜI CHO NGƯỜI MỚI BẮT ĐẦU</text>
+<text x="450" y="1110" text-anchor="middle" fill="#9db7d5" font-family="Arial, sans-serif" font-size="24">SÁCH THỬ NGHIỆM VINABOOK</text>
+</svg>

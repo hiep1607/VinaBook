@@ -50,11 +50,11 @@ jobs:
           java-version: '17'
           cache: maven
       - name: Import test database
-        run: mysql --protocol=tcp -h 127.0.0.1 -uroot -p123456 < database.sql
+        run: mysql --protocol=tcp -h 127.0.0.1 -uroot -p123456 < db/01-schema-seed.sql
       - name: Run backend tests
         working-directory: VinaBookStore
         env:
-          DB_URL: jdbc:mysql://127.0.0.1:3306/martfury_shop?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+          SPRING_DATASOURCE_URL: jdbc:mysql://127.0.0.1:3306/book?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
           DB_USERNAME: root
           DB_PASSWORD: 123456
           JWT_SECRET: ci-only-secret-that-is-long-enough-for-hs512-signing-tests

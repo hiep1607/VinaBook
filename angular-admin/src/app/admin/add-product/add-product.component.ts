@@ -62,7 +62,7 @@ export class AddProductComponent implements OnInit {
       this.product.image = this.image;
 
       this.productService.save(this.product).subscribe(data => {
-        this.toastr.success('Thêm thành công!', 'Hệ thống');
+        this.toastr.success('Đã lưu bản nháp. Mở Hồ sơ AI để duyệt và xuất bản sách.', 'Hệ thống');
         this.saveFinish.emit('done');
       })
 

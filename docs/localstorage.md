@@ -13,6 +13,8 @@ Storefront dùng `localStorage` cho state nhẹ hoặc dữ liệu chưa chuyể
 | `wishlist_{email}` | `number[]` product IDs | Theo tài khoản |
 | `search_history` | `string[]`, tối đa 8 | Theo thiết bị |
 | `theme` | `editorial`, `ocean`, `forest` hoặc `berry` | Theo thiết bị |
+| `vinabook_chat_id_v3:{guest\|user:email}` | ID phiên ngẫu nhiên | Theo cuộc chat và tài khoản |
+| `vinabook_chat_session_v2:{guest\|user:email}` | Cache tối đa 24 tin mới nhất | Theo cuộc chat và tài khoản |
 
 `currentUser` không được chứa password plaintext, bcrypt hash hoặc reset token. JWT hết hạn/sai format bị `AuthService` xóa khi kiểm tra phiên.
 
@@ -32,6 +34,6 @@ Storefront dùng `localStorage` cho state nhẹ hoặc dữ liệu chưa chuyể
 - Khi đổi shape, parser phải chịu được JSON hỏng và dữ liệu phiên bản cũ.
 - Logout chỉ xóa phiên; dữ liệu theo email được giữ để user đăng nhập lại.
 
-## sessionStorage
+## Chatbot
 
-Chatbot dùng `vinabook_chat_session` để giữ tối đa 24 tin nhắn và `vinabook_chat_id` làm mã phiên ngẫu nhiên trong tab hiện tại. Dữ liệu tự mất khi phiên tab kết thúc và không được dùng làm nguồn tin cậy. Không lưu API key hoặc secret trong browser storage. Backend không lưu nội dung hội thoại; telemetry chỉ giữ metadata phục vụ metrics.
+ID phiên và cache giao diện nay nằm trong `localStorage` để mở lại tab vẫn chọn đúng cuộc chat. Backend lưu lịch sử đầy đủ và trạng thái hội thoại; cache trình duyệt chỉ giúp hiển thị tức thì trong lúc tải. Nút “Cuộc trò chuyện mới” xóa phiên trên backend rồi mới bỏ ID/cache cục bộ. Bộ nhớ sở thích tài khoản nằm trong database, không bị xóa bởi nút này. Không lưu API key hoặc secret trong browser storage.

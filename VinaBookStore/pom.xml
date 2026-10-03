@@ -16,6 +16,8 @@
     <description>MartfuryShop</description>
     <properties>
         <java.version>17</java.version>
+        <!-- Override for the launcher to isolate output from IDE/stale classes. -->
+        <vinabook.build.directory>${project.basedir}/target</vinabook.build.directory>
         <!-- BỔ SUNG: Khai báo phiên bản Lombok hiện đại để tương thích với JDK 17 -->
         <lombok.version>1.18.30</lombok.version>
     </properties>
@@ -89,6 +91,7 @@
     </dependencies>
 
     <build>
+        <directory>${vinabook.build.directory}</directory>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

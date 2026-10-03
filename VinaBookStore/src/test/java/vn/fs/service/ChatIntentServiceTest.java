@@ -16,6 +16,13 @@ import vn.fs.dto.chat.ChatSearchCriteriaDto;
 class ChatIntentServiceTest {
 	private final ChatIntentService service = new ChatIntentService();
 
+    @Test void bookCountsAndTopicChangesAreSeparateFromPricesAndRatings() {
+        assertThat(service.bookCount("Cho mình sáu cuốn trinh thám dưới 150k")).isEqualTo(6);
+        assertThat(service.bookCount("Gợi ý sách từ 4.5 sao, dưới 200.000đ")).isNull();
+        assertThat(service.moreInCurrentTopic("Còn cuốn nào khác cùng chủ đề này?")).isTrue();
+        assertThat(service.moreInCurrentTopic("Gợi ý thêm vài cuốn về tình yêu, chuyển sang chủ đề này nhé.")).isFalse();
+    }
+
 	@ParameterizedTest(name = "{0} -> {1}")
 	@MethodSource("intentCases")
 	void classifiesVietnameseShoppingQuestions(String question, ChatIntent expected) {

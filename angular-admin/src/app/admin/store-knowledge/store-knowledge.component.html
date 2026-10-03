@@ -1,0 +1,30 @@
+<div class="container-fluid knowledge-page">
+  <h1 class="h3 mb-3 text-gray-800">Chính sách cửa hàng</h1>
+  <p>Thông tin đã xuất bản được dùng cho thanh toán, trang khách hàng và chatbot. Phương thức thanh toán được lấy từ cổng thanh toán đang hoạt động.</p>
+  <div *ngIf="loading">Đang tải…</div>
+  <section class="card p-4 mb-4" *ngIf="settings as s">
+    <h2>Giao hàng</h2>
+    <div class="row">
+      <div class="col-md-3 form-group"><label>Phí giao (đ)</label><input type="number" min="0" class="form-control" [(ngModel)]="s.shippingFee"></div>
+      <div class="col-md-3 form-group"><label>Miễn phí từ (đ)</label><input type="number" min="0" class="form-control" [(ngModel)]="s.freeShippingThreshold"></div>
+      <div class="col-md-3 form-group"><label>Sớm nhất (ngày)</label><input type="number" min="1" class="form-control" [(ngModel)]="s.deliveryMinDays"></div>
+      <div class="col-md-3 form-group"><label>Muộn nhất (ngày)</label><input type="number" min="1" class="form-control" [(ngModel)]="s.deliveryMaxDays"></div>
+    </div>
+    <button class="btn btn-primary align-self-start" [disabled]="saving" (click)="saveSettings()">Lưu cấu hình giao hàng</button>
+  </section>
+  <section class="card p-4 mb-4" *ngFor="let policy of policies">
+    <h2>{{ policy.policyKey === 'returns' ? 'Đổi trả' : policy.policyKey === 'cancellation' ? 'Hủy đơn' : 'Hỗ trợ' }}</h2>
+    <div class="form-group"><label>Tiêu đề</label><input class="form-control" [(ngModel)]="policy.title"></div>
+    <div class="form-group"><label>Nội dung</label><textarea class="form-control" rows="5" [(ngModel)]="policy.body"></textarea></div>
+    <div class="form-group"><label>Có hiệu lực từ</label><input type="datetime-local" class="form-control" [(ngModel)]="policy.effectiveAt"></div>
+    <p *ngIf="policy.updatedAt" class="text-muted">Cập nhật lần cuối: {{ policy.updatedAt | date:'dd/MM/yyyy HH:mm' }}</p>
+    <button class="btn btn-primary align-self-start" [disabled]="saving" (click)="publish(policy)">Duyệt và xuất bản</button>
+  </section>
+  <section class="card p-4 mb-4" *ngIf="history.length">
+    <h2>Lịch sử phiên bản</h2>
+    <div *ngFor="let version of history" class="history-row">
+      <strong>{{ version.title }} · v{{ version.version }}</strong>
+      <span>Hiệu lực {{ version.effectiveAt | date:'dd/MM/yyyy HH:mm' }} · Duyệt {{ version.updatedAt | date:'dd/MM/yyyy HH:mm' }}</span>
+    </div>
+  </section>
+</div>

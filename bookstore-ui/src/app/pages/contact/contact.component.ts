@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { NotificationService } from 'src/app/services/notification.service';
+import { StoreKnowledgeService } from 'src/app/services/store-knowledge.service';
 
 @Component({
   selector: 'app-contact',
@@ -15,17 +16,17 @@ export class ContactComponent {
   faqs = [
     {
       q: 'Bao lâu thì tôi nhận được sách?',
-      a: 'Đơn hàng được xử lý trong 24 giờ và giao trong 2 đến 4 ngày làm việc tùy khu vực. Bạn có thể theo dõi trong mục Đơn hàng của tôi.',
+      a: 'Đang tải thông tin giao hàng.',
       open: false
     },
     {
       q: 'VinaBook có hỗ trợ đổi trả không?',
-      a: 'Sách lỗi in ấn hoặc hư hỏng do vận chuyển được hỗ trợ đổi trả trong 7 ngày kể từ khi nhận hàng.',
+      a: 'Đang tải chính sách đổi trả.',
       open: false
     },
     {
       q: 'Tôi có thể thanh toán bằng hình thức nào?',
-      a: 'Hiện tại VinaBook chỉ nhận thanh toán khi giao hàng (COD). Thanh toán trực tuyến sẽ được mở sau khi kết nối với cổng thanh toán được xác thực.',
+      a: 'Đang tải phương thức thanh toán.',
       open: false
     },
     {
@@ -35,12 +36,23 @@ export class ContactComponent {
     },
     {
       q: 'Phí vận chuyển được tính thế nào?',
-      a: 'Phí vận chuyển là 20.000đ. Đơn hàng từ 300.000đ được miễn phí vận chuyển.',
+      a: 'Đang tải phí vận chuyển.',
       open: false
     }
   ];
 
-  constructor(private notification: NotificationService) {}
+  constructor(private notification: NotificationService, private knowledge: StoreKnowledgeService) {
+    this.knowledge.get().subscribe(data => {
+      const shipping = StoreKnowledgeService.shippingText(data.settings);
+      this.faqs[0].a = `Thời gian giao dự kiến ${data.settings.deliveryMinDays}–${data.settings.deliveryMaxDays} ngày làm việc. Bạn có thể theo dõi trong mục Đơn hàng của tôi.`;
+      this.faqs[4].a = shipping;
+      this.faqs[1].a = data.policies.find(p => p.policyKey === 'returns')?.body || 'Vui lòng liên hệ cửa hàng để biết chính sách đổi trả hiện hành.';
+      const available = Object.values(data.paymentMethods).filter(method => method.available).map(method => method.label);
+      this.faqs[2].a = available.length ? `Các phương thức đang khả dụng: ${available.join(', ')}.` : 'Vui lòng kiểm tra phương thức thanh toán ở bước đặt hàng.';
+    }, () => this.faqs.forEach((faq, index) => {
+      if (index !== 3) { faq.a = 'Thông tin này tạm thời chưa tải được. Vui lòng thử lại sau.'; }
+    }));
+  }
 
   isValid(): boolean {
     return this.form.name.trim().length > 0

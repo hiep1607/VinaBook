@@ -28,6 +28,9 @@ public class ChatCheckoutService {
     private final Map<String, Draft> drafts = new HashMap<>();
     private CartSyncService carts;
     @org.springframework.beans.factory.annotation.Autowired public void setCarts(CartSyncService value){carts=value;}
+    private StoreKnowledgeService store;
+    @org.springframework.beans.factory.annotation.Autowired(required=false)
+    public void setStore(StoreKnowledgeService value){store=value;}
     public ChatCheckoutService(CurrentUserAccess access, ProductRepository products, UserRepository users,
             OrderRepository orders, OrderDetailRepository details, ChatRetrievalService pricing,
             EntityManager em, PlatformTransactionManager transactions) {
@@ -62,7 +65,8 @@ public class ChatCheckoutService {
         d.paymentMethod=input.paymentMethod;d.fromCart=input.fromCart;d.cartRevision=input.cartRevision;
         d.recipient=input.recipient.trim(); d.phone=input.phone.trim(); d.street=input.street.trim();
         d.unitPrice=lines.get(0).unitPrice();d.subtotal=lines.stream().mapToLong(i->i.unitPrice()*i.quantity()).sum();
-        d.shipping=d.subtotal>0 && d.subtotal<300000 ? 20000 : 0; d.total=d.subtotal+d.shipping;
+        d.shipping=store==null?(d.subtotal>0 && d.subtotal<300000 ? 20000 : 0):store.shipping(d.subtotal);
+        d.total=d.subtotal+d.shipping;
         d.expiresAt=System.currentTimeMillis()+15*60*1000;
         drafts.put(d.token,d); return d;
     }

@@ -13,7 +13,9 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,6 +59,36 @@ public class ChatApi {
 		}
 		ChatResponseDto response = chat.reply(request);
 		return ResponseEntity.ok(response);
+	}
+
+	@GetMapping("conversation")
+	public ResponseEntity<?> conversation(@RequestParam String sessionId) {
+		if (!validSession(sessionId)) return ResponseEntity.badRequest().body(Map.of("message", "Mã cuộc trò chuyện không hợp lệ."));
+		return ResponseEntity.ok(chat.history(sessionId));
+	}
+
+	@DeleteMapping("conversation")
+	public ResponseEntity<?> clearConversation(@RequestParam String sessionId) {
+		if (!validSession(sessionId)) return ResponseEntity.badRequest().body(Map.of("message", "Mã cuộc trò chuyện không hợp lệ."));
+		chat.clearConversation(sessionId);
+		return ResponseEntity.noContent().build();
+	}
+
+	@GetMapping("account-memory")
+	public ResponseEntity<?> accountMemory() {
+		return ResponseEntity.ok(chat.accountContext());
+	}
+
+	@PostMapping("activity")
+	public ResponseEntity<?> activity(@RequestBody Map<String, Long> body) {
+		Long productId = body.get("productId");
+		if (productId == null || productId <= 0) return ResponseEntity.badRequest().build();
+		chat.observeProductView(productId);
+		return ResponseEntity.noContent().build();
+	}
+
+	private boolean validSession(String sessionId) {
+		return sessionId != null && sessionId.matches("[A-Za-z0-9_-]{16,64}");
 	}
 
 	@PostMapping(value = "stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)

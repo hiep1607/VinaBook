@@ -1,0 +1,145 @@
+{
+  "indexedProfiles": 56,
+  "queries": [
+    {
+      "question": "Mình hay trì hoãn công việc và muốn rèn những thay đổi nhỏ mỗi ngày",
+      "top": [
+        {
+          "id": 55,
+          "score": 0.6119,
+          "summary": "Công trình tâm lý học đoạt giải Nobel về hai hệ thống tư duy chi phối mọi quyết định của con người. Cuốn sách thay đổi cách bạn hiểu về lý trí và sai lầm."
+        },
+        {
+          "id": 32,
+          "score": 0.5964,
+          "summary": "Những phương pháp thiết thực để vượt qua lo âu, tìm lại bình an và sống trọn vẹn từng ngày. Kim chỉ nam cho một tâm hồn an nhiên giữa cuộc sống bộn bề."
+        },
+        {
+          "id": 19,
+          "score": 0.5916,
+          "summary": "Phương pháp xây dựng startup hiện đại: thử nghiệm nhanh, học hỏi từ khách hàng, xoay trục đúng lúc. Kim chỉ nam cho mọi nhà sáng lập."
+        },
+        {
+          "id": 44,
+          "score": 0.589,
+          "summary": "Giới thiệu các khái niệm cốt lõi của trí tuệ nhân tạo: tìm kiếm, biểu diễn tri thức, suy diễn, học máy. Cầu nối lý thuyết và ứng dụng cho sinh viên."
+        },
+        {
+          "id": 17,
+          "score": 0.583,
+          "summary": "Giải thích trí tuệ nhân tạo, machine learning và deep learning bằng ngôn ngữ dễ hiểu, không nặng toán. Khởi đầu hoàn hảo cho người mới bước vào lĩnh vực AI."
+        },
+        {
+          "id": 22,
+          "score": 0.5821,
+          "summary": "Học lập trình Java từ căn bản: cú pháp, hướng đối tượng, collection, xử lý ngoại lệ, lập trình giao diện. Bài tập phong phú bám sát chương trình đào tạo."
+        }
+      ]
+    },
+    {
+      "question": "Mình muốn biết cách kiểm chứng ý tưởng trước khi bỏ nhiều tiền mở một doanh nghiệp",
+      "top": [
+        {
+          "id": 19,
+          "score": 0.6939,
+          "summary": "Phương pháp xây dựng startup hiện đại: thử nghiệm nhanh, học hỏi từ khách hàng, xoay trục đúng lúc. Kim chỉ nam cho mọi nhà sáng lập."
+        },
+        {
+          "id": 4,
+          "score": 0.6438,
+          "summary": "Trọn bộ quy định mới nhất về thành lập, tổ chức quản lý và hoạt động của doanh nghiệp tại Việt Nam. Tài liệu không thể thiếu cho người khởi nghiệp và nhà quản lý."
+        },
+        {
+          "id": 6,
+          "score": 0.634,
+          "summary": "Sổ tay pháp lý toàn diện giúp doanh nghiệp phòng ngừa rủi ro: hợp đồng, thuế, sở hữu trí tuệ, giải quyết tranh chấp. Viết bởi luật sư giàu kinh nghiệm thực chiến."
+        },
+        {
+          "id": 17,
+          "score": 0.5779,
+          "summary": "Giải thích trí tuệ nhân tạo, machine learning và deep learning bằng ngôn ngữ dễ hiểu, không nặng toán. Khởi đầu hoàn hảo cho người mới bước vào lĩnh vực AI."
+        },
+        {
+          "id": 44,
+          "score": 0.5711,
+          "summary": "Giới thiệu các khái niệm cốt lõi của trí tuệ nhân tạo: tìm kiếm, biểu diễn tri thức, suy diễn, học máy. Cầu nối lý thuyết và ứng dụng cho sinh viên."
+        },
+        {
+          "id": 16,
+          "score": 0.5707,
+          "summary": "Những bài học thực dụng đưa bạn từ thợ code thành kỹ sư phần mềm bậc thầy: tư duy, công cụ, thói quen nghề nghiệp bền vững."
+        }
+      ]
+    },
+    {
+      "question": "Mình muốn đọc câu chuyện có những bí mật cần suy luận để tìm lời giải",
+      "top": [
+        {
+          "id": 26,
+          "score": 0.6753,
+          "summary": "Những vụ án ly kỳ của thám tử lừng danh phố Baker. Tài suy luận thiên tài của Sherlock Holmes đã làm say mê độc giả khắp thế giới hơn một thế kỷ qua."
+        },
+        {
+          "id": 54,
+          "score": 0.6313,
+          "summary": "Những câu chuyện về luân hồi, nhân quả và hành trình của linh hồn qua muôn kiếp. Tác phẩm tâm linh ăn khách bậc nhất, gợi mở suy ngẫm về lẽ sống."
+        },
+        {
+          "id": 48,
+          "score": 0.6244,
+          "summary": "Thám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại."
+        },
+        {
+          "id": 44,
+          "score": 0.6039,
+          "summary": "Giới thiệu các khái niệm cốt lõi của trí tuệ nhân tạo: tìm kiếm, biểu diễn tri thức, suy diễn, học máy. Cầu nối lý thuyết và ứng dụng cho sinh viên."
+        },
+        {
+          "id": 28,
+          "score": 0.6029,
+          "summary": "Hành trình của cậu bé Rémi lưu lạc khắp nước Pháp đi tìm gia đình. Câu chuyện cảm động về nghị lực, lòng nhân hậu và khát khao yêu thương."
+        },
+        {
+          "id": 58,
+          "score": 0.6012,
+          "summary": "Hành trình của cậu chăn cừu Santiago đi tìm kho báu và khám phá vận mệnh đời mình. Câu chuyện truyền cảm hứng được dịch ra hơn 80 thứ tiếng."
+        }
+      ]
+    },
+    {
+      "question": "Tìm sách về nuôi ong lấy mật",
+      "top": [
+        {
+          "id": 4,
+          "score": 0.6263,
+          "summary": "Trọn bộ quy định mới nhất về thành lập, tổ chức quản lý và hoạt động của doanh nghiệp tại Việt Nam. Tài liệu không thể thiếu cho người khởi nghiệp và nhà quản lý."
+        },
+        {
+          "id": 7,
+          "score": 0.6188,
+          "summary": "Tập hợp đầy đủ Luật Đất đai cùng các nghị định, thông tư hướng dẫn thi hành mới nhất. Công cụ tra cứu thiết yếu cho công tác quản lý và giao dịch bất động sản."
+        },
+        {
+          "id": 54,
+          "score": 0.617,
+          "summary": "Những câu chuyện về luân hồi, nhân quả và hành trình của linh hồn qua muôn kiếp. Tác phẩm tâm linh ăn khách bậc nhất, gợi mở suy ngẫm về lẽ sống."
+        },
+        {
+          "id": 36,
+          "score": 0.6157,
+          "summary": "Bộ sách khoa học giải đáp hàng nghìn thắc mắc của trẻ về thế giới quanh ta: thiên nhiên, vũ trụ, cơ thể, công nghệ. Nuôi dưỡng trí tò mò và niềm yêu khám phá."
+        },
+        {
+          "id": 45,
+          "score": 0.6137,
+          "summary": "Các nguyên lý cung cầu, hành vi người tiêu dùng, lý thuyết sản xuất và cấu trúc thị trường. Giáo trình chuẩn cho khối ngành kinh tế và quản trị kinh doanh."
+        },
+        {
+          "id": 57,
+          "score": 0.6119,
+          "summary": "Cuốn sách về nghệ thuật đối nhân xử thế bán chạy nhất mọi thời đại. Những nguyên tắc vàng giúp bạn chinh phục lòng người và thành công trong giao tiếp."
+        }
+      ]
+    }
+  ]
+}

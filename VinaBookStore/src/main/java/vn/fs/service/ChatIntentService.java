@@ -24,6 +24,10 @@ public class ChatIntentService {
 
 	public ChatIntent classify(String question) {
 		String q = normalize(question);
+		if (containsAny(q,"tra hang","tra sach","doi tra","doi sach","hoan tien")) return ChatIntent.POLICY;
+		if (containsAny(q,"da mua","tung mua","sach da dat") && containsAny(q,"tim","xem","lich su","nhung cuon","cac cuon")) return ChatIntent.ORDER_SUPPORT;
+		if (containsAny(q, "ban lam duoc gi", "ban co the giup toi", "ban ho tro gi", "tro ly lam duoc gi"))
+			return ChatIntent.SMALL_TALK;
 		if (containsAny(q, "so sanh", "khac nhau", "giong nhau")) return ChatIntent.COMPARE_BOOKS;
 		if (q.matches(".*\\b(tim|cho|muon|goi y).*\\b(tac gia|danh muc|re nhat|thap nhat|doc truyen)\\b.*")) return ChatIntent.DISCOVER_BOOKS;
 		if (isBudgetOnlyDiscovery(question)) return ChatIntent.DISCOVER_BOOKS;
@@ -32,6 +36,8 @@ public class ChatIntentService {
 		if (containsAny(q, "so sanh", "khac nhau", "nen chon cuon nao", "cuon nao tot hon")) {
 			return ChatIntent.COMPARE_BOOKS;
 		}
+		if (containsAny(q, "huy don", "huy dat hang", "xac nhan don", "don duoc xac nhan"))
+			return ChatIntent.POLICY;
 		if (containsAny(q, "don hang", "theo doi don", "ma don", "dang giao", "don cua toi")
 				|| q.matches(".*(?:#|\\bdon\\s+)[0-9]{1,18}\\b.*")) {
 			return ChatIntent.ORDER_SUPPORT;
@@ -115,6 +121,53 @@ public class ChatIntentService {
 				.toLowerCase(Locale.ROOT)
 				.replaceAll("\\b(pyhton|pythn)\\b", "python").replaceAll("\\bsahc\\b", "sach").replaceAll("\\bmun\\b", "muon")
 				.replaceAll("\\s+", " ").trim();
+	}
+
+	public boolean wantsAnotherBook(String question) {
+		String q = normalize(question);
+		return q.matches("(?s).*\\b(?:cuon|quyen|sach)\\s+(?:nao\\s+)?khac\\b.*")
+				|| q.matches("(?s).*\\b(?:them\\s+(?:[0-9]+|mot|hai|ba|bon|nam|sau|bay|tam|chin|muoi)\\s+(?:cuon|quyen|sach)|(?:cuon|quyen|sach)\\s+nua)\\b.*")
+				|| q.matches("(?s).*\\b(?:them lua chon|goi y them|con lua chon nao|sach khac|cuon nua|quyen nua|con sach nao|con cuon nao|them vai cuon|gioi thieu them|xem them sach|show them)\\b.*");
+	}
+
+    public boolean moreInCurrentTopic(String question) {
+        String q=normalize(question);
+        if(ChatBookFacts.has(q,"doi sang|chuyen sang|chu de khac|the loai khac"))return false;
+        return wantsAnotherBook(question) && (ChatBookFacts.has(q,"cung chu de|cung the loai|chu de nay|the loai nay|tuong tu|nhu vay")
+            || !q.matches("(?s).*\\b(?:doi sang|chuyen sang|chu de khac|the loai khac|ve|chu de|the loai)\\b.*"));
+    }
+
+    public Integer bookCount(String question) {
+        String q=normalize(question);
+        Matcher count=Pattern.compile("\\b([0-9]{1,4}|mot|hai|ba|bon|nam|sau|bay|tam|chin|muoi)\\s+(?:cuon|quyen|dau sach|sach|books?)\\b").matcher(q);
+        if(!count.find())return null;
+        String value=count.group(1);
+        return value.matches("[0-9]+")?Integer.parseInt(value):List.of("mot","hai","ba","bon","nam","sau","bay","tam","chin","muoi").indexOf(value)+1;
+    }
+
+    /** Separate groups of books are alternatives; one book combining topics still uses AND. */
+    public String discoveryQuery(String question) {
+        String q=normalize(question);
+        if(q.matches("(?s).*\\b(?:vai|mot so|[0-9]+)\\s+(?:cuon|quyen|sach)\\b.*\\bva\\b.*\\b(?:vai|mot so|[0-9]+)\\s+(?:cuon|quyen|sach)\\b.*"))
+            return q.replaceAll("\\bva\\b","hoac");
+        return question;
+    }
+
+    public boolean alternativeTopics(String question) {
+        return ChatBookFacts.has(normalize(discoveryQuery(question)),"hoac|or");
+    }
+
+    public boolean refinesCurrentSearch(String question) {
+        return ChatBookFacts.has(normalize(question),"giu nguyen chu de|giu chu de|giu nguyen bo loc|bo gioi han gia|khong gioi han gia|bo bo loc gia");
+    }
+
+	public Integer childGiftAge(String question) {
+		String q = normalize(question);
+		if (!q.matches("(?s).*\\b(?:tang|qua|em nho)\\b.*")) return null;
+		Matcher age = Pattern.compile("(?<!\\d)(\\d{1,2})\\s*tuoi\\b").matcher(q);
+		if (!age.find()) return null;
+		int years = Integer.parseInt(age.group(1));
+		return years >= 6 && years <= 12 ? years : null;
 	}
 
 	/** A budget-only request has no title/topic to match against catalog prose. */

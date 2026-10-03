@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscriber, Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 export type ChatIntent =
@@ -63,6 +64,7 @@ interface ChatApiResponse {
 export class ChatbotService {
   private readonly api = environment.apiUrl + '/api/chat';
   private sessionKey = 'vinabook_chat_id_v3:guest';
+  private readonly ephemeralSessionIds = new Map<string, string>();
 
   useAccount(email?: string): void {
     this.sessionKey = 'vinabook_chat_id_v3:' + (email ? 'user:' + encodeURIComponent(email) : 'guest');
@@ -112,8 +114,6 @@ export class ChatbotService {
           const reader = response.body.getReader();
           const decoder = new TextDecoder('utf-8');
           let buffer = '';
-          let streamed = '';
-          let chunks = 0;
           while (true) {
             const result = await reader.read();
             if (result.done) break;
@@ -123,15 +123,10 @@ export class ChatbotService {
             for (const frame of frames) {
               const event = this.parseEvent(frame);
               if (!event) continue;
-              if (event.name === 'chunk') {
-                streamed += event.data.text || '';
-                if (controller.signal.aborted) return;
-                observer.next({ from: 'bot', text: streamed, streaming: true });
-                // Yield to the browser between chunks so Angular can paint each
-                // update instead of rendering the whole buffered SSE response at once.
-                if (++chunks % 16 === 0) await this.pause(16);
-              } else if (event.name === 'done') {
-                observer.next(this.fromResponse(event.data as ChatApiResponse));
+              if (event.name === 'done') {
+                // The answer has been grounded and checked by the backend. Reveal
+                // this completed response locally so unverified text never flashes.
+                await this.reveal(event.data as ChatApiResponse, observer, controller.signal);
                 observer.complete();
                 return;
               } else if (event.name === 'error') {
@@ -144,9 +139,10 @@ export class ChatbotService {
         } catch (error) {
           if (controller.signal.aborted) return;
           fallbackSub = this.http.post<ChatApiResponse>(this.api, body).subscribe({
-            next: response => observer.next(this.fromResponse(response)),
-            error: error => observer.error(this.transportError(error.status)),
-            complete: () => observer.complete()
+            next: response => {
+              this.reveal(response, observer, controller.signal).then(() => observer.complete());
+            },
+            error: error => observer.error(this.transportError(error.status))
           });
         }
       };
@@ -161,6 +157,38 @@ export class ChatbotService {
 
   feedback(messageId: string, value: 'positive' | 'negative'): Observable<void> {
     return this.http.post<void>(this.api + '/feedback', { messageId, value });
+  }
+
+  history(): Observable<ChatMessage[]> {
+    return this.http.get<ChatMessage[]>(this.api + '/conversation', { params: { sessionId: this.sessionId() } });
+  }
+
+  newConversation(): Observable<void> {
+    const oldId = this.sessionId();
+    const key = this.sessionKey;
+    return this.http.delete<void>(this.api + '/conversation', { params: { sessionId: oldId } }).pipe(
+      tap(() => {
+        this.ephemeralSessionIds.delete(key);
+        try { localStorage.removeItem(key); } catch {}
+        try { sessionStorage.removeItem(key); } catch {}
+      })
+    );
+  }
+
+  recordProductView(productId: number): void {
+    if (!Number.isInteger(productId) || productId <= 0) return;
+    this.http.post<void>(this.api + '/activity', { productId }).subscribe({ error: () => {} });
+  }
+
+  private async reveal(response: ChatApiResponse, observer: Subscriber<ChatMessage>, signal: AbortSignal): Promise<void> {
+    const words = response.answer.match(/\S+\s*/g) || [];
+    let shown = '';
+    for (let index = 0; index < words.length && !signal.aborted && !observer.closed; index += 3) {
+      shown += words.slice(index, index + 3).join('');
+      observer.next({ from: 'bot', text: shown, streaming: true });
+      await this.pause(28);
+    }
+    if (!signal.aborted && !observer.closed) observer.next(this.fromResponse(response));
   }
 
   private prepareHistory(history: ChatMessage[]): {role: string; content: string}[] {
@@ -239,15 +267,23 @@ export class ChatbotService {
   }
 
   resetSession(): void {
+    this.ephemeralSessionIds.delete(this.sessionKey);
+    try { localStorage.removeItem(this.sessionKey); } catch {}
     try { sessionStorage.removeItem(this.sessionKey); } catch {}
   }
 
   private sessionId(): string {
-    let id = sessionStorage.getItem(this.sessionKey);
+    let id: string | null = null;
+    try { id = localStorage.getItem(this.sessionKey) || sessionStorage.getItem(this.sessionKey); } catch {}
+    if (!id) id = this.ephemeralSessionIds.get(this.sessionKey) || null;
+    if (this.sessionKey.endsWith(':guest') && id && !/^chat-[0-9a-f]{48}$/.test(id)) id = null;
     if (!id) {
-      id = 'chat-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
-      sessionStorage.setItem(this.sessionKey, id);
+      const bytes = new Uint8Array(24);
+      window.crypto.getRandomValues(bytes);
+      id = 'chat-' + Array.from(bytes).map(byte => byte.toString(16).padStart(2, '0')).join('');
     }
+    this.ephemeralSessionIds.set(this.sessionKey, id);
+    try { localStorage.setItem(this.sessionKey, id); } catch {}
     return id;
   }
 

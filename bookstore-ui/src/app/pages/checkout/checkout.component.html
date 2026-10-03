@@ -166,15 +166,16 @@
         <div class="summary-row">
           <span>Phí vận chuyển</span>
           <strong>
-            <ng-container *ngIf="getShipping() > 0; else checkoutFreeShipping">
+            <ng-container *ngIf="!shippingSettings; else knownCheckoutShipping">Đang kiểm tra</ng-container>
+            <ng-template #knownCheckoutShipping><ng-container *ngIf="getShipping() > 0; else checkoutFreeShipping">
               {{ getShipping() | number }}đ
-            </ng-container>
+            </ng-container></ng-template>
             <ng-template #checkoutFreeShipping>Miễn phí</ng-template>
           </strong>
         </div>
 
-        <p class="payment-hint" *ngIf="getSubtotal() < freeShippingThreshold">
-          Miễn phí vận chuyển cho đơn từ {{ freeShippingThreshold | number }}đ.
+        <p class="payment-hint" *ngIf="shippingSettings && getSubtotal() < shippingSettings.freeShippingThreshold">
+          Miễn phí vận chuyển cho đơn từ {{ shippingSettings.freeShippingThreshold | number }}đ.
         </p>
 
         <div class="summary-row">
@@ -184,7 +185,7 @@
 
         <div class="summary-total">
           <span>Tổng cộng</span>
-          <strong>{{ getTotal() | number }}đ</strong>
+          <strong>{{ shippingSettings ? (getTotal() | number) + 'đ' : 'Đang kiểm tra' }}</strong>
         </div>
 
         <button
@@ -192,7 +193,7 @@
           type="submit"
           class="place-order-btn"
           [class.success]="orderPlaced"
-          [disabled]="placing || orderPlaced || cartItems.length === 0"
+          [disabled]="placing || orderPlaced || cartItems.length === 0 || !shippingSettings"
         >
           {{ orderPlaced ? 'Đặt hàng thành công' : (placing ? 'Đang xử lý...' : (selectedPayment === 'COD' ? 'Đặt hàng' : 'Tiếp tục thanh toán')) }}
         </button>

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { StoreKnowledgeService } from './store-knowledge.service';
 
 /** Đơn hàng server-side: quote tính giá/ship, confirm tạo đơn và giữ tồn kho. */
 @Injectable({
@@ -12,7 +13,7 @@ export class OrderService {
 
   private api = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private knowledge: StoreKnowledgeService) { }
 
   statusLabel(status: number): string {
     switch (status) {
@@ -53,24 +54,29 @@ export class OrderService {
    */
   private pendingQuotes = new Map<string, string>();
 
-  placeOrder(email: string, street: string, phone: string, items: any[], paymentMethod = 'COD', fromCart = false, cartRevision = 0): Observable<any> {
+  placeOrder(email: string, street: string, phone: string, items: any[], paymentMethod = 'COD', fromCart = false, cartRevision = 0, displayedTotal?: number): Observable<any> {
     const key = JSON.stringify([email, street, phone, items.map(i => [i.id, i.quantity, i.price]), paymentMethod, fromCart]);
     const recipient = street.match(/\(Người nhận: (.*?)\)$/)?.[1] || 'Khách hàng';
     const address = street.replace(/\s*\(Người nhận: .*?\)$/, '');
     const expectedSubtotal = items.reduce((sum, i) => sum + Number(i.price) * i.quantity, 0);
-    const expectedTotal = expectedSubtotal + (expectedSubtotal > 0 && expectedSubtotal < 300000 ? 20000 : 0);
-    const saved = this.pendingQuotes.get(key);
-    const quote = saved ? of({token: saved, total: expectedTotal}) : this.http.post<any>(this.api + '/api/chat/checkout/quote', {
-      items: items.map(i => ({productId: i.id, quantity: i.quantity})), recipient, phone, street: address,
-      paymentMethod, fromCart, cartRevision
-    });
-    return quote.pipe(switchMap(q => {
-      if (q.total !== expectedTotal) throw new Error('Giá hoặc phí giao hàng đã thay đổi. Vui lòng tải lại giỏ và kiểm tra tổng tiền.');
-      this.pendingQuotes.set(key, q.token);
-      return this.http.post<any>(this.api + '/api/chat/checkout/' + encodeURIComponent(q.token) + '/confirm', {}).pipe(
-        map(result => { this.pendingQuotes.delete(key); return {ordersId: result.orderId}; }),
-        catchError(error => { if ([400,401,403,404,409,410].includes(error.status)) this.pendingQuotes.delete(key); return throwError(error); })
-      );
+    return this.knowledge.getFresh().pipe(switchMap(({ settings }) => {
+      const expectedTotal = expectedSubtotal + StoreKnowledgeService.shipping(expectedSubtotal, settings);
+      if (displayedTotal !== undefined && displayedTotal !== expectedTotal) {
+        throw new Error('Phí giao hàng đã thay đổi. Vui lòng kiểm tra lại tổng tiền trước khi đặt hàng.');
+      }
+      const saved = this.pendingQuotes.get(key);
+      const quote = saved ? of({token: saved, total: expectedTotal}) : this.http.post<any>(this.api + '/api/chat/checkout/quote', {
+        items: items.map(i => ({productId: i.id, quantity: i.quantity})), recipient, phone, street: address,
+        paymentMethod, fromCart, cartRevision
+      });
+      return quote.pipe(switchMap(q => {
+        if (q.total !== expectedTotal) throw new Error('Giá hoặc phí giao hàng đã thay đổi. Vui lòng tải lại giỏ và kiểm tra tổng tiền.');
+        this.pendingQuotes.set(key, q.token);
+        return this.http.post<any>(this.api + '/api/chat/checkout/' + encodeURIComponent(q.token) + '/confirm', {}).pipe(
+          map(result => { this.pendingQuotes.delete(key); return {ordersId: result.orderId}; }),
+          catchError(error => { if ([400,401,403,404,409,410].includes(error.status)) this.pendingQuotes.delete(key); return throwError(error); })
+        );
+      }));
     }));
   }
 

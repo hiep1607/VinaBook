@@ -1,0 +1,962 @@
+{
+  "status": {
+    "provider": "local",
+    "model": "",
+    "aiEnabled": false
+  },
+  "catalog": [
+    {
+      "productId": 3,
+      "name": "Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam (Hiện Hành)",
+      "author": "Quốc Hội Việt Nam",
+      "quantity": 150,
+      "price": 45000.0,
+      "discount": 0,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320474/products/aifrungfs4soocyvpsnk.webp",
+      "description": "Toàn văn Hiến pháp hiện hành của nước CHXHCN Việt Nam — văn bản pháp lý cao nhất, nền tảng cho toàn bộ hệ thống pháp luật quốc gia. Ấn bản chuẩn, tiện tra cứu.",
+      "enteredDate": "2025-09-10",
+      "status": true,
+      "sold": 28,
+      "category": {
+        "categoryId": 1,
+        "categoryName": "Sách Chính trị – pháp luật"
+      }
+    },
+    {
+      "productId": 4,
+      "name": "Luật Doanh Nghiệp (Hiện Hành)",
+      "author": "Quốc Hội Việt Nam",
+      "quantity": 120,
+      "price": 78000.0,
+      "discount": 5,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320139/products/vbad4nshdikvyfrdaq0d.webp",
+      "description": "Trọn bộ quy định mới nhất về thành lập, tổ chức quản lý và hoạt động của doanh nghiệp tại Việt Nam. Tài liệu không thể thiếu cho người khởi nghiệp và nhà quản lý.",
+      "enteredDate": "2025-10-02",
+      "status": true,
+      "sold": 22,
+      "category": {
+        "categoryId": 1,
+        "categoryName": "Sách Chính trị – pháp luật"
+      }
+    },
+    {
+      "productId": 5,
+      "name": "Luật Lao Động Thực Hành",
+      "author": "Nguyễn Văn Phần",
+      "quantity": 100,
+      "price": 92000.0,
+      "discount": 10,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320128/products/nhzwddy375czep8g5stu.jpg",
+      "description": "Phân tích và hướng dẫn áp dụng Bộ luật Lao động qua các tình huống thực tế: hợp đồng, tiền lương, kỷ luật, tranh chấp. Dành cho cả người lao động lẫn người sử dụng lao động.",
+      "enteredDate": "2025-11-15",
+      "status": true,
+      "sold": 18,
+      "category": {
+        "categoryId": 1,
+        "categoryName": "Sách Chính trị – pháp luật"
+      }
+    },
+    {
+      "productId": 6,
+      "name": "Cẩm Nang Pháp Lý Cho Doanh Nghiệp",
+      "author": "Trương Thanh Đức",
+      "quantity": 90,
+      "price": 135000.0,
+      "discount": 15,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320093/products/k3k09hlkujlxxjpvjcto.jpg",
+      "description": "Sổ tay pháp lý toàn diện giúp doanh nghiệp phòng ngừa rủi ro: hợp đồng, thuế, sở hữu trí tuệ, giải quyết tranh chấp. Viết bởi luật sư giàu kinh nghiệm thực chiến.",
+      "enteredDate": "2026-01-20",
+      "status": true,
+      "sold": 41,
+      "category": {
+        "categoryId": 1,
+        "categoryName": "Sách Chính trị – pháp luật"
+      }
+    },
+    {
+      "productId": 7,
+      "name": "Luật Đất Đai Và Văn Bản Hướng Dẫn Thi Hành",
+      "author": "Bộ Tư Pháp",
+      "quantity": 80,
+      "price": 110000.0,
+      "discount": 0,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320083/products/ex49vpz8y05eonwc7cpj.webp",
+      "description": "Tập hợp đầy đủ Luật Đất đai cùng các nghị định, thông tư hướng dẫn thi hành mới nhất. Công cụ tra cứu thiết yếu cho công tác quản lý và giao dịch bất động sản.",
+      "enteredDate": "2025-08-05",
+      "status": true,
+      "sold": 12,
+      "category": {
+        "categoryId": 1,
+        "categoryName": "Sách Chính trị – pháp luật"
+      }
+    },
+    {
+      "productId": 8,
+      "name": "Tìm Hiểu Bộ Luật Dân Sự Việt Nam",
+      "author": "Đỗ Văn Đại",
+      "quantity": 85,
+      "price": 156000.0,
+      "discount": 8,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320070/products/qdhv6q3h0cpfrynrzd6p.jpg",
+      "description": "Bình luận khoa học về Bộ luật Dân sự — quyền sở hữu, hợp đồng, thừa kế, bồi thường thiệt hại. Giúp bạn đọc nắm vững nguyên tắc nền tảng của luật tư.",
+      "enteredDate": "2026-02-11",
+      "status": true,
+      "sold": 15,
+      "category": {
+        "categoryId": 1,
+        "categoryName": "Sách Chính trị – pháp luật"
+      }
+    },
+    {
+      "productId": 9,
+      "name": "Clean Code - Mã Sạch Và Cách Viết",
+      "author": "Robert C. Martin",
+      "quantity": 140,
+      "price": 168000.0,
+      "discount": 10,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320053/products/bargnm2lw0ykyd3gqinf.webp",
+      "description": "Cẩm nang kinh điển của Uncle Bob về cách viết mã nguồn sạch, dễ đọc, dễ bảo trì. Bắt buộc đọc với mọi lập trình viên muốn nâng tầm tay nghề.",
+      "enteredDate": "2026-03-01",
+      "status": true,
+      "sold": 86,
+      "category": {
+        "categoryId": 2,
+        "categoryName": "Sách Khoa học công nghệ – Kinh tế"
+      }
+    },
+    {
+      "productId": 10,
+      "name": "Truyện Kiều",
+      "author": "Nguyễn Du",
+      "quantity": 130,
+      "price": 68000.0,
+      "discount": 5,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320037/products/tcsofukigsxxa4o1fb2k.webp",
+      "description": "Kiệt tác thi ca của đại thi hào Nguyễn Du — 3254 câu lục bát kể về cuộc đời nàng Kiều. Đỉnh cao của văn học cổ điển Việt Nam, di sản của muôn đời.",
+      "enteredDate": "2025-09-09",
+      "status": true,
+      "sold": 52,
+      "category": {
+        "categoryId": 3,
+        "categoryName": "Sách Văn học nghệ thuật"
+      }
+    },
+    {
+      "productId": 11,
+      "name": "Số Đỏ",
+      "author": "Vũ Trọng Phụng",
+      "quantity": 100,
+      "price": 72000.0,
+      "discount": 0,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320025/products/i6xosoj7gdpgf8fdizfu.webp",
+      "description": "Tiểu thuyết trào phúng bậc thầy về Xuân Tóc Đỏ và xã hội thành thị nhố nhăng thời thuộc địa. Tiếng cười sắc bén phê phán thói rởm đời, học làm sang.",
+      "enteredDate": "2025-10-19",
+      "status": true,
+      "sold": 33,
+      "category": {
+        "categoryId": 3,
+        "categoryName": "Sách Văn học nghệ thuật"
+      }
+    },
+    {
+      "productId": 12,
+      "name": "Vang Bóng Một Thời",
+      "author": "Nguyễn Tuân",
+      "quantity": 90,
+      "price": 78000.0,
+      "discount": 0,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320013/products/wrtj0w8hmnfkixfm1nj4.jpg",
+      "description": "Tập truyện ngắn tài hoa tái hiện vẻ đẹp của một thời đã xa: thú uống trà, chơi chữ, những con người cuối mùa nho nhã. Văn phong Nguyễn Tuân độc đáo, đậm chất nghệ sĩ.",
+      "enteredDate": "2025-12-01",
+      "status": true,
+      "sold": 20,
+      "category": {
+        "categoryId": 3,
+        "categoryName": "Sách Văn học nghệ thuật"
+      }
+    },
+    {
+      "productId": 13,
+      "name": "Dế Mèn Phiêu Lưu Ký",
+      "author": "Tô Hoài",
+      "quantity": 160,
+      "price": 56000.0,
+      "discount": 10,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp",
+      "description": "Cuộc phiêu lưu của chú Dế Mèn qua thế giới loài vật — bài học về lòng dũng cảm, tình bạn và khát vọng. Tác phẩm gối đầu giường của bao thế hệ thiếu nhi Việt Nam.",
+      "enteredDate": "2026-02-14",
+      "status": true,
+      "sold": 64,
+      "category": {
+        "categoryId": 3,
+        "categoryName": "Sách Văn học nghệ thuật"
+      }
+    },
+    {
+      "productId": 14,
+      "name": "Việt Nam Sử Lược",
+      "author": "Trần Trọng Kim",
+      "quantity": 110,
+      "price": 125000.0,
+      "discount": 5,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319897/products/h3ualgdbw1wvjmb87thi.webp",
+      "description": "Bộ thông sử Việt Nam bằng chữ quốc ngữ đầu tiên, trình bày mạch lạc dòng chảy lịch sử dân tộc từ thời dựng nước đến cận đại. Công trình kinh điển của học giả Trần Trọng Kim.",
+      "enteredDate": "2025-11-03",
+      "status": true,
+      "sold": 47,
+      "category": {
+        "categoryId": 4,
+        "categoryName": "Sách Văn hóa xã hội – Lịch sử"
+      }
+    },
+    {
+      "productId": 15,
+      "name": "Lịch Sử Thế Giới Hiện Đại",
+      "author": "Nguyễn Anh Thái",
+      "quantity": 90,
+      "price": 158000.0,
+      "discount": 8,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319872/products/oscnv2zjikeyzoini0wl.webp",
+      "description": "Tổng quan các biến cố lớn định hình thế giới hiện đại: hai cuộc thế chiến, chiến tranh lạnh, toàn cầu hóa. Tài liệu nền tảng cho người yêu lịch sử.",
+      "enteredDate": "2026-01-08",
+      "status": true,
+      "sold": 24,
+      "category": {
+        "categoryId": 4,
+        "categoryName": "Sách Văn hóa xã hội – Lịch sử"
+      }
+    },
+    {
+      "productId": 16,
+      "name": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+      "author": "Andrew Hunt & David Thomas",
+      "quantity": 110,
+      "price": 175000.0,
+      "discount": 12,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319839/products/emvvfbsijvpo4ctg0c2t.jpg",
+      "description": "Những bài học thực dụng đưa bạn từ thợ code thành kỹ sư phần mềm bậc thầy: tư duy, công cụ, thói quen nghề nghiệp bền vững.",
+      "enteredDate": "2026-03-18",
+      "status": true,
+      "sold": 58,
+      "category": {
+        "categoryId": 2,
+        "categoryName": "Sách Khoa học công nghệ – Kinh tế"
+      }
+    },
+    {
+      "productId": 17,
+      "name": "AI Cơ Bản - Trí Tuệ Nhân Tạo Cho Mọi Người",
+      "author": "Phạm Huy Hoàng",
+      "quantity": 120,
+      "price": 132000.0,
+      "discount": 5,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319801/products/yrcackuuxv0bxefp3dah.jpg",
+      "description": "Giải thích trí tuệ nhân tạo, machine learning và deep learning bằng ngôn ngữ dễ hiểu, không nặng toán. Khởi đầu hoàn hảo cho người mới bước vào lĩnh vực AI.",
+      "enteredDate": "2026-04-02",
+      "status": true,
+      "sold": 45,
+      "category": {
+        "categoryId": 2,
+        "categoryName": "Sách Khoa học công nghệ – Kinh tế"
+      }
+    },
+    {
+      "productId": 18,
+      "name": "Blockchain Fundamentals - Nền Tảng Công Nghệ Chuỗi Khối",
+      "author": "Don Tapscott",
+      "quantity": 95,
+      "price": 145000.0,
+      "discount": 8,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319781/products/ptjxp427gba0zja7ivmv.jpg",
+      "description": "Khám phá cách blockchain định hình lại tài chính, kinh doanh và xã hội. Từ Bitcoin đến hợp đồng thông minh, một bức tranh toàn cảnh về cuộc cách mạng chuỗi khối.",
+      "enteredDate": "2026-02-22",
+      "status": true,
+      "sold": 31,
+      "category": {
+        "categoryId": 2,
+        "categoryName": "Sách Khoa học công nghệ – Kinh tế"
+      }
+    },
+    {
+      "productId": 19,
+      "name": "Khởi Nghiệp Tinh Gọn (The Lean Startup)",
+      "author": "Eric Ries",
+      "quantity": 130,
+      "price": 128000.0,
+      "discount": 15,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319755/products/zmbp1gauuup88piahxdy.webp",
+      "description": "Phương pháp xây dựng startup hiện đại: thử nghiệm nhanh, học hỏi từ khách hàng, xoay trục đúng lúc. Kim chỉ nam cho mọi nhà sáng lập.",
+      "enteredDate": "2026-03-25",
+      "status": true,
+      "sold": 72,
+      "category": {
+        "categoryId": 2,
+        "categoryName": "Sách Khoa học công nghệ – Kinh tế"
+      }
+    },
+    {
+      "productId": 20,
+      "name": "Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật",
+      "author": "Đinh Mạnh Tường",
+      "quantity": 130,
+      "price": 88000.0,
+      "discount": 5,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319743/products/x6ssqusalnhgpbux28uv.webp",
+      "description": "Giáo trình nền tảng về cấu trúc dữ liệu và thuật toán: danh sách, cây, đồ thị, sắp xếp, tìm kiếm. Kèm ví dụ minh họa cho sinh viên công nghệ thông tin.",
+      "enteredDate": "2025-09-15",
+      "status": true,
+      "sold": 38,
+      "category": {
+        "categoryId": 5,
+        "categoryName": "Sách Giáo trình"
+      }
+    },
+    {
+      "productId": 21,
+      "name": "Giáo Trình Mạng Máy Tính",
+      "author": "Nguyễn Thúc Hải",
+      "quantity": 110,
+      "price": 95000.0,
+      "discount": 0,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319730/products/zdawz28whpsziinrtoou.jpg",
+      "description": "Kiến thức cơ bản đến nâng cao về mạng máy tính: mô hình OSI, TCP/IP, định tuyến, bảo mật. Tài liệu chuẩn cho học phần mạng tại các trường đại học.",
+      "enteredDate": "2025-10-27",
+      "status": true,
+      "sold": 26,
+      "category": {
+        "categoryId": 5,
+        "categoryName": "Sách Giáo trình"
+      }
+    },
+    {
+      "productId": 22,
+      "name": "Giáo Trình Lập Trình Java",
+      "author": "Trần Đình Quế",
+      "quantity": 140,
+      "price": 102000.0,
+      "discount": 10,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319640/products/gz9tp9xsoujfkcglnftj.jpg",
+      "description": "Học lập trình Java từ căn bản: cú pháp, hướng đối tượng, collection, xử lý ngoại lệ, lập trình giao diện. Bài tập phong phú bám sát chương trình đào tạo.",
+      "enteredDate": "2026-01-30",
+      "status": true,
+      "sold": 44,
+      "category": {
+        "categoryId": 5,
+        "categoryName": "Sách Giáo trình"
+      }
+    },
+    {
+      "productId": 23,
+      "name": "Giáo Trình Cơ Sở Dữ Liệu",
+      "author": "Phạm Thị Anh Lê",
+      "quantity": 115,
+      "price": 98000.0,
+      "discount": 8,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319627/products/l9kqqextxr409kipn29q.jpg",
+      "description": "Nền tảng về mô hình quan hệ, thiết kế CSDL, chuẩn hóa và ngôn ngữ SQL. Giáo trình cốt lõi cho sinh viên ngành công nghệ thông tin và hệ thống thông tin.",
+      "enteredDate": "2025-12-12",
+      "status": true,
+      "sold": 29,
+      "category": {
+        "categoryId": 5,
+        "categoryName": "Sách Giáo trình"
+      }
+    },
+    {
+      "productId": 24,
+      "name": "Đại Việt Sử Ký Toàn Thư",
+      "author": "Ngô Sĩ Liên",
+      "quantity": 70,
+      "price": 245000.0,
+      "discount": 12,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319617/products/w5xkcnbvjrczijgz3btl.jpg",
+      "description": "Bộ quốc sử đồ sộ ghi chép lịch sử Đại Việt từ thời Hồng Bàng đến nhà Lê. Di sản sử học vô giá, nguồn tư liệu gốc cho mọi nghiên cứu về Việt Nam xưa.",
+      "enteredDate": "2025-08-22",
+      "status": true,
+      "sold": 19,
+      "category": {
+        "categoryId": 4,
+        "categoryName": "Sách Văn hóa xã hội – Lịch sử"
+      }
+    },
+    {
+      "productId": 25,
+      "name": "Súng, Vi Trùng Và Thép",
+      "author": "Jared Diamond",
+      "quantity": 95,
+      "price": 189000.0,
+      "discount": 15,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319604/products/unpfjvpmewvipu2lar2f.webp",
+      "description": "Tác phẩm đoạt giải Pulitzer lý giải vì sao các nền văn minh phát triển không đồng đều. Một cái nhìn liên ngành chấn động về số phận của các xã hội loài người.",
+      "enteredDate": "2026-02-05",
+      "status": true,
+      "sold": 35,
+      "category": {
+        "categoryId": 4,
+        "categoryName": "Sách Văn hóa xã hội – Lịch sử"
+      }
+    },
+    {
+      "productId": 26,
+      "name": "Sherlock Holmes Toàn Tập - Tập 1",
+      "author": "Arthur Conan Doyle",
+      "quantity": 110,
+      "price": 215000.0,
+      "discount": 10,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319589/products/ptjyfdchzgieobq2kuwg.webp",
+      "description": "Những vụ án ly kỳ của thám tử lừng danh phố Baker. Tài suy luận thiên tài của Sherlock Holmes đã làm say mê độc giả khắp thế giới hơn một thế kỷ qua.",
+      "enteredDate": "2026-01-15",
+      "status": true,
+      "sold": 51,
+      "category": {
+        "categoryId": 6,
+        "categoryName": "Sách Truyện, tiểu thuyết"
+      }
+    },
+    {
+      "productId": 27,
+      "name": "Bố Già (The Godfather)",
+      "author": "Mario Puzo",
+      "quantity": 100,
+      "price": 145000.0,
+      "discount": 8,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319572/products/xrmf9d1gfvlskbf6fmn3.jpg",
+      "description": "Kiệt tác về gia đình mafia Corleone — quyền lực, danh dự và máu. Một bức chân dung sắc lạnh về thế giới ngầm và bản chất con người. Tiểu thuyết bất hủ.",
+      "enteredDate": "2025-11-20",
+      "status": true,
+      "sold": 49,
+      "category": {
+        "categoryId": 6,
+        "categoryName": "Sách Truyện, tiểu thuyết"
+      }
+    },
+    {
+      "productId": 28,
+      "name": "Không Gia Đình",
+      "author": "Hector Malot",
+      "quantity": 95,
+      "price": 132000.0,
+      "discount": 5,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319541/products/rdyankdh2hrze9o9kisp.webp",
+      "description": "Hành trình của cậu bé Rémi lưu lạc khắp nước Pháp đi tìm gia đình. Câu chuyện cảm động về nghị lực, lòng nhân hậu và khát khao yêu thương.",
+      "enteredDate": "2025-10-08",
+      "status": true,
+      "sold": 27,
+      "category": {
+        "categoryId": 6,
+        "categoryName": "Sách Truyện, tiểu thuyết"
+      }
+    },
+    {
+      "productId": 29,
+      "name": "Cây Cam Ngọt Của Tôi",
+      "author": "José Mauro de Vasconcelos",
+      "quantity": 130,
+      "price": 108000.0,
+      "discount": 12,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319503/products/uxuhqd7outfqapixokei.webp",
+      "description": "Câu chuyện trong veo mà đau đáu về cậu bé Zezé nghèo khó và trí tưởng tượng diệu kỳ. Một cuốn sách lay động trái tim hàng triệu độc giả toàn cầu.",
+      "enteredDate": "2026-03-10",
+      "status": true,
+      "sold": 68,
+      "category": {
+        "categoryId": 6,
+        "categoryName": "Sách Truyện, tiểu thuyết"
+      }
+    },
+    {
+      "productId": 30,
+      "name": "Suối Nguồn (The Fountainhead)",
+      "author": "Ayn Rand",
+      "quantity": 85,
+      "price": 232000.0,
+      "discount": 15,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319491/products/y7kucofbwvrmdivs1fcs.jpg",
+      "description": "Tiểu thuyết tư tưởng về kiến trúc sư Howard Roark và cuộc chiến bảo vệ chính kiến trước đám đông. Bản tuyên ngôn về chủ nghĩa cá nhân và sự sáng tạo.",
+      "enteredDate": "2026-02-28",
+      "status": true,
+      "sold": 33,
+      "category": {
+        "categoryId": 6,
+        "categoryName": "Sách Truyện, tiểu thuyết"
+      }
+    },
+    {
+      "productId": 31,
+      "name": "Sức Mạnh Tiềm Thức",
+      "author": "Joseph Murphy",
+      "quantity": 140,
+      "price": 110000.0,
+      "discount": 10,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1686548250/products/mn4damiiyjtm4pbeslxu.jpg",
+      "description": "Khám phá nguồn sức mạnh vô tận ẩn trong tiềm thức và cách khai mở nó để thay đổi cuộc đời. Một trong những cuốn sách phát triển bản thân có ảnh hưởng nhất.",
+      "enteredDate": "2026-01-22",
+      "status": true,
+      "sold": 63,
+      "category": {
+        "categoryId": 7,
+        "categoryName": "Sách Tâm lý, tâm linh, tôn giáo"
+      }
+    },
+    {
+      "productId": 32,
+      "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+      "author": "Dale Carnegie",
+      "quantity": 130,
+      "price": 98000.0,
+      "discount": 8,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg",
+      "description": "Những phương pháp thiết thực để vượt qua lo âu, tìm lại bình an và sống trọn vẹn từng ngày. Kim chỉ nam cho một tâm hồn an nhiên giữa cuộc sống bộn bề.",
+      "enteredDate": "2025-12-18",
+      "status": true,
+      "sold": 57,
+      "category": {
+        "categoryId": 7,
+        "categoryName": "Sách Tâm lý, tâm linh, tôn giáo"
+      }
+    },
+    {
+      "productId": 33,
+      "name": "Hành Trình Về Phương Đông",
+      "author": "Baird T. Spalding",
+      "quantity": 110,
+      "price": 105000.0,
+      "discount": 5,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg",
+      "description": "Ghi chép về cuộc gặp gỡ các bậc hiền triết phương Đông và những huyền bí của tâm linh. Bản dịch của Nguyên Phong đưa người đọc vào thế giới minh triết sâu thẳm.",
+      "enteredDate": "2025-11-11",
+      "status": true,
+      "sold": 42,
+      "category": {
+        "categoryId": 7,
+        "categoryName": "Sách Tâm lý, tâm linh, tôn giáo"
+      }
+    },
+    {
+      "productId": 34,
+      "name": "Đường Xưa Mây Trắng",
+      "author": "Thích Nhất Hạnh",
+      "quantity": 100,
+      "price": 165000.0,
+      "discount": 12,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781254627/products/nofbu66aftcnqjh5mbbo.jpg",
+      "description": "Kể lại cuộc đời Đức Phật bằng giọng văn dung dị, thấm đẫm chất thơ và thiền vị. Một tác phẩm chạm đến trái tim của hàng triệu người trên khắp thế giới.",
+      "enteredDate": "2026-02-09",
+      "status": true,
+      "sold": 38,
+      "category": {
+        "categoryId": 7,
+        "categoryName": "Sách Tâm lý, tâm linh, tôn giáo"
+      }
+    },
+    {
+      "productId": 35,
+      "name": "Kho Tàng Truyện Cổ Tích Việt Nam",
+      "author": "Nguyễn Đổng Chi",
+      "quantity": 150,
+      "price": 135000.0,
+      "discount": 10,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1686548299/products/ldekbmnoaesji9jnzfcy.jpg",
+      "description": "Tuyển tập đồ sộ những câu chuyện cổ tích dân gian Việt Nam: Tấm Cám, Thạch Sanh, Cây tre trăm đốt... Gìn giữ hồn cốt văn hóa dân tộc cho thế hệ nhỏ.",
+      "enteredDate": "2025-10-30",
+      "status": true,
+      "sold": 44,
+      "category": {
+        "categoryId": 8,
+        "categoryName": "Sách thiếu nhi"
+      }
+    },
+    {
+      "productId": 36,
+      "name": "10 Vạn Câu Hỏi Vì Sao",
+      "author": "Nhiều Tác Giả",
+      "quantity": 170,
+      "price": 89000.0,
+      "discount": 15,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1686548402/products/byvkzoeemkmotbeinw8d.jpg",
+      "description": "Bộ sách khoa học giải đáp hàng nghìn thắc mắc của trẻ về thế giới quanh ta: thiên nhiên, vũ trụ, cơ thể, công nghệ. Nuôi dưỡng trí tò mò và niềm yêu khám phá.",
+      "enteredDate": "2026-01-05",
+      "status": true,
+      "sold": 71,
+      "category": {
+        "categoryId": 8,
+        "categoryName": "Sách thiếu nhi"
+      }
+    },
+    {
+      "productId": 37,
+      "name": "Hoàng Tử Bé",
+      "author": "Antoine de Saint-Exupéry",
+      "quantity": 160,
+      "price": 76000.0,
+      "discount": 8,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg",
+      "description": "Câu chuyện trong trẻo và sâu sắc về cậu hoàng tử nhỏ đến từ tiểu hành tinh B612. Tác phẩm văn học được yêu thích nhất nước Pháp, dành cho mọi lứa tuổi.",
+      "enteredDate": "2025-12-25",
+      "status": true,
+      "sold": 59,
+      "category": {
+        "categoryId": 8,
+        "categoryName": "Sách thiếu nhi"
+      }
+    },
+    {
+      "productId": 38,
+      "name": "Totto-chan Bên Cửa Sổ",
+      "author": "Kuroyanagi Tetsuko",
+      "quantity": 140,
+      "price": 92000.0,
+      "discount": 10,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781254810/products/zn5psmwy3f8txxdfnet2.jpg",
+      "description": "Hồi ức cảm động về cô bé Totto-chan và ngôi trường Tomoe đặc biệt. Một quan niệm giáo dục đầy nhân văn khiến cả trẻ em lẫn người lớn yêu thích.",
+      "enteredDate": "2026-02-17",
+      "status": true,
+      "sold": 46,
+      "category": {
+        "categoryId": 8,
+        "categoryName": "Sách thiếu nhi"
+      }
+    },
+    {
+      "productId": 39,
+      "name": "Chí Phèo",
+      "author": "Nam Cao",
+      "quantity": 120,
+      "price": 55000.0,
+      "discount": 10,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781254605/products/tjgtuub4otjky9gm7c6q.jpg",
+      "description": "Truyện ngắn hiện thực đỉnh cao về bi kịch bị tha hóa của người nông dân. Tiếng kêu Ai cho tao lương thiện vang vọng mãi trong văn học Việt Nam.",
+      "enteredDate": "2025-09-28",
+      "status": true,
+      "sold": 50,
+      "category": {
+        "categoryId": 3,
+        "categoryName": "Sách Văn học nghệ thuật"
+      }
+    },
+    {
+      "productId": 40,
+      "name": "Tắt Đèn",
+      "author": "Ngô Tất Tố",
+      "quantity": 95,
+      "price": 60000.0,
+      "discount": 8,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255547/products/qlas6inf9k7gnsak8r8d.webp",
+      "description": "Bức tranh chân thực về số phận người nông dân dưới ách sưu thuế qua hình tượng chị Dậu. Một bản án đanh thép với xã hội thực dân phong kiến.",
+      "enteredDate": "2025-11-06",
+      "status": true,
+      "sold": 30,
+      "category": {
+        "categoryId": 3,
+        "categoryName": "Sách Văn học nghệ thuật"
+      }
+    },
+    {
+      "productId": 41,
+      "name": "Những Người Khốn Khổ",
+      "author": "Victor Hugo",
+      "quantity": 85,
+      "price": 218000.0,
+      "discount": 15,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255531/products/yusyyulbk20nhvvtdun7.jpg",
+      "description": "Đại tiểu thuyết về Jean Valjean và hành trình cứu rỗi giữa nước Pháp đầy biến động. Bản hùng ca bất hủ về lòng nhân ái, công lý và phẩm giá con người.",
+      "enteredDate": "2026-01-12",
+      "status": true,
+      "sold": 41,
+      "category": {
+        "categoryId": 3,
+        "categoryName": "Sách Văn học nghệ thuật"
+      }
+    },
+    {
+      "productId": 42,
+      "name": "Từ Tốt Đến Vĩ Đại (Good to Great)",
+      "author": "Jim Collins",
+      "quantity": 125,
+      "price": 138000.0,
+      "discount": 20,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255437/products/j3oaptaxefhhvvm4a3vk.webp",
+      "description": "Nghiên cứu vì sao một số công ty bứt phá từ tốt lên vĩ đại trong khi số khác thì không. Những nguyên lý lãnh đạo và quản trị đã được kiểm chứng bằng dữ liệu.",
+      "enteredDate": "2026-03-05",
+      "status": true,
+      "sold": 74,
+      "category": {
+        "categoryId": 2,
+        "categoryName": "Sách Khoa học công nghệ – Kinh tế"
+      }
+    },
+    {
+      "productId": 43,
+      "name": "Nhà Đầu Tư Thông Minh",
+      "author": "Benjamin Graham",
+      "quantity": 100,
+      "price": 198000.0,
+      "discount": 10,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255428/products/uvnrlqxxeel4r1rf8dw7.webp",
+      "description": "Kinh thánh của đầu tư giá trị, cuốn sách gối đầu giường của Warren Buffett. Tư duy kỷ luật giúp bạn đầu tư an toàn và sinh lời bền vững.",
+      "enteredDate": "2026-02-26",
+      "status": true,
+      "sold": 55,
+      "category": {
+        "categoryId": 2,
+        "categoryName": "Sách Khoa học công nghệ – Kinh tế"
+      }
+    },
+    {
+      "productId": 44,
+      "name": "Giáo Trình Nhập Môn Trí Tuệ Nhân Tạo",
+      "author": "Đinh Mạnh Tường",
+      "quantity": 100,
+      "price": 112000.0,
+      "discount": 8,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255413/products/f77nmz9iq7iq1rundyaf.webp",
+      "description": "Giới thiệu các khái niệm cốt lõi của trí tuệ nhân tạo: tìm kiếm, biểu diễn tri thức, suy diễn, học máy. Cầu nối lý thuyết và ứng dụng cho sinh viên.",
+      "enteredDate": "2026-01-18",
+      "status": true,
+      "sold": 22,
+      "category": {
+        "categoryId": 5,
+        "categoryName": "Sách Giáo trình"
+      }
+    },
+    {
+      "productId": 45,
+      "name": "Giáo Trình Kinh Tế Vi Mô",
+      "author": "Nguyễn Văn Công",
+      "quantity": 120,
+      "price": 99000.0,
+      "discount": 5,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255403/products/cey5c3ocjrjxm3eecig6.webp",
+      "description": "Các nguyên lý cung cầu, hành vi người tiêu dùng, lý thuyết sản xuất và cấu trúc thị trường. Giáo trình chuẩn cho khối ngành kinh tế và quản trị kinh doanh.",
+      "enteredDate": "2025-12-05",
+      "status": true,
+      "sold": 31,
+      "category": {
+        "categoryId": 5,
+        "categoryName": "Sách Giáo trình"
+      }
+    },
+    {
+      "productId": 46,
+      "name": "Homo Deus: Lược Sử Tương Lai",
+      "author": "Yuval Noah Harari",
+      "quantity": 100,
+      "price": 195000.0,
+      "discount": 12,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255184/products/yvfmx6itw0krxyr4yipk.jpg",
+      "description": "Phần tiếp nối của Sapiens, khám phá tương lai loài người trong kỷ nguyên công nghệ sinh học và trí tuệ nhân tạo. Những câu hỏi lớn về vận mệnh nhân loại.",
+      "enteredDate": "2026-03-14",
+      "status": true,
+      "sold": 43,
+      "category": {
+        "categoryId": 4,
+        "categoryName": "Sách Văn hóa xã hội – Lịch sử"
+      }
+    },
+    {
+      "productId": 47,
+      "name": "Kinh Tế Học Hài Hước (Freakonomics)",
+      "author": "Steven D. Levitt & Stephen J. Dubner",
+      "quantity": 105,
+      "price": 142000.0,
+      "discount": 12,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255169/products/t4ntwq8lymkoayiropbp.webp",
+      "description": "Góc nhìn kinh tế học bất ngờ và dí dỏm về những câu hỏi đời thường. Khám phá mặt ẩn giấu của mọi thứ qua dữ liệu và lý lẽ sắc bén.",
+      "enteredDate": "2026-02-20",
+      "status": true,
+      "sold": 39,
+      "category": {
+        "categoryId": 2,
+        "categoryName": "Sách Khoa học công nghệ – Kinh tế"
+      }
+    },
+    {
+      "productId": 48,
+      "name": "Thám Tử Lừng Danh Conan - Tập 1",
+      "author": "Gosho Aoyama",
+      "quantity": 250,
+      "price": 25000.0,
+      "discount": 5,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp",
+      "description": "Thám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.",
+      "enteredDate": "2026-03-22",
+      "status": true,
+      "sold": 78,
+      "category": {
+        "categoryId": 8,
+        "categoryName": "Sách thiếu nhi"
+      }
+    },
+    {
+      "productId": 49,
+      "name": "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
+      "author": "Nguyễn Nhật Ánh",
+      "quantity": 160,
+      "price": 88000.0,
+      "discount": 10,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781254725/products/tcnifywbraeqs4pm0r10.jpg",
+      "description": "Câu chuyện tuổi thơ trong trẻo nơi làng quê nghèo với tình anh em, tình bạn và những rung động đầu đời. Tác phẩm best-seller của Nguyễn Nhật Ánh đã lên màn ảnh.",
+      "enteredDate": "2026-02-15",
+      "status": true,
+      "sold": 67,
+      "category": {
+        "categoryId": 3,
+        "categoryName": "Sách Văn học nghệ thuật"
+      }
+    },
+    {
+      "productId": 50,
+      "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+      "author": "Nguyễn Nhật Ánh",
+      "quantity": 150,
+      "price": 78000.0,
+      "discount": 8,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp",
+      "description": "Tấm vé đưa người đọc trở về thế giới hồn nhiên của tuổi thơ với bao trò nghịch ngợm đáng yêu. Cuốn sách gối đầu giường của cả trẻ em và người lớn.",
+      "enteredDate": "2026-01-26",
+      "status": true,
+      "sold": 58,
+      "category": {
+        "categoryId": 3,
+        "categoryName": "Sách Văn học nghệ thuật"
+      }
+    },
+    {
+      "productId": 51,
+      "name": "Doraemon - Tập 1",
+      "author": "Fujiko F. Fujio",
+      "quantity": 300,
+      "price": 22000.0,
+      "discount": 10,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp",
+      "description": "Chú mèo máy Doraemon từ tương lai cùng những bảo bối thần kỳ và cậu bạn Nobita. Bộ truyện tranh tuổi thơ thân thương của bao thế hệ thiếu nhi.",
+      "enteredDate": "2026-05-12",
+      "status": true,
+      "sold": 105,
+      "category": {
+        "categoryId": 8,
+        "categoryName": "Sách thiếu nhi"
+      }
+    },
+    {
+      "productId": 52,
+      "name": "Harry Potter Và Hòn Đá Phù Thủy",
+      "author": "J.K. Rowling",
+      "quantity": 200,
+      "price": 135000.0,
+      "discount": 12,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781254644/products/o7nbnyebfglziwxbhzm4.jpg",
+      "description": "Khởi đầu của loạt truyện phù thủy huyền thoại. Cậu bé Harry bước vào trường Hogwarts và khám phá thế giới phép thuật kỳ diệu. Hiện tượng xuất bản toàn cầu.",
+      "enteredDate": "2026-05-20",
+      "status": true,
+      "sold": 120,
+      "category": {
+        "categoryId": 6,
+        "categoryName": "Sách Truyện, tiểu thuyết"
+      }
+    },
+    {
+      "productId": 53,
+      "name": "Mắt Biếc",
+      "author": "Nguyễn Nhật Ánh",
+      "quantity": 180,
+      "price": 95000.0,
+      "discount": 10,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781254910/products/ytjtlnudjncbcb776ies.jpg",
+      "description": "Chuyện tình day dứt của Ngạn dành cho Hà Lan từ làng Đo Đo đến phố thị. Một trong những tác phẩm lãng mạn được yêu thích nhất của Nguyễn Nhật Ánh.",
+      "enteredDate": "2026-05-28",
+      "status": true,
+      "sold": 98,
+      "category": {
+        "categoryId": 3,
+        "categoryName": "Sách Văn học nghệ thuật"
+      }
+    },
+    {
+      "productId": 54,
+      "name": "Muôn Kiếp Nhân Sinh",
+      "author": "Nguyên Phong",
+      "quantity": 190,
+      "price": 168000.0,
+      "discount": 8,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319150/products/spxjuedmhj78dovdcwfn.webp",
+      "description": "Những câu chuyện về luân hồi, nhân quả và hành trình của linh hồn qua muôn kiếp. Tác phẩm tâm linh ăn khách bậc nhất, gợi mở suy ngẫm về lẽ sống.",
+      "enteredDate": "2026-06-01",
+      "status": true,
+      "sold": 112,
+      "category": {
+        "categoryId": 7,
+        "categoryName": "Sách Tâm lý, tâm linh, tôn giáo"
+      }
+    },
+    {
+      "productId": 55,
+      "name": "Tư Duy Nhanh Và Chậm",
+      "author": "Daniel Kahneman",
+      "quantity": 200,
+      "price": 178000.0,
+      "discount": 15,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781254927/products/o9xsf2ve0mmsrg2wkgmf.webp",
+      "description": "Công trình tâm lý học đoạt giải Nobel về hai hệ thống tư duy chi phối mọi quyết định của con người. Cuốn sách thay đổi cách bạn hiểu về lý trí và sai lầm.",
+      "enteredDate": "2026-06-03",
+      "status": true,
+      "sold": 134,
+      "category": {
+        "categoryId": 7,
+        "categoryName": "Sách Tâm lý, tâm linh, tôn giáo"
+      }
+    },
+    {
+      "productId": 56,
+      "name": "Sapiens: Lược Sử Loài Người",
+      "author": "Yuval Noah Harari",
+      "quantity": 180,
+      "price": 189000.0,
+      "discount": 15,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781252589/products/cdcgqyejh8w71vtetrz0.webp",
+      "description": "Hành trình 70.000 năm của loài người từ vượn người đến chúa tể địa cầu. Cuốn sách bán chạy toàn cầu thay đổi cách ta nhìn nhận về chính mình và lịch sử.",
+      "enteredDate": "2026-06-05",
+      "status": true,
+      "sold": 145,
+      "category": {
+        "categoryId": 4,
+        "categoryName": "Sách Văn hóa xã hội – Lịch sử"
+      }
+    },
+    {
+      "productId": 57,
+      "name": "Đắc Nhân Tâm",
+      "author": "Dale Carnegie",
+      "quantity": 220,
+      "price": 86000.0,
+      "discount": 18,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781252580/products/lo4gmiaypwfzes99fouo.webp",
+      "description": "Cuốn sách về nghệ thuật đối nhân xử thế bán chạy nhất mọi thời đại. Những nguyên tắc vàng giúp bạn chinh phục lòng người và thành công trong giao tiếp.",
+      "enteredDate": "2026-06-08",
+      "status": true,
+      "sold": 156,
+      "category": {
+        "categoryId": 6,
+        "categoryName": "Sách Truyện, tiểu thuyết"
+      }
+    },
+    {
+      "productId": 58,
+      "name": "Nhà Giả Kim",
+      "author": "Paulo Coelho",
+      "quantity": 230,
+      "price": 79000.0,
+      "discount": 20,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781252411/products/zdyuok0htjowbzf7lwpx.jpg",
+      "description": "Hành trình của cậu chăn cừu Santiago đi tìm kho báu và khám phá vận mệnh đời mình. Câu chuyện truyền cảm hứng được dịch ra hơn 80 thứ tiếng.",
+      "enteredDate": "2026-06-10",
+      "status": true,
+      "sold": 168,
+      "category": {
+        "categoryId": 6,
+        "categoryName": "Sách Truyện, tiểu thuyết"
+      }
+    }
+  ],
+  "time": "2026-09-17T23:19:08.8091539+07:00"
+}

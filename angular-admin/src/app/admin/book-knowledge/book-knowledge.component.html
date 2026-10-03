@@ -1,0 +1,30 @@
+<button type="button" class="btn btn-sm btn-outline-primary" (click)="open(editor)" [disabled]="busy">Hồ sơ AI</button>
+<ng-template #editor let-modal>
+  <div class="modal-header">
+    <div><h4 class="modal-title">Hồ sơ tri thức · Sách #{{ id }}</h4><small>Chỉ nội dung được duyệt mới dùng để tư vấn.</small></div>
+    <button type="button" class="close" aria-label="Đóng" (click)="modal.dismiss()"><span aria-hidden="true">&times;</span></button>
+  </div>
+  <div class="modal-body" *ngIf="profile as p">
+    <p class="state">{{ p.published ? 'Đã xuất bản' : 'Bản nháp' }} · {{ p.semanticReady ? 'Đã lập chỉ mục ngữ nghĩa' : 'Chưa có chỉ mục ngữ nghĩa' }}</p>
+    <button type="button" class="btn btn-outline-secondary btn-sm mb-3" (click)="suggest()" [disabled]="busy">Gợi ý từ AI</button>
+    <div class="form-group"><label>Tóm tắt đã kiểm chứng *</label><textarea class="form-control" rows="5" [(ngModel)]="p.summary"></textarea></div>
+    <div class="form-group"><label>Chủ đề * <small>(phân cách bằng dấu phẩy hoặc xuống dòng)</small></label><textarea class="form-control" rows="2" [(ngModel)]="topicsText"></textarea></div>
+    <div class="row">
+      <div class="col-md-6 form-group"><label>Độc giả phù hợp</label><input class="form-control" [(ngModel)]="p.audience"></div>
+      <div class="col-md-6 form-group"><label>Mức độ đọc</label><input class="form-control" [(ngModel)]="p.readingLevel"></div>
+      <div class="col-md-6 form-group"><label>Văn phong / cách tiếp cận</label><input class="form-control" [(ngModel)]="p.readingStyle"></div>
+      <div class="col-md-6 form-group"><label>Mục tiêu học / đọc</label><input class="form-control" [(ngModel)]="p.learningGoal"></div>
+      <div class="col-md-6 form-group"><label>Ngôn ngữ</label><input class="form-control" [(ngModel)]="p.language"></div>
+      <div class="col-md-6 form-group"><label>Nhà xuất bản</label><input class="form-control" [(ngModel)]="p.publisher"></div>
+      <div class="col-md-4 form-group"><label>Năm xuất bản</label><input type="number" class="form-control" [(ngModel)]="p.publicationYear"></div>
+      <div class="col-md-4 form-group"><label>Số trang</label><input type="number" class="form-control" [(ngModel)]="p.pageCount"></div>
+      <div class="col-md-4 form-group"><label>ISBN</label><input class="form-control" [(ngModel)]="p.isbn"></div>
+    </div>
+    <div class="form-group"><label>Quan hệ sách</label><textarea class="form-control" rows="3" [(ngModel)]="relationsText" placeholder="SAME_SERIES | 42 | Cùng bộ sách"></textarea><small>Mỗi dòng: SAME_SERIES, NEXT_VOLUME hoặc READ_BEFORE | mã sách | căn cứ.</small></div>
+    <div class="form-group"><label>Nguồn / ghi chú biên tập</label><textarea class="form-control" rows="2" [(ngModel)]="p.sourceNote"></textarea></div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-light" (click)="modal.dismiss()">Đóng</button>
+    <button type="button" class="btn btn-primary" [disabled]="busy" (click)="publish()">{{ busy ? 'Đang lưu hồ sơ…' : 'Duyệt và xuất bản' }}</button>
+  </div>
+</ng-template>

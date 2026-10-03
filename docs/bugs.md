@@ -5,16 +5,18 @@ Tài liệu này chỉ giữ vấn đề còn hiệu lực. Các mô tả protot
 ## Ưu tiên cao
 
 1. **Angular 12 đã cũ.** Admin có dependency tree legacy và cảnh báo `npm audit`; cần nâng cấp theo từng major, không dùng `npm audit fix --force`.
-2. **Test coverage còn mỏng.** Backend có smoke/security và service test; storefront chạy được 52 test, admin chạy được 38 smoke test, nhưng cả hai vẫn thiếu nhiều test nghiệp vụ sâu.
-3. **Dữ liệu cá nhân còn theo thiết bị.** Địa chỉ, wishlist và avatar chưa đồng bộ server; giỏ đã đồng bộ theo tài khoản.
+2. **Test coverage còn mỏng ở storefront/admin.** Backend có kiểm thử hồi quy chatbot; storefront/admin phần lớn mới dừng ở compile/build. Ngày 02/10/2026, `tsc -p tsconfig.spec.json --noEmit` thất bại ở spec login/search tham chiếu thuộc tính và handler đã bỏ (`showPassword`, `totalPages`, `pagedProducts`, ...). Một số smoke spec cũ cũng thiếu `HttpClientTestingModule` hoặc service mock. Build ứng dụng storefront vẫn thành công; cần cập nhật riêng các spec này theo giao diện hiện tại.
+3. **Cart chưa đồng bộ đa thiết bị.** Cart local chỉ được đẩy lên backend lúc checkout.
 
 ## Ưu tiên trung bình
 
-4. Storefront còn dùng nhiều `any`, chưa có model/domain types dùng chung.
-5. Tất cả page storefront đang eager-loaded; bundle có thể giảm bằng feature modules/lazy routes.
-6. Contact chỉ mở email client, chưa có ticket API hoặc theo dõi trạng thái.
-7. Avatar, address, wishlist và search history còn device-local.
-8. VietQR hiện đối soát thủ công trong admin; muốn tự động cần dịch vụ webhook ngân hàng hoặc payOS/Open Banking.
+4. `buyNowItem` là state in-memory; cần bảo đảm luôn clear khi user rời checkout giữa chừng.
+5. Storefront còn dùng nhiều `any`, chưa có model/domain types dùng chung.
+6. Tất cả page storefront đang eager-loaded; bundle có thể giảm bằng feature modules/lazy routes.
+7. Contact chỉ mở email client, chưa có ticket API hoặc theo dõi trạng thái.
+8. Avatar, address, wishlist và search history còn device-local.
+9. Backend đang dùng Spring Boot 2.6 và `open-in-view`/SQL logging cần cấu hình rõ theo profile production.
+10. VietQR hiện đối soát thủ công trong admin; muốn tự động cần dịch vụ webhook ngân hàng hoặc payOS/Open Banking.
 
 ## Đã xử lý gần đây
 
@@ -29,9 +31,3 @@ Tài liệu này chỉ giữ vấn đề còn hiệu lực. Các mô tả protot
 - COD, VietQR, VNPay Sandbox và MoMo Test đã có luồng server-side; chữ ký và số tiền callback được xác thực trước khi đổi trạng thái.
 - Footer, 404, mobile menu, loading/error/empty state và accessibility chính đã được củng cố.
 - Chatbot đã gom rule về backend, có intent eval tiếng Việt, follow-up context, SSE/fallback transport, action xác nhận thêm giỏ, tra đơn theo principal, feedback và metrics admin không lưu nội dung chat.
-- Backend đã tách profile dev/prod; production không có secret/database mặc định, tắt SQL log và `open-in-view`.
-- CI build/test storefront, backend và admin; test backend dùng MySQL 8 trên pull request/push `main`.
-- State mua ngay được xóa khi rời checkout, kể cả khi chưa hoàn tất đơn.
-
-- 11/09/2026: giỏ server theo JWT có revision, migration một lần, báo xung đột; checkout dùng quote/confirm chung với chat, giữ tồn kho và chống xác nhận trùng; hủy đơn COD hợp lệ hoàn tồn kho.
-- Đăng ký không còn ghi JWT dài vào cột token dành cho đặt lại mật khẩu.

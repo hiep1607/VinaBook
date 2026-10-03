@@ -61,6 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		http.authorizeRequests()
+				.antMatchers(HttpMethod.GET, "/api/products/bestseller-admin").hasRole("ADMIN")
 
 				// ---- 1) CÔNG KHAI — duyệt catalog, đăng nhập/đăng ký, quên mật khẩu ----
 				.antMatchers(HttpMethod.GET, "/api/products/*/preview")
@@ -71,7 +72,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll()
 				.antMatchers(HttpMethod.GET, "/api/categories", "/api/categories/*").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/homepage").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/store-knowledge").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/chat/status").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/chat/conversation").permitAll()
+				.antMatchers(HttpMethod.DELETE, "/api/chat/conversation").permitAll()
 				.antMatchers("/api/chat/checkout/**").hasRole("USER")
 				.antMatchers(HttpMethod.POST, "/api/chat").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/chat/stream", "/api/chat/feedback").permitAll()
@@ -107,10 +111,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 				// ---- 4) CHỈ ADMIN — quản trị catalog, đơn hàng, khách hàng, thống kê ----
 				.antMatchers("/api/admin/products/**").hasRole("ADMIN")
+				.antMatchers("/api/admin/products", "/api/admin/books/**").hasRole("ADMIN")
+				.antMatchers("/api/admin/store-knowledge/**", "/api/admin/store-knowledge").hasRole("ADMIN")
 				.antMatchers(HttpMethod.POST, "/api/products").hasRole("ADMIN")
 				.antMatchers(HttpMethod.PUT, "/api/products/*").hasRole("ADMIN")
 				.antMatchers(HttpMethod.DELETE, "/api/products/*").hasRole("ADMIN")
-				.antMatchers(HttpMethod.GET, "/api/products/bestseller-admin").hasRole("ADMIN")
 				.antMatchers(HttpMethod.POST, "/api/categories").hasRole("ADMIN")
 				.antMatchers(HttpMethod.PUT, "/api/categories/*").hasRole("ADMIN")
 				.antMatchers(HttpMethod.DELETE, "/api/categories/*").hasRole("ADMIN")

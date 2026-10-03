@@ -1,0 +1,1166 @@
+[
+  {
+    "id": "discovery_more-1",
+    "question": "Gợi ý vài cuốn sách trinh thám đang bán nhé.",
+    "status": 200,
+    "elapsedMs": 14078,
+    "response": {
+      "answer": "Bạn có thể tham khảo hai phong cách kể chuyện khác nhau trong thể loại trinh thám dưới đây để chọn cuốn phù hợp với sở thích.\n\nMình chọn được 2 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nPhù hợp nếu bạn yêu thích thể loại trinh thám qua nét vẽ truyện tranh với các vụ án được phá giải bởi nhân vật chính trong hình hài học sinh tiểu học.\n\n• “Sherlock Holmes Toàn Tập - Tập 1” — 193.500đ · Arthur Conan Doyle · Chưa có đánh giá\nLựa chọn lý tưởng cho độc giả muốn tiếp cận những vụ án mang tính cổ điển, tập trung vào kỹ năng suy luận sắc bén của thám tử trong văn học.\n\nNếu bạn muốn tìm thêm truyện về phá án theo phong cách suy luận hay hành động kịch tính hơn, hãy cho mình biết nhé.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 48,
+          "name": "Thám Tử Lừng Danh Conan - Tập 1",
+          "author": "Gosho Aoyama",
+          "category": "Sách thiếu nhi",
+          "price": 23750,
+          "oldPrice": 25000.0,
+          "discount": 5,
+          "quantity": 250,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+        },
+        {
+          "id": 26,
+          "name": "Sherlock Holmes Toàn Tập - Tập 1",
+          "author": "Arthur Conan Doyle",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 193500,
+          "oldPrice": 215000.0,
+          "discount": 10,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319589/products/ptjyfdchzgieobq2kuwg.webp"
+        }
+      ],
+      "chips": [],
+      "messageId": "9bddfedf-b464-4a71-b590-b835552eda0e",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 48,
+          "route": "/product/48",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 48,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 26,
+          "route": "/product/26",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 26,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      }
+    }
+  },
+  {
+    "id": "discovery_more-2",
+    "question": "Cuốn đầu tiên còn bao nhiêu bản?",
+    "status": 200,
+    "elapsedMs": 5547,
+    "response": {
+      "answer": "Về “Thám Tử Lừng Danh Conan - Tập 1”, mình có những thông tin này:\nĐang bán, còn 250 bản theo tồn kho hiện tại.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 48,
+          "name": "Thám Tử Lừng Danh Conan - Tập 1",
+          "author": "Gosho Aoyama",
+          "category": "Sách thiếu nhi",
+          "price": 23750,
+          "oldPrice": 25000.0,
+          "discount": 5,
+          "quantity": 250,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+        }
+      ],
+      "chips": [],
+      "messageId": "6c50295a-0d00-40bc-939c-6476de14ea93",
+      "intent": "PRODUCT_INFO",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 48,
+          "route": "/product/48",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 48,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      }
+    }
+  },
+  {
+    "id": "discovery_more-3",
+    "question": "Phí giao hàng là bao nhiêu?",
+    "status": 200,
+    "elapsedMs": 2094,
+    "response": {
+      "answer": "Phí giao hàng 20.000đ, miễn phí khi tiền sách từ 300.000đ. Thời gian giao dự kiến 2–4 ngày làm việc.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [],
+      "chips": [],
+      "messageId": "6b1b3445-644d-46f7-bb25-f20aa9fdc631",
+      "intent": "POLICY",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {
+        "tool": "getPolicy",
+        "status": "COMPLETED"
+      }
+    }
+  },
+  {
+    "id": "discovery_more-4",
+    "question": "Còn cuốn nào khác cùng chủ đề không?",
+    "status": 200,
+    "elapsedMs": 2594,
+    "response": {
+      "answer": "Mình đã kiểm tra lại các sách đang bán và loại những cuốn đã giới thiệu. Hiện chưa có cuốn nào khác đúng chủ đề hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn. Nếu muốn đổi hướng đọc, bạn cho mình một chủ đề khác nhé.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [],
+      "chips": [],
+      "messageId": "50a91e1c-cf68-4caa-aafc-ba07fa7fae2f",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "NEEDS_INPUT"
+      }
+    }
+  },
+  {
+    "id": "discovery_more-5",
+    "question": "Còn cuốn nào khác cùng chủ đề nữa không?",
+    "status": 200,
+    "elapsedMs": 2546,
+    "response": {
+      "answer": "Mình đã kiểm tra lại các sách đang bán và loại những cuốn đã giới thiệu. Hiện chưa có cuốn nào khác đúng chủ đề hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn. Nếu muốn đổi hướng đọc, bạn cho mình một chủ đề khác nhé.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [],
+      "chips": [],
+      "messageId": "516a353b-8955-4c5c-9c6f-6ca7cedd9ed9",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "NEEDS_INPUT"
+      }
+    }
+  },
+  {
+    "id": "discovery_more-6",
+    "question": "Còn cuốn nào khác không?",
+    "status": 200,
+    "elapsedMs": 2594,
+    "response": {
+      "answer": "Mình đã kiểm tra lại các sách đang bán và loại những cuốn đã giới thiệu. Hiện chưa có cuốn nào khác đúng chủ đề hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn. Nếu muốn đổi hướng đọc, bạn cho mình một chủ đề khác nhé.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [],
+      "chips": [],
+      "messageId": "ea7cfe4c-64c3-4dc9-9994-0e8a436e8059",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "NEEDS_INPUT"
+      }
+    }
+  },
+  {
+    "id": "discovery_six-1",
+    "question": "Mình muốn 6 cuốn sách trinh thám. Nếu không đủ, có thể gợi ý sách gần chủ đề nhưng hãy nói rõ.",
+    "status": 200,
+    "elapsedMs": 10953,
+    "response": {
+      "answer": "Bạn muốn 6 cuốn; mình tìm được 2 cuốn đúng yêu cầu. Tổng cộng có 2 lựa chọn; hiện chưa đủ 6 cuốn khác nhau trong các điều kiện này.\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nĐây là tác phẩm tập trung vào hành trình giải quyết các vụ án hóc búa của nhân vật chính trong bối cảnh trinh thám.\n\n• “Sherlock Holmes Toàn Tập - Tập 1” — 193.500đ · Arthur Conan Doyle · Chưa có đánh giá\nTác phẩm này xoay quanh các vụ án ly kỳ và khả năng suy luận đặc trưng, phù hợp với nhu cầu tìm đọc thể loại trinh thám.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 48,
+          "name": "Thám Tử Lừng Danh Conan - Tập 1",
+          "author": "Gosho Aoyama",
+          "category": "Sách thiếu nhi",
+          "price": 23750,
+          "oldPrice": 25000.0,
+          "discount": 5,
+          "quantity": 250,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+        },
+        {
+          "id": 26,
+          "name": "Sherlock Holmes Toàn Tập - Tập 1",
+          "author": "Arthur Conan Doyle",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 193500,
+          "oldPrice": 215000.0,
+          "discount": 10,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319589/products/ptjyfdchzgieobq2kuwg.webp"
+        }
+      ],
+      "chips": [],
+      "messageId": "52084e8d-18d1-4ea9-8f72-7e6cbcf6bf33",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 48,
+          "route": "/product/48",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 48,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 26,
+          "route": "/product/26",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 26,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      }
+    }
+  },
+  {
+    "id": "discovery_six-2",
+    "question": "Cho mình thêm 6 cuốn khác cùng chủ đề nhé.",
+    "status": 200,
+    "elapsedMs": 2484,
+    "response": {
+      "answer": "Mình đã kiểm tra lại các sách đang bán và loại những cuốn đã giới thiệu. Hiện chưa có cuốn nào khác đúng chủ đề hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn. Vì vậy mình chưa thể giới thiệu đủ 6 cuốn khác nhau. Nếu muốn đổi hướng đọc, bạn cho mình một chủ đề khác nhé.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [],
+      "chips": [],
+      "messageId": "5b965b17-b207-45b3-a5ff-4d2536fe7530",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "NEEDS_INPUT"
+      }
+    }
+  },
+  {
+    "id": "discovery_exact_only-1",
+    "question": "Cho mình 6 cuốn trinh thám, chỉ đúng thể loại thôi, không lấy sách gần chủ đề.",
+    "status": 200,
+    "elapsedMs": 15765,
+    "response": {
+      "answer": "Bạn muốn 6 cuốn; mình tìm được 2 cuốn đúng yêu cầu. Tổng cộng có 2 lựa chọn; hiện chưa đủ 6 cuốn khác nhau trong các điều kiện này.\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nNội dung xoay quanh quá trình giải quyết các vụ án hóc búa, phù hợp với yêu cầu về thể loại trinh thám.\n\n• “Sherlock Holmes Toàn Tập - Tập 1” — 193.500đ · Arthur Conan Doyle · Chưa có đánh giá\nCốt truyện tập trung vào việc phá giải các vụ án ly kỳ thông qua tài suy luận, đúng với đặc trưng của dòng tiểu thuyết trinh thám.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 48,
+          "name": "Thám Tử Lừng Danh Conan - Tập 1",
+          "author": "Gosho Aoyama",
+          "category": "Sách thiếu nhi",
+          "price": 23750,
+          "oldPrice": 25000.0,
+          "discount": 5,
+          "quantity": 250,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+        },
+        {
+          "id": 26,
+          "name": "Sherlock Holmes Toàn Tập - Tập 1",
+          "author": "Arthur Conan Doyle",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 193500,
+          "oldPrice": 215000.0,
+          "discount": 10,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319589/products/ptjyfdchzgieobq2kuwg.webp"
+        }
+      ],
+      "chips": [],
+      "messageId": "2d698b92-feb0-47af-9275-ff8e21e1481e",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 48,
+          "route": "/product/48",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 48,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 26,
+          "route": "/product/26",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 26,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      }
+    }
+  },
+  {
+    "id": "discovery_nine-1",
+    "question": "Giới thiệu 9 cuốn sách lập trình đang có trong kho nhé.",
+    "status": 200,
+    "elapsedMs": 15828,
+    "response": {
+      "answer": "Bạn muốn 9 cuốn; mình tìm được 5 cuốn đúng yêu cầu. Tổng cộng có 5 lựa chọn; hiện chưa đủ 9 cuốn khác nhau trong các điều kiện này.\n\n**Sách đúng yêu cầu:**\n\n• “Clean Code - Mã Sạch Và Cách Viết” — 151.200đ · Robert C. Martin · Chưa có đánh giá\nTài liệu này tập trung vào kỹ năng viết mã nguồn sạch, hỗ trợ cải thiện khả năng bảo trì và chất lượng công việc của lập trình viên.\n\n• “The Pragmatic Programmer - Lập Trình Viên Thực Dụng” — 154.000đ · Andrew Hunt & David Thomas · Chưa có đánh giá\nNội dung hướng đến việc phát triển tư duy, công cụ và thói quen cần thiết để trở thành kỹ sư phần mềm chuyên nghiệp.\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Trần Đình Quế · Chưa có đánh giá\nTài liệu cung cấp kiến thức nền tảng và bài tập thực hành dành cho người muốn học ngôn ngữ lập trình Java.\n\n• “Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật” — 83.600đ · Đinh Mạnh Tường · Chưa có đánh giá\nPhù hợp để nghiên cứu các cấu trúc dữ liệu cơ bản và giải thuật thông dụng trong lĩnh vực công nghệ thông tin.\n\n• “Giáo Trình Cơ Sở Dữ Liệu” — 90.160đ · Phạm Thị Anh Lê · Chưa có đánh giá\nTài liệu này là lựa chọn tốt nếu bạn muốn tìm hiểu về thiết kế cơ sở dữ liệu và sử dụng ngôn ngữ truy vấn SQL.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 9,
+          "name": "Clean Code - Mã Sạch Và Cách Viết",
+          "author": "Robert C. Martin",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 151200,
+          "oldPrice": 168000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320053/products/bargnm2lw0ykyd3gqinf.webp"
+        },
+        {
+          "id": 16,
+          "name": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+          "author": "Andrew Hunt & David Thomas",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 154000,
+          "oldPrice": 175000.0,
+          "discount": 12,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319839/products/emvvfbsijvpo4ctg0c2t.jpg"
+        },
+        {
+          "id": 22,
+          "name": "Giáo Trình Lập Trình Java",
+          "author": "Trần Đình Quế",
+          "category": "Sách Giáo trình",
+          "price": 91800,
+          "oldPrice": 102000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319640/products/gz9tp9xsoujfkcglnftj.jpg"
+        },
+        {
+          "id": 20,
+          "name": "Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật",
+          "author": "Đinh Mạnh Tường",
+          "category": "Sách Giáo trình",
+          "price": 83600,
+          "oldPrice": 88000.0,
+          "discount": 5,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319743/products/x6ssqusalnhgpbux28uv.webp"
+        },
+        {
+          "id": 23,
+          "name": "Giáo Trình Cơ Sở Dữ Liệu",
+          "author": "Phạm Thị Anh Lê",
+          "category": "Sách Giáo trình",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 115,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319627/products/l9kqqextxr409kipn29q.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "024d01a0-c500-428d-bdc2-9c6575b33a68",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 9,
+          "route": "/product/9",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 9,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 16,
+          "route": "/product/16",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 16,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 22,
+          "route": "/product/22",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 22,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 20,
+          "route": "/product/20",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 20,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 23,
+          "route": "/product/23",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 23,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      }
+    }
+  },
+  {
+    "id": "discovery_default-1",
+    "question": "Gợi ý vài cuốn sách phát triển bản thân đang bán nhé.",
+    "status": 200,
+    "elapsedMs": 11281,
+    "response": {
+      "answer": "Chào bạn, đây là những lựa chọn đáng cân nhắc nếu bạn đang tìm kiếm các tựa sách để hoàn thiện và phát triển bản thân.\n\nMình chọn được 3 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Sức Mạnh Tiềm Thức” — 99.000đ · Joseph Murphy · Chưa có đánh giá\nPhù hợp nếu bạn muốn tìm hiểu cách tận dụng nguồn lực nội tại từ tiềm thức để tạo ra những thay đổi tích cực cho bản thân.\n\n• “Đắc Nhân Tâm” — 70.520đ · Dale Carnegie · Chưa có đánh giá\nHỗ trợ phát triển kỹ năng giao tiếp và cách ứng xử để xây dựng các mối quan hệ hiệu quả hơn trong công việc và cuộc sống.\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nCung cấp các kỹ năng quản lý cảm xúc, giúp bạn duy trì tinh thần lạc quan và sự bình tĩnh trước những áp lực hàng ngày.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 31,
+          "name": "Sức Mạnh Tiềm Thức",
+          "author": "Joseph Murphy",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 99000,
+          "oldPrice": 110000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1686548250/products/mn4damiiyjtm4pbeslxu.jpg"
+        },
+        {
+          "id": 57,
+          "name": "Đắc Nhân Tâm",
+          "author": "Dale Carnegie",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 70520,
+          "oldPrice": 86000.0,
+          "discount": 18,
+          "quantity": 220,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252580/products/lo4gmiaypwfzes99fouo.webp"
+        },
+        {
+          "id": 32,
+          "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+          "author": "Dale Carnegie",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "66c0411c-d939-443d-b2c7-287f643d2c7a",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 31,
+          "route": "/product/31",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 31,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 57,
+          "route": "/product/57",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 57,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 32,
+          "route": "/product/32",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 32,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "tool": "recommendBooks",
+        "status": "COMPLETED"
+      }
+    }
+  },
+  {
+    "id": "discovery_nearby-1",
+    "question": "Giới thiệu 6 cuốn sách phiêu lưu nhé. Nếu thiếu có thể chọn vài cuốn gần chủ đề và nói rõ.",
+    "status": 200,
+    "elapsedMs": 19531,
+    "response": {
+      "answer": "Chào bạn, mình đã chọn lọc những cuốn sách mang tinh thần khám phá và trải nghiệm hành trình để bạn tham khảo.\n\nBạn muốn 6 cuốn; mình tìm được 1 cuốn đúng yêu cầu và thêm 2 cuốn có chủ đề hoặc nội dung gần với hướng đó. Tổng cộng có 3 lựa chọn; hiện chưa đủ 6 cuốn khác nhau trong các điều kiện này.\n\n**Sách đúng yêu cầu:**\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nNội dung tập trung trực tiếp vào hành trình trải nghiệm thế giới của nhân vật chính, đúng với kỳ vọng về truyện phiêu lưu.\n\n**Gợi ý gần chủ đề — các cuốn này chỉ đáp ứng một phần nhu cầu ban đầu:**\n\n• “Nhà Giả Kim” — 63.200đ · Paulo Coelho · Chưa có đánh giá\nĐây là lựa chọn gần gũi nhờ yếu tố hành trình đi tìm kho báu, tương đồng với tinh thần dịch chuyển và khám phá.\nNội dung nhắc đến “đi tìm kho báu”, gần với hướng đọc bạn đang tìm.\n\n• “Harry Potter Và Hòn Đá Phù Thủy” — 118.800đ · J.K. Rowling · Chưa có đánh giá\nCuốn này phù hợp với mong muốn tìm hiểu những vùng đất mới lạ thông qua việc nhân vật bước vào thế giới phép thuật.\nNội dung nhắc đến “khám phá thế giới”, gần với hướng đọc bạn đang tìm.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 13,
+          "name": "Dế Mèn Phiêu Lưu Ký",
+          "author": "Tô Hoài",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 50400,
+          "oldPrice": 56000.0,
+          "discount": 10,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+        },
+        {
+          "id": 58,
+          "name": "Nhà Giả Kim",
+          "author": "Paulo Coelho",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 63200,
+          "oldPrice": 79000.0,
+          "discount": 20,
+          "quantity": 230,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252411/products/zdyuok0htjowbzf7lwpx.jpg"
+        },
+        {
+          "id": 52,
+          "name": "Harry Potter Và Hòn Đá Phù Thủy",
+          "author": "J.K. Rowling",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 118800,
+          "oldPrice": 135000.0,
+          "discount": 12,
+          "quantity": 200,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254644/products/o7nbnyebfglziwxbhzm4.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "52fbee80-310a-4023-9406-e8669e08464d",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 13,
+          "route": "/product/13",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 13,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 58,
+          "route": "/product/58",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 58,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 52,
+          "route": "/product/52",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 52,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      }
+    }
+  },
+  {
+    "id": "discovery_nearby-2",
+    "question": "Còn cuốn nào khác cùng chủ đề không?",
+    "status": 200,
+    "elapsedMs": 2437,
+    "response": {
+      "answer": "Mình đã kiểm tra lại các sách đang bán và loại những cuốn đã giới thiệu. Hiện chưa có cuốn nào khác đúng chủ đề hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn. Nếu muốn đổi hướng đọc, bạn cho mình một chủ đề khác nhé.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [],
+      "chips": [],
+      "messageId": "22ac7438-2685-44a7-b4de-23ab4ebd02c2",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "NEEDS_INPUT"
+      }
+    }
+  },
+  {
+    "id": "discovery_topic_change-1",
+    "question": "Gợi ý vài cuốn trinh thám nhé.",
+    "status": 200,
+    "elapsedMs": 10984,
+    "response": {
+      "answer": "Mình chọn được 2 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nPhù hợp nếu bạn muốn tìm kiếm một tác phẩm trinh thám dưới dạng truyện tranh với cốt truyện tập trung vào các vụ án.\n\n• “Sherlock Holmes Toàn Tập - Tập 1” — 193.500đ · Arthur Conan Doyle · Chưa có đánh giá\nLựa chọn này dành cho người thích những vụ án kinh điển, tập trung vào khả năng phá án thông qua suy luận sắc bén.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 48,
+          "name": "Thám Tử Lừng Danh Conan - Tập 1",
+          "author": "Gosho Aoyama",
+          "category": "Sách thiếu nhi",
+          "price": 23750,
+          "oldPrice": 25000.0,
+          "discount": 5,
+          "quantity": 250,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+        },
+        {
+          "id": 26,
+          "name": "Sherlock Holmes Toàn Tập - Tập 1",
+          "author": "Arthur Conan Doyle",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 193500,
+          "oldPrice": 215000.0,
+          "discount": 10,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319589/products/ptjyfdchzgieobq2kuwg.webp"
+        }
+      ],
+      "chips": [],
+      "messageId": "87c99d3f-495c-4670-a5a5-acf6513c8437",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 48,
+          "route": "/product/48",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 48,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 26,
+          "route": "/product/26",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 26,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "tool": "recommendBooks",
+        "status": "COMPLETED"
+      }
+    }
+  },
+  {
+    "id": "discovery_topic_change-2",
+    "question": "Gợi ý thêm vài cuốn về tình yêu, chuyển sang chủ đề này nhé.",
+    "status": 200,
+    "elapsedMs": 7172,
+    "response": {
+      "answer": "Mình tìm thêm được 1 cuốn đúng chủ đề, đều khác những cuốn đã giới thiệu: Mình cũng tìm được 3 cuốn gần chủ đề và để riêng bên dưới.\n\n**Sách đúng yêu cầu:**\n\n• “Mắt Biếc” — 85.500đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nChuyện tình day dứt của Ngạn dành cho Hà Lan từ làng Đo Đo đến phố thị. Một trong những tác phẩm lãng mạn được yêu thích nhất của Nguyễn Nhật Ánh.\n\n**Gợi ý gần chủ đề — các cuốn này chỉ đáp ứng một phần nhu cầu ban đầu:**\n\n• “Không Gia Đình” — 125.400đ · Hector Malot · Chưa có đánh giá\nHành trình của cậu bé Rémi lưu lạc khắp nước Pháp đi tìm gia đình. Câu chuyện cảm động về nghị lực, lòng nhân hậu và khát khao yêu thương.\nNội dung nhắc đến “gia đình”, gần với hướng đọc bạn đang tìm.\n\n• “Bố Già (The Godfather)” — 133.400đ · Mario Puzo · 5.0/5\nKiệt tác về gia đình mafia Corleone — quyền lực, danh dự và máu. Một bức chân dung sắc lạnh về thế giới ngầm và bản chất con người. Tiểu thuyết bất hủ.\nNội dung nhắc đến “gia đình”, gần với hướng đọc bạn đang tìm.\n\n• “Cẩm Nang Pháp Lý Cho Doanh Nghiệp” — 114.750đ · Trương Thanh Đức · Chưa có đánh giá\nSổ tay pháp lý toàn diện giúp doanh nghiệp phòng ngừa rủi ro: hợp đồng, thuế, sở hữu trí tuệ, giải quyết tranh chấp. Viết bởi luật sư giàu kinh nghiệm thực chiến.\nNội dung nhắc đến “trưởng thành”, gần với hướng đọc bạn đang tìm.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 53,
+          "name": "Mắt Biếc",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 85500,
+          "oldPrice": 95000.0,
+          "discount": 10,
+          "quantity": 180,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254910/products/ytjtlnudjncbcb776ies.jpg"
+        },
+        {
+          "id": 28,
+          "name": "Không Gia Đình",
+          "author": "Hector Malot",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 125400,
+          "oldPrice": 132000.0,
+          "discount": 5,
+          "quantity": 95,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319541/products/rdyankdh2hrze9o9kisp.webp"
+        },
+        {
+          "id": 27,
+          "name": "Bố Già (The Godfather)",
+          "author": "Mario Puzo",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 133400,
+          "oldPrice": 145000.0,
+          "discount": 8,
+          "quantity": 100,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319572/products/xrmf9d1gfvlskbf6fmn3.jpg"
+        },
+        {
+          "id": 6,
+          "name": "Cẩm Nang Pháp Lý Cho Doanh Nghiệp",
+          "author": "Trương Thanh Đức",
+          "category": "Sách Chính trị – pháp luật",
+          "price": 114750,
+          "oldPrice": 135000.0,
+          "discount": 15,
+          "quantity": 90,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320093/products/k3k09hlkujlxxjpvjcto.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "91e7d72a-2e4f-4426-a8ed-3c781b2898bc",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 53,
+          "route": "/product/53",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 53,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 28,
+          "route": "/product/28",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 28,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 27,
+          "route": "/product/27",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 27,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 6,
+          "route": "/product/6",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 6,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      }
+    }
+  }
+]

@@ -3,6 +3,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/services/notification.service';
 import { MotionService } from 'src/app/services/motion.service';
+import { StoreKnowledgeService, StoreSettings } from 'src/app/services/store-knowledge.service';
 
 @Component({
   selector: 'app-cart',
@@ -11,20 +12,25 @@ import { MotionService } from 'src/app/services/motion.service';
 })
 export class CartComponent {
 cartItems: any[] = [];
+shippingSettings?: StoreSettings;
+shippingUnavailable = false;
 
 constructor(
   public cartService: CartService,
   private router: Router,
   private notification: NotificationService,
-  private motion: MotionService
+  private motion: MotionService,
+  private knowledge: StoreKnowledgeService
 )
  {
 
   this.cartItems =
     this.cartService.getCartItems();
+  this.knowledge.get().subscribe(data => this.shippingSettings = data.settings,
+    () => this.shippingUnavailable = true);
 
 }
-  
+
 
 increase(item: any, event: MouseEvent) {
 
@@ -88,7 +94,7 @@ getShippingFee() {
 
   }
 
-  return this.getSubtotal() >= 300000 ? 0 : 20000;
+  return this.shippingSettings ? StoreKnowledgeService.shipping(this.getSubtotal(), this.shippingSettings) : 0;
 
 }
 removeItem(item: any, event: MouseEvent) {
@@ -101,6 +107,7 @@ removeItem(item: any, event: MouseEvent) {
 }
 
 async goToCheckout(): Promise<void> {
+  if (!this.shippingSettings) { this.notification.error('Chưa tải được chính sách giao hàng. Vui lòng thử lại.'); return; }
   try { await this.cartService.flush(); } catch { this.notification.error('Chưa đồng bộ được giỏ. Vui lòng tải lại giỏ trước khi đặt hàng.'); return; }
   if (this.getSubtotal() <= 0) {
     this.notification.error('Vui lòng chọn ít nhất một sản phẩm để thanh toán');

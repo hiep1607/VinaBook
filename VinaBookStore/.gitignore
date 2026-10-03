@@ -1,4 +1,6 @@
 target/
+target-codex/
+target-runtime/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -30,3 +32,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/target-conversation-check/

@@ -18,7 +18,8 @@ export class ProductComponent implements OnInit {
   listData!: MatTableDataSource<Product>;
   products!: Product[];
   productsLength!: number;
-  columns: string[] = ['image', 'productId', 'name', 'author', 'price', 'discount', 'category', 'enteredDate', 'view', 'delete'];
+  reindexing = false;
+  columns: string[] = ['image', 'productId', 'name', 'author', 'price', 'discount', 'category', 'enteredDate', 'status', 'knowledge', 'view', 'delete'];
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -33,6 +34,7 @@ export class ProductComponent implements OnInit {
   getAll() {
     this.productService.getAll().subscribe(data => {
       this.products = (data as Product[]).sort((a, b) => b.productId - a.productId);
+      this.productsLength = this.products.length;
       this.listData = new MatTableDataSource(this.products);
       this.listData.sort = this.sort;
       this.listData.paginator = this.paginator;
@@ -68,5 +70,16 @@ export class ProductComponent implements OnInit {
 
   finish() {
     this.ngOnInit();
+  }
+
+  reindexExisting(): void {
+    if (this.reindexing) { return; }
+    this.reindexing = true;
+    this.productService.reindexKnowledge().subscribe(result => {
+      this.reindexing = false;
+      if (!result.configured) this.toastr.info('Cần cấu hình Gemini embedding để tạo chỉ mục ngữ nghĩa.', 'Hồ sơ sách');
+      else if (result.failedProductId) this.toastr.warning(`Đã xử lý ${result.indexed} sách; tạm dừng ở sách #${result.failedProductId}.`, 'Hồ sơ sách');
+      else this.toastr.success(`Đã tạo ${result.indexed} chỉ mục; còn ${result.remaining} sách cũ.`, 'Hồ sơ sách');
+    }, () => { this.reindexing = false; this.toastr.error('Không tạo được chỉ mục sách cũ.', 'Hệ thống'); });
   }
 }

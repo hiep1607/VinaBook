@@ -1,0 +1,4 @@
+.knowledge-page { max-width: 1120px; }
+h2 { font-size: 1.2rem; font-weight: 700; }
+label { font-weight: 600; }
+.history-row { display: flex; justify-content: space-between; gap: 1rem; padding: .65rem 0; border-top: 1px solid #e5e7eb; }

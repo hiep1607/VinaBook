@@ -3,8 +3,8 @@
 ## P0 — An toàn vận hành
 
 - [ ] Thêm test authorization cho toàn bộ endpoint owner/admin, gồm trường hợp user A truy cập dữ liệu user B.
-- [x] Tách cấu hình Spring theo profile dev/prod; tắt SQL debug và `open-in-view` ở production.
-- [x] Thêm CI build/test cho storefront, backend và admin trên pull request.
+- [ ] Tách cấu hình Spring theo profile dev/prod; tắt SQL debug và `open-in-view` ở production.
+- [ ] Thêm CI build/test cho storefront, backend và admin trên pull request.
 - [ ] Quét secret/dependency định kỳ và cấu hình secret production ngoài repository.
 
 ## P1 — Tính đúng nghiệp vụ
@@ -13,7 +13,7 @@
 - [ ] Thêm transaction/locking cho checkout để tránh race tồn kho.
 - [ ] Thêm trang order detail riêng cho khách hàng.
 - [ ] Chuẩn hóa shared order-math và shipping rule giữa backend/frontend.
-- [x] Clear buy-now state khi rời checkout không hoàn tất.
+- [ ] Clear buy-now state khi rời checkout không hoàn tất.
 
 ## P2 — Chất lượng frontend
 
@@ -36,6 +36,5 @@
 - [ ] Contact/ticket backend.
 - [ ] Đồng bộ avatar/address/wishlist theo tài khoản.
 - [ ] Email template, retry queue và trạng thái gửi.
-- [ ] Bản đọc thử 5–20 trang do admin duyệt, reader 2D và mở sách 3D bằng double-click (đã có khung triển khai, còn kiểm thử tích hợp).
 
 Mỗi mục chỉ được đánh dấu hoàn tất sau khi behavior, test và tài liệu cùng được cập nhật.

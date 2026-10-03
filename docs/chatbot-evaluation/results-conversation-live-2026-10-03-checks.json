@@ -1,0 +1,17 @@
+{
+  "all_http_200": true,
+  "no_fallback": true,
+  "gender_asks_preferences": true,
+  "why_keeps_list": true,
+  "deeper_answer_differs": true,
+  "more_does_not_repeat_books": true,
+  "group_survives_singular_focus": true,
+  "identical_question_adds_new_reply": true,
+  "return_asks_reason_first": true,
+  "return_reason_guides": true,
+  "return_shipping_followup": true,
+  "refund_followup": true,
+  "changed_mind_not_promised": true,
+  "purchased_books_are_orders": true,
+  "known_subject_still_recommends": true
+}

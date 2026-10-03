@@ -1,140 +1,120 @@
-﻿param(
-    [switch]$NoBrowser,
-    [switch]$SkipDatabase
-)
-
+param([switch]$NoBrowser)
 $ErrorActionPreference = 'Stop'
-$projectRoot = $PSScriptRoot
-$backendRoot = Join-Path $projectRoot 'VinaBookStore'
-$frontendRoot = Join-Path $projectRoot 'bookstore-ui'
+$root = $PSScriptRoot
+$logs = Join-Path $root '.run-logs'
+New-Item -ItemType Directory -Force -Path $logs | Out-Null
 
-if (-not (Test-Path $backendRoot) -or -not (Test-Path $frontendRoot)) {
-    throw "Không tìm thấy VinaBookStore hoặc bookstore-ui trong $projectRoot"
-}
-
-function Import-EnvFile([string]$path) {
-    foreach ($line in Get-Content -LiteralPath $path) {
-        if ($line -match '^\s*([^#][^=]*)=(.*)$') {
-            $name = $matches[1].Trim()
-            $value = $matches[2].Trim()
-            if ($value.Length -ge 2 -and (($value.StartsWith('"') -and $value.EndsWith('"')) -or ($value.StartsWith("'") -and $value.EndsWith("'")))) {
-                $value = $value.Substring(1, $value.Length - 2)
+# Reuse the private signing key without printing it to logs.
+if (-not $env:JWT_SECRET) {
+    $settingsFile = Join-Path $root 'VinaBookStore/.env.local'
+    if (Test-Path -LiteralPath $settingsFile) {
+        foreach ($settingsLine in Get-Content -LiteralPath $settingsFile -Encoding utf8) {
+            if ($settingsLine -match '^\s*JWT_SECRET\s*=\s*(.+)$') {
+                $env:JWT_SECRET = $Matches[1].Trim().Trim('"').Trim("'")
             }
-            [Environment]::SetEnvironmentVariable($name, $value, 'Process')
         }
     }
 }
 
-$envCandidates = @(
-    (Join-Path $backendRoot '.env.local'),
-    $env:VINABOOK_ENV_FILE,
-    'D:\book\book\VinaBookStore\.env.local'
-) | Where-Object { $_ -and (Test-Path -LiteralPath $_) }
-
-if (-not $envCandidates) {
-    throw "Chưa tìm thấy VinaBookStore/.env.local. Hãy tạo file từ .env.local.example và thêm API key."
-}
-$envFile = $envCandidates | Select-Object -First 1
-Import-EnvFile -path $envFile
-
-if (-not $env:JAVA_HOME -and (Test-Path 'C:\Program Files\Eclipse Adoptium\jdk-17.0.19.10-hotspot')) {
-    $env:JAVA_HOME = 'C:\Program Files\Eclipse Adoptium\jdk-17.0.19.10-hotspot'
-}
-
-$maven = (Get-Command mvn -ErrorAction SilentlyContinue).Source
-if (-not $maven) {
-    $maven = Join-Path $backendRoot 'mvnw.cmd'
-}
-$settings = Join-Path $projectRoot '..\..\maven-settings-local.xml'
-$mavenArgs = @()
-if (Test-Path $settings) {
-    $mavenArgs += @('-s', (Resolve-Path $settings).Path)
-}
-$mavenArgs += 'spring-boot:run'
-
-function Test-Endpoint([string]$url) {
+function Test-Port([int]$Port) {
+    $client = New-Object Net.Sockets.TcpClient
     try {
-        Invoke-WebRequest -Uri $url -UseBasicParsing -TimeoutSec 2 | Out-Null
+        $task = $client.ConnectAsync('127.0.0.1', $Port)
+        return ($task.Wait(1000) -and $client.Connected)
+    } catch { return $false } finally { $client.Dispose() }
+}
+
+function Test-Http([string]$Url, [switch]$Json) {
+    try {
+        $r = Invoke-WebRequest $Url -UseBasicParsing -TimeoutSec 5
+        if ($r.StatusCode -ne 200) { return $false }
+        if ($Json) { return ($r.Headers['Content-Type'] -match 'application/json') }
         return $true
-    } catch {
-        return $false
-    }
+    } catch { return $false }
 }
 
-function Ensure-MySqlService {
-    if ($SkipDatabase) {
-        Write-Host 'Bỏ qua kiểm tra MySQL theo tham số -SkipDatabase.' -ForegroundColor DarkGray
-        return
+function Wait-Service([string]$Url, [System.Diagnostics.Process]$Process, [string]$Log, [switch]$Json) {
+    $deadline = (Get-Date).AddMinutes(5)
+    while ((Get-Date) -lt $deadline) {
+        if (Test-Http $Url -Json:$Json) { return }
+        $Process.Refresh()
+        if ($Process.HasExited) { throw "Tien trinh dung. Xem log: $Log" }
+        Start-Sleep -Seconds 2
     }
+    throw "Qua 5 phut van chua san sang: $Url. Xem log: $Log"
+}
 
-    # Tên service có thể cấu hình trong .env.local nếu máy dùng tên khác.
-    $serviceNames = @()
-    if ($env:VINABOOK_MYSQL_SERVICE) { $serviceNames += $env:VINABOOK_MYSQL_SERVICE }
-    $serviceNames += @('MySQL80', 'MySQL', 'MariaDB')
+function Start-Logged([string]$Directory, [string]$Command, [string]$Name) {
+    $log = Join-Path $logs "$Name.log"
+    $process = Start-Process $env:ComSpec -WorkingDirectory $Directory -WindowStyle Minimized -PassThru `
+        -ArgumentList ('/d /s /c "' + $Command + ' > "' + $log + '" 2>&1"')
+    return $process
+}
 
-    $service = $null
-    foreach ($name in ($serviceNames | Select-Object -Unique)) {
+try {
+    if (!(Test-Port 3306)) {
+        throw 'MySQL chua chay tren cong 3306. Mo Services, Start dich vu MySQL, roi chay lai. Database book can duoc import tu db/01-schema-seed.sql lan dau.'
+    }
+    if (!(Get-Command node.exe -ErrorAction SilentlyContinue) -or !(Get-Command npm.cmd -ErrorAction SilentlyContinue)) {
+        throw 'Can cai Node.js/npm (du an da kiem tra voi Node 16).'
+    }
+    if (!(Test-Path "$env:JAVA_HOME\bin\javac.exe")) {
+        $java = Get-Command java.exe -ErrorAction SilentlyContinue
+        if (!$java) {
+            # Known-good JDK 17 install on this machine; used only if PATH has no java.
+            $known = 'C:\Program Files\Eclipse Adoptium\jdk-17.0.19.10-hotspot\bin\java.exe'
+            if (Test-Path $known) { $java = Get-Item $known } else { throw 'Can cai JDK 17 va them java vao PATH hoac dat JAVA_HOME.' }
+        }
+        $javaLog = Join-Path $logs 'java-check.log'
+        $check = Start-Process $java.Source -ArgumentList '-XshowSettings:properties -version' -NoNewWindow -Wait -PassThru -RedirectStandardError $javaLog
+        $settings = Get-Content $javaLog -Raw
+        if ($settings -match 'java.home\s*=\s*([^\r\n]+)') { $env:JAVA_HOME = $Matches[1].Trim() }
+        if (!(Test-Path "$env:JAVA_HOME\bin\javac.exe")) { throw 'Khong tim thay JDK. Hay dat JAVA_HOME den JDK 17.' }
+    }
+    if (Test-Port 8080) {
+        if (!(Test-Http 'http://localhost:8080/api/products' -Json)) { throw 'Cong 8080 dang bi chiem hoac backend loi. Khong tu dong tat tien trinh khac.' }
+        Write-Host 'Backend da chay.'
+    } else {
+        if (-not $env:JWT_SECRET) { throw 'Hay dat JWT_SECRET trong VinaBookStore/.env.local hoac bien moi truong truoc khi chay backend.' }
+        Write-Host 'Dang build sach va khoi dong backend (khong bo qua bien dich test)...'
+        $build = (Join-Path $logs 'backend-build').Replace('\', '/')
+        $backend = Start-Logged (Join-Path $root 'VinaBookStore') ('mvnw.cmd "-Dvinabook.build.directory=' + $build + '" clean spring-boot:run') 'backend'
+        Wait-Service 'http://localhost:8080/api/products' $backend (Join-Path $logs 'backend.log') -Json
+    }
+    $ui = Join-Path $root 'bookstore-ui'
+    if (Test-Port 4200) {
+        if (!(Test-Http 'http://localhost:4200/main.js')) { throw 'Cong 4200 dang bi chiem hoac Angular chua build thanh cong.' }
+        Write-Host 'Frontend da chay.'
+    } else {
+        Push-Location $ui
         try {
-            $service = Get-Service -Name $name -ErrorAction SilentlyContinue
-            if ($service) { break }
-        } catch { }
+            $lock = 'package-lock.json'
+            $hasLock = (Test-Path $lock) -and ((Get-Item $lock).Length -gt 2)
+            $hash = if ($hasLock) { (Get-FileHash $lock).Hash } else { 'no-lockfile' }
+            $hash = $hash + '|' + (Get-FileHash 'package.json').Hash
+            $stamp = Join-Path $ui 'node_modules/.vinabook-dependencies'
+            if (!(Test-Path $stamp) -or ((Get-Content $stamp -Raw).Trim() -ne $hash)) {
+                Write-Host 'Dang dong bo dependency tu package.json...'
+                $instLog = Join-Path $logs 'install.log'
+                $cmd = 'npm install --no-audit --no-fund'
+                $inst = Start-Process $env:ComSpec -WorkingDirectory $ui -WindowStyle Minimized -PassThru `
+                    -ArgumentList ('/d /s /c "' + $cmd + ' > "' + $instLog + '" 2>&1"')
+                $inst.WaitForExit()
+                if ($inst.ExitCode -ne 0) { throw "Cai dependency loi (exit $($inst.ExitCode)). Xem: $instLog" }
+                Set-Content $stamp $hash -Encoding ASCII
+            }
+        } finally { Pop-Location }
+        Write-Host 'Dang khoi dong Angular...'
+        $frontend = Start-Logged $ui 'npm start -- --host 127.0.0.1 --port 4200' 'storefront'
+        Wait-Service 'http://localhost:4200/main.js' $frontend (Join-Path $logs 'storefront.log')
     }
-
-    if (-not $service) {
-        Write-Host 'Không tìm thấy Windows service MySQL/MariaDB; tiếp tục với database hiện có (Docker, WSL hoặc máy khác).' -ForegroundColor Yellow
-        return
-    }
-
-    if ($service.Status -eq 'Running') {
-        Write-Host "MySQL đã chạy ($($service.Name))." -ForegroundColor DarkGray
-        return
-    }
-
-    try {
-        Start-Service -Name $service.Name -ErrorAction Stop
-    } catch {
-        throw "Tìm thấy service $($service.Name) nhưng không thể khởi động. Hãy mở PowerShell bằng quyền Administrator hoặc dùng -SkipDatabase."
-    }
-
-    $ready = $false
-    1..30 | ForEach-Object {
-        Start-Sleep -Seconds 1
-        $current = Get-Service -Name $service.Name -ErrorAction SilentlyContinue
-        if ($current -and $current.Status -eq 'Running') { $ready = $true; break }
-    }
-    if (-not $ready) { throw "MySQL ($($service.Name)) không sẵn sàng sau 30 giây." }
-    Write-Host "Đã khởi động MySQL ($($service.Name))." -ForegroundColor Cyan
+    if (!(Test-Http 'http://localhost:4200/api/products' -Json)) { throw "Frontend khong ket noi duoc API. Xem log trong $logs" }
+    Write-Host 'Web san sang: http://localhost:4200/' -ForegroundColor Green
+    Write-Host "Log: $logs"
+    Write-Host 'Cac dich vu dang chay trong cua so thu nho. Dong cua so dich vu de dung.'
+    if (!$NoBrowser) { Start-Process 'http://localhost:4200/' }
+    exit 0
+} catch {
+    Write-Host $_.Exception.Message -ForegroundColor Red
+    exit 1
 }
-
-if (-not (Test-Endpoint 'http://localhost:8080/api/chat/status')) {
-    Ensure-MySqlService
-    $backendCommand = "Set-Location -LiteralPath '$backendRoot'; & '$maven' $($mavenArgs -join ' ')"
-    Start-Process powershell.exe -WorkingDirectory $backendRoot -ArgumentList @('-NoProfile', '-NoExit', '-Command', $backendCommand) | Out-Null
-    Write-Host 'Đang khởi động backend...' -ForegroundColor Cyan
-    $backendReady = $false
-    1..60 | ForEach-Object {
-        Start-Sleep -Seconds 1
-        if (Test-Endpoint 'http://localhost:8080/api/chat/status') { $backendReady = $true; break }
-    }
-    if (-not $backendReady) { throw 'Backend không khởi động trong 60 giây.' }
-} else {
-    Write-Host 'Backend đã chạy sẵn.' -ForegroundColor DarkGray
-}
-
-if (-not (Test-Endpoint 'http://localhost:4200')) {
-    $frontendCommand = "Set-Location -LiteralPath '$frontendRoot'; `$env:NODE_OPTIONS='--openssl-legacy-provider'; npm start"
-    Start-Process powershell.exe -WorkingDirectory $frontendRoot -ArgumentList @('-NoProfile', '-NoExit', '-Command', $frontendCommand) | Out-Null
-    Write-Host 'Đang khởi động frontend...' -ForegroundColor Cyan
-    $frontendReady = $false
-    1..60 | ForEach-Object {
-        Start-Sleep -Seconds 1
-        if (Test-Endpoint 'http://localhost:4200') { $frontendReady = $true; break }
-    }
-    if (-not $frontendReady) { throw 'Frontend không khởi động trong 60 giây.' }
-} else {
-    Write-Host 'Frontend đã chạy sẵn.' -ForegroundColor DarkGray
-}
-
-$status = Invoke-RestMethod 'http://localhost:8080/api/chat/status'
-Write-Host "VinaBook đã sẵn sàng: http://localhost:4200 (AI: $($status.provider)/$($status.model))" -ForegroundColor Green
-if (-not $NoBrowser) { Start-Process 'http://localhost:4200' }

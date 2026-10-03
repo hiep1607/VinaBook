@@ -26,6 +26,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
 import { RecentlyViewedService } from 'src/app/services/recently-viewed.service';
 import { MotionService } from 'src/app/services/motion.service';
+import { ChatbotService } from 'src/app/services/chatbot.service';
 import { Book3dViewerComponent } from 'src/app/components/book-3d-viewer/book-3d-viewer.component';
 
 const STICKY_BAR_MAX_WIDTH = 768;
@@ -59,6 +60,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
 
   // Số lượng mua (stepper)
   qty = 1;
+  private requestedQty = 1;
 
   stickyBarVisible = false;
   private originalCtaVisible = true;
@@ -88,11 +90,17 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
     private productService: ProductService,
     private zone: NgZone,
     private recentlyViewed: RecentlyViewedService,
+    private chatbot: ChatbotService,
     private motion: MotionService,
     @Inject(DOCUMENT) private doc: Document
   ) {}
 
   ngOnInit(): void {
+    this.subscriptions.add(this.route.queryParamMap.subscribe(params => {
+      const quantity = Number(params.get('quantity'));
+      this.requestedQty = Number.isInteger(quantity) && quantity >= 1 && quantity <= 99 ? quantity : 1;
+      this.qty = Math.min(this.requestedQty, Math.max(1, this.maxQty));
+    }));
 
     // Subscribe paramMap (không dùng snapshot) để bấm "sách cùng thể loại"
     // điều hướng sang sản phẩm khác vẫn nạp lại dữ liệu (component được tái sử dụng)
@@ -115,6 +123,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
           return;
         }
 
+        this.qty = Math.min(this.requestedQty, Math.max(1, this.maxQty));
         this.loadReviews();
         this.previewSubscription = this.productService.getPreview(id).subscribe({
           next: preview => {
@@ -128,6 +137,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
 
 
         this.recentlyViewed.add(id);
+        if (this.authService.currentUser?.token) this.chatbot.recordProductView(id);
         setTimeout(() => this.setupStickyObserver());
 
       }, () => {

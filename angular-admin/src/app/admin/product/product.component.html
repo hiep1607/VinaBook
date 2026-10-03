@@ -11,11 +11,12 @@
             <mat-form-field>
                 <mat-label>Tìm kiếm</mat-label>
                 <input matInput type="text" (keyup)="search($event)" />
-            </mat-form-field>            
+            </mat-form-field>
             <button mat-raised-button color="primary" class="ml-3" style="float: right;" (click)="exporter.exportTable('csv', {fileName:'Danh sách sản phẩm'})">Xuất Excel</button>
             <app-add-product style="float: right;" (saveFinish)="finish()"></app-add-product>
+            <button type="button" class="btn btn-outline-secondary ml-3" (click)="reindexExisting()" [disabled]="reindexing">{{ reindexing ? 'Đang lập chỉ mục…' : 'Lập chỉ mục sách cũ (10/lần)' }}</button>
 
-            <table mat-table matTableExporter #exporter="matTableExporter" [hiddenColumns]="[0,8,9]" [dataSource]="listData" matSort class="mat-elevation-z8">
+            <table mat-table matTableExporter #exporter="matTableExporter" [hiddenColumns]="[0,9,10,11]" [dataSource]="listData" matSort class="mat-elevation-z8">
                 <ng-container matColumnDef="image">
                     <th mat-header-cell *matHeaderCellDef style="width: 10%;"></th>
                     <td mat-cell *matCellDef="let row">
@@ -49,6 +50,14 @@
                 <ng-container matColumnDef="enteredDate">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 12%;">Ngày thêm</th>
                     <td mat-cell *matCellDef="let row">{{row.enteredDate|date:'dd-MM-yyyy'}}</td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef>Trạng thái</th>
+                    <td mat-cell *matCellDef="let row">{{ row.status ? 'Đã xuất bản' : 'Bản nháp' }}</td>
+                </ng-container>
+                <ng-container matColumnDef="knowledge">
+                    <th mat-header-cell *matHeaderCellDef>Hồ sơ AI</th>
+                    <td mat-cell *matCellDef="let row"><app-book-knowledge [id]="row.productId" (published)="finish()"></app-book-knowledge></td>
                 </ng-container>
                 <ng-container matColumnDef="view">
                     <th mat-header-cell *matHeaderCellDef style="width: 4%;">Xem</th>

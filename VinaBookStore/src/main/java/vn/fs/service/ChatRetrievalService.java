@@ -41,6 +41,9 @@ public class ChatRetrievalService {
 
 	private final ChatIntentService intents;
 	private vn.fs.repository.RateRepository rates;
+	private BookKnowledgeService knowledge;
+	@org.springframework.beans.factory.annotation.Autowired(required=false)
+	public void setKnowledge(BookKnowledgeService value) { this.knowledge = value; }
 	@org.springframework.beans.factory.annotation.Autowired
 	public void setRates(vn.fs.repository.RateRepository rates) { this.rates = rates; }
 
@@ -101,7 +104,7 @@ public class ChatRetrievalService {
 		if (named.isEmpty() && plan.getIntent() == ChatIntent.PRODUCT_INFO) return List.of();
 		if (plan.getIntent() == ChatIntent.COMPARE_BOOKS && named.isEmpty()
 				&& normalized.matches(".*\\b(nay|do|vua|hon)\\b.*")) return List.of();
-		ChatExplicitFilters mandatory = new ChatExplicitFilters(intents);
+		ChatExplicitFilters mandatory = new ChatExplicitFilters(intents, this);
 		active = active.stream().filter(p -> mandatory.matches(question, p)).collect(Collectors.toList());
 
 		ChatSearchCriteriaDto criteria = plan.getCriteria();
@@ -178,7 +181,7 @@ public class ChatRetrievalService {
 			boolean authorMatch = authorNeedle.isEmpty() || author.equals(authorNeedle);
 			if (!categoryMatch || !authorMatch) continue;
 			String explicitTopic = intents.normalize(String.join(" ", criteria.getTopics()));
-			String bookText = intents.normalize(product.getName() + " " + product.getDescription() + " " + category);
+			String bookText = intents.normalize(searchableText(product) + " " + category);
 
 			int anchorValue = relevance(product, terms.anchors);
 			int value = relevance(product, terms.scoring);
@@ -201,7 +204,7 @@ public class ChatRetrievalService {
 		String name = intents.normalize(product.getName());
 		String author = intents.normalize(product.getAuthor());
 		String category = category(product);
-		String description = intents.normalize(product.getDescription());
+		String description = intents.normalize(searchableText(product));
 		int score = 0;
 		for (String term : terms) {
 			if (term.length() < 2) continue;
@@ -213,6 +216,31 @@ public class ChatRetrievalService {
 		}
 		return score;
 	}
+
+	public String searchableText(Product product) {
+		return knowledge == null ? product.getName() + " " + product.getDescription()
+				: knowledge.searchableText(product);
+	}
+    /** Content evidence for nearby recommendations excludes author names and broad categories. */
+    public String descriptiveText(Product product) {
+        return java.util.Objects.toString(product.getName(),"")+" "+java.util.Objects.toString(knowledge==null?product.getDescription():knowledge.approvedDescription(product),"");
+    }
+
+	public List<Product> rankByMeaning(String query, List<Product> candidates) {
+		return knowledge == null ? candidates : knowledge.rankByMeaning(query, candidates);
+	}
+
+    public java.util.Map<Long,String> relatedEvidence(List<Long> seeds) {
+        return knowledge==null?java.util.Map.of():knowledge.relatedEvidence(seeds);
+    }
+
+    public java.util.Map<Long,String> semanticEvidence(String query,List<Product> candidates) {
+        return knowledge==null?java.util.Map.of():knowledge.semanticEvidence(query,candidates);
+    }
+    public BookKnowledgeService.SemanticRecall semanticRecall(String query,List<Product> candidates) {
+        BookKnowledgeService.SemanticRecall result=knowledge==null?null:knowledge.semanticRecall(query,candidates);
+        return result==null?new BookKnowledgeService.SemanticRecall(false,java.util.Map.of()):result;
+    }
 
 	private RetrievalTerms expandedTerms(String question, ChatQueryPlan plan) {
 		LinkedHashSet<String> base = new LinkedHashSet<>();

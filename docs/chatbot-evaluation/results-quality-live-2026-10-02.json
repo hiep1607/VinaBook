@@ -1,0 +1,1311 @@
+[
+  {
+    "id": "comparison-1",
+    "question": "So sánh Nhà Giả Kim và Hoàng Tử Bé.",
+    "status": 200,
+    "elapsedMs": 18094,
+    "response": {
+      "answer": "| Tên sách | Tác giả | Giá | Rating |\n|---|---|---:|---:|\n| Nhà Giả Kim | Paulo Coelho | 63.200đ | Chưa có đánh giá |\n| Hoàng Tử Bé | Antoine de Saint-Exupéry | 69.920đ | Chưa có đánh giá |\n\nĐể chọn theo mục tiêu đọc, đây là nội dung catalog của từng cuốn:\n• “Nhà Giả Kim”: Hành trình của cậu chăn cừu Santiago đi tìm kho báu và khám phá vận mệnh đời mình. Câu chuyện truyền cảm hứng được dịch ra hơn 80 thứ tiếng.\n• “Hoàng Tử Bé”: Câu chuyện trong trẻo và sâu sắc về cậu hoàng tử nhỏ đến từ tiểu hành tinh B612. Tác phẩm văn học được yêu thích nhất nước Pháp, dành cho mọi lứa tuổi.\nNếu bạn muốn đọc về Sách Truyện, tiểu thuyết, chọn “Nhà Giả Kim”; nếu ưu tiên Sách thiếu nhi, chọn “Hoàng Tử Bé”.\n\nVề “Nhà Giả Kim”: Sách tập trung vào hành trình khám phá vận mệnh của nhân vật chính thông qua chuyến đi tìm kho báu.\n\nVề “Hoàng Tử Bé”: Sách mang phong cách kể chuyện trong trẻo, sâu sắc về một nhân vật đến từ tiểu hành tinh khác, phù hợp với mọi lứa tuổi.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 58,
+          "name": "Nhà Giả Kim",
+          "author": "Paulo Coelho",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 63200,
+          "oldPrice": 79000.0,
+          "discount": 20,
+          "quantity": 230,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252411/products/zdyuok0htjowbzf7lwpx.jpg"
+        },
+        {
+          "id": 37,
+          "name": "Hoàng Tử Bé",
+          "author": "Antoine de Saint-Exupéry",
+          "category": "Sách thiếu nhi",
+          "price": 69920,
+          "oldPrice": 76000.0,
+          "discount": 8,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "c8ddf9d1-1b4a-46dd-b368-576af00156fe",
+      "intent": "COMPARE_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      }
+    }
+  },
+  {
+    "id": "comparison-2",
+    "question": "Cuốn nào rẻ hơn?",
+    "status": 200,
+    "elapsedMs": 2156,
+    "response": {
+      "answer": "• “Nhà Giả Kim”:\nGiá sau giảm: 63.200đ",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 58,
+          "name": "Nhà Giả Kim",
+          "author": "Paulo Coelho",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 63200,
+          "oldPrice": 79000.0,
+          "discount": 20,
+          "quantity": 230,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252411/products/zdyuok0htjowbzf7lwpx.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "a7ee83e5-cdab-43f7-b9f9-7bf1e1c0265c",
+      "intent": "PRODUCT_INFO",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 58,
+          "route": "/product/58",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 58,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      }
+    }
+  },
+  {
+    "id": "comparison-3",
+    "question": "Cuốn rẻ hơn đó còn bao nhiêu bản?",
+    "status": 200,
+    "elapsedMs": 2141,
+    "response": {
+      "answer": "• “Nhà Giả Kim”:\nGiá sau giảm: 63.200đ\nĐang bán, còn 230 bản theo tồn kho hiện tại.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 58,
+          "name": "Nhà Giả Kim",
+          "author": "Paulo Coelho",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 63200,
+          "oldPrice": 79000.0,
+          "discount": 20,
+          "quantity": 230,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252411/products/zdyuok0htjowbzf7lwpx.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "37adc879-fc17-4434-add4-10a7751c3423",
+      "intent": "PRODUCT_INFO",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 58,
+          "route": "/product/58",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 58,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      }
+    }
+  },
+  {
+    "id": "comparison-4",
+    "question": "Nội dung cuốn còn lại là gì?",
+    "status": 200,
+    "elapsedMs": 2109,
+    "response": {
+      "answer": "• “Hoàng Tử Bé”:\nCâu chuyện trong trẻo và sâu sắc về cậu hoàng tử nhỏ đến từ tiểu hành tinh B612. Tác phẩm văn học được yêu thích nhất nước Pháp, dành cho mọi lứa tuổi.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 37,
+          "name": "Hoàng Tử Bé",
+          "author": "Antoine de Saint-Exupéry",
+          "category": "Sách thiếu nhi",
+          "price": 69920,
+          "oldPrice": 76000.0,
+          "discount": 8,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "90773cbb-f81a-4b23-9805-477734ff020d",
+      "intent": "PRODUCT_INFO",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 37,
+          "route": "/product/37",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 37,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      }
+    }
+  },
+  {
+    "id": "comparison-5",
+    "question": "Tôi muốn mua 2 bản cuốn đó.",
+    "status": 200,
+    "elapsedMs": 7266,
+    "response": {
+      "answer": "Bạn xác nhận thêm “Nhà Giả Kim” vào giỏ nhé. Giỏ hàng chưa được thay đổi.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 58,
+          "name": "Nhà Giả Kim",
+          "author": "Paulo Coelho",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 63200,
+          "oldPrice": 79000.0,
+          "discount": 20,
+          "quantity": 230,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252411/products/zdyuok0htjowbzf7lwpx.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "4ff9c780-4ad0-4771-bbfd-4ea978a04707",
+      "intent": "PRODUCT_INFO",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm 2 cuốn vào giỏ",
+          "productId": 58,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 2
+        }
+      ],
+      "execution": {
+        "status": "AWAITING_CONFIRMATION",
+        "tool": "prepareCartChange"
+      }
+    }
+  },
+  {
+    "id": "facts-1",
+    "question": "Hoàng Tử Bé do ai viết, còn bán không?",
+    "status": 200,
+    "elapsedMs": 3875,
+    "response": {
+      "answer": "• “Hoàng Tử Bé”:\nTác giả: Antoine de Saint-Exupéry\nĐang bán, còn 160 bản theo tồn kho hiện tại.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 37,
+          "name": "Hoàng Tử Bé",
+          "author": "Antoine de Saint-Exupéry",
+          "category": "Sách thiếu nhi",
+          "price": 69920,
+          "oldPrice": 76000.0,
+          "discount": 8,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "b287c242-f1fc-47b8-b997-c49d24a67c3b",
+      "intent": "PRODUCT_INFO",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 37,
+          "route": "/product/37",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 37,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      }
+    }
+  },
+  {
+    "id": "facts-2",
+    "question": "Cho tôi số trang và ISBN của Nhà Giả Kim; nếu chưa có thông tin được xác nhận thì nói rõ.",
+    "status": 200,
+    "elapsedMs": 3641,
+    "response": {
+      "answer": "• “Nhà Giả Kim”:\nChưa có dữ liệu đã duyệt về số trang, ISBN.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 58,
+          "name": "Nhà Giả Kim",
+          "author": "Paulo Coelho",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 63200,
+          "oldPrice": 79000.0,
+          "discount": 20,
+          "quantity": 230,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252411/products/zdyuok0htjowbzf7lwpx.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "e166c3f4-b55b-4055-8f81-f535f28b8444",
+      "intent": "PRODUCT_INFO",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 58,
+          "route": "/product/58",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 58,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      }
+    }
+  },
+  {
+    "id": "facts-3",
+    "question": "Cửa hàng có sách tên “Nhật Ký Atlantis 2099” không? Nếu không có, đừng đoán giá.",
+    "status": 200,
+    "elapsedMs": 2078,
+    "response": {
+      "answer": "Mình cần kiểm tra đúng cuốn sách trong catalog trước khi xác nhận giá hoặc tồn kho. Bạn cho mình tên sách nhé.",
+      "provider": "local",
+      "model": "",
+      "fallback": false,
+      "products": [],
+      "chips": [],
+      "messageId": "04687fc7-31f7-42ce-9bb4-4fa1c327250e",
+      "intent": "UNKNOWN",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {}
+    }
+  },
+  {
+    "id": "facts-4",
+    "question": "Sách “Hoàng Tử Bé” do ai viết và còn bán không?",
+    "status": 200,
+    "elapsedMs": 3765,
+    "response": {
+      "answer": "• “Hoàng Tử Bé”:\nTác giả: Antoine de Saint-Exupéry\nĐang bán, còn 160 bản theo tồn kho hiện tại.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 37,
+          "name": "Hoàng Tử Bé",
+          "author": "Antoine de Saint-Exupéry",
+          "category": "Sách thiếu nhi",
+          "price": 69920,
+          "oldPrice": 76000.0,
+          "discount": 8,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "e2e3a23e-2ea4-41e2-87cd-6c8fc39390b7",
+      "intent": "PRODUCT_INFO",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 37,
+          "route": "/product/37",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 37,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      }
+    }
+  },
+  {
+    "id": "facts-5",
+    "question": "Cuốn đó hiện còn bao nhiêu bản?",
+    "status": 200,
+    "elapsedMs": 3454,
+    "response": {
+      "answer": "• “Hoàng Tử Bé”:\nĐang bán, còn 160 bản theo tồn kho hiện tại.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 37,
+          "name": "Hoàng Tử Bé",
+          "author": "Antoine de Saint-Exupéry",
+          "category": "Sách thiếu nhi",
+          "price": 69920,
+          "oldPrice": 76000.0,
+          "discount": 8,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "0be51091-21fe-419f-a1aa-eadcd3ab1e02",
+      "intent": "PRODUCT_INFO",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 37,
+          "route": "/product/37",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 37,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      }
+    }
+  },
+  {
+    "id": "startup-1",
+    "question": "Tôi muốn thử mở một công ty nhỏ và kiểm chứng ý tưởng trước khi đầu tư nhiều tiền. Nên đọc gì?",
+    "status": 200,
+    "elapsedMs": 3609,
+    "response": {
+      "answer": "Mình chọn theo chủ đề bạn cần:\n\n• “Khởi Nghiệp Tinh Gọn (The Lean Startup)” — 108.800đ · Eric Ries · Chưa có đánh giá\nPhương pháp xây dựng startup hiện đại: thử nghiệm nhanh, học hỏi từ khách hàng, xoay trục đúng lúc. Kim chỉ nam cho mọi nhà sáng lập.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 19,
+          "name": "Khởi Nghiệp Tinh Gọn (The Lean Startup)",
+          "author": "Eric Ries",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 108800,
+          "oldPrice": 128000.0,
+          "discount": 15,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319755/products/zmbp1gauuup88piahxdy.webp"
+        }
+      ],
+      "chips": [],
+      "messageId": "f4a6964d-6b77-45da-a9d8-25e2faefd35b",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 19,
+          "route": "/product/19",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 19,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "recommendBooks"
+      }
+    }
+  },
+  {
+    "id": "coding-1",
+    "question": "Mã nguồn của tôi ngày càng rối, tôi muốn đọc gì để viết dễ hiểu và dễ bảo trì hơn?",
+    "status": 200,
+    "elapsedMs": 3891,
+    "response": {
+      "answer": "Mình chọn theo chủ đề bạn cần:\n\n• “Clean Code - Mã Sạch Và Cách Viết” — 151.200đ · Robert C. Martin · Chưa có đánh giá\nCẩm nang kinh điển của Uncle Bob về cách viết mã nguồn sạch, dễ đọc, dễ bảo trì. Bắt buộc đọc với mọi lập trình viên muốn nâng tầm tay nghề.\n\n• “Tìm Hiểu Bộ Luật Dân Sự Việt Nam” — 143.520đ · Đỗ Văn Đại · Chưa có đánh giá\nBình luận khoa học về Bộ luật Dân sự — quyền sở hữu, hợp đồng, thừa kế, bồi thường thiệt hại. Giúp bạn đọc nắm vững nguyên tắc nền tảng của luật tư.\n\n• “Tư Duy Nhanh Và Chậm” — 151.300đ · Daniel Kahneman · Chưa có đánh giá\nCông trình tâm lý học đoạt giải Nobel về hai hệ thống tư duy chi phối mọi quyết định của con người. Cuốn sách thay đổi cách bạn hiểu về lý trí và sai lầm.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 9,
+          "name": "Clean Code - Mã Sạch Và Cách Viết",
+          "author": "Robert C. Martin",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 151200,
+          "oldPrice": 168000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320053/products/bargnm2lw0ykyd3gqinf.webp"
+        },
+        {
+          "id": 8,
+          "name": "Tìm Hiểu Bộ Luật Dân Sự Việt Nam",
+          "author": "Đỗ Văn Đại",
+          "category": "Sách Chính trị – pháp luật",
+          "price": 143520,
+          "oldPrice": 156000.0,
+          "discount": 8,
+          "quantity": 85,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320070/products/qdhv6q3h0cpfrynrzd6p.jpg"
+        },
+        {
+          "id": 55,
+          "name": "Tư Duy Nhanh Và Chậm",
+          "author": "Daniel Kahneman",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 151300,
+          "oldPrice": 178000.0,
+          "discount": 15,
+          "quantity": 200,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254927/products/o9xsf2ve0mmsrg2wkgmf.webp"
+        }
+      ],
+      "chips": [],
+      "messageId": "b8f271c5-64b2-48fd-8099-6e772f09a798",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 9,
+          "route": "/product/9",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 9,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 8,
+          "route": "/product/8",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 8,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 55,
+          "route": "/product/55",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 55,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "recommendBooks"
+      }
+    }
+  },
+  {
+    "id": "self_help-1",
+    "question": "Mình cần sách phát triển bản thân, khoảng 100.000đ một cuốn. Gợi ý vài lựa chọn hiện có nhé.",
+    "status": 200,
+    "elapsedMs": 2359,
+    "response": {
+      "answer": "Mình tìm được các cuốn phù hợp dưới đây:\n\n• “Sức Mạnh Tiềm Thức” — 99.000đ · Joseph Murphy · Chưa có đánh giá\nKhám phá nguồn sức mạnh vô tận ẩn trong tiềm thức và cách khai mở nó để thay đổi cuộc đời. Một trong những cuốn sách phát triển bản thân có ảnh hưởng nhất.\n\n• “Đắc Nhân Tâm” — 70.520đ · Dale Carnegie · Chưa có đánh giá\nCuốn sách về nghệ thuật đối nhân xử thế bán chạy nhất mọi thời đại. Những nguyên tắc vàng giúp bạn chinh phục lòng người và thành công trong giao tiếp.\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nNhững phương pháp thiết thực để vượt qua lo âu, tìm lại bình an và sống trọn vẹn từng ngày. Kim chỉ nam cho một tâm hồn an nhiên giữa cuộc sống bộn bề.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 31,
+          "name": "Sức Mạnh Tiềm Thức",
+          "author": "Joseph Murphy",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 99000,
+          "oldPrice": 110000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1686548250/products/mn4damiiyjtm4pbeslxu.jpg"
+        },
+        {
+          "id": 57,
+          "name": "Đắc Nhân Tâm",
+          "author": "Dale Carnegie",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 70520,
+          "oldPrice": 86000.0,
+          "discount": 18,
+          "quantity": 220,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252580/products/lo4gmiaypwfzes99fouo.webp"
+        },
+        {
+          "id": 32,
+          "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+          "author": "Dale Carnegie",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "3a48f776-dd26-4e7d-8c54-ec6774b6d19e",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": 100000,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 31,
+          "route": "/product/31",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 31,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 57,
+          "route": "/product/57",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 57,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 32,
+          "route": "/product/32",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 32,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      }
+    }
+  },
+  {
+    "id": "self_help-2",
+    "question": "Còn cuốn nào khác không?",
+    "status": 200,
+    "elapsedMs": 2313,
+    "response": {
+      "answer": "Mình chưa tìm thấy cuốn khác đủ phù hợp với chủ đề đang tìm. Bạn muốn đổi chủ đề hoặc nới điều kiện nào?",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [],
+      "chips": [],
+      "messageId": "3522e9e8-ea4f-4a94-9995-505d53bbbe7c",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": 100000,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {
+        "status": "NEEDS_INPUT",
+        "tool": "searchProducts"
+      }
+    }
+  },
+  {
+    "id": "adventure-1",
+    "question": "Gợi ý sách phiêu lưu đang bán.",
+    "status": 200,
+    "elapsedMs": 3797,
+    "response": {
+      "answer": "Mình chọn các cuốn có số lượng bán cao nhất trong điều kiện bạn yêu cầu, rồi sắp theo thứ tự đã chọn:\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nCuộc phiêu lưu của chú Dế Mèn qua thế giới loài vật — bài học về lòng dũng cảm, tình bạn và khát vọng. Tác phẩm gối đầu giường của bao thế hệ thiếu nhi Việt Nam.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 13,
+          "name": "Dế Mèn Phiêu Lưu Ký",
+          "author": "Tô Hoài",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 50400,
+          "oldPrice": 56000.0,
+          "discount": 10,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+        }
+      ],
+      "chips": [],
+      "messageId": "12c4dc53-50cf-4e66-b267-7f2fd7975881",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 13,
+          "route": "/product/13",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 13,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      }
+    }
+  },
+  {
+    "id": "adventure-2",
+    "question": "Còn cuốn nào khác không?",
+    "status": 200,
+    "elapsedMs": 2296,
+    "response": {
+      "answer": "Mình chưa tìm thấy cuốn khác đủ phù hợp với chủ đề đang tìm. Bạn muốn đổi chủ đề hoặc nới điều kiện nào?",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [],
+      "chips": [],
+      "messageId": "c9ed726a-e8ee-4cee-be04-52f6037fd3e7",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {
+        "status": "NEEDS_INPUT",
+        "tool": "searchProducts"
+      }
+    }
+  },
+  {
+    "id": "adventure-3",
+    "question": "Chuyển sang trinh thám nhé.",
+    "status": 200,
+    "elapsedMs": 3782,
+    "response": {
+      "answer": "Mình chọn các cuốn có số lượng bán cao nhất trong điều kiện bạn yêu cầu, rồi sắp theo thứ tự đã chọn:\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.\n\n• “Sherlock Holmes Toàn Tập - Tập 1” — 193.500đ · Arthur Conan Doyle · Chưa có đánh giá\nNhững vụ án ly kỳ của thám tử lừng danh phố Baker. Tài suy luận thiên tài của Sherlock Holmes đã làm say mê độc giả khắp thế giới hơn một thế kỷ qua.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 48,
+          "name": "Thám Tử Lừng Danh Conan - Tập 1",
+          "author": "Gosho Aoyama",
+          "category": "Sách thiếu nhi",
+          "price": 23750,
+          "oldPrice": 25000.0,
+          "discount": 5,
+          "quantity": 250,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+        },
+        {
+          "id": 26,
+          "name": "Sherlock Holmes Toàn Tập - Tập 1",
+          "author": "Arthur Conan Doyle",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 193500,
+          "oldPrice": 215000.0,
+          "discount": 10,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319589/products/ptjyfdchzgieobq2kuwg.webp"
+        }
+      ],
+      "chips": [],
+      "messageId": "4020c3d0-ce20-49e1-b6d8-f324e7d39a2c",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 48,
+          "route": "/product/48",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 48,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 26,
+          "route": "/product/26",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 26,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      }
+    }
+  },
+  {
+    "id": "adventure-4",
+    "question": "Chỉ lấy những cuốn dưới 150.000đ.",
+    "status": 200,
+    "elapsedMs": 3703,
+    "response": {
+      "answer": "Mình chọn các cuốn có số lượng bán cao nhất trong điều kiện bạn yêu cầu, rồi sắp theo thứ tự đã chọn:\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 48,
+          "name": "Thám Tử Lừng Danh Conan - Tập 1",
+          "author": "Gosho Aoyama",
+          "category": "Sách thiếu nhi",
+          "price": 23750,
+          "oldPrice": 25000.0,
+          "discount": 5,
+          "quantity": 250,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+        }
+      ],
+      "chips": [],
+      "messageId": "be9537df-c5f2-47d2-8b07-948bcf11a519",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": 150000,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 48,
+          "route": "/product/48",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 48,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      }
+    }
+  },
+  {
+    "id": "child-1",
+    "question": "Mình mua quà cho bé 8 tuổi. Có sách nào nên cân nhắc?",
+    "status": 200,
+    "elapsedMs": 2235,
+    "response": {
+      "answer": "Bạn đang tìm quà cho bé 8 tuổi. Đây là các sách thuộc nhóm thiếu nhi trong catalog; cửa hàng chưa có độ tuổi đọc đã duyệt cho từng cuốn:\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nChú mèo máy Doraemon từ tương lai cùng những bảo bối thần kỳ và cậu bạn Nobita. Bộ truyện tranh tuổi thơ thân thương của bao thế hệ thiếu nhi.\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.\n\n• “10 Vạn Câu Hỏi Vì Sao” — 75.650đ · Nhiều Tác Giả · Chưa có đánh giá\nBộ sách khoa học giải đáp hàng nghìn thắc mắc của trẻ về thế giới quanh ta: thiên nhiên, vũ trụ, cơ thể, công nghệ. Nuôi dưỡng trí tò mò và niềm yêu khám phá.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [
+        {
+          "id": 51,
+          "name": "Doraemon - Tập 1",
+          "author": "Fujiko F. Fujio",
+          "category": "Sách thiếu nhi",
+          "price": 19800,
+          "oldPrice": 22000.0,
+          "discount": 10,
+          "quantity": 300,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+        },
+        {
+          "id": 48,
+          "name": "Thám Tử Lừng Danh Conan - Tập 1",
+          "author": "Gosho Aoyama",
+          "category": "Sách thiếu nhi",
+          "price": 23750,
+          "oldPrice": 25000.0,
+          "discount": 5,
+          "quantity": 250,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+        },
+        {
+          "id": 36,
+          "name": "10 Vạn Câu Hỏi Vì Sao",
+          "author": "Nhiều Tác Giả",
+          "category": "Sách thiếu nhi",
+          "price": 75650,
+          "oldPrice": 89000.0,
+          "discount": 15,
+          "quantity": 170,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1686548402/products/byvkzoeemkmotbeinw8d.jpg"
+        }
+      ],
+      "chips": [],
+      "messageId": "dcb0b12f-12a4-4b91-ab75-67e5ba59ae6c",
+      "intent": "DISCOVER_BOOKS",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 51,
+          "route": "/product/51",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 51,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 48,
+          "route": "/product/48",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 48,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "VIEW_PRODUCT",
+          "label": "Xem sách",
+          "productId": 36,
+          "route": "/product/36",
+          "requiresConfirmation": false,
+          "orderId": null,
+          "quantity": 1
+        },
+        {
+          "type": "ADD_TO_CART",
+          "label": "Thêm giỏ",
+          "productId": 36,
+          "route": null,
+          "requiresConfirmation": true,
+          "orderId": null,
+          "quantity": 1
+        }
+      ],
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      }
+    }
+  },
+  {
+    "id": "policy_and_order-1",
+    "question": "Đơn 290k và 310k thì phí ship thế nào?",
+    "status": 200,
+    "elapsedMs": 2110,
+    "response": {
+      "answer": "Phí giao hàng 20.000đ, miễn phí khi tiền sách từ 300.000đ. Thời gian giao dự kiến 2–4 ngày làm việc.\n• Tiền sách 290.000đ: phí giao hàng 20.000đ; tổng thanh toán 310.000đ.\n• Tiền sách 310.000đ: miễn phí giao hàng; tổng thanh toán 310.000đ.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [],
+      "chips": [],
+      "messageId": "f6ba14eb-3019-4334-bc19-d7b351305e57",
+      "intent": "POLICY",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getPolicy"
+      }
+    }
+  },
+  {
+    "id": "policy_and_order-2",
+    "question": "Chưa đăng nhập thì có xem được đơn hàng của tôi không?",
+    "status": 200,
+    "elapsedMs": 2062,
+    "response": {
+      "answer": "Bạn cần đăng nhập để mình tra cứu đơn hàng. Sau khi đăng nhập, hãy hỏi lại “Đơn hàng của tôi đang ở đâu?”.",
+      "provider": "gemini",
+      "model": "gemini-3.1-flash-lite",
+      "fallback": false,
+      "products": [],
+      "chips": [],
+      "messageId": "27aabdfe-5d01-49ef-a3ff-b081a08db7db",
+      "intent": "ORDER_SUPPORT",
+      "criteria": {
+        "minPrice": null,
+        "maxPrice": null,
+        "category": "",
+        "author": "",
+        "sort": "",
+        "topics": [],
+        "minRating": null
+      },
+      "actions": [],
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getOrderDetail"
+      }
+    }
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "turns": 25,
+  "http200": 25,
+  "fallbacks": 0,
+  "minMs": 2125,
+  "medianMs": 5890,
+  "maxMs": 11797,
+  "checks": {
+    "all_http_200": true,
+    "no_fallback": true,
+    "more_does_not_repeat": true,
+    "java_exclusion_retained": true,
+    "java_exclusion_cleared": true,
+    "total_budget_300k": true,
+    "total_budget_400k": true,
+    "budget_cleared": true,
+    "per_book_price": true,
+    "only_python_retained": true,
+    "unknown_topic_empty": true,
+    "count_is_not_money": true,
+    "policy_and_books": true,
+    "startup_goal_ranked_first": true,
+    "maintainability_goal": true,
+    "mystery_goal": true
+  }
+}

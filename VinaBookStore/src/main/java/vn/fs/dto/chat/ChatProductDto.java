@@ -12,8 +12,16 @@ public class ChatProductDto {
 	private final int quantity;
 	private final String image;
 
-	public ChatProductDto(Long id, String name, String author, String category, long price,
-			double oldPrice, int discount, int quantity, String image) {
+	@com.fasterxml.jackson.annotation.JsonCreator
+	public ChatProductDto(@com.fasterxml.jackson.annotation.JsonProperty("id") Long id,
+			@com.fasterxml.jackson.annotation.JsonProperty("name") String name,
+			@com.fasterxml.jackson.annotation.JsonProperty("author") String author,
+			@com.fasterxml.jackson.annotation.JsonProperty("category") String category,
+			@com.fasterxml.jackson.annotation.JsonProperty("price") long price,
+			@com.fasterxml.jackson.annotation.JsonProperty("oldPrice") double oldPrice,
+			@com.fasterxml.jackson.annotation.JsonProperty("discount") int discount,
+			@com.fasterxml.jackson.annotation.JsonProperty("quantity") int quantity,
+			@com.fasterxml.jackson.annotation.JsonProperty("image") String image) {
 		this.id = id;
 		this.name = name;
 		this.author = author;

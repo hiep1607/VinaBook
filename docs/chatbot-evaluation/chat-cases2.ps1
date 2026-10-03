@@ -1,0 +1,50 @@
+﻿# Kich ban test chatbot - phan 2 (noi vao $cases da khoi tao o phan 1)
+# --- 9. So sanh (6) ---
+AddCase 'SO_SANH' 'So sánh Nhà Giả Kim và Hoàng Tử Bé' 'COMPARE_BOOKS' '' ''
+AddCase 'SO_SANH' 'Khác nhau giữa Tư Duy Nhanh Và Chậm và Quẳng Gánh Lo Đi?' 'COMPARE_BOOKS' '' ''
+AddCase 'SO_SANH' 'Nên chọn Clean Code hay Khởi Nghiệp Tinh Gọn?' 'COMPARE_BOOKS' '' ''
+AddCase 'SO_SANH' 'So sánh Sherlock Holmes với Chí Phèo' 'COMPARE_BOOKS' '' ''
+AddCase 'SO_SANH' 'Cuốn nào hay hơn: Truyện Kiều hay Hoàng Tử Bé?' 'COMPARE_BOOKS' '' ''
+AddCase 'SO_SANH' 'Truyện Kiều khác Dế Mèn Phiêu Lưu Ký thế nào?' 'COMPARE_BOOKS' '' ''
+# --- 10. Sai chinh ta (5) ---
+AddCase 'SAI_CHINH_TA' 'tìm sách Dế Mèn Phiêu Lưu Ký giùm nha' 'DISCOVER_BOOKS' '' ''
+AddCase 'SAI_CHINH_TA' 'có sách Harrry Poter không?' 'DISCOVER_BOOKS' '' ''
+AddCase 'SAI_CHINH_TA' 'sách Đắc Nhân Tâm giá bao nhêu?' 'PRODUCT_INFO' '' ''
+AddCase 'SAI_CHINH_TA' 'phí shíp sao vậy bạn' 'POLICY' '' ''
+AddCase 'SAI_CHINH_TA' 'Tôi muon mua Hary Poter' 'DISCOVER_BOOKS' '' ''
+# --- 11. Khong dau (5) ---
+AddCase 'KHONG_DAU' 'tim sach de men phieu luu ky' 'DISCOVER_BOOKS' '' ''
+AddCase 'KHONG_DAU' 'co sach nha gia kim khong' 'DISCOVER_BOOKS' '' ''
+AddCase 'KHONG_DAU' 'goi y sach duoi 100k' 'DISCOVER_BOOKS' '' ''
+AddCase 'KHONG_DAU' 'sach hai cua nguyen nhat anh' 'DISCOVER_BOOKS' '' ''
+AddCase 'KHONG_DAU' 'phi ship bao nhieu vay ban' 'POLICY' '' ''
+# --- 12. Ngoai ngu (3) ---
+AddCase 'NGOAI_NGU' 'Do you have Harry Potter in stock?' 'ANY' '' ''
+AddCase 'NGOAI_NGU' 'What books do you recommend for kids?' 'ANY' '' ''
+AddCase 'NGOAI_NGU' 'こんにちは、本を探しています' 'ANY' '' ''
+# --- 13. Vo nghia / lang nhang (6) ---
+AddCase 'VO_NGHIA' 'asdfghjkl' 'UNKNOWN' '' ''
+AddCase 'VO_NGHIA' '??????' 'ANY' '' ''
+AddCase 'VO_NGHIA' 'Tôi là người ngoài hành tinh' 'ANY' '' ''
+AddCase 'VO_NGHIA' 'Bầu trời hôm nay xanh nhỉ?' 'ANY' '' ''
+AddCase 'VO_NGHIA' 'abc def ghi' 'ANY' '' ''
+AddCase 'VO_NGHIA' '123456789' 'ANY' '' ''
+# --- 14. Cau dai nhieu dieu kien (5) ---
+AddCase 'CAU_DAI' 'Mình đang tìm một cuốn sách hay về phát triển bản thân, ngân sách khoảng 100k, bạn gợi ý giúp mình vài cuốn được không?' 'DISCOVER_BOOKS' 'cd1' ''
+AddCase 'CAU_DAI' 'Mình muốn tặng sách cho em nhỏ 8 tuổi, nên chọn cuốn nào cho phù hợp?' 'DISCOVER_BOOKS' 'cd2' ''
+AddCase 'CAU_DAI' 'Mình thích truyện trinh thám kiểu Sherlock Holmes, có cuốn nào tương tự không?' 'DISCOVER_BOOKS' 'cd3' ''
+AddCase 'CAU_DAI' 'Trong số các sách tâm lý hiện có thì cuốn nào đáng đọc nhất bạn nhỉ?' 'DISCOVER_BOOKS' 'cd4' ''
+AddCase 'CAU_DAI' 'Mình mới học lập trình, nên đọc Clean Code trước hay tìm cuốn khác dễ hơn?' 'DISCOVER_BOOKS' 'cd5' ''
+# --- 15. Follow-up co ngu canh (8) ---
+AddCase 'FOLLOW_UP' 'Gợi ý sách phiêu lưu' 'DISCOVER_BOOKS' 'fu1' ''
+AddCase 'FOLLOW_UP' 'Còn cuốn khác không?' 'DISCOVER_BOOKS' 'fu1' ''
+AddCase 'FOLLOW_UP' 'Sách rẻ hơn được không?' 'DISCOVER_BOOKS' 'fu1' ''
+AddCase 'FOLLOW_UP' 'Gợi ý sách dưới 100k' 'DISCOVER_BOOKS' 'fu2' ''
+AddCase 'FOLLOW_UP' 'So sánh các cuốn này' 'COMPARE_BOOKS' 'fu2' 'ctx'
+AddCase 'FOLLOW_UP' 'Tìm Harry Potter' 'DISCOVER_BOOKS' 'fu3' ''
+AddCase 'FOLLOW_UP' 'Thêm Harry Potter vào giỏ' 'ANY' 'fu3' ''
+AddCase 'FOLLOW_UP' 'Cảm ơn nhé' 'SMALL_TALK' 'fu3' ''
+# --- 16. Bien do (3) ---
+AddCase 'BIEN_DO' '   ' 'HTTP_400' '' ''
+AddCase 'BIEN_DO' ('truyện dài lắm phải không ' + ('x' * 990)) 'HTTP_400' '' ''
+AddCase 'BIEN_DO' 'Sách  tế  nhị  giữa  khoảng  50  nghìn  và  120  nghìn  thì  có  cuốn  nào  không  bạn  ơi' 'DISCOVER_BOOKS' '' ''

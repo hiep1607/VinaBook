@@ -8,6 +8,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { OrderService } from 'src/app/services/order.service';
 import { PaymentService } from 'src/app/services/payment.service';
 import { MotionService } from 'src/app/services/motion.service';
+import { StoreKnowledgeService, StoreSettings } from 'src/app/services/store-knowledge.service';
 
 @Component({
   selector: 'app-checkout',
@@ -18,7 +19,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   @ViewChild('placeOrderButton') placeOrderButton?: ElementRef<HTMLButtonElement>;
 
-  readonly freeShippingThreshold = 300000;
+  shippingSettings?: StoreSettings;
+  shippingUnavailable = false;
 
   cartItems: any[] = [];
   addresses: any[] = [];
@@ -55,10 +57,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private paymentService: PaymentService,
     private router: Router,
     private notification: NotificationService,
-    private motion: MotionService
+    private motion: MotionService,
+    private knowledge: StoreKnowledgeService
   ) {}
 
   ngOnInit(): void {
+    this.knowledge.get().subscribe(data => this.shippingSettings = data.settings,
+      () => this.shippingUnavailable = true);
     this.cartService.getCartItems();
     if (this.cartService.syncing) {
       this.cartService.flush().then(() => { if (!this.destroyed) this.ngOnInit(); }, () => {
@@ -160,7 +165,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   getShipping(): number {
     const subtotal = this.getSubtotal();
-    return subtotal > 0 && subtotal < this.freeShippingThreshold ? 20000 : 0;
+    return this.shippingSettings ? StoreKnowledgeService.shipping(subtotal, this.shippingSettings) : 0;
   }
 
   getTotal(): number {
@@ -168,6 +173,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   async placeOrder(): Promise<void> {
+    if (!this.shippingSettings) { this.formError = 'Chưa tải được chính sách giao hàng. Vui lòng thử lại.'; return; }
     if (this.placing || this.preparing || this.orderPlaced) return;
     this.preparing = true;
     try { await this.cartService.flush(); } catch { this.formError = this.cartService.syncError || 'Chưa đồng bộ được giỏ hàng. Vui lòng kiểm tra lại.'; return; }
@@ -208,7 +214,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.placing = true;
 
     this.orderService
-      .placeOrder(this.email, addressLine, shippingAddress.phone, this.cartItems, this.selectedPayment, !this.cartService.buyNowItem, this.cartService.serverRevision)
+      .placeOrder(this.email, addressLine, shippingAddress.phone, this.cartItems, this.selectedPayment, !this.cartService.buyNowItem, this.cartService.serverRevision, this.getTotal())
       .subscribe(
         (order: any) => {
           if (isNewAddress && this.saveToProfile) {
@@ -250,6 +256,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.placing = false;
           this.formError = error?.error?.message || error?.message || 'Chưa xác nhận được kết quả đặt hàng. Vui lòng kiểm tra Đơn hàng trước khi đặt lại.';
           this.notification.error(this.formError);
+          this.knowledge.get().subscribe(data => this.shippingSettings = data.settings, () => {});
         }
       );
   }

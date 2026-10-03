@@ -124,9 +124,10 @@
           </span>
 
           <strong>
-            <ng-container *ngIf="getShippingFee() > 0; else freeShipping">
+            <ng-container *ngIf="!shippingSettings; else knownCartShipping">Đang kiểm tra</ng-container>
+            <ng-template #knownCartShipping><ng-container *ngIf="getShippingFee() > 0; else freeShipping">
               {{ getShippingFee() | number }}đ
-            </ng-container>
+            </ng-container></ng-template>
             <ng-template #freeShipping>Miễn phí</ng-template>
           </strong>
 
@@ -139,7 +140,7 @@
           </span>
 
           <strong>
-            {{ getTotal() | number }}đ
+            {{ shippingSettings ? (getTotal() | number) + 'đ' : 'Đang kiểm tra' }}
           </strong>
 
         </div>
@@ -148,7 +149,7 @@
   type="button"
   class="checkout-btn"
   (click)="goToCheckout()"
-  [disabled]="getSubtotal() <= 0"
+  [disabled]="getSubtotal() <= 0 || !shippingSettings"
 >
   Tiến hành thanh toán
 </button>

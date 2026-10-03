@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Product } from '../common/Product';
 import { environment } from 'src/environments/environment';
 import { ProductPreviewManifest, ProductPreviewPage } from '../common/ProductPreview';
+import { BookProfileInput } from '../common/BookKnowledge';
 
 @Injectable({
   providedIn: 'root'
@@ -14,11 +15,28 @@ export class ProductService {
   constructor(private httpClient: HttpClient) { }
 
   getAll() {
-    return this.httpClient.get(this.url);
+    return this.httpClient.get(`${environment.apiUrl}/api/admin/products`);
+  }
+
+  getKnowledge(id: number) {
+    return this.httpClient.get<BookProfileInput>(`${environment.apiUrl}/api/admin/books/${id}/profile`);
+  }
+
+  suggestKnowledge(id: number) {
+    return this.httpClient.post<BookProfileInput>(`${environment.apiUrl}/api/admin/books/${id}/suggest`, {});
+  }
+
+  publishKnowledge(id: number, profile: BookProfileInput) {
+    return this.httpClient.put<BookProfileInput>(`${environment.apiUrl}/api/admin/books/${id}/publish`, profile);
+  }
+
+  reindexKnowledge() {
+    return this.httpClient.post<{configured: boolean; indexed: number; remaining: number; failedProductId?: number}>(
+      `${environment.apiUrl}/api/admin/books/reindex`, {});
   }
 
   getOne(id: number) {
-    return this.httpClient.get(this.url + '/' + id);
+    return this.httpClient.get(`${environment.apiUrl}/api/admin/products/${id}`);
   }
 
   getBestSeller() {

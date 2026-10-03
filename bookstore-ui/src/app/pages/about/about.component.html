@@ -112,12 +112,12 @@
         </div>
 
         <div class="stat" appReveal="up" [revealDelay]="240">
-          <div class="stat-number">2-4</div>
+          <div class="stat-number">{{ shippingSettings ? shippingSettings.deliveryMinDays + '–' + shippingSettings.deliveryMaxDays : '—' }}</div>
           <div class="stat-label">Ngày giao hàng dự kiến</div>
         </div>
 
         <div class="stat" appReveal="up" [revealDelay]="360">
-          <div class="stat-number">300K</div>
+          <div class="stat-number">{{ shippingSettings ? (shippingSettings.freeShippingThreshold | number) + 'đ' : '—' }}</div>
           <div class="stat-label">Miễn phí vận chuyển từ</div>
         </div>
 
