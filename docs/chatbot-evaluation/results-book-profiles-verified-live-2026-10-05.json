@@ -1,0 +1,2242 @@
+{
+  "testedAt": "2026-10-05T17:16:21.113580+07:00",
+  "app": "VinaBook localhost:4200 -> Spring Boot/Gemini/MySQL",
+  "method": "Actual storefront proxy API; fresh guest sessions with server memory. No browser UI or signed-in account test.",
+  "manifest": "docs/book-knowledge/profiles-reviewed-2026-10-05.json",
+  "scenarios": [
+    {
+      "id": "01-nguoi-it-doc",
+      "questions": [
+        "Mình ít đọc sách, gợi ý 3 cuốn văn học dễ đọc.",
+        "Trong các cuốn đó, cuốn nào có căn cứ là dễ đọc nhất?",
+        "Giải thích kỹ hơn vì sao bạn chọn cuốn ấy nhé."
+      ]
+    },
+    {
+      "id": "02-be-8-tuoi",
+      "questions": [
+        "Tìm vài cuốn truyện cho bé 8 tuổi dưới 100 nghìn.",
+        "Phí vận chuyển là bao nhiêu?",
+        "Trong những cuốn vừa giới thiệu, cuốn nào có thông tin độ tuổi rõ nhất?",
+        "Conan có phù hợp với bé 8 tuổi không?"
+      ]
+    },
+    {
+      "id": "03-giao-tiep",
+      "questions": [
+        "Đắc Nhân Tâm nói cụ thể về gì, có cách áp dụng không?",
+        "Mình hay bất đồng với đồng nghiệp. Vì sao cuốn đó liên quan?",
+        "Nói sâu hơn, cho mình một nguyên tắc cụ thể đã xác nhận trong sách."
+      ]
+    },
+    {
+      "id": "04-lo-lang",
+      "questions": [
+        "Mình hay lo về công việc và tiền bạc, muốn sách có cách áp dụng cụ thể.",
+        "Giải thích vì sao những cuốn đó phù hợp và khác nhau thế nào.",
+        "Chỉ chọn 1 cuốn sát với chuyện lo lắng công việc của mình thôi."
+      ]
+    },
+    {
+      "id": "05-qua-tang",
+      "questions": [
+        "Mua sách tặng bạn nữ 22 tuổi, bạn ấy thích truyện nhẹ nhàng, không thích sách dạy thành công.",
+        "Tại sao lại là những cuốn đó?",
+        "Mắt Biếc có kết thúc vui không, có nên thay vào danh sách đó không?"
+      ]
+    },
+    {
+      "id": "06-an-ban",
+      "questions": [
+        "Cho Tôi Xin Một Vé Đi Tuổi Thơ bán ở đây có bao nhiêu trang và ISBN là gì?",
+        "Có phải bản màu có minh họa của NXB Trẻ không?"
+      ]
+    },
+    {
+      "id": "07-lap-trinh",
+      "questions": [
+        "Clean Code dành cho ai? Mình chưa biết lập trình thì đọc có phù hợp không?",
+        "Có ví dụ cụ thể hay chỉ là lời khuyên chung?",
+        "Còn The Pragmatic Programmer có khác gì?"
+      ]
+    },
+    {
+      "id": "08-tai-chinh",
+      "questions": [
+        "Nhà Đầu Tư Thông Minh có giúp mình lập ngân sách chi tiêu hàng tháng không?",
+        "Nếu mình muốn tìm hiểu chứng khoán dài hạn thì nội dung đã xác nhận của sách là gì?"
+      ]
+    }
+  ],
+  "results": [
+    {
+      "scenario": "01-nguoi-it-doc",
+      "turn": 1,
+      "question": "Mình ít đọc sách, gợi ý 3 cuốn văn học dễ đọc.",
+      "httpStatus": 200,
+      "elapsedMs": 15453,
+      "answer": "Bạn muốn 3 cuốn; mình tìm được 3 lựa chọn theo nội dung bạn tìm.\n\nCó vài điểm cần xem thêm trước khi quyết định; mình ghi rõ dưới từng cuốn. Dữ liệu hiện chưa xác nhận mức đọc cho mọi cuốn.\n\n**Sách theo nội dung bạn tìm:**\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ” — 71.760đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nĐây là lựa chọn phù hợp nhất cho người ít đọc sách vì nguồn dữ liệu đã xác nhận cuốn này dễ tiếp cận với giọng kể hóm hỉnh.\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nTruyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận. Độc giả nhỏ…\nChưa xác nhận độ dễ đọc cho cuốn này.\n\n• “Tôi Thấy Hoa Vàng Trên Cỏ Xanh” — 79.200đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nThiều, Tường và những đứa trẻ trong một ngôi làng cùng nô đùa, cãi cọ, yêu thương và lớn lên giữa nhiều biến cố. Câu chuyện có tình cảm anh em, bạn bè, cùng những cảnh đói ăn, cháy nhà và lụt lội. Ngư…\nChưa xác nhận độ dễ đọc cho cuốn này.",
+      "products": [
+        {
+          "id": 50,
+          "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 71760,
+          "oldPrice": 78000.0,
+          "discount": 8,
+          "quantity": 150,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+        },
+        {
+          "id": 13,
+          "name": "Dế Mèn Phiêu Lưu Ký",
+          "author": "Tô Hoài",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 50400,
+          "oldPrice": 56000.0,
+          "discount": 10,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+        },
+        {
+          "id": 49,
+          "name": "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 79200,
+          "oldPrice": 88000.0,
+          "discount": 10,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254725/products/tcnifywbraeqs4pm0r10.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "recommendBooks"
+      },
+      "response": {
+        "answer": "Bạn muốn 3 cuốn; mình tìm được 3 lựa chọn theo nội dung bạn tìm.\n\nCó vài điểm cần xem thêm trước khi quyết định; mình ghi rõ dưới từng cuốn. Dữ liệu hiện chưa xác nhận mức đọc cho mọi cuốn.\n\n**Sách theo nội dung bạn tìm:**\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ” — 71.760đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nĐây là lựa chọn phù hợp nhất cho người ít đọc sách vì nguồn dữ liệu đã xác nhận cuốn này dễ tiếp cận với giọng kể hóm hỉnh.\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nTruyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận. Độc giả nhỏ…\nChưa xác nhận độ dễ đọc cho cuốn này.\n\n• “Tôi Thấy Hoa Vàng Trên Cỏ Xanh” — 79.200đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nThiều, Tường và những đứa trẻ trong một ngôi làng cùng nô đùa, cãi cọ, yêu thương và lớn lên giữa nhiều biến cố. Câu chuyện có tình cảm anh em, bạn bè, cùng những cảnh đói ăn, cháy nhà và lụt lội. Ngư…\nChưa xác nhận độ dễ đọc cho cuốn này.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 50,
+            "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+            "author": "Nguyễn Nhật Ánh",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 71760,
+            "oldPrice": 78000.0,
+            "discount": 8,
+            "quantity": 150,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+          },
+          {
+            "id": 13,
+            "name": "Dế Mèn Phiêu Lưu Ký",
+            "author": "Tô Hoài",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 50400,
+            "oldPrice": 56000.0,
+            "discount": 10,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+          },
+          {
+            "id": 49,
+            "name": "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
+            "author": "Nguyễn Nhật Ánh",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 79200,
+            "oldPrice": 88000.0,
+            "discount": 10,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254725/products/tcnifywbraeqs4pm0r10.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "982fb381-1dbd-466d-b45c-9061979e9162",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 50,
+            "route": "/product/50",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 50,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 13,
+            "route": "/product/13",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 13,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 49,
+            "route": "/product/49",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 49,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "recommendBooks"
+        }
+      }
+    },
+    {
+      "scenario": "01-nguoi-it-doc",
+      "turn": 2,
+      "question": "Trong các cuốn đó, cuốn nào có căn cứ là dễ đọc nhất?",
+      "httpStatus": 200,
+      "elapsedMs": 4906,
+      "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ”\nĐây là cuốn duy nhất có căn cứ xác nhận về độ dễ đọc từ đơn vị phát hành, giúp bạn yên tâm hơn khi bắt đầu thói quen đọc.\n\n• “Dế Mèn Phiêu Lưu Ký”\nMình chọn cuốn này theo phần nội dung đã được mô tả. Truyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận.\nChưa xác nhận độ dễ đọc cho cuốn này.\nNếu bạn muốn bắt đầu từ câu chuyện về tình bạn, đây là điểm nội dung để cân nhắc khi xem thử.\n\n• “Tôi Thấy Hoa Vàng Trên Cỏ Xanh”\nMình chọn cuốn này theo phần nội dung đã được mô tả. Thiều, Tường và những đứa trẻ trong một ngôi làng cùng nô đùa, cãi cọ, yêu thương và lớn lên giữa nhiều biến cố. Câu chuyện có tình cảm anh em, bạn bè, cùng những cảnh đói ăn, cháy nhà và lụt lội.\nChưa xác nhận độ dễ đọc cho cuốn này.\n\nVới mục tiêu bạn nêu, mình nghiêng về “Cho Tôi Xin Một Vé Đi Tuổi Thơ”.",
+      "products": [
+        {
+          "id": 50,
+          "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 71760,
+          "oldPrice": 78000.0,
+          "discount": 8,
+          "quantity": 150,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+        },
+        {
+          "id": 13,
+          "name": "Dế Mèn Phiêu Lưu Ký",
+          "author": "Tô Hoài",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 50400,
+          "oldPrice": 56000.0,
+          "discount": 10,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+        },
+        {
+          "id": 49,
+          "name": "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 79200,
+          "oldPrice": 88000.0,
+          "discount": 10,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254725/products/tcnifywbraeqs4pm0r10.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ”\nĐây là cuốn duy nhất có căn cứ xác nhận về độ dễ đọc từ đơn vị phát hành, giúp bạn yên tâm hơn khi bắt đầu thói quen đọc.\n\n• “Dế Mèn Phiêu Lưu Ký”\nMình chọn cuốn này theo phần nội dung đã được mô tả. Truyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận.\nChưa xác nhận độ dễ đọc cho cuốn này.\nNếu bạn muốn bắt đầu từ câu chuyện về tình bạn, đây là điểm nội dung để cân nhắc khi xem thử.\n\n• “Tôi Thấy Hoa Vàng Trên Cỏ Xanh”\nMình chọn cuốn này theo phần nội dung đã được mô tả. Thiều, Tường và những đứa trẻ trong một ngôi làng cùng nô đùa, cãi cọ, yêu thương và lớn lên giữa nhiều biến cố. Câu chuyện có tình cảm anh em, bạn bè, cùng những cảnh đói ăn, cháy nhà và lụt lội.\nChưa xác nhận độ dễ đọc cho cuốn này.\n\nVới mục tiêu bạn nêu, mình nghiêng về “Cho Tôi Xin Một Vé Đi Tuổi Thơ”.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 50,
+            "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+            "author": "Nguyễn Nhật Ánh",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 71760,
+            "oldPrice": 78000.0,
+            "discount": 8,
+            "quantity": 150,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+          },
+          {
+            "id": 13,
+            "name": "Dế Mèn Phiêu Lưu Ký",
+            "author": "Tô Hoài",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 50400,
+            "oldPrice": 56000.0,
+            "discount": 10,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+          },
+          {
+            "id": 49,
+            "name": "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
+            "author": "Nguyễn Nhật Ánh",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 79200,
+            "oldPrice": 88000.0,
+            "discount": 10,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254725/products/tcnifywbraeqs4pm0r10.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "442315a6-46c3-4b51-85a9-ec1f629dd95e",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "01-nguoi-it-doc",
+      "turn": 3,
+      "question": "Giải thích kỹ hơn vì sao bạn chọn cuốn ấy nhé.",
+      "httpStatus": 200,
+      "elapsedMs": 5000,
+      "answer": "Với cả danh sách vừa gợi ý, mỗi cuốn có một trọng tâm để bạn cân nhắc:\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ”\nDữ liệu xác nhận đây là cuốn duy nhất trong danh sách có nhận xét cụ thể về độ dễ đọc từ đơn vị phát hành. Điều này giúp bạn có căn cứ tin cậy hơn khi tìm kiếm một cuốn sách phù hợp với người ít đọc như nhu cầu của bạn.",
+      "products": [
+        {
+          "id": 50,
+          "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 71760,
+          "oldPrice": 78000.0,
+          "discount": 8,
+          "quantity": 150,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Với cả danh sách vừa gợi ý, mỗi cuốn có một trọng tâm để bạn cân nhắc:\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ”\nDữ liệu xác nhận đây là cuốn duy nhất trong danh sách có nhận xét cụ thể về độ dễ đọc từ đơn vị phát hành. Điều này giúp bạn có căn cứ tin cậy hơn khi tìm kiếm một cuốn sách phù hợp với người ít đọc như nhu cầu của bạn.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 50,
+            "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+            "author": "Nguyễn Nhật Ánh",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 71760,
+            "oldPrice": 78000.0,
+            "discount": 8,
+            "quantity": 150,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "57768e9e-bb7f-47e7-9fc6-76705c403c0f",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "02-be-8-tuoi",
+      "turn": 1,
+      "question": "Tìm vài cuốn truyện cho bé 8 tuổi dưới 100 nghìn.",
+      "httpStatus": 200,
+      "elapsedMs": 5266,
+      "answer": "Mình chọn được 4 lựa chọn theo nội dung để bạn xem thử:\n\nCó vài điểm cần xem thêm trước khi quyết định; mình ghi rõ dưới từng cuốn.\n\n**Sách theo nội dung bạn tìm:**\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nĐây là lựa chọn sát với độ tuổi của bé nhất nhờ phân loại đối tượng độc giả cụ thể từ nhà xuất bản.\n\n• “Hoàng Tử Bé” — 69.920đ · Antoine de Saint-Exupéry · Chưa có đánh giá\nTruyện về hoàng tử nhỏ và cách cậu nhìn thế giới, gửi gắm suy ngẫm về con người và đời sống. Tác phẩm kết hợp chất thơ với những câu hỏi mang tính triết lý. Trẻ em và người lớn quan tâm truyện mang ch…\nChưa xác nhận độ tuổi đọc cho cuốn này.\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nTruyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận. Độc giả nhỏ…\nChưa xác nhận độ tuổi đọc cho cuốn này.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ” — 71.760đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nNgười kể hồi tưởng những trò chơi và cách nhìn thế giới của cu Mùi, Hải cò, Tủn và Tí sún. Từ ký ức tuổi thơ, câu chuyện nối sang suy nghĩ của người lớn về cách thấu hiểu trẻ em. Người lớn, phụ huynh …\nChưa xác nhận độ tuổi đọc cho cuốn này.",
+      "products": [
+        {
+          "id": 51,
+          "name": "Doraemon - Tập 1",
+          "author": "Fujiko F. Fujio",
+          "category": "Sách thiếu nhi",
+          "price": 19800,
+          "oldPrice": 22000.0,
+          "discount": 10,
+          "quantity": 300,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+        },
+        {
+          "id": 37,
+          "name": "Hoàng Tử Bé",
+          "author": "Antoine de Saint-Exupéry",
+          "category": "Sách thiếu nhi",
+          "price": 69920,
+          "oldPrice": 76000.0,
+          "discount": 8,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+        },
+        {
+          "id": 13,
+          "name": "Dế Mèn Phiêu Lưu Ký",
+          "author": "Tô Hoài",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 50400,
+          "oldPrice": 56000.0,
+          "discount": 10,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+        },
+        {
+          "id": 50,
+          "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 71760,
+          "oldPrice": 78000.0,
+          "discount": 8,
+          "quantity": 150,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      },
+      "response": {
+        "answer": "Mình chọn được 4 lựa chọn theo nội dung để bạn xem thử:\n\nCó vài điểm cần xem thêm trước khi quyết định; mình ghi rõ dưới từng cuốn.\n\n**Sách theo nội dung bạn tìm:**\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nĐây là lựa chọn sát với độ tuổi của bé nhất nhờ phân loại đối tượng độc giả cụ thể từ nhà xuất bản.\n\n• “Hoàng Tử Bé” — 69.920đ · Antoine de Saint-Exupéry · Chưa có đánh giá\nTruyện về hoàng tử nhỏ và cách cậu nhìn thế giới, gửi gắm suy ngẫm về con người và đời sống. Tác phẩm kết hợp chất thơ với những câu hỏi mang tính triết lý. Trẻ em và người lớn quan tâm truyện mang ch…\nChưa xác nhận độ tuổi đọc cho cuốn này.\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nTruyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận. Độc giả nhỏ…\nChưa xác nhận độ tuổi đọc cho cuốn này.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ” — 71.760đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nNgười kể hồi tưởng những trò chơi và cách nhìn thế giới của cu Mùi, Hải cò, Tủn và Tí sún. Từ ký ức tuổi thơ, câu chuyện nối sang suy nghĩ của người lớn về cách thấu hiểu trẻ em. Người lớn, phụ huynh …\nChưa xác nhận độ tuổi đọc cho cuốn này.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 51,
+            "name": "Doraemon - Tập 1",
+            "author": "Fujiko F. Fujio",
+            "category": "Sách thiếu nhi",
+            "price": 19800,
+            "oldPrice": 22000.0,
+            "discount": 10,
+            "quantity": 300,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+          },
+          {
+            "id": 37,
+            "name": "Hoàng Tử Bé",
+            "author": "Antoine de Saint-Exupéry",
+            "category": "Sách thiếu nhi",
+            "price": 69920,
+            "oldPrice": 76000.0,
+            "discount": 8,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+          },
+          {
+            "id": 13,
+            "name": "Dế Mèn Phiêu Lưu Ký",
+            "author": "Tô Hoài",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 50400,
+            "oldPrice": 56000.0,
+            "discount": 10,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+          },
+          {
+            "id": 50,
+            "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+            "author": "Nguyễn Nhật Ánh",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 71760,
+            "oldPrice": 78000.0,
+            "discount": 8,
+            "quantity": 150,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "d9fc1298-6984-4e15-9f5b-76938799121b",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": 100000,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 51,
+            "route": "/product/51",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 51,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 37,
+            "route": "/product/37",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 37,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 13,
+            "route": "/product/13",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 13,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 50,
+            "route": "/product/50",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 50,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "searchProducts"
+        }
+      }
+    },
+    {
+      "scenario": "02-be-8-tuoi",
+      "turn": 2,
+      "question": "Phí vận chuyển là bao nhiêu?",
+      "httpStatus": 200,
+      "elapsedMs": 2844,
+      "answer": "Phí giao hàng 20.000đ, miễn phí khi tiền sách từ 300.000đ. Thời gian giao dự kiến 2–4 ngày làm việc.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getPolicy"
+      },
+      "response": {
+        "answer": "Phí giao hàng 20.000đ, miễn phí khi tiền sách từ 300.000đ. Thời gian giao dự kiến 2–4 ngày làm việc.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "4a597fc6-0033-4828-aac1-0e07243a5f53",
+        "intent": "POLICY",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": 100000,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getPolicy"
+        }
+      }
+    },
+    {
+      "scenario": "02-be-8-tuoi",
+      "turn": 3,
+      "question": "Trong những cuốn vừa giới thiệu, cuốn nào có thông tin độ tuổi rõ nhất?",
+      "httpStatus": 200,
+      "elapsedMs": 2296,
+      "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Doraemon - Tập 1”\nCuốn này nằm trong hướng đọc bạn đang tìm. Truyện tranh về Doraemon, Nobita và nhóm bạn với những bảo bối từ tương lai. Các câu chuyện gắn tiếng cười, thế giới tưởng tượng và tình bạn.\n\n• “Hoàng Tử Bé”\nMình chọn cuốn này theo phần nội dung đã được mô tả. Truyện về hoàng tử nhỏ và cách cậu nhìn thế giới, gửi gắm suy ngẫm về con người và đời sống. Tác phẩm kết hợp chất thơ với những câu hỏi mang tính triết lý.\nChưa xác nhận độ tuổi đọc cho cuốn này.\n\n• “Dế Mèn Phiêu Lưu Ký”\nMình chọn cuốn này theo phần nội dung đã được mô tả. Truyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận.\nChưa xác nhận độ tuổi đọc cho cuốn này.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ”\nMình chọn cuốn này theo phần nội dung đã được mô tả. Người kể hồi tưởng những trò chơi và cách nhìn thế giới của cu Mùi, Hải cò, Tủn và Tí sún. Từ ký ức tuổi thơ, câu chuyện nối sang suy nghĩ của người lớn về cách thấu hiểu trẻ em.\nChưa xác nhận độ tuổi đọc cho cuốn này.\n\nTheo mô tả, “Doraemon - Tập 1” là truyện tranh. Bé thường tự đọc truyện chữ hay quen đọc truyện tranh hơn?",
+      "products": [
+        {
+          "id": 51,
+          "name": "Doraemon - Tập 1",
+          "author": "Fujiko F. Fujio",
+          "category": "Sách thiếu nhi",
+          "price": 19800,
+          "oldPrice": 22000.0,
+          "discount": 10,
+          "quantity": 300,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+        },
+        {
+          "id": 37,
+          "name": "Hoàng Tử Bé",
+          "author": "Antoine de Saint-Exupéry",
+          "category": "Sách thiếu nhi",
+          "price": 69920,
+          "oldPrice": 76000.0,
+          "discount": 8,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+        },
+        {
+          "id": 13,
+          "name": "Dế Mèn Phiêu Lưu Ký",
+          "author": "Tô Hoài",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 50400,
+          "oldPrice": 56000.0,
+          "discount": 10,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+        },
+        {
+          "id": 50,
+          "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 71760,
+          "oldPrice": 78000.0,
+          "discount": 8,
+          "quantity": 150,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Doraemon - Tập 1”\nCuốn này nằm trong hướng đọc bạn đang tìm. Truyện tranh về Doraemon, Nobita và nhóm bạn với những bảo bối từ tương lai. Các câu chuyện gắn tiếng cười, thế giới tưởng tượng và tình bạn.\n\n• “Hoàng Tử Bé”\nMình chọn cuốn này theo phần nội dung đã được mô tả. Truyện về hoàng tử nhỏ và cách cậu nhìn thế giới, gửi gắm suy ngẫm về con người và đời sống. Tác phẩm kết hợp chất thơ với những câu hỏi mang tính triết lý.\nChưa xác nhận độ tuổi đọc cho cuốn này.\n\n• “Dế Mèn Phiêu Lưu Ký”\nMình chọn cuốn này theo phần nội dung đã được mô tả. Truyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận.\nChưa xác nhận độ tuổi đọc cho cuốn này.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ”\nMình chọn cuốn này theo phần nội dung đã được mô tả. Người kể hồi tưởng những trò chơi và cách nhìn thế giới của cu Mùi, Hải cò, Tủn và Tí sún. Từ ký ức tuổi thơ, câu chuyện nối sang suy nghĩ của người lớn về cách thấu hiểu trẻ em.\nChưa xác nhận độ tuổi đọc cho cuốn này.\n\nTheo mô tả, “Doraemon - Tập 1” là truyện tranh. Bé thường tự đọc truyện chữ hay quen đọc truyện tranh hơn?",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 51,
+            "name": "Doraemon - Tập 1",
+            "author": "Fujiko F. Fujio",
+            "category": "Sách thiếu nhi",
+            "price": 19800,
+            "oldPrice": 22000.0,
+            "discount": 10,
+            "quantity": 300,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+          },
+          {
+            "id": 37,
+            "name": "Hoàng Tử Bé",
+            "author": "Antoine de Saint-Exupéry",
+            "category": "Sách thiếu nhi",
+            "price": 69920,
+            "oldPrice": 76000.0,
+            "discount": 8,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+          },
+          {
+            "id": 13,
+            "name": "Dế Mèn Phiêu Lưu Ký",
+            "author": "Tô Hoài",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 50400,
+            "oldPrice": 56000.0,
+            "discount": 10,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+          },
+          {
+            "id": 50,
+            "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+            "author": "Nguyễn Nhật Ánh",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 71760,
+            "oldPrice": 78000.0,
+            "discount": 8,
+            "quantity": 150,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "c5d24350-9fbe-4e9e-9f09-2b766b83330f",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": 100000,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "02-be-8-tuoi",
+      "turn": 4,
+      "question": "Conan có phù hợp với bé 8 tuổi không?",
+      "httpStatus": 200,
+      "elapsedMs": 4641,
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      },
+      "response": {
+        "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "00bd8d72-6b87-4039-8830-06910068c3cc",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "searchProducts"
+        }
+      }
+    },
+    {
+      "scenario": "03-giao-tiep",
+      "turn": 1,
+      "question": "Đắc Nhân Tâm nói cụ thể về gì, có cách áp dụng không?",
+      "httpStatus": 200,
+      "elapsedMs": 3594,
+      "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Đắc Nhân Tâm”\nDale Carnegie bàn về giao tiếp và cách ứng xử trong các mối quan hệ cá nhân, công việc. Một nguyên tắc được giới thiệu là tránh chỉ trích, lên án và phàn nàn; nội dung gắn với việc hiểu người khác và xử lý bất đồng.",
+      "products": [
+        {
+          "id": 57,
+          "name": "Đắc Nhân Tâm",
+          "author": "Dale Carnegie",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 70520,
+          "oldPrice": 86000.0,
+          "discount": 18,
+          "quantity": 220,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252580/products/lo4gmiaypwfzes99fouo.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Đắc Nhân Tâm”\nDale Carnegie bàn về giao tiếp và cách ứng xử trong các mối quan hệ cá nhân, công việc. Một nguyên tắc được giới thiệu là tránh chỉ trích, lên án và phàn nàn; nội dung gắn với việc hiểu người khác và xử lý bất đồng.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 57,
+            "name": "Đắc Nhân Tâm",
+            "author": "Dale Carnegie",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 70520,
+            "oldPrice": 86000.0,
+            "discount": 18,
+            "quantity": 220,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781252580/products/lo4gmiaypwfzes99fouo.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "221cfb3d-9051-40d8-b1c4-8931ca1dcd50",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "03-giao-tiep",
+      "turn": 2,
+      "question": "Mình hay bất đồng với đồng nghiệp. Vì sao cuốn đó liên quan?",
+      "httpStatus": 200,
+      "elapsedMs": 4094,
+      "answer": "Để bạn cân nhắc kỹ hơn, mình đi thêm vào nội dung và đối tượng đọc đã được xác nhận:\n\n• “Đắc Nhân Tâm”\nCuốn sách đề xuất nguyên tắc tránh chỉ trích và phàn nàn, giúp bạn có căn cứ để nhìn nhận lại các tình huống bất đồng với đồng nghiệp. Việc áp dụng cách tiếp cận này nhằm thay đổi góc nhìn từ việc chỉ trích sang thấu hiểu người khác hơn trong công việc.\nMục tiêu đọc: Tham khảo hướng dẫn áp dụng nguyên tắc ứng xử khi giao tiếp và xử lý bất đồng.\nĐối tượng: Người muốn tham khảo cách giao tiếp và ứng xử với gia đình, đồng nghiệp hoặc cộng đồng.\nCách trình bày: Lối viết trò chuyện và kể chuyện để trình bày các nguyên tắc ứng xử.",
+      "products": [
+        {
+          "id": 57,
+          "name": "Đắc Nhân Tâm",
+          "author": "Dale Carnegie",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 70520,
+          "oldPrice": 86000.0,
+          "discount": 18,
+          "quantity": 220,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252580/products/lo4gmiaypwfzes99fouo.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Để bạn cân nhắc kỹ hơn, mình đi thêm vào nội dung và đối tượng đọc đã được xác nhận:\n\n• “Đắc Nhân Tâm”\nCuốn sách đề xuất nguyên tắc tránh chỉ trích và phàn nàn, giúp bạn có căn cứ để nhìn nhận lại các tình huống bất đồng với đồng nghiệp. Việc áp dụng cách tiếp cận này nhằm thay đổi góc nhìn từ việc chỉ trích sang thấu hiểu người khác hơn trong công việc.\nMục tiêu đọc: Tham khảo hướng dẫn áp dụng nguyên tắc ứng xử khi giao tiếp và xử lý bất đồng.\nĐối tượng: Người muốn tham khảo cách giao tiếp và ứng xử với gia đình, đồng nghiệp hoặc cộng đồng.\nCách trình bày: Lối viết trò chuyện và kể chuyện để trình bày các nguyên tắc ứng xử.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 57,
+            "name": "Đắc Nhân Tâm",
+            "author": "Dale Carnegie",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 70520,
+            "oldPrice": 86000.0,
+            "discount": 18,
+            "quantity": 220,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781252580/products/lo4gmiaypwfzes99fouo.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "0e83d0fb-3026-43bd-b71e-0fcc4ac575fc",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "03-giao-tiep",
+      "turn": 3,
+      "question": "Nói sâu hơn, cho mình một nguyên tắc cụ thể đã xác nhận trong sách.",
+      "httpStatus": 200,
+      "elapsedMs": 3032,
+      "answer": "Mình sẽ làm rõ thêm căn cứ lựa chọn và những điểm còn thiếu thông tin để bạn dễ quyết định:\n\n• “Đắc Nhân Tâm”\nSách đề xuất nguyên tắc không chỉ trích nhằm thay đổi cách bạn tiếp cận bất đồng. Việc này giúp bạn chuyển hướng từ việc phản ứng lại đồng nghiệp sang chủ động tìm hiểu góc nhìn của họ để xử lý tình huống.\nMục tiêu đọc: Tham khảo hướng dẫn áp dụng nguyên tắc ứng xử khi giao tiếp và xử lý bất đồng.\nĐối tượng: Người muốn tham khảo cách giao tiếp và ứng xử với gia đình, đồng nghiệp hoặc cộng đồng.\nCách trình bày: Lối viết trò chuyện và kể chuyện để trình bày các nguyên tắc ứng xử.\n\nMình đã trình bày các dữ kiện nội dung hiện có. Nếu bạn muốn đi sâu vào một khía cạnh cụ thể, bạn cho mình biết điểm đang phân vân; phần mô tả chưa xác nhận thì mình sẽ nói rõ.",
+      "products": [
+        {
+          "id": 57,
+          "name": "Đắc Nhân Tâm",
+          "author": "Dale Carnegie",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 70520,
+          "oldPrice": 86000.0,
+          "discount": 18,
+          "quantity": 220,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252580/products/lo4gmiaypwfzes99fouo.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Mình sẽ làm rõ thêm căn cứ lựa chọn và những điểm còn thiếu thông tin để bạn dễ quyết định:\n\n• “Đắc Nhân Tâm”\nSách đề xuất nguyên tắc không chỉ trích nhằm thay đổi cách bạn tiếp cận bất đồng. Việc này giúp bạn chuyển hướng từ việc phản ứng lại đồng nghiệp sang chủ động tìm hiểu góc nhìn của họ để xử lý tình huống.\nMục tiêu đọc: Tham khảo hướng dẫn áp dụng nguyên tắc ứng xử khi giao tiếp và xử lý bất đồng.\nĐối tượng: Người muốn tham khảo cách giao tiếp và ứng xử với gia đình, đồng nghiệp hoặc cộng đồng.\nCách trình bày: Lối viết trò chuyện và kể chuyện để trình bày các nguyên tắc ứng xử.\n\nMình đã trình bày các dữ kiện nội dung hiện có. Nếu bạn muốn đi sâu vào một khía cạnh cụ thể, bạn cho mình biết điểm đang phân vân; phần mô tả chưa xác nhận thì mình sẽ nói rõ.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 57,
+            "name": "Đắc Nhân Tâm",
+            "author": "Dale Carnegie",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 70520,
+            "oldPrice": 86000.0,
+            "discount": 18,
+            "quantity": 220,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781252580/products/lo4gmiaypwfzes99fouo.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "08c1d42e-f947-4cb6-92d9-bdf4a8980f08",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "04-lo-lang",
+      "turn": 1,
+      "question": "Mình hay lo về công việc và tiền bạc, muốn sách có cách áp dụng cụ thể.",
+      "httpStatus": 200,
+      "elapsedMs": 7609,
+      "answer": "Để giúp bạn giảm bớt lo âu về tài chính và áp lực công việc, mình đã lọc ra hai hướng tiếp cận khác nhau qua các cuốn sách sau.\n\nMình chọn được 2 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nCuốn này cung cấp trực tiếp các nguyên tắc để đối diện với nỗi lo liên quan đến công việc và tiền bạc, giúp bạn tìm kiếm những giải pháp thực tế cho vấn đề của mình.\n\n• “The Pragmatic Programmer - Lập Trình Viên Thực Dụng” — 154.000đ · Andrew Hunt & David Thomas · Chưa có đánh giá\nBàn về trách nhiệm nghề nghiệp và cách xây dựng phần mềm linh hoạt, dễ bảo trì. Các chủ đề gồm tránh lặp kiến thức, dùng công cụ, hiểu yêu cầu, học liên tục và kiểm thử. Người học lập trình, lập trình…",
+      "products": [
+        {
+          "id": 32,
+          "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+          "author": "Dale Carnegie",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+        },
+        {
+          "id": 16,
+          "name": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+          "author": "Andrew Hunt & David Thomas",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 154000,
+          "oldPrice": 175000.0,
+          "discount": 12,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319839/products/emvvfbsijvpo4ctg0c2t.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "recommendBooks"
+      },
+      "response": {
+        "answer": "Để giúp bạn giảm bớt lo âu về tài chính và áp lực công việc, mình đã lọc ra hai hướng tiếp cận khác nhau qua các cuốn sách sau.\n\nMình chọn được 2 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nCuốn này cung cấp trực tiếp các nguyên tắc để đối diện với nỗi lo liên quan đến công việc và tiền bạc, giúp bạn tìm kiếm những giải pháp thực tế cho vấn đề của mình.\n\n• “The Pragmatic Programmer - Lập Trình Viên Thực Dụng” — 154.000đ · Andrew Hunt & David Thomas · Chưa có đánh giá\nBàn về trách nhiệm nghề nghiệp và cách xây dựng phần mềm linh hoạt, dễ bảo trì. Các chủ đề gồm tránh lặp kiến thức, dùng công cụ, hiểu yêu cầu, học liên tục và kiểm thử. Người học lập trình, lập trình…",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 32,
+            "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+            "author": "Dale Carnegie",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 90160,
+            "oldPrice": 98000.0,
+            "discount": 8,
+            "quantity": 130,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+          },
+          {
+            "id": 16,
+            "name": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+            "author": "Andrew Hunt & David Thomas",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 154000,
+            "oldPrice": 175000.0,
+            "discount": 12,
+            "quantity": 110,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319839/products/emvvfbsijvpo4ctg0c2t.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "ae731afc-6060-47e5-a804-7ac76520a9ea",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 32,
+            "route": "/product/32",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 32,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 16,
+            "route": "/product/16",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 16,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "recommendBooks"
+        }
+      }
+    },
+    {
+      "scenario": "04-lo-lang",
+      "turn": 2,
+      "question": "Giải thích vì sao những cuốn đó phù hợp và khác nhau thế nào.",
+      "httpStatus": 200,
+      "elapsedMs": 5563,
+      "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Quẳng Gánh Lo Đi Và Vui Sống”\nCuốn này tập trung trực tiếp vào mục tiêu giảm bớt lo âu liên quan đến công việc và tài chính. Các nguyên tắc được đưa ra để bạn ứng dụng vào việc tìm giải pháp cụ thể cho những căng thẳng trong đời sống hàng ngày.\n\n• “The Pragmatic Programmer - Lập Trình Viên Thực Dụng”\nCuốn này nằm trong hướng đọc bạn đang tìm. Bàn về trách nhiệm nghề nghiệp và cách xây dựng phần mềm linh hoạt, dễ bảo trì. Các chủ đề gồm tránh lặp kiến thức, dùng công cụ, hiểu yêu cầu, học liên tục và kiểm thử.",
+      "products": [
+        {
+          "id": 32,
+          "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+          "author": "Dale Carnegie",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+        },
+        {
+          "id": 16,
+          "name": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+          "author": "Andrew Hunt & David Thomas",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 154000,
+          "oldPrice": 175000.0,
+          "discount": 12,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319839/products/emvvfbsijvpo4ctg0c2t.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Quẳng Gánh Lo Đi Và Vui Sống”\nCuốn này tập trung trực tiếp vào mục tiêu giảm bớt lo âu liên quan đến công việc và tài chính. Các nguyên tắc được đưa ra để bạn ứng dụng vào việc tìm giải pháp cụ thể cho những căng thẳng trong đời sống hàng ngày.\n\n• “The Pragmatic Programmer - Lập Trình Viên Thực Dụng”\nCuốn này nằm trong hướng đọc bạn đang tìm. Bàn về trách nhiệm nghề nghiệp và cách xây dựng phần mềm linh hoạt, dễ bảo trì. Các chủ đề gồm tránh lặp kiến thức, dùng công cụ, hiểu yêu cầu, học liên tục và kiểm thử.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 32,
+            "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+            "author": "Dale Carnegie",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 90160,
+            "oldPrice": 98000.0,
+            "discount": 8,
+            "quantity": 130,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+          },
+          {
+            "id": 16,
+            "name": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+            "author": "Andrew Hunt & David Thomas",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 154000,
+            "oldPrice": 175000.0,
+            "discount": 12,
+            "quantity": 110,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319839/products/emvvfbsijvpo4ctg0c2t.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "32933fac-9a4f-4a2b-bf99-9730396eabeb",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "04-lo-lang",
+      "turn": 3,
+      "question": "Chỉ chọn 1 cuốn sát với chuyện lo lắng công việc của mình thôi.",
+      "httpStatus": 200,
+      "elapsedMs": 9781,
+      "answer": "Bạn muốn 1 cuốn; mình tìm được 1 cuốn đúng yêu cầu.\n\n**Sách đúng yêu cầu:**\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nSách tập trung vào việc đưa ra các nguyên tắc để đối diện với nỗi lo liên quan trực tiếp đến công việc và tài chính, giúp bạn có hướng xử lý những căng thẳng hiện tại.",
+      "products": [
+        {
+          "id": 32,
+          "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+          "author": "Dale Carnegie",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "recommendBooks"
+      },
+      "response": {
+        "answer": "Bạn muốn 1 cuốn; mình tìm được 1 cuốn đúng yêu cầu.\n\n**Sách đúng yêu cầu:**\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nSách tập trung vào việc đưa ra các nguyên tắc để đối diện với nỗi lo liên quan trực tiếp đến công việc và tài chính, giúp bạn có hướng xử lý những căng thẳng hiện tại.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 32,
+            "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+            "author": "Dale Carnegie",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 90160,
+            "oldPrice": 98000.0,
+            "discount": 8,
+            "quantity": 130,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "2a8177e8-cb68-41ab-9cb4-984cee727802",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 32,
+            "route": "/product/32",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 32,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "recommendBooks"
+        }
+      }
+    },
+    {
+      "scenario": "05-qua-tang",
+      "turn": 1,
+      "question": "Mua sách tặng bạn nữ 22 tuổi, bạn ấy thích truyện nhẹ nhàng, không thích sách dạy thành công.",
+      "httpStatus": 200,
+      "elapsedMs": 8750,
+      "answer": "Mình chọn được 4 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Hoàng Tử Bé” — 69.920đ · Antoine de Saint-Exupéry · Chưa có đánh giá\nTruyện về hoàng tử nhỏ và cách cậu nhìn thế giới, gửi gắm suy ngẫm về con người và đời sống. Tác phẩm kết hợp chất thơ với những câu hỏi mang tính triết lý. Trẻ em và người lớn quan tâm truyện mang ch…\n\n• “Đường Xưa Mây Trắng” — 145.200đ · Thích Nhất Hạnh · Chưa có đánh giá\nThích Nhất Hạnh kể cuộc đời và lời dạy của Đức Phật, dựa trên các nguồn kinh điển. Một phần câu chuyện được nhìn qua Svasti, cậu bé chăn trâu, và một phần qua Đức Phật. Người muốn tìm hiểu cuộc đời Đứ…\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nĐây là lựa chọn thuần túy giải trí với không khí tươi sáng, hoàn toàn không liên quan đến các nội dung hướng dẫn làm giàu hay phát triển sự nghiệp.\n\n• “Tôi Thấy Hoa Vàng Trên Cỏ Xanh” — 79.200đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nCuốn sách kể lại những kỷ niệm tuổi thơ với giọng văn trong sáng, gợi cảm xúc, tránh xa các chủ đề về thành công hay kỹ năng.",
+      "products": [
+        {
+          "id": 37,
+          "name": "Hoàng Tử Bé",
+          "author": "Antoine de Saint-Exupéry",
+          "category": "Sách thiếu nhi",
+          "price": 69920,
+          "oldPrice": 76000.0,
+          "discount": 8,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+        },
+        {
+          "id": 34,
+          "name": "Đường Xưa Mây Trắng",
+          "author": "Thích Nhất Hạnh",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 145200,
+          "oldPrice": 165000.0,
+          "discount": 12,
+          "quantity": 100,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254627/products/nofbu66aftcnqjh5mbbo.jpg"
+        },
+        {
+          "id": 51,
+          "name": "Doraemon - Tập 1",
+          "author": "Fujiko F. Fujio",
+          "category": "Sách thiếu nhi",
+          "price": 19800,
+          "oldPrice": 22000.0,
+          "discount": 10,
+          "quantity": 300,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+        },
+        {
+          "id": 49,
+          "name": "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 79200,
+          "oldPrice": 88000.0,
+          "discount": 10,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254725/products/tcnifywbraeqs4pm0r10.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "recommendBooks"
+      },
+      "response": {
+        "answer": "Mình chọn được 4 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Hoàng Tử Bé” — 69.920đ · Antoine de Saint-Exupéry · Chưa có đánh giá\nTruyện về hoàng tử nhỏ và cách cậu nhìn thế giới, gửi gắm suy ngẫm về con người và đời sống. Tác phẩm kết hợp chất thơ với những câu hỏi mang tính triết lý. Trẻ em và người lớn quan tâm truyện mang ch…\n\n• “Đường Xưa Mây Trắng” — 145.200đ · Thích Nhất Hạnh · Chưa có đánh giá\nThích Nhất Hạnh kể cuộc đời và lời dạy của Đức Phật, dựa trên các nguồn kinh điển. Một phần câu chuyện được nhìn qua Svasti, cậu bé chăn trâu, và một phần qua Đức Phật. Người muốn tìm hiểu cuộc đời Đứ…\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nĐây là lựa chọn thuần túy giải trí với không khí tươi sáng, hoàn toàn không liên quan đến các nội dung hướng dẫn làm giàu hay phát triển sự nghiệp.\n\n• “Tôi Thấy Hoa Vàng Trên Cỏ Xanh” — 79.200đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nCuốn sách kể lại những kỷ niệm tuổi thơ với giọng văn trong sáng, gợi cảm xúc, tránh xa các chủ đề về thành công hay kỹ năng.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 37,
+            "name": "Hoàng Tử Bé",
+            "author": "Antoine de Saint-Exupéry",
+            "category": "Sách thiếu nhi",
+            "price": 69920,
+            "oldPrice": 76000.0,
+            "discount": 8,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+          },
+          {
+            "id": 34,
+            "name": "Đường Xưa Mây Trắng",
+            "author": "Thích Nhất Hạnh",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 145200,
+            "oldPrice": 165000.0,
+            "discount": 12,
+            "quantity": 100,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254627/products/nofbu66aftcnqjh5mbbo.jpg"
+          },
+          {
+            "id": 51,
+            "name": "Doraemon - Tập 1",
+            "author": "Fujiko F. Fujio",
+            "category": "Sách thiếu nhi",
+            "price": 19800,
+            "oldPrice": 22000.0,
+            "discount": 10,
+            "quantity": 300,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+          },
+          {
+            "id": 49,
+            "name": "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
+            "author": "Nguyễn Nhật Ánh",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 79200,
+            "oldPrice": 88000.0,
+            "discount": 10,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254725/products/tcnifywbraeqs4pm0r10.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "01c4e952-1c66-4c77-99fe-9f104d156f35",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 37,
+            "route": "/product/37",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 37,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 34,
+            "route": "/product/34",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 34,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 51,
+            "route": "/product/51",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 51,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 49,
+            "route": "/product/49",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 49,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "recommendBooks"
+        }
+      }
+    },
+    {
+      "scenario": "05-qua-tang",
+      "turn": 2,
+      "question": "Tại sao lại là những cuốn đó?",
+      "httpStatus": 200,
+      "elapsedMs": 4406,
+      "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Hoàng Tử Bé”\nCuốn này nằm trong hướng đọc bạn đang tìm. Truyện về hoàng tử nhỏ và cách cậu nhìn thế giới, gửi gắm suy ngẫm về con người và đời sống. Tác phẩm kết hợp chất thơ với những câu hỏi mang tính triết lý.\n\n• “Đường Xưa Mây Trắng”\nCuốn này nằm trong hướng đọc bạn đang tìm. Thích Nhất Hạnh kể cuộc đời và lời dạy của Đức Phật, dựa trên các nguồn kinh điển. Một phần câu chuyện được nhìn qua Svasti, cậu bé chăn trâu, và một phần qua Đức Phật.\n\n• “Doraemon - Tập 1”\nĐây là lựa chọn giải trí đơn thuần với không khí tươi sáng. Nó hoàn toàn khác biệt với các sách hướng dẫn phát triển kỹ năng hay thành công.\n\n• “Tôi Thấy Hoa Vàng Trên Cỏ Xanh”\nGiọng kể trong sáng và những câu chuyện về tuổi thơ giúp bạn có trải nghiệm đọc nhẹ nhàng. Đây là cuốn sách gợi nhiều cảm xúc về tình bạn và quá trình lớn lên.",
+      "products": [
+        {
+          "id": 37,
+          "name": "Hoàng Tử Bé",
+          "author": "Antoine de Saint-Exupéry",
+          "category": "Sách thiếu nhi",
+          "price": 69920,
+          "oldPrice": 76000.0,
+          "discount": 8,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+        },
+        {
+          "id": 34,
+          "name": "Đường Xưa Mây Trắng",
+          "author": "Thích Nhất Hạnh",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 145200,
+          "oldPrice": 165000.0,
+          "discount": 12,
+          "quantity": 100,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254627/products/nofbu66aftcnqjh5mbbo.jpg"
+        },
+        {
+          "id": 51,
+          "name": "Doraemon - Tập 1",
+          "author": "Fujiko F. Fujio",
+          "category": "Sách thiếu nhi",
+          "price": 19800,
+          "oldPrice": 22000.0,
+          "discount": 10,
+          "quantity": 300,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+        },
+        {
+          "id": 49,
+          "name": "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 79200,
+          "oldPrice": 88000.0,
+          "discount": 10,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254725/products/tcnifywbraeqs4pm0r10.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Hoàng Tử Bé”\nCuốn này nằm trong hướng đọc bạn đang tìm. Truyện về hoàng tử nhỏ và cách cậu nhìn thế giới, gửi gắm suy ngẫm về con người và đời sống. Tác phẩm kết hợp chất thơ với những câu hỏi mang tính triết lý.\n\n• “Đường Xưa Mây Trắng”\nCuốn này nằm trong hướng đọc bạn đang tìm. Thích Nhất Hạnh kể cuộc đời và lời dạy của Đức Phật, dựa trên các nguồn kinh điển. Một phần câu chuyện được nhìn qua Svasti, cậu bé chăn trâu, và một phần qua Đức Phật.\n\n• “Doraemon - Tập 1”\nĐây là lựa chọn giải trí đơn thuần với không khí tươi sáng. Nó hoàn toàn khác biệt với các sách hướng dẫn phát triển kỹ năng hay thành công.\n\n• “Tôi Thấy Hoa Vàng Trên Cỏ Xanh”\nGiọng kể trong sáng và những câu chuyện về tuổi thơ giúp bạn có trải nghiệm đọc nhẹ nhàng. Đây là cuốn sách gợi nhiều cảm xúc về tình bạn và quá trình lớn lên.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 37,
+            "name": "Hoàng Tử Bé",
+            "author": "Antoine de Saint-Exupéry",
+            "category": "Sách thiếu nhi",
+            "price": 69920,
+            "oldPrice": 76000.0,
+            "discount": 8,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+          },
+          {
+            "id": 34,
+            "name": "Đường Xưa Mây Trắng",
+            "author": "Thích Nhất Hạnh",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 145200,
+            "oldPrice": 165000.0,
+            "discount": 12,
+            "quantity": 100,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254627/products/nofbu66aftcnqjh5mbbo.jpg"
+          },
+          {
+            "id": 51,
+            "name": "Doraemon - Tập 1",
+            "author": "Fujiko F. Fujio",
+            "category": "Sách thiếu nhi",
+            "price": 19800,
+            "oldPrice": 22000.0,
+            "discount": 10,
+            "quantity": 300,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+          },
+          {
+            "id": 49,
+            "name": "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
+            "author": "Nguyễn Nhật Ánh",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 79200,
+            "oldPrice": 88000.0,
+            "discount": 10,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254725/products/tcnifywbraeqs4pm0r10.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "6b7cdc86-9fee-4b70-8559-9d792a0e1cbd",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "05-qua-tang",
+      "turn": 3,
+      "question": "Mắt Biếc có kết thúc vui không, có nên thay vào danh sách đó không?",
+      "httpStatus": 200,
+      "elapsedMs": 3453,
+      "answer": "Về “Mắt Biếc”, mình có những thông tin này:\nTác giả: Nguyễn Nhật Ánh\nGiá sau giảm: 85.500đ\nĐang bán, còn 180 bản theo tồn kho hiện tại.\nCâu chuyện tình cảm trong sáng nhưng đan xen vui buồn và có kết thúc rất buồn theo giới thiệu của NXB Trẻ. Người muốn đọc một câu chuyện tình cảm có sắc thái buồn.  Truyện tình cảm xen lẫn vui buồn, kết thúc buồn. Suy ngẫm về tình cảm qua một câu chuyện vui buồn đan xen.",
+      "products": [
+        {
+          "id": 53,
+          "name": "Mắt Biếc",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 85500,
+          "oldPrice": 95000.0,
+          "discount": 10,
+          "quantity": 180,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254910/products/ytjtlnudjncbcb776ies.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Về “Mắt Biếc”, mình có những thông tin này:\nTác giả: Nguyễn Nhật Ánh\nGiá sau giảm: 85.500đ\nĐang bán, còn 180 bản theo tồn kho hiện tại.\nCâu chuyện tình cảm trong sáng nhưng đan xen vui buồn và có kết thúc rất buồn theo giới thiệu của NXB Trẻ. Người muốn đọc một câu chuyện tình cảm có sắc thái buồn.  Truyện tình cảm xen lẫn vui buồn, kết thúc buồn. Suy ngẫm về tình cảm qua một câu chuyện vui buồn đan xen.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 53,
+            "name": "Mắt Biếc",
+            "author": "Nguyễn Nhật Ánh",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 85500,
+            "oldPrice": 95000.0,
+            "discount": 10,
+            "quantity": 180,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254910/products/ytjtlnudjncbcb776ies.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "791fd49d-68e6-4a7b-9f02-f95c9ec29764",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 53,
+            "route": "/product/53",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 53,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "06-an-ban",
+      "turn": 1,
+      "question": "Cho Tôi Xin Một Vé Đi Tuổi Thơ bán ở đây có bao nhiêu trang và ISBN là gì?",
+      "httpStatus": 200,
+      "elapsedMs": 1953,
+      "answer": "Về “Cho Tôi Xin Một Vé Đi Tuổi Thơ”, mình có những thông tin này:\nChưa có dữ liệu đã duyệt về số trang, ISBN.",
+      "products": [
+        {
+          "id": 50,
+          "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 71760,
+          "oldPrice": 78000.0,
+          "discount": 8,
+          "quantity": 150,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Về “Cho Tôi Xin Một Vé Đi Tuổi Thơ”, mình có những thông tin này:\nChưa có dữ liệu đã duyệt về số trang, ISBN.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 50,
+            "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+            "author": "Nguyễn Nhật Ánh",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 71760,
+            "oldPrice": 78000.0,
+            "discount": 8,
+            "quantity": 150,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "7c9d5f1d-933b-45ff-8b3b-befa26a027d7",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 50,
+            "route": "/product/50",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 50,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "06-an-ban",
+      "turn": 2,
+      "question": "Có phải bản màu có minh họa của NXB Trẻ không?",
+      "httpStatus": 200,
+      "elapsedMs": 1531,
+      "answer": "Về “Cho Tôi Xin Một Vé Đi Tuổi Thơ”, mình có những thông tin này:\nChưa có dữ liệu đã duyệt về nhà xuất bản.",
+      "products": [
+        {
+          "id": 50,
+          "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 71760,
+          "oldPrice": 78000.0,
+          "discount": 8,
+          "quantity": 150,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Về “Cho Tôi Xin Một Vé Đi Tuổi Thơ”, mình có những thông tin này:\nChưa có dữ liệu đã duyệt về nhà xuất bản.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 50,
+            "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+            "author": "Nguyễn Nhật Ánh",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 71760,
+            "oldPrice": 78000.0,
+            "discount": 8,
+            "quantity": 150,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "9f5d0cff-2739-41b3-9f93-14e830a93926",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 50,
+            "route": "/product/50",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 50,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "07-lap-trinh",
+      "turn": 1,
+      "question": "Clean Code dành cho ai? Mình chưa biết lập trình thì đọc có phù hợp không?",
+      "httpStatus": 200,
+      "elapsedMs": 2516,
+      "answer": "Về “Clean Code - Mã Sạch Và Cách Viết”, mình có những thông tin này:\nTác giả: Robert C. Martin\nGiá sau giảm: 151.200đ\nĐang bán, còn 140 bản theo tồn kho hiện tại.\nBàn về cách nhận diện và cải thiện chất lượng mã nguồn: đặt tên, hàm, lớp, định dạng, xử lý lỗi và kiểm thử. Các tình huống cải tiến mã được dùng để minh họa nguyên tắc viết mã sạch. Lập trình viên, kỹ sư phần mềm, trưởng nhóm và người quản lý dự án muốn cải thiện mã nguồn. Cần theo dõi và phân tích mã nguồn trong các ví dụ. Nguyên tắc viết mã đi cùng ví dụ cụ thể và tình huống cải tiến mã nguồn. Tham khảo cách đọc, đánh giá, chỉnh sửa mã nguồn và viết kiểm thử đơn vị.",
+      "products": [
+        {
+          "id": 9,
+          "name": "Clean Code - Mã Sạch Và Cách Viết",
+          "author": "Robert C. Martin",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 151200,
+          "oldPrice": 168000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320053/products/bargnm2lw0ykyd3gqinf.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Về “Clean Code - Mã Sạch Và Cách Viết”, mình có những thông tin này:\nTác giả: Robert C. Martin\nGiá sau giảm: 151.200đ\nĐang bán, còn 140 bản theo tồn kho hiện tại.\nBàn về cách nhận diện và cải thiện chất lượng mã nguồn: đặt tên, hàm, lớp, định dạng, xử lý lỗi và kiểm thử. Các tình huống cải tiến mã được dùng để minh họa nguyên tắc viết mã sạch. Lập trình viên, kỹ sư phần mềm, trưởng nhóm và người quản lý dự án muốn cải thiện mã nguồn. Cần theo dõi và phân tích mã nguồn trong các ví dụ. Nguyên tắc viết mã đi cùng ví dụ cụ thể và tình huống cải tiến mã nguồn. Tham khảo cách đọc, đánh giá, chỉnh sửa mã nguồn và viết kiểm thử đơn vị.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 9,
+            "name": "Clean Code - Mã Sạch Và Cách Viết",
+            "author": "Robert C. Martin",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 151200,
+            "oldPrice": 168000.0,
+            "discount": 10,
+            "quantity": 140,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781320053/products/bargnm2lw0ykyd3gqinf.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "b1bc9aaf-b89a-40cd-acc0-c7237cc13ea7",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 9,
+            "route": "/product/9",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 9,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "07-lap-trinh",
+      "turn": 2,
+      "question": "Có ví dụ cụ thể hay chỉ là lời khuyên chung?",
+      "httpStatus": 200,
+      "elapsedMs": 2343,
+      "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Clean Code - Mã Sạch Và Cách Viết”\nBàn về cách nhận diện và cải thiện chất lượng mã nguồn: đặt tên, hàm, lớp, định dạng, xử lý lỗi và kiểm thử. Các tình huống cải tiến mã được dùng để minh họa nguyên tắc viết mã sạch.",
+      "products": [
+        {
+          "id": 9,
+          "name": "Clean Code - Mã Sạch Và Cách Viết",
+          "author": "Robert C. Martin",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 151200,
+          "oldPrice": 168000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320053/products/bargnm2lw0ykyd3gqinf.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Clean Code - Mã Sạch Và Cách Viết”\nBàn về cách nhận diện và cải thiện chất lượng mã nguồn: đặt tên, hàm, lớp, định dạng, xử lý lỗi và kiểm thử. Các tình huống cải tiến mã được dùng để minh họa nguyên tắc viết mã sạch.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 9,
+            "name": "Clean Code - Mã Sạch Và Cách Viết",
+            "author": "Robert C. Martin",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 151200,
+            "oldPrice": 168000.0,
+            "discount": 10,
+            "quantity": 140,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781320053/products/bargnm2lw0ykyd3gqinf.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "51f27124-60df-4208-b06a-1c39ba56adc0",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "07-lap-trinh",
+      "turn": 3,
+      "question": "Còn The Pragmatic Programmer có khác gì?",
+      "httpStatus": 200,
+      "elapsedMs": 3860,
+      "answer": "| Tên sách | Tác giả | Giá | Rating |\n|---|---|---:|---:|\n| Clean Code - Mã Sạch Và Cách Viết | Robert C. Martin | 151.200đ | Chưa có đánh giá |\n| The Pragmatic Programmer - Lập Trình Viên Thực Dụng | Andrew Hunt & David Thomas | 154.000đ | Chưa có đánh giá |\n\nĐể chọn theo mục tiêu đọc, đây là nội dung catalog của từng cuốn:\n• “Clean Code - Mã Sạch Và Cách Viết”: Bàn về cách nhận diện và cải thiện chất lượng mã nguồn: đặt tên, hàm, lớp, định dạng, xử lý lỗi và kiểm thử. Các tình huống cải tiến mã được dùng để minh họa nguyên tắc viết mã sạch. Lập trình viên, kỹ sư phần mềm, trưởng nhóm và người quản lý dự án muốn cải thiện mã nguồn. Cần theo dõi và phân tích mã nguồn trong các ví dụ. Nguyên tắc viết mã đi cùng ví dụ cụ thể và tình huống cải tiến mã nguồn. …\n• “The Pragmatic Programmer - Lập Trình Viên Thực Dụng”: Bàn về trách nhiệm nghề nghiệp và cách xây dựng phần mềm linh hoạt, dễ bảo trì. Các chủ đề gồm tránh lặp kiến thức, dùng công cụ, hiểu yêu cầu, học liên tục và kiểm thử. Người học lập trình, lập trình viên có kinh nghiệm và người quản lý dự án phần mềm.  Các phần chuyên đề về lập trình được trình bày qua giai thoại, ví dụ cụ thể và phép so sánh. Tham khảo thói quen làm việc, cách hiểu yêu cầu và c…",
+      "products": [
+        {
+          "id": 9,
+          "name": "Clean Code - Mã Sạch Và Cách Viết",
+          "author": "Robert C. Martin",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 151200,
+          "oldPrice": 168000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320053/products/bargnm2lw0ykyd3gqinf.webp"
+        },
+        {
+          "id": 16,
+          "name": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+          "author": "Andrew Hunt & David Thomas",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 154000,
+          "oldPrice": 175000.0,
+          "discount": 12,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319839/products/emvvfbsijvpo4ctg0c2t.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "| Tên sách | Tác giả | Giá | Rating |\n|---|---|---:|---:|\n| Clean Code - Mã Sạch Và Cách Viết | Robert C. Martin | 151.200đ | Chưa có đánh giá |\n| The Pragmatic Programmer - Lập Trình Viên Thực Dụng | Andrew Hunt & David Thomas | 154.000đ | Chưa có đánh giá |\n\nĐể chọn theo mục tiêu đọc, đây là nội dung catalog của từng cuốn:\n• “Clean Code - Mã Sạch Và Cách Viết”: Bàn về cách nhận diện và cải thiện chất lượng mã nguồn: đặt tên, hàm, lớp, định dạng, xử lý lỗi và kiểm thử. Các tình huống cải tiến mã được dùng để minh họa nguyên tắc viết mã sạch. Lập trình viên, kỹ sư phần mềm, trưởng nhóm và người quản lý dự án muốn cải thiện mã nguồn. Cần theo dõi và phân tích mã nguồn trong các ví dụ. Nguyên tắc viết mã đi cùng ví dụ cụ thể và tình huống cải tiến mã nguồn. …\n• “The Pragmatic Programmer - Lập Trình Viên Thực Dụng”: Bàn về trách nhiệm nghề nghiệp và cách xây dựng phần mềm linh hoạt, dễ bảo trì. Các chủ đề gồm tránh lặp kiến thức, dùng công cụ, hiểu yêu cầu, học liên tục và kiểm thử. Người học lập trình, lập trình viên có kinh nghiệm và người quản lý dự án phần mềm.  Các phần chuyên đề về lập trình được trình bày qua giai thoại, ví dụ cụ thể và phép so sánh. Tham khảo thói quen làm việc, cách hiểu yêu cầu và c…",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 9,
+            "name": "Clean Code - Mã Sạch Và Cách Viết",
+            "author": "Robert C. Martin",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 151200,
+            "oldPrice": 168000.0,
+            "discount": 10,
+            "quantity": 140,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781320053/products/bargnm2lw0ykyd3gqinf.webp"
+          },
+          {
+            "id": 16,
+            "name": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+            "author": "Andrew Hunt & David Thomas",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 154000,
+            "oldPrice": 175000.0,
+            "discount": 12,
+            "quantity": 110,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319839/products/emvvfbsijvpo4ctg0c2t.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "dd619e26-5df3-4f94-b1ef-872f54e6eac5",
+        "intent": "COMPARE_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "08-tai-chinh",
+      "turn": 1,
+      "question": "Nhà Đầu Tư Thông Minh có giúp mình lập ngân sách chi tiêu hàng tháng không?",
+      "httpStatus": 200,
+      "elapsedMs": 2953,
+      "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Nhà Đầu Tư Thông Minh”\nBenjamin Graham trình bày triết lý đầu tư giá trị và việc phát triển chiến lược đầu tư dài hạn. Trọng tâm là hạn chế những sai lầm lớn của nhà đầu tư trên thị trường chứng khoán.",
+      "products": [
+        {
+          "id": 43,
+          "name": "Nhà Đầu Tư Thông Minh",
+          "author": "Benjamin Graham",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 178200,
+          "oldPrice": 198000.0,
+          "discount": 10,
+          "quantity": 100,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255428/products/uvnrlqxxeel4r1rf8dw7.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Nhà Đầu Tư Thông Minh”\nBenjamin Graham trình bày triết lý đầu tư giá trị và việc phát triển chiến lược đầu tư dài hạn. Trọng tâm là hạn chế những sai lầm lớn của nhà đầu tư trên thị trường chứng khoán.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 43,
+            "name": "Nhà Đầu Tư Thông Minh",
+            "author": "Benjamin Graham",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 178200,
+            "oldPrice": 198000.0,
+            "discount": 10,
+            "quantity": 100,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255428/products/uvnrlqxxeel4r1rf8dw7.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "497629da-7d2f-4a2d-97dd-a55d06ed5389",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "08-tai-chinh",
+      "turn": 2,
+      "question": "Nếu mình muốn tìm hiểu chứng khoán dài hạn thì nội dung đã xác nhận của sách là gì?",
+      "httpStatus": 200,
+      "elapsedMs": 7188,
+      "answer": "Để bạn cân nhắc kỹ hơn, mình đi thêm vào nội dung và đối tượng đọc đã được xác nhận:\n\n• “Nhà Đầu Tư Thông Minh”\n  Sách tập trung vào xây dựng chiến lược dài hạn thông qua triết lý đầu tư giá trị, giúp bạn nhận diện và tránh các lỗi sai phổ biến khi tham gia thị trường.\nBenjamin Graham trình bày triết lý đầu tư giá trị và việc phát triển chiến lược đầu tư dài hạn. Trọng tâm là hạn chế những sai lầm lớn của nhà đầu tư trên thị trường chứng khoán.\nMục tiêu đọc: Tìm hiểu cách tiếp cận đầu tư giá trị và cân nhắc sai lầm trong đầu tư dài hạn.\nĐối tượng: Người quan tâm đầu tư giá trị và chiến lược chứng khoán dài hạn.\nCách trình bày: Trình bày nguyên tắc và chiến lược đầu tư theo giá trị.",
+      "products": [
+        {
+          "id": 43,
+          "name": "Nhà Đầu Tư Thông Minh",
+          "author": "Benjamin Graham",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 178200,
+          "oldPrice": 198000.0,
+          "discount": 10,
+          "quantity": 100,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255428/products/uvnrlqxxeel4r1rf8dw7.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Để bạn cân nhắc kỹ hơn, mình đi thêm vào nội dung và đối tượng đọc đã được xác nhận:\n\n• “Nhà Đầu Tư Thông Minh”\n  Sách tập trung vào xây dựng chiến lược dài hạn thông qua triết lý đầu tư giá trị, giúp bạn nhận diện và tránh các lỗi sai phổ biến khi tham gia thị trường.\nBenjamin Graham trình bày triết lý đầu tư giá trị và việc phát triển chiến lược đầu tư dài hạn. Trọng tâm là hạn chế những sai lầm lớn của nhà đầu tư trên thị trường chứng khoán.\nMục tiêu đọc: Tìm hiểu cách tiếp cận đầu tư giá trị và cân nhắc sai lầm trong đầu tư dài hạn.\nĐối tượng: Người quan tâm đầu tư giá trị và chiến lược chứng khoán dài hạn.\nCách trình bày: Trình bày nguyên tắc và chiến lược đầu tư theo giá trị.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 43,
+            "name": "Nhà Đầu Tư Thông Minh",
+            "author": "Benjamin Graham",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 178200,
+            "oldPrice": 198000.0,
+            "discount": 10,
+            "quantity": 100,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255428/products/uvnrlqxxeel4r1rf8dw7.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "d93a5448-2f30-4b42-abaa-0f391a0621f3",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    }
+  ],
+  "cleanup": [
+    {
+      "scenario": "01-nguoi-it-doc",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "02-be-8-tuoi",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "03-giao-tiep",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "04-lo-lang",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "05-qua-tang",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "06-an-ban",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "07-lap-trinh",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "08-tai-chinh",
+      "httpStatus": 204
+    }
+  ],
+  "statusBefore": {
+    "provider": "gemini",
+    "model": "gemini-3.1-flash-lite",
+    "aiEnabled": true,
+    "architecture": "tools-v4"
+  }
+}

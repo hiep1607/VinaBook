@@ -1,0 +1,404 @@
+{
+  "testedAt": "2026-10-05T20:47:01.165491+07:00",
+  "app": "VinaBook localhost:4200 -> Spring Boot/Gemini/MySQL",
+  "method": "Actual storefront proxy API; fresh guest sessions with server memory. No browser UI or signed-in account test.",
+  "manifest": "docs/book-knowledge/profiles-reviewed-remaining-2026-10-05.json",
+  "scenarios": [
+    {
+      "id": "switch-spring-java-macro-verified",
+      "questions": [
+        "Chỉ lấy sách dạy Spring Boot.",
+        "Bỏ yêu cầu Spring Boot, chuyển sang giáo trình Java đang bán nhé.",
+        "Bỏ yêu cầu Java, đổi sang giáo trình kinh tế vĩ mô đang bán nhé."
+      ]
+    },
+    {
+      "id": "spring-exact-switch-control",
+      "questions": [
+        "Mình cần sách thực sự dạy Spring Boot, chỉ lấy cuốn đã xác nhận có nội dung đó.",
+        "Còn cuốn nào khác đúng chủ đề này không?"
+      ]
+    },
+    {
+      "id": "micro-exact-switch-control",
+      "questions": [
+        "Chỉ tìm giáo trình kinh tế vi mô, không lấy vĩ mô.",
+        "Còn cuốn nào khác đúng yêu cầu đó không?"
+      ]
+    }
+  ],
+  "results": [
+    {
+      "scenario": "switch-spring-java-macro-verified",
+      "turn": 1,
+      "question": "Chỉ lấy sách dạy Spring Boot.",
+      "httpStatus": 200,
+      "elapsedMs": 10078,
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "ecf9ca04-f702-40a6-abb8-a96639cd43bd",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "tool": "searchProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "switch-spring-java-macro-verified",
+      "turn": 2,
+      "question": "Bỏ yêu cầu Spring Boot, chuyển sang giáo trình Java đang bán nhé.",
+      "httpStatus": 200,
+      "elapsedMs": 6219,
+      "answer": "Mình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Phạm Xuân Lâm (chủ biên) · Chưa có đánh giá\nĐây là tài liệu được biên soạn phục vụ mục đích giảng dạy và học tập Java chuyên ngành, giúp bạn nắm bắt các kiến thức nền tảng của ngôn ngữ này.",
+      "products": [
+        {
+          "id": 22,
+          "name": "Giáo Trình Lập Trình Java",
+          "author": "Phạm Xuân Lâm (chủ biên)",
+          "category": "Sách Giáo trình",
+          "price": 91800,
+          "oldPrice": 102000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319640/products/gz9tp9xsoujfkcglnftj.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Mình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Phạm Xuân Lâm (chủ biên) · Chưa có đánh giá\nĐây là tài liệu được biên soạn phục vụ mục đích giảng dạy và học tập Java chuyên ngành, giúp bạn nắm bắt các kiến thức nền tảng của ngôn ngữ này.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 22,
+            "name": "Giáo Trình Lập Trình Java",
+            "author": "Phạm Xuân Lâm (chủ biên)",
+            "category": "Sách Giáo trình",
+            "price": 91800,
+            "oldPrice": 102000.0,
+            "discount": 10,
+            "quantity": 140,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319640/products/gz9tp9xsoujfkcglnftj.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "8e37531f-6ad7-479d-9745-d670744d2f19",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 22,
+            "route": "/product/22",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 22,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "searchProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "switch-spring-java-macro-verified",
+      "turn": 3,
+      "question": "Bỏ yêu cầu Java, đổi sang giáo trình kinh tế vĩ mô đang bán nhé.",
+      "httpStatus": 200,
+      "elapsedMs": 6609,
+      "answer": "Đây là tài liệu về kinh tế vĩ mô hiện có tại cửa hàng để bạn tham khảo.\n\nMình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Kinh Tế Vĩ Mô” — 94.050đ · Lê Thanh Tùng · Chưa có đánh giá\nSách tập trung vào các vấn đề tổng thể của nền kinh tế, hỗ trợ mục tiêu nắm bắt các chỉ tiêu và cơ chế vận hành vĩ mô thay vì các quyết định kinh tế ở cấp đơn vị.",
+      "products": [
+        {
+          "id": 45,
+          "name": "Giáo Trình Kinh Tế Vĩ Mô",
+          "author": "Lê Thanh Tùng",
+          "category": "Sách Giáo trình",
+          "price": 94050,
+          "oldPrice": 99000.0,
+          "discount": 5,
+          "quantity": 120,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255403/products/cey5c3ocjrjxm3eecig6.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Đây là tài liệu về kinh tế vĩ mô hiện có tại cửa hàng để bạn tham khảo.\n\nMình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Kinh Tế Vĩ Mô” — 94.050đ · Lê Thanh Tùng · Chưa có đánh giá\nSách tập trung vào các vấn đề tổng thể của nền kinh tế, hỗ trợ mục tiêu nắm bắt các chỉ tiêu và cơ chế vận hành vĩ mô thay vì các quyết định kinh tế ở cấp đơn vị.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 45,
+            "name": "Giáo Trình Kinh Tế Vĩ Mô",
+            "author": "Lê Thanh Tùng",
+            "category": "Sách Giáo trình",
+            "price": 94050,
+            "oldPrice": 99000.0,
+            "discount": 5,
+            "quantity": 120,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255403/products/cey5c3ocjrjxm3eecig6.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "f2a1e6a5-b3a1-4754-9b5b-7a25283537bb",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 45,
+            "route": "/product/45",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 45,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "searchProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "spring-exact-switch-control",
+      "turn": 1,
+      "question": "Mình cần sách thực sự dạy Spring Boot, chỉ lấy cuốn đã xác nhận có nội dung đó.",
+      "httpStatus": 200,
+      "elapsedMs": 9625,
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "0a64f453-6213-4709-b8e7-9c73b00bdbed",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "tool": "searchProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "spring-exact-switch-control",
+      "turn": 2,
+      "question": "Còn cuốn nào khác đúng chủ đề này không?",
+      "httpStatus": 200,
+      "elapsedMs": 703,
+      "answer": "Với yêu cầu đang giữ, mình vẫn chưa tìm được cuốn mới đúng chủ đề trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Với yêu cầu đang giữ, mình vẫn chưa tìm được cuốn mới đúng chủ đề trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "3359172a-5300-4191-bad2-247fc61766c8",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "tool": "searchProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "micro-exact-switch-control",
+      "turn": 1,
+      "question": "Chỉ tìm giáo trình kinh tế vi mô, không lấy vĩ mô.",
+      "httpStatus": 200,
+      "elapsedMs": 10718,
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "083360ea-e114-40f9-98f9-f75a711865ce",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "tool": "searchProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "micro-exact-switch-control",
+      "turn": 2,
+      "question": "Còn cuốn nào khác đúng yêu cầu đó không?",
+      "httpStatus": 200,
+      "elapsedMs": 594,
+      "answer": "Với yêu cầu đang giữ, mình vẫn chưa tìm được cuốn mới đúng chủ đề trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Với yêu cầu đang giữ, mình vẫn chưa tìm được cuốn mới đúng chủ đề trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "ca6c1062-103f-463e-939d-a80264d281c6",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "tool": "searchProducts",
+          "status": "COMPLETED"
+        }
+      }
+    }
+  ],
+  "cleanup": [
+    {
+      "scenario": "switch-spring-java-macro-verified",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "spring-exact-switch-control",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "micro-exact-switch-control",
+      "httpStatus": 204
+    }
+  ],
+  "statusBefore": {
+    "provider": "gemini",
+    "model": "gemini-3.1-flash-lite",
+    "aiEnabled": true,
+    "architecture": "tools-v4"
+  }
+}

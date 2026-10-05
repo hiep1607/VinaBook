@@ -1,0 +1,1914 @@
+{
+  "testedAt": "2026-10-05T18:40:01.987128+07:00",
+  "app": "VinaBook localhost:4200 -> Spring Boot/Gemini/MySQL",
+  "method": "Actual storefront proxy API; fresh guest sessions with server memory. No browser UI or signed-in account test.",
+  "manifest": "docs/book-knowledge/profiles-reviewed-remaining-2026-10-05.json",
+  "scenarios": [
+    {
+      "id": "03-hien-phap",
+      "questions": [
+        "Cuốn Hiến Pháp ở shop nói về những gì, phù hợp với ai?",
+        "Bản đó có phải bản mới nhất và còn đúng với pháp luật năm 2026 không?"
+      ]
+    },
+    {
+      "id": "04-doanh-nghiep",
+      "questions": [
+        "Luật Doanh Nghiệp có hướng dẫn từng bước mở một công ty không?"
+      ]
+    },
+    {
+      "id": "05-lao-dong",
+      "questions": [
+        "Bộ Luật Lao Động ở đây là sách phân tích tình huống hay văn bản luật? Ai là tác giả?"
+      ]
+    },
+    {
+      "id": "06-cam-nang",
+      "questions": [
+        "Cẩm Nang Pháp Luật Dành Cho Doanh Nghiệp đề cập những vấn đề gì?",
+        "Sách đó có chắc hướng dẫn hợp đồng và sở hữu trí tuệ không?"
+      ]
+    },
+    {
+      "id": "17-ai-pho-thong",
+      "questions": [
+        "Mình chưa biết lập trình, cuốn AI - Sức Mạnh Của Trí Tuệ Nhân Tạo có phù hợp không?",
+        "Nếu muốn học thuật toán AI thì cuốn đó hay Giáo Trình Nhập Môn Trí Tuệ Nhân Tạo sát hơn?"
+      ]
+    },
+    {
+      "id": "18-blockchain",
+      "questions": [
+        "Blockchain Cơ Bản của ai, có cần giỏi toán hoặc lập trình trước không?",
+        "Có phải đây là sách Don Tapscott, dạy đầu tư Bitcoin để có lãi không?"
+      ]
+    },
+    {
+      "id": "22-java",
+      "questions": [
+        "Giáo Trình Lập Trình Java đang bán do ai chủ biên?",
+        "Có chắc sách dạy Java 21 và Spring Boot không?"
+      ]
+    },
+    {
+      "id": "23-du-lieu",
+      "questions": [
+        "Giáo Trình Cơ Sở Dữ Liệu ở shop của những tác giả nào và dành cho ai?",
+        "Bạn xác nhận giúp sách có chương SQL Server và chuẩn hóa dữ liệu được không?"
+      ]
+    },
+    {
+      "id": "24-su-ky",
+      "questions": [
+        "Đại Việt Sử Ký Toàn Thư là sử viết theo kiểu gì, khác một cuốn lược sử thế nào?",
+        "Giá niêm yết ở đây là trọn bộ hay chỉ một tập?"
+      ]
+    },
+    {
+      "id": "35-co-tich",
+      "questions": [
+        "Kho Tàng Truyện Cổ Tích Việt Nam phù hợp người muốn tìm hiểu văn hóa dân gian không?",
+        "Mua cuốn này cho bé 5 tuổi, có chắc là bản rút gọn và có truyện Tấm Cám không?"
+      ]
+    },
+    {
+      "id": "36-vi-sao",
+      "questions": [
+        "10 Vạn Câu Hỏi Vì Sao đang bán thuộc tập nào và hợp bé bao nhiêu tuổi?",
+        "Có chắc cuốn đó gồm câu hỏi về vũ trụ và cơ thể người không?"
+      ]
+    },
+    {
+      "id": "45-kinh-te",
+      "questions": [
+        "Giáo Trình Kinh Tế Vĩ Mô của Lê Thanh Tùng ở đây nói về gì?",
+        "Mình muốn học quyết định của từng người tiêu dùng, sách đó có phải kinh tế vi mô không?"
+      ]
+    }
+  ],
+  "results": [
+    {
+      "scenario": "03-hien-phap",
+      "turn": 1,
+      "question": "Cuốn Hiến Pháp ở shop nói về những gì, phù hợp với ai?",
+      "httpStatus": 200,
+      "elapsedMs": 3469,
+      "answer": "Về “Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam Năm 2013 (Sửa Đổi, Bổ Sung Năm 2025)”, mình có những thông tin này:\nVăn bản Hiến pháp về nền tảng tổ chức Nhà nước, chế độ chính trị, quyền con người và quyền, nghĩa vụ cơ bản của công dân. Bìa đang bán ghi Hiến pháp năm 2013, sửa đổi, bổ sung năm 2025; chưa có ISBN và trang xuất bản để xác nhận chính xác bản in hoặc mọi cập nhật sau đó.\nĐối tượng đọc: Người học, tra cứu Hiến pháp và tìm hiểu tổ chức Nhà nước Việt Nam.",
+      "products": [
+        {
+          "id": 3,
+          "name": "Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam Năm 2013 (Sửa Đổi, Bổ Sung Năm 2025)",
+          "author": "Quốc Hội Việt Nam",
+          "category": "Sách Chính trị – pháp luật",
+          "price": 45000,
+          "oldPrice": 45000.0,
+          "discount": 0,
+          "quantity": 150,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320474/products/aifrungfs4soocyvpsnk.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam Năm 2013 (Sửa Đổi, Bổ Sung Năm 2025)”, mình có những thông tin này:\nVăn bản Hiến pháp về nền tảng tổ chức Nhà nước, chế độ chính trị, quyền con người và quyền, nghĩa vụ cơ bản của công dân. Bìa đang bán ghi Hiến pháp năm 2013, sửa đổi, bổ sung năm 2025; chưa có ISBN và trang xuất bản để xác nhận chính xác bản in hoặc mọi cập nhật sau đó.\nĐối tượng đọc: Người học, tra cứu Hiến pháp và tìm hiểu tổ chức Nhà nước Việt Nam.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 3,
+            "name": "Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam Năm 2013 (Sửa Đổi, Bổ Sung Năm 2025)",
+            "author": "Quốc Hội Việt Nam",
+            "category": "Sách Chính trị – pháp luật",
+            "price": 45000,
+            "oldPrice": 45000.0,
+            "discount": 0,
+            "quantity": 150,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781320474/products/aifrungfs4soocyvpsnk.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "407af3a8-5907-41ef-8cdb-af554a11b922",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 3,
+            "route": "/product/3",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 3,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "03-hien-phap",
+      "turn": 2,
+      "question": "Bản đó có phải bản mới nhất và còn đúng với pháp luật năm 2026 không?",
+      "httpStatus": 200,
+      "elapsedMs": 94,
+      "answer": "Về “Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam Năm 2013 (Sửa Đổi, Bổ Sung Năm 2025)”, mình có những thông tin này:\nVăn bản Hiến pháp về nền tảng tổ chức Nhà nước, chế độ chính trị, quyền con người và quyền, nghĩa vụ cơ bản của công dân. Bìa đang bán ghi Hiến pháp năm 2013, sửa đổi, bổ sung năm 2025; chưa có ISBN và trang xuất bản để xác nhận chính xác bản in hoặc mọi cập nhật sau đó.",
+      "products": [
+        {
+          "id": 3,
+          "name": "Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam Năm 2013 (Sửa Đổi, Bổ Sung Năm 2025)",
+          "author": "Quốc Hội Việt Nam",
+          "category": "Sách Chính trị – pháp luật",
+          "price": 45000,
+          "oldPrice": 45000.0,
+          "discount": 0,
+          "quantity": 150,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320474/products/aifrungfs4soocyvpsnk.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam Năm 2013 (Sửa Đổi, Bổ Sung Năm 2025)”, mình có những thông tin này:\nVăn bản Hiến pháp về nền tảng tổ chức Nhà nước, chế độ chính trị, quyền con người và quyền, nghĩa vụ cơ bản của công dân. Bìa đang bán ghi Hiến pháp năm 2013, sửa đổi, bổ sung năm 2025; chưa có ISBN và trang xuất bản để xác nhận chính xác bản in hoặc mọi cập nhật sau đó.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 3,
+            "name": "Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam Năm 2013 (Sửa Đổi, Bổ Sung Năm 2025)",
+            "author": "Quốc Hội Việt Nam",
+            "category": "Sách Chính trị – pháp luật",
+            "price": 45000,
+            "oldPrice": 45000.0,
+            "discount": 0,
+            "quantity": 150,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781320474/products/aifrungfs4soocyvpsnk.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "c573acc9-67b0-4826-9d1d-c4ff7eab108c",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 3,
+            "route": "/product/3",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 3,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "04-doanh-nghiep",
+      "turn": 1,
+      "question": "Luật Doanh Nghiệp có hướng dẫn từng bước mở một công ty không?",
+      "httpStatus": 200,
+      "elapsedMs": 63,
+      "answer": "Về “Luật Doanh Nghiệp”, mình có những thông tin này:\nVăn bản luật về thành lập, tổ chức quản lý, tổ chức lại, giải thể và hoạt động của doanh nghiệp, bao gồm các loại hình công ty và doanh nghiệp tư nhân. Sách phục vụ tra cứu quy định, không phải cẩm nang khởi nghiệp từng bước. Chưa xác định năm in và các sửa đổi đã được tích hợp trong bản cửa hàng.",
+      "products": [
+        {
+          "id": 4,
+          "name": "Luật Doanh Nghiệp",
+          "author": "Quốc Hội Việt Nam",
+          "category": "Sách Chính trị – pháp luật",
+          "price": 74100,
+          "oldPrice": 78000.0,
+          "discount": 5,
+          "quantity": 120,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320139/products/vbad4nshdikvyfrdaq0d.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Luật Doanh Nghiệp”, mình có những thông tin này:\nVăn bản luật về thành lập, tổ chức quản lý, tổ chức lại, giải thể và hoạt động của doanh nghiệp, bao gồm các loại hình công ty và doanh nghiệp tư nhân. Sách phục vụ tra cứu quy định, không phải cẩm nang khởi nghiệp từng bước. Chưa xác định năm in và các sửa đổi đã được tích hợp trong bản cửa hàng.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 4,
+            "name": "Luật Doanh Nghiệp",
+            "author": "Quốc Hội Việt Nam",
+            "category": "Sách Chính trị – pháp luật",
+            "price": 74100,
+            "oldPrice": 78000.0,
+            "discount": 5,
+            "quantity": 120,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781320139/products/vbad4nshdikvyfrdaq0d.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "9f88fbcf-d292-4c9e-a418-87696df56899",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 4,
+            "route": "/product/4",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 4,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "05-lao-dong",
+      "turn": 1,
+      "question": "Bộ Luật Lao Động ở đây là sách phân tích tình huống hay văn bản luật? Ai là tác giả?",
+      "httpStatus": 200,
+      "elapsedMs": 63,
+      "answer": "Về “Bộ Luật Lao Động”, mình có những thông tin này:\nTác giả: Quốc Hội Việt Nam\nBộ luật quy định quan hệ lao động, quyền và nghĩa vụ của người lao động và người sử dụng lao động, cùng các nội dung quản lý nhà nước về lao động. Đây là văn bản luật để tra cứu; chưa có căn cứ cho mô tả cũ về một sách thực hành kèm phân tích tình huống. Bản in và các sửa đổi được tích hợp chưa được xác nhận.",
+      "products": [
+        {
+          "id": 5,
+          "name": "Bộ Luật Lao Động",
+          "author": "Quốc Hội Việt Nam",
+          "category": "Sách Chính trị – pháp luật",
+          "price": 82800,
+          "oldPrice": 92000.0,
+          "discount": 10,
+          "quantity": 100,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320128/products/nhzwddy375czep8g5stu.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Bộ Luật Lao Động”, mình có những thông tin này:\nTác giả: Quốc Hội Việt Nam\nBộ luật quy định quan hệ lao động, quyền và nghĩa vụ của người lao động và người sử dụng lao động, cùng các nội dung quản lý nhà nước về lao động. Đây là văn bản luật để tra cứu; chưa có căn cứ cho mô tả cũ về một sách thực hành kèm phân tích tình huống. Bản in và các sửa đổi được tích hợp chưa được xác nhận.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 5,
+            "name": "Bộ Luật Lao Động",
+            "author": "Quốc Hội Việt Nam",
+            "category": "Sách Chính trị – pháp luật",
+            "price": 82800,
+            "oldPrice": 92000.0,
+            "discount": 10,
+            "quantity": 100,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781320128/products/nhzwddy375czep8g5stu.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "389518c9-9b34-47b4-95c5-72e22bb52a77",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 5,
+            "route": "/product/5",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 5,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "06-cam-nang",
+      "turn": 1,
+      "question": "Cẩm Nang Pháp Luật Dành Cho Doanh Nghiệp đề cập những vấn đề gì?",
+      "httpStatus": 200,
+      "elapsedMs": 47,
+      "answer": "Về “Cẩm Nang Pháp Luật Dành Cho Doanh Nghiệp”, mình có những thông tin này:\nCẩm nang hệ thống thông tin pháp luật dành cho doanh nghiệp về tiền lương, bảo hiểm, thuế, chi phí hợp lệ, hóa đơn, chứng từ và thanh tra, kiểm tra. Phù hợp nhu cầu tra cứu các vấn đề vận hành doanh nghiệp. Chưa xác nhận bản in cửa hàng và mức cập nhật quy định của bản đó.",
+      "products": [
+        {
+          "id": 6,
+          "name": "Cẩm Nang Pháp Luật Dành Cho Doanh Nghiệp",
+          "author": "Tăng Bình & Ái Phương (hệ thống)",
+          "category": "Sách Chính trị – pháp luật",
+          "price": 114750,
+          "oldPrice": 135000.0,
+          "discount": 15,
+          "quantity": 90,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320093/products/k3k09hlkujlxxjpvjcto.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Cẩm Nang Pháp Luật Dành Cho Doanh Nghiệp”, mình có những thông tin này:\nCẩm nang hệ thống thông tin pháp luật dành cho doanh nghiệp về tiền lương, bảo hiểm, thuế, chi phí hợp lệ, hóa đơn, chứng từ và thanh tra, kiểm tra. Phù hợp nhu cầu tra cứu các vấn đề vận hành doanh nghiệp. Chưa xác nhận bản in cửa hàng và mức cập nhật quy định của bản đó.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 6,
+            "name": "Cẩm Nang Pháp Luật Dành Cho Doanh Nghiệp",
+            "author": "Tăng Bình & Ái Phương (hệ thống)",
+            "category": "Sách Chính trị – pháp luật",
+            "price": 114750,
+            "oldPrice": 135000.0,
+            "discount": 15,
+            "quantity": 90,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781320093/products/k3k09hlkujlxxjpvjcto.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "0165f4ae-db97-4549-b482-16b23e01ad42",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 6,
+            "route": "/product/6",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 6,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "06-cam-nang",
+      "turn": 2,
+      "question": "Sách đó có chắc hướng dẫn hợp đồng và sở hữu trí tuệ không?",
+      "httpStatus": 200,
+      "elapsedMs": 78,
+      "answer": "Về “Cẩm Nang Pháp Luật Dành Cho Doanh Nghiệp”, mình có những thông tin này:\nCẩm nang hệ thống thông tin pháp luật dành cho doanh nghiệp về tiền lương, bảo hiểm, thuế, chi phí hợp lệ, hóa đơn, chứng từ và thanh tra, kiểm tra. Phù hợp nhu cầu tra cứu các vấn đề vận hành doanh nghiệp. Chưa xác nhận bản in cửa hàng và mức cập nhật quy định của bản đó.",
+      "products": [
+        {
+          "id": 6,
+          "name": "Cẩm Nang Pháp Luật Dành Cho Doanh Nghiệp",
+          "author": "Tăng Bình & Ái Phương (hệ thống)",
+          "category": "Sách Chính trị – pháp luật",
+          "price": 114750,
+          "oldPrice": 135000.0,
+          "discount": 15,
+          "quantity": 90,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320093/products/k3k09hlkujlxxjpvjcto.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Cẩm Nang Pháp Luật Dành Cho Doanh Nghiệp”, mình có những thông tin này:\nCẩm nang hệ thống thông tin pháp luật dành cho doanh nghiệp về tiền lương, bảo hiểm, thuế, chi phí hợp lệ, hóa đơn, chứng từ và thanh tra, kiểm tra. Phù hợp nhu cầu tra cứu các vấn đề vận hành doanh nghiệp. Chưa xác nhận bản in cửa hàng và mức cập nhật quy định của bản đó.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 6,
+            "name": "Cẩm Nang Pháp Luật Dành Cho Doanh Nghiệp",
+            "author": "Tăng Bình & Ái Phương (hệ thống)",
+            "category": "Sách Chính trị – pháp luật",
+            "price": 114750,
+            "oldPrice": 135000.0,
+            "discount": 15,
+            "quantity": 90,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781320093/products/k3k09hlkujlxxjpvjcto.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "b7bd5b47-80ce-428d-a888-e7a55d706819",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 6,
+            "route": "/product/6",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 6,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "17-ai-pho-thong",
+      "turn": 1,
+      "question": "Mình chưa biết lập trình, cuốn AI - Sức Mạnh Của Trí Tuệ Nhân Tạo có phù hợp không?",
+      "httpStatus": 200,
+      "elapsedMs": 31,
+      "answer": "Về “AI - Sức Mạnh Của Trí Tuệ Nhân Tạo”, mình có những thông tin này:\nTác giả: Nguyễn Văn Lượng\nGiá sau giảm: 125.400đ\nĐang bán, còn 120 bản theo tồn kho hiện tại.\nGiới thiệu các khái niệm trí tuệ nhân tạo và học máy, cùng ứng dụng trong công việc, học tập, sáng tạo và kinh doanh. Sách của Nguyễn Văn Lượng hướng đến người mới tìm hiểu, bằng cách trình bày phổ thông. Đây không phải giáo trình lập trình AI chuyên sâu.\nĐối tượng đọc: Người mới tìm hiểu AI và muốn biết ứng dụng trong học tập, công việc, sáng tạo, kinh doanh.\nMức đọc: Nhập môn cho người mới tìm hiểu; không tập trung lập trình chuyên sâu.",
+      "products": [
+        {
+          "id": 17,
+          "name": "AI - Sức Mạnh Của Trí Tuệ Nhân Tạo",
+          "author": "Nguyễn Văn Lượng",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 125400,
+          "oldPrice": 132000.0,
+          "discount": 5,
+          "quantity": 120,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319801/products/yrcackuuxv0bxefp3dah.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “AI - Sức Mạnh Của Trí Tuệ Nhân Tạo”, mình có những thông tin này:\nTác giả: Nguyễn Văn Lượng\nGiá sau giảm: 125.400đ\nĐang bán, còn 120 bản theo tồn kho hiện tại.\nGiới thiệu các khái niệm trí tuệ nhân tạo và học máy, cùng ứng dụng trong công việc, học tập, sáng tạo và kinh doanh. Sách của Nguyễn Văn Lượng hướng đến người mới tìm hiểu, bằng cách trình bày phổ thông. Đây không phải giáo trình lập trình AI chuyên sâu.\nĐối tượng đọc: Người mới tìm hiểu AI và muốn biết ứng dụng trong học tập, công việc, sáng tạo, kinh doanh.\nMức đọc: Nhập môn cho người mới tìm hiểu; không tập trung lập trình chuyên sâu.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 17,
+            "name": "AI - Sức Mạnh Của Trí Tuệ Nhân Tạo",
+            "author": "Nguyễn Văn Lượng",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 125400,
+            "oldPrice": 132000.0,
+            "discount": 5,
+            "quantity": 120,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319801/products/yrcackuuxv0bxefp3dah.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "7c7b58e0-405d-46c7-92e7-33ece5985186",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 17,
+            "route": "/product/17",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 17,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "17-ai-pho-thong",
+      "turn": 2,
+      "question": "Nếu muốn học thuật toán AI thì cuốn đó hay Giáo Trình Nhập Môn Trí Tuệ Nhân Tạo sát hơn?",
+      "httpStatus": 200,
+      "elapsedMs": 47,
+      "answer": "| Tên sách | Tác giả | Giá | Rating |\n|---|---|---:|---:|\n| AI - Sức Mạnh Của Trí Tuệ Nhân Tạo | Nguyễn Văn Lượng | 125.400đ | Chưa có đánh giá |\n| Giáo Trình Nhập Môn Trí Tuệ Nhân Tạo | Từ Minh Phương | 103.040đ | Chưa có đánh giá |\n\nĐể chọn theo mục tiêu đọc, đây là nội dung catalog của từng cuốn:\n• “AI - Sức Mạnh Của Trí Tuệ Nhân Tạo”: Giới thiệu các khái niệm trí tuệ nhân tạo và học máy, cùng ứng dụng trong công việc, học tập, sáng tạo và kinh doanh. Sách của Nguyễn Văn Lượng hướng đến người mới tìm hiểu, bằng cách trình bày phổ thông. Đây không phải giáo trình lập trình AI chuyên sâu.\n• “Giáo Trình Nhập Môn Trí Tuệ Nhân Tạo”: Giáo trình do Từ Minh Phương biên soạn, giới thiệu trí tuệ nhân tạo và các hướng giải quyết vấn đề bằng tìm kiếm, biểu diễn tri thức và logic, suy diễn xác suất, học máy. Phù hợp nhu cầu học nền tảng chuyên ngành. Chưa có căn cứ khẳng định sách hướng dẫn các công cụ AI tạo sinh hoặc lập trình ứng dụng ChatGPT.",
+      "products": [
+        {
+          "id": 17,
+          "name": "AI - Sức Mạnh Của Trí Tuệ Nhân Tạo",
+          "author": "Nguyễn Văn Lượng",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 125400,
+          "oldPrice": 132000.0,
+          "discount": 5,
+          "quantity": 120,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319801/products/yrcackuuxv0bxefp3dah.jpg"
+        },
+        {
+          "id": 44,
+          "name": "Giáo Trình Nhập Môn Trí Tuệ Nhân Tạo",
+          "author": "Từ Minh Phương",
+          "category": "Sách Giáo trình",
+          "price": 103040,
+          "oldPrice": 112000.0,
+          "discount": 8,
+          "quantity": 100,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255413/products/f77nmz9iq7iq1rundyaf.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "| Tên sách | Tác giả | Giá | Rating |\n|---|---|---:|---:|\n| AI - Sức Mạnh Của Trí Tuệ Nhân Tạo | Nguyễn Văn Lượng | 125.400đ | Chưa có đánh giá |\n| Giáo Trình Nhập Môn Trí Tuệ Nhân Tạo | Từ Minh Phương | 103.040đ | Chưa có đánh giá |\n\nĐể chọn theo mục tiêu đọc, đây là nội dung catalog của từng cuốn:\n• “AI - Sức Mạnh Của Trí Tuệ Nhân Tạo”: Giới thiệu các khái niệm trí tuệ nhân tạo và học máy, cùng ứng dụng trong công việc, học tập, sáng tạo và kinh doanh. Sách của Nguyễn Văn Lượng hướng đến người mới tìm hiểu, bằng cách trình bày phổ thông. Đây không phải giáo trình lập trình AI chuyên sâu.\n• “Giáo Trình Nhập Môn Trí Tuệ Nhân Tạo”: Giáo trình do Từ Minh Phương biên soạn, giới thiệu trí tuệ nhân tạo và các hướng giải quyết vấn đề bằng tìm kiếm, biểu diễn tri thức và logic, suy diễn xác suất, học máy. Phù hợp nhu cầu học nền tảng chuyên ngành. Chưa có căn cứ khẳng định sách hướng dẫn các công cụ AI tạo sinh hoặc lập trình ứng dụng ChatGPT.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 17,
+            "name": "AI - Sức Mạnh Của Trí Tuệ Nhân Tạo",
+            "author": "Nguyễn Văn Lượng",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 125400,
+            "oldPrice": 132000.0,
+            "discount": 5,
+            "quantity": 120,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319801/products/yrcackuuxv0bxefp3dah.jpg"
+          },
+          {
+            "id": 44,
+            "name": "Giáo Trình Nhập Môn Trí Tuệ Nhân Tạo",
+            "author": "Từ Minh Phương",
+            "category": "Sách Giáo trình",
+            "price": 103040,
+            "oldPrice": 112000.0,
+            "discount": 8,
+            "quantity": 100,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255413/products/f77nmz9iq7iq1rundyaf.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "39b2aa1f-d0d1-4a7e-b65e-bd22ac9bde1d",
+        "intent": "COMPARE_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "18-blockchain",
+      "turn": 1,
+      "question": "Blockchain Cơ Bản của ai, có cần giỏi toán hoặc lập trình trước không?",
+      "httpStatus": 200,
+      "elapsedMs": 47,
+      "answer": "Về “Blockchain Cơ Bản”, mình có những thông tin này:\nTác giả: Daniel Drescher",
+      "products": [
+        {
+          "id": 18,
+          "name": "Blockchain Cơ Bản",
+          "author": "Daniel Drescher",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 133400,
+          "oldPrice": 145000.0,
+          "discount": 8,
+          "quantity": 95,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319781/products/ptjxp427gba0zja7ivmv.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Blockchain Cơ Bản”, mình có những thông tin này:\nTác giả: Daniel Drescher",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 18,
+            "name": "Blockchain Cơ Bản",
+            "author": "Daniel Drescher",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 133400,
+            "oldPrice": 145000.0,
+            "discount": 8,
+            "quantity": 95,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319781/products/ptjxp427gba0zja7ivmv.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "7f1d3436-7a0b-432a-b403-2320c2b0e9a2",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 18,
+            "route": "/product/18",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 18,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "18-blockchain",
+      "turn": 2,
+      "question": "Có phải đây là sách Don Tapscott, dạy đầu tư Bitcoin để có lãi không?",
+      "httpStatus": 200,
+      "elapsedMs": 78,
+      "answer": "Về “Blockchain Cơ Bản”, mình có những thông tin này:\nTác giả: Daniel Drescher\nDaniel Drescher giải thích blockchain qua 25 bước, dùng hình ảnh, phép so sánh và ví dụ để nối các khái niệm. Người đọc tìm hiểu cơ chế, tiềm năng và giới hạn của công nghệ chuỗi khối mà không cần công thức toán hay lập trình. Sách giúp hiểu nền tảng công nghệ, không bảo đảm lợi nhuận đầu tư tiền mã hóa.",
+      "products": [
+        {
+          "id": 18,
+          "name": "Blockchain Cơ Bản",
+          "author": "Daniel Drescher",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 133400,
+          "oldPrice": 145000.0,
+          "discount": 8,
+          "quantity": 95,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319781/products/ptjxp427gba0zja7ivmv.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Blockchain Cơ Bản”, mình có những thông tin này:\nTác giả: Daniel Drescher\nDaniel Drescher giải thích blockchain qua 25 bước, dùng hình ảnh, phép so sánh và ví dụ để nối các khái niệm. Người đọc tìm hiểu cơ chế, tiềm năng và giới hạn của công nghệ chuỗi khối mà không cần công thức toán hay lập trình. Sách giúp hiểu nền tảng công nghệ, không bảo đảm lợi nhuận đầu tư tiền mã hóa.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 18,
+            "name": "Blockchain Cơ Bản",
+            "author": "Daniel Drescher",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 133400,
+            "oldPrice": 145000.0,
+            "discount": 8,
+            "quantity": 95,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319781/products/ptjxp427gba0zja7ivmv.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "6b03ff73-d122-4a2b-9931-d111b2c4f5c9",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 18,
+            "route": "/product/18",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 18,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "22-java",
+      "turn": 1,
+      "question": "Giáo Trình Lập Trình Java đang bán do ai chủ biên?",
+      "httpStatus": 200,
+      "elapsedMs": 31,
+      "answer": "Về “Giáo Trình Lập Trình Java”, mình có những thông tin này:\nTác giả: Phạm Xuân Lâm (chủ biên)\nĐang bán, còn 140 bản theo tồn kho hiện tại.",
+      "products": [
+        {
+          "id": 22,
+          "name": "Giáo Trình Lập Trình Java",
+          "author": "Phạm Xuân Lâm (chủ biên)",
+          "category": "Sách Giáo trình",
+          "price": 91800,
+          "oldPrice": 102000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319640/products/gz9tp9xsoujfkcglnftj.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Giáo Trình Lập Trình Java”, mình có những thông tin này:\nTác giả: Phạm Xuân Lâm (chủ biên)\nĐang bán, còn 140 bản theo tồn kho hiện tại.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 22,
+            "name": "Giáo Trình Lập Trình Java",
+            "author": "Phạm Xuân Lâm (chủ biên)",
+            "category": "Sách Giáo trình",
+            "price": 91800,
+            "oldPrice": 102000.0,
+            "discount": 10,
+            "quantity": 140,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319640/products/gz9tp9xsoujfkcglnftj.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "91e47c9f-9c34-447b-8064-e6258f3c6e7d",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 22,
+            "route": "/product/22",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 22,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "22-java",
+      "turn": 2,
+      "question": "Có chắc sách dạy Java 21 và Spring Boot không?",
+      "httpStatus": 200,
+      "elapsedMs": 63,
+      "answer": "Về “Giáo Trình Lập Trình Java”, mình có những thông tin này:\nGiáo trình Lập trình Java do Phạm Xuân Lâm chủ biên, được xác nhận qua bìa và thư mục quốc gia. Có thể dùng làm tài liệu học lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java, các thư viện, framework hoặc các chủ đề cụ thể; không khẳng định sách dạy Spring Boot hay Java 21.",
+      "products": [
+        {
+          "id": 22,
+          "name": "Giáo Trình Lập Trình Java",
+          "author": "Phạm Xuân Lâm (chủ biên)",
+          "category": "Sách Giáo trình",
+          "price": 91800,
+          "oldPrice": 102000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319640/products/gz9tp9xsoujfkcglnftj.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Giáo Trình Lập Trình Java”, mình có những thông tin này:\nGiáo trình Lập trình Java do Phạm Xuân Lâm chủ biên, được xác nhận qua bìa và thư mục quốc gia. Có thể dùng làm tài liệu học lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java, các thư viện, framework hoặc các chủ đề cụ thể; không khẳng định sách dạy Spring Boot hay Java 21.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 22,
+            "name": "Giáo Trình Lập Trình Java",
+            "author": "Phạm Xuân Lâm (chủ biên)",
+            "category": "Sách Giáo trình",
+            "price": 91800,
+            "oldPrice": 102000.0,
+            "discount": 10,
+            "quantity": 140,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319640/products/gz9tp9xsoujfkcglnftj.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "0a334a6e-186b-4938-85da-e9b23cd50da4",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 22,
+            "route": "/product/22",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 22,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "23-du-lieu",
+      "turn": 1,
+      "question": "Giáo Trình Cơ Sở Dữ Liệu ở shop của những tác giả nào và dành cho ai?",
+      "httpStatus": 200,
+      "elapsedMs": 63,
+      "answer": "Về “Giáo Trình Cơ Sở Dữ Liệu”, mình có những thông tin này:\nTác giả: Phan Tấn Quốc & Nguyễn Thị Uyên Nhi\nĐối tượng đọc: Người học máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin.",
+      "products": [
+        {
+          "id": 23,
+          "name": "Giáo Trình Cơ Sở Dữ Liệu",
+          "author": "Phan Tấn Quốc & Nguyễn Thị Uyên Nhi",
+          "category": "Sách Giáo trình",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 115,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319627/products/l9kqqextxr409kipn29q.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Giáo Trình Cơ Sở Dữ Liệu”, mình có những thông tin này:\nTác giả: Phan Tấn Quốc & Nguyễn Thị Uyên Nhi\nĐối tượng đọc: Người học máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 23,
+            "name": "Giáo Trình Cơ Sở Dữ Liệu",
+            "author": "Phan Tấn Quốc & Nguyễn Thị Uyên Nhi",
+            "category": "Sách Giáo trình",
+            "price": 90160,
+            "oldPrice": 98000.0,
+            "discount": 8,
+            "quantity": 115,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319627/products/l9kqqextxr409kipn29q.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "f9a42a06-4708-4bbc-bc80-9ae29025d20a",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 23,
+            "route": "/product/23",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 23,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "23-du-lieu",
+      "turn": 2,
+      "question": "Bạn xác nhận giúp sách có chương SQL Server và chuẩn hóa dữ liệu được không?",
+      "httpStatus": 200,
+      "elapsedMs": 47,
+      "answer": "Về “Giáo Trình Cơ Sở Dữ Liệu”, mình có những thông tin này:\nGiáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học cơ sở dữ liệu. Chưa có mục lục đúng bản để xác nhận chương SQL, hệ quản trị sử dụng hoặc nội dung chi tiết.",
+      "products": [
+        {
+          "id": 23,
+          "name": "Giáo Trình Cơ Sở Dữ Liệu",
+          "author": "Phan Tấn Quốc & Nguyễn Thị Uyên Nhi",
+          "category": "Sách Giáo trình",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 115,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319627/products/l9kqqextxr409kipn29q.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Giáo Trình Cơ Sở Dữ Liệu”, mình có những thông tin này:\nGiáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học cơ sở dữ liệu. Chưa có mục lục đúng bản để xác nhận chương SQL, hệ quản trị sử dụng hoặc nội dung chi tiết.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 23,
+            "name": "Giáo Trình Cơ Sở Dữ Liệu",
+            "author": "Phan Tấn Quốc & Nguyễn Thị Uyên Nhi",
+            "category": "Sách Giáo trình",
+            "price": 90160,
+            "oldPrice": 98000.0,
+            "discount": 8,
+            "quantity": 115,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319627/products/l9kqqextxr409kipn29q.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "da6971bf-7b73-4ff7-85f9-b54c52ecd1ce",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 23,
+            "route": "/product/23",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 23,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "24-su-ky",
+      "turn": 1,
+      "question": "Đại Việt Sử Ký Toàn Thư là sử viết theo kiểu gì, khác một cuốn lược sử thế nào?",
+      "httpStatus": 200,
+      "elapsedMs": 47,
+      "answer": "Về “Đại Việt Sử Ký Toàn Thư”, mình có những thông tin này:\nBộ sử biên niên Việt Nam, gắn với Ngô Sĩ Liên và sự tiếp nối của các sử gia triều Lê. Các sự kiện được ghi theo thời gian, là nguồn để tìm hiểu lịch sử và cách người xưa chép sử. Chưa xác định tập, bản dịch hoặc việc sản phẩm cửa hàng là một tập hay trọn bộ; không khẳng định bao quát toàn bộ các phần.",
+      "products": [
+        {
+          "id": 24,
+          "name": "Đại Việt Sử Ký Toàn Thư",
+          "author": "Ngô Sĩ Liên",
+          "category": "Sách Văn hóa xã hội – Lịch sử",
+          "price": 215600,
+          "oldPrice": 245000.0,
+          "discount": 12,
+          "quantity": 70,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319617/products/w5xkcnbvjrczijgz3btl.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Đại Việt Sử Ký Toàn Thư”, mình có những thông tin này:\nBộ sử biên niên Việt Nam, gắn với Ngô Sĩ Liên và sự tiếp nối của các sử gia triều Lê. Các sự kiện được ghi theo thời gian, là nguồn để tìm hiểu lịch sử và cách người xưa chép sử. Chưa xác định tập, bản dịch hoặc việc sản phẩm cửa hàng là một tập hay trọn bộ; không khẳng định bao quát toàn bộ các phần.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 24,
+            "name": "Đại Việt Sử Ký Toàn Thư",
+            "author": "Ngô Sĩ Liên",
+            "category": "Sách Văn hóa xã hội – Lịch sử",
+            "price": 215600,
+            "oldPrice": 245000.0,
+            "discount": 12,
+            "quantity": 70,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319617/products/w5xkcnbvjrczijgz3btl.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "936ea490-ce8d-4a72-81be-8d7197cfee13",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 24,
+            "route": "/product/24",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 24,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "24-su-ky",
+      "turn": 2,
+      "question": "Giá niêm yết ở đây là trọn bộ hay chỉ một tập?",
+      "httpStatus": 200,
+      "elapsedMs": 1469,
+      "answer": "Về “Đại Việt Sử Ký Toàn Thư”, mình có những thông tin này:\nGiá sau giảm: 215.600đ\nBộ sử biên niên Việt Nam, gắn với Ngô Sĩ Liên và sự tiếp nối của các sử gia triều Lê. Các sự kiện được ghi theo thời gian, là nguồn để tìm hiểu lịch sử và cách người xưa chép sử. Chưa xác định tập, bản dịch hoặc việc sản phẩm cửa hàng là một tập hay trọn bộ; không khẳng định bao quát toàn bộ các phần.",
+      "products": [
+        {
+          "id": 24,
+          "name": "Đại Việt Sử Ký Toàn Thư",
+          "author": "Ngô Sĩ Liên",
+          "category": "Sách Văn hóa xã hội – Lịch sử",
+          "price": 215600,
+          "oldPrice": 245000.0,
+          "discount": 12,
+          "quantity": 70,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319617/products/w5xkcnbvjrczijgz3btl.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Đại Việt Sử Ký Toàn Thư”, mình có những thông tin này:\nGiá sau giảm: 215.600đ\nBộ sử biên niên Việt Nam, gắn với Ngô Sĩ Liên và sự tiếp nối của các sử gia triều Lê. Các sự kiện được ghi theo thời gian, là nguồn để tìm hiểu lịch sử và cách người xưa chép sử. Chưa xác định tập, bản dịch hoặc việc sản phẩm cửa hàng là một tập hay trọn bộ; không khẳng định bao quát toàn bộ các phần.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 24,
+            "name": "Đại Việt Sử Ký Toàn Thư",
+            "author": "Ngô Sĩ Liên",
+            "category": "Sách Văn hóa xã hội – Lịch sử",
+            "price": 215600,
+            "oldPrice": 245000.0,
+            "discount": 12,
+            "quantity": 70,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319617/products/w5xkcnbvjrczijgz3btl.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "728aba52-5c93-4cf5-94fd-571f93a2f5eb",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 24,
+            "route": "/product/24",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 24,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "35-co-tich",
+      "turn": 1,
+      "question": "Kho Tàng Truyện Cổ Tích Việt Nam phù hợp người muốn tìm hiểu văn hóa dân gian không?",
+      "httpStatus": 200,
+      "elapsedMs": 1922,
+      "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Kho Tàng Truyện Cổ Tích Việt Nam”\nCông trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ.",
+      "products": [
+        {
+          "id": 35,
+          "name": "Kho Tàng Truyện Cổ Tích Việt Nam",
+          "author": "Nguyễn Đổng Chi",
+          "category": "Sách thiếu nhi",
+          "price": 121500,
+          "oldPrice": 135000.0,
+          "discount": 10,
+          "quantity": 150,
+          "image": "/assets/book-cover-unverified-35.svg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Kho Tàng Truyện Cổ Tích Việt Nam”\nCông trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 35,
+            "name": "Kho Tàng Truyện Cổ Tích Việt Nam",
+            "author": "Nguyễn Đổng Chi",
+            "category": "Sách thiếu nhi",
+            "price": 121500,
+            "oldPrice": 135000.0,
+            "discount": 10,
+            "quantity": 150,
+            "image": "/assets/book-cover-unverified-35.svg"
+          }
+        ],
+        "chips": [],
+        "messageId": "b3fa17fb-a0ae-438f-bd90-cee8f2fd982e",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "35-co-tich",
+      "turn": 2,
+      "question": "Mua cuốn này cho bé 5 tuổi, có chắc là bản rút gọn và có truyện Tấm Cám không?",
+      "httpStatus": 200,
+      "elapsedMs": 78,
+      "answer": "Về “Kho Tàng Truyện Cổ Tích Việt Nam”, mình có những thông tin này:\nCông trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ.",
+      "products": [
+        {
+          "id": 35,
+          "name": "Kho Tàng Truyện Cổ Tích Việt Nam",
+          "author": "Nguyễn Đổng Chi",
+          "category": "Sách thiếu nhi",
+          "price": 121500,
+          "oldPrice": 135000.0,
+          "discount": 10,
+          "quantity": 150,
+          "image": "/assets/book-cover-unverified-35.svg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Kho Tàng Truyện Cổ Tích Việt Nam”, mình có những thông tin này:\nCông trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 35,
+            "name": "Kho Tàng Truyện Cổ Tích Việt Nam",
+            "author": "Nguyễn Đổng Chi",
+            "category": "Sách thiếu nhi",
+            "price": 121500,
+            "oldPrice": 135000.0,
+            "discount": 10,
+            "quantity": 150,
+            "image": "/assets/book-cover-unverified-35.svg"
+          }
+        ],
+        "chips": [],
+        "messageId": "a78d0adf-f72f-49d8-b692-4e984b7e646e",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 35,
+            "route": "/product/35",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 35,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "36-vi-sao",
+      "turn": 1,
+      "question": "10 Vạn Câu Hỏi Vì Sao đang bán thuộc tập nào và hợp bé bao nhiêu tuổi?",
+      "httpStatus": 200,
+      "elapsedMs": 3953,
+      "answer": "Về “10 Vạn Câu Hỏi Vì Sao”, mình có những thông tin này:\nĐang bán, còn 170 bản theo tồn kho hiện tại.\nHiện tại dữ liệu chưa xác định được tập sách cũng như độ tuổi cụ thể mà nội dung hướng đến. Bạn có thể kiểm tra trực tiếp thông tin bìa hoặc mục lục để nắm rõ tập đang được đề cập.\nĐối tượng đọc: Người thích tìm hiểu khoa học qua câu hỏi và câu trả lời; cần xác nhận tập để tư vấn độ tuổi.",
+      "products": [
+        {
+          "id": 36,
+          "name": "10 Vạn Câu Hỏi Vì Sao",
+          "author": "Nhiều Tác Giả",
+          "category": "Sách thiếu nhi",
+          "price": 75650,
+          "oldPrice": 89000.0,
+          "discount": 15,
+          "quantity": 170,
+          "image": "/assets/book-cover-unverified-36.svg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “10 Vạn Câu Hỏi Vì Sao”, mình có những thông tin này:\nĐang bán, còn 170 bản theo tồn kho hiện tại.\nHiện tại dữ liệu chưa xác định được tập sách cũng như độ tuổi cụ thể mà nội dung hướng đến. Bạn có thể kiểm tra trực tiếp thông tin bìa hoặc mục lục để nắm rõ tập đang được đề cập.\nĐối tượng đọc: Người thích tìm hiểu khoa học qua câu hỏi và câu trả lời; cần xác nhận tập để tư vấn độ tuổi.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 36,
+            "name": "10 Vạn Câu Hỏi Vì Sao",
+            "author": "Nhiều Tác Giả",
+            "category": "Sách thiếu nhi",
+            "price": 75650,
+            "oldPrice": 89000.0,
+            "discount": 15,
+            "quantity": 170,
+            "image": "/assets/book-cover-unverified-36.svg"
+          }
+        ],
+        "chips": [],
+        "messageId": "77749db6-26fc-4c1a-b299-39ce84be0ddb",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 36,
+            "route": "/product/36",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 36,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "36-vi-sao",
+      "turn": 2,
+      "question": "Có chắc cuốn đó gồm câu hỏi về vũ trụ và cơ thể người không?",
+      "httpStatus": 200,
+      "elapsedMs": 47,
+      "answer": "Về “10 Vạn Câu Hỏi Vì Sao”, mình có những thông tin này:\nTên chung cho sách hỏi đáp kiến thức khoa học và đời sống, giúp người đọc khám phá các câu hỏi vì sao. Có nhiều bộ, tập và nhóm tuổi mang tên tương tự; dữ liệu cửa hàng chưa xác định bộ hoặc tập cụ thể. Vì vậy chưa thể cam kết các phần về động vật, vũ trụ, cơ thể hay độ tuổi của một ấn bản cụ thể.",
+      "products": [
+        {
+          "id": 36,
+          "name": "10 Vạn Câu Hỏi Vì Sao",
+          "author": "Nhiều Tác Giả",
+          "category": "Sách thiếu nhi",
+          "price": 75650,
+          "oldPrice": 89000.0,
+          "discount": 15,
+          "quantity": 170,
+          "image": "/assets/book-cover-unverified-36.svg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “10 Vạn Câu Hỏi Vì Sao”, mình có những thông tin này:\nTên chung cho sách hỏi đáp kiến thức khoa học và đời sống, giúp người đọc khám phá các câu hỏi vì sao. Có nhiều bộ, tập và nhóm tuổi mang tên tương tự; dữ liệu cửa hàng chưa xác định bộ hoặc tập cụ thể. Vì vậy chưa thể cam kết các phần về động vật, vũ trụ, cơ thể hay độ tuổi của một ấn bản cụ thể.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 36,
+            "name": "10 Vạn Câu Hỏi Vì Sao",
+            "author": "Nhiều Tác Giả",
+            "category": "Sách thiếu nhi",
+            "price": 75650,
+            "oldPrice": 89000.0,
+            "discount": 15,
+            "quantity": 170,
+            "image": "/assets/book-cover-unverified-36.svg"
+          }
+        ],
+        "chips": [],
+        "messageId": "0b7ea647-4e92-4a51-b015-93d332c657cb",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 36,
+            "route": "/product/36",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 36,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "45-kinh-te",
+      "turn": 1,
+      "question": "Giáo Trình Kinh Tế Vĩ Mô của Lê Thanh Tùng ở đây nói về gì?",
+      "httpStatus": 200,
+      "elapsedMs": 47,
+      "answer": "Về “Giáo Trình Kinh Tế Vĩ Mô”, mình có những thông tin này:\nGiáo trình Kinh tế vĩ mô của Lê Thanh Tùng bàn về nền kinh tế ở cấp tổng thể, như sản lượng, lạm phát, thất nghiệp, tỷ giá và chính sách kinh tế. Phù hợp học về các chỉ tiêu và cơ chế của nền kinh tế. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp.",
+      "products": [
+        {
+          "id": 45,
+          "name": "Giáo Trình Kinh Tế Vĩ Mô",
+          "author": "Lê Thanh Tùng",
+          "category": "Sách Giáo trình",
+          "price": 94050,
+          "oldPrice": 99000.0,
+          "discount": 5,
+          "quantity": 120,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255403/products/cey5c3ocjrjxm3eecig6.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Giáo Trình Kinh Tế Vĩ Mô”, mình có những thông tin này:\nGiáo trình Kinh tế vĩ mô của Lê Thanh Tùng bàn về nền kinh tế ở cấp tổng thể, như sản lượng, lạm phát, thất nghiệp, tỷ giá và chính sách kinh tế. Phù hợp học về các chỉ tiêu và cơ chế của nền kinh tế. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 45,
+            "name": "Giáo Trình Kinh Tế Vĩ Mô",
+            "author": "Lê Thanh Tùng",
+            "category": "Sách Giáo trình",
+            "price": 94050,
+            "oldPrice": 99000.0,
+            "discount": 5,
+            "quantity": 120,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255403/products/cey5c3ocjrjxm3eecig6.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "3ba11dbd-d9a4-4f42-a46c-7af6d7a6481c",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 45,
+            "route": "/product/45",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 45,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "45-kinh-te",
+      "turn": 2,
+      "question": "Mình muốn học quyết định của từng người tiêu dùng, sách đó có phải kinh tế vi mô không?",
+      "httpStatus": 200,
+      "elapsedMs": 62,
+      "answer": "Về “Giáo Trình Kinh Tế Vĩ Mô”, mình có những thông tin này:\nGiáo trình Kinh tế vĩ mô của Lê Thanh Tùng bàn về nền kinh tế ở cấp tổng thể, như sản lượng, lạm phát, thất nghiệp, tỷ giá và chính sách kinh tế. Phù hợp học về các chỉ tiêu và cơ chế của nền kinh tế. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp.",
+      "products": [
+        {
+          "id": 45,
+          "name": "Giáo Trình Kinh Tế Vĩ Mô",
+          "author": "Lê Thanh Tùng",
+          "category": "Sách Giáo trình",
+          "price": 94050,
+          "oldPrice": 99000.0,
+          "discount": 5,
+          "quantity": 120,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255403/products/cey5c3ocjrjxm3eecig6.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Giáo Trình Kinh Tế Vĩ Mô”, mình có những thông tin này:\nGiáo trình Kinh tế vĩ mô của Lê Thanh Tùng bàn về nền kinh tế ở cấp tổng thể, như sản lượng, lạm phát, thất nghiệp, tỷ giá và chính sách kinh tế. Phù hợp học về các chỉ tiêu và cơ chế của nền kinh tế. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 45,
+            "name": "Giáo Trình Kinh Tế Vĩ Mô",
+            "author": "Lê Thanh Tùng",
+            "category": "Sách Giáo trình",
+            "price": 94050,
+            "oldPrice": 99000.0,
+            "discount": 5,
+            "quantity": 120,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255403/products/cey5c3ocjrjxm3eecig6.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "d263e4d7-2ed7-4546-b1dd-6e6c839968ee",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 45,
+            "route": "/product/45",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 45,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    }
+  ],
+  "cleanup": [
+    {
+      "scenario": "03-hien-phap",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "04-doanh-nghiep",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "05-lao-dong",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "06-cam-nang",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "17-ai-pho-thong",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "18-blockchain",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "22-java",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "23-du-lieu",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "24-su-ky",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "35-co-tich",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "36-vi-sao",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "45-kinh-te",
+      "httpStatus": 204
+    }
+  ],
+  "statusBefore": {
+    "provider": "gemini",
+    "model": "gemini-3.1-flash-lite",
+    "aiEnabled": true,
+    "architecture": "tools-v4"
+  }
+}

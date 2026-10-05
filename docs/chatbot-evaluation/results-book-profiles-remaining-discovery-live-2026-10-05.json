@@ -1,0 +1,360 @@
+{
+  "testedAt": "2026-10-05T18:40:16.241563+07:00",
+  "app": "VinaBook localhost:4200 -> Spring Boot/Gemini/MySQL",
+  "method": "Actual storefront proxy API; fresh guest sessions with server memory. No browser UI or signed-in account test.",
+  "manifest": "docs/book-knowledge/profiles-reviewed-remaining-2026-10-05.json",
+  "scenarios": [
+    {
+      "id": "micro-exact",
+      "questions": [
+        "Chỉ tìm giáo trình kinh tế vi mô, không lấy vĩ mô."
+      ]
+    },
+    {
+      "id": "spring-exact",
+      "questions": [
+        "Mình cần sách thực sự dạy Spring Boot, chỉ lấy cuốn đã xác nhận có nội dung đó."
+      ]
+    }
+  ],
+  "results": [
+    {
+      "scenario": "micro-exact",
+      "turn": 1,
+      "question": "Chỉ tìm giáo trình kinh tế vi mô, không lấy vĩ mô.",
+      "httpStatus": 200,
+      "elapsedMs": 12172,
+      "answer": "Rất tiếc, các cuốn sách hiện có tập trung vào AI, tâm lý học, lịch sử và cơ sở dữ liệu. Dữ liệu của mình chưa có giáo trình nào chuyên về kinh tế vi mô để bạn tham khảo.\n\nMình chọn được 5 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “AI - Sức Mạnh Của Trí Tuệ Nhân Tạo” — 125.400đ · Nguyễn Văn Lượng · Chưa có đánh giá\nGiới thiệu các khái niệm trí tuệ nhân tạo và học máy, cùng ứng dụng trong công việc, học tập, sáng tạo và kinh doanh. Sách của Nguyễn Văn Lượng hướng đến người mới tìm hiểu, bằng cách trình bày phổ th…\n\n• “Tư Duy Nhanh Và Chậm” — 151.300đ · Daniel Kahneman · Chưa có đánh giá\nDaniel Kahneman trình bày hai hệ thống tư duy: một thiên về trực giác và cảm xúc, một thiên về suy xét. Sách bàn về thiên kiến nhận thức, sự quá tự tin và cách chúng tác động đến phán đoán, quyết định…\n\n• “Sapiens: Lược Sử Loài Người” — 160.650đ · Yuval Noah Harari · Chưa có đánh giá\nHarari kể lịch sử loài người từ nguồn gốc tiến hóa đến xã hội hiện đại. Sách tập trung vào nông nghiệp, tiền tệ, tôn giáo và nhà nước, kết hợp lịch sử, sinh học, triết học và kinh tế.\n\n• “Giáo Trình Cơ Sở Dữ Liệu” — 90.160đ · Phan Tấn Quốc & Nguyễn Thị Uyên Nhi · Chưa có đánh giá\nGiáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học c…\n\n• “Nhà Đầu Tư Thông Minh” — 178.200đ · Benjamin Graham · Chưa có đánh giá\nBenjamin Graham trình bày triết lý đầu tư giá trị và việc phát triển chiến lược đầu tư dài hạn. Trọng tâm là hạn chế những sai lầm lớn của nhà đầu tư trên thị trường chứng khoán.\n\nBạn có muốn tìm kiếm các tài liệu học tập trong lĩnh vực khác hoặc cần hỗ trợ thêm thông tin về các sách hiện có không?",
+      "products": [
+        {
+          "id": 17,
+          "name": "AI - Sức Mạnh Của Trí Tuệ Nhân Tạo",
+          "author": "Nguyễn Văn Lượng",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 125400,
+          "oldPrice": 132000.0,
+          "discount": 5,
+          "quantity": 120,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319801/products/yrcackuuxv0bxefp3dah.jpg"
+        },
+        {
+          "id": 55,
+          "name": "Tư Duy Nhanh Và Chậm",
+          "author": "Daniel Kahneman",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 151300,
+          "oldPrice": 178000.0,
+          "discount": 15,
+          "quantity": 200,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254927/products/o9xsf2ve0mmsrg2wkgmf.webp"
+        },
+        {
+          "id": 56,
+          "name": "Sapiens: Lược Sử Loài Người",
+          "author": "Yuval Noah Harari",
+          "category": "Sách Văn hóa xã hội – Lịch sử",
+          "price": 160650,
+          "oldPrice": 189000.0,
+          "discount": 15,
+          "quantity": 180,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252589/products/cdcgqyejh8w71vtetrz0.webp"
+        },
+        {
+          "id": 23,
+          "name": "Giáo Trình Cơ Sở Dữ Liệu",
+          "author": "Phan Tấn Quốc & Nguyễn Thị Uyên Nhi",
+          "category": "Sách Giáo trình",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 115,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319627/products/l9kqqextxr409kipn29q.jpg"
+        },
+        {
+          "id": 43,
+          "name": "Nhà Đầu Tư Thông Minh",
+          "author": "Benjamin Graham",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 178200,
+          "oldPrice": 198000.0,
+          "discount": 10,
+          "quantity": 100,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255428/products/uvnrlqxxeel4r1rf8dw7.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Rất tiếc, các cuốn sách hiện có tập trung vào AI, tâm lý học, lịch sử và cơ sở dữ liệu. Dữ liệu của mình chưa có giáo trình nào chuyên về kinh tế vi mô để bạn tham khảo.\n\nMình chọn được 5 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “AI - Sức Mạnh Của Trí Tuệ Nhân Tạo” — 125.400đ · Nguyễn Văn Lượng · Chưa có đánh giá\nGiới thiệu các khái niệm trí tuệ nhân tạo và học máy, cùng ứng dụng trong công việc, học tập, sáng tạo và kinh doanh. Sách của Nguyễn Văn Lượng hướng đến người mới tìm hiểu, bằng cách trình bày phổ th…\n\n• “Tư Duy Nhanh Và Chậm” — 151.300đ · Daniel Kahneman · Chưa có đánh giá\nDaniel Kahneman trình bày hai hệ thống tư duy: một thiên về trực giác và cảm xúc, một thiên về suy xét. Sách bàn về thiên kiến nhận thức, sự quá tự tin và cách chúng tác động đến phán đoán, quyết định…\n\n• “Sapiens: Lược Sử Loài Người” — 160.650đ · Yuval Noah Harari · Chưa có đánh giá\nHarari kể lịch sử loài người từ nguồn gốc tiến hóa đến xã hội hiện đại. Sách tập trung vào nông nghiệp, tiền tệ, tôn giáo và nhà nước, kết hợp lịch sử, sinh học, triết học và kinh tế.\n\n• “Giáo Trình Cơ Sở Dữ Liệu” — 90.160đ · Phan Tấn Quốc & Nguyễn Thị Uyên Nhi · Chưa có đánh giá\nGiáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học c…\n\n• “Nhà Đầu Tư Thông Minh” — 178.200đ · Benjamin Graham · Chưa có đánh giá\nBenjamin Graham trình bày triết lý đầu tư giá trị và việc phát triển chiến lược đầu tư dài hạn. Trọng tâm là hạn chế những sai lầm lớn của nhà đầu tư trên thị trường chứng khoán.\n\nBạn có muốn tìm kiếm các tài liệu học tập trong lĩnh vực khác hoặc cần hỗ trợ thêm thông tin về các sách hiện có không?",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 17,
+            "name": "AI - Sức Mạnh Của Trí Tuệ Nhân Tạo",
+            "author": "Nguyễn Văn Lượng",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 125400,
+            "oldPrice": 132000.0,
+            "discount": 5,
+            "quantity": 120,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319801/products/yrcackuuxv0bxefp3dah.jpg"
+          },
+          {
+            "id": 55,
+            "name": "Tư Duy Nhanh Và Chậm",
+            "author": "Daniel Kahneman",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 151300,
+            "oldPrice": 178000.0,
+            "discount": 15,
+            "quantity": 200,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254927/products/o9xsf2ve0mmsrg2wkgmf.webp"
+          },
+          {
+            "id": 56,
+            "name": "Sapiens: Lược Sử Loài Người",
+            "author": "Yuval Noah Harari",
+            "category": "Sách Văn hóa xã hội – Lịch sử",
+            "price": 160650,
+            "oldPrice": 189000.0,
+            "discount": 15,
+            "quantity": 180,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781252589/products/cdcgqyejh8w71vtetrz0.webp"
+          },
+          {
+            "id": 23,
+            "name": "Giáo Trình Cơ Sở Dữ Liệu",
+            "author": "Phan Tấn Quốc & Nguyễn Thị Uyên Nhi",
+            "category": "Sách Giáo trình",
+            "price": 90160,
+            "oldPrice": 98000.0,
+            "discount": 8,
+            "quantity": 115,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319627/products/l9kqqextxr409kipn29q.jpg"
+          },
+          {
+            "id": 43,
+            "name": "Nhà Đầu Tư Thông Minh",
+            "author": "Benjamin Graham",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 178200,
+            "oldPrice": 198000.0,
+            "discount": 10,
+            "quantity": 100,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255428/products/uvnrlqxxeel4r1rf8dw7.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "85b036bd-8f9b-497e-bd5a-65482dbfb168",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 17,
+            "route": "/product/17",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 17,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 55,
+            "route": "/product/55",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 55,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 56,
+            "route": "/product/56",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 56,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 23,
+            "route": "/product/23",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 23,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 43,
+            "route": "/product/43",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 43,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "searchProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "spring-exact",
+      "turn": 1,
+      "question": "Mình cần sách thực sự dạy Spring Boot, chỉ lấy cuốn đã xác nhận có nội dung đó.",
+      "httpStatus": 200,
+      "elapsedMs": 10391,
+      "answer": "Mình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Phạm Xuân Lâm (chủ biên) · Chưa có đánh giá\nDữ liệu hiện tại xác nhận cuốn sách tập trung vào Java cơ bản theo giáo trình, nhưng chưa có đủ bằng chứng về các thư viện hoặc framework như Spring Boot bên trong.\n\nBạn có thể kiểm tra lại mục lục chi tiết hoặc các tài liệu hướng dẫn cụ thể về framework này để đảm bảo nội dung đúng với lộ trình học tập của mình.",
+      "products": [
+        {
+          "id": 22,
+          "name": "Giáo Trình Lập Trình Java",
+          "author": "Phạm Xuân Lâm (chủ biên)",
+          "category": "Sách Giáo trình",
+          "price": 91800,
+          "oldPrice": 102000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319640/products/gz9tp9xsoujfkcglnftj.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Mình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Phạm Xuân Lâm (chủ biên) · Chưa có đánh giá\nDữ liệu hiện tại xác nhận cuốn sách tập trung vào Java cơ bản theo giáo trình, nhưng chưa có đủ bằng chứng về các thư viện hoặc framework như Spring Boot bên trong.\n\nBạn có thể kiểm tra lại mục lục chi tiết hoặc các tài liệu hướng dẫn cụ thể về framework này để đảm bảo nội dung đúng với lộ trình học tập của mình.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 22,
+            "name": "Giáo Trình Lập Trình Java",
+            "author": "Phạm Xuân Lâm (chủ biên)",
+            "category": "Sách Giáo trình",
+            "price": 91800,
+            "oldPrice": 102000.0,
+            "discount": 10,
+            "quantity": 140,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319640/products/gz9tp9xsoujfkcglnftj.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "be89dd08-0bcd-4adb-abca-9c81b5e2257c",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 22,
+            "route": "/product/22",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 22,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "searchProducts",
+          "status": "COMPLETED"
+        }
+      }
+    }
+  ],
+  "cleanup": [
+    {
+      "scenario": "micro-exact",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "spring-exact",
+      "httpStatus": 204
+    }
+  ],
+  "statusBefore": {
+    "provider": "gemini",
+    "model": "gemini-3.1-flash-lite",
+    "aiEnabled": true,
+    "architecture": "tools-v4"
+  }
+}

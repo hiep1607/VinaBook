@@ -1,0 +1,664 @@
+{
+  "testedAt": "2026-10-05T20:33:57.148556+07:00",
+  "app": "VinaBook localhost:4200 -> Spring Boot/Gemini/MySQL",
+  "method": "Actual storefront proxy API; fresh guest sessions with server memory. No browser UI or signed-in account test.",
+  "manifest": "docs/book-knowledge/profiles-reviewed-remaining-2026-10-05.json",
+  "scenarios": [
+    {
+      "id": "micro-exact-final",
+      "questions": [
+        "Chỉ tìm giáo trình kinh tế vi mô, không lấy vĩ mô.",
+        "Còn cuốn nào khác đúng yêu cầu đó không?"
+      ]
+    },
+    {
+      "id": "spring-exact-final",
+      "questions": [
+        "Mình cần sách thực sự dạy Spring Boot, chỉ lấy cuốn đã xác nhận có nội dung đó.",
+        "Còn cuốn nào khác đúng chủ đề này không?"
+      ]
+    },
+    {
+      "id": "blockchain-prerequisite-final",
+      "questions": [
+        "Blockchain Cơ Bản của ai, có cần giỏi toán hoặc lập trình trước không?"
+      ]
+    },
+    {
+      "id": "scope-switch-final",
+      "questions": [
+        "Chỉ lấy sách dạy Spring Boot.",
+        "Bỏ yêu cầu Spring Boot, chuyển sang giáo trình Java đang bán nhé."
+      ]
+    },
+    {
+      "id": "macro-final",
+      "questions": [
+        "Tìm giáo trình kinh tế vĩ mô đang bán ở đây."
+      ]
+    }
+  ],
+  "results": [
+    {
+      "scenario": "micro-exact-final",
+      "turn": 1,
+      "question": "Chỉ tìm giáo trình kinh tế vi mô, không lấy vĩ mô.",
+      "httpStatus": 200,
+      "elapsedMs": 6406,
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "2ab61a5c-fd97-44e7-9307-a0645e14f5ca",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "tool": "searchProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "micro-exact-final",
+      "turn": 2,
+      "question": "Còn cuốn nào khác đúng yêu cầu đó không?",
+      "httpStatus": 200,
+      "elapsedMs": 531,
+      "answer": "Với yêu cầu đang giữ, mình vẫn chưa tìm được cuốn mới đúng chủ đề trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Với yêu cầu đang giữ, mình vẫn chưa tìm được cuốn mới đúng chủ đề trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "c11d8737-e9cd-4871-8ba4-a8c57ae54de2",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "tool": "searchProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "spring-exact-final",
+      "turn": 1,
+      "question": "Mình cần sách thực sự dạy Spring Boot, chỉ lấy cuốn đã xác nhận có nội dung đó.",
+      "httpStatus": 200,
+      "elapsedMs": 7766,
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "c1033410-799d-4bda-a28f-be5c20858545",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "tool": "searchProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "spring-exact-final",
+      "turn": 2,
+      "question": "Còn cuốn nào khác đúng chủ đề này không?",
+      "httpStatus": 200,
+      "elapsedMs": 531,
+      "answer": "Với yêu cầu đang giữ, mình vẫn chưa tìm được cuốn mới đúng chủ đề trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Với yêu cầu đang giữ, mình vẫn chưa tìm được cuốn mới đúng chủ đề trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "4906bd2d-b726-46f9-a3fa-880b04142252",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "tool": "searchProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "blockchain-prerequisite-final",
+      "turn": 1,
+      "question": "Blockchain Cơ Bản của ai, có cần giỏi toán hoặc lập trình trước không?",
+      "httpStatus": 200,
+      "elapsedMs": 63,
+      "answer": "Về “Blockchain Cơ Bản”, mình có những thông tin này:\nTác giả: Daniel Drescher\nDaniel Drescher giải thích blockchain qua 25 bước, dùng hình ảnh, phép so sánh và ví dụ để nối các khái niệm. Người đọc tìm hiểu cơ chế, tiềm năng và giới hạn của công nghệ chuỗi khối mà không cần công thức toán hay lập trình. Sách giúp hiểu nền tảng công nghệ, không bảo đảm lợi nhuận đầu tư tiền mã hóa.",
+      "products": [
+        {
+          "id": 18,
+          "name": "Blockchain Cơ Bản",
+          "author": "Daniel Drescher",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 133400,
+          "oldPrice": 145000.0,
+          "discount": 8,
+          "quantity": 95,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319781/products/ptjxp427gba0zja7ivmv.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Về “Blockchain Cơ Bản”, mình có những thông tin này:\nTác giả: Daniel Drescher\nDaniel Drescher giải thích blockchain qua 25 bước, dùng hình ảnh, phép so sánh và ví dụ để nối các khái niệm. Người đọc tìm hiểu cơ chế, tiềm năng và giới hạn của công nghệ chuỗi khối mà không cần công thức toán hay lập trình. Sách giúp hiểu nền tảng công nghệ, không bảo đảm lợi nhuận đầu tư tiền mã hóa.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 18,
+            "name": "Blockchain Cơ Bản",
+            "author": "Daniel Drescher",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 133400,
+            "oldPrice": 145000.0,
+            "discount": 8,
+            "quantity": 95,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319781/products/ptjxp427gba0zja7ivmv.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "73c00262-9599-494d-b31b-0f6965986715",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 18,
+            "route": "/product/18",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 18,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "scope-switch-final",
+      "turn": 1,
+      "question": "Chỉ lấy sách dạy Spring Boot.",
+      "httpStatus": 200,
+      "elapsedMs": 4968,
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Khi bạn muốn chuyển sang hướng đọc khác, mình sẽ tìm tiếp.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "da197669-9509-4cc6-922b-b1df19f573e8",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "tool": "searchProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "scope-switch-final",
+      "turn": 2,
+      "question": "Bỏ yêu cầu Spring Boot, chuyển sang giáo trình Java đang bán nhé.",
+      "httpStatus": 200,
+      "elapsedMs": 5375,
+      "answer": "Hiện mình chưa tìm được cuốn đúng chủ đề. Có 5 lựa chọn gần với hướng đọc đó để bạn cân nhắc:\n\n**Gợi ý gần chủ đề — các cuốn này chỉ đáp ứng một phần nhu cầu ban đầu:**\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Phạm Xuân Lâm (chủ biên) · Chưa có đánh giá\nĐây là tài liệu chuyên ngành về ngôn ngữ Java, phù hợp nhất với mục tiêu học lập trình Java của bạn. Do chưa có mục lục chi tiết, bạn nên cân nhắc nội dung sách có bao quát đúng các chương bạn cần học không.\nNội dung nhắc đến “lập trình”, gần với hướng đọc bạn đang tìm.\n\n• “Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật” — 83.600đ · Đỗ Trung Kiên (chủ biên), Đặng Xuân Thọ, Nguyễn Thị Hồng, Phạm Thị Lan · Chưa có đánh giá\nGiáo trình do Đỗ Trung Kiên chủ biên, giới thiệu giải thuật, phân tích giải thuật và đệ quy, cùng các cấu trúc như danh sách liên kết, ngăn xếp, hàng đợi và cây. Có nội dung tìm kiếm và sắp xếp. Chưa …\nNội dung nhắc đến “lập trình”, gần với hướng đọc bạn đang tìm.\n\n• “The Pragmatic Programmer - Lập Trình Viên Thực Dụng” — 154.000đ · Andrew Hunt & David Thomas · Chưa có đánh giá\nBàn về trách nhiệm nghề nghiệp và cách xây dựng phần mềm linh hoạt, dễ bảo trì. Các chủ đề gồm tránh lặp kiến thức, dùng công cụ, hiểu yêu cầu, học liên tục và kiểm thử.\nNội dung nhắc đến “lập trình”, gần với hướng đọc bạn đang tìm.\n\n• “AI - Sức Mạnh Của Trí Tuệ Nhân Tạo” — 125.400đ · Nguyễn Văn Lượng · Chưa có đánh giá\nGiới thiệu các khái niệm trí tuệ nhân tạo và học máy, cùng ứng dụng trong công việc, học tập, sáng tạo và kinh doanh. Sách của Nguyễn Văn Lượng hướng đến người mới tìm hiểu, bằng cách trình bày phổ th…\nNội dung nhắc đến “lập trình”, gần với hướng đọc bạn đang tìm.\n\n• “Giáo Trình Cơ Sở Dữ Liệu” — 90.160đ · Phan Tấn Quốc & Nguyễn Thị Uyên Nhi · Chưa có đánh giá\nGiáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học c…\nNội dung nhắc đến “cơ sở dữ liệu”, gần với hướng đọc bạn đang tìm.",
+      "products": [
+        {
+          "id": 22,
+          "name": "Giáo Trình Lập Trình Java",
+          "author": "Phạm Xuân Lâm (chủ biên)",
+          "category": "Sách Giáo trình",
+          "price": 91800,
+          "oldPrice": 102000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319640/products/gz9tp9xsoujfkcglnftj.jpg"
+        },
+        {
+          "id": 20,
+          "name": "Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật",
+          "author": "Đỗ Trung Kiên (chủ biên), Đặng Xuân Thọ, Nguyễn Thị Hồng, Phạm Thị Lan",
+          "category": "Sách Giáo trình",
+          "price": 83600,
+          "oldPrice": 88000.0,
+          "discount": 5,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319743/products/x6ssqusalnhgpbux28uv.webp"
+        },
+        {
+          "id": 16,
+          "name": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+          "author": "Andrew Hunt & David Thomas",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 154000,
+          "oldPrice": 175000.0,
+          "discount": 12,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319839/products/emvvfbsijvpo4ctg0c2t.jpg"
+        },
+        {
+          "id": 17,
+          "name": "AI - Sức Mạnh Của Trí Tuệ Nhân Tạo",
+          "author": "Nguyễn Văn Lượng",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 125400,
+          "oldPrice": 132000.0,
+          "discount": 5,
+          "quantity": 120,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319801/products/yrcackuuxv0bxefp3dah.jpg"
+        },
+        {
+          "id": 23,
+          "name": "Giáo Trình Cơ Sở Dữ Liệu",
+          "author": "Phan Tấn Quốc & Nguyễn Thị Uyên Nhi",
+          "category": "Sách Giáo trình",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 115,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319627/products/l9kqqextxr409kipn29q.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Hiện mình chưa tìm được cuốn đúng chủ đề. Có 5 lựa chọn gần với hướng đọc đó để bạn cân nhắc:\n\n**Gợi ý gần chủ đề — các cuốn này chỉ đáp ứng một phần nhu cầu ban đầu:**\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Phạm Xuân Lâm (chủ biên) · Chưa có đánh giá\nĐây là tài liệu chuyên ngành về ngôn ngữ Java, phù hợp nhất với mục tiêu học lập trình Java của bạn. Do chưa có mục lục chi tiết, bạn nên cân nhắc nội dung sách có bao quát đúng các chương bạn cần học không.\nNội dung nhắc đến “lập trình”, gần với hướng đọc bạn đang tìm.\n\n• “Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật” — 83.600đ · Đỗ Trung Kiên (chủ biên), Đặng Xuân Thọ, Nguyễn Thị Hồng, Phạm Thị Lan · Chưa có đánh giá\nGiáo trình do Đỗ Trung Kiên chủ biên, giới thiệu giải thuật, phân tích giải thuật và đệ quy, cùng các cấu trúc như danh sách liên kết, ngăn xếp, hàng đợi và cây. Có nội dung tìm kiếm và sắp xếp. Chưa …\nNội dung nhắc đến “lập trình”, gần với hướng đọc bạn đang tìm.\n\n• “The Pragmatic Programmer - Lập Trình Viên Thực Dụng” — 154.000đ · Andrew Hunt & David Thomas · Chưa có đánh giá\nBàn về trách nhiệm nghề nghiệp và cách xây dựng phần mềm linh hoạt, dễ bảo trì. Các chủ đề gồm tránh lặp kiến thức, dùng công cụ, hiểu yêu cầu, học liên tục và kiểm thử.\nNội dung nhắc đến “lập trình”, gần với hướng đọc bạn đang tìm.\n\n• “AI - Sức Mạnh Của Trí Tuệ Nhân Tạo” — 125.400đ · Nguyễn Văn Lượng · Chưa có đánh giá\nGiới thiệu các khái niệm trí tuệ nhân tạo và học máy, cùng ứng dụng trong công việc, học tập, sáng tạo và kinh doanh. Sách của Nguyễn Văn Lượng hướng đến người mới tìm hiểu, bằng cách trình bày phổ th…\nNội dung nhắc đến “lập trình”, gần với hướng đọc bạn đang tìm.\n\n• “Giáo Trình Cơ Sở Dữ Liệu” — 90.160đ · Phan Tấn Quốc & Nguyễn Thị Uyên Nhi · Chưa có đánh giá\nGiáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học c…\nNội dung nhắc đến “cơ sở dữ liệu”, gần với hướng đọc bạn đang tìm.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 22,
+            "name": "Giáo Trình Lập Trình Java",
+            "author": "Phạm Xuân Lâm (chủ biên)",
+            "category": "Sách Giáo trình",
+            "price": 91800,
+            "oldPrice": 102000.0,
+            "discount": 10,
+            "quantity": 140,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319640/products/gz9tp9xsoujfkcglnftj.jpg"
+          },
+          {
+            "id": 20,
+            "name": "Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật",
+            "author": "Đỗ Trung Kiên (chủ biên), Đặng Xuân Thọ, Nguyễn Thị Hồng, Phạm Thị Lan",
+            "category": "Sách Giáo trình",
+            "price": 83600,
+            "oldPrice": 88000.0,
+            "discount": 5,
+            "quantity": 130,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319743/products/x6ssqusalnhgpbux28uv.webp"
+          },
+          {
+            "id": 16,
+            "name": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+            "author": "Andrew Hunt & David Thomas",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 154000,
+            "oldPrice": 175000.0,
+            "discount": 12,
+            "quantity": 110,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319839/products/emvvfbsijvpo4ctg0c2t.jpg"
+          },
+          {
+            "id": 17,
+            "name": "AI - Sức Mạnh Của Trí Tuệ Nhân Tạo",
+            "author": "Nguyễn Văn Lượng",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 125400,
+            "oldPrice": 132000.0,
+            "discount": 5,
+            "quantity": 120,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319801/products/yrcackuuxv0bxefp3dah.jpg"
+          },
+          {
+            "id": 23,
+            "name": "Giáo Trình Cơ Sở Dữ Liệu",
+            "author": "Phan Tấn Quốc & Nguyễn Thị Uyên Nhi",
+            "category": "Sách Giáo trình",
+            "price": 90160,
+            "oldPrice": 98000.0,
+            "discount": 8,
+            "quantity": 115,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319627/products/l9kqqextxr409kipn29q.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "308df8a8-b9b5-46c5-9158-c7e2f90559e2",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 22,
+            "route": "/product/22",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 22,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 20,
+            "route": "/product/20",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 20,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 16,
+            "route": "/product/16",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 16,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 17,
+            "route": "/product/17",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 17,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 23,
+            "route": "/product/23",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 23,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "searchProducts",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "macro-final",
+      "turn": 1,
+      "question": "Tìm giáo trình kinh tế vĩ mô đang bán ở đây.",
+      "httpStatus": 200,
+      "elapsedMs": 11812,
+      "answer": "Mình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Kinh Tế Vĩ Mô” — 94.050đ · Lê Thanh Tùng · Chưa có đánh giá\nCuốn này cung cấp cái nhìn tổng quan về các biến số chính của nền kinh tế, hỗ trợ người đọc nắm bắt cơ chế vận hành vĩ mô thay vì đi sâu vào hành vi cá nhân.",
+      "products": [
+        {
+          "id": 45,
+          "name": "Giáo Trình Kinh Tế Vĩ Mô",
+          "author": "Lê Thanh Tùng",
+          "category": "Sách Giáo trình",
+          "price": 94050,
+          "oldPrice": 99000.0,
+          "discount": 5,
+          "quantity": 120,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255403/products/cey5c3ocjrjxm3eecig6.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "searchProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Mình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Kinh Tế Vĩ Mô” — 94.050đ · Lê Thanh Tùng · Chưa có đánh giá\nCuốn này cung cấp cái nhìn tổng quan về các biến số chính của nền kinh tế, hỗ trợ người đọc nắm bắt cơ chế vận hành vĩ mô thay vì đi sâu vào hành vi cá nhân.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 45,
+            "name": "Giáo Trình Kinh Tế Vĩ Mô",
+            "author": "Lê Thanh Tùng",
+            "category": "Sách Giáo trình",
+            "price": 94050,
+            "oldPrice": 99000.0,
+            "discount": 5,
+            "quantity": 120,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255403/products/cey5c3ocjrjxm3eecig6.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "a13b7d0d-d815-46dc-832a-cd97dc26690d",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 45,
+            "route": "/product/45",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 45,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "searchProducts",
+          "status": "COMPLETED"
+        }
+      }
+    }
+  ],
+  "cleanup": [
+    {
+      "scenario": "micro-exact-final",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "spring-exact-final",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "blockchain-prerequisite-final",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "scope-switch-final",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "macro-final",
+      "httpStatus": 204
+    }
+  ],
+  "statusBefore": {
+    "provider": "gemini",
+    "model": "gemini-3.1-flash-lite",
+    "aiEnabled": true,
+    "architecture": "tools-v4"
+  }
+}
