@@ -64,6 +64,40 @@ public class ChatOrchestrator {
                 tool="respond";
                 result=ChatTool.Result.clarify(ChatConversationSupport.readerQuestion(state,request.getMessage()));
                 status=result.status();
+            } else if(products!=null && (ChatConversationSupport.suitabilityQuestion(request.getMessage(),language)
+                        || ChatBookFacts.has(plainMessage,"lap ngan sach|chi tieu hang thang"))
+                    && new ChatCatalogQuery(language,data).named(request.getMessage(),products.findByStatusTrue()).size()==1) {
+                tool="getProducts";
+                result=registry.execute(tool,mapper.createObjectNode().put("field",ChatBookFacts.has(plainMessage,"lap ngan sach|chi tieu hang thang")?"explanation":"detail"),new ChatTool.Context(request,state));
+                status=result.status();
+            } else if(products!=null && ChatConversationSupport.giftDiscovery(request.getMessage(),language)
+                    && new ChatCatalogQuery(language,data).named(request.getMessage(),products.findByStatusTrue()).isEmpty()) {
+                tool="recommendBooks";
+                var arguments=mapper.createObjectNode().put("scope","new").put("query",reading.hardMessage(request.getMessage()));
+                if(stated.getMinPrice()!=null)arguments.put("minPrice",stated.getMinPrice());
+                if(stated.getMaxPrice()!=null)arguments.put("maxPrice",stated.getMaxPrice());
+                result=registry.execute(tool,arguments,new ChatTool.Context(request,state));status=result.status();
+            } else if(products!=null && state.focus!=null && ChatConversationSupport.followupComparison(request.getMessage(),language)
+                    && new ChatCatalogQuery(language,data).named(request.getMessage(),products.findByStatusTrue()).size()==1) {
+                tool="getProducts";
+                result=registry.execute(tool,mapper.createObjectNode().put("field","table"),new ChatTool.Context(request,state));
+                status=result.status();
+            } else if(products!=null && bookInformation(request,state,language)) {
+                tool="getProducts";
+                result=registry.execute(tool,mapper.createObjectNode().put("field","detail"),new ChatTool.Context(request,state));
+                status=result.status();
+            } else if(!state.toolSearch.isEmpty() && ChatBookFacts.has(plainMessage,"cuon nao dung chu de|cuon nao dung yeu cau|cuon nao chi gan|trong so do.*dung chu de")) {
+                tool="getProducts";
+                result=registry.execute(tool,mapper.createObjectNode().put("field","explanation").put("reference","selection"),new ChatTool.Context(request,state));
+                status=result.status();
+            } else if(!state.toolSearch.isEmpty() && (reading.contextPatch(request.getMessage()) || reading.budgetPatch(request.getMessage()))
+                    && !ChatBookFacts.has(plainMessage,"doi sang|chuyen sang|gio hang|vao gio|trong gio|dat hang")) {
+                tool="searchProducts";
+                var arguments=mapper.createObjectNode().put("scope","continue");
+                if(stated.getMinPrice()!=null)arguments.put("minPrice",stated.getMinPrice());
+                if(stated.getMaxPrice()!=null)arguments.put("maxPrice",stated.getMaxPrice());
+                result=registry.execute(tool,arguments,new ChatTool.Context(request,state));
+                status=result.status();
             } else if((!state.shortlist.isEmpty() || state.emptySearch) && ChatConversationSupport.explanation(request.getMessage(),language)
                     && (ChatConversationSupport.pluralReference(request.getMessage(),language)
                         || ChatBookFacts.has(plainMessage,"cuon|sach|goi y|lua chon")
@@ -173,7 +207,16 @@ public class ChatOrchestrator {
                         "Bạn đang tìm quà cho bé " + age + " tuổi. Đây là các sách thuộc nhóm thiếu nhi trong catalog; cửa hàng chưa có độ tuổi đọc đã duyệt cho từng cuốn.\n\n" + result.answer(),
                         result.intent(), result.products(), result.actions(), result.status());
                 status = result.status();
-            } else if (!analyzeReading && !stated.getTopics().isEmpty() && (stated.getMaxPrice()!=null || language.alternativeTopics(request.getMessage()))
+            } else if (!analyzeReading && new ChatCatalogQuery(language,data).semanticConstraint(request.getMessage())
+                    && ChatBookFacts.has(plainMessage,"doi sang|chuyen sang") && quoted.isBlank()
+                    && !ChatBookFacts.has(plainMessage,"gio hang|vao gio|dat hang")) {
+                tool="searchProducts";
+                var arguments=mapper.createObjectNode().put("query",language.discoveryQuery(request.getMessage())).put("scope","new");
+                if(stated.getMinPrice()!=null)arguments.put("minPrice",stated.getMinPrice());
+                if(stated.getMaxPrice()!=null)arguments.put("maxPrice",stated.getMaxPrice());
+                result=registry.execute(tool,arguments,new ChatTool.Context(request,state));status=result.status();
+            } else if (!analyzeReading && (!stated.getTopics().isEmpty() || new ChatCatalogQuery(language,data).semanticConstraint(request.getMessage()))
+                    && (stated.getMaxPrice()!=null || language.alternativeTopics(request.getMessage()))
                     && plainMessage.matches("(?s).*\\b(?:tim|goi y|tu van|nen doc)\\b.*") && quoted.isBlank()) {
                 tool = "searchProducts";
                 var arguments=mapper.createObjectNode().put("query",language.discoveryQuery(request.getMessage())).put("scope","new");
@@ -299,7 +342,7 @@ public class ChatOrchestrator {
             }
             if(narrator!=null && tool.equals("getProducts")
                     && (ChatConversationSupport.explanation(request.getMessage(),language)
-                        || ChatBookFacts.has(plainMessage,"so sanh|khac nhau|nhe nhang|de doc|nen chon|hay hon|tot hon|noi dung"))) {
+                        || ChatBookFacts.has(plainMessage,"so sanh|khac nhau|khac gi|nhe nhang|de doc|nen chon|hay hon|tot hon|noi dung"))) {
                 ChatTool.Result presented=narrator.explain(result,request.getMessage(),state);
                 if(presented!=null)result=presented;
             }
@@ -338,6 +381,17 @@ public class ChatOrchestrator {
                 result.products(), List.of(), messageId, result.intent(), state.criteria, result.actions());
         response.setExecution(Map.of("tool", tool, "status", status));
         return response;
+    }
+
+    private boolean bookInformation(ChatRequestDto request,ChatDialogueMemory.State state,ChatIntentService language) {
+        String q=language.normalize(request.getMessage());
+        if(ChatBookFacts.has(q,"gio hang|vao gio|them gio|don hang|doi tra|phi giao|phi ship|so sanh|tuong tu|gan giong"))return false;
+        List<vn.fs.entity.Product> named=new ChatCatalogQuery(language,data).named(request.getMessage(),products.findByStatusTrue());
+        if(named.size()==1 && !ChatService.isPurchaseRequest(q) && !ChatBookFacts.has(q,"tim|goi y|liet ke")) {
+            Set<String> fields=ChatBookFacts.requested(request.getMessage(),named,language);
+            return fields.contains("description") || fields.contains("author") || fields.contains("audience");
+        }
+        return named.isEmpty() && state.focus!=null && ChatBookFacts.focusedContentQuestion(q);
     }
     private int purchaseQuantity(String message) {
         var quantity=java.util.regex.Pattern.compile("\\b([0-9]{1,6}|mot|hai|ba|bon|nam|sau|bay|tam|chin|muoi)\\s+(?:ban|cuon|quyen|sach)\\b").matcher(message);

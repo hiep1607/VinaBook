@@ -31,13 +31,16 @@ public class ChatBookNarrator {
     private ChatTool.Result compose(ChatTool.Result result,String question,ChatDialogueMemory.State state) {
         if (!"COMPLETED".equals(result.status()) || result.products().isEmpty() && (state==null || result.intent()!=vn.fs.dto.chat.ChatIntent.DISCOVER_BOOKS)) return result;
         boolean explanation=state!=null && ChatConversationSupport.explanation(question,language);
+        // No book evidence is available for an empty result. The verified answer
+        // already states whether both exact and related searches were exhausted.
+        if(result.products().isEmpty())return result;
         int reasonLimit=explanation?900:600;
         try {
             Map<Long,String> descriptions=new LinkedHashMap<>();
             Map<Long,Map<String,String>> readingFacts=new LinkedHashMap<>();
             products.findByStatusTrue().stream().filter(p->result.products().stream().anyMatch(b->b.getId().equals(p.getProductId())))
                 .forEach(p->{
-                    descriptions.put(p.getProductId(),ChatDialogueInterpreter.clean(knowledge==null?p.getDescription():knowledge.approvedDescription(p),2400));
+                    descriptions.put(p.getProductId(),ChatDialogueInterpreter.clean(knowledge==null?p.getDescription():knowledge.approvedReadingFacts(p).getOrDefault("summary",Objects.toString(p.getDescription(),"")),2400));
                     readingFacts.put(p.getProductId(),knowledge==null?Map.of("summary",Objects.toString(p.getDescription(),"")):knowledge.approvedReadingFacts(p));
                 });
             Map<String,Object> input=new LinkedHashMap<>();
@@ -67,7 +70,17 @@ public class ChatBookNarrator {
                 +"Không suy ra sở thích, độ phù hợp hay mức yêu thích từ giới tính; không khẳng định nhóm người ưa thích sách nếu thiếu số liệu. "
                 +"Tránh các lời khẳng định lý tưởng, tối ưu, phù hợp nhất, lôi cuốn hoặc dễ tiếp cận khi dữ liệu không xác nhận. Dùng căn cứ nội dung để khách tự cân nhắc. "
                 +"Không biết chương trình học cụ thể của khách: không nói sát chương trình, đúng học phần hoặc khớp môn học nếu dữ kiện chưa xác nhận. "
+                +"Tuổi của nhân vật không phải độ tuổi đọc. Chỉ khẳng định hợp trẻ ở tuổi cụ thể khi audience hoặc readingLevel xác nhận; nếu chưa có, giúp phụ huynh cân nhắc nội dung và nói rõ thiếu dữ kiện về tuổi. "
+                +"Khi khách hỏi sâu, phân biệt nội dung cuốn sách với hiệu quả chưa được chứng minh. Giải thích nội dung liên quan đến vấn đề khách ở đâu, hạn chế dữ liệu và một tiêu chí lựa chọn cụ thể; không chỉ diễn đạt lại câu trước dài hơn. "
                 +"Nhóm nearbyProductIds chỉ gần với yêu cầu: tuyệt đối không mô tả chúng là đúng thể loại/chủ đề gốc. Không chọn preferredProductId khi chỉ đang liệt kê lựa chọn. ";
+            presentation+="Các điểm chưa xác nhận trong verifiedAnswer phải được giữ nguyên. Intro không được khẳng định hợp độ tuổi, dễ đọc hoặc tác dụng giáo dục. "
+                +"Không kết luận dễ theo dõi từ cốt truyện, dễ đọc hoặc hợp người mới đọc từ chương ngắn, hay giúp trẻ phát triển từ việc sách có tranh. "
+                +"readingStyle chỉ mô tả cách tác giả trình bày; không biến lối kể chuyện của tác giả thành kỹ thuật giao tiếp mà sách dạy. Không gán sách quản lý cảm xúc khi nguồn chỉ nói về ứng xử. "
+                +"Nếu mô tả chỉ có lời quảng bá như nguyên tắc vàng/chinh phục lòng người, giải thích phạm vi chủ đề rồi nói rõ chưa có ví dụ, mục lục hay kỹ thuật được xác nhận; không kéo dài lời quảng bá. "
+                +"Khi hỏi sâu hơn, đưa ra điểm để quyết định chọn hoặc không chọn theo nhu cầu gốc. Có thể hỏi một tình huống thực tế còn thiếu, nhưng không gán tình huống đó thành nội dung đã có trong sách. "
+                +"Không viết closing nếu verifiedAnswer đã có câu hỏi cuối; không thêm câu Nếu bạn muốn ở mọi lượt. "
+                +"Không suy ra sách không đề cập đến điều gì chỉ vì mô tả không nhắc điều đó. Không nói hoàn toàn tách biệt, giải trí thuần túy hay bảo đảm hiệu quả. "
+                +"Thể hiện nhận xét như căn cứ cân nhắc dựa vào mô tả; không biến lợi ích quảng cáo thành kết quả mà khách chắc chắn đạt được. ";
             String raw=ai.complete("Bạn giải thích sự phù hợp hoặc khác biệt giữa những cuốn sách đã được backend chọn. "
                 + "Chỉ trả JSON {\"reasons\":[{\"productId\":1,\"evidenceField\":\"summary\",\"evidence\":\"trích nguyên văn dữ liệu\",\"reason\":\"giải thích ngắn\"}],\"preferredProductId\":null}. "
                 + "evidenceField là trường trong approvedReadingFacts của cuốn đó; evidence phải là trích nguyên văn từ đúng trường. Độ khó, đối tượng, phong cách chỉ dựa vào trường tương ứng hoặc mô tả có nói rõ. "
@@ -90,7 +103,9 @@ public class ChatBookNarrator {
             if(result.products().isEmpty())intro="";
             if(!safeConversationText(intro,result,state))intro="";
             if(!safeConversationText(closing,result,state))closing="";
-            if(state!=null && !state.toolHistory.isEmpty() && ChatBookFacts.has(language.normalize(intro),"chao|xin chao|hello"))intro="";
+            if(language.normalize(closing).startsWith("neu ban"))closing="";
+            if(result.answer().stripTrailing().endsWith("?"))closing="";
+            if(ChatBookFacts.has(language.normalize(intro),"chao|xin chao|hello"))intro="";
             Map<Long,String> accepted=new LinkedHashMap<>();
             Map<String,Integer> rejected=new LinkedHashMap<>();
             for(JsonNode reason:reasons) {
@@ -105,7 +120,15 @@ public class ChatBookNarrator {
                 }
                 if(!evidenceField.isBlank()? !readingFacts.get(id).getOrDefault(evidenceField,"").contains(evidence)
                     : !descriptions.get(id).contains(evidence)) {rejected.merge("unverified_evidence",1,Integer::sum);continue;}
-                if(unsupportedReadingFact(text,descriptions.get(id))) {rejected.merge("unsupported_fact",1,Integer::sum);continue;}
+                if(new ChatReadingClaims(language).unsupported(text,readingFacts.get(id))) {rejected.merge("unsupported_fact",1,Integer::sum);continue;}
+                if(ChatBookFacts.has(normalized,"(?:hop|phu hop|danh cho|ly tuong cho).*(?:be|tre|tuoi)|do tuoi.*(?:hop|phu hop)|doi tuong.*(?:be|tre|tuoi)|doc gia nho tuoi")
+                        && readingFacts.get(id).getOrDefault("audience","").isBlank()) {rejected.merge("unverified_reader_age",1,Integer::sum);continue;}
+                if(state!=null && state.toolSearch.get("readerAge") instanceof Number
+                        && ((Number)state.toolSearch.get("readerAge")).intValue()<18
+                        && ChatBookFacts.has(normalized,"(?:hop|phu hop|ly tuong cho).*(?:be|tre|tuoi)|do tuoi.*(?:hop|phu hop)")
+                        && !new ChatReadingFit(language).ageConfirmed(state.toolSearch,readingFacts.get(id))) {
+                    rejected.merge("unverified_specific_age",1,Integer::sum);continue;
+                }
                 if(state!=null && state.recentDialogue.stream().anyMatch(turn->language.normalize(turn.getOrDefault("assistant","")).contains(normalized))) {rejected.merge("repeated_reason",1,Integer::sum);continue;}
                 if(result.products().stream().anyMatch(b->text.toLowerCase(Locale.ROOT).contains(b.getName().toLowerCase(Locale.ROOT)))) {rejected.merge("product_name_in_reason",1,Integer::sum);continue;}
                 String name=result.products().stream().filter(b->b.getId()==id).findFirst().orElseThrow().getName();
@@ -114,9 +137,14 @@ public class ChatBookNarrator {
                     String marker="• “"+name+"”";
                     int start=answer.indexOf(marker), end=start<0?-1:answer.indexOf("\n",start);
                     if(start>=0) {
+                        String inline=marker+": ";
+                        if(answer.indexOf(inline,start)==start) {
+                            answer.replace(start+inline.length(),end<0?answer.length():end,ChatDialogueInterpreter.clean(text,reasonLimit));
+                            continue;
+                        }
                         if(explanation && end>=0) {
-                            int blockEnd=answer.indexOf("\n\n",end+1);
-                            answer.replace(end+1,blockEnd<0?answer.length():blockEnd,ChatDialogueInterpreter.clean(text,reasonLimit));
+                            int lineEnd=answer.indexOf("\n",end+1);
+                            answer.replace(end+1,lineEnd<0?answer.length():lineEnd,ChatDialogueInterpreter.clean(text,reasonLimit));
                             continue;
                         }
                         String summary=ChatDialogueInterpreter.clean(descriptions.get(id),200);
@@ -133,11 +161,17 @@ public class ChatBookNarrator {
                     }
                 } else answer.append("\n\nVề “").append(name).append("”: ").append(ChatDialogueInterpreter.clean(text,reasonLimit));
             }
-            if(state==null && root.path("preferredProductId").isIntegralNumber() && result.products().size()>1) {
+            if(root.path("preferredProductId").isIntegralNumber() && result.products().size()>1
+                    && (state==null || ChatBookFacts.has(language.normalize(question),"cuon nao|chon mot|chon giup|sat.*nhat"))) {
                 long preferred=root.path("preferredProductId").asLong();
-                if(accepted.containsKey(preferred)) {
+                if(accepted.containsKey(preferred)
+                        && (state==null || !Objects.equals(state.focus,preferred))
+                        && (state==null || new ChatReadingFit(language).missing(state.toolSearch,readingFacts.get(preferred)).isEmpty())
+                        && (state==null || !state.toolSearch.containsKey("readerAge")
+                        || new ChatReadingFit(language).ageConfirmed(state.toolSearch,readingFacts.get(preferred)))) {
                     String name=result.products().stream().filter(b->b.getId()==preferred).findFirst().orElseThrow().getName();
                     answer.append("\n\nVới mục tiêu bạn nêu, mình nghiêng về “").append(name).append("”.");
+                    if(state!=null)state.focus=preferred;
                 }
             }
             if(!intro.isBlank()) {
@@ -163,7 +197,9 @@ public class ChatBookNarrator {
         String normalized=language.normalize(text);
         if(text.length()>220 || text.contains("\n") || normalized.matches("(?s).*(?:[0-9]|https?://|productid|[<>]).*")
             || normalized.startsWith("duoi day") || normalized.startsWith("hy vong")
+            || ChatBookFacts.has(normalized,"duoi day|(?:mot|hai|ba|bon|nam|sau|bay|tam|chin|muoi) (?:cuon|goi y|lua chon)|co che thuc hanh|cuon sach nay|cuon nay|moi cuon sach")
             || ChatBookFacts.has(normalized,"chuong trinh hoc|hoc phan|khop mon hoc|sat.*chuong trinh")
+            || ChatBookFacts.has(normalized,"(?:hop|phu hop|danh cho|ly tuong cho).*(?:be|tre|tuoi)|do tuoi.*(?:hop|phu hop)|giup (?:be|tre)|de dang|de hieu|de tiep can")
             || ChatBookFacts.has(normalized,"gio hang|dat hang|don hang|thanh toan|giao hang|da them|da xoa|ton kho|vnd|gia sach|dung chu de|dung the loai|du so luong|het sach|con hang|chua tim thay|chua co sach|khong co sach|danh muc|catalog|chuyen sau|nang cao|de doc|nhe nhang|noi tieng|phong cach|loi ke|nhan vat|do dai|so trang|se co them|se tim duoc|nhieu goi y|phu hop nhat"))return false;
         if(state!=null && !state.toolSearch.containsKey("maxPrice") && !state.toolSearch.containsKey("minPrice") && state.recommendationBudget==null
             && ChatBookFacts.has(normalized,"noi.*(?:gia|ngan sach)|tang ngan sach"))return false;
@@ -171,15 +207,5 @@ public class ChatBookNarrator {
             || normalized.matches("(?s).*\\b(?:sach|lua chon)\\b.*\\b(?:het|khong con|chua du|liet ke het)\\b.*"))return false;
         if(state!=null && state.recentDialogue.stream().anyMatch(turn->language.normalize(turn.getOrDefault("assistant","")).contains(normalized)))return false;
         return result.products().stream().noneMatch(b->normalized.contains(language.normalize(b.getName())));
-    }
-    private boolean unsupportedReadingFact(String text,String description) {
-        String normalized=language.normalize(text), source=language.normalize(description);
-        // Accent stripping makes “mục tiêu học” contain “tiểu học”. It is a goal,
-        // not an assertion about primary-school readers.
-        normalized=normalized.replace("muc tieu hoc","muc dich hoc");
-        if(ChatBookFacts.has(normalized,"phu nu.*(?:thich|hop)|ban nu.*(?:thich|hop)|nu gioi.*(?:thich|hop)|nam gioi.*(?:thich|hop)|duoc.*ua thich|ban chay"))return true;
-        for(String fact:List.of("chuyen sau","nang cao","de doc","nhe nhang","ngan gon","hoc sinh","tieu hoc","tre em","thieu nhi","co dien","van phong","java","python","javascript","spring boot","bat ky","bat buoc","loi ke","ke chuyen nhanh","phong cach","kich tinh","truong thanh","chuong trinh hoc","hoc phan"))
-            if(ChatCatalogQuery.word(normalized,fact) && !ChatCatalogQuery.word(source,fact))return true;
-        return false;
     }
 }

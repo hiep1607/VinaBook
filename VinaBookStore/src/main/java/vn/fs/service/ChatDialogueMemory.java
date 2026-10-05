@@ -36,6 +36,7 @@ final class ChatDialogueMemory {
         List<Long> discoverySeeds = new ArrayList<>(), discoveryExact = new ArrayList<>(), discoveryNearby = new ArrayList<>();
         Map<Long,String> discoveryReasons = new LinkedHashMap<>();
         Integer discoveryRequestedCount;
+        int discoveryEmptyRounds;
 		Set<Long> shownProductIds = new LinkedHashSet<>();
         int recommendationHistoryVersion;
         Long focus;

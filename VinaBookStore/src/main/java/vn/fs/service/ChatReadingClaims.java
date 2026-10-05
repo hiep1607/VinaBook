@@ -1,0 +1,43 @@
+package vn.fs.service;
+
+import java.util.*;
+
+/** Checks claim families against the corresponding approved reading fields, including synonyms. */
+final class ChatReadingClaims {
+    private final ChatIntentService language;
+    ChatReadingClaims(ChatIntentService language) { this.language=language; }
+    boolean unsupported(String text,Map<String,String> facts) {
+        String source=language.normalize(String.join(" ",facts.values()));
+        String level=language.normalize(facts.getOrDefault("summary","")+" "+facts.getOrDefault("readingLevel","")+" "+facts.getOrDefault("readingStyle",""));
+        String audience=language.normalize(facts.getOrDefault("audience",""));
+        for(String sentence:text.split("[.!?;\\n]+")) {
+            String q=language.normalize(sentence).trim().replace("muc tieu hoc","muc dich hoc");
+            // Explicit uncertainty is useful; it is not a positive reading claim.
+            if(q.matches("^(?:phan mo ta |mo ta |du lieu |cua hang |minh )?(?:hien )?(?:chua|khong du|khong the|khong co du).*"))continue;
+            if(ChatBookFacts.has(q,"phu nu.*(?:thich|hop)|ban nu.*(?:thich|hop)|nu gioi.*(?:thich|hop)|nam gioi.*(?:thich|hop)|duoc.*ua thich|ban chay"))return true;
+            if(ChatBookFacts.has(q,"de doc|de hieu|khong.*ap luc khi doc|theo doi.*thuan tien|de dang (?:doc|theo doi|tiep can|lam quen|ap dung|dong cam)|khong.*choang ngop|de tiep can|de hinh dung|de tiep nhan|khong.*nang ne|thay vi.*phuc tap|doc.*khong.*mat.*thoi gian|phu hop.*(?:lam quen|tap doc|it doc|moi doc|bat dau doc)|(?:lam quen|tap doc|bat dau).*thoi quen doc|giup.*(?:lam quen|tap doc)")
+                    && !ChatBookFacts.has(level,"de doc|de hieu|ngon ngu don gian|ngon ngu gian di|de tiep can|de dang ap dung"))return true;
+            if(ChatBookFacts.has(q,"khong.*(?:giao dieu|huong dan ky nang|giao trinh)|khong mang mau sac")
+                    && !ChatBookFacts.has(source,"khong.*(?:giao dieu|huong dan ky nang|giao trinh)|khong mang mau sac"))return true;
+            if(ChatBookFacts.has(q,"khong (?:de cap|ban ve|chua dung)|khong.*lien quan|hoan toan.*(?:tach biet|khac biet)|giai tri (?:thuan tuy|don thuan)|thuan tuy.*(?:giai tri|ve giai tri)|tranh xa.*(?:chu de|nguyen tac)|tranh.*(?:cac|nhung) (?:noi dung|chu de|nguyen tac)")
+                    && !ChatBookFacts.has(source,"khong (?:de cap|ban ve|chua dung)|hoan toan tach biet|giai tri thuan tuy"))return true;
+            if(ChatBookFacts.has(q,"cong cu cu the|co che thuc hanh|tinh huong cu the|vi du cu the|phuong phap thuc hanh")
+                    && !new ChatReadingFit(language).confirmed("practical",facts))return true;
+            if(ChatBookFacts.has(q,"giup (?:be|tre)|ren luyen.*(?:be|tre)|phong phu.*(?:tu duy|ngon ngu)|phat trien.*(?:tu duy|ngon ngu|tri tuong tuong)|kich thich tu duy")
+                    && !ChatBookFacts.has(source,"phat trien.*(?:tu duy|ngon ngu|tri tuong tuong)|ren luyen|nuoi duong"))return true;
+            if(ChatBookFacts.has(q,"(?:hop|phu hop|danh cho|ly tuong cho|doi tuong).*(?:be|tre|tuoi)|do tuoi.*(?:hop|phu hop)|doc gia nho tuoi")
+                    && audience.isBlank())return true;
+            if(ChatBookFacts.has(q,"lap ngan sach|chi tieu hang thang")
+                    && !ChatBookFacts.has(source,"lap ngan sach|chi tieu hang thang"))return true;
+            if(ChatBookFacts.has(q,"quan ly cam xuc|kiem soat cam xuc") && !ChatBookFacts.has(source,"quan ly cam xuc|kiem soat cam xuc"))return true;
+            if(ChatBookFacts.has(q,"nhe nhang") && !new ChatReadingFit(language).confirmed("gentle",facts))return true;
+            if(ChatBookFacts.has(q,"nhip ke|tiet tau ke") && !ChatBookFacts.has(source,"nhip ke|tiet tau ke"))return true;
+            for(String fact:List.of("chuyen sau","nang cao","ngan gon","hoc sinh","tieu hoc","trung hoc","tre em","thieu nhi","co dien","van phong","java","python","javascript","spring boot","bat ky","bat buoc","loi ke","ke chuyen nhanh","phong cach","kich tinh","truong thanh","chuong trinh hoc","hoc phan"))
+                if(ChatCatalogQuery.word(q,fact) && !ChatCatalogQuery.word(source,fact))return true;
+            for(String fact:List.of("bai tap","cac buoc","ky thuat","thuc hanh"))
+                if(ChatCatalogQuery.word(q,fact) && !ChatCatalogQuery.word(source,fact)
+                        && !(fact.equals("bai tap") && ChatBookFacts.has(q,"truoc khi chuyen sang bai tap")))return true;
+        }
+        return false;
+    }
+}

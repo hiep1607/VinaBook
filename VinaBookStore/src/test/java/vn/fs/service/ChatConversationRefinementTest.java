@@ -146,6 +146,112 @@ class ChatConversationRefinementTest {
         when(ai.complete(anyString(),anyList(),anyString())).thenReturn(mapper.writeValueAsString(Map.of("intro",intro,"reasons",List.of())));
         assertThat(narrator.present(base,"Gợi ý sách cho sinh viên",state).answer()).doesNotContain(intro);
     }
+    @Test void returnAbookAndMissingPagesThenTenDaysKeepTheReason() {
+        assertThat(turn("Tôi muốn trả cuốn sách vừa mua.").getAnswer()).contains("Bạn muốn trả vì");
+        assertThat(turn("Sách bị thiếu mấy trang ở giữa.").getAnswer()).contains("thiếu trang","1. Mở").doesNotContain("Bạn muốn trả vì");
+        assertThat(turn("Tôi nhận được khoảng 10 ngày rồi, giờ phải làm sao?").getAnswer())
+            .contains("10 ngày","vượt mốc 7 ngày","thiếu trang","Liên hệ").doesNotContain("Bạn muốn trả vì");
+    }
+    @Test void abbreviatedChangedMindReturnAndRefundRememberTheReason() {
+        assertThat(turn("Tôi mua một cuốn rồi nhưng đọc thấy không hợp, muốn trả.").getAnswer())
+            .contains("không còn hứng thú").doesNotContain("Bạn muốn trả vì");
+        turn("Sách không bị lỗi gì, tôi chỉ không thích nội dung thôi.");
+        assertThat(turn("Vậy tôi có được hoàn tiền không, và cần liên hệ ở đâu để hỏi?").getAnswer())
+            .contains("không thích nội dung","cửa hàng xác nhận").doesNotContain("Bạn muốn trả vì");
+    }
+    @Test void demonstrativeSoDoDoesNotNameTheNovelButTheRealTitleStillWorks() {
+        ChatRetrievalService data=new ChatRetrievalService(language);
+        var query=new ChatCatalogQuery(language,data);
+        var novel=book(3,"Số Đỏ","Tiểu thuyết trào phúng.");
+        assertThat(query.named("Trong số đó, cuốn nào đúng chủ đề?",List.of(novel))).isEmpty();
+        assertThat(query.named("Sách Số Đỏ của ai?",List.of(novel))).containsExactly(novel);
+        assertThat(query.named("Tim sach So Do",List.of(novel))).containsExactly(novel);
+        state.emptySearch=true;state.toolSearch.put("query","quản lý tiền cá nhân");
+        assertThat(turn("Trong số đó, cuốn nào đúng chủ đề, cuốn nào chỉ gần giống?").getAnswer())
+            .contains("chưa có danh sách","quản lý tiền cá nhân").doesNotContain("Số Đỏ");
+        verify(ai,never()).complete(anyString(),anyList(),anyString());
+    }
+    @Test void readingStyleRefinementDoesNotLoseSearchOrFallBackToGenericClarification() {
+        selection();
+        var response=turn("Tôi muốn đọc dễ hiểu, không muốn kiểu giáo trình tâm lý.");
+        assertThat(state.toolSearch).containsEntry("query","python");
+        assertThat(response.getIntent()).isEqualTo(ChatIntent.DISCOVER_BOOKS);
+        assertThat(response.getProducts()).extracting(ChatProductDto::getId).contains(1L,2L);
+        verify(ai,never()).complete(anyString(),anyList(),anyString());
+    }
+    @Test void exactOnlyRefinementPreservesTheOriginalGoalAfterAnEmptySearch() {
+        state.emptySearch=true;state.toolSearch.put("query","quản lý tiền cá nhân");
+        turn("Vậy chỉ giữ những cuốn đúng yêu cầu thôi, không cần đủ 6.");
+        assertThat(state.toolSearch).containsEntry("query","quản lý tiền cá nhân").containsEntry("match","exact_only");
+    }
+    @Test void exclusionsSurviveTopicSwitchAndMaximumCountIsNotAQuota() throws Exception {
+        state.toolSearch.put("excludedQuery","Python Nhập Môn");
+        var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"Python\",\"scope\":\"new\"}"),new ChatTool.Context(request("Giới thiệu tối đa 5 cuốn Python"),state));
+        assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(2L);
+        assertThat(result.answer()).doesNotContain("chưa đủ","Bạn muốn 5");
+        assertThat(state.toolSearch).containsEntry("excludedQuery","Python Nhập Môn");
+    }
+    @Test void beginnerFictionDoesNotNeedTechnicalIntroductoryKeywords() throws Exception {
+        Product fiction=book(3,"Truyện Mùa Hè","Tập truyện ngắn về tình bạn.");
+        fiction.setCategory(new Category(3L,"Sách Văn học nghệ thuật"));
+        when(products.findByStatusTrue()).thenReturn(List.of(fiction));
+        var result=registry.execute("recommendBooks",mapper.readTree("{\"query\":\"văn học\",\"level\":\"beginner\"}"),new ChatTool.Context(request("Gợi ý văn học cho người ít đọc"),state));
+        assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(3L);
+        assertThat(result.answer()).contains("chưa xác nhận mức đọc");
+    }
+    @Test void worryRecommendationsExcludeProgrammingEvenWhenItMentionsHabits() {
+        Product coding=book(3,"Pragmatic Programmer","Thói quen nghề nghiệp của kỹ sư phần mềm và thợ code.");
+        Product worry=book(4,"Quẳng Gánh Lo","Phương pháp vượt qua lo âu và tìm lại bình an.");
+        var query=new ChatCatalogQuery(language,new ChatRetrievalService(language));
+        var criteria=new ChatSearchCriteriaDto(null,null,"","","",List.of());
+        assertThat(query.search("Tôi hay nghĩ quá nhiều, lo cả ngày",criteria,List.of(coding,worry))).containsExactly(worry);
+        assertThat(query.nearby("lo âu",criteria,List.of(coding),List.of(),Set.of())).isEmpty();
+    }
+    @Test void gradeIsMandatoryAndWrongFictionMetadataDoesNotTurnAdviceIntoANovel() {
+        var filter=new ChatExplicitFilters(language);
+        assertThat(filter.matches("toán lớp 7",book(3,"Toán lớp 5","Bài tập toán cho lớp 5"))).isFalse();
+        assertThat(filter.matches("toán lớp 7",book(4,"Toán lớp 7","Bài tập toán cho lớp 7"))).isTrue();
+        Product advice=book(5,"Đắc Nhân Tâm","Nghệ thuật đối nhân xử thế và giao tiếp.");
+        advice.setCategory(new Category(6L,"Sách Truyện, tiểu thuyết"));
+        assertThat(filter.matches("truyện thư giãn",advice)).isFalse();
+    }
+    @Test void budgetOnlyFollowupPreservesFictionEvenWhenPlannerPreviouslyPutItInPreference() throws Exception {
+        Product fiction=book(3,"Truyện Mùa Hè","Truyện ngắn về tình bạn.");
+        fiction.setCategory(new Category(3L,"Sách Văn học nghệ thuật"));
+        when(products.findByStatusTrue()).thenReturn(List.of(fiction,catalog.get(0)));
+        registry.execute("recommendBooks",mapper.readTree("{\"query\":\"truyện nhẹ nhàng\",\"preferredQuery\":\"truyện nhẹ nhàng\"}"),new ChatTool.Context(request("Tôi thích truyện nhẹ nhàng"),state));
+        assertThat(state.toolSearch).containsEntry("query","truyện");
+        assertThat(turn("Khoảng 150 nghìn trở xuống, bạn chọn giúp tôi 2 cuốn nhé.").getProducts())
+            .extracting(ChatProductDto::getId).containsExactly(3L);
+    }
+    @Test void explicitTopicSwitchWinsOverStillUnderBudgetAndAnIncorrectContinueScope() throws Exception {
+        selection();state.toolSearch.put("maxPrice",100000L);state.toolSearch.put("excludedQuery","Đắc Nhân Tâm");
+        Product fiction=book(3,"Truyện Mùa Hè","Truyện ngắn về tình bạn.");
+        fiction.setCategory(new Category(6L,"Sách Truyện, tiểu thuyết"));
+        when(products.findByStatusTrue()).thenReturn(List.of(fiction,catalog.get(0)));
+        var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"truyện\",\"scope\":\"continue\"}"),new ChatTool.Context(request("Thôi đổi sang truyện để thư giãn nhé, vẫn dưới 100 nghìn."),state));
+        assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(3L);
+        assertThat(state.toolSearch).containsEntry("maxPrice",100000L).containsEntry("excludedQuery","Đắc Nhân Tâm");
+    }
+    @Test void gradeInUserMessageCannotBeOmittedByPlannerOrRemovedByAReferenceFollowup() throws Exception {
+        var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"toán\"}"),new ChatTool.Context(request("Tôi muốn tìm sách toán cho học sinh lớp 7."),state));
+        assertThat(result.products()).isEmpty();assertThat(state.toolSearch).containsEntry("grade",7);
+        assertThat(turn("Nếu không có đúng lớp thì nói giúp tôi, đừng chọn sách tiểu học hay đại học để thay nhé.").getProducts()).isEmpty();
+        assertThat(state.toolSearch).containsEntry("grade",7);
+    }
+    @Test void ChildReaderRequirementSurvivesGenericPlannerQueryAndPriceFollowup() throws Exception {
+        Product child=book(3,"Truyện Cho Bé","Truyện thiếu nhi về tình bạn.");
+        child.setCategory(new Category(8L,"Sách thiếu nhi"));
+        Product adult=book(4,"Truyện Kiều","Tác phẩm văn học cổ điển.");
+        adult.setCategory(new Category(3L,"Sách Văn học nghệ thuật"));
+        when(products.findByStatusTrue()).thenReturn(List.of(child,adult));
+        var result=registry.execute("recommendBooks",mapper.readTree("{\"query\":\"truyện\"}"),new ChatTool.Context(request("Tôi muốn tìm truyện cho bé 8 tuổi, dễ đọc, dưới 100 nghìn."),state));
+        assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(3L);
+        assertThat(state.toolSearch).containsEntry("readerGroup","children");
+        assertThat(turn("Tăng ngân sách lên 150 nghìn, vẫn giữ điều kiện cũ").getProducts()).extracting(ChatProductDto::getId).containsExactly(3L);
+        turn("Cửa hàng tính phí giao hàng thế nào?");
+        assertThat(turn("Quay lại những cuốn vừa rồi, cuốn nào hợp với bé nhất?").getAnswer()).contains("chưa xác nhận độ tuổi đọc");
+    }
     private void selection(){state.shortlist=new ArrayList<>(List.of(1L,2L));state.displayed=new ArrayList<>(state.shortlist);state.toolSearch.put("query","Python");state.lastTask="DISCOVER_BOOKS";}
     private ChatResponseDto turn(String message){return chat.reply(request(message),state);}
     private ChatRequestDto request(String message){ChatRequestDto r=new ChatRequestDto();r.setSessionId("test-conversation-refinement");r.setMessage(message);return r;}

@@ -226,6 +226,10 @@ public class ChatRetrievalService {
         return java.util.Objects.toString(product.getName(),"")+" "+java.util.Objects.toString(knowledge==null?product.getDescription():knowledge.approvedDescription(product),"");
     }
 
+    public java.util.Map<String,String> approvedReadingFacts(Product product) {
+        return knowledge==null?java.util.Map.of("summary",java.util.Objects.toString(product.getDescription(),"")):knowledge.approvedReadingFacts(product);
+    }
+
 	public List<Product> rankByMeaning(String query, List<Product> candidates) {
 		return knowledge == null ? candidates : knowledge.rankByMeaning(query, candidates);
 	}

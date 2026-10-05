@@ -819,7 +819,7 @@ class ChatToolsTest {
             discoveryBook(5,"Lịch Sử","Lịch sử thế giới.",60000)));
         var result=orchestrator.reply(request("s","Gợi ý trinh thám hoặc tình yêu, mỗi cuốn dưới 150k, tối đa 5 cuốn"),state);
         assertThat(result.getProducts()).extracting(ChatProductDto::getId).containsExactlyInAnyOrder(1L,2L,4L);
-        assertThat(result.getAnswer()).contains("3 cuốn đúng yêu cầu");
+        assertThat(result.getAnswer()).contains("3 cuốn phù hợp").doesNotContain("chưa đủ 5");
         assertThat(state.discoveryExact).containsExactlyInAnyOrder(1L,2L,4L);
         verify(ai,never()).complete(anyString(),anyList(),anyString());
     }
@@ -975,14 +975,14 @@ class ChatToolsTest {
     @Test void unknownOrdinaryTopicDoesNotSilentlyReturnTheCatalog() throws Exception {
         assertThat(run("searchProducts","{\"query\":\"nuôi ong lấy mật\"}").products()).isEmpty();
     }
-    @Test void emptyNarrationUsesTheCurrentConstraintsAndKeepsTheVerifiedOutcome() throws Exception {
+    @Test void emptyNarrationKeepsTheVerifiedOutcomeAndTheCurrentPriceConstraint() throws Exception {
         var base=run("searchProducts","{\"query\":\"nuôi ong\",\"maxPrice\":50000}");
         state.recentDialogue.add(Map.of("user","Tìm sách nuôi ong dưới 50k","assistant","Mình đang tìm theo nhu cầu đó."));
         plan("{\"reasons\":[],\"closing\":\"Bạn có muốn mình thử nới khoảng giá đang chọn không?\"}");
         var result=new ChatBookNarrator(ai,mapper,products,language).present(base,"Còn cuốn nào khác?",state);
-        assertThat(result.answer()).contains("chưa tìm được sách","nới khoảng giá").doesNotContain("Khi bạn muốn chuyển");
+        assertThat(result.answer()).contains("chưa tìm được sách","nới điều kiện giá").doesNotContain("Khi bạn muốn chuyển");
         assertThat(result.products()).isEmpty();assertThat(result.status()).isEqualTo("COMPLETED");
-        verify(ai).complete(anyString(),anyList(),contains("recentConversation"));
+        verify(ai,never()).complete(anyString(),anyList(),anyString());
     }
     @Test void vectorRecallMustRespectPriceStockAndTopicExclusionAndRemainLabelledNearby() throws Exception {
         Product eligible=discoveryBook(1,"Tập Trung","Rèn sự tập trung trong công việc.",50000);

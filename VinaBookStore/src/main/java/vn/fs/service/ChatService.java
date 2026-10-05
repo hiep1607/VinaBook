@@ -165,6 +165,21 @@ public class ChatService {
 		}
 		if(ChatConversationSupport.audienceOnly(question,intents) && search.named(question,catalog).isEmpty())
 			return finish(request,ChatConversationSupport.readerQuestion(s,question),ChatIntent.UNKNOWN,List.of(),false,false,s,started);
+        if(tools!=null && ChatConversationSupport.giftDiscovery(question,intents) && search.named(question,catalog).isEmpty()) {
+            var args=new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("scope","new")
+                .put("query",new ChatReadingRequest(intents).hardMessage(question));
+            ChatSearchCriteriaDto constraints=intents.criteria(question,catalog);
+            if(constraints.getMinPrice()!=null)args.put("minPrice",constraints.getMinPrice());
+            if(constraints.getMaxPrice()!=null)args.put("maxPrice",constraints.getMaxPrice());
+            return localDiscovery(request,s,args,started);
+        }
+        if(tools!=null && s.focus!=null && ChatConversationSupport.followupComparison(question,intents)
+                && search.named(question,catalog).size()==1) {
+            var args=new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("field","table");
+            ChatTool.Result compared=tools.execute("getProducts",args,new ChatTool.Context(request,s));
+            return finish(request,compared.answer(),compared.intent(),search.byIds(compared.products().stream()
+                .map(ChatProductDto::getId).collect(Collectors.toList()),catalog),false,false,s,started);
+        }
 		if(tools!=null && (!s.shortlist.isEmpty() || s.emptySearch) && ChatConversationSupport.explanation(question,intents)
 				&& (ChatConversationSupport.pluralReference(question,intents) || ChatBookFacts.has(q,"cuon|sach|goi y|lua chon"))) {
 			var args=new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("field","explanation");
@@ -179,6 +194,14 @@ public class ChatService {
 				ChatIntent.ORDER_SUPPORT, List.of(), false, false, s, started);
 		}
         ChatReadingRequest reading=new ChatReadingRequest(intents);
+        if(tools!=null && !s.toolSearch.isEmpty() && (reading.contextPatch(question) || reading.budgetPatch(question))
+                && !ChatBookFacts.has(q,"doi sang|chuyen sang|gio hang|vao gio|trong gio|dat hang")) {
+            var args=new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("scope","continue");
+            ChatSearchCriteriaDto constraints=intents.criteria(question,catalog);
+            if(constraints.getMinPrice()!=null)args.put("minPrice",constraints.getMinPrice());
+            if(constraints.getMaxPrice()!=null)args.put("maxPrice",constraints.getMaxPrice());
+            return localDiscovery(request,s,args,started);
+        }
         if(tools!=null && reading.goalRequest(question) && !buy && search.quoted(question).isBlank()
                 && !ChatBookFacts.has(q,"cuon nay|cuon do|sach nay|sach do|so sanh|gio hang|vao gio|trong gio|mua|dat hang")) {
             var args=new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("query",ChatDialogueInterpreter.clean(question,240)).put("scope","new");
@@ -225,6 +248,18 @@ public class ChatService {
                 args.remove("scope");args.put("productId",((Number)s.toolSearch.get("relatedSourceId")).longValue());
                 return localDiscovery(request,s,"findRelatedBooks",args,started);
             }
+            return localDiscovery(request,s,args,started);
+        }
+        if(tools!=null && search.semanticConstraint(question) && search.named(question,catalog).isEmpty()
+                && search.quoted(question).isBlank() && !buy
+                && ChatBookFacts.has(q,"tim|goi y|gioi thieu|toi muon|doi sang|chuyen sang")
+                && !ChatBookFacts.has(q,"so sanh|cuon nay|sach nay|gio hang|vao gio|trong gio|dat hang")) {
+            var args=new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode()
+                .put("query",intents.discoveryQuery(question)).put("scope","new");
+            ChatSearchCriteriaDto constraints=intents.criteria(question,catalog);
+            if(constraints.getMinPrice()!=null)args.put("minPrice",constraints.getMinPrice());
+            if(constraints.getMaxPrice()!=null)args.put("maxPrice",constraints.getMaxPrice());
+            if(constraints.getMinRating()!=null)args.put("minRating",constraints.getMinRating());
             return localDiscovery(request,s,args,started);
         }
 		if (!s.offered.isEmpty() && q.matches("^(co|ok|oke|dong y|duoc|xem|cho minh xem|tim sach nen tang lien quan|tim tai lieu nen tang lien quan)(?: nhe| nha| di)?[.!]*$")) {

@@ -32,7 +32,8 @@ public class ChatProductSearchService {
 		String q = intents.normalize(question);
 		List<Product> named = catalog.stream().filter(product -> {
 			String name = intents.normalize(product.getName());
-			return name.length() >= 3 && q.contains(name);
+            return name.length() >= 3 && ChatCatalogQuery.word(q,name)
+                    && ChatCatalogQuery.titleMention(question,product.getName(),intents);
 		}).limit(intent == ChatIntent.COMPARE_BOOKS ? 3 : 1).collect(Collectors.toList());
 		if (!named.isEmpty() && (intent == ChatIntent.COMPARE_BOOKS || intent == ChatIntent.PRODUCT_INFO)) {
 			return named;

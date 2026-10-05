@@ -13,16 +13,46 @@ final class ChatCatalogQuery {
     ChatCatalogQuery(ChatIntentService language, ChatRetrievalService data) { this.language = language; this.data = data; }
     List<Product> named(String question, List<Product> catalog) {
         String q = language.normalize(question);
+        record Mention(Product book,int start,int end) {}
+        List<Mention> exact=new ArrayList<>();
+        for(Product product:catalog) {
+            if(!titleMention(question,product.getName(),language))continue;
+            String name=language.normalize(product.getName());
+            String shortName=name.replaceAll("\\s*\\([^)]*\\)","").trim();
+            String leading=shortName.split("\\s+[-–:]\\s+",2)[0];
+            for(String variant:new LinkedHashSet<>(List.of(name,shortName,leading))) {
+                if(variant.length()<4)continue;
+                Matcher match=Pattern.compile("\\b"+Pattern.quote(variant)+"\\b").matcher(q);
+                if(match.find()){exact.add(new Mention(product,match.start(),match.end()));break;}
+            }
+        }
+        if(!exact.isEmpty())return exact.stream()
+            .filter(m->exact.stream().noneMatch(other->!other.book().getProductId().equals(m.book().getProductId())
+                && other.start()<=m.start() && other.end()>=m.end() && other.end()-other.start()>m.end()-m.start()))
+            .sorted(Comparator.comparingInt(Mention::start)).map(Mention::book).toList();
         return catalog.stream().filter(p -> {
+            if(!titleMention(question,p.getName(),language))return false;
             String name = language.normalize(p.getName());
             String shortName = name.replaceAll("\\s*\\([^)]*\\)", "").trim();
             String leadingTitle = shortName.split("\\s+[-–:]\\s+", 2)[0];
             return name.length() > 3 && (q.contains(name) || q.contains(shortName)
                     || (leadingTitle.length() >= 8 && leadingTitle.contains(" ") && word(q, leadingTitle))
                     || containsDistinctiveTitlePhrase(q, name)
-                    || (q.contains("harry potter") && name.startsWith("harry potter")));
+                    || (q.contains("harry potter") && name.startsWith("harry potter"))
+                    || (word(q,"conan") && word(name,"conan"))
+                    || (word(q,"doraemon") && word(name,"doraemon")));
         }).sorted(Comparator.comparingInt(p -> q.indexOf(language.normalize(p.getName()).split(" \\(")[0])))
                 .collect(Collectors.toList());
+    }
+    static boolean titleMention(String question,String title,ChatIntentService language) {
+        String q=language.normalize(question), name=language.normalize(title);
+        String rawQuestion=question.toLowerCase(Locale.ROOT),rawTitle=title.toLowerCase(Locale.ROOT);
+        if(rawTitle.contains("vĩ mô") && rawQuestion.contains("vi mô") && !rawQuestion.contains("vĩ mô"))return false;
+        if(rawTitle.contains("vi mô") && rawQuestion.contains("vĩ mô") && !rawQuestion.contains("vi mô"))return false;
+        // Accent folding must not turn the demonstrative “số đó” into the title “Số Đỏ”.
+        if(name.equals("so do") && !question.toLowerCase(Locale.ROOT).contains("số đỏ")
+                && ChatBookFacts.has(q,"trong so do|so do cuon nao|so do sach nao"))return false;
+        return true;
     }
     private boolean containsDistinctiveTitlePhrase(String question, String title) {
         String[] words = title.split("\\s+");
@@ -94,7 +124,7 @@ final class ChatCatalogQuery {
     boolean semanticConstraint(String query) {
         String q = language.normalize(query);
         return new ChatExplicitFilters(language,data).programmingRequest(query)
-                || q.matches(".*\\b(java|python|javascript|spring boot|tieng anh|cong nghe|cntt|thieu nhi|tre em|cho be|truyen|tieu thuyet)\\b.*")
+                || q.matches(".*\\b(java|python|javascript|spring boot|tieng anh|cong nghe|cntt|thieu nhi|tre em|cho be|truyen|tieu thuyet|van hoc)\\b.*")
                 || GROUPS.stream().anyMatch(g -> g.stream().anyMatch(t -> word(q, t)));
     }
     record Nearby(Product book,String reason) {}
@@ -116,6 +146,9 @@ final class ChatCatalogQuery {
         if(ChatBookFacts.has(q,"phieu luu|tham hiem|trinh tham|tham tu|lang man")
             || ChatBookFacts.has(q,"tinh yeu|tinh cam") && !ChatBookFacts.has(q,"tam ly|ky nang|giao tiep"))domain+=" truyện";
         ChatExplicitFilters mandatory=new ChatExplicitFilters(language,data);
+        var grade=Pattern.compile("\\blop\\s*(\\d{1,2})\\b").matcher(q);
+        if(grade.find())domain+=" lớp "+grade.group(1);
+        if(ChatBookFacts.has(q,"nghi qua nhieu|lo ca ngay|lo au|lo lang|giao tiep|tam ly|cam xuc|phat trien ban than|ky nang song|quan ly tien ca nhan|tai chinh ca nhan"))domain+=" "+q;
         final String required=domain;
         candidates.removeIf(p->!mandatory.matches(required,p));
         Map<Long,String> linked=data.relatedEvidence(seeds);
@@ -151,6 +184,8 @@ final class ChatCatalogQuery {
             List.of("khoi nghiep", "startup", "kiem chung y tuong", "thu nghiem y tuong"),
             List.of("phap luat", "phap ly", "luat", "hien phap", "dan su", "lao dong"),
             List.of("giao tiep", "ung xu", "doi nhan xu the", "thuyet phuc"),
+            List.of("nghi qua nhieu", "lo ca ngay", "lo au", "lo lang", "ganh lo", "binh an"),
+            List.of("quan ly tien ca nhan", "tai chinh ca nhan", "quan ly chi tieu", "tiet kiem", "ngan sach ca nhan"),
             List.of("phat trien ban than", "ky nang song", "thoi quen", "self help", "lo au", "lo lang", "doi nhan xu the"),
             List.of("lich su", "chien tranh", "trieu dai", "su luoc"),
             List.of("tam ly", "cam xuc", "hanh vi", "noi tam"),
@@ -164,6 +199,8 @@ final class ChatCatalogQuery {
         List.of("khoi nghiep|startup|kiem chung y tuong|thu nghiem y tuong","quản trị|marketing|chiến lược kinh doanh|quản lý doanh nghiệp"),
         List.of("kinh doanh|quan tri|marketing|kinh te","khởi nghiệp|startup|giao tiếp|đàm phán"),
         List.of("giao tiep|ung xu|thuyet phuc","tâm lý|hành vi|cảm xúc|đàm phán"),
+        List.of("nghi qua nhieu|lo ca ngay|lo au|lo lang|ganh lo","tâm lý|cảm xúc|bình an|nội tâm"),
+        List.of("quan ly tien ca nhan|tai chinh ca nhan|quan ly chi tieu|tiet kiem","tài chính|tiền bạc|đầu tư"),
         List.of("phat trien ban than|ky nang song|thoi quen|self help|lo au|lo lang","tâm lý|cảm xúc|truyền cảm hứng|vượt qua khó khăn"),
         List.of("tam ly|cam xuc|hanh vi|noi tam","lo âu|lo lắng|kỹ năng sống|thói quen|giao tiếp"),
         List.of("lich su|chien tranh|trieu dai","văn hóa|hồi ký|tiểu sử|phong tục"),

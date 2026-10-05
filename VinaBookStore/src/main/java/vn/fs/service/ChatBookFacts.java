@@ -16,16 +16,28 @@ final class ChatBookFacts {
             if (shortTitle.length() >= 4) q = q.replace(shortTitle, " ");
         }
         Set<String> fields = new LinkedHashSet<>();
-        if (has(q, "tac gia|ai viet|cua ai")) fields.add("author");
-        if (has(q, "gia|bao nhieu tien|re hon|re nhat|dat hon|dat nhat")) fields.add("price");
+        if (has(q, "tac gia|ai viet|cua ai|ai chu bien|chu bien.*ai|co phai.*(?:sach|cua)")) fields.add("author");
+        String priceQuestion=q.replaceAll("\\b(?:tac gia|danh gia)\\b"," ");
+        if (has(priceQuestion, "gia|bao nhieu tien|re hon|re nhat|dat hon|dat nhat")) fields.add("price");
         if (has(q, "con hang|con ban|dang ban|co ban|ton kho|con may|bao nhieu ban|bao nhieu cuon")) fields.add("inventory");
         if (has(q, "rating|danh gia|[0-5](?:[.,]\\d)? sao")) fields.add("rating");
-        if (has(q, "noi dung|tom tat|ke ve")) fields.add("description");
+        if (contentQuestion(q)) fields.add("description");
+        if (has(q,"danh cho ai|phu hop.*ai|doi tuong|do tuoi|bao nhieu tuoi")) fields.add("audience");
         if (has(q, "nha xuat ban|nxb")) fields.add("publisher");
         if (has(q, "nam xuat ban")) fields.add("publicationYear");
         if (has(q, "so trang|bao nhieu trang")) fields.add("pageCount");
         if (has(q, "isbn")) fields.add("isbn");
         return fields;
+    }
+
+    static boolean contentQuestion(String normalized) {
+        return has(normalized,"noi dung|tom tat|ke ve|viet ve|noi ve|de cap|chu de|hoc nhung|day|huong dan|phan tich tinh huong|van ban luat|co chuong|co phai|co chac|can.*(?:toan|lap trinh)|gom|bao quat|giai doan|trinh bay|kieu gi|moi nhat|hien hanh|con dung.*phap luat|tap nao|tron bo|mot tap|tap [123]|rut gon|minh hoa|nghien cuu khoa hoc|chung minh");
+    }
+
+    static boolean focusedContentQuestion(String normalized) {
+        return contentQuestion(normalized) && has(normalized,
+            "(?:cuon|sach|quyen|ban|tap|bo) (?:do|nay|ay)|^sach|^(?:co|ban xac nhan|san pham o day).*(?:khong|tap|tron bo)")
+            && !has(normalized,"tim|goi y|liet ke|co cuon|cuon nao khac|sach nao khac|gio hang|don hang|ma don|huy|doi tra|thanh toan|dat hang|dang nhap|phi giao|phi ship");
     }
 
     static boolean has(String normalized, String alternatives) {

@@ -15,9 +15,9 @@ public class ChatPolicyService {
 
     boolean handlesReturn(String question, ChatDialogueMemory.State state) {
         String q=intents.normalize(question);
-        if(contains(q,"tra hang","tra sach","doi tra","doi sach","hoan tien"))return true;
+        if(returnRequest(q))return true;
         if(!state.returnActive)return false;
-        return !returnReason(q).isBlank() || contains(q,"gui lai","gui tra","dia chi tra","tra o dau","lam sao tra","lam the nao","buoc tiep","huong dan tra","tra nhu nao")
+        return !returnReason(q).isBlank() || receivedDays(q)!=null || contains(q,"gui lai","gui tra","dia chi tra","tra o dau","lam sao tra","lam the nao","buoc tiep","huong dan tra","tra nhu nao")
             || state.returnAwaitingReason && q.length()<180
                 && !ChatBookFacts.has(q,"tim|goi y|sach ve|chu de|mua|gio hang|don hang|phi ship|phi giao|thanh toan|chao|cam on");
     }
@@ -28,6 +28,8 @@ public class ChatPolicyService {
         boolean general=contains(q,"chinh sach","dieu kien","quy dinh")
             && !ChatBookFacts.has(q,"toi muon|minh muon|muon tra|muon doi|can tra|can doi|vua mua|da mua|da nhan|sach bi");
         if(general && !state.returnAwaitingReason)return returnsPolicy();
+        boolean continuingCase=state.returnActive && !state.returnAwaitingReason;
+        String previousReason=state.returnReason;
         state.returnActive=true;
         String reason=returnReason(q);
         if(!reason.isBlank())state.returnReason=reason;
@@ -39,6 +41,16 @@ public class ChatPolicyService {
         }
         state.returnAwaitingReason=false;
         String reasonText=state.returnReason;
+        Integer days=receivedDays(q);
+        if(days!=null) {
+            var window=java.util.regex.Pattern.compile("(\\d+)\\s*ngay").matcher(intents.normalize(returnsPolicy()));
+            String timing=window.find() && days>Integer.parseInt(window.group(1))
+                ?"Thời điểm bạn nhận sách đã vượt mốc "+window.group(1)+" ngày trong chính sách hiện hành. "
+                :"Cửa hàng cần đối chiếu ngày nhận và tình trạng sách với chính sách hiện hành. ";
+            return "Bạn đã nhận sách khoảng "+days+" ngày, với lý do “"+reasonText+"”. "+timing
+                +"Mình chưa thể xác nhận yêu cầu được nhận trả hoặc hoàn tiền.\n\n"+returnsPolicy()
+                +"\n\nBạn hãy gửi mã đơn, ngày nhận thực tế và ảnh tình trạng sách qua trang Liên hệ, nói rõ thời gian đã nhận và nhờ cửa hàng xem xét cách xử lý. Giữ sách và hóa đơn, chờ hướng dẫn trước khi gửi lại.";
+        }
         if(contains(q,"gui lai","gui tra","dia chi tra","tra o dau"))return "Bạn đừng gửi sách về một địa chỉ tự đoán nhé. Với yêu cầu trả vì “"+reasonText
             +"”, hãy gửi mã đơn, ngày nhận và tình trạng sách qua trang Liên hệ để cửa hàng xác nhận địa chỉ nhận lại và cách gửi. Giữ sách và hóa đơn trong lúc chờ phản hồi."
             +"\n\nMình chưa có hướng dẫn đã được xác nhận về địa chỉ nhận hàng trả hoặc bên chịu phí gửi lại, nên cần cửa hàng cung cấp các thông tin đó."
@@ -47,6 +59,10 @@ public class ChatPolicyService {
             +"”, việc hoàn tiền cần cửa hàng xác nhận sau khi kiểm tra yêu cầu. Chính sách hiện hành: "+returnsPolicy()
             +"\n\nMình chưa có điều khoản xác nhận thời gian hoặc cách hoàn tiền cho trường hợp của bạn. Bạn gửi mã đơn và lý do qua trang Liên hệ, yêu cầu cửa hàng xác nhận có nhận trả hay không, hình thức xử lý và thời gian dự kiến trước khi gửi lại sách.";
         boolean changedMind=reasonText.equals("không còn nhu cầu hoặc không thích nội dung");
+        if(continuingCase && !reason.isBlank() && previousReason.equals(reasonText))
+            return "Mình đã ghi nhận: "+(changedMind?"sách không có lỗi, bạn muốn trả vì nội dung không hợp":"bạn muốn trả vì “"+reasonText+"”")
+                +". Bạn không cần nêu lại lý do. Bước tiếp theo là gửi mã đơn và ngày nhận qua trang Liên hệ để cửa hàng xác nhận điều kiện xử lý."
+                +(changedMind?" Chính sách hiện có chưa xác nhận nhận trả vì thay đổi sở thích; mình chưa thể hứa hoàn tiền.":"\n\n"+returnsPolicy());
         String opening=changedMind
             ?"Mình hiểu là bạn không còn hứng thú với cuốn vừa mua. Mình chưa có điều khoản xác nhận đổi trả chỉ vì thay đổi sở thích, nên cần cửa hàng xem xét trước khi kết luận có nhận trả hay không."
             :"Với lý do “"+reasonText+"”, bạn nên gửi thông tin để cửa hàng đối chiếu điều kiện đổi trả; mình chưa thể xác nhận yêu cầu đã được chấp nhận.";
@@ -63,17 +79,30 @@ public class ChatPolicyService {
     }
 
     private String returnReason(String q) {
-        if(ChatBookFacts.has(q,"loi in|in loi|thieu trang|mat trang|nguoc trang"))return "sách lỗi in hoặc thiếu trang";
+        if(ChatBookFacts.has(q,"(?:loi in|in loi|thieu(?: [a-z0-9]+){0,3} trang|mat trang|nguoc trang)")
+                && !ChatBookFacts.has(q,"khong (?:bi )?(?:loi|thieu)|khong co loi"))return "sách lỗi in hoặc thiếu trang";
         if(ChatBookFacts.has(q,"sach loi|sach bi loi|cuon bi loi") && !ChatBookFacts.has(q,"khong bi loi|khong co loi"))return "sách có lỗi";
         if(ChatBookFacts.has(q,"bi rach|sach rach|bia rach|bi hong|hu hong|mop|uot|rach"))return "sách bị rách hoặc hư hỏng";
         if(ChatBookFacts.has(q,"giao sai|sai cuon|nham cuon|khong dung sach|sai sach"))return "giao sai cuốn đã đặt";
         if(ChatBookFacts.has(q,"chan|khong thich|doi y|khong con nhu cau|khong muon doc|khong hop|noi dung khong hay"))return "không còn nhu cầu hoặc không thích nội dung";
         if(ChatBookFacts.has(q,"mua nham|mua trung|dat nham|dat trung"))return "đặt nhầm hoặc mua trùng cuốn sách";
-        if(contains(q,"tra hang","tra sach","doi tra","doi sach","hoan tien")) {
+        if(returnRequest(q)) {
             var reason=java.util.regex.Pattern.compile("\\b(?:boi vi|vi|ly do la)\\s+(.+)$").matcher(q);
             if(reason.find())return ChatDialogueInterpreter.clean(reason.group(1),180);
         }
         return "";
+    }
+
+    private boolean returnRequest(String q) {
+        return contains(q,"tra hang","tra sach","doi tra","doi sach","hoan tien")
+            || java.util.regex.Pattern.compile("\\b(?:muon|can|xin|yeu cau) (?:duoc )?tra(?: lai)?(?=\\s*(?:[.!?,]|$))").matcher(q).find()
+            || ChatBookFacts.has(q,"(?:muon|can|xin|yeu cau) (?:duoc )?(?:tra|doi)(?: lai)?(?: cuon| quyen| sach|$)|tra (?:lai )?(?:cuon|quyen)(?: sach)?|doi (?:lai )?(?:cuon|quyen) sach");
+    }
+
+    private Integer receivedDays(String q) {
+        if(!ChatBookFacts.has(q,"nhan|giao den|giao toi"))return null;
+        var days=java.util.regex.Pattern.compile("\\b(\\d{1,4})\\s*ngay\\b").matcher(q);
+        return days.find()?Integer.valueOf(days.group(1)):null;
     }
 
 	public String answer(String question) {
