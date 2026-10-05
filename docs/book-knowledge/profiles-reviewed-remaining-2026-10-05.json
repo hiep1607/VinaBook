@@ -1,0 +1,910 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-05",
+  "scope": "Remaining 23 approved active VinaBook profiles and verified catalog corrections",
+  "policy": "Primary source work-level review, with limited records explicitly marked in summary. No edition-specific bibliography imported. Reader interests are editorial mappings. Catalog identity corrected only where source and existing cover support it.",
+  "books": [
+    {
+      "title": "Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam (Hiện Hành)",
+      "author": "Quốc Hội Việt Nam",
+      "productId": 3,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Văn bản Hiến pháp về nền tảng tổ chức Nhà nước, chế độ chính trị, quyền con người và quyền, nghĩa vụ cơ bản của công dân. Bìa đang bán ghi Hiến pháp năm 2013, sửa đổi, bổ sung năm 2025; chưa có ISBN và trang xuất bản để xác nhận chính xác bản in hoặc mọi cập nhật sau đó.",
+        "audience": "Người học, tra cứu Hiến pháp và tìm hiểu tổ chức Nhà nước Việt Nam.",
+        "readingStyle": "Văn bản pháp luật để đọc và tra cứu theo điều khoản.",
+        "learningGoal": "Tìm hiểu các nguyên tắc hiến định và quyền, nghĩa vụ cơ bản; cần kiểm tra văn bản hiệu lực khi áp dụng."
+      },
+      "catalog": {
+        "description": "Văn bản Hiến pháp về nền tảng tổ chức Nhà nước, chế độ chính trị, quyền con người và quyền, nghĩa vụ cơ bản của công dân. Bìa đang bán ghi Hiến pháp năm 2013, sửa đổi, bổ sung năm 2025; chưa có ISBN và trang xuất bản để xác nhận chính xác bản in hoặc mọi cập nhật sau đó.",
+        "title": "Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam Năm 2013 (Sửa Đổi, Bổ Sung Năm 2025)"
+      },
+      "topics": [
+        "Hiến pháp",
+        "quyền công dân",
+        "tổ chức Nhà nước"
+      ],
+      "sources": [
+        {
+          "url": "https://www.nxbctqg.org.vn/xuat-ban-hai-tai-lieu-phap-ly-quan-trong-thiet-yeu.html",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description",
+            "catalog.title"
+          ]
+        }
+      ],
+      "reviewNote": "Đối chiếu bìa với thông báo NXB về Hiến pháp 2013 sửa đổi 2025. Không xác nhận tính hiện hành tại ngày hỏi."
+    },
+    {
+      "title": "Luật Doanh Nghiệp (Hiện Hành)",
+      "author": "Quốc Hội Việt Nam",
+      "productId": 4,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Văn bản luật về thành lập, tổ chức quản lý, tổ chức lại, giải thể và hoạt động của doanh nghiệp, bao gồm các loại hình công ty và doanh nghiệp tư nhân. Sách phục vụ tra cứu quy định, không phải cẩm nang khởi nghiệp từng bước. Chưa xác định năm in và các sửa đổi đã được tích hợp trong bản cửa hàng.",
+        "audience": "Người cần tra cứu pháp luật doanh nghiệp, người học và người quản lý doanh nghiệp.",
+        "readingStyle": "Văn bản luật được đọc, tra cứu theo các điều khoản.",
+        "learningGoal": "Tham khảo khung pháp luật về doanh nghiệp; kiểm tra hiệu lực và bản sửa đổi trước khi áp dụng vào hồ sơ thực tế."
+      },
+      "catalog": {
+        "description": "Văn bản luật về thành lập, tổ chức quản lý, tổ chức lại, giải thể và hoạt động của doanh nghiệp, bao gồm các loại hình công ty và doanh nghiệp tư nhân. Sách phục vụ tra cứu quy định, không phải cẩm nang khởi nghiệp từng bước. Chưa xác định năm in và các sửa đổi đã được tích hợp trong bản cửa hàng.",
+        "title": "Luật Doanh Nghiệp"
+      },
+      "topics": [
+        "pháp luật doanh nghiệp",
+        "loại hình doanh nghiệp",
+        "quản lý doanh nghiệp"
+      ],
+      "sources": [
+        {
+          "url": "https://vbpl.moj.gov.vn/bolaodong/Pages/vbpq-toanvan.aspx?ItemID=142881&Keyword=",
+          "kind": "official_legal_database",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description",
+            "catalog.title"
+          ]
+        }
+      ],
+      "reviewNote": "Nguồn luật cho phạm vi chung, không chứng minh bản in cửa hàng tích hợp sửa đổi mới nhất. Bỏ nhãn hiện hành chưa xác minh."
+    },
+    {
+      "title": "Luật Lao Động Thực Hành",
+      "author": "Nguyễn Văn Phần",
+      "productId": 5,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Bộ luật quy định quan hệ lao động, quyền và nghĩa vụ của người lao động và người sử dụng lao động, cùng các nội dung quản lý nhà nước về lao động. Đây là văn bản luật để tra cứu; chưa có căn cứ cho mô tả cũ về một sách thực hành kèm phân tích tình huống. Bản in và các sửa đổi được tích hợp chưa được xác nhận.",
+        "audience": "Người lao động, người sử dụng lao động và người học cần tham khảo văn bản pháp luật lao động.",
+        "readingStyle": "Văn bản luật để tra cứu theo điều khoản.",
+        "learningGoal": "Tìm hiểu khung quyền và nghĩa vụ trong quan hệ lao động; đối chiếu văn bản hiệu lực khi giải quyết vụ việc."
+      },
+      "catalog": {
+        "description": "Bộ luật quy định quan hệ lao động, quyền và nghĩa vụ của người lao động và người sử dụng lao động, cùng các nội dung quản lý nhà nước về lao động. Đây là văn bản luật để tra cứu; chưa có căn cứ cho mô tả cũ về một sách thực hành kèm phân tích tình huống. Bản in và các sửa đổi được tích hợp chưa được xác nhận.",
+        "title": "Bộ Luật Lao Động",
+        "author": "Quốc Hội Việt Nam"
+      },
+      "topics": [
+        "pháp luật lao động",
+        "quan hệ lao động",
+        "quyền người lao động"
+      ],
+      "sources": [
+        {
+          "url": "https://nxbctqg.org.vn/bo-luat-lao-dong-hien-hanh--54.html",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description",
+            "catalog.title",
+            "catalog.author"
+          ]
+        }
+      ],
+      "reviewNote": "Bìa là Bộ luật Lao động, khớp NXB và cơ quan ban hành Quốc hội. Loại bỏ tác giả và mô tả thực hành gán nhầm."
+    },
+    {
+      "title": "Cẩm Nang Pháp Lý Cho Doanh Nghiệp",
+      "author": "Trương Thanh Đức",
+      "productId": 6,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Cẩm nang hệ thống thông tin pháp luật dành cho doanh nghiệp về tiền lương, bảo hiểm, thuế, chi phí hợp lệ, hóa đơn, chứng từ và thanh tra, kiểm tra. Phù hợp nhu cầu tra cứu các vấn đề vận hành doanh nghiệp. Chưa xác nhận bản in cửa hàng và mức cập nhật quy định của bản đó.",
+        "audience": "Người làm công việc quản lý, hành chính, kế toán và cần tra cứu pháp luật liên quan doanh nghiệp.",
+        "readingStyle": "Cẩm nang hệ thống nội dung tra cứu theo các vấn đề doanh nghiệp.",
+        "learningGoal": "Định hướng tra cứu pháp luật về lương, bảo hiểm, thuế và chứng từ; không thay việc kiểm tra quy định đang có hiệu lực."
+      },
+      "catalog": {
+        "description": "Cẩm nang hệ thống thông tin pháp luật dành cho doanh nghiệp về tiền lương, bảo hiểm, thuế, chi phí hợp lệ, hóa đơn, chứng từ và thanh tra, kiểm tra. Phù hợp nhu cầu tra cứu các vấn đề vận hành doanh nghiệp. Chưa xác nhận bản in cửa hàng và mức cập nhật quy định của bản đó.",
+        "title": "Cẩm Nang Pháp Luật Dành Cho Doanh Nghiệp",
+        "author": "Tăng Bình & Ái Phương (hệ thống)"
+      },
+      "topics": [
+        "pháp luật doanh nghiệp",
+        "tiền lương",
+        "bảo hiểm",
+        "thuế",
+        "hóa đơn chứng từ"
+      ],
+      "sources": [
+        {
+          "url": "https://thuvien.donga.edu.vn/sach/thong-tin?id=22321",
+          "kind": "university_library",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description",
+            "catalog.title",
+            "catalog.author"
+          ]
+        }
+      ],
+      "reviewNote": "Tên chính và nội dung phụ đề khớp bìa; thư viện ghi Tăng Bình, Ái Phương hệ thống. Không gán cho Trương Thanh Đức."
+    },
+    {
+      "title": "Luật Đất Đai Và Văn Bản Hướng Dẫn Thi Hành",
+      "author": "Bộ Tư Pháp",
+      "productId": 7,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Tài liệu tập hợp Luật Đất đai và các văn bản hướng dẫn, phục vụ tìm hiểu chế độ quản lý đất đai và quyền, nghĩa vụ của người sử dụng đất. Bìa ghi sửa đổi, bổ sung năm 2024. Chưa xác nhận người hệ thống, danh mục văn bản đi kèm hoặc các cập nhật sau năm đó, nên không khẳng định đây là bản đầy đủ mới nhất.",
+        "audience": "Người học và người cần tra cứu văn bản pháp luật đất đai.",
+        "readingStyle": "Tập hợp văn bản luật và văn bản hướng dẫn để tra cứu.",
+        "learningGoal": "Tham khảo khung pháp luật đất đai; cần xác minh hiệu lực và văn bản áp dụng cho từng trường hợp."
+      },
+      "catalog": {
+        "description": "Tài liệu tập hợp Luật Đất đai và các văn bản hướng dẫn, phục vụ tìm hiểu chế độ quản lý đất đai và quyền, nghĩa vụ của người sử dụng đất. Bìa ghi sửa đổi, bổ sung năm 2024. Chưa xác nhận người hệ thống, danh mục văn bản đi kèm hoặc các cập nhật sau năm đó, nên không khẳng định đây là bản đầy đủ mới nhất.",
+        "title": "Luật Đất Đai (Sửa Đổi, Bổ Sung Năm 2024) Và Các Văn Bản Hướng Dẫn Thi Hành",
+        "author": "Quốc Hội Việt Nam (văn bản luật)"
+      },
+      "topics": [
+        "pháp luật đất đai",
+        "quản lý đất đai",
+        "quyền sử dụng đất"
+      ],
+      "sources": [
+        {
+          "url": "https://nxbctqg.org.vn/luat-dat-dai-47.html",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description",
+            "catalog.title",
+            "catalog.author"
+          ]
+        }
+      ],
+      "reviewNote": "Nguồn xác nhận cơ quan ban hành và phạm vi luật, bìa ghi năm 2024. Chưa biết người hệ thống và danh mục hướng dẫn trong bản bán."
+    },
+    {
+      "title": "Tìm Hiểu Bộ Luật Dân Sự Việt Nam",
+      "author": "Đỗ Văn Đại",
+      "productId": 8,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Bộ luật về địa vị pháp lý, quyền và nghĩa vụ dân sự của cá nhân, pháp nhân cùng các quan hệ tài sản và nhân thân. Đây là văn bản luật để tra cứu, không phải tác phẩm bình luận khoa học của Đỗ Văn Đại. Chưa xác nhận năm in hoặc các sửa đổi được tích hợp trong bản cửa hàng.",
+        "audience": "Người học và người cần tham khảo văn bản pháp luật dân sự.",
+        "readingStyle": "Văn bản luật để tra cứu theo các điều khoản.",
+        "learningGoal": "Tìm hiểu nền tảng các quan hệ dân sự; cần đối chiếu hiệu lực trước khi dùng cho vụ việc cụ thể."
+      },
+      "catalog": {
+        "description": "Bộ luật về địa vị pháp lý, quyền và nghĩa vụ dân sự của cá nhân, pháp nhân cùng các quan hệ tài sản và nhân thân. Đây là văn bản luật để tra cứu, không phải tác phẩm bình luận khoa học của Đỗ Văn Đại. Chưa xác nhận năm in hoặc các sửa đổi được tích hợp trong bản cửa hàng.",
+        "title": "Bộ Luật Dân Sự",
+        "author": "Quốc Hội Việt Nam"
+      },
+      "topics": [
+        "pháp luật dân sự",
+        "quan hệ tài sản",
+        "quyền nhân thân"
+      ],
+      "sources": [
+        {
+          "url": "https://nxbctqg.org.vn/bo-luat-dan-su-hien-hanh--23.html",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description",
+            "catalog.title",
+            "catalog.author"
+          ]
+        }
+      ],
+      "reviewNote": "Bìa là Bộ luật Dân sự, khớp NXB và cơ quan ban hành Quốc hội. Loại bỏ tên và tác giả sách bình luận gán nhầm."
+    },
+    {
+      "title": "Số Đỏ",
+      "author": "Vũ Trọng Phụng",
+      "productId": 11,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Tác phẩm trào phúng của Vũ Trọng Phụng, dựng những chân dung hí họa để phơi bày sự lố bịch trong xã hội. Sự hài hước đi cùng phê phán và châm biếm, phù hợp người muốn đọc văn học Việt Nam có giọng sắc sảo; không nên mặc định là truyện vui nhẹ nhàng cho mọi lứa tuổi.",
+        "audience": "Người thích văn học Việt Nam, truyện trào phúng và tìm hiểu văn học trong nhà trường.",
+        "readingStyle": "Trào phúng, châm biếm qua những chân dung nhân vật hí họa.",
+        "learningGoal": "Tìm hiểu cách văn học dùng tiếng cười để phê phán xã hội."
+      },
+      "catalog": {
+        "description": "Tác phẩm trào phúng của Vũ Trọng Phụng, dựng những chân dung hí họa để phơi bày sự lố bịch trong xã hội. Sự hài hước đi cùng phê phán và châm biếm, phù hợp người muốn đọc văn học Việt Nam có giọng sắc sảo; không nên mặc định là truyện vui nhẹ nhàng cho mọi lứa tuổi."
+      },
+      "topics": [
+        "văn học Việt Nam",
+        "trào phúng",
+        "phê phán xã hội"
+      ],
+      "sources": [
+        {
+          "url": "https://nxbkimdong.com.vn/so-do-26",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description"
+          ]
+        }
+      ],
+      "reviewNote": "Chỉ dùng mô tả chung của tác phẩm, không chuyển tuổi, số trang hoặc đặc điểm bản minh họa từ ấn bản nguồn."
+    },
+    {
+      "title": "Vang Bóng Một Thời",
+      "author": "Nguyễn Tuân",
+      "productId": 12,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Tập truyện và tùy bút của Nguyễn Tuân gợi lại nếp sống, thú chơi và vẻ đẹp văn hóa của một thời đã qua. Cách viết chú trọng ngôn ngữ và những con người tài hoa, với không khí hoài cổ. Đây là lựa chọn để thưởng thức văn chương và văn hóa, không phải sách hướng dẫn kỹ năng thực hành.",
+        "audience": "Người thích văn chương Nguyễn Tuân, văn hóa truyền thống và không khí hoài cổ.",
+        "readingStyle": "Truyện, tùy bút giàu ngôn ngữ, chú trọng vẻ đẹp văn hóa và con người tài hoa.",
+        "learningGoal": "Thưởng thức ngôn ngữ và tìm hiểu những nét văn hóa, nếp sống được tái hiện trong tác phẩm."
+      },
+      "catalog": {
+        "description": "Tập truyện và tùy bút của Nguyễn Tuân gợi lại nếp sống, thú chơi và vẻ đẹp văn hóa của một thời đã qua. Cách viết chú trọng ngôn ngữ và những con người tài hoa, với không khí hoài cổ. Đây là lựa chọn để thưởng thức văn chương và văn hóa, không phải sách hướng dẫn kỹ năng thực hành."
+      },
+      "topics": [
+        "văn hóa truyền thống",
+        "hoài cổ",
+        "văn học Việt Nam"
+      ],
+      "sources": [
+        {
+          "url": "https://nhanam.vn/review-sach-vang-bong-mot-thoi-nguyen-tuan",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description"
+          ]
+        }
+      ],
+      "reviewNote": "Nguồn đơn vị phát hành về tác phẩm; không áp số lượng truyện và bài tùy bút của bản nguồn cho mọi ấn bản."
+    },
+    {
+      "title": "Việt Nam Sử Lược",
+      "author": "Trần Trọng Kim",
+      "productId": 14,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Tác phẩm trình bày lịch sử Việt Nam theo trình tự các thời kỳ và triều đại, nhằm giúp người đọc nắm một mạch lịch sử có hệ thống. Phù hợp nhu cầu tìm hiểu lịch sử tổng quát. Đây là cách trình bày lịch sử của Trần Trọng Kim, không nên xem như kết luận cuối cùng cho mọi tranh luận sử học.",
+        "audience": "Người muốn tìm hiểu lịch sử Việt Nam theo một mạch tổng quan.",
+        "readingStyle": "Lược sử trình bày theo trình tự thời kỳ, triều đại.",
+        "learningGoal": "Xây dựng cái nhìn tổng quan và liên hệ các thời kỳ lịch sử Việt Nam."
+      },
+      "catalog": {
+        "description": "Tác phẩm trình bày lịch sử Việt Nam theo trình tự các thời kỳ và triều đại, nhằm giúp người đọc nắm một mạch lịch sử có hệ thống. Phù hợp nhu cầu tìm hiểu lịch sử tổng quát. Đây là cách trình bày lịch sử của Trần Trọng Kim, không nên xem như kết luận cuối cùng cho mọi tranh luận sử học."
+      },
+      "topics": [
+        "lịch sử Việt Nam",
+        "triều đại Việt Nam",
+        "lược sử"
+      ],
+      "sources": [
+        {
+          "url": "https://nxbkimdong.com.vn/viet-nam-su-luoc-ban-dac-biet-26",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description"
+          ]
+        }
+      ],
+      "reviewNote": "Dùng phạm vi tác phẩm và lời giới thiệu; không nhập thông số hoặc phụ lục của bản đặc biệt."
+    },
+    {
+      "title": "Lịch Sử Thế Giới Hiện Đại",
+      "author": "Nguyễn Anh Thái",
+      "productId": 15,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Giáo trình lịch sử thế giới hiện đại do Nguyễn Anh Thái chủ biên, trình bày các biến chuyển từ năm 1917, gồm cách mạng, phong trào giải phóng dân tộc, chủ nghĩa tư bản và quan hệ quốc tế. Có nội dung về Chiến tranh thế giới thứ hai cùng các chuyển biến khoa học, kỹ thuật sau chiến tranh. Chưa xác định mốc kết thúc của đúng bản cửa hàng, không khẳng định bao quát sự kiện đến hiện nay.",
+        "audience": "Người học và tìm hiểu lịch sử thế giới hiện đại, quan hệ quốc tế và các phong trào chính trị thế kỷ XX.",
+        "readingStyle": "Giáo trình lịch sử trình bày theo các giai đoạn và vấn đề.",
+        "learningGoal": "Hệ thống các chuyển biến lịch sử thế giới từ năm 1917 và bối cảnh quan hệ quốc tế."
+      },
+      "catalog": {
+        "description": "Giáo trình lịch sử thế giới hiện đại do Nguyễn Anh Thái chủ biên, trình bày các biến chuyển từ năm 1917, gồm cách mạng, phong trào giải phóng dân tộc, chủ nghĩa tư bản và quan hệ quốc tế. Có nội dung về Chiến tranh thế giới thứ hai cùng các chuyển biến khoa học, kỹ thuật sau chiến tranh. Chưa xác định mốc kết thúc của đúng bản cửa hàng, không khẳng định bao quát sự kiện đến hiện nay.",
+        "author": "Nguyễn Anh Thái (chủ biên)"
+      },
+      "topics": [
+        "lịch sử thế giới",
+        "quan hệ quốc tế",
+        "giải phóng dân tộc",
+        "Chiến tranh thế giới thứ hai"
+      ],
+      "sources": [
+        {
+          "url": "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/lich-su-the-gioi-hien-dai/63442",
+          "kind": "university_library",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description",
+            "catalog.author"
+          ]
+        }
+      ],
+      "reviewNote": "Bìa và thư viện xác nhận vai trò chủ biên. Không dùng mô tả cũ bao quát cả hai thế chiến hoặc đến hiện nay."
+    },
+    {
+      "title": "AI Cơ Bản - Trí Tuệ Nhân Tạo Cho Mọi Người",
+      "author": "Phạm Huy Hoàng",
+      "productId": 17,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Giới thiệu các khái niệm trí tuệ nhân tạo và học máy, cùng ứng dụng trong công việc, học tập, sáng tạo và kinh doanh. Sách của Nguyễn Văn Lượng hướng đến người mới tìm hiểu, bằng cách trình bày phổ thông. Đây không phải giáo trình lập trình AI chuyên sâu.",
+        "audience": "Người mới tìm hiểu AI và muốn biết ứng dụng trong học tập, công việc, sáng tạo, kinh doanh.",
+        "readingStyle": "Giới thiệu phổ thông, giải thích khái niệm gắn với các ứng dụng.",
+        "learningGoal": "Có định hướng ban đầu về AI, học máy và những cách ứng dụng trong đời sống, công việc.",
+        "readingLevel": "Nhập môn cho người mới tìm hiểu; không tập trung lập trình chuyên sâu."
+      },
+      "catalog": {
+        "description": "Giới thiệu các khái niệm trí tuệ nhân tạo và học máy, cùng ứng dụng trong công việc, học tập, sáng tạo và kinh doanh. Sách của Nguyễn Văn Lượng hướng đến người mới tìm hiểu, bằng cách trình bày phổ thông. Đây không phải giáo trình lập trình AI chuyên sâu.",
+        "title": "AI - Sức Mạnh Của Trí Tuệ Nhân Tạo",
+        "author": "Nguyễn Văn Lượng"
+      },
+      "topics": [
+        "AI nhập môn",
+        "học máy",
+        "ứng dụng AI",
+        "AI trong công việc"
+      ],
+      "sources": [
+        {
+          "url": "https://nhasachbella.com/san-pham/sach-ai-suc-manh-cua-tri-tue-nhan-tao/",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "readingLevel",
+            "topics",
+            "catalog.description",
+            "catalog.title",
+            "catalog.author"
+          ]
+        }
+      ],
+      "reviewNote": "Bìa khớp sản phẩm do Bella phát hành; tác giả Nguyễn Văn Lượng. Không gán cho Phạm Huy Hoàng."
+    },
+    {
+      "title": "Blockchain Fundamentals - Nền Tảng Công Nghệ Chuỗi Khối",
+      "author": "Don Tapscott",
+      "productId": 18,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Daniel Drescher giải thích blockchain qua 25 bước, dùng hình ảnh, phép so sánh và ví dụ để nối các khái niệm. Người đọc tìm hiểu cơ chế, tiềm năng và giới hạn của công nghệ chuỗi khối mà không cần công thức toán hay lập trình. Sách giúp hiểu nền tảng công nghệ, không bảo đảm lợi nhuận đầu tư tiền mã hóa.",
+        "audience": "Người muốn hiểu nền tảng blockchain, kể cả người chưa có kiến thức kỹ thuật chuyên môn.",
+        "readingStyle": "Giải thích theo 25 bước với hình ảnh, phép so sánh và ví dụ.",
+        "learningGoal": "Hiểu cách blockchain hoạt động cùng tiềm năng, giới hạn và ý nghĩa ứng dụng.",
+        "readingLevel": "Không đòi hỏi nền tảng kỹ thuật; không dùng công thức toán hay lập trình."
+      },
+      "catalog": {
+        "description": "Daniel Drescher giải thích blockchain qua 25 bước, dùng hình ảnh, phép so sánh và ví dụ để nối các khái niệm. Người đọc tìm hiểu cơ chế, tiềm năng và giới hạn của công nghệ chuỗi khối mà không cần công thức toán hay lập trình. Sách giúp hiểu nền tảng công nghệ, không bảo đảm lợi nhuận đầu tư tiền mã hóa.",
+        "title": "Blockchain Cơ Bản",
+        "author": "Daniel Drescher"
+      },
+      "topics": [
+        "blockchain",
+        "chuỗi khối",
+        "nền tảng công nghệ"
+      ],
+      "sources": [
+        {
+          "url": "https://nhanam.vn/blockchain-co-ban-nha-nam",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "readingLevel",
+            "topics",
+            "catalog.description",
+            "catalog.title",
+            "catalog.author"
+          ]
+        }
+      ],
+      "reviewNote": "Bìa và Nha Nam xác nhận Blockchain cơ bản của Daniel Drescher; không phải tác phẩm Don Tapscott."
+    },
+    {
+      "title": "Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật",
+      "author": "Đinh Mạnh Tường",
+      "productId": 20,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Giáo trình do Đỗ Trung Kiên chủ biên, giới thiệu giải thuật, phân tích giải thuật và đệ quy, cùng các cấu trúc như danh sách liên kết, ngăn xếp, hàng đợi và cây. Có nội dung tìm kiếm và sắp xếp. Chưa có căn cứ để xác nhận ngôn ngữ lập trình hoặc mức bao quát đồ thị của đúng bản đang bán.",
+        "audience": "Người học cấu trúc dữ liệu và giải thuật trong ngành công nghệ thông tin.",
+        "readingStyle": "Giáo trình chuyên ngành về các khái niệm, cấu trúc dữ liệu và giải thuật.",
+        "learningGoal": "Hệ thống kiến thức về phân tích giải thuật, cấu trúc dữ liệu, tìm kiếm và sắp xếp."
+      },
+      "catalog": {
+        "description": "Giáo trình do Đỗ Trung Kiên chủ biên, giới thiệu giải thuật, phân tích giải thuật và đệ quy, cùng các cấu trúc như danh sách liên kết, ngăn xếp, hàng đợi và cây. Có nội dung tìm kiếm và sắp xếp. Chưa có căn cứ để xác nhận ngôn ngữ lập trình hoặc mức bao quát đồ thị của đúng bản đang bán.",
+        "author": "Đỗ Trung Kiên (chủ biên), Đặng Xuân Thọ, Nguyễn Thị Hồng, Phạm Thị Lan"
+      },
+      "topics": [
+        "cấu trúc dữ liệu",
+        "giải thuật",
+        "đệ quy",
+        "tìm kiếm và sắp xếp"
+      ],
+      "sources": [
+        {
+          "url": "https://thuvien.hiu.vn/Opac/DmdInfo.aspx?=&collection_id=27&dmd_id=27629&heading_id=5",
+          "kind": "university_library",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description",
+            "catalog.author"
+          ]
+        }
+      ],
+      "reviewNote": "Bìa khớp bốn tác giả trong bản ghi thư viện; bỏ tên Đinh Mạnh Tường gán nhầm. Không nhập ngôn ngữ code hoặc số trang."
+    },
+    {
+      "title": "Giáo Trình Mạng Máy Tính",
+      "author": "Nguyễn Thúc Hải",
+      "productId": 21,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Tác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN. Đây là tài liệu về nền tảng mạng; nguồn mô tả còn đề cập công nghệ của giai đoạn trước. Chưa xác nhận bản cửa hàng có cập nhật các chuẩn mạng mới.",
+        "audience": "Người học công nghệ thông tin và người muốn tham khảo kiến thức nền tảng mạng máy tính.",
+        "readingStyle": "Giáo trình chuyên ngành trình bày các mô hình, giao thức và hệ thống mạng.",
+        "learningGoal": "Tìm hiểu mô hình mạng, TCP/IP và Internet ở mức nền tảng."
+      },
+      "catalog": {
+        "description": "Tác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN. Đây là tài liệu về nền tảng mạng; nguồn mô tả còn đề cập công nghệ của giai đoạn trước. Chưa xác nhận bản cửa hàng có cập nhật các chuẩn mạng mới.",
+        "title": "Mạng Máy Tính Và Các Hệ Thống Mở"
+      },
+      "topics": [
+        "mạng máy tính",
+        "OSI",
+        "TCP/IP",
+        "Internet"
+      ],
+      "sources": [
+        {
+          "url": "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/mang-may-tinh-va-cac-he-thong-mo/67056",
+          "kind": "university_library",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description",
+            "catalog.title"
+          ]
+        }
+      ],
+      "reviewNote": "Bìa khớp tên tác phẩm cụ thể của Nguyễn Thúc Hải. Không quảng bá Wi-Fi, 5G hoặc bảo mật cập nhật chưa được xác nhận."
+    },
+    {
+      "title": "Giáo Trình Lập Trình Java",
+      "author": "Trần Đình Quế",
+      "productId": 22,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Giáo trình Lập trình Java do Phạm Xuân Lâm chủ biên, được xác nhận qua bìa và thư mục quốc gia. Có thể dùng làm tài liệu học lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java, các thư viện, framework hoặc các chủ đề cụ thể; không khẳng định sách dạy Spring Boot hay Java 21.",
+        "audience": "Người đang học lập trình Java và cần một giáo trình chuyên ngành.",
+        "readingStyle": "Giáo trình chuyên ngành; chưa xác nhận hình thức bài tập và ví dụ của bản đang bán.",
+        "learningGoal": "Tham khảo việc học lập trình Java; cần mục lục để đối chiếu chương trình học cụ thể."
+      },
+      "catalog": {
+        "description": "Giáo trình Lập trình Java do Phạm Xuân Lâm chủ biên, được xác nhận qua bìa và thư mục quốc gia. Có thể dùng làm tài liệu học lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java, các thư viện, framework hoặc các chủ đề cụ thể; không khẳng định sách dạy Spring Boot hay Java 21.",
+        "author": "Phạm Xuân Lâm (chủ biên)"
+      },
+      "topics": [
+        "Java",
+        "lập trình",
+        "giáo trình công nghệ thông tin"
+      ],
+      "sources": [
+        {
+          "url": "https://nlv.gov.vn/dmdocuments/tmqg-09-2024.pdf",
+          "kind": "national_library",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description",
+            "catalog.author"
+          ]
+        }
+      ],
+      "reviewNote": "Nguồn thư mục xác nhận tên và chủ biên, chưa đủ cho mục lục. Đối tượng/mục tiêu là ánh xạ từ tên giáo trình, không khẳng định các chương."
+    },
+    {
+      "title": "Giáo Trình Cơ Sở Dữ Liệu",
+      "author": "Phạm Thị Anh Lê",
+      "productId": 23,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Giáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học cơ sở dữ liệu. Chưa có mục lục đúng bản để xác nhận chương SQL, hệ quản trị sử dụng hoặc nội dung chi tiết.",
+        "audience": "Người học máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin.",
+        "readingStyle": "Giáo trình chuyên ngành cơ sở dữ liệu.",
+        "learningGoal": "Tham khảo môn học cơ sở dữ liệu; cần mục lục để kiểm tra nội dung phù hợp chương trình học."
+      },
+      "catalog": {
+        "description": "Giáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học cơ sở dữ liệu. Chưa có mục lục đúng bản để xác nhận chương SQL, hệ quản trị sử dụng hoặc nội dung chi tiết.",
+        "author": "Phan Tấn Quốc & Nguyễn Thị Uyên Nhi"
+      },
+      "topics": [
+        "cơ sở dữ liệu",
+        "hệ thống thông tin",
+        "giáo trình công nghệ thông tin"
+      ],
+      "sources": [
+        {
+          "url": "https://vnuhcmpress.edu.vn/giao-trinh-co-so-du-lieu-b40207.html",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description",
+            "catalog.author"
+          ]
+        },
+        {
+          "url": "https://thuvien.stu.edu.vn/tracuutailieutruyenthong2xem.aspx?intItemID=9298",
+          "kind": "university_library",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description",
+            "catalog.author"
+          ]
+        }
+      ],
+      "reviewNote": "Bìa và thư viện xác nhận đồng tác giả; NXB xác nhận ngành học. Không dùng mục lục bản một tác giả năm 2007 cho bản này."
+    },
+    {
+      "title": "Đại Việt Sử Ký Toàn Thư",
+      "author": "Ngô Sĩ Liên",
+      "productId": 24,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Bộ sử biên niên Việt Nam, gắn với Ngô Sĩ Liên và sự tiếp nối của các sử gia triều Lê. Các sự kiện được ghi theo thời gian, là nguồn để tìm hiểu lịch sử và cách người xưa chép sử. Chưa xác định tập, bản dịch hoặc việc sản phẩm cửa hàng là một tập hay trọn bộ; không khẳng định bao quát toàn bộ các phần.",
+        "audience": "Người tìm hiểu lịch sử Việt Nam, sử liệu và cách chép sử truyền thống.",
+        "readingStyle": "Sử biên niên, ghi chép sự kiện theo trình tự thời gian.",
+        "learningGoal": "Tham khảo sử liệu và đối chiếu cách ghi chép, nhận xét lịch sử của các sử gia."
+      },
+      "catalog": {
+        "description": "Bộ sử biên niên Việt Nam, gắn với Ngô Sĩ Liên và sự tiếp nối của các sử gia triều Lê. Các sự kiện được ghi theo thời gian, là nguồn để tìm hiểu lịch sử và cách người xưa chép sử. Chưa xác định tập, bản dịch hoặc việc sản phẩm cửa hàng là một tập hay trọn bộ; không khẳng định bao quát toàn bộ các phần."
+      },
+      "topics": [
+        "lịch sử Việt Nam",
+        "sử liệu",
+        "sử biên niên"
+      ],
+      "sources": [
+        {
+          "url": "https://hannom.vass.gov.vn/web/tchn/DATA1/9903v.htm",
+          "kind": "research_institute",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description"
+          ]
+        }
+      ],
+      "reviewNote": "Nguồn Viện Hán Nôm về lịch sử tác phẩm. Không suy ra tập, bản dịch, ISBN hoặc bộ đầy đủ từ tên chung."
+    },
+    {
+      "title": "Kho Tàng Truyện Cổ Tích Việt Nam",
+      "author": "Nguyễn Đổng Chi",
+      "productId": 35,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Công trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ.",
+        "audience": "Người thích truyện cổ tích Việt Nam và tìm hiểu văn hóa, truyện kể dân gian.",
+        "readingStyle": "Sưu tầm và biên soạn truyện dân gian; chưa xác định đặc điểm minh họa của bản cửa hàng.",
+        "learningGoal": "Tìm hiểu kho truyện kể và các nét văn hóa dân gian Việt Nam."
+      },
+      "catalog": {
+        "description": "Công trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ.",
+        "image": "/assets/book-cover-unverified-35.svg"
+      },
+      "topics": [
+        "cổ tích Việt Nam",
+        "văn hóa dân gian",
+        "truyện dân gian"
+      ],
+      "sources": [
+        {
+          "url": "https://www.nxbtre.com.vn/sach/kho-tang-truyen-co-tich-viet-nam-01-146145.html",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description"
+          ]
+        }
+      ],
+      "reviewNote": "Chỉ xác nhận tác phẩm/bộ Nguyễn Đổng Chi. Không lấy mục lục tập 1 làm nội dung mọi tập; chưa có căn cứ nhóm tuổi của bản bán.",
+      "coverReviewNote": "Bìa Cloudinary hiện là tác phẩm khác (Nữ Sinh / Ngày Tận Của Thế Giới); thay bằng ảnh minh họa có nhãn, giữ tác phẩm đang bán."
+    },
+    {
+      "title": "10 Vạn Câu Hỏi Vì Sao",
+      "author": "Nhiều Tác Giả",
+      "productId": 36,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Tên chung cho sách hỏi đáp kiến thức khoa học và đời sống, giúp người đọc khám phá các câu hỏi vì sao. Có nhiều bộ, tập và nhóm tuổi mang tên tương tự; dữ liệu cửa hàng chưa xác định bộ hoặc tập cụ thể. Vì vậy chưa thể cam kết các phần về động vật, vũ trụ, cơ thể hay độ tuổi của một ấn bản cụ thể.",
+        "audience": "Người thích tìm hiểu khoa học qua câu hỏi và câu trả lời; cần xác nhận tập để tư vấn độ tuổi.",
+        "readingStyle": "Hỏi đáp kiến thức khoa học; chưa xác định độ dài, minh họa và mức đọc của bản bán.",
+        "learningGoal": "Khơi gợi việc quan sát, đặt câu hỏi và tìm hiểu kiến thức khoa học."
+      },
+      "catalog": {
+        "description": "Tên chung cho sách hỏi đáp kiến thức khoa học và đời sống, giúp người đọc khám phá các câu hỏi vì sao. Có nhiều bộ, tập và nhóm tuổi mang tên tương tự; dữ liệu cửa hàng chưa xác định bộ hoặc tập cụ thể. Vì vậy chưa thể cam kết các phần về động vật, vũ trụ, cơ thể hay độ tuổi của một ấn bản cụ thể.",
+        "image": "/assets/book-cover-unverified-36.svg"
+      },
+      "topics": [
+        "hỏi đáp khoa học",
+        "khám phá khoa học"
+      ],
+      "sources": [
+        {
+          "url": "https://nxbkimdong.com.vn/muoi-van-cau-hoi-vi-sao-the-gioi-dong-thuc-vat",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description"
+          ]
+        }
+      ],
+      "reviewNote": "Nguồn minh họa đặc điểm tên bộ chung, không nhận diện chính xác sản phẩm cửa hàng. Không áp tuổi, tác giả hoặc chủ đề riêng của tập nguồn.",
+      "coverReviewNote": "Bìa Cloudinary hiện là tác phẩm khác (Nữ Sinh / Ngày Tận Của Thế Giới); thay bằng ảnh minh họa có nhãn, giữ tác phẩm đang bán."
+    },
+    {
+      "title": "Chí Phèo",
+      "author": "Nam Cao",
+      "productId": 39,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Truyện ngắn của Nam Cao về bi kịch của người nông dân trong xã hội cũ, đặt ra câu hỏi về con người và cách xã hội đối xử với họ. Có thể đọc để tìm hiểu văn học hiện thực và thảo luận về nội dung, nghệ thuật tác phẩm. Chưa xác định bản dịch, ngôn ngữ và những truyện khác đi kèm trong bản đang bán.",
+        "audience": "Người tìm hiểu văn học Việt Nam, truyện ngắn Nam Cao và nội dung học văn trong nhà trường.",
+        "readingStyle": "Truyện ngắn hiện thực có nội dung bi kịch để đọc, phân tích và thảo luận.",
+        "learningGoal": "Suy ngẫm về cuộc sống người nông dân và cách tác phẩm đặt vấn đề về con người, xã hội."
+      },
+      "catalog": {
+        "description": "Truyện ngắn của Nam Cao về bi kịch của người nông dân trong xã hội cũ, đặt ra câu hỏi về con người và cách xã hội đối xử với họ. Có thể đọc để tìm hiểu văn học hiện thực và thảo luận về nội dung, nghệ thuật tác phẩm. Chưa xác định bản dịch, ngôn ngữ và những truyện khác đi kèm trong bản đang bán."
+      },
+      "topics": [
+        "văn học hiện thực",
+        "người nông dân",
+        "bi kịch",
+        "văn học Việt Nam"
+      ],
+      "sources": [
+        {
+          "url": "https://js.vnu.edu.vn/ER/article/view/4080/3807",
+          "kind": "research_journal",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description"
+          ]
+        }
+      ],
+      "reviewNote": "Nguồn nghiên cứu giáo dục chỉ dùng cho chủ đề và việc đọc hiểu. Bìa cửa hàng ghi Chí Phèo and Other Stories; không suy ra bản tiếng Việt hoặc mục lục toàn tuyển tập."
+    },
+    {
+      "title": "Giáo Trình Nhập Môn Trí Tuệ Nhân Tạo",
+      "author": "Đinh Mạnh Tường",
+      "productId": 44,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Giáo trình do Từ Minh Phương biên soạn, giới thiệu trí tuệ nhân tạo và các hướng giải quyết vấn đề bằng tìm kiếm, biểu diễn tri thức và logic, suy diễn xác suất, học máy. Phù hợp nhu cầu học nền tảng chuyên ngành. Chưa có căn cứ khẳng định sách hướng dẫn các công cụ AI tạo sinh hoặc lập trình ứng dụng ChatGPT.",
+        "audience": "Người học môn trí tuệ nhân tạo và muốn tìm hiểu các phương pháp nền tảng chuyên ngành.",
+        "readingStyle": "Giáo trình trình bày các khái niệm và phương pháp nền tảng của trí tuệ nhân tạo.",
+        "learningGoal": "Hệ thống kiến thức về tìm kiếm, tri thức, logic, suy diễn xác suất và học máy."
+      },
+      "catalog": {
+        "description": "Giáo trình do Từ Minh Phương biên soạn, giới thiệu trí tuệ nhân tạo và các hướng giải quyết vấn đề bằng tìm kiếm, biểu diễn tri thức và logic, suy diễn xác suất, học máy. Phù hợp nhu cầu học nền tảng chuyên ngành. Chưa có căn cứ khẳng định sách hướng dẫn các công cụ AI tạo sinh hoặc lập trình ứng dụng ChatGPT.",
+        "author": "Từ Minh Phương"
+      },
+      "topics": [
+        "trí tuệ nhân tạo",
+        "tìm kiếm AI",
+        "biểu diễn tri thức",
+        "suy diễn xác suất",
+        "học máy"
+      ],
+      "sources": [
+        {
+          "url": "https://nxbkhcntt.vn/node/15847",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description",
+            "catalog.author"
+          ]
+        }
+      ],
+      "reviewNote": "Bìa và NXB xác nhận tác giả Từ Minh Phương và phạm vi nội dung. Không gán cho Đinh Mạnh Tường."
+    },
+    {
+      "title": "Giáo Trình Kinh Tế Vi Mô",
+      "author": "Nguyễn Văn Công",
+      "productId": 45,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Giáo trình Kinh tế vĩ mô của Lê Thanh Tùng bàn về nền kinh tế ở cấp tổng thể, như sản lượng, lạm phát, thất nghiệp, tỷ giá và chính sách kinh tế. Phù hợp học về các chỉ tiêu và cơ chế của nền kinh tế. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp.",
+        "audience": "Người học kinh tế vĩ mô và muốn tìm hiểu nền kinh tế ở cấp tổng thể.",
+        "readingStyle": "Giáo trình kinh tế; chưa xác nhận cấu trúc bài tập của bản in cửa hàng.",
+        "learningGoal": "Tìm hiểu các chỉ tiêu vĩ mô và chính sách tác động đến nền kinh tế."
+      },
+      "catalog": {
+        "description": "Giáo trình Kinh tế vĩ mô của Lê Thanh Tùng bàn về nền kinh tế ở cấp tổng thể, như sản lượng, lạm phát, thất nghiệp, tỷ giá và chính sách kinh tế. Phù hợp học về các chỉ tiêu và cơ chế của nền kinh tế. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp.",
+        "title": "Giáo Trình Kinh Tế Vĩ Mô",
+        "author": "Lê Thanh Tùng"
+      },
+      "topics": [
+        "kinh tế vĩ mô",
+        "lạm phát",
+        "thất nghiệp",
+        "chính sách kinh tế"
+      ],
+      "sources": [
+        {
+          "url": "https://thuquan.ou.edu.vn/chi-tiet-sach/Kinh-t%C3%A1%C2%BA%C2%BF-MTcwOA/Giao-trinh-Kinh-te-vi-mo-%282025%29%5B1%5D-MUIwODQ2MjY",
+          "kind": "university_rights_holder",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description",
+            "catalog.title",
+            "catalog.author"
+          ]
+        }
+      ],
+      "reviewNote": "Bìa xác nhận Vĩ mô của Lê Thanh Tùng, khớp tác phẩm trong thư quán ĐH Mở. Chỉ dùng chủ đề chung, không gán năm 2025 và bài tập bản điện tử cho bản in."
+    },
+    {
+      "title": "Muôn Kiếp Nhân Sinh",
+      "author": "Nguyên Phong",
+      "productId": 54,
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Tác phẩm của Nguyên Phong kể và suy ngẫm về những kiếp sống, nhân quả và các lựa chọn của con người qua góc nhìn tâm linh. Nên đọc như câu chuyện và quan điểm để chiêm nghiệm; không xem các nội dung luân hồi như kết luận khoa học hoặc bảo đảm chữa lành. Chưa xác định chính xác tập và ấn bản cửa hàng, nên không gán cốt truyện riêng của tập 1, 2 hoặc 3.",
+        "audience": "Người quan tâm câu chuyện tâm linh, nhân quả và suy ngẫm về đời sống.",
+        "readingStyle": "Kể chuyện kết hợp suy ngẫm theo góc nhìn tâm linh của tác giả.",
+        "learningGoal": "Chiêm nghiệm về nhân quả, lựa chọn và cách sống từ góc nhìn tác phẩm."
+      },
+      "catalog": {
+        "description": "Tác phẩm của Nguyên Phong kể và suy ngẫm về những kiếp sống, nhân quả và các lựa chọn của con người qua góc nhìn tâm linh. Nên đọc như câu chuyện và quan điểm để chiêm nghiệm; không xem các nội dung luân hồi như kết luận khoa học hoặc bảo đảm chữa lành. Chưa xác định chính xác tập và ấn bản cửa hàng, nên không gán cốt truyện riêng của tập 1, 2 hoặc 3."
+      },
+      "topics": [
+        "tâm linh",
+        "nhân quả",
+        "suy ngẫm về đời sống"
+      ],
+      "sources": [
+        {
+          "url": "https://firstnews.vn/muon-kiep-nhan-sinh-2-bia-cung-kho-lon-p1271.html",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics",
+            "catalog.description"
+          ]
+        }
+      ],
+      "reviewNote": "Chỉ dùng điểm chung của tác phẩm/bộ. Ký hiệu trên bìa chưa đủ xác nhận ISBN, tập và dạng bìa; không dùng nội dung riêng của tập nguồn."
+    }
+  ]
+}

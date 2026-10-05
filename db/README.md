@@ -34,3 +34,9 @@ cmd /c "mysql -u <user> -p --default-character-set=utf8mb4 book < D:\book\book\d
   - Mật khẩu của tất cả tài khoản demo: `ChangeMe123!`
   - Không bao giờ dùng các tài khoản này cho môi trường public.
 - Dữ liệu cá nhân trong seed (email, họ tên, số điện thoại, địa chỉ chi tiết, JWT token cũ, avatar gắn với tài khoản cũ) đã được **thay bằng giá trị giả**; chỉ giữ lại cấu trúc và ID để khóa ngoại hoạt động đúng.
+
+## Bổ sung hồ sơ chatbot đã đối chiếu
+
+Công cụ `apply-reviewed-book-profiles.py` nhập manifest đã biên tập vào các hồ sơ sách hiện có. Mặc định dry-run, so khớp đúng tên/tác giả, sao lưu catalog/hồ sơ/chủ đề và ghi trong một transaction. Manifest có `catalog` chỉ được sửa các trường có nguồn đối chiếu, khớp thêm ID; giá và tồn kho không được ghi. Cần MySQL 8.0.16+ để transaction guard hoạt động. Xem [hướng dẫn và độ phủ dữ liệu](../docs/book-knowledge/README.md). Hai đợt 33 + 23 cuốn ngày 2026-10-05 đã được chủ dự án đồng ý và áp dụng trên database local `book` cổng 3306; đây không phải seed cho database sạch.
+
+`test_reviewed_book_profiles.py` kiểm tra các điều kiện nhập. Tùy chọn `--integration` dùng trước khi nhập manifest 23 cuốn để chứng minh kế hoạch có dữ liệu cũ bị từ chối và mọi thay đổi catalog/hồ sơ/chủ đề trong transaction bị rollback. Sau nhập, chạy lại hai manifest ở chế độ dry-run để kiểm tra không có thay đổi.

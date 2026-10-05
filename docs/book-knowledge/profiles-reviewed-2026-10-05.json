@@ -1,0 +1,1075 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-10-05",
+  "scope": "VinaBook approved active book profiles",
+  "policy": "Paraphrased work-level content from publishers, authors or rights holders. Reader interests are editorial mappings; empty fields stay unknown. No edition-specific bibliography is imported.",
+  "books": [
+    {
+      "productId": 9,
+      "title": "Clean Code - Mã Sạch Và Cách Viết",
+      "author": "Robert C. Martin",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Bàn về cách nhận diện và cải thiện chất lượng mã nguồn: đặt tên, hàm, lớp, định dạng, xử lý lỗi và kiểm thử. Các tình huống cải tiến mã được dùng để minh họa nguyên tắc viết mã sạch.",
+        "audience": "Lập trình viên, kỹ sư phần mềm, trưởng nhóm và người quản lý dự án muốn cải thiện mã nguồn.",
+        "readingStyle": "Nguyên tắc viết mã đi cùng ví dụ cụ thể và tình huống cải tiến mã nguồn.",
+        "learningGoal": "Tham khảo cách đọc, đánh giá, chỉnh sửa mã nguồn và viết kiểm thử đơn vị.",
+        "readingLevel": "Cần theo dõi và phân tích mã nguồn trong các ví dụ."
+      },
+      "topics": [
+        "mã sạch",
+        "cải tiến mã nguồn",
+        "kiểm thử phần mềm"
+      ],
+      "sources": [
+        {
+          "url": "https://www.informit.com/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "readingLevel",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Nguồn bản gốc 2008; chỉ dùng các chủ đề nền tảng. Không nhập thay đổi của bản 2026 hoặc thông số bản tiếng Anh."
+    },
+    {
+      "productId": 10,
+      "title": "Truyện Kiều",
+      "author": "Nguyễn Du",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "audience": "Người học và tìm hiểu văn học Việt Nam; tác phẩm được giới thiệu trong tủ sách văn học nhà trường."
+      },
+      "topics": [
+        "văn học Việt Nam",
+        "văn học trong nhà trường"
+      ],
+      "sources": [
+        {
+          "url": "https://nxbkimdong.com.vn/truyen-kieu",
+          "kind": "publisher_or_author",
+          "supports": [
+            "audience",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Chỉ bổ sung đối tượng và chủ đề có trên nguồn; giữ tóm tắt cửa hàng. Chưa đối chiếu bản chú giải, không áp dụng mốc tuổi của ấn bản nguồn."
+    },
+    {
+      "productId": 13,
+      "title": "Dế Mèn Phiêu Lưu Ký",
+      "author": "Tô Hoài",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Truyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận.",
+        "audience": "Độc giả nhỏ tuổi và người quan tâm văn học thiếu nhi Việt Nam.",
+        "readingStyle": "Truyện phiêu lưu qua thế giới loài vật, có khó khăn và nguy hiểm trên hành trình.",
+        "learningGoal": "Suy ngẫm về tình bạn, lòng dũng cảm và sự hòa thuận qua câu chuyện."
+      },
+      "topics": [
+        "phiêu lưu",
+        "tình bạn",
+        "hòa bình"
+      ],
+      "sources": [
+        {
+          "url": "https://nxbkimdong.com.vn/diary-of-a-cricket",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Trang nguồn là bản dịch tiếng Anh của cùng tác phẩm. Chỉ dùng nội dung chung; không lấy độ tuổi, tranh minh họa, số trang hoặc mức dễ đọc của bản rút gọn."
+    },
+    {
+      "productId": 16,
+      "title": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+      "author": "Andrew Hunt & David Thomas",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Bàn về trách nhiệm nghề nghiệp và cách xây dựng phần mềm linh hoạt, dễ bảo trì. Các chủ đề gồm tránh lặp kiến thức, dùng công cụ, hiểu yêu cầu, học liên tục và kiểm thử.",
+        "audience": "Người học lập trình, lập trình viên có kinh nghiệm và người quản lý dự án phần mềm.",
+        "readingStyle": "Các phần chuyên đề về lập trình được trình bày qua giai thoại, ví dụ cụ thể và phép so sánh.",
+        "learningGoal": "Tham khảo thói quen làm việc, cách hiểu yêu cầu và cải thiện chất lượng phần mềm."
+      },
+      "topics": [
+        "nghề lập trình",
+        "bảo trì phần mềm",
+        "kiểm thử phần mềm"
+      ],
+      "sources": [
+        {
+          "url": "https://www.pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Nguồn bản kỷ niệm 2019; chỉ dùng chủ đề chung của tác phẩm. Chưa xác nhận bản dịch hoặc những mục mới riêng của ấn bản này."
+    },
+    {
+      "productId": 19,
+      "title": "Khởi Nghiệp Tinh Gọn (The Lean Startup)",
+      "author": "Eric Ries",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Giới thiệu cách phát triển sản phẩm bằng thử nghiệm và học từ kết quả đo lường. Trọng tâm là vòng xây dựng, đo lường, học hỏi và kiểm chứng ý tưởng để giảm công việc lãng phí.",
+        "audience": "Người khởi nghiệp và đội ngũ phát triển sản phẩm muốn kiểm chứng ý tưởng.",
+        "readingStyle": "Trình bày nguyên tắc thử nghiệm và cách học từ kết quả trong quá trình xây dựng sản phẩm.",
+        "learningGoal": "Tham khảo hướng dẫn áp dụng vòng xây dựng, đo lường, học hỏi để kiểm chứng ý tưởng kinh doanh."
+      },
+      "topics": [
+        "khởi nghiệp",
+        "kiểm chứng ý tưởng",
+        "phát triển sản phẩm"
+      ],
+      "sources": [
+        {
+          "url": "https://theleanstartup.com/",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Tóm lược nội dung tác phẩm; đối tượng theo mối quan tâm là phân loại biên tập từ nội dung nguồn. Không xác nhận tuổi cụ thể, độ khó hay ấn bản."
+    },
+    {
+      "productId": 25,
+      "title": "Súng, Vi Trùng Và Thép",
+      "author": "Jared Diamond",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Đặt câu hỏi vì sao các xã hội phát triển sức mạnh và công nghệ khác nhau. Jared Diamond kết hợp lịch sử với thực vật học, động vật học và vi sinh để trình bày lập luận về sản xuất lương thực, xã hội định cư và công nghệ.",
+        "audience": "Người muốn tìm hiểu lịch sử các xã hội qua lập luận liên ngành.",
+        "readingStyle": "Phân tích lịch sử bằng cách kết hợp nhiều ngành nghiên cứu.",
+        "learningGoal": "Tìm hiểu lập luận của tác giả về các điều kiện ảnh hưởng đến sự phát triển xã hội."
+      },
+      "topics": [
+        "lịch sử xã hội",
+        "nông nghiệp",
+        "lịch sử công nghệ"
+      ],
+      "sources": [
+        {
+          "url": "https://jareddiamond.org/Jared_Diamond/Guns%2C_Germs%2C_and_Steel.html",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Tóm lược nội dung tác phẩm; đối tượng theo mối quan tâm là phân loại biên tập từ nội dung nguồn. Không xác nhận tuổi cụ thể, độ khó hay ấn bản."
+    },
+    {
+      "productId": 26,
+      "title": "Sherlock Holmes Toàn Tập - Tập 1",
+      "author": "Arthur Conan Doyle",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Các câu chuyện trinh thám về Sherlock Holmes và bác sĩ Watson. Việc điều tra các vụ án gắn với khả năng quan sát và suy luận của Holmes.",
+        "audience": "Người thích truyện trinh thám và khám phá cách nhân vật giải các vụ án.",
+        "readingStyle": "Truyện trinh thám với những vụ án và suy luận của nhân vật.",
+        "learningGoal": "Theo dõi quá trình điều tra và suy luận trong các câu chuyện."
+      },
+      "topics": [
+        "trinh thám",
+        "Sherlock Holmes",
+        "suy luận"
+      ],
+      "sources": [
+        {
+          "url": "https://www.penguinrandomhouse.com/books/618167/sherlock-holmes-the-complete-novels-and-stories-volume-i-by-sir-arthur-conan-doyle/",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Cùng tác giả và hệ truyện, nhưng cách chia tập của bản Việt chưa xác nhận. Không nhập tên truyện thành phần, mục lục, số trang hoặc tuổi đọc từ tập tiếng Anh."
+    },
+    {
+      "productId": 27,
+      "title": "Bố Già (The Godfather)",
+      "author": "Mario Puzo",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Tiểu thuyết về gia đình Corleone trong thế giới ngầm mafia Mỹ. Câu chuyện đan xen quyền lực, bạo lực, lòng trung thành, quan hệ gia đình và sự phản kháng.",
+        "audience": "Người quan tâm tiểu thuyết tội phạm và quan hệ quyền lực trong thế giới ngầm.",
+        "readingStyle": "Tiểu thuyết tội phạm, có bạo lực và xung đột quyền lực.",
+        "learningGoal": "Suy ngẫm về quan hệ gia đình, lòng trung thành và quyền lực qua câu chuyện."
+      },
+      "topics": [
+        "mafia",
+        "tiểu thuyết tội phạm",
+        "quyền lực"
+      ],
+      "sources": [
+        {
+          "url": "https://www.penguinrandomhouse.com/books/290370/the-godfather-by-mario-puzo/9780593542590/",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Tóm lược nội dung tác phẩm; đối tượng theo mối quan tâm là phân loại biên tập từ nội dung nguồn. Không xác nhận tuổi cụ thể, độ khó hay ấn bản."
+    },
+    {
+      "productId": 28,
+      "title": "Không Gia Đình",
+      "author": "Hector Malot",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Rémi lưu lạc khắp nước Pháp cùng gánh hát rong và học cách sống qua gian khổ. Câu chuyện gắn cuộc phiêu lưu với tình cảm gia đình, lao động, tự trọng và lòng biết ơn.",
+        "audience": "Người thích truyện phiêu lưu và tình cảm gia đình; NXB giới thiệu tác phẩm cho thiếu niên.",
+        "readingStyle": "Truyện phiêu lưu có gian khổ, mất mát và tình cảm gia đình.",
+        "learningGoal": "Suy ngẫm về lòng dũng cảm, tự trọng và tình cảm gia đình."
+      },
+      "topics": [
+        "phiêu lưu",
+        "tình cảm gia đình",
+        "lòng dũng cảm"
+      ],
+      "sources": [
+        {
+          "url": "https://nxbkimdong.com.vn/khong-gia-dinh-26?view=amp",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Không dùng độ tuổi hay thông số của ấn bản nguồn khi chưa xác nhận bản bán tại cửa hàng."
+    },
+    {
+      "productId": 29,
+      "title": "Cây Cam Ngọt Của Tôi",
+      "author": "José Mauro de Vasconcelos",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Zezé là cậu bé giàu trí tưởng tượng sống trong hoàn cảnh nghèo khó và bị hắt hủi, đánh mắng. Cây cam trong vườn và một người bạn trở thành nơi chia sẻ của cậu; câu chuyện có cả tình thương và nỗi đau.",
+        "audience": "Người quan tâm câu chuyện tuổi thơ, tình thương và sự thấu cảm.",
+        "readingStyle": "Lời kể mở đầu trong sáng, về sau lắng lại với nỗi đau và hoài niệm.",
+        "learningGoal": "Suy ngẫm về tình thương và lòng trắc ẩn qua trải nghiệm của nhân vật."
+      },
+      "topics": [
+        "tuổi thơ",
+        "tình thương",
+        "nỗi đau"
+      ],
+      "sources": [
+        {
+          "url": "https://nhanam.vn/cay-cam-ngot-cua-toi-nha-nam",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Không lấy tuổi nhân vật làm tuổi độc giả; không gắn nhãn truyện chỉ vui hoặc đọc để thư giãn hoàn toàn."
+    },
+    {
+      "productId": 30,
+      "title": "Suối Nguồn (The Fountainhead)",
+      "author": "Ayn Rand",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Câu chuyện về kiến trúc sư Howard Roark và việc giữ nguyên tắc sáng tạo trước sức ép xã hội. Tiểu thuyết trình bày tư tưởng của Ayn Rand về cái tôi và vai trò của cá nhân.",
+        "audience": "Người quan tâm tiểu thuyết tư tưởng, sáng tạo và quan hệ giữa cá nhân với xã hội.",
+        "readingStyle": "Tiểu thuyết tư tưởng với xung đột giữa nhân vật và xã hội.",
+        "learningGoal": "Tìm hiểu quan điểm của tác giả về cá nhân và sáng tạo qua câu chuyện."
+      },
+      "topics": [
+        "tiểu thuyết tư tưởng",
+        "sáng tạo",
+        "chủ nghĩa cá nhân"
+      ],
+      "sources": [
+        {
+          "url": "https://www.penguinrandomhouse.com/books/296786/the-fountainhead-by-ayn-rand/",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Tóm lược nội dung tác phẩm; đối tượng theo mối quan tâm là phân loại biên tập từ nội dung nguồn. Không xác nhận tuổi cụ thể, độ khó hay ấn bản."
+    },
+    {
+      "productId": 31,
+      "title": "Sức Mạnh Tiềm Thức",
+      "author": "Joseph Murphy",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Joseph Murphy trình bày quan điểm về tiềm thức và việc thay đổi cách suy nghĩ, cùng các kỹ thuật và tình huống thực tế liên quan đến mục tiêu, công việc và các mối quan hệ.",
+        "audience": "Người muốn tham khảo sách phát triển bản thân về suy nghĩ và mục tiêu cá nhân.",
+        "readingStyle": "Trình bày kỹ thuật và tình huống thực tế theo quan điểm của tác giả.",
+        "learningGoal": "Tham khảo cách tác giả đề xuất thay đổi lối suy nghĩ khi hướng tới mục tiêu cá nhân."
+      },
+      "topics": [
+        "tiềm thức",
+        "suy nghĩ",
+        "mục tiêu cá nhân"
+      ],
+      "sources": [
+        {
+          "url": "https://www.penguinrandomhouse.com/books/549149/the-power-of-your-subconscious-mind-by-joseph-murphy-phd-dd/",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Chỉ mô tả quan điểm và nội dung tác phẩm; không duyệt lời hứa chữa bệnh, thành công hoặc tác dụng khoa học đã được chứng minh. Không nhập tác phẩm tặng kèm của bản nguồn."
+    },
+    {
+      "productId": 32,
+      "title": "Quẳng Gánh Lo Đi Và Vui Sống",
+      "author": "Dale Carnegie",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Dale Carnegie trình bày những nguyên tắc xử lý lo âu trong đời sống và công việc. Các nội dung được giới thiệu gồm tìm giải pháp có thể thực hiện, đối diện lời chỉ trích và giảm bận tâm về công việc, tiền bạc.",
+        "audience": "Người muốn tham khảo cách xử lý lo lắng trong cuộc sống và công việc.",
+        "readingStyle": "Sách tư vấn với nguyên tắc và hướng dẫn áp dụng vào các vấn đề đời sống.",
+        "learningGoal": "Tham khảo hướng dẫn áp dụng nguyên tắc tìm giải pháp và ứng xử với lời chỉ trích."
+      },
+      "topics": [
+        "lo âu",
+        "đối diện lời chỉ trích",
+        "phát triển bản thân"
+      ],
+      "sources": [
+        {
+          "url": "https://www.simonandschuster.com/books/How-to-Stop-Worrying-and-Start-Living/Dale-Carnegie/Dale-Carnegie-Books/9780671035976",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Nguồn giới thiệu tác phẩm gốc; không cam kết hiệu quả sức khỏe hay điều trị, không lấy thông số hoặc nội dung cập nhật riêng của bản tiếng Anh."
+    },
+    {
+      "productId": 33,
+      "title": "Hành Trình Về Phương Đông",
+      "author": "Baird T. Spalding",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Bản Nguyên Phong phóng tác kể hành trình tìm hiểu tư tưởng và đời sống tinh thần phương Đông, qua các cuộc gặp đạo sĩ và những trao đổi về khoa học, tâm linh, các hiện tượng huyền bí.",
+        "audience": "Người quan tâm tư tưởng phương Đông và văn học tâm linh.",
+        "readingStyle": "Kể hành trình khám phá và các cuộc trao đổi về tư tưởng, tâm linh.",
+        "learningGoal": "Tìm hiểu các quan điểm được trình bày về đời sống tinh thần phương Đông."
+      },
+      "topics": [
+        "tư tưởng phương Đông",
+        "tâm linh",
+        "hành trình khám phá"
+      ],
+      "sources": [
+        {
+          "url": "https://firstnews.vn/upload/docthu/HanhTrinhVePhuongDong%28biamem%29/index.html",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Nguồn đọc thử chính thức ghi Nguyên Phong phóng tác. Các hiện tượng được coi là nội dung sách, không xác nhận là sự kiện khoa học hay lịch sử đã được kiểm chứng."
+    },
+    {
+      "productId": 34,
+      "title": "Đường Xưa Mây Trắng",
+      "author": "Thích Nhất Hạnh",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Thích Nhất Hạnh kể cuộc đời và lời dạy của Đức Phật, dựa trên các nguồn kinh điển. Một phần câu chuyện được nhìn qua Svasti, cậu bé chăn trâu, và một phần qua Đức Phật.",
+        "audience": "Người muốn tìm hiểu cuộc đời Đức Phật và lời dạy qua hình thức truyện kể.",
+        "readingStyle": "Lời kể chậm rãi, nhẹ nhàng về cuộc đời và lời dạy của Đức Phật.",
+        "learningGoal": "Tìm hiểu cuộc đời và tư tưởng Phật giáo qua câu chuyện."
+      },
+      "topics": [
+        "Đức Phật",
+        "Phật giáo",
+        "truyện kể"
+      ],
+      "sources": [
+        {
+          "url": "https://www.parallax.org/product/old-path-white-clouds/",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Cùng tác phẩm Old Path White Clouds; chỉ dùng nội dung và phong cách được NXB mô tả. Không coi đây là sách bài tập thiền hoặc lấy thông số bản tiếng Anh."
+    },
+    {
+      "productId": 37,
+      "title": "Hoàng Tử Bé",
+      "author": "Antoine de Saint-Exupéry",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Truyện về hoàng tử nhỏ và cách cậu nhìn thế giới, gửi gắm suy ngẫm về con người và đời sống. Tác phẩm kết hợp chất thơ với những câu hỏi mang tính triết lý.",
+        "audience": "Trẻ em và người lớn quan tâm truyện mang chất thơ và suy ngẫm về cuộc sống.",
+        "readingStyle": "Truyện giàu chất thơ, nhẹ nhàng truyền tải suy ngẫm về tình bạn và cách nhìn thế giới.",
+        "learningGoal": "Suy ngẫm về tình bạn, trí tưởng tượng và cách nhìn cuộc sống."
+      },
+      "topics": [
+        "tình bạn",
+        "truyện triết lý",
+        "cách nhìn cuộc sống"
+      ],
+      "sources": [
+        {
+          "url": "https://www.lepetitprince.com/en/events-around-the-world/le-petit-prince-in-versailles-2/",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        },
+        {
+          "url": "https://www.lepetitprince.com/en/new-products-from-our-licensees/fleurus-marks-the-80th-anniversary-of-the-little-prince-with-a-special-edition/",
+          "kind": "rights_holder",
+          "supports": [
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Nguồn chính thức về nội dung chung. Không xác nhận độ dễ đọc, mốc tuổi cụ thể, bản dịch hoặc thông số ấn bản."
+    },
+    {
+      "productId": 38,
+      "title": "Totto-chan Bên Cửa Sổ",
+      "author": "Kuroyanagi Tetsuko",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Totto-chan chuyển đến trường Tomoe sau khi bị đuổi học. Ngôi trường có lớp học trong toa xe điện, cách học khác thường và thầy hiệu trưởng chăm chú lắng nghe cô bé; các trải nghiệm ấy gắn với sự lớn lên của nhân vật.",
+        "audience": "Độc giả trẻ và người quan tâm tuổi thơ, nhà trường, sự lắng nghe trẻ em.",
+        "readingStyle": "Kể những trải nghiệm của cô bé ở một ngôi trường có cách giáo dục khác thường.",
+        "learningGoal": "Suy ngẫm về sự tôn trọng, lắng nghe trẻ em và môi trường giáo dục."
+      },
+      "topics": [
+        "tuổi thơ",
+        "giáo dục",
+        "lắng nghe trẻ em"
+      ],
+      "sources": [
+        {
+          "url": "https://nhanam.vn/tottochan-ben-cua-so",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Tuổi vào lớp một của nhân vật không phải tuổi khuyến nghị của độc giả. Không gắn tác dụng giáo dục chắc chắn cho người đọc."
+    },
+    {
+      "productId": 40,
+      "title": "Tắt Đèn",
+      "author": "Ngô Tất Tố",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Tiểu thuyết hiện thực về chị Dậu và cảnh sống đau khổ của dân quê trong nghèo đói, bị người có thế lực áp bức. Nhân vật vẫn hết lòng vì chồng con giữa hoàn cảnh khắc nghiệt.",
+        "audience": "Người học văn học và quan tâm văn học hiện thực Việt Nam.",
+        "readingStyle": "Tiểu thuyết hiện thực khắc họa đau khổ, nghèo đói và áp bức.",
+        "learningGoal": "Tìm hiểu hình tượng chị Dậu và hiện thực xã hội được phản ánh trong tác phẩm."
+      },
+      "topics": [
+        "văn học hiện thực",
+        "người nông dân",
+        "áp bức"
+      ],
+      "sources": [
+        {
+          "url": "https://nxbkimdong.com.vn/products/tat-den",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Không áp dụng tuổi, số trang hoặc tài liệu học tập kèm theo của bản nguồn cho ấn bản cửa hàng."
+    },
+    {
+      "productId": 41,
+      "title": "Những Người Khốn Khổ",
+      "author": "Victor Hugo",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Jean Valjean từng bị tù vì lấy một ổ bánh mì và bị thanh tra Javert truy đuổi. Câu chuyện đặt ra vấn đề tội lỗi, hình phạt, khổ đau và khát vọng đổi đời trong xã hội Pháp.",
+        "audience": "Người quan tâm tiểu thuyết hiện thực, số phận con người và công lý.",
+        "readingStyle": "Tiểu thuyết có phạm vi rộng, nhiều xung đột xã hội và số phận đau khổ.",
+        "learningGoal": "Suy ngẫm về công lý, lòng nhân ái và khát vọng thoát khỏi khổ đau."
+      },
+      "topics": [
+        "công lý",
+        "số phận con người",
+        "xã hội Pháp"
+      ],
+      "sources": [
+        {
+          "url": "https://www.penguinrandomhouse.com/books/313987/les-miserables-by-victor-hugo/",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Không nhập số trang, thông tin bản đầy đủ hay bản rút gọn vì chưa xác nhận ấn bản tiếng Việt đang bán."
+    },
+    {
+      "productId": 42,
+      "title": "Từ Tốt Đến Vĩ Đại (Good to Great)",
+      "author": "Jim Collins",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Jim Collins phân tích các doanh nghiệp chuyển từ kết quả tốt sang vĩ đại. Các ý tưởng được trình bày gồm tư duy kỷ luật, tập trung vào năng lực cốt lõi và xác định điều doanh nghiệp cần dừng làm.",
+        "audience": "Người quản lý và người quan tâm cách tổ chức phát triển doanh nghiệp.",
+        "readingStyle": "Phân tích doanh nghiệp và ví dụ cụ thể để trình bày các ý tưởng quản trị.",
+        "learningGoal": "Tham khảo cách xác định định hướng, năng lực và những hoạt động cần tập trung của doanh nghiệp."
+      },
+      "topics": [
+        "quản trị doanh nghiệp",
+        "tư duy kỷ luật",
+        "năng lực cốt lõi"
+      ],
+      "sources": [
+        {
+          "url": "https://www.jimcollins.com/article_topics/articles/good-to-great.html",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Nguồn là bài của chính tác giả giới thiệu kết quả trong sách. Không cam kết kết quả kinh doanh cho người đọc."
+    },
+    {
+      "productId": 43,
+      "title": "Nhà Đầu Tư Thông Minh",
+      "author": "Benjamin Graham",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Benjamin Graham trình bày triết lý đầu tư giá trị và việc phát triển chiến lược đầu tư dài hạn. Trọng tâm là hạn chế những sai lầm lớn của nhà đầu tư trên thị trường chứng khoán.",
+        "audience": "Người quan tâm đầu tư giá trị và chiến lược chứng khoán dài hạn.",
+        "readingStyle": "Trình bày nguyên tắc và chiến lược đầu tư theo giá trị.",
+        "learningGoal": "Tìm hiểu cách tiếp cận đầu tư giá trị và cân nhắc sai lầm trong đầu tư dài hạn."
+      },
+      "topics": [
+        "đầu tư giá trị",
+        "chứng khoán",
+        "chiến lược đầu tư"
+      ],
+      "sources": [
+        {
+          "url": "https://nhanam.vn/nha-dau-tu-thong-minh-nha-nam",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Không xác nhận bản cửa hàng có bình luận Jason Zweig hay ví dụ doanh nghiệp cập nhật. Không gắn nhãn sách lập ngân sách chi tiêu cá nhân hoặc hứa lợi nhuận."
+    },
+    {
+      "productId": 46,
+      "title": "Homo Deus: Lược Sử Tương Lai",
+      "author": "Yuval Noah Harari",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Harari xem xét các khả năng về tương lai nhân loại khi trí tuệ nhân tạo và kỹ thuật di truyền thay đổi xã hội. Sách đặt câu hỏi về quyền lực, việc làm và giá trị con người qua cách nhìn kết hợp lịch sử, khoa học và triết học.",
+        "audience": "Người quan tâm tương lai xã hội, công nghệ và các câu hỏi về con người.",
+        "readingStyle": "Lập luận liên ngành và đặt ra những khả năng về tương lai.",
+        "learningGoal": "Suy ngẫm về các khả năng thay đổi xã hội do công nghệ theo lập luận của tác giả."
+      },
+      "topics": [
+        "tương lai nhân loại",
+        "công nghệ và xã hội",
+        "trí tuệ nhân tạo"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ynharari.com/book/homo-deus/",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Các dự báo là lập luận của tác giả, không ghi thành sự kiện tương lai chắc chắn."
+    },
+    {
+      "productId": 47,
+      "title": "Kinh Tế Học Hài Hước (Freakonomics)",
+      "author": "Steven D. Levitt & Stephen J. Dubner",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Levitt và Dubner đặt những câu hỏi khác thường về gian lận, tội phạm, nuôi dạy con và thể thao để khám phá động cơ hành vi. Kinh tế học được dùng để tìm hiểu cách con người đạt điều họ muốn.",
+        "audience": "Người quan tâm kinh tế học và động cơ phía sau hành vi đời sống.",
+        "readingStyle": "Kể chuyện và phân tích những câu hỏi khác thường trong đời sống.",
+        "learningGoal": "Tìm hiểu cách phân tích động cơ hành vi qua các ví dụ cụ thể."
+      },
+      "topics": [
+        "kinh tế học hành vi",
+        "động cơ hành vi",
+        "đời sống"
+      ],
+      "sources": [
+        {
+          "url": "https://freakonomics.com/books/",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Chỉ dùng phần Freakonomics trên trang tác giả, không nhập nội dung của các cuốn tiếp theo."
+    },
+    {
+      "productId": 48,
+      "title": "Thám Tử Lừng Danh Conan - Tập 1",
+      "author": "Gosho Aoyama",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "audience": "Thiếu niên 11–15 tuổi theo phân loại bộ truyện Conan bản thường của NXB Kim Đồng.",
+        "readingStyle": "Truyện tranh trinh thám về các vụ án và suy luận.",
+        "learningGoal": "Theo dõi các vụ án và cách nhân vật suy luận."
+      },
+      "topics": [
+        "trinh thám",
+        "truyện tranh",
+        "Conan"
+      ],
+      "sources": [
+        {
+          "url": "https://nxbkimdong.com.vn/tap-le-tham-tu-lung-danh-conan-107",
+          "kind": "publisher_or_author",
+          "supports": [
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Độ tuổi là phân loại tham khảo của cùng bộ truyện bản thường, không phải cam kết thích hợp riêng cho từng trẻ. Giữ nội dung trong catalog; không lấy nội dung phim/ngoại truyện hay thông số bản tái bản."
+    },
+    {
+      "productId": 49,
+      "title": "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
+      "author": "Nguyễn Nhật Ánh",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Thiều, Tường và những đứa trẻ trong một ngôi làng cùng nô đùa, cãi cọ, yêu thương và lớn lên giữa nhiều biến cố. Câu chuyện có tình cảm anh em, bạn bè, cùng những cảnh đói ăn, cháy nhà và lụt lội.",
+        "audience": "Người quan tâm truyện tuổi thơ, tình cảm anh em và cuộc sống làng quê.",
+        "readingStyle": "Nhiều chương ngắn, giọng kể trong sáng và hồn nhiên của trẻ con; có chi tiết cảm động và những biến cố.",
+        "learningGoal": "Suy ngẫm về tình cảm anh em, bạn bè và quá trình lớn lên."
+      },
+      "topics": [
+        "tuổi thơ",
+        "tình cảm anh em",
+        "làng quê"
+      ],
+      "sources": [
+        {
+          "url": "https://www.nxbtre.com.vn/sach/toi-thay-hoa-vang-tren-co-xanh-11418.html",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Không suy ra độ dễ đọc từ chương ngắn; không coi tuổi nhân vật là tuổi độc giả hay khẳng định truyện chỉ có nội dung vui."
+    },
+    {
+      "productId": 50,
+      "title": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+      "author": "Nguyễn Nhật Ánh",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Người kể hồi tưởng những trò chơi và cách nhìn thế giới của cu Mùi, Hải cò, Tủn và Tí sún. Từ ký ức tuổi thơ, câu chuyện nối sang suy nghĩ của người lớn về cách thấu hiểu trẻ em.",
+        "audience": "Người lớn, phụ huynh và người muốn trở lại ký ức tuổi thơ; trẻ em cũng có thể nhận ra mình trong câu chuyện.",
+        "readingStyle": "Giọng kể dí dỏm, hóm hỉnh, đan xen hồi ức với suy nghĩ ở hiện tại.",
+        "learningGoal": "Suy ngẫm về tuổi thơ và cách người lớn nhìn nhận, ứng xử với trẻ em.",
+        "readingLevel": "Được bài giới thiệu đăng trên NXB Trẻ nhận xét là dễ đọc."
+      },
+      "topics": [
+        "ký ức tuổi thơ",
+        "thấu hiểu trẻ em",
+        "tình bạn"
+      ],
+      "sources": [
+        {
+          "url": "https://www.nxbtre.com.vn/diem-tin/gioi-thieu-sach-cho-toi-xin-mot-ve-di-tuoi-tho-1348.html",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "readingLevel",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Nguồn đăng phỏng vấn tác giả, xác nhận hướng tới người lớn và giọng văn dễ đọc. Không lấy tuổi tám của nhân vật làm độ tuổi đọc."
+    },
+    {
+      "productId": 51,
+      "title": "Doraemon - Tập 1",
+      "author": "Fujiko F. Fujio",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Truyện tranh về Doraemon, Nobita và nhóm bạn với những bảo bối từ tương lai. Các câu chuyện gắn tiếng cười, thế giới tưởng tượng và tình bạn.",
+        "audience": "Tham khảo nhóm nhi đồng 6–11 tuổi theo phân loại bộ truyện Doraemon của NXB Kim Đồng.",
+        "readingStyle": "Truyện tranh với không khí hồn nhiên, trong sáng và hài hước.",
+        "learningGoal": "Đọc các câu chuyện tưởng tượng về bảo bối và tình bạn."
+      },
+      "topics": [
+        "truyện tranh",
+        "tình bạn",
+        "bảo bối tưởng tượng"
+      ],
+      "sources": [
+        {
+          "url": "https://nxbkimdong.com.vn/tap-le-doraemon-truyen-ngan-chu-meo-may-den-tu-tuong-lai",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        },
+        {
+          "url": "https://nxbkimdong.com.vn/tap-le-doraemon-truyen-dai-24",
+          "kind": "publisher_or_author",
+          "supports": [
+            "audience"
+          ]
+        }
+      ],
+      "reviewNote": "Chưa xác nhận loại tập Doraemon tại cửa hàng. Tuổi tham khảo được đối chiếu ở cả dòng truyện ngắn và truyện dài, đều 6–11; không nhập cốt truyện riêng, số trang, ISBN hay tranh màu."
+    },
+    {
+      "productId": 52,
+      "title": "Harry Potter Và Hòn Đá Phù Thủy",
+      "author": "J.K. Rowling",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Harry nhận các lá thư bí ẩn và phát hiện mình là phù thủy, được nhận vào trường Hogwarts. Đây là khởi đầu những cuộc phiêu lưu của Harry trong thế giới phép thuật.",
+        "audience": "Người muốn đọc truyện giả tưởng về trường học phù thủy và hành trình khám phá thế giới phép thuật.",
+        "readingStyle": "Truyện giả tưởng mở đầu cuộc phiêu lưu trong thế giới phù thủy.",
+        "learningGoal": "Khám phá thế giới phép thuật qua cuộc phiêu lưu của nhân vật."
+      },
+      "topics": [
+        "giả tưởng",
+        "phù thủy",
+        "Hogwarts"
+      ],
+      "sources": [
+        {
+          "url": "https://www.jkrowling.com/book/harry-potter-philosophers-stone/",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Chỉ dùng tác phẩm đầu tiên trên trang tác giả. Tuổi nhân vật không phải tuổi độc giả; chưa xác nhận mức dễ đọc của bản dịch hay ấn bản minh họa."
+    },
+    {
+      "productId": 53,
+      "title": "Mắt Biếc",
+      "author": "Nguyễn Nhật Ánh",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Câu chuyện tình cảm trong sáng nhưng đan xen vui buồn và có kết thúc rất buồn theo giới thiệu của NXB Trẻ.",
+        "audience": "Người muốn đọc một câu chuyện tình cảm có sắc thái buồn.",
+        "readingStyle": "Truyện tình cảm xen lẫn vui buồn, kết thúc buồn.",
+        "learningGoal": "Suy ngẫm về tình cảm qua một câu chuyện vui buồn đan xen."
+      },
+      "topics": [
+        "truyện tình cảm",
+        "kết thúc buồn"
+      ],
+      "sources": [
+        {
+          "url": "https://www.nxbtre.com.vn/sach/mat-biec-146386.html",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Không dùng nhãn truyện thư giãn chỉ vui hoặc suy ra sở thích theo giới tính; không nhập thông số của bản khổ nhỏ."
+    },
+    {
+      "productId": 55,
+      "title": "Tư Duy Nhanh Và Chậm",
+      "author": "Daniel Kahneman",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Daniel Kahneman trình bày hai hệ thống tư duy: một thiên về trực giác và cảm xúc, một thiên về suy xét. Sách bàn về thiên kiến nhận thức, sự quá tự tin và cách chúng tác động đến phán đoán, quyết định.",
+        "audience": "Người quan tâm tâm lý học nhận thức và cách con người phán đoán, ra quyết định.",
+        "readingStyle": "Phân tích cơ chế tư duy và thiên kiến qua những tình huống trong đời sống, kinh doanh.",
+        "learningGoal": "Nhận diện cách tác giả lý giải trực giác, sự quá tự tin và các sai lệch trong phán đoán."
+      },
+      "topics": [
+        "thiên kiến nhận thức",
+        "tâm lý học nhận thức",
+        "ra quyết định"
+      ],
+      "sources": [
+        {
+          "url": "https://us.macmillan.com/books/9780374533557/thinkingfastandslow/",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Không suy ra độ dễ đọc toàn sách từ lời quảng bá; không cam kết cải thiện sức khỏe tâm thần hoặc chất lượng quyết định của người đọc."
+    },
+    {
+      "productId": 56,
+      "title": "Sapiens: Lược Sử Loài Người",
+      "author": "Yuval Noah Harari",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Harari kể lịch sử loài người từ nguồn gốc tiến hóa đến xã hội hiện đại. Sách tập trung vào nông nghiệp, tiền tệ, tôn giáo và nhà nước, kết hợp lịch sử, sinh học, triết học và kinh tế.",
+        "audience": "Người muốn tìm hiểu lịch sử loài người qua cách tiếp cận liên ngành.",
+        "readingStyle": "Kể và phân tích lịch sử với ngôn ngữ sinh động, kết hợp nhiều lĩnh vực.",
+        "learningGoal": "Tìm hiểu các quá trình tạo nên xã hội loài người theo lập luận của tác giả."
+      },
+      "topics": [
+        "lịch sử loài người",
+        "nông nghiệp",
+        "tiền tệ",
+        "tôn giáo"
+      ],
+      "sources": [
+        {
+          "url": "https://www.ynharari.com/book/sapiens/",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Tóm lược nội dung tác phẩm; đối tượng theo mối quan tâm là phân loại biên tập từ nội dung nguồn. Không xác nhận tuổi cụ thể, độ khó hay ấn bản."
+    },
+    {
+      "productId": 57,
+      "title": "Đắc Nhân Tâm",
+      "author": "Dale Carnegie",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Dale Carnegie bàn về giao tiếp và cách ứng xử trong các mối quan hệ cá nhân, công việc. Một nguyên tắc được giới thiệu là tránh chỉ trích, lên án và phàn nàn; nội dung gắn với việc hiểu người khác và xử lý bất đồng.",
+        "audience": "Người muốn tham khảo cách giao tiếp và ứng xử với gia đình, đồng nghiệp hoặc cộng đồng.",
+        "readingStyle": "Lối viết trò chuyện và kể chuyện để trình bày các nguyên tắc ứng xử.",
+        "learningGoal": "Tham khảo hướng dẫn áp dụng nguyên tắc ứng xử khi giao tiếp và xử lý bất đồng."
+      },
+      "topics": [
+        "giao tiếp",
+        "quan hệ giữa người với người",
+        "xử lý bất đồng"
+      ],
+      "sources": [
+        {
+          "url": "https://www.dalecarnegie.com/en/resources/how-to-win-friends-and-influence-people-chapter-1",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Nguồn chính thức giới thiệu nguyên tắc từ chương đầu. Không tự tạo bài tập, lộ trình thuyết trình hay đàm phán; không nhập nội dung chỉ có trong bản cập nhật."
+    },
+    {
+      "productId": 58,
+      "title": "Nhà Giả Kim",
+      "author": "Paulo Coelho",
+      "scope": "work",
+      "reviewed": true,
+      "fields": {
+        "summary": "Hành trình của Santiago qua sa mạc Sahara đến các kim tự tháp được Paulo Coelho dùng như một ẩn dụ về sự thay đổi của người trải qua hành trình.",
+        "audience": "Người quan tâm truyện ẩn dụ và hành trình thay đổi bản thân.",
+        "readingStyle": "Truyện kể theo lối ẩn dụ về một hành trình.",
+        "learningGoal": "Chiêm nghiệm sự thay đổi của nhân vật qua hành trình trong câu chuyện."
+      },
+      "topics": [
+        "truyện ẩn dụ",
+        "hành trình",
+        "thay đổi bản thân"
+      ],
+      "sources": [
+        {
+          "url": "https://paulocoelhoblog.com/2008/10/28/today%E2%80%99s-question-by-the-reader-chesney/",
+          "kind": "publisher_or_author",
+          "supports": [
+            "summary",
+            "audience",
+            "readingStyle",
+            "learningGoal",
+            "topics"
+          ]
+        }
+      ],
+      "reviewNote": "Nguồn giải thích của chính tác giả; không dùng bài cảm nhận về marketing thành nội dung thực hành của sách, không xác nhận tuổi hoặc độ dễ đọc."
+    }
+  ]
+}
