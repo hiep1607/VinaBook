@@ -1,0 +1,24 @@
+<section class="panel" [attr.aria-busy]="busy" aria-label="Gửi yêu cầu cho cửa hàng">
+  <h3>{{ kind === 'RETURN' ? 'Yêu cầu đổi trả' : 'Nhờ nhân viên hỗ trợ' }}</h3>
+  <p *ngIf="orderId">Đơn #{{ orderId }}</p><p *ngIf="busy" role="status">Đang kiểm tra với VinaBook...</p><p *ngIf="error" class="error" role="alert">{{ error }}</p>
+  <ng-container *ngIf="!review && !result && !uncertain">
+    <p>{{ kind === 'RETURN' ? 'Bạn chia sẻ đúng sách, ngày nhận và tình trạng hiện tại để cửa hàng xem xét nhé. Gửi yêu cầu chưa đồng nghĩa được chấp nhận đổi trả hoặc hoàn tiền.' : 'Bạn xem lại và bổ sung nội dung muốn nhân viên hỗ trợ nhé. Phản hồi sẽ được lưu tại mục Liên hệ; đây là yêu cầu hỗ trợ, chưa phải cuộc trò chuyện trực tiếp.' }}</p>
+    <form (ngSubmit)="prepare()">
+      <ng-container *ngIf="kind === 'RETURN'">
+        <label>Cuốn sách <select [(ngModel)]="productId" name="returnBook" [disabled]="busy"><option [ngValue]="0">Chọn sách trong đơn</option><option *ngFor="let item of items" [ngValue]="item.productId">{{ item.name }}</option></select></label>
+        <label>Ngày nhận sách thực tế <input type="date" [(ngModel)]="receivedOn" name="receivedOn" [max]="today" [disabled]="busy" /></label>
+        <label>Mong muốn xử lý <select [(ngModel)]="outcome" name="outcome" [disabled]="busy"><option value="EXCHANGE">Đổi sách</option><option value="RETURN">Trả sách, đề nghị hoàn tiền</option></select></label>
+      </ng-container>
+      <label>{{ kind === 'RETURN' ? 'Lý do và tình trạng sách' : 'Nội dung cần hỗ trợ' }} <textarea [(ngModel)]="message" name="supportMessage" rows="4" maxlength="2000" [disabled]="busy"></textarea></label>
+      <p class="muted">Bạn chỉ gửi thông tin cần xử lý. Không gửi mật khẩu, OTP hoặc thông tin thẻ.</p>
+      <button type="submit" [disabled]="busy || (kind === 'RETURN' && !items.length)">Xem lại yêu cầu</button><button type="button" *ngIf="kind === 'RETURN' && !items.length" (click)="loadOptions()" [disabled]="busy">Tải lại sách trong đơn</button>
+    </form>
+  </ng-container>
+  <ng-container *ngIf="review">
+    <h4>Kiểm tra trước khi gửi</h4><p *ngIf="kind === 'RETURN'">{{ bookName(review.productId) }} · Nhận ngày {{ review.receivedOn | date:'dd/MM/yyyy' }} · {{ review.outcome === 'EXCHANGE' ? 'Đổi sách' : 'Trả sách, đề nghị hoàn tiền' }}</p>
+    <p class="message">{{ review.message }}</p><p>Nhân viên sẽ nhận nội dung này và phản hồi trong mục Liên hệ. <span *ngIf="kind === 'RETURN'">Bạn giữ sách và hóa đơn, chờ hướng dẫn trước khi gửi hàng lại nhé.</span></p>
+    <button type="button" (click)="confirm()" [disabled]="busy || uncertain">Xác nhận gửi yêu cầu</button><button type="button" (click)="edit()" [disabled]="busy || uncertain">Sửa nội dung</button>
+  </ng-container>
+  <p *ngIf="result" role="status">Yêu cầu #{{ result.id }} đã được lưu. Bạn <a routerLink="/contact">mở mục Liên hệ</a> để theo dõi trạng thái và phản hồi của nhân viên nhé. <span *ngIf="result.kind === 'RETURN'">Cửa hàng chưa tự đổi sách hoặc hoàn tiền ở bước này.</span></p>
+  <button type="button" *ngIf="uncertain" (click)="recover()" [disabled]="busy">Kiểm tra kết quả gửi</button><button type="button" *ngIf="dismissable" (click)="dismiss()" [disabled]="busy || uncertain">Đóng</button>
+</section>

@@ -100,6 +100,14 @@ class ChatToolsTest {
         assertThat(result.getActions().get(0).isRequiresConfirmation()).isTrue();
         assertThat(result.isFallback()).isFalse();
     }
+    @Test void returnRequestOpensReviewFormButNeverSubmitsATicket() {
+        var support=mock(CustomerSupportService.class);builtins.setSupport(support);when(support.returnOptions(7L)).thenReturn(Map.of("orderId",7L));
+        var registry=new ChatToolRegistry(List.of(builtins.prepareReturnRequest()));
+        var orchestrator=new ChatOrchestrator(ai,mapper,registry,analytics);
+        var result=orchestrator.reply(request("s","đổi trả đơn #7"),state);
+        assertThat(result.getActions().get(0).getType()).isEqualTo("CREATE_RETURN_REQUEST");assertThat(result.getActions().get(0).getOrderId()).isEqualTo(7L);
+        assertThat(result.isFallback()).isFalse();verify(support,never()).create(any());
+    }
     @Test void continuationRetainsTopicAndExplicitNullClearsPrice() throws Exception {
         run("searchProducts","{\"query\":\"Python\",\"maxPrice\":100000}");
         run("searchProducts","{\"scope\":\"continue\",\"minRating\":4.5}");

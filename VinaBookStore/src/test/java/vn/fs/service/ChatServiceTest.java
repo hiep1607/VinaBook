@@ -66,6 +66,20 @@ class ChatServiceTest {
 		assertThat(response.getProducts()).isEmpty();
 	}
 
+    @Test
+    void localReturnCommandOpensTheOwnedOrderFormBeforeGeneralPolicy() {
+        ChatToolRegistry tools = org.mockito.Mockito.mock(ChatToolRegistry.class);
+        service.setTools(tools);
+        when(tools.execute(anyString(), any(), any())).thenReturn(ChatTool.Result.text(
+                "Mình mở yêu cầu đổi trả để bạn xem lại nhé.", vn.fs.dto.chat.ChatIntent.ORDER_SUPPORT));
+
+        ChatResponseDto response = service.reply(request("Tôi muốn đổi trả đơn #7"));
+
+        assertThat(response.getAnswer()).contains("mở yêu cầu đổi trả");
+        assertThat(response.getProducts()).isEmpty();
+        org.mockito.Mockito.verify(tools).execute(org.mockito.ArgumentMatchers.eq("prepareReturnRequest"),
+                org.mockito.ArgumentMatchers.argThat(a -> a.size() == 1 && a.path("orderId").asLong() == 7L), any());
+    }
 
 
 	@Test

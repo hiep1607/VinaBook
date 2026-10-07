@@ -3,7 +3,9 @@ package vn.fs.service;
 /** Explicit customer commands, distinct from a reading preference such as “mình thích trinh thám”. */
 final class ChatCustomerActions {
     static String tool(String q) {
+        if ("getSupportRequests".equals(supportTool(q))) return "getSupportRequests";
         if (reorder(q)) return "prepareReorder";
+        if (returnRequest(q)) return "prepareReturnRequest";
         return wishlistTool(q);
     }
     static com.fasterxml.jackson.databind.node.ObjectNode arguments(String tool, String q) {

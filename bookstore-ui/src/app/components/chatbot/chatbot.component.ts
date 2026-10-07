@@ -17,6 +17,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { chatCartFingerprint } from 'src/app/services/chat-checkout.service';
 import { ChatCommerceComponent } from '../chat-commerce/chat-commerce.component';
 import { WishlistService } from 'src/app/services/wishlist.service';
+import { SupportRequestComponent } from '../support-request/support-request.component';
 
 /**
  * Widget trợ lý ảo nổi góc phải dưới. Hỏi đáp về sản phẩm, gợi ý sách và
@@ -34,6 +35,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
   @ViewChild('chatInput') private chatInput!: ElementRef<HTMLTextAreaElement>;
   @ViewChild('fabBtn') private fabBtn?: ElementRef<HTMLButtonElement>;
   @ViewChild(ChatCommerceComponent) commerce?: ChatCommerceComponent;
+  @ViewChild(SupportRequestComponent) supportForm?: SupportRequestComponent;
 
   open = false;
   draft = '';
@@ -157,7 +159,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
   }
 
   toggle(): void {
-    if (this.commerceBusy || this.commerce?.uncertainConfirmation || false) return;
+    if (this.commerceBusy || this.commerce?.uncertainConfirmation || this.supportForm?.uncertain) return;
     this.open = !this.open;
     if (!this.open) { this.reviewProduct = null; this.cancellationOrderId = 0; this.reorderOrderId = 0; this.supportKind = undefined; this.supportSummary = ''; this.showSupportRequests = false; }
     if (this.open) {
@@ -172,7 +174,10 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     if (!value || this.typing || this.commerceBusy) {
       return;
     }
-
+    if (this.supportForm?.uncertain || this.supportForm?.review) {
+      this.supportForm.error = 'Bạn hoàn tất hoặc sửa yêu cầu đang xem lại trước khi gửi câu hỏi khác nhé, để mình không trộn nội dung cần chuyển cho cửa hàng.';
+      return;
+    }
     if (this.commerce?.checkout || this.commerce?.uncertainConfirmation) {
       this.commerce.error = 'Bạn hoàn tất hoặc đóng bước đặt hàng trước khi gửi câu hỏi mới nhé, để mình không trộn yêu cầu mới với đơn đang chuẩn bị.';
       return;
@@ -253,7 +258,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
   }
 
   clearConversation(): void {
-    if (this.clearing || this.commerceBusy || this.commerce?.uncertainConfirmation || false) return;
+    if (this.clearing || this.commerceBusy || this.commerce?.uncertainConfirmation || this.supportForm?.uncertain) return;
     this.reviewProduct = null;
     this.request?.unsubscribe();
     this.historySub?.unsubscribe();
@@ -289,7 +294,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
   }
 
   openProduct(product: any): void {
-    if (this.commerceBusy || this.commerce?.uncertainConfirmation || false) return;
+    if (this.commerceBusy || this.commerce?.uncertainConfirmation || this.supportForm?.uncertain) return;
     this.router.navigate(['/product', product.id]);
     this.reviewProduct = null;
     this.open = false;
@@ -297,7 +302,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
 
   showCart(): void {
     this.syncAccount();
-    if (this.commerceBusy || this.commerce?.uncertainConfirmation || false) return;
+    if (this.commerceBusy || this.commerce?.uncertainConfirmation || this.supportForm?.uncertain) return;
     this.reviewProduct = null;
     this.cancellationOrderId = 0; this.reorderOrderId = 0;
     this.supportKind = undefined; this.supportSummary = ''; this.showSupportRequests = false;
@@ -312,9 +317,25 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
   runAction(action: ChatAction, message: ChatMessage): void {
 
     this.syncAccount();
-    if (this.commerceBusy || false) return;
-
-
+    if (this.commerceBusy || this.supportForm?.uncertain) return;
+    if (action.type === 'CREATE_RETURN_REQUEST') {
+      if (!this.actionAvailable(message) || (action.type === 'CREATE_RETURN_REQUEST' && !action.orderId)
+        || (action.orderId != null && (!Number.isSafeInteger(action.orderId) || action.orderId < 1))) return;
+      if (this.commerce?.checkout || this.commerce?.uncertainConfirmation) return;
+      this.reviewProduct = null;
+      this.commerce?.dismiss();this.cancellationOrderId = 0;this.reorderOrderId = 0;
+      this.showSupportRequests = false;
+      this.supportKind = action.type === 'CREATE_RETURN_REQUEST' ? 'RETURN' : 'SUPPORT'; this.supportOrderId = action.orderId || 0;
+      this.supportSummary = this.supportKind === 'SUPPORT'
+        ? this.messages.filter(msg => msg.from === 'user' && !msg.private).slice(-4).map(msg => msg.text).join('\n').slice(0, 1600) : '';
+      this.shouldScroll = true; return;
+    }
+    if (action.type === 'SHOW_SUPPORT_REQUESTS') {
+      if (!this.actionAvailable(message) || this.commerce?.checkout || this.commerce?.uncertainConfirmation) return;
+      this.reviewProduct = null;
+      this.commerce?.dismiss(); this.supportKind = undefined; this.supportSummary = ''; this.cancellationOrderId = 0; this.reorderOrderId = 0;
+      this.showSupportRequests = true; this.shouldScroll = true; return;
+    }
     if (action.type === 'ADD_TO_WISHLIST' || action.type === 'REMOVE_FROM_WISHLIST') {
       if (!this.actionAvailable(message) || !action.productId || !this.accountEmail) return;
       const product = message.products?.find(item => item.id === action.productId);

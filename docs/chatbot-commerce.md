@@ -82,3 +82,13 @@ Giao diện khóa bấm lặp, xóa state khi đổi tài khoản/đơn, bỏ re
 Trang Đơn hàng chưa có mua lại nên đã bổ sung OrderReorderComponent trước khi nối action REORDER_ORDER vào chat. GET /api/orders/me/{id}/reorder đọc đơn của chính JWT và chỉ trả mã sách/tên/số lượng cũ. ProductService tải giá, trạng thái bán và tồn kho hiện tại; khách xem lại và chỉnh số lượng rồi xác nhận thêm vào cùng CartService của website. Không giữ giá đơn cũ hoặc tự tạo đơn/thanh toán. Sách không còn khả dụng ngăn thêm toàn bộ bản nháp; khách được hướng dẫn chọn sách còn bán ở trang Sách.
 
 CartService.addBooks kiểm tra mọi dòng và tổng số lượng trước khi lưu một lần, tránh giỏ bị thêm một phần khi có dòng không hợp lệ. Kết quả đồng bộ chưa rõ yêu cầu kiểm tra giỏ trước khi thao tác tiếp. Response cũ khi đổi tài khoản/đơn bị bỏ qua. Chat “mua lại đơn #…” chỉ chuẩn bị cùng biểu mẫu web; không gọi thêm giỏ trong công cụ backend.
+
+## Yêu cầu đổi trả và quản trị — 07/10/2026
+
+Website chưa có biểu mẫu/theo dõi đổi trả, nên đã làm phần web và kiểm thử trước khi thêm CREATE_RETURN_REQUEST vào chat. Trang Đơn hàng hiển thị Đổi trả cho đơn đã hoàn thành. Biểu mẫu dùng SupportRequestComponent chung; khách chọn sách thật trong đơn, nhập ngày nhận thực tế, cách muốn xử lý và lý do. Bước Xem lại yêu cầu tách khỏi Xác nhận gửi yêu cầu. Backend xác minh JWT/chủ đơn/sách/ngày nhận và lưu phiếu OPEN; việc lưu phiếu chưa đồng nghĩa chấp nhận đổi trả hoặc hoàn tiền. Chính sách vẫn là câu trả lời riêng khi khách chỉ hỏi điều kiện/hướng dẫn.
+
+SupportRequestsApi cung cấp POST/GET /api/support/me, GET /me/order/{id} và GET /me/request/{key}. Chủ sở hữu được lấy từ JWT, không từ dữ liệu client. requestKey gắn với tài khoản và nội dung giúp gửi lặp trả cùng phiếu; nội dung khác cùng key bị từ chối. Khóa tài khoản khi lưu/kiểm tra kết quả tránh kết luận chưa lưu trong lúc lần gửi trước đang chạy. Giao diện giữ key theo tài khoản trong sessionStorage để phục hồi, không giữ nội dung/ngày nhận trong nhật ký này. Lỗi kết nối không tự gửi lại; khách kiểm tra kết quả trước.
+
+Trang Liên hệ và action SHOW_SUPPORT_REQUESTS trong chat dùng cùng danh sách tối đa 50 yêu cầu mới nhất, trạng thái và phản hồi. Nội dung phiếu được tải riêng ở component, không chèn vào prompt hoặc cache hội thoại. Chuyển tài khoản xóa state và bỏ qua response cũ. Admin có hàng đợi /admin/support-requests, lọc/phân trang và phản hồi cùng trạng thái IN_REVIEW/RESOLVED/REJECTED. API admin kiểm tra quyền, khóa phiếu và version để tránh ghi đè phản hồi đồng thời; không thay đổi thanh toán hoặc tồn kho.
+
+Schema bổ sung nằm trong db/05-support-requests.sql. Môi trường local dùng Hibernate ddl-auto=update; môi trường triển khai cần chạy migration trước khi dùng API, không dựa vào tự cập nhật schema production.
