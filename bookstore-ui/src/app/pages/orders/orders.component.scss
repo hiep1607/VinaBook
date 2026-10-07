@@ -266,3 +266,11 @@
     flex-direction: column;
   }
 }
+.order-actions {
+  margin: 16px 0;
+  font-size: 14px;
+  line-height: 1.6;
+  button { min-height: 40px; padding: 8px 14px; border: 1px solid var(--c-border); border-radius: 8px; color: #a12626; background: var(--c-surface); cursor: pointer; }
+  button:disabled { opacity: .6; cursor: default; }
+  a { color: var(--c-accent); text-decoration: underline; }
+}

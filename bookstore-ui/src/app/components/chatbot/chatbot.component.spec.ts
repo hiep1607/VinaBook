@@ -83,6 +83,19 @@ describe('Chatbot purchase actions', () => {
     expect(fixture.nativeElement.querySelector('.bot-product button.primary')).toBeNull();
     expect(fixture.nativeElement.querySelector('.bot-product button').textContent).toContain('Xem sách');
   });
+  it('opens shared cancellation for the current reply without cancelling by itself', () => {
+    const reply: ChatMessage = { from: 'bot', text: 'Bạn kiểm tra đơn trước khi hủy nhé.', intent: 'ORDER_SUPPORT',
+      actions: [{ type: 'CANCEL_ORDER', orderId: 7, label: 'Kiểm tra và hủy đơn #7', requiresConfirmation: true }] };
+    fixture.componentInstance.send('hủy đơn #7'); replies.next(reply); replies.complete(); fixture.detectChanges();
+    const button = fixture.nativeElement.querySelector('.message-actions button'); button.click(); fixture.detectChanges();
+    expect(fixture.componentInstance.cancellationOrderId).toBe(7);
+    expect(fixture.nativeElement.querySelector('app-order-cancellation')).not.toBeNull();
+  });
+  it('blocks a cancellation action restored from old history', () => {
+    const reply: ChatMessage = { from: 'bot', text: 'Hủy đơn', actions: [{ type: 'CANCEL_ORDER', orderId: 7, label: 'Hủy', requiresConfirmation: true }] };
+    fixture.componentInstance.messages = [reply]; fixture.componentInstance.runAction(reply.actions![0], reply);
+    expect(fixture.componentInstance.cancellationOrderId).toBe(0);
+  });
 
 
 

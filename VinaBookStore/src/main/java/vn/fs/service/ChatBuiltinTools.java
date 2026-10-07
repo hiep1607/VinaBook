@@ -680,10 +680,12 @@ public class ChatBuiltinTools {
                 return ChatTool.Result.text(policies.answer(c.request().getMessage()),ChatIntent.POLICY);
             try {
                 Long requested=a.hasNonNull("orderId")?Long.valueOf(integerLong(a,"orderId")):c.state().focusedOrderId;
+                if(!a.hasNonNull("orderId") && ChatBookFacts.has(question,"gan nhat|moi nhat"))requested=null;
                 Long id=cancellation.preview(requested);
                 c.state().focusedOrderId=id;
-                ChatActionDto action=new ChatActionDto("VIEW_ORDERS","Mở đơn hàng",null,"/orders",false);
-                return new ChatTool.Result("Đơn #"+id+" có thể hủy theo trạng thái hiện tại. Bạn mở trang Đơn hàng để kiểm tra và xác nhận hủy; chat chưa thay đổi đơn.",ChatIntent.ORDER_SUPPORT,List.of(),List.of(action),"COMPLETED");
+                ChatActionDto action=new ChatActionDto("CANCEL_ORDER","Kiểm tra và hủy đơn #"+id,null,null,true);
+                action.setOrderId(id);
+                return new ChatTool.Result("Mình đã kiểm tra: đơn #"+id+" có thể hủy theo trạng thái hiện tại. Bạn bấm nút bên dưới để xem lại sách và tổng đơn, rồi xác nhận nếu đúng đơn muốn hủy nhé. Mình sẽ chỉ hủy sau khi bạn xác nhận.",ChatIntent.ORDER_SUPPORT,List.of(),List.of(action),"AWAITING_CONFIRMATION");
             } catch(org.springframework.web.server.ResponseStatusException e) {
                 if(e.getStatus()==org.springframework.http.HttpStatus.UNAUTHORIZED)
                     return ChatTool.Result.text("Bạn cần đăng nhập để kiểm tra và hủy đơn của mình. Sau khi đăng nhập, hãy hỏi lại “Hủy đơn hàng giúp tôi” hoặc gửi mã đơn muốn hủy.",ChatIntent.ORDER_SUPPORT);

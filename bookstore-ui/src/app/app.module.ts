@@ -50,6 +50,7 @@ import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { ChatbotComponent } from './components/chatbot/chatbot.component';
 import { ChatCommerceComponent } from './components/chat-commerce/chat-commerce.component';
+import { OrderCancellationComponent } from './components/order-cancellation/order-cancellation.component';
 import { RevealDirective } from './shared/directives/reveal.directive';
 import { CountUpDirective } from './shared/directives/count-up.directive';
 import { NgrokSkipInterceptor } from './core/ngrok-skip.interceptor';
@@ -84,6 +85,7 @@ import { BookPreviewReaderComponent } from './components/book-preview-reader/boo
     ContactComponent,
     ChatbotComponent,
     ChatCommerceComponent,
+    OrderCancellationComponent,
     RevealDirective,
     CountUpDirective,
     FooterComponent,

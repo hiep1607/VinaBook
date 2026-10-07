@@ -120,6 +120,9 @@
     </div>
     <app-chat-commerce (busyChange)="commerceBusy = $event" (updated)="commerceUpdated()"
       (added)="addedProductIds.add($event)" (navigated)="open = false; commerceBusy = false"></app-chat-commerce>
+    <app-order-cancellation *ngIf="cancellationOrderId" [orderId]="cancellationOrderId"
+      (completed)="orderCancelled($event)" (closed)="cancellationOrderId = 0; commerceBusy = false"
+      (busyChange)="commerceBusy = $event" (updated)="commerceUpdated()"></app-order-cancellation>
   </div>
 
   <footer class="chat-composer">

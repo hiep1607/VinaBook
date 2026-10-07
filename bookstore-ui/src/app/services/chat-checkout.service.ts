@@ -45,7 +45,6 @@ export class ChatCheckoutService {
   constructor(private http: HttpClient) {}
   quote(input: ChatShipping) { return this.http.post<ChatQuote>(this.api + '/quote', input); }
   cancelDraft(token: string) { return this.http.delete<void>(this.api + '/' + encodeURIComponent(token)); }
-  cancelOrder(orderId: number) { return this.http.post<{orderId: number; status: string}>(environment.apiUrl + '/api/orders/me/' + orderId + '/cancel', {confirmed: true}); }
   confirm(token: string) {
     return this.http.post<{orderId: number}>(this.api + '/' + encodeURIComponent(token) + '/confirm', {});
   }

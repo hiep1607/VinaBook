@@ -19,9 +19,13 @@ export class OrdersComponent implements OnInit {
   loading = true;
   loadError = false;
   payingOrderId = 0;
+  cancellingOrderId = 0;
+  cancellationBusy = false;
+  reorderOrderId = 0;
+  returnOrderId = 0;
 
   constructor(
-    private orderService: OrderService,
+    public orderService: OrderService,
     private authService: AuthService,
     private router: Router,
     private paymentService: PaymentService,
@@ -62,6 +66,18 @@ export class OrdersComponent implements OnInit {
     return 'pending';
   }
 
+  requestCancellation(order: any): void {
+    if (this.cancellationBusy || this.payingOrderId || !this.orderService.canCancel(order)) return;
+    this.cancellingOrderId = order.id;
+    this.reorderOrderId = 0;
+    this.returnOrderId = 0;
+  }
+
+  orderCancelled(id: number): void {
+    const order = this.orders.find(item => item.id === id);
+    if (order) { order.statusCode = 3; order.status = this.orderService.statusLabel(3); }
+  }
+
   paymentMethodLabel(method: string): string {
     switch (method) {
       case 'BANK_QR': return 'Chuyển khoản QR';
@@ -84,7 +100,7 @@ export class OrdersComponent implements OnInit {
   }
 
   continuePayment(order: any): void {
-    if (!this.canPay(order) || this.payingOrderId) { return; }
+    if (!this.canPay(order) || this.payingOrderId || this.cancellationBusy) { return; }
     if (order.paymentMethod === 'BANK_QR' && order.paymentStatus === 'PENDING') {
       this.router.navigate(['/payment/result'], { queryParams: { orderId: order.id } });
       return;
