@@ -96,6 +96,14 @@ describe('Chatbot purchase actions', () => {
     fixture.componentInstance.messages = [reply]; fixture.componentInstance.runAction(reply.actions![0], reply);
     expect(fixture.componentInstance.cancellationOrderId).toBe(0);
   });
+  it('uses the website wishlist service and makes a repeated click harmless', () => {
+    TestBed.inject(AuthService).currentUser = { email: 'buyer@test.invalid' };
+    fixture.componentInstance.ngDoCheck();
+    const reply: ChatMessage = { ...purchase, actions: [{ type: 'ADD_TO_WISHLIST', label: 'Lưu yêu thích', productId: 7, requiresConfirmation: false }] };
+    fixture.componentInstance.send('Lưu cuốn này vào yêu thích'); replies.next(reply); replies.complete(); fixture.detectChanges();
+    fixture.componentInstance.runAction(reply.actions![0], reply); fixture.componentInstance.runAction(reply.actions![0], reply);
+    expect(TestBed.inject(WishlistService).addToWishlist).toHaveBeenCalledOnceWith('buyer@test.invalid', 7);
+  });
 
 
 

@@ -16,6 +16,7 @@ import { FabCollisionService } from 'src/app/services/fab-collision.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { chatCartFingerprint } from 'src/app/services/chat-checkout.service';
 import { ChatCommerceComponent } from '../chat-commerce/chat-commerce.component';
+import { WishlistService } from 'src/app/services/wishlist.service';
 
 /**
  * Widget trợ lý ảo nổi góc phải dưới. Hỏi đáp về sản phẩm, gợi ý sách và
@@ -69,7 +70,8 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     private cart: CartService,
     private router: Router,
     private collision: FabCollisionService,
-    private auth: AuthService
+    private auth: AuthService,
+    private wishlist: WishlistService
   ) {}
 
   ngOnInit(): void {
@@ -213,7 +215,8 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
       .map(item => ({ productId: item.id, quantity: item.quantity }));
     let responseIndex = -1;
     const cartSnapshot = chatCartFingerprint(this.cart.getCartItems(), this.cart.serverRevision);
-    this.request = this.chatbot.ask(value, history, activeProductId, cartItems).subscribe({
+    const wishlistIds = this.accountEmail ? this.wishlist.getIds(this.accountEmail).slice(0, 100) : [];
+    this.request = this.chatbot.ask(value, history, activeProductId, cartItems, wishlistIds).subscribe({
       next: message => {
         if (responseIndex < 0) {
           responseIndex = this.messages.length;
@@ -312,7 +315,20 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     if (this.commerceBusy || false) return;
 
 
-
+    if (action.type === 'ADD_TO_WISHLIST' || action.type === 'REMOVE_FROM_WISHLIST') {
+      if (!this.actionAvailable(message) || !action.productId || !this.accountEmail) return;
+      const product = message.products?.find(item => item.id === action.productId);
+      if (!product) return;
+      try {
+        if (action.type === 'ADD_TO_WISHLIST') this.wishlist.addToWishlist(this.accountEmail, product.id);
+        else this.wishlist.removeFromWishlist(this.accountEmail, product.id);
+        this.messages.push({ from: 'bot', text: action.type === 'ADD_TO_WISHLIST'
+          ? `Mình đã lưu “${product.name}” vào yêu thích trên thiết bị này. Bạn có thể xem lại ở mục Yêu thích trên web nhé.`
+          : `Mình đã bỏ “${product.name}” khỏi danh sách yêu thích trên thiết bị này.`, intent: 'PRODUCT_INFO' });
+        this.persistMessages(); this.shouldScroll = true;
+      } catch { this.errorText = 'Trình duyệt chưa lưu được thay đổi. Bạn kiểm tra quyền lưu dữ liệu rồi thử lại nhé.'; }
+      return;
+    }
     if (action.type === 'CANCEL_ORDER') {
       if (!this.actionAvailable(message) || !Number.isSafeInteger(action.orderId) || !action.orderId || action.orderId < 1) return;
       if (this.commerce?.checkout || this.commerce?.uncertainConfirmation) {

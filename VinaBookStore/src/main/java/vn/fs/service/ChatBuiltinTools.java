@@ -21,6 +21,9 @@ public class ChatBuiltinTools {
     private final ChatPolicyService policies;
     private OrderCancellationService cancellation;
     private BookKnowledgeService knowledge;
+    private vn.fs.config.CurrentUserAccess access;
+    @org.springframework.beans.factory.annotation.Autowired
+    public void setAccess(vn.fs.config.CurrentUserAccess value){access=value;}
     @org.springframework.beans.factory.annotation.Autowired(required=false)
     public void setKnowledge(BookKnowledgeService value){knowledge=value;}
     @org.springframework.beans.factory.annotation.Autowired
@@ -691,6 +694,32 @@ public class ChatBuiltinTools {
                     return ChatTool.Result.text("Bạn cần đăng nhập để kiểm tra và hủy đơn của mình. Sau khi đăng nhập, hãy hỏi lại “Hủy đơn hàng giúp tôi” hoặc gửi mã đơn muốn hủy.",ChatIntent.ORDER_SUPPORT);
                 return ChatTool.Result.text(e.getReason()==null?"Chưa thể hủy đơn này.":e.getReason(),ChatIntent.ORDER_SUPPORT);
             }
+        });
+    }
+    private ChatTool.Result wishlistLogin() {
+        return new ChatTool.Result("Bạn đăng nhập để mình mở đúng danh sách yêu thích của tài khoản trên thiết bị này nhé. Sau đó bạn có thể lưu sách để xem lại khi cần.",ChatIntent.PRODUCT_INFO,List.of(),
+            List.of(new ChatActionDto("LOGIN","Đăng nhập",null,"/login",false)),"AWAITING_INPUT");
+    }
+    @Bean public ChatTool getWishlist() {
+        return tool("getWishlist","Xem danh sách yêu thích đang dùng trên website/thiết bị của khách đăng nhập. Không suy ra từ sở thích đọc.",Map.of(),(a,c)->{
+            if(access==null || access.currentEmail()==null)return wishlistLogin();
+            List<Product> books=byIds(c.request().getWishlistProductIds());
+            c.state().displayed=ids(books); c.state().shortlist=ids(books);
+            if(books.size()==1)c.state().focus=books.get(0).getProductId();
+            return books.isEmpty()?ChatTool.Result.text("Danh sách yêu thích trên thiết bị này đang trống hoặc các sách đã lưu không còn bán. Bạn tìm một cuốn muốn đọc rồi nhắn mình lưu vào yêu thích để dễ xem lại nhé.",ChatIntent.PRODUCT_INFO)
+                :books("Đây là các sách bạn đã lưu vào yêu thích trên website ở thiết bị này. Giá dưới đây là giá hiện tại nhé:",books,ChatIntent.PRODUCT_INFO,false);
+        });
+    }
+    @Bean public ChatTool prepareWishlistChange() {
+        var parameters=referenceParameters(); parameters.put("operation",choice("Thao tác yêu thích","add","remove"));
+        return tool("prepareWishlistChange","Chuẩn bị lưu/bỏ một sách khỏi yêu thích; dùng cùng danh sách local của website. Chỉ trả nút; chưa thay đổi dữ liệu.",parameters,(a,c)->{
+            if(access==null || access.currentEmail()==null)return wishlistLogin();
+            List<Product> selected=resolve(a,c);
+            if(selected.size()!=1)return missing(c,selected);
+            Product book=selected.get(0); boolean remove="remove".equals(a.path("operation").asText("add"));
+            var action=new ChatActionDto(remove?"REMOVE_FROM_WISHLIST":"ADD_TO_WISHLIST",remove?"Bỏ yêu thích":"Lưu yêu thích",book.getProductId(),null,false);
+            c.state().focus=book.getProductId();c.state().displayed=List.of(book.getProductId());
+            return new ChatTool.Result("Bạn bấm “"+action.getLabel()+"” ở cuốn “"+book.getName()+"” nhé. Mình sẽ cập nhật cùng danh sách yêu thích trên website của tài khoản này, để bạn dễ tìm lại sách.",ChatIntent.PRODUCT_INFO,List.of(dto(book)),List.of(action),"AWAITING_INPUT");
         });
     }
     @Bean public ChatTool getMyOrders() {

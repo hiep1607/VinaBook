@@ -35,7 +35,7 @@ class ChatToolsTest {
         builtins.setCancellation(cancellation);
         when(rates.findByProductOrderByIdDesc(any(Product.class))).thenReturn(List.of());
         registry=new ChatToolRegistry(List.of(builtins.searchProducts(),builtins.recommendBooks(),builtins.getProducts(),builtins.updateSelection(),
-            builtins.prepareCartChange(),builtins.prepareClearCart(),builtins.prepareCheckout(),builtins.prepareCancelOrder(),builtins.getCart(),builtins.getMyOrders(),builtins.getOrderDetail(),builtins.getPolicy(),builtins.respond(),builtins.findRelatedBooks()));
+            builtins.prepareCartChange(),builtins.prepareClearCart(),builtins.prepareCheckout(),builtins.prepareCancelOrder(),builtins.getWishlist(),builtins.prepareWishlistChange(),builtins.getCart(),builtins.getMyOrders(),builtins.getOrderDetail(),builtins.getPolicy(),builtins.respond(),builtins.findRelatedBooks()));
         when(ai.provider()).thenReturn("gemini");when(ai.modelUsed()).thenReturn("fixture");when(ai.isConfigured()).thenReturn(true);
         when(analytics.record(any(),any(),anyString(),anyBoolean(),anyInt(),anyLong())).thenReturn("event");
         orchestrator=new ChatOrchestrator(ai,mapper,registry,analytics);
@@ -64,6 +64,33 @@ class ChatToolsTest {
         assertThat(action.isRequiresConfirmation()).isTrue();
         assertThat(state.focusedOrderId).isEqualTo(7L);
         verify(cancellation,never()).cancel(any());
+    }
+    @Test void wishlistUsesCurrentWebsiteSnapshotAndDoesNotInventReadingPreferences() throws Exception {
+        var access=mock(vn.fs.config.CurrentUserAccess.class); when(access.currentEmail()).thenReturn("buyer@test.invalid"); builtins.setAccess(access);
+        var request=request("s","Danh sách yêu thích của tôi"); request.setWishlistProductIds(List.of(2L,99999L));
+        var result=builtins.getWishlist().execute(mapper.createObjectNode(),new ChatTool.Context(request,state));
+        assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(2L);
+        assertThat(ChatCustomerActions.wishlistTool("minh thich trinh tham")).isEmpty();
+    }
+    @Test void wishlistChangeIsAProposalForTheResolvedBook() throws Exception {
+        var access=mock(vn.fs.config.CurrentUserAccess.class); when(access.currentEmail()).thenReturn("buyer@test.invalid"); builtins.setAccess(access);
+        state.focus=2L; state.displayed=List.of(2L);
+        var result=builtins.prepareWishlistChange().execute(mapper.readTree("{\"productId\":2,\"operation\":\"remove\"}"),new ChatTool.Context(request("s","Bỏ cuốn này khỏi yêu thích"),state));
+        assertThat(result.actions().get(0).getType()).isEqualTo("REMOVE_FROM_WISHLIST");
+        assertThat(result.actions().get(0).getProductId()).isEqualTo(2L);
+        assertThat(result.answer()).doesNotContain("đã bỏ");
+    }
+    @Test void guestCannotReadWishlistSnapshotThroughChat() {
+        var request=request("s","Xem yêu thích"); request.setWishlistProductIds(List.of(1L));
+        var result=builtins.getWishlist().execute(mapper.createObjectNode(),new ChatTool.Context(request,state));
+        assertThat(result.products()).isEmpty(); assertThat(result.actions().get(0).getType()).isEqualTo("LOGIN");
+    }
+    @Test void wishlistReadRoutingSuppliesOnlySupportedArguments() {
+        var access=mock(vn.fs.config.CurrentUserAccess.class); when(access.currentEmail()).thenReturn("buyer@test.invalid"); builtins.setAccess(access);
+        var request=request("s","Danh sách yêu thích của tôi"); request.setWishlistProductIds(List.of(2L));
+        var result=orchestrator.reply(request,state);
+        assertThat(result.getProducts()).extracting(ChatProductDto::getId).containsExactly(2L);
+        assertThat(result.isFallback()).isFalse();
     }
     @Test void continuationRetainsTopicAndExplicitNullClearsPrice() throws Exception {
         run("searchProducts","{\"query\":\"Python\",\"maxPrice\":100000}");

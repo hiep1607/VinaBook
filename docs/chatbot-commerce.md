@@ -70,3 +70,9 @@ GET /api/orders/me/{id}/cancellation chỉ trả dữ liệu cần xác nhận v
 Giao diện khóa bấm lặp, xóa state khi đổi tài khoản/đơn, bỏ response cũ, timeout 20 giây. Kết quả chưa rõ phải Kiểm tra trạng thái; không tự gửi lại thao tác hủy. Action hội thoại cũ không được thực thi trực tiếp. Kết quả hủy nằm trong state riêng của widget, không lưu vào cache chat local.
 
 432 kiểm thử backend và 33 kiểm thử giao diện đều đạt; build production thành công, còn hai cảnh báo dung lượng bundle/stylesheet đã tồn tại. Kiểm tra web thật với backend/MySQL và phiên đăng nhập sẵn có: nút hủy trên trang Đơn hàng và câu “hủy đơn #46” trong chat đều mở cùng bước xác nhận, hiển thị đúng sách/tổng đơn. Chọn Giữ đơn hàng trong cả hai lần; không hủy đơn thật của khách. Nhánh hủy thành công/hoàn tồn kho/xác nhận lặp/quyền sở hữu đã được kiểm thử tự động bằng fixture.
+
+## Danh sách yêu thích dùng chung website — 07/10/2026
+
+Đã kiểm tra website có trang Yêu thích, nút lưu tại sách và nút xóa. Chat dùng cùng WishlistService và key wishlist_{email}; không tạo danh sách riêng. Snapshot wishlistProductIds chỉ là danh sách local của thiết bị, được lọc ID/sách còn bán; backend vẫn xác minh đăng nhập từ JWT. “Xem danh sách yêu thích của tôi” trả sách và giá hiện tại, “lưu/bỏ cuốn này vào/khỏi yêu thích” chuẩn bị nút cho sách đã xác định. Nút chỉ cập nhật sau khi khách bấm; thao tác thêm là idempotent, không dùng toggle gây đảo kết quả khi bấm lặp. “Mình thích trinh thám” vẫn là sở thích đọc, không bị hiểu là yêu cầu sửa yêu thích. Hỏi yêu thích không bị bước thu thập nhu cầu tư vấn chặn.
+
+142 ca ChatToolsTest và 34 kiểm thử giao diện đạt sau khi bổ sung kiểm thử routing và sửa tham số công cụ đọc. Web thật xác minh cùng cuốn Muôn Kiếp Nhân Sinh ở trang Yêu thích và câu trả lời chat; không thay đổi danh sách thật khi kiểm tra. Danh sách này tiếp tục là dữ liệu trên thiết bị theo cơ chế website hiện có, chưa đồng bộ đa thiết bị.

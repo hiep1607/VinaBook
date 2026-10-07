@@ -13,7 +13,8 @@ export class WishlistService {
 
   getIds(email: string): number[] {
     try {
-      return JSON.parse(localStorage.getItem(this.key(email)) || '[]');
+      const value = JSON.parse(localStorage.getItem(this.key(email)) || '[]');
+      return Array.isArray(value) ? [...new Set<number>(value.filter(id => Number.isSafeInteger(id) && id > 0))] : [];
     } catch {
       return [];
     }
@@ -34,6 +35,11 @@ export class WishlistService {
     ids.push(productId);
     this.save(email, ids);
     return true;
+  }
+
+  addToWishlist(email: string, productId: number): void {
+    const ids = this.getIds(email);
+    if (!ids.includes(productId)) this.save(email, [...ids, productId]);
   }
 
   removeFromWishlist(email: string, productId: number): void {

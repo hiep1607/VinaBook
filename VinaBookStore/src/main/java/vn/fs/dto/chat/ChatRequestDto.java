@@ -8,6 +8,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class ChatRequestDto {
+    // Device-local wishlist snapshot; never used as identity or ownership evidence.
+    @Size(max = 100)
+    private List<@javax.validation.constraints.NotNull @javax.validation.constraints.Positive Long> wishlistProductIds = new ArrayList<>();
+    public List<Long> getWishlistProductIds() { return wishlistProductIds; }
+    public void setWishlistProductIds(List<Long> value) { wishlistProductIds=value==null?new ArrayList<>():value; }
     @Valid
     @Size(max = 100)
     private List<CartItem> cartItems = new ArrayList<>();
