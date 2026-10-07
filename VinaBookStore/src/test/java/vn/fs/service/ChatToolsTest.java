@@ -33,9 +33,10 @@ class ChatToolsTest {
         when(rates.averageRatings()).thenReturn(List.of(new Object[]{1L,4.8},new Object[]{2L,4.5},new Object[]{3L,4.0}));
         builtins=new ChatBuiltinTools(products,data,language,orders,new ChatPolicyService(language));
         builtins.setCancellation(cancellation);
+        builtins.setRates(rates);
         when(rates.findByProductOrderByIdDesc(any(Product.class))).thenReturn(List.of());
         registry=new ChatToolRegistry(List.of(builtins.searchProducts(),builtins.recommendBooks(),builtins.getProducts(),builtins.updateSelection(),
-            builtins.prepareCartChange(),builtins.prepareClearCart(),builtins.prepareCheckout(),builtins.prepareCancelOrder(),builtins.prepareReorder(),builtins.getWishlist(),builtins.prepareWishlistChange(),builtins.getCart(),builtins.getMyOrders(),builtins.getOrderDetail(),builtins.getPolicy(),builtins.respond(),builtins.findRelatedBooks()));
+            builtins.bookReviews(),builtins.prepareCartChange(),builtins.prepareClearCart(),builtins.prepareCheckout(),builtins.prepareCancelOrder(),builtins.prepareReorder(),builtins.getWishlist(),builtins.prepareWishlistChange(),builtins.getCart(),builtins.getMyOrders(),builtins.getOrderDetail(),builtins.getPolicy(),builtins.respond(),builtins.findRelatedBooks()));
         when(ai.provider()).thenReturn("gemini");when(ai.modelUsed()).thenReturn("fixture");when(ai.isConfigured()).thenReturn(true);
         when(analytics.record(any(),any(),anyString(),anyBoolean(),anyInt(),anyLong())).thenReturn("event");
         orchestrator=new ChatOrchestrator(ai,mapper,registry,analytics);
@@ -47,6 +48,156 @@ class ChatToolsTest {
     private Rate rate(long id,long userId,double rating,String comment) {
         User user=new User();user.setUserId(userId);user.setName("Khách riêng tư");user.setEmail("private@example.test");
         Rate rate=new Rate();rate.setId(id);rate.setUser(user);rate.setRating(rating);rate.setComment(comment);return rate;
+    }
+    @Test void bookReviewRoutingSeparatesReadingWritingAndAmbiguousRequests() {
+        ChatIntentService language=new ChatIntentService();
+        assertThat(ChatCustomerActions.reviewMode(language.normalize("Cho mình xem đánh giá của cuốn này"))).isEqualTo("read");
+        assertThat(ChatCustomerActions.reviewMode(language.normalize("Mình muốn đánh giá cuốn này 5 sao"))).isEqualTo("write");
+        assertThat(ChatCustomerActions.reviewMode(language.normalize("Đánh giá cuốn này"))).isEqualTo("clarify");
+        assertThat(ChatCustomerActions.tool(language.normalize("Mình thích trinh thám và muốn đọc sách hay"))).isEmpty();
+        assertThat(ChatCustomerActions.arguments("bookReviews",language.normalize("Mình muốn xem đánh giá cuốn này 5 sao")).path("mode").asText()).isEqualTo("read");
+        assertThat(ChatCustomerActions.reviewMode(language.normalize("Cuốn này mấy sao?"))).isEqualTo("read");
+        assertThat(ChatCustomerActions.reviewMode(language.normalize("Cuốn này được đánh giá 5 sao không?"))).isEqualTo("read");
+        assertThat(ChatCustomerActions.reviewMode(language.normalize("Mình muốn viết nhận xét sách dễ đọc"))).isEqualTo("write");
+        assertThat(ChatCustomerActions.reviewMode(language.normalize("Gợi ý sách được đánh giá trên 4 sao cho mình"))).isEmpty();
+        assertThat(ChatCustomerActions.reviewMode(language.normalize("Đánh giá câu trả lời của nhân viên"))).isEmpty();
+    }
+    @Test void bookReviewReadUsesRealCommentsAndDoesNotExposeReviewerEmail() throws Exception {
+        state.focus=1L;
+        when(rates.findByProductOrderByIdDesc(any(Product.class))).thenReturn(List.of(
+            rate(3,3,5,"Nội dung dễ hiểu."),rate(2,2,4,"Có nhiều ví dụ hữu ích."),rate(1,1,1,"Bản in khó đọc.")));
+        var request=request("s","Cho mình xem đánh giá của cuốn này");
+        var result=builtins.bookReviews().execute(mapper.readTree("{\"mode\":\"read\",\"reference\":\"focus\"}"),new ChatTool.Context(request,state));
+        assertThat(result.answer()).contains("3 đánh giá","3.3/5","Nội dung dễ hiểu.","Bản in khó đọc.");
+        assertThat(result.answer()).doesNotContain("private@example.test","Khách riêng tư");
+        assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(1L);
+        assertThat(result.actions()).extracting(ChatActionDto::getType).contains("LOGIN");
+        verify(rates,never()).save(any());
+    }
+    @Test void bookReviewWritingRequiresLoginAndExplicitCustomerSubmission() throws Exception {
+        state.focus=1L;
+        var guest=builtins.bookReviews().execute(mapper.readTree("{\"mode\":\"write\",\"reference\":\"focus\"}"),
+            new ChatTool.Context(request("s","Mình muốn viết đánh giá cuốn này"),state));
+        assertThat(guest.actions()).extracting(ChatActionDto::getType).containsExactly("LOGIN");
+        assertThat(guest.answer()).contains("đăng nhập");
+        verify(rates,never()).save(any());
+
+        when(access.currentUserId()).thenReturn(42L);builtins.setAccess(access);
+        when(rates.findByProductOrderByIdDesc(any(Product.class))).thenReturn(List.of());
+        var member=builtins.bookReviews().execute(mapper.readTree("{\"mode\":\"write\",\"reference\":\"focus\"}"),
+            new ChatTool.Context(request("s","Mình muốn viết đánh giá cuốn này"),state));
+        assertThat(member.actions()).extracting(ChatActionDto::getType).containsExactly("WRITE_REVIEW");
+        assertThat(member.actions().get(0).getProductId()).isEqualTo(1L);
+        assertThat(member.answer()).contains("chưa lưu gì","chủ động bấm gửi");
+        verify(rates,never()).save(any());
+    }
+    @Test void bookReviewAsksWhichBookOrWhichReviewActionBeforeProceeding() throws Exception {
+        var request=request("s","Cho mình xem đánh giá");
+        var missing=builtins.bookReviews().execute(mapper.readTree("{\"mode\":\"read\"}"),new ChatTool.Context(request,state));
+        assertThat(missing.status()).isEqualTo("NEEDS_INPUT");
+        assertThat(missing.products()).isEmpty();
+
+        state.focus=1L;
+        var ambiguous=builtins.bookReviews().execute(mapper.readTree("{\"mode\":\"clarify\",\"reference\":\"focus\"}"),
+            new ChatTool.Context(request("s","Đánh giá cuốn này"),state));
+        assertThat(ambiguous.answer()).contains("xem nhận xét","tự viết đánh giá");
+        assertThat(ambiguous.actions()).extracting(ChatActionDto::getType).containsExactly("VIEW_PRODUCT");
+    }
+    @Test void reviewAverageIncludesLegacyFractionalRatingsAndStarOnlyReviews() throws Exception {
+        state.focus=1L;
+        when(rates.findByProductOrderByIdDesc(any(Product.class))).thenReturn(List.of(
+            rate(4,4,0,"Không hợp lệ"),rate(3,3,6,"Không hợp lệ"),rate(2,2,5,""),rate(1,1,1.5,"Bản in khó đọc.")));
+        var result=run("bookReviews","{\"mode\":\"read\"}");
+        assertThat(result.answer()).contains("2 đánh giá","3.3/5","1.5/5 sao","Bản in khó đọc.").doesNotContain("Không hợp lệ");
+    }
+    @Test void starOnlyReviewsDoNotCauseInventedComments() throws Exception {
+        state.focus=1L;
+        when(rates.findByProductOrderByIdDesc(any(Product.class))).thenReturn(List.of(rate(2,2,5,null),rate(1,1,3," ")));
+        assertThat(run("bookReviews","{\"mode\":\"read\"}").answer()).contains("2 đánh giá","4.0/5","chỉ có điểm sao","chưa có nhận xét bằng lời");
+    }
+    @Test void emptyReviewListIsReportedWithoutInventingARating() throws Exception {
+        state.focus=1L;
+        var result=run("bookReviews","{\"mode\":\"read\"}");
+        assertThat(result.answer()).contains("chưa có nhận xét").doesNotContain("/5");
+    }
+    @Test void shortReadOrWriteAnswerContinuesTheClarifiedReviewRequest() {
+        state.focus=1L;
+        orchestrator.reply(request("s","Đánh giá cuốn này"),state);
+        var read=orchestrator.reply(request("s","xem"),state);
+        assertThat(read.getExecution()).containsEntry("tool","bookReviews");
+        assertThat(read.getProducts()).extracting(ChatProductDto::getId).containsExactly(1L);
+        assertThat(state.pendingReviewMode).isEmpty();
+        when(access.currentUserId()).thenReturn(42L); builtins.setAccess(access);
+        orchestrator.reply(request("s","Đánh giá cuốn này"),state);
+        var write=orchestrator.reply(request("s","viết"),state);
+        assertThat(write.getActions()).extracting(ChatActionDto::getType).containsExactly("WRITE_REVIEW");
+        verify(rates,never()).save(any());
+    }
+    @Test void selectingAReviewBookByOrdinalPreservesTheReadingIntent() {
+        var first=orchestrator.reply(request("s","Xem đánh giá sách \"Python\""),state);
+        assertThat(first.getProducts()).hasSize(3);
+        var second=orchestrator.reply(request("s","2"),state);
+        assertThat(second.getExecution()).containsEntry("tool","bookReviews");
+        assertThat(second.getProducts()).extracting(ChatProductDto::getId).containsExactly(2L);
+        assertThat(state.focus).isEqualTo(2L);
+    }
+    @Test void unknownReviewTitleNeverFallsBackToThePreviouslyFocusedBook() {
+        state.focus=1L;
+        var result=orchestrator.reply(request("s","Xem đánh giá sách \"Một Tên Không Tồn Tại\""),state);
+        assertThat(result.getProducts()).isEmpty();
+        assertThat(result.getExecution()).containsEntry("status","NEEDS_INPUT");
+        verify(rates,never()).findByProductOrderByIdDesc(any());
+    }
+    @Test void anUnquotedMissingBookDoesNotReuseTheOldFocus() {
+        state.focus=1L;
+        var response=orchestrator.reply(request("s","Xem đánh giá sách Không Tồn Tại"),state);
+        assertThat(response.getProducts()).isEmpty();
+        assertThat(response.getAnswer()).contains("tránh chọn nhầm");
+        verify(rates,never()).findByProductOrderByIdDesc(any());
+    }
+    @Test void selectingANamedBookAfterMissingReviewKeepsTheRequest() {
+        orchestrator.reply(request("s","Cho mình xem đánh giá"),state);
+        var response=orchestrator.reply(request("s","Python 2"),state);
+        assertThat(response.getExecution()).containsEntry("tool","bookReviews");
+        assertThat(response.getProducts()).extracting(ChatProductDto::getId).containsExactly(2L);
+    }
+    @Test void choosingReadAfterAnUnknownTitleStillRequiresTheBook() {
+        state.focus=1L; state.shortlist=List.of(1L); state.displayed=List.of(1L);
+        orchestrator.reply(request("s","Xem đánh giá sách Không Tồn Tại"),state);
+        var response=orchestrator.reply(request("s","xem"),state);
+        assertThat(response.getProducts()).isEmpty();
+        assertThat(response.getExecution()).containsEntry("status","NEEDS_INPUT");
+        verify(rates,never()).findByProductOrderByIdDesc(any());
+        var selected=orchestrator.reply(request("s","Python 2"),state);
+        assertThat(selected.getProducts()).extracting(ChatProductDto::getId).containsExactly(2L);
+    }
+    @Test void choosingWriteAfterAmbiguousBooksDoesNotOpenTheOldFocusedBook() {
+        state.focus=1L;
+        when(access.currentUserId()).thenReturn(42L); builtins.setAccess(access);
+        orchestrator.reply(request("s","Xem đánh giá sách \"Python\""),state);
+        var response=orchestrator.reply(request("s","viết"),state);
+        assertThat(response.getProducts()).isEmpty();
+        assertThat(response.getActions()).isEmpty();
+        assertThat(response.getExecution()).containsEntry("status","NEEDS_INPUT");
+        var selected=orchestrator.reply(request("s","2"),state);
+        assertThat(selected.getProducts()).extracting(ChatProductDto::getId).containsExactly(2L);
+        assertThat(selected.getActions()).extracting(ChatActionDto::getType).containsExactly("WRITE_REVIEW");
+        verify(rates,never()).save(any());
+    }
+    @Test void reviewSelectionUpdatesTheFocusForTheNextBookReference() {
+        state.focus=1L;
+        orchestrator.reply(request("s","Xem đánh giá của Python 2"),state);
+        var followup=orchestrator.reply(request("s","Mình muốn viết đánh giá cuốn này"),state);
+        assertThat(followup.getProducts()).extracting(ChatProductDto::getId).containsExactly(2L);
+    }
+    @Test void unrelatedCommandClearsPendingReviewAndInvalidOrdinalAsksAgain() {
+        orchestrator.reply(request("s","Xem đánh giá sách \"Python\""),state);
+        var invalid=orchestrator.reply(request("s","8"),state);
+        assertThat(invalid.getProducts()).isEmpty();
+        assertThat(invalid.getExecution()).containsEntry("status","NEEDS_INPUT");
+        String newTask=ChatCustomerActions.tool(language.normalize("Gợi ý thêm sách Python cho mình"),state,true);
+        assertThat(newTask).isEmpty();
+        assertThat(state.pendingReviewMode).isEmpty();
     }
     @Test void filtersRatingIndependentlyOfPriceAndSortsBeforeLimit() throws Exception {
         var r=run("searchProducts","{\"query\":\"Python\",\"maxPrice\":200000,\"minRating\":4.5,\"sort\":\"price-asc\",\"limit\":1}");

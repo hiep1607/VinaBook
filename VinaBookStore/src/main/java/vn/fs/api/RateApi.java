@@ -8,10 +8,15 @@ package vn.fs.api;
 
 import java.util.List;
 import java.util.Date;
+import java.util.Objects;
+import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,10 +28,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import vn.fs.entity.Rate;
+import vn.fs.entity.User;
+import vn.fs.entity.OrderDetail;
 import vn.fs.repository.OrderDetailRepository;
 import vn.fs.repository.ProductRepository;
 import vn.fs.repository.RateRepository;
-import vn.fs.repository.UserRepository;
 import vn.fs.config.CurrentUserAccess;
 
 @CrossOrigin("*")
@@ -38,9 +44,6 @@ public class RateApi {
 	RateRepository rateRepository;
 
 	@Autowired
-	UserRepository userRepository;
-
-	@Autowired
 	OrderDetailRepository orderDetailRepository;
 
 	@Autowired
@@ -48,6 +51,9 @@ public class RateApi {
 
 	@Autowired
 	CurrentUserAccess access;
+
+	@PersistenceContext
+	EntityManager em;
 
 	@GetMapping
 	public ResponseEntity<List<Rate>> findAll() {
@@ -71,39 +77,66 @@ public class RateApi {
 	}
 
 	@PostMapping
+	@Transactional
 	public ResponseEntity<Rate> post(@RequestBody Rate rate) {
-		if (!userRepository.existsById(rate.getUser().getUserId())) {
-			return ResponseEntity.notFound().build();
-		}
-		if (!productRepository.existsById(rate.getProduct().getProductId())) {
-			return ResponseEntity.notFound().build();
-		}
-		if (!access.ownsUserId(rate.getUser().getUserId())) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-		}
-		if (!validRating(rate)) {
+		if (rate == null || rate.getId() != null || rate.getUser() == null || rate.getUser().getUserId() == null
+				|| rate.getProduct() == null || rate.getProduct().getProductId() == null || !validRating(rate)) {
 			return ResponseEntity.badRequest().build();
 		}
-		// orderDetail là tùy chọn — storefront cho phép đánh giá không cần mua hàng
-		if (rate.getOrderDetail() != null
-				&& !orderDetailRepository.existsById(rate.getOrderDetail().getOrderDetailId())) {
-			return ResponseEntity.notFound().build();
+		Long ownerId = access.currentUserId();
+		if (ownerId == null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
-		rate.setUser(userRepository.findById(rate.getUser().getUserId()).get());
-		rate.setProduct(productRepository.findById(rate.getProduct().getProductId()).get());
-		rate.setRateDate(new Date());
-		return ResponseEntity.ok(rateRepository.save(rate));
+		if (!Objects.equals(ownerId, rate.getUser().getUserId())) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+		}
+		// Lock the JWT owner even when no rate exists yet, so concurrent POSTs serialize.
+		User user = em.find(User.class, ownerId, LockModeType.PESSIMISTIC_WRITE);
+		if (user == null) return ResponseEntity.notFound().build();
+		var product = productRepository.findById(rate.getProduct().getProductId()).orElse(null);
+		if (product == null) return ResponseEntity.notFound().build();
+		// orderDetail là tùy chọn — storefront cho phép đánh giá không cần mua hàng
+		OrderDetail detail = null;
+		if (rate.getOrderDetail() != null) {
+			if (rate.getOrderDetail().getOrderDetailId() == null) return ResponseEntity.badRequest().build();
+			detail = orderDetailRepository.findById(rate.getOrderDetail().getOrderDetailId()).orElse(null);
+			if (detail == null) return ResponseEntity.notFound().build();
+			if (detail.getOrder() == null || detail.getOrder().getUser() == null
+					|| !Objects.equals(ownerId, detail.getOrder().getUser().getUserId()))
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+			if (detail.getProduct() == null || !Objects.equals(product.getProductId(), detail.getProduct().getProductId()))
+				return ResponseEntity.badRequest().build();
+		}
+		Rate stored = rateRepository.findFirstByUser_UserIdAndProduct_ProductIdOrderByIdDesc(ownerId, product.getProductId());
+		if (stored == null) {
+			stored = new Rate();
+			stored.setUser(user);
+			stored.setProduct(product);
+			stored.setOrderDetail(detail);
+		}
+		stored.setRating(rate.getRating());
+		stored.setComment(rate.getComment().trim());
+		stored.setRateDate(new Date());
+		return ResponseEntity.ok(rateRepository.save(stored));
 	}
 
 	@PutMapping
+	@Transactional
 	public ResponseEntity<Rate> put(@RequestBody Rate rate) {
-		if (!rateRepository.existsById(rate.getId())) {
-			return ResponseEntity.notFound().build();
+		if (rate == null || rate.getId() == null) {
+			return ResponseEntity.badRequest().build();
 		}
-		Rate stored = rateRepository.findById(rate.getId()).get();
-		if (stored.getUser() == null || !access.ownsUserId(stored.getUser().getUserId())) {
+		Long ownerId = access.currentUserId();
+		if (ownerId == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		if (em.find(User.class, ownerId, LockModeType.PESSIMISTIC_WRITE) == null) return ResponseEntity.notFound().build();
+		Rate stored = rateRepository.findById(rate.getId()).orElse(null);
+		if (stored == null) return ResponseEntity.notFound().build();
+		if (stored.getUser() == null || !Objects.equals(ownerId, stored.getUser().getUserId())) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
+		if (rate.getProduct() != null && (stored.getProduct() == null
+				|| !Objects.equals(stored.getProduct().getProductId(), rate.getProduct().getProductId())))
+			return ResponseEntity.badRequest().build();
 		if (!validRating(rate)) {
 			return ResponseEntity.badRequest().build();
 		}
@@ -124,6 +157,7 @@ public class RateApi {
 
 	private boolean validRating(Rate rate) {
 		return rate.getRating() != null && rate.getRating() >= 1 && rate.getRating() <= 5
+				&& rate.getRating() == Math.rint(rate.getRating())
 				&& rate.getComment() != null && !rate.getComment().trim().isEmpty()
 				&& rate.getComment().trim().length() <= 2000;
 	}

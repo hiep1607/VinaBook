@@ -13,7 +13,7 @@ Tài liệu này chỉ giữ vấn đề còn hiệu lực. Các mô tả protot
 4. `buyNowItem` là state in-memory; cần bảo đảm luôn clear khi user rời checkout giữa chừng.
 5. Storefront còn dùng nhiều `any`, chưa có model/domain types dùng chung.
 6. Tất cả page storefront đang eager-loaded; bundle có thể giảm bằng feature modules/lazy routes.
-7. Contact chỉ mở email client, chưa có ticket API hoặc theo dõi trạng thái.
+7. Yêu cầu hỗ trợ/đổi trả đã có API, lịch sử trạng thái và phản hồi từ admin; chưa có chat trực tiếp với nhân viên hoặc thông báo chủ động khi có phản hồi.
 8. Avatar, address, wishlist và search history còn device-local.
 9. Backend đang dùng Spring Boot 2.6 và `open-in-view`/SQL logging cần cấu hình rõ theo profile production.
 10. VietQR hiện đối soát thủ công trong admin; muốn tự động cần dịch vụ webhook ngân hàng hoặc payOS/Open Banking.
@@ -31,3 +31,6 @@ Tài liệu này chỉ giữ vấn đề còn hiệu lực. Các mô tả protot
 - COD, VietQR, VNPay Sandbox và MoMo Test đã có luồng server-side; chữ ký và số tiền callback được xác thực trước khi đổi trạng thái.
 - Footer, 404, mobile menu, loading/error/empty state và accessibility chính đã được củng cố.
 - Chatbot đã gom rule về backend, có intent eval tiếng Việt, follow-up context, SSE/fallback transport, action xác nhận thêm giỏ, tra đơn theo principal, feedback và metrics admin không lưu nội dung chat.
+- Hủy đơn, yêu thích, mua lại, yêu cầu đổi trả và hỗ trợ nhân viên dùng chung chức năng web với chat. Thao tác thay đổi đơn/gửi yêu cầu có bước khách xem lại và xác nhận; hỗ trợ là yêu cầu được lưu, chưa phải hội thoại trực tiếp với nhân viên.
+- Đánh giá sách trong chat dùng chung nhận xét, biểu mẫu và API với trang chi tiết sách; yêu cầu đọc/viết được làm rõ, nội dung chỉ lưu khi khách tự gửi.
+- Rà soát đánh giá ngày 07/10/2026: POST không nhận ID của client để ghi đè rate, POST/PUT khóa owner từ JWT khi upsert; điểm sao/cache thống nhất web và chat, form có timeout và bảo vệ đổi ngữ cảnh. Giới hạn 2.000 ký tự đã đồng bộ schema local bằng `db/06-review-comment-length.sql`; database triển khai cần migration tương ứng.

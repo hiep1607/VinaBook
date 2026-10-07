@@ -19,6 +19,7 @@ export class ReviewService {
   private url = environment.apiUrl + '/api/rates';
 
   private rates: any[] = [];
+  private refreshVersion = 0;
 
   /** Phát sau mỗi lần cache thay đổi (nạp lần đầu, upsert) */
   changes$ = new ReplaySubject<void>(1);
@@ -28,9 +29,14 @@ export class ReviewService {
   }
 
   refresh(): void {
-    this.http.get<any[]>(this.url).subscribe(rates => {
-      this.rates = rates || [];
-      this.changes$.next();
+    const version = ++this.refreshVersion;
+    this.http.get<any[]>(this.url).subscribe({
+      next: rates => {
+        if (version !== this.refreshVersion) return;
+        this.rates = Array.isArray(rates) ? rates : [];
+        this.changes$.next();
+      },
+      error: () => { /* Keep the latest confirmed cache when refresh fails. */ }
     });
   }
 
@@ -47,12 +53,12 @@ export class ReviewService {
 
   getReviews(productId: number): any[] {
     return this.rates
-      .filter(r => r.product && r.product.productId === productId)
+      .filter(r => r.product && r.product.productId === productId && this.validStoredRating(r))
       .map(r => this.toReview(r));
   }
 
   getUserReview(productId: number, email: string): any {
-    return this.getReviews(productId).find(r => r.email === email) || null;
+    return this.getReviews(productId).find(r => this.sameEmail(r.email, email)) || null;
   }
 
   getAverageRating(productId: number): number {
@@ -74,7 +80,7 @@ export class ReviewService {
 
   /** Số review user này đã viết (cho tab thống kê ở profile) */
   countByEmail(email: string): number {
-    return this.rates.filter(r => r.user && r.user.email === email).length;
+    return this.rates.filter(r => r.user && this.sameEmail(r.user.email, email) && this.validStoredRating(r)).length;
   }
 
   /**
@@ -85,7 +91,7 @@ export class ReviewService {
 
     const existing = this.rates.find(
       r => r.product && r.product.productId === productId
-        && r.user && r.user.email === review.email
+        && r.user && this.sameEmail(r.user.email, review.email)
     );
 
     const body: any = {
@@ -108,10 +114,27 @@ export class ReviewService {
     }
 
     return call.pipe(
-      tap(() => this.refresh()),
+      tap(saved => {
+        // A successful write is already authoritative; an older GET must not undo it.
+        if (saved?.id) {
+          const rate = { ...saved, product: saved.product || { productId },
+            user: saved.user || { userId: review.userId, email: review.email, name: review.name } };
+          this.rates = [rate, ...this.rates.filter(r => r.id !== saved.id)];
+          this.changes$.next();
+        }
+        this.refresh();
+      }),
       map(saved => saved)
     );
 
+  }
+
+  private validStoredRating(rate: any): boolean {
+    return typeof rate.rating === 'number' && Number.isFinite(rate.rating) && rate.rating >= 1 && rate.rating <= 5;
+  }
+
+  private sameEmail(left: string, right: string): boolean {
+    return !!left && !!right && left.trim().toLowerCase() === right.trim().toLowerCase();
   }
 
 }

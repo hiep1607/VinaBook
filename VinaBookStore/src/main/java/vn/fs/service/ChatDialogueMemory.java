@@ -53,6 +53,8 @@ final class ChatDialogueMemory {
         String offered = "", alternativeFor = "";
         String lastTask = "";
         String pendingQuestion = "";
+        String pendingReviewMode = "";
+        Long pendingReviewProductId;
         String returnReason = "";
         boolean returnActive, returnAwaitingReason;
         List<Long> explanationProductIds = new ArrayList<>();
