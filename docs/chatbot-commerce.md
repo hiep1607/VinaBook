@@ -92,3 +92,17 @@ SupportRequestsApi cung cấp POST/GET /api/support/me, GET /me/order/{id} và G
 Trang Liên hệ và action SHOW_SUPPORT_REQUESTS trong chat dùng cùng danh sách tối đa 50 yêu cầu mới nhất, trạng thái và phản hồi. Nội dung phiếu được tải riêng ở component, không chèn vào prompt hoặc cache hội thoại. Chuyển tài khoản xóa state và bỏ qua response cũ. Admin có hàng đợi /admin/support-requests, lọc/phân trang và phản hồi cùng trạng thái IN_REVIEW/RESOLVED/REJECTED. API admin kiểm tra quyền, khóa phiếu và version để tránh ghi đè phản hồi đồng thời; không thay đổi thanh toán hoặc tồn kho.
 
 Schema bổ sung nằm trong db/05-support-requests.sql. Môi trường local dùng Hibernate ddl-auto=update; môi trường triển khai cần chạy migration trước khi dùng API, không dựa vào tự cập nhật schema production.
+
+## Nhờ nhân viên hỗ trợ — 07/10/2026
+
+Đã thêm biểu mẫu hỗ trợ cho khách đăng nhập ở trang Liên hệ trước khi tích hợp prepareHumanSupport. Chat mở bản nháp cùng SupportRequestComponent với kind SUPPORT. Tóm tắt lấy tối đa bốn lượt user không riêng tư, khách xem/sửa/bổ sung rồi xác nhận gửi. Chỉ gắn đơn khi khách nói rõ và backend xác minh sở hữu; không tự gắn đơn đang xem. Khách theo dõi phản hồi ở Liên hệ hoặc nhắn “xem yêu cầu đã gửi”. Nhân viên xử lý ở hàng đợi admin. Đây là yêu cầu hỗ trợ lưu trên web, chưa phải chuyển sang nhân viên đang trực tuyến và không hứa thời gian trả lời cụ thể.
+
+## Hồi quy cả năm chức năng — 07/10/2026
+
+454 kiểm thử backend (Chat*Test, CartSyncServiceTest, OrderCancellationServiceTest, MyOrderActionsApiTest, CustomerSupportServiceTest, SupportRequestsApiTest), 49 kiểm thử storefront và 3 kiểm thử admin đều đạt. Các ca mới bao gồm JWT/chủ đơn, xác nhận riêng, gửi lặp, kết quả chưa rõ, đổi tài khoản, giá/tồn kho mua lại, thao tác yêu thích, origin local/loại bỏ origin lạ và phiên local không để câu hỏi chính sách chặn lệnh đổi trả. Storefront/admin dùng bộ entry kiểm thử riêng vì các spec cũ ngoài phạm vi vẫn có lỗi đã ghi trong docs/bugs.md. Hai bản build production thành công, còn cảnh báo dung lượng bundle/stylesheet. Ba biểu mẫu dùng busyChange bất đồng bộ để việc khởi tạo component con không thay đổi binding đã kiểm tra ở cha; ca host mua lại kiểm tra hồi quy lỗi Angular NG0100.
+
+MyOrderActionsApi/SupportRequestsApi chỉ cho CORS từ localhost/127.0.0.1 cổng 4200 và 4300. Production nên dùng reverse proxy cùng origin theo cấu hình website hiện tại; nếu frontend/backend đặt khác origin cần cấu hình đúng origin triển khai trước khi dùng các API này.
+
+Kiểm tra localhost với backend/MySQL thật: hủy đơn mở xem lại trên web/chat và chọn Giữ đơn; mua lại đơn #46 mở đúng sách, giá hiện tại và tồn kho trên cả hai giao diện, dừng trước thêm giỏ; yêu thích đọc cùng danh sách hiện hành; đổi trả đơn đang chờ được giải thích điều kiện và hướng dẫn hỗ trợ; biểu mẫu hỗ trợ cho xem/sửa nội dung trước xác nhận; danh sách yêu cầu trong chat và Liên hệ cùng trạng thái trống của tài khoản. Không hủy, mua lại, gửi phiếu hoặc thanh toán thật trong QA. Nhánh lưu phiếu/phản hồi/đổi trả đơn hoàn thành được kiểm thử tự động bằng dữ liệu giả, chưa gửi một phiếu thật trong đợt này.
+
+Widget chờ lượt render tiếp theo trước khi cuộn xuống cuối, để phản hồi/biểu mẫu mới không nằm ngoài khung nhìn khi lịch sử dài. Backend đang chạy được biên dịch và khởi động lại đầy đủ sau các thay đổi: tránh Spring devtools quét class trong lúc Maven đang biên dịch khiến một số API tạm thiếu. OPTIONS thật xác minh API hủy/hỗ trợ/admin cho origin local và từ chối origin lạ; các endpoint vẫn cần JWT/role ở request thực thi.

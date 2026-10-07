@@ -81,6 +81,19 @@ class ChatServiceTest {
                 org.mockito.ArgumentMatchers.argThat(a -> a.size() == 1 && a.path("orderId").asLong() == 7L), any());
     }
 
+    @Test
+    void localHumanSupportCommandPreservesTheExplicitOrderWithoutRecommendingBooks() {
+        ChatToolRegistry tools = org.mockito.Mockito.mock(ChatToolRegistry.class);
+        service.setTools(tools);
+        when(tools.execute(anyString(), any(), any())).thenReturn(ChatTool.Result.text(
+                "Bạn xem lại nội dung trước khi gửi cho nhân viên nhé.", vn.fs.dto.chat.ChatIntent.ORDER_SUPPORT));
+
+        ChatResponseDto response = service.reply(request("Tôi cần gặp nhân viên về đơn #7"));
+
+        assertThat(response.getProducts()).isEmpty();
+        org.mockito.Mockito.verify(tools).execute(org.mockito.ArgumentMatchers.eq("prepareHumanSupport"),
+                org.mockito.ArgumentMatchers.argThat(a -> a.size() == 1 && a.path("orderId").asLong() == 7L), any());
+    }
 
 	@Test
 	void providerFailureFallsBackToVerifiedStorePolicy() {

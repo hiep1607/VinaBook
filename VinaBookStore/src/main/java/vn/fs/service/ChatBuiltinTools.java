@@ -733,6 +733,15 @@ public class ChatBuiltinTools {
     private ChatTool.Result supportLogin() {
         return new ChatTool.Result("Bạn đăng nhập để yêu cầu hỗ trợ được lưu đúng tài khoản và chỉ bạn xem được phản hồi nhé. Sau đó mình sẽ giúp bạn soạn nội dung để nhân viên hiểu rõ tình huống.",ChatIntent.ORDER_SUPPORT,List.of(),List.of(new ChatActionDto("LOGIN","Đăng nhập",null,"/login",false)),"NEEDS_INPUT");
     }
+    @Bean public ChatTool prepareHumanSupport() {
+        return tool("prepareHumanSupport","Mở bản nháp để nhờ nhân viên hỗ trợ. Khách xem/sửa tóm tắt và xác nhận gửi; phản hồi qua yêu cầu trên web, không hứa nhân viên đang trực tuyến.",Map.of("orderId",integer("Mã đơn nếu khách nói rõ",1,9007199254740991L)),(a,c)->{
+            if(access==null || access.currentEmail()==null)return supportLogin();
+            Long id=a.hasNonNull("orderId")?Long.valueOf(integerLong(a,"orderId")):null;
+            if(id!=null)try { orders.reorderPreview(id); } catch(org.springframework.web.server.ResponseStatusException e){return ChatTool.Result.text(e.getReason(),ChatIntent.ORDER_SUPPORT);}
+            var action=new ChatActionDto("CREATE_SUPPORT_REQUEST","Soạn yêu cầu cho nhân viên",null,null,true);action.setOrderId(id);
+            return new ChatTool.Result("Mình sẽ giúp bạn chuyển điều cần hỗ trợ thành một yêu cầu cho nhân viên. Bạn mở bản nháp bên dưới, kiểm tra và bổ sung nội dung rồi xác nhận gửi nhé. Nhân viên sẽ phản hồi trong mục yêu cầu; mình chưa có thông tin để xác nhận ai đang trực tuyến hoặc thời gian trả lời cụ thể.",ChatIntent.ORDER_SUPPORT,List.of(),List.of(action),"AWAITING_INPUT");
+        });
+    }
     @Bean public ChatTool getSupportRequests() {
         return tool("getSupportRequests","Mở danh sách yêu cầu hỗ trợ/đổi trả và phản hồi của chính khách trong chat. Không đưa nội dung riêng tư của ticket vào prompt hoặc history.",Map.of(),(a,c)->{
             if(access==null || access.currentEmail()==null)return supportLogin();

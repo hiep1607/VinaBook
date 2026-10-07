@@ -108,6 +108,15 @@ class ChatToolsTest {
         assertThat(result.getActions().get(0).getType()).isEqualTo("CREATE_RETURN_REQUEST");assertThat(result.getActions().get(0).getOrderId()).isEqualTo(7L);
         assertThat(result.isFallback()).isFalse();verify(support,never()).create(any());
     }
+    @Test void humanSupportOpensAnEditableDraftAndPrivateHistoryIsReadOnlyInTheUi() {
+        builtins.setAccess(access);when(access.currentEmail()).thenReturn("buyer@test.invalid");
+        var registry=new ChatToolRegistry(List.of(builtins.prepareHumanSupport(),builtins.getSupportRequests()));
+        var orchestrator=new ChatOrchestrator(ai,mapper,registry,analytics);
+        var result=orchestrator.reply(request("s","Tôi muốn gặp nhân viên hỗ trợ"),state);
+        assertThat(result.getActions().get(0).getType()).isEqualTo("CREATE_SUPPORT_REQUEST");assertThat(result.getActions().get(0).getOrderId()).isNull();
+        var history=orchestrator.reply(request("s","Xem yêu cầu đã gửi"),state);
+        assertThat(history.getActions().get(0).getType()).isEqualTo("SHOW_SUPPORT_REQUESTS");assertThat(history.getProducts()).isEmpty();
+    }
     @Test void continuationRetainsTopicAndExplicitNullClearsPrice() throws Exception {
         run("searchProducts","{\"query\":\"Python\",\"maxPrice\":100000}");
         run("searchProducts","{\"scope\":\"continue\",\"minRating\":4.5}");
