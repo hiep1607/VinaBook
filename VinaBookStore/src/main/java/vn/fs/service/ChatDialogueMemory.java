@@ -41,6 +41,11 @@ final class ChatDialogueMemory {
         int recommendationHistoryVersion;
         Long focus;
         Long recommendationBudget;
+        String recommendationNeed = "", recommendationReader = "";
+        boolean recommendationPending, recommendationFactsLoaded;
+        @com.fasterxml.jackson.annotation.JsonIgnore
+        boolean recommendationIntakeRequired;
+        List<String> recommendationTurns = new ArrayList<>();
         Long focusedOrderId;
         boolean awaitingPurchase;
         boolean awaitingComparison;

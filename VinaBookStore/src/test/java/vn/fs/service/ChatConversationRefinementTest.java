@@ -40,7 +40,7 @@ class ChatConversationRefinementTest {
     @Test void genderWithoutReadingPreferencesDoesNotRecommendAnArbitraryCatalog() {
         var response=turn("Có cuốn sách nào các bạn nữ đặc biệt ưa thích không?");
         assertThat(response.getProducts()).isEmpty();
-        assertThat(response.getAnswer()).contains("giới tính","thống kê","chủ đề");
+        assertThat(response.getAnswer()).contains("giới tính","Sở thích đọc khác nhau","chủ đề");
         assertThat(response.getExecution()).containsEntry("status","NEEDS_INPUT");
         verify(ai,never()).complete(anyString(),anyList(),anyString());
     }

@@ -252,6 +252,8 @@ public class ChatOrchestrator {
             context.put("comparisonProductIds", state.comparisonProducts);
             context.put("productFacts", productFacts(state,request));
             context.put("focusedProductId", state.focus);
+            context.put("confirmedReadingNeed", state.recommendationNeed);
+            context.put("confirmedReader", state.recommendationReader);
             context.put("pageProductId", request.getActiveProductId());
             context.put("browserCart", request.getCartItems());
             context.put("lastSearch", state.toolSearch);

@@ -37,7 +37,7 @@ public class ChatPolicyService {
             state.returnReason=ChatDialogueInterpreter.clean(question,180);
         if(state.returnReason.isBlank()) {
             state.returnAwaitingReason=true;
-            return "Mình sẽ hướng dẫn theo tình trạng sách để bạn biết bước tiếp theo. Bạn muốn trả vì sách bị lỗi, giao sai hay vì không còn nhu cầu đọc?";
+            return "Mình có thể hướng dẫn bạn bước tiếp theo. Bạn muốn trả vì sách bị lỗi, giao sai hay vì không còn nhu cầu đọc? Mình cần biết lý do vì điều kiện và cách xử lý sẽ khác nhau theo tình trạng sách.";
         }
         state.returnAwaitingReason=false;
         String reasonText=state.returnReason;
@@ -51,7 +51,7 @@ public class ChatPolicyService {
                 +"Mình chưa thể xác nhận yêu cầu được nhận trả hoặc hoàn tiền.\n\n"+returnsPolicy()
                 +"\n\nBạn hãy gửi mã đơn, ngày nhận thực tế và ảnh tình trạng sách qua trang Liên hệ, nói rõ thời gian đã nhận và nhờ cửa hàng xem xét cách xử lý. Giữ sách và hóa đơn, chờ hướng dẫn trước khi gửi lại.";
         }
-        if(contains(q,"gui lai","gui tra","dia chi tra","tra o dau"))return "Bạn đừng gửi sách về một địa chỉ tự đoán nhé. Với yêu cầu trả vì “"+reasonText
+        if(contains(q,"gui lai","gui tra","dia chi tra","tra o dau"))return "Mình cần cửa hàng xác nhận địa chỉ nhận lại để sách của bạn được gửi đúng nơi. Với yêu cầu trả vì “"+reasonText
             +"”, hãy gửi mã đơn, ngày nhận và tình trạng sách qua trang Liên hệ để cửa hàng xác nhận địa chỉ nhận lại và cách gửi. Giữ sách và hóa đơn trong lúc chờ phản hồi."
             +"\n\nMình chưa có hướng dẫn đã được xác nhận về địa chỉ nhận hàng trả hoặc bên chịu phí gửi lại, nên cần cửa hàng cung cấp các thông tin đó."
             +"\n\nChính sách hiện hành: "+returnsPolicy();
@@ -112,7 +112,7 @@ public class ChatPolicyService {
 			return "Bạn có thể nhắn “hủy đơn gần nhất” hoặc “hủy đơn #mã đơn”. Mình sẽ kiểm tra tài khoản và trạng thái rồi yêu cầu xác nhận. Đơn COD chưa thanh toán, đang chờ xử lý có thể hủy; đơn đang giao, đã hoàn thành hoặc thanh toán trực tuyến cần liên hệ cửa hàng. Chưa có đơn nào bị hủy chỉ vì bạn hỏi chính sách.";
 		}
 		if (contains(q, "xac nhan don", "don duoc xac nhan"))
-			return "Bạn có thể xem trạng thái xác nhận trong mục Đơn hàng. Nếu muốn mình kiểm tra một đơn cụ thể, bạn gửi mã đơn hoặc yêu cầu tra đơn gần nhất nhé.";
+			return "Bạn có thể xem trạng thái xác nhận trong mục Đơn hàng nhé. Nếu muốn mình kiểm tra một đơn cụ thể, bạn gửi mã đơn hoặc yêu cầu tra đơn gần nhất nhé.";
 		if (contains(q, "doi sach", "doi tra", "tra hang", "tra sach", "hoan tien", "sach loi", "sach rach", "giao sai")) {
 			if (store != null) return store.text("returns");
 			return "VinaBook hỗ trợ đổi trả trong 7 ngày nếu sách lỗi in, rách hoặc giao sai. Bạn giữ hóa đơn và liên hệ trang Hỗ trợ để được xử lý.";
@@ -136,13 +136,13 @@ public class ChatPolicyService {
 		}
 		if (contains(q, "thanh toan", "cod", "vietqr", "vnpay", "momo", "chuyen khoan")) {
 			if (store != null) return store.text("payment");
-			return "Bạn luôn có thể thanh toán COD. VietQR, VNPay Sandbox và MoMo Test sẽ xuất hiện ở bước thanh toán khi cửa hàng đã cấu hình cổng tương ứng.";
+			return "Bạn có thể chọn COD để thanh toán khi nhận hàng. VietQR, VNPay Sandbox và MoMo Test sẽ xuất hiện ở bước thanh toán khi cửa hàng đã cấu hình cổng tương ứng.";
 		}
 		if (contains(q, "lien he", "hotline", "email", "cua hang")) {
 			if (store != null) return store.text("support");
 			return "Bạn có thể gửi yêu cầu tại trang Liên hệ hoặc email hotro@vinabook.vn. Không gửi mật khẩu, OTP hay thông tin thẻ qua nội dung hỗ trợ.";
 		}
-		return "Mình có thể giải đáp về giao hàng, thanh toán, đổi trả và cách đặt hàng. Bạn muốn hỏi chính sách nào?";
+		return "Mình có thể giúp bạn làm rõ chuyện giao hàng, thanh toán, đổi trả hoặc cách đặt hàng. Bạn đang vướng ở bước nào, hay muốn kiểm tra chính sách nào trước khi mua?";
 	}
 
 	private boolean contains(String q, String... values) {

@@ -192,7 +192,7 @@ class ChatReadingQualityTest {
         ChatBuiltinTools builtins=new ChatBuiltinTools(repo,data,language,orders,new ChatPolicyService(language));
         ChatService service=new ChatService(repo,ai,language,data,new ChatPolicyService(language),orders,mock(ChatAnalyticsService.class),mock(vn.fs.config.CurrentUserAccess.class));
         service.setTools(new ChatToolRegistry(List.of(builtins.recommendBooks())));
-        localTurn(service,"Tìm sách phát triển bản thân, đừng giới thiệu Đắc Nhân Tâm.");
+        localTurn(service,"Tìm sách phát triển bản thân cho mình, đừng giới thiệu Đắc Nhân Tâm.");
         var switched=localTurn(service,"Thôi đổi sang truyện để thư giãn nhé, vẫn dưới 100 nghìn.");
         assertThat(switched.getProducts()).extracting(ChatProductDto::getId).containsExactly(1L);
         assertThat(switched.getAnswer()).doesNotContain("Bạn muốn mình giúp tìm sách");
