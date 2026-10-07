@@ -31,6 +31,9 @@ public class ChatCheckoutService {
     private StoreKnowledgeService store;
     @org.springframework.beans.factory.annotation.Autowired(required=false)
     public void setStore(StoreKnowledgeService value){store=value;}
+    private PaymentGatewayService payments;
+    @org.springframework.beans.factory.annotation.Autowired
+    public void setPayments(PaymentGatewayService value){payments=value;}
     public ChatCheckoutService(CurrentUserAccess access, ProductRepository products, UserRepository users,
             OrderRepository orders, OrderDetailRepository details, ChatRetrievalService pricing,
             EntityManager em, PlatformTransactionManager transactions) {
@@ -44,6 +47,7 @@ public class ChatCheckoutService {
     }
     public synchronized Draft quote(Input input) {
         String email=owner();
+        checkPayment(input.paymentMethod);
         drafts.values().removeIf(d -> d.expiresAt < System.currentTimeMillis());
         if(drafts.size()>=2000) throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "Vui lòng thử lại sau");
         List<QuoteLine> lines=new ArrayList<>();
@@ -51,6 +55,15 @@ public class ChatCheckoutService {
         if(requested==null || requested.isEmpty()) {
             if(input.productId==null)throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Bạn chưa chọn sách.");
             CartSyncService.Line line=new CartSyncService.Line();line.setProductId(input.productId);line.setQuantity(input.quantity);requested=List.of(line);
+        }
+        if(input.fromCart) {
+            if(carts==null)throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,"Chưa tải được giỏ hàng.");
+            CartSyncService.Snapshot cart=carts.get();
+            if(cart.revision()!=input.cartRevision)throw new ResponseStatusException(HttpStatus.CONFLICT,"Giỏ hàng đã thay đổi. Vui lòng tải lại giỏ.");
+            for(CartSyncService.Line item:requested) {
+                if(cart.items().stream().noneMatch(stored->stored.id().equals(item.getProductId()) && stored.quantity()==item.getQuantity()))
+                    throw new ResponseStatusException(HttpStatus.CONFLICT,"Sách hoặc số lượng trong giỏ đã thay đổi.");
+            }
         }
         Set<Long> seen=new HashSet<>();
         for(CartSyncService.Line item:requested) {
@@ -80,6 +93,9 @@ public class ChatCheckoutService {
             throw new ResponseStatusException(HttpStatus.GONE,"Bản nháp đã hết hạn. Vui lòng lập lại.");
         if(d.orderId!=null) return Map.of("orderId",d.orderId);
         Long id=tx.execute(status -> {
+            checkPayment(d.paymentMethod);
+            long currentShipping=store==null?(d.subtotal>0 && d.subtotal<300000 ? 20000 : 0):store.shipping(d.subtotal);
+            if(currentShipping!=d.shipping)throw new ResponseStatusException(HttpStatus.CONFLICT,"Phí giao hàng đã thay đổi. Vui lòng xem lại báo giá.");
             if(d.fromCart)carts.consume(d.items,d.cartRevision);
             Map<Long,Product> locked=new LinkedHashMap<>();
             for(QuoteLine line:d.items.stream().sorted(Comparator.comparing(QuoteLine::productId)).toList()) {
@@ -114,6 +130,14 @@ public class ChatCheckoutService {
     private void check(Product p,int quantity) {
         if(!Boolean.TRUE.equals(p.getStatus()) || quantity<1 || quantity>99 || quantity>p.getQuantity())
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Sách không còn đủ số lượng. Vui lòng chọn lại.");
+    }
+    private void checkPayment(String method) {
+        if(method==null || !Set.of("COD","BANK_QR","VNPAY","MOMO").contains(method))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Phương thức thanh toán không hợp lệ.");
+        if("COD".equals(method))return;
+        Object available=payments==null?null:payments.availableMethods().get(method);
+        if(!(available instanceof Map<?,?> entry) || !Boolean.TRUE.equals(entry.get("available")))
+            throw new ResponseStatusException(HttpStatus.CONFLICT,"Phương thức thanh toán này hiện không khả dụng. Vui lòng chọn lại.");
     }
     @Data public static class Input {
         @Positive private Long productId;

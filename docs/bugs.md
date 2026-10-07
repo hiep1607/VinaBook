@@ -5,7 +5,7 @@ Tài liệu này chỉ giữ vấn đề còn hiệu lực. Các mô tả protot
 ## Ưu tiên cao
 
 1. **Angular 12 đã cũ.** Admin có dependency tree legacy và cảnh báo `npm audit`; cần nâng cấp theo từng major, không dùng `npm audit fix --force`.
-2. **Test coverage còn mỏng ở storefront/admin.** Backend có kiểm thử hồi quy chatbot; storefront/admin phần lớn mới dừng ở compile/build. Ngày 02/10/2026, `tsc -p tsconfig.spec.json --noEmit` thất bại ở spec login/search tham chiếu thuộc tính và handler đã bỏ (`showPassword`, `totalPages`, `pagedProducts`, ...). Một số smoke spec cũ cũng thiếu `HttpClientTestingModule` hoặc service mock. Build ứng dụng storefront vẫn thành công; cần cập nhật riêng các spec này theo giao diện hiện tại.
+2. **Test coverage còn mỏng ở storefront/admin.** CI chạy build và toàn bộ test Angular; một số trang/admin vẫn chủ yếu có smoke test khởi tạo. Cần bổ sung kiểm thử tích hợp các luồng người dùng. Mock checkout đã được cập nhật theo `StoreKnowledgeService`, và mock route chi tiết sách đã có `queryParamMap` để từng commit tính năng có thể chạy bộ kiểm thử storefront đầy đủ.
 3. **Cart chưa đồng bộ đa thiết bị.** Cart local chỉ được đẩy lên backend lúc checkout.
 
 ## Ưu tiên trung bình

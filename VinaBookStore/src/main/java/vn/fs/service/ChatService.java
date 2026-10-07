@@ -124,6 +124,12 @@ public class ChatService {
 		String guard = guardedAnswer(question);
 		if (guard != null) return clarification(request, guard, started);
 		if (privateText(question)) return clarification(request, "Bạn nhập thông tin giao hàng vào bản nháp đơn để mình xử lý đúng tài khoản nhé.", started);
+        var purchaseCount=java.util.regex.Pattern.compile("\\b(?:mua|dat mua|chot|lay)\\s+(?:ngay\\s+)?(-?[0-9]+(?:[.,][0-9]+)?)\\s+(?:ban|cuon|quyen)\\b").matcher(q);
+        if(!q.matches(".*\\b(?:khong|chua|dung)\\b.*") && purchaseCount.find()) {
+            String count=purchaseCount.group(1);
+            if(!count.matches("[0-9]{1,2}") || Integer.parseInt(count)<1)
+                return clarification(request,ChatVoice.INVALID_QUANTITY,started);
+        }
         if (!forceLocal && orchestrator != null && ai.isConfigured()) {
             if (!s.initialized) {
                 s.displayed = products.findByStatusTrue().stream()
@@ -159,6 +165,10 @@ public class ChatService {
 		if (request.getActiveProductId() != null && catalog.stream().anyMatch(p -> request.getActiveProductId().equals(p.getProductId())))
 			s.focus = request.getActiveProductId();
 		ChatIntent classified = intents.classify(question);
+        if(tools!=null && !ChatOrchestrator.cartTool(q).isEmpty()) {
+            String tool=ChatOrchestrator.cartTool(q);
+            return localDiscovery(request,s,tool,ChatOrchestrator.cartArguments(tool),started);
+        }
 		if(policies.handlesReturn(question,s)) {
 			String answer=policies.answer(question,s);
 			return finish(request,answer,ChatIntent.POLICY,List.of(),false,false,s,started);
@@ -621,10 +631,17 @@ public class ChatService {
 		if (q.matches(".*\\b(chi lay|chi chon|de hoc|hoc tieng|lam qua|qua sinh nhat|goi y|tu van|duoi|ngan sach|khoang)\\b.*")) return false;
 		q = q.replaceAll("^(?:(?:toi|minh|t|em) )?(?:(?:muon|can) )?(?:doi sang|chuyen sang) ", "mua ");
 		q = q.replaceAll("\\bdat don\\b", "mua").replaceAll("\\bdat hang\\b", "mua").replaceAll("\\bdat(?= (?:cuon|sach|quyen))", "mua");
+		q = q.replaceAll("\\bdat(?= (?:cho (?:toi|minh|t|em|anh|chi)|giup|ho))", "mua")
+			.replaceAll("\\b(mua|dat mua|chot|lay)\\s+(?:(?:cho|giup|ho)\\s+)?(?:toi|minh|t|em|anh|chi)\\s+", "$1 ");
 		if (q.matches(".*\\b(khong|chua|dung|huy|bao nhieu|the nao|lam sao|cach mua)\\b.*")) return false;
 		return isImplicitPurchase(q) || q.matches(".*\\b(mua|dat mua|chot|lay)\\s+(ngay\\s+)?([0-9]{1,2}\\s+)?(cuon|sach|quyen|ban|no)\\b.*")
 			|| q.matches(".*\\b(toi|minh|t|em|anh|chi)\\s+(muon\\s+|se\\s+)?(mua|dat mua|chot|lay)\\b.*");
 	}
+
+    static boolean isCartChangeRequest(String q) {
+        return ChatBookFacts.has(q,"them|xoa|doi so luong|gio hang|vao gio|khoi gio|trong gio|cart")
+            || q.matches("(?s).*\\bbo\\s+(?:cuon|sach|quyen|khoi|ra)\\b.*");
+    }
 
 	static boolean isImplicitPurchase(String q) {
 		q = q.replaceAll("\\bdat don\\b", "mua").replaceAll("\\bdat hang\\b", "mua");

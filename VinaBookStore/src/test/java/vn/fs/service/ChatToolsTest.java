@@ -34,7 +34,7 @@ class ChatToolsTest {
         builtins=new ChatBuiltinTools(products,data,language,orders,new ChatPolicyService(language));
         builtins.setCancellation(cancellation);
         registry=new ChatToolRegistry(List.of(builtins.searchProducts(),builtins.recommendBooks(),builtins.getProducts(),builtins.updateSelection(),
-            builtins.prepareCartChange(),builtins.prepareCheckout(),builtins.prepareCancelOrder(),builtins.getCart(),builtins.getMyOrders(),builtins.getOrderDetail(),builtins.getPolicy(),builtins.respond(),builtins.findRelatedBooks()));
+            builtins.prepareCartChange(),builtins.prepareCheckout(),builtins.prepareCancelOrder(),builtins.prepareClearCart(),builtins.getCart(),builtins.getMyOrders(),builtins.getOrderDetail(),builtins.getPolicy(),builtins.respond(),builtins.findRelatedBooks()));
         when(ai.provider()).thenReturn("gemini");when(ai.modelUsed()).thenReturn("fixture");when(ai.isConfigured()).thenReturn(true);
         when(analytics.record(any(),any(),anyString(),anyBoolean(),anyInt(),anyLong())).thenReturn("event");
         orchestrator=new ChatOrchestrator(ai,mapper,registry,analytics);
@@ -212,22 +212,6 @@ class ChatToolsTest {
     @Test void fabricatedProductIdCannotBeSelected() throws Exception {
         assertThat(run("prepareCheckout","{\"productId\":1}").status()).isEqualTo("NEEDS_INPUT");
     }
-    @Test void checkoutGuidesToProductWithoutCreatingOrder() throws Exception {
-        var r=run("prepareCheckout","{\"title\":\"Python 1\",\"quantity\":3}");
-        assertThat(r.status()).isEqualTo("COMPLETED");
-        assertThat(r.actions().get(0).getRoute()).isEqualTo("/product/1?quantity=3");
-        assertThat(r.answer()).contains("3 cuốn", "chat chưa đặt đơn");
-        assertThat(r.answer()).doesNotContain("đặt hàng thành công");
-        verifyNoInteractions(orders);
-    }
-    @Test void cartUpdateGuidesToCartPage() throws Exception {
-        ChatRequestDto request=request("s","Sửa cuốn Python 2 thành 2 bản");
-        ChatRequestDto.CartItem item=new ChatRequestDto.CartItem();item.setProductId(2L);item.setQuantity(1);request.setCartItems(List.of(item));
-        var r=registry.execute("prepareCartChange",mapper.readTree("{\"title\":\"Python 2\",\"operation\":\"update\",\"quantity\":2}"),new ChatTool.Context(request,state));
-        assertThat(r.status()).isEqualTo("COMPLETED");
-        assertThat(r.actions().get(0).getType()).isEqualTo("SHOW_CART");
-        assertThat(r.actions().get(0).getRoute()).isEqualTo("/cart");
-    }
     @Test void rejectsUnknownToolsAndArgumentsBeforeExecution() {
         assertThatThrownBy(()->run("createOrder","{}")).isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(()->run("getMyOrders","{\"userId\":99}")).isInstanceOf(IllegalArgumentException.class);
@@ -284,7 +268,9 @@ class ChatToolsTest {
         ChatRequestDto.CartItem item=new ChatRequestDto.CartItem();item.setProductId(3L);item.setQuantity(2);request.setCartItems(List.of(item));
         var result=registry.execute("prepareCartChange",mapper.readTree("{\"source\":\"cart\",\"reference\":\"first\",\"operation\":\"remove\"}"),new ChatTool.Context(request,state));
         assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(3L);
-        assertThat(result.actions().get(0).getRoute()).isEqualTo("/cart");
+        assertThat(result.actions().get(0).getType()).isEqualTo("REMOVE_FROM_CART");
+        assertThat(result.actions().get(0).getProductId()).isEqualTo(3L);
+        assertThat(result.actions().get(0).isRequiresConfirmation()).isTrue();
         var cart=registry.execute("getCart",mapper.readTree("{}"),new ChatTool.Context(request,state));
         assertThat(cart.answer()).contains("180.000đ");
     }
@@ -434,7 +420,7 @@ class ChatToolsTest {
         assertThat(r.products()).hasSize(3);assertThat(r.actions()).isEmpty();
         var next=run("prepareCheckout","{\"reference\":\"second\",\"quantity\":2}");
         assertThat(next.products()).extracting(ChatProductDto::getId).containsExactly(2L);
-        assertThat(next.actions().get(0).getRoute()).isEqualTo("/product/2?quantity=2");
+        assertThat(next.actions().get(0).getType()).isEqualTo("BUY_NOW");
         assertThat(next.answer()).contains("2 cuốn");
     }
     @Test void emptyResultsAskToChangeSearchInsteadOfSelectingNonexistentBook() throws Exception {
@@ -535,8 +521,8 @@ class ChatToolsTest {
         assertThat(response.getExecution()).containsEntry("tool","prepareCheckout");
         assertThat(response.getProducts()).extracting(ChatProductDto::getId).containsExactly(2L);
         assertThat(response.getAnswer()).contains("Python 2","2 cuốn").doesNotContain("xác nhận thêm");
-        assertThat(response.getActions()).extracting(ChatActionDto::getType).containsExactly("VIEW_PRODUCT");
-        assertThat(response.getActions().get(0).getRoute()).isEqualTo("/product/2?quantity=2");
+        assertThat(response.getActions()).extracting(ChatActionDto::getType).containsExactly("BUY_NOW");
+        assertThat(response.getActions().get(0).getRoute()).isNull();
         assertThat(response.getActions().get(0).getQuantity()).isEqualTo(2);
     }
     @Test void namedBookAndOrdinalOverrideConflictingModelIds() throws Exception {
@@ -592,7 +578,7 @@ class ChatToolsTest {
         var response=orchestrator.reply(request("s","Tôi muốn mua 2 bản Python 2."),state);
         assertThat(response.getExecution()).containsEntry("tool","prepareCheckout");
         assertThat(response.getProducts()).extracting(ChatProductDto::getId).containsExactly(2L);
-        assertThat(response.getActions().get(0).getRoute()).isEqualTo("/product/2?quantity=2");
+        assertThat(response.getActions().get(0).getType()).isEqualTo("BUY_NOW");
         verify(ai,never()).complete(anyString(),anyList(),anyString());
     }
     @Test void excessivePurchaseQuantityAsksForAValidQuantity() {
@@ -1092,4 +1078,76 @@ class ChatToolsTest {
     private void plan(String p){when(ai.complete(anyString(),anyList(),anyString())).thenReturn(p);}
     private ChatRequestDto request(String session,String message){ChatRequestDto r=new ChatRequestDto();r.setSessionId(session);r.setMessage(message);return r;}
     private Product book(long id,double price){return new Product(id,"Python "+id,"Tác giả",10,price,0,"","Học lập trình Python cơ bản cho người mới.",LocalDate.now(),true,10,new Category(1L,"Giáo trình"));}
+    @Test void checkoutOpensShippingFormWithoutCreatingOrder() throws Exception {
+        var r=run("prepareCheckout","{\"title\":\"Python 1\",\"quantity\":3}");
+        assertThat(r.status()).isEqualTo("AWAITING_CONFIRMATION");
+        assertThat(r.actions().get(0).getType()).isEqualTo("BUY_NOW");
+        assertThat(r.actions().get(0).getQuantity()).isEqualTo(3);
+        assertThat(r.actions().get(0).getRoute()).isNull();
+        assertThat(r.answer()).contains("3 cuốn", "chỉ tạo đơn sau khi bạn xem tổng tiền và xác nhận");
+        assertThat(r.answer()).doesNotContain("đặt hàng thành công");
+        verifyNoInteractions(orders);
+    }
+
+    @Test void cartUpdateWaitsForConfirmationWithExactQuantity() throws Exception {
+        ChatRequestDto request=request("s","Sửa cuốn Python 2 thành 2 bản");
+        ChatRequestDto.CartItem item=new ChatRequestDto.CartItem();item.setProductId(2L);item.setQuantity(1);request.setCartItems(List.of(item));
+        var r=registry.execute("prepareCartChange",mapper.readTree("{\"title\":\"Python 2\",\"operation\":\"update\",\"quantity\":2}"),new ChatTool.Context(request,state));
+        assertThat(r.status()).isEqualTo("AWAITING_CONFIRMATION");
+        assertThat(r.actions().get(0).getType()).isEqualTo("UPDATE_CART_QUANTITY");
+        assertThat(r.actions().get(0).getQuantity()).isEqualTo(2);
+        assertThat(r.actions().get(0).isRequiresConfirmation()).isTrue();
+        assertThat(r.actions().get(0).getRoute()).isNull();
+    }
+
+    @Test void wholeCartCheckoutDoesNotPickAnOldFocusedBook() {
+        state.focus=1L;
+        ChatRequestDto request=request("s","Thanh toán giỏ hàng");
+        ChatRequestDto.CartItem item=new ChatRequestDto.CartItem();item.setProductId(2L);item.setQuantity(2);request.setCartItems(List.of(item));
+        var result=orchestrator.reply(request,state);
+        assertThat(result.getActions()).extracting(ChatActionDto::getType).containsExactly("CHECKOUT_CART");
+        assertThat(result.getProducts()).isEmpty();verify(ai,never()).complete(anyString(),anyList(),anyString());
+    }
+
+    @Test void clearCartOnlyProposesConfirmationAndIgnoresNegation() {
+        ChatRequestDto request=request("s","Xóa toàn bộ giỏ hàng");
+        ChatRequestDto.CartItem item=new ChatRequestDto.CartItem();item.setProductId(2L);item.setQuantity(1);request.setCartItems(List.of(item));
+        var result=orchestrator.reply(request,state);
+        assertThat(result.getActions()).extracting(ChatActionDto::getType).containsExactly("CLEAR_CART");
+        assertThat(result.getActions().get(0).isRequiresConfirmation()).isTrue();
+        assertThat(result.getExecution()).containsEntry("status","AWAITING_CONFIRMATION");
+        assertThat(ChatOrchestrator.cartTool("khong xoa toan bo gio hang")).isEmpty();verifyNoInteractions(orders);
+    }
+
+    @Test void localModeCanReadAndCheckoutTheCartWithoutCallingAi() {
+        ChatService chat=new ChatService(products,ai,language,data,new ChatPolicyService(language),orders,analytics,access);
+        chat.setTools(registry);when(ai.isConfigured()).thenReturn(false);
+        ChatRequestDto request=request("local-cart","Thanh toán giỏ hàng");
+        ChatRequestDto.CartItem item=new ChatRequestDto.CartItem();item.setProductId(2L);item.setQuantity(2);request.setCartItems(List.of(item));
+        assertThat(chat.reply(request).getActions()).extracting(ChatActionDto::getType).containsExactly("CHECKOUT_CART");
+        verify(ai,never()).complete(anyString(),anyList(),anyString());
+    }
+
+    @Test void localPurchaseRejectsInvalidQuantitiesInsteadOfChangingThemOrFailing() {
+        ChatService chat=new ChatService(products,ai,language,data,new ChatPolicyService(language),orders,analytics,access);
+        chat.setTools(registry);when(ai.isConfigured()).thenReturn(false);
+        for(String quantity:List.of("0","100","1.5","-1")) {
+            var result=chat.reply(request("invalid-"+quantity,"Mua "+quantity+" bản Python 2"));
+            assertThat(result.getAnswer()).as("quantity=%s",quantity).contains("1 đến 99");
+            assertThat(result.getActions()).isEmpty();
+        }
+        verifyNoInteractions(orders);
+    }
+
+    @Test void orderForMeRecognizesShortEditionTitleAndCreatesCheckoutAction() {
+        Product law=book(7,110000);law.setName("Luật Đất Đai (Sửa Đổi, Bổ Sung Năm 2024) Và Các Văn Bản Hướng Dẫn Thi Hành");
+        when(products.findByStatusTrue()).thenReturn(List.of(book(1,90000),law));
+        var result=orchestrator.reply(request("s","đặt cho tôi cuốn luật đất đai"),state);
+        assertThat(result.getExecution()).containsEntry("tool","prepareCheckout");
+        assertThat(result.getActions()).extracting(ChatActionDto::getType).containsExactly("BUY_NOW");
+        assertThat(result.getActions().get(0).getProductId()).isEqualTo(7L);
+        assertThat(state.focus).isEqualTo(7L);
+        verify(ai,never()).complete(anyString(),anyList(),anyString());
+    }
+
 }

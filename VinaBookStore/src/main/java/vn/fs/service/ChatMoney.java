@@ -12,7 +12,7 @@ final class ChatMoney {
         Matcher m = Pattern.compile("(?<![\\w])([0-9]+(?:[.,][0-9]+)*)\\s*(trieu|nghin|ngan|dong|vnd|lit|tr|k|d)?\\b").matcher(q);
         while (m.find()) {
             String tail = q.substring(m.end()).trim();
-            if (tail.matches("^(sao|cuon|quyen|ban|trang|nam)\\b.*")) continue;
+            if (tail.matches("^(sao|cuon|quyen|ban|trang|nam|tuoi)\\b.*")) continue;
             String prefix = q.substring(0, m.start());
             String unit = m.group(2);
             if (unit == null && !prefix.matches(".*\\b(duoi|tren|tu|den|khoang|tam|toi da|toi thieu|ngan sach(?: cua toi)?|toi co|gia)\\s*$")) continue;

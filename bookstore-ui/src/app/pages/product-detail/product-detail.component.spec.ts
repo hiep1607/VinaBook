@@ -93,7 +93,8 @@ describe('ProductDetailComponent — sticky buy bar (P1)', () => {
         {
           provide: ActivatedRoute,
           useValue: {
-            paramMap: new BehaviorSubject({ get: (key: string) => (key === 'id' ? '57' : null) }).asObservable()
+            paramMap: new BehaviorSubject({ get: (key: string) => (key === 'id' ? '57' : null) }).asObservable(),
+            queryParamMap: of({ get: () => null })
           }
         },
         { provide: Router, useValue: routerSpy },

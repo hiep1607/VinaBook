@@ -1,6 +1,6 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 
 import { FabCollisionService } from './fab-collision.service';
 
@@ -24,8 +24,14 @@ function rectsIntersect(a: DOMRect, b: DOMRect): boolean {
 
 describe('FabCollisionService', () => {
   let service: FabCollisionService;
+  let fixtureRoot: HTMLElement;
+  let watcher: Subscription;
 
   beforeEach(() => {
+    fixtureRoot = document.createElement('div');
+    document.body.appendChild(fixtureRoot);
+    // Geometry fixtures must not include CTA elements from other component specs.
+    spyOn(document, 'querySelectorAll').and.callFake((selector: string) => fixtureRoot.querySelectorAll(selector));
     const routerSpy = jasmine.createSpyObj<Router>('Router', ['navigate']);
     (routerSpy as any).events = of();
 
@@ -35,20 +41,25 @@ describe('FabCollisionService', () => {
     service = TestBed.inject(FabCollisionService);
   });
 
+  afterEach(() => {
+    watcher?.unsubscribe();
+    fixtureRoot.remove();
+  });
+
   it('không nâng FAB ở desktop (>560px)', fakeAsync(() => {
     spyOnProperty(window, 'innerWidth').and.returnValue(1280);
 
     const fab = document.createElement('button');
     const cta = document.createElement('button');
     cta.className = 'cart-btn';
-    document.body.appendChild(cta);
-    document.body.appendChild(fab);
+    fixtureRoot.appendChild(cta);
+    fixtureRoot.appendChild(fab);
 
     spyOn(fab, 'getBoundingClientRect').and.returnValue(makeRect(300, 700, 48, 48));
     spyOn(cta, 'getBoundingClientRect').and.returnValue(makeRect(31, 742, 314, 58));
 
     let lift = -1;
-    service.watch(() => fab).subscribe(value => { lift = value; });
+    watcher = service.watch(() => fab).subscribe(value => { lift = value; });
     service.recheck();
     tick(80);
 
@@ -64,15 +75,15 @@ describe('FabCollisionService', () => {
     const barBtn = document.createElement('button');
     // Nút trong sticky buy bar tái dùng class .buy-btn -> được service nhận diện.
     barBtn.className = 'buy-btn';
-    document.body.appendChild(barBtn);
-    document.body.appendChild(fab);
+    fixtureRoot.appendChild(barBtn);
+    fixtureRoot.appendChild(fab);
 
     // Sticky bar full-width ở đáy viewport; nút bar giao cột x của FAB.
     spyOn(fab, 'getBoundingClientRect').and.returnValue(makeRect(708, 980, 56, 56));
     spyOn(barBtn, 'getBoundingClientRect').and.returnValue(makeRect(200, 952, 560, 44));
 
     let lift = -1;
-    service.watch(() => fab).subscribe(value => { lift = value; });
+    watcher = service.watch(() => fab).subscribe(value => { lift = value; });
     service.recheck();
     tick(80);
 
@@ -89,8 +100,8 @@ describe('FabCollisionService', () => {
     const fab = document.createElement('button');
     const cta = document.createElement('button');
     cta.className = 'cart-btn'; // "Thêm giỏ hàng"
-    document.body.appendChild(cta);
-    document.body.appendChild(fab);
+    fixtureRoot.appendChild(cta);
+    fixtureRoot.appendChild(fab);
 
     // Số liệu thực đo trên /product/57 @390x844:
     // FAB gốc 315.2..363.2 x 784..832 ; CTA 31..344.2 x 785.8..843.8
@@ -101,7 +112,7 @@ describe('FabCollisionService', () => {
     expect(rectsIntersect(fabRect, ctaRect)).toBe(true); // trạng thái lỗi ban đầu
 
     let lift = -1;
-    service.watch(() => fab).subscribe(value => { lift = value; });
+    watcher = service.watch(() => fab).subscribe(value => { lift = value; });
     service.recheck();
     tick(80);
 
@@ -121,15 +132,15 @@ describe('FabCollisionService', () => {
     const fab = document.createElement('button');
     const cta = document.createElement('button');
     cta.className = 'page-btn'; // pagination
-    document.body.appendChild(cta);
-    document.body.appendChild(fab);
+    fixtureRoot.appendChild(cta);
+    fixtureRoot.appendChild(fab);
 
     // Pagination nằm lệch trái, không chạm cột x của FAB.
     spyOn(fab, 'getBoundingClientRect').and.returnValue(makeRect(284.8, 740, 48, 48));
     spyOn(cta, 'getBoundingClientRect').and.returnValue(makeRect(20, 750, 60, 44));
 
     let lift = -1;
-    service.watch(() => fab).subscribe(value => { lift = value; });
+    watcher = service.watch(() => fab).subscribe(value => { lift = value; });
     service.recheck();
     tick(80);
 

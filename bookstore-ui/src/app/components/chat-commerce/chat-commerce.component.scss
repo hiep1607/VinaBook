@@ -1,0 +1,42 @@
+:host { display: block; width: 100%; }
+.commerce-card {
+  padding: 14px; border: 1px solid var(--c-border); border-radius: 12px;
+  background: var(--c-surface); font-size: 13px; line-height: 1.5;
+  header { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; }
+  p { margin: 8px 0; overflow-wrap: anywhere; }
+  h4 { font-size: 14px; margin: 12px 0; }
+  button {
+    min-height: 36px; padding: 7px 11px; border: 1px solid var(--c-border); border-radius: 7px;
+    font: inherit; color: var(--c-fg); background: var(--c-surface); cursor: pointer;
+    &:disabled { opacity: .5; cursor: default; }
+    &.primary { background: var(--c-primary); border-color: var(--c-primary); color: #fff; }
+  }
+  label { display: grid; gap: 4px; margin: 9px 0; color: var(--c-muted-fg); font-size: 12px; }
+  input, select, textarea {
+    min-width: 0; width: 100%; box-sizing: border-box; padding: 9px; border: 1px solid var(--c-border);
+    border-radius: 6px; font: inherit; font-size: 13px; color: var(--c-fg); background: var(--c-bg);
+  }
+  button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--c-primary); outline-offset: 2px; }
+}
+.cart-line {
+  display: flex; gap: 10px; padding: 11px 0; border-top: 1px solid var(--c-border);
+  img { width: 36px; height: 50px; object-fit: cover; border-radius: 3px; }
+  .line-info { flex: 1; min-width: 0; }
+  strong, span, small { display: block; }
+  strong { overflow-wrap: anywhere; }
+  span { color: var(--c-muted-fg); font-size: 12px; margin-top: 2px; }
+}
+.line-controls { display: flex; align-items: center; gap: 12px; label { display: flex; align-items: center; gap: 7px; } input { width: 60px; } }
+.buttons { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.totals { margin: 12px 0; padding-top: 8px; border-top: 1px solid var(--c-border);
+  div { display: flex; justify-content: space-between; gap: 8px; padding: 3px 0; }
+  dd { margin: 0; white-space: nowrap; }
+  .total { font-weight: 700; padding-top: 8px; }
+}
+.quote-line { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; strong { white-space: nowrap; } }
+.hint, .empty, .status { font-size: 12px; color: var(--c-muted-fg); }
+.notice { color: var(--c-primary); font-weight: 600; }
+.commerce-error, .stock-warning { color: #a33225; }
+.commerce-error { padding: 9px; border: 1px solid currentColor; border-radius: 7px; margin: 8px 0; }
+.confirmation { padding: 10px; border: 1px solid var(--c-primary); border-radius: 8px; margin-top: 12px; }
+.shipping-summary { white-space: pre-line; }
