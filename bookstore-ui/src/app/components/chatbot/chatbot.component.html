@@ -123,6 +123,8 @@
     <app-order-cancellation *ngIf="cancellationOrderId" [orderId]="cancellationOrderId"
       (completed)="orderCancelled($event)" (closed)="cancellationOrderId = 0; commerceBusy = false"
       (busyChange)="commerceBusy = $event" (updated)="commerceUpdated()"></app-order-cancellation>
+    <app-order-reorder *ngIf="reorderOrderId" [orderId]="reorderOrderId"
+      (closed)="reorderOrderId = 0; commerceBusy = false" (busyChange)="commerceBusy = $event" (updated)="commerceUpdated()"></app-order-reorder>
   </div>
 
   <footer class="chat-composer">

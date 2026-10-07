@@ -116,6 +116,7 @@
 
       <!-- TOTAL -->
       <div class="order-actions">
+        <button type="button" (click)="reorderOrderId = order.id; cancellingOrderId = 0; returnOrderId = 0" [disabled]="cancellationBusy || !!payingOrderId">Mua lại đơn #{{ order.id }}</button>
         <button type="button" *ngIf="orderService.canCancel(order) && cancellingOrderId !== order.id"
           (click)="requestCancellation(order)" [disabled]="cancellationBusy || !!payingOrderId">Hủy đơn #{{ order.id }}</button>
         <p *ngIf="order.statusCode === 0 && !orderService.canCancel(order)">Đơn thanh toán trực tuyến hoặc đã thanh toán cần cửa hàng kiểm tra trước khi hủy. Bạn <a routerLink="/contact">liên hệ cửa hàng</a> nhé.</p>
@@ -123,6 +124,8 @@
       <app-order-cancellation *ngIf="cancellingOrderId === order.id" [orderId]="order.id"
         (completed)="orderCancelled($event)" (closed)="cancellingOrderId = 0"
         (busyChange)="cancellationBusy = $event"></app-order-cancellation>
+      <app-order-reorder *ngIf="reorderOrderId === order.id" [orderId]="order.id"
+        (closed)="reorderOrderId = 0" (busyChange)="cancellationBusy = $event"></app-order-reorder>
 
       <div class="order-total">
 

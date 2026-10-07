@@ -1,0 +1,20 @@
+<section class="panel" aria-label="Mua lại đơn cũ" [attr.aria-busy]="busy">
+  <h3>Mua lại sách từ đơn #{{ orderId }}</h3>
+  <p *ngIf="busy" role="status">Đang kiểm tra sách và giỏ hàng...</p>
+  <p *ngIf="error" role="alert" class="error">{{ error }}</p>
+  <div *ngFor="let line of lines" class="line">
+    <strong>{{ line.name }}</strong>
+    <p *ngIf="line.product">Giá hiện tại: {{ line.product.price | number }}đ · Còn {{ line.product.quantity }} cuốn</p>
+    <p *ngIf="!line.product">Sách này không còn bán. Bạn chưa thể mua lại toàn bộ đơn; hãy chọn sách còn bán trong mục Sách nhé.</p>
+    <label *ngIf="line.product && !done && !uncertain">Số lượng <input type="number" min="1" [max]="line.product.quantity < 99 ? line.product.quantity : 99" [(ngModel)]="line.quantity" [disabled]="busy" /></label>
+  </div>
+  <p *ngIf="lines.length">Tạm tính sách còn bán: <strong>{{ subtotal | number }}đ</strong>. Phí giao hàng được tính khi đặt hàng.</p>
+  <p *ngIf="!done && !uncertain && lines.length">Mình dùng giá và tồn kho hiện tại vì chúng có thể khác lần mua trước. Xác nhận sẽ thêm sách vào giỏ hiện có; bạn vẫn sẽ xem tổng tiền và xác nhận riêng ở bước đặt hàng nhé.</p>
+  <p *ngIf="done" role="status">Mình đã thêm sách vào giỏ. Bạn <a routerLink="/cart" (click)="dismiss()">mở giỏ hàng</a> để kiểm tra rồi tiếp tục đặt mua nhé.</p>
+  <p *ngIf="uncertain">Bạn <a routerLink="/cart" (click)="dismiss()">mở giỏ hàng</a> để kiểm tra kết quả trước khi thêm lại nhé.</p>
+  <div class="actions">
+    <button type="button" *ngIf="!done && !uncertain && lines.length" (click)="confirm()" [disabled]="busy || !canAdd">Xác nhận thêm vào giỏ</button>
+    <button type="button" *ngIf="!done && !uncertain" (click)="load()" [disabled]="busy">Tải lại</button>
+    <button type="button" (click)="dismiss()" [disabled]="busy">Đóng</button>
+  </div>
+</section>

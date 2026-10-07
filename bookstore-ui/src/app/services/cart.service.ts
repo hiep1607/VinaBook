@@ -117,6 +117,20 @@ export class CartService implements OnDestroy {
     return this.items;
   }
 
+  addBooks(lines: { product: any; quantity: number }[]): void {
+    this.ensureScope();
+    const next = this.items.map(item => ({ ...item }));
+    for (const line of lines) {
+      const existing = next.find(item => item.id === line.product.id);
+      const quantity = (existing?.quantity || 0) + line.quantity;
+      if (!Number.isInteger(line.quantity) || line.quantity < 1 || quantity > Math.min(99, line.product.quantity))
+        throw new Error(`“${line.product.name}” không đủ số lượng để thêm vào giỏ. Bạn giảm số lượng rồi thử lại nhé.`);
+      if (existing) { Object.assign(existing, line.product, { quantity, selected: true }); }
+      else next.push({ ...line.product, quantity, selected: true });
+    }
+    this.items.splice(0, this.items.length, ...next); this.saveCart();
+  }
+
   removeItem(item: any): void {
     this.ensureScope();
     this.items.splice(0, this.items.length, ...this.items.filter(cartItem => cartItem.id !== item.id));

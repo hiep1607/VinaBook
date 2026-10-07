@@ -1,0 +1,11 @@
+:host { display: block; min-width: 0; }
+.panel { padding: 16px; border: 1px solid var(--c-border); border-radius: var(--radius-md, 12px); background: var(--c-surface); color: var(--c-fg); }
+h3 { margin-bottom: 10px; font-size: 16px; }
+p, label { margin: 8px 0; font-size: 14px; line-height: 1.6; overflow-wrap: anywhere; }
+.line { padding: 10px 0; border-bottom: 1px solid var(--c-border); }
+input { width: 72px; min-height: 36px; margin-left: 8px; padding: 6px; }
+a { color: var(--c-accent); text-decoration: underline; }
+.error { color: #a12626; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+button { min-height: 40px; padding: 8px 12px; border: 1px solid var(--c-border); border-radius: 8px; background: var(--c-surface); color: var(--c-fg); cursor: pointer; font-weight: 600; }
+button:disabled { opacity: .6; cursor: default; }

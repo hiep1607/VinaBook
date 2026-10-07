@@ -10,7 +10,7 @@ import vn.fs.service.OrderCancellationService;
 
 class MyOrderActionsApiTest {
     final OrderCancellationService service=mock(OrderCancellationService.class);
-    final org.springframework.test.web.servlet.MockMvc mvc=MockMvcBuilders.standaloneSetup(new MyOrderActionsApi(service)).build();
+    final org.springframework.test.web.servlet.MockMvc mvc=MockMvcBuilders.standaloneSetup(new MyOrderActionsApi(service,mock(vn.fs.service.ChatOrderSupportService.class))).build();
     @Test void rejectsAbsentOrFalseConfirmation() throws Exception {
         for(String body:new String[]{"{}","{\"confirmed\":false}"})
             mvc.perform(post("/api/orders/me/7/cancel").contentType(MediaType.APPLICATION_JSON).content(body)).andExpect(status().isBadRequest());

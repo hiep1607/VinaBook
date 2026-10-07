@@ -29,6 +29,9 @@ export class OrderService {
   cancellationPreview(orderId: number): Observable<OrderCancellationPreview> {
     return this.http.get<OrderCancellationPreview>(this.api + '/api/orders/me/' + orderId + '/cancellation').pipe(timeout(20000));
   }
+  reorderPreview(orderId: number): Observable<{orderId: number; items: {productId: number | null; name: string; quantity: number}[]}> {
+    return this.http.get<{orderId: number; items: {productId: number | null; name: string; quantity: number}[]}>(this.api + '/api/orders/me/' + orderId + '/reorder').pipe(timeout(20000));
+  }
 
   cancelOrder(orderId: number): Observable<{ orderId: number; status: string }> {
     return this.http.post<{ orderId: number; status: string }>(this.api + '/api/orders/me/' + orderId + '/cancel', { confirmed: true }).pipe(timeout(20000));

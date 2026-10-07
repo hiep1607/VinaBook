@@ -31,6 +31,23 @@ public class ChatOrderSupportService {
 		return orders.findByUserOrderByOrdersIdDesc(user).stream().findFirst().map(Order::getOrdersId).orElse(null);
 	}
 
+    @Transactional(readOnly=true, noRollbackFor=org.springframework.web.server.ResponseStatusException.class)
+    public java.util.Map<String,Object> reorderPreview(Long requestedId) {
+        String email=access.currentEmail();
+        if(email==null)throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.UNAUTHORIZED,"Bạn đăng nhập để mình mở đúng đơn đã mua của bạn nhé.");
+        Long id=requestedId==null?latestOrderId():requestedId;
+        Order order=id==null?null:orders.findById(id).orElse(null);
+        if(order==null || order.getUser()==null || !email.equals(order.getUser().getEmail()))
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND,"Mình chưa tìm thấy đơn này trong tài khoản của bạn. Bạn kiểm tra lại mã đơn nhé.");
+        java.util.List<java.util.Map<String,Object>> items=new java.util.ArrayList<>();
+        for(var line:details.findByOrder(order)) {
+            java.util.Map<String,Object> item=new java.util.LinkedHashMap<>();
+            item.put("productId",line.getProduct()==null?null:line.getProduct().getProductId());
+            item.put("name",line.getProduct()==null?"Sách không còn thông tin":line.getProduct().getName());
+            item.put("quantity",line.getQuantity());items.add(item);
+        }
+        return java.util.Map.of("orderId",id,"items",items);
+    }
 
 	public ChatOrderSupportService(CurrentUserAccess access, UserRepository users, OrderRepository orders) {
 		this.access = access;
