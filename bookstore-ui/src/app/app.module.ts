@@ -49,6 +49,7 @@ import { BooksComponent } from './pages/books/books.component';
 import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
 import { ChatbotComponent } from './components/chatbot/chatbot.component';
+import { ChatCommerceComponent } from './components/chat-commerce/chat-commerce.component';
 import { RevealDirective } from './shared/directives/reveal.directive';
 import { CountUpDirective } from './shared/directives/count-up.directive';
 import { NgrokSkipInterceptor } from './core/ngrok-skip.interceptor';
@@ -58,6 +59,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { ThemeSwitcherComponent } from './components/theme-switcher/theme-switcher.component';
 import { PaymentResultComponent } from './pages/payment-result/payment-result.component';
 import { Book3dViewerComponent } from './components/book-3d-viewer/book-3d-viewer.component';
+
 import { BookPreviewReaderComponent } from './components/book-preview-reader/book-preview-reader.component';
 
 @NgModule({
@@ -81,6 +83,7 @@ import { BookPreviewReaderComponent } from './components/book-preview-reader/boo
     AboutComponent,
     ContactComponent,
     ChatbotComponent,
+    ChatCommerceComponent,
     RevealDirective,
     CountUpDirective,
     FooterComponent,

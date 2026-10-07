@@ -588,14 +588,21 @@ public class ChatBuiltinTools {
     }
     @Bean public ChatTool prepareCheckout() {
         Map<String,ChatTool.Parameter> p=referenceParameters();p.put("quantity",integer("Số cuốn muốn mua",1,99));
-        return tool("prepareCheckout","Tìm đúng sách người dùng muốn mua và hướng dẫn mở trang sản phẩm để thanh toán.",p,(a,c)->{
+        return tool("prepareCheckout","Chuẩn bị mua một sách hoặc toàn bộ giỏ (source=cart, reference=selection). Chỉ mở form và báo giá; khách phải xác nhận trước khi tạo đơn.",p,(a,c)->{
+            if("cart".equals(a.path("source").asText()) && !a.hasNonNull("title") && !a.hasNonNull("productId")
+                    && (a.path("reference").asText().isBlank() || "selection".equals(a.path("reference").asText()))) {
+                if(c.request().getCartItems().isEmpty())return ChatTool.Result.clarify("Giỏ hàng đang trống nên mình chưa có sách để chuẩn bị đơn. Bạn chọn sách trước khi đặt hàng nhé; mình có thể giúp tìm theo nhu cầu của bạn.");
+                return new ChatTool.Result("Mình có thể giúp bạn đặt các sách trong giỏ. Bạn kiểm tra giỏ rồi chọn địa chỉ và phương thức thanh toán trong khung chat để mình tính đúng tổng tiền. Chưa có đơn nào được tạo; bạn sẽ xem lại trước khi xác nhận.",
+                    ChatIntent.PURCHASE,List.of(),List.of(new ChatActionDto("CHECKOUT_CART","Đặt hàng từ giỏ",null,null,false)),"AWAITING_CONFIRMATION");
+            }
             List<Product> selected=resolve(a,c); if(selected.size()!=1)return missing(c,selected);
             Product b=selected.get(0);int quantity=intArg(a,"quantity",1);
-            if(b.getQuantity()<quantity)return ChatTool.Result.clarify("Số lượng muốn mua vượt tồn kho hiện tại. Bạn chọn số lượng ít hơn nhé.");
+            if(b.getQuantity()<quantity)return ChatTool.Result.clarify("Số lượng muốn mua vượt tồn kho hiện tại nên mình chưa thể chuẩn bị đủ sách cho bạn. Bạn chọn số lượng ít hơn nhé.");
             c.state().focus=b.getProductId();
-            ChatActionDto action=new ChatActionDto("VIEW_PRODUCT","Mở trang sách để mua",b.getProductId(),"/product/"+b.getProductId()+"?quantity="+quantity,false);
+            c.state().displayed=List.of(b.getProductId());c.state().emptySearch=false;
+            ChatActionDto action=new ChatActionDto("BUY_NOW","Tiếp tục đặt hàng",b.getProductId(),null,false);
             action.setQuantity(quantity);
-            return new ChatTool.Result("Bạn có thể mở trang “"+b.getName()+"” để mua "+quantity+" cuốn. Giỏ hàng, phí giao và thông tin nhận hàng sẽ được kiểm tra ở bước thanh toán; chat chưa đặt đơn.",ChatIntent.PURCHASE,List.of(dto(b)),List.of(action),"COMPLETED");
+            return new ChatTool.Result("Mình đã chọn “"+b.getName()+"” với số lượng "+quantity+" cuốn. Bạn bấm Tiếp tục đặt hàng để chọn thông tin giao hàng và xem tổng tiền; mình sẽ chỉ tạo đơn sau khi bạn xem tổng tiền và xác nhận.",ChatIntent.PURCHASE,List.of(dto(b)),List.of(action),"AWAITING_CONFIRMATION");
         });
     }
     @Bean public ChatTool prepareCartChange() {
@@ -606,13 +613,12 @@ public class ChatBuiltinTools {
             Product b=selected.get(0);String operation=a.path("operation").asText("add");int quantity=intArg(a,"quantity",1);
             int inCart=c.request().getCartItems().stream().filter(i->b.getProductId().equals(i.getProductId())).mapToInt(ChatRequestDto.CartItem::getQuantity).sum();
             if(!"add".equals(operation) && inCart==0)return ChatTool.Result.clarify("Mình không thấy “"+b.getName()+"” trong giỏ hàng của bạn. Giỏ hàng chưa được thay đổi.");
-            if(!"remove".equals(operation) && b.getQuantity()<("add".equals(operation)?quantity+inCart:quantity))return ChatTool.Result.clarify("Tổng số lượng trong giỏ sẽ vượt tồn kho hiện tại. Bạn chọn số lượng ít hơn nhé.");
-            if (!"add".equals(operation)) {
-                ChatActionDto action=new ChatActionDto("SHOW_CART","Mở giỏ hàng",null,"/cart",false);
-                return new ChatTool.Result("Mình thấy “"+b.getName()+"” trong giỏ. Bạn mở giỏ hàng để sửa số lượng hoặc xóa sách; chat chưa thay đổi giỏ.",ChatIntent.PRODUCT_INFO,List.of(dto(b)),List.of(action),"COMPLETED");
-            }
-            ChatActionDto action=new ChatActionDto("ADD_TO_CART","Thêm "+quantity+" cuốn vào giỏ",b.getProductId(),null,true);action.setQuantity(quantity);
-            return new ChatTool.Result("Bạn xác nhận thêm “"+b.getName()+"” vào giỏ nhé. Giỏ hàng chưa được thay đổi.",ChatIntent.PRODUCT_INFO,List.of(dto(b)),List.of(action),"AWAITING_CONFIRMATION");
+            if(!"remove".equals(operation) && b.getQuantity()<("add".equals(operation)?quantity+inCart:quantity))return ChatTool.Result.clarify("Tổng số lượng trong giỏ sẽ vượt tồn kho hiện tại. Bạn chọn số lượng ít hơn để mình kiểm tra đủ sách cho đơn nhé.");
+            String type="remove".equals(operation)?"REMOVE_FROM_CART":"update".equals(operation)?"UPDATE_CART_QUANTITY":"ADD_TO_CART";
+            String label="remove".equals(operation)?"Xóa khỏi giỏ":"update".equals(operation)?"Đổi thành "+quantity+" cuốn":"Thêm "+quantity+" cuốn vào giỏ";
+            ChatActionDto action=new ChatActionDto(type,label,b.getProductId(),null,true);action.setQuantity(quantity);
+            c.state().focus=b.getProductId();c.state().displayed=List.of(b.getProductId());c.state().emptySearch=false;
+            return new ChatTool.Result("Mình đã chuẩn bị thao tác với “"+b.getName()+"”. Bạn kiểm tra rồi xác nhận để mình sửa đúng sách và số lượng bạn muốn nhé. Giỏ hàng chưa được thay đổi.",ChatIntent.PRODUCT_INFO,List.of(dto(b)),List.of(action),"AWAITING_CONFIRMATION");
         });
     }
     @Bean public ChatTool getCart() {
@@ -631,8 +637,8 @@ public class ChatBuiltinTools {
     }
     @Bean public ChatTool prepareClearCart() {
         return tool("prepareClearCart","Xóa toàn bộ giỏ hàng, chỉ tạo đề xuất chờ xác nhận; không yêu cầu chọn sách.",Map.of(),(a,c)->{
-            if(c.request().getCartItems().isEmpty())return ChatTool.Result.text("Giỏ hàng đang trống, không có sách để xóa.",ChatIntent.UNKNOWN);
-            return new ChatTool.Result("Bạn mở giỏ hàng để kiểm tra và xóa các sách. Chat chưa thay đổi giỏ.",ChatIntent.UNKNOWN,List.of(),List.of(new ChatActionDto("SHOW_CART","Mở giỏ hàng",null,"/cart",false)),"COMPLETED");
+            if(c.request().getCartItems().isEmpty())return ChatTool.Result.text("Giỏ hàng đang trống nên không có sách để xóa. Bạn cứ giữ nguyên giỏ nhé; khi muốn chọn sách mới, mình có thể giúp.",ChatIntent.UNKNOWN);
+            return new ChatTool.Result("Bạn xác nhận xóa toàn bộ sách khỏi giỏ nhé. Mình chờ bạn đồng ý để tránh bỏ nhầm những cuốn bạn vẫn muốn mua. Giỏ hàng chưa được thay đổi.",ChatIntent.UNKNOWN,List.of(),List.of(new ChatActionDto("CLEAR_CART","Xóa toàn bộ giỏ",null,null,true)),"AWAITING_CONFIRMATION");
         });
     }
     @Bean public ChatTool prepareCancelOrder() {

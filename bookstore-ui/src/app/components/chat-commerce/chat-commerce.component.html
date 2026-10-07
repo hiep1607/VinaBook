@@ -1,0 +1,113 @@
+<section class="commerce-card" *ngIf="visible" aria-label="Giỏ hàng và đặt sách" [attr.aria-busy]="busy">
+  <header>
+    <strong>{{ placed ? 'Đặt hàng thành công' : checkout ? 'Đặt sách' : 'Giỏ hàng của bạn' }}</strong>
+    <button type="button" (click)="dismiss()" [disabled]="busy || uncertainConfirmation" aria-label="Đóng phần giỏ và đặt hàng">Đóng</button>
+  </header>
+
+  <p class="status" *ngIf="busy" role="status">Mình đang xử lý lựa chọn của bạn, bạn chờ một chút nhé…</p>
+  <p class="notice" *ngIf="notice" role="status">{{ notice }}</p>
+  <div class="commerce-error" *ngIf="error" role="alert">
+    <p>{{ error }}</p>
+    <button type="button" *ngIf="!checkout && !placed" (click)="showCart()" [disabled]="busy">Tải lại giỏ</button>
+    <button type="button" *ngIf="!authenticated" (click)="navigate('/login')" [disabled]="busy">Đăng nhập</button>
+  </div>
+
+  <div *ngIf="recovery">
+    <p>Mình chưa xác nhận được kết quả lượt đặt hàng trước. Bạn kiểm tra lại trước khi đặt đơn mới nhé, để tránh tạo hai đơn cho cùng lựa chọn.</p>
+    <div class="buttons">
+      <button type="button" class="primary" (click)="recoverOrder()" [disabled]="busy">Kiểm tra lại kết quả</button>
+      <button type="button" (click)="navigate('/orders')" [disabled]="busy">Kiểm tra Đơn hàng</button>
+    </div>
+  </div>
+  <button type="button" *ngIf="recoveryUnavailable" (click)="acknowledgeOrders()" [disabled]="busy">Tôi đã kiểm tra đơn, bắt đầu lại</button>
+  <ng-container *ngIf="!checkout && !placed && !uncertainConfirmation">
+    <p class="empty" *ngIf="!cartItems.length && !busy">Giỏ đang trống. Bạn cho mình biết muốn đọc gì và chọn sách cho ai nhé, mình sẽ giúp tìm sách để bạn cân nhắc.</p>
+    <article class="cart-line" *ngFor="let item of cartItems">
+      <img [src]="item.image" [alt]="'Bìa ' + item.name" loading="lazy" />
+      <div class="line-info">
+        <strong>{{ item.name }}</strong>
+        <span>{{ item.price | number:'1.0-0' }}đ / cuốn</span>
+        <small class="stock-warning" *ngIf="!item.stock || item.quantity > (item.stock || 0)">Sách không còn đủ số lượng bạn đã chọn. Bạn giảm số lượng hoặc xóa cuốn này để mình tiếp tục chuẩn bị đơn nhé.</small>
+        <div class="line-controls">
+          <label>Số lượng
+            <input type="number" [value]="item.quantity" min="1" [max]="item.stock && item.stock < 99 ? item.stock : 99"
+              [disabled]="busy || !!pending || !item.stock" (change)="requestQuantity(item, $event)" [attr.aria-label]="'Số lượng ' + item.name" />
+          </label>
+          <button type="button" (click)="requestRemoval(item)" [disabled]="busy || !!pending">Xóa</button>
+        </div>
+      </div>
+    </article>
+    <dl class="totals" *ngIf="cartItems.length && settings">
+      <div><dt>Tiền sách</dt><dd>{{ subtotal | number:'1.0-0' }}đ</dd></div>
+      <div><dt>Phí giao dự kiến</dt><dd>{{ shipping | number:'1.0-0' }}đ</dd></div>
+      <div class="total"><dt>Tổng dự kiến</dt><dd>{{ subtotal + shipping | number:'1.0-0' }}đ</dd></div>
+    </dl>
+    <p class="hint" *ngIf="cartItems.length">Mình sẽ kiểm tra lại giá, số sách còn bán và phí giao khi lập báo giá, để bạn xem đúng tổng tiền trước khi quyết định.</p>
+    <div class="buttons" *ngIf="cartItems.length">
+      <button type="button" class="primary" (click)="startCheckout(true)" [disabled]="busy || !!pending || !canCheckoutCart">Đặt toàn bộ giỏ</button>
+      <button type="button" (click)="requestClear()" [disabled]="busy || !!pending">Xóa giỏ</button>
+    </div>
+  </ng-container>
+
+  <div class="confirmation" *ngIf="pending">
+    <p>{{ pendingText }}</p>
+    <div class="buttons">
+      <button type="button" class="primary" (click)="confirmChange()" [disabled]="busy">Xác nhận</button>
+      <button type="button" (click)="cancelChange()" [disabled]="busy">Giữ nguyên</button>
+    </div>
+  </div>
+
+  <form *ngIf="checkout && !quote" (ngSubmit)="requestQuote()" #shippingForm="ngForm">
+    <p *ngIf="checkout.product">{{ checkout.product.name }} · {{ checkout.quantity }} cuốn</p>
+    <p *ngIf="checkout.fromCart">Đặt toàn bộ {{ cartItems.length }} đầu sách trong giỏ.</p>
+    <label *ngIf="addresses.length">Dùng địa chỉ đã lưu
+      <select name="savedAddress" (change)="useAddress($any($event.target).value)" [disabled]="busy">
+        <option value="">Chọn địa chỉ</option>
+        <option *ngFor="let address of addresses" [value]="address.id">{{ address.name }} · {{ address.street }}</option>
+      </select>
+    </label>
+    <label>Người nhận
+      <input name="recipient" [(ngModel)]="form.recipient" required maxlength="80" autocomplete="name" [disabled]="busy" />
+    </label>
+    <label>Số điện thoại
+      <input name="phone" [(ngModel)]="form.phone" required pattern="0[0-9]{9}" maxlength="10" inputmode="tel" autocomplete="tel-national" [disabled]="busy" />
+    </label>
+    <label>Địa chỉ giao hàng
+      <textarea name="street" [(ngModel)]="form.street" required maxlength="160" rows="2" autocomplete="street-address" [disabled]="busy" placeholder="Số nhà, đường, phường/xã, tỉnh/thành"></textarea>
+    </label>
+    <label>Thanh toán
+      <select name="paymentMethod" [(ngModel)]="form.paymentMethod" required [disabled]="busy">
+        <option *ngFor="let method of paymentMethods" [value]="method.code">{{ method.label }}</option>
+      </select>
+    </label>
+    <p class="hint">Bạn điền thông tin bên trên để mình chuẩn bị giao sách đúng nơi và tính tổng tiền nhé. Chưa tạo đơn ở bước này; bạn sẽ xem lại trước khi xác nhận.</p>
+    <button type="submit" class="primary" [disabled]="busy || shippingForm.invalid || !paymentMethods.length">Xem báo giá</button>
+  </form>
+
+  <ng-container *ngIf="quote">
+    <h4>Kiểm tra trước khi đặt hàng</h4>
+    <div class="quote-line" *ngFor="let item of quote.items"><span>{{ item.name }} × {{ item.quantity }}</span><strong>{{ item.unitPrice * item.quantity | number:'1.0-0' }}đ</strong></div>
+    <dl class="totals">
+      <div><dt>Tiền sách</dt><dd>{{ quote.subtotal | number:'1.0-0' }}đ</dd></div>
+      <div><dt>Phí giao</dt><dd>{{ quote.shipping | number:'1.0-0' }}đ</dd></div>
+      <div class="total"><dt>Tổng thanh toán</dt><dd>{{ quote.total | number:'1.0-0' }}đ</dd></div>
+    </dl>
+    <p class="shipping-summary">{{ quote.recipient }} · {{ quote.phone }}<br />{{ quote.street }}</p>
+    <p>{{ paymentLabel(quote.paymentMethod) }}</p>
+    <p class="hint">Báo giá có hiệu lực đến {{ quote.expiresAt | date:'HH:mm' }}. Bạn kiểm tra sách, địa chỉ và tổng tiền nhé. Mình chỉ tạo đơn khi bạn bấm nút xác nhận.</p>
+    <div class="buttons">
+      <button type="button" class="primary" (click)="confirmOrder()" [disabled]="busy">{{ uncertainConfirmation ? 'Kiểm tra lại kết quả' : 'Xác nhận đặt hàng' }}</button>
+      <button type="button" (click)="editQuote()" [disabled]="busy || uncertainConfirmation">Sửa thông tin</button>
+    </div>
+    <button type="button" *ngIf="uncertainConfirmation" (click)="navigate('/orders')" [disabled]="busy">Kiểm tra Đơn hàng</button>
+  </ng-container>
+
+  <ng-container *ngIf="placed">
+    <p>Đơn <strong>#{{ placed.orderId }}</strong> đã được tạo.</p>
+    <p *ngIf="placed.paymentMethod === 'COD'">Bạn thanh toán khi nhận hàng nhé. Có thể mở mục Đơn hàng để theo dõi trạng thái của đơn.</p>
+    <div class="buttons">
+      <button type="button" class="primary" *ngIf="placed.paymentMethod !== 'COD'" (click)="startPayment()" [disabled]="busy">Tiếp tục thanh toán</button>
+      <button type="button" (click)="navigate('/orders')" [disabled]="busy">Xem đơn hàng</button>
+    </div>
+  </ng-container>
+</section>

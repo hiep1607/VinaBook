@@ -20,7 +20,9 @@ final class ChatCatalogQuery {
             String name=language.normalize(product.getName());
             String shortName=name.replaceAll("\\s*\\([^)]*\\)","").trim();
             String leading=shortName.split("\\s+[-–:]\\s+",2)[0];
-            for(String variant:new LinkedHashSet<>(List.of(name,shortName,leading))) {
+            String beforeEdition=name.split("\\s*\\(",2)[0].trim();
+            if(beforeEdition.length()<8 || !beforeEdition.contains(" "))beforeEdition=name;
+            for(String variant:new LinkedHashSet<>(List.of(name,shortName,leading,beforeEdition))) {
                 if(variant.length()<4)continue;
                 Matcher match=Pattern.compile("\\b"+Pattern.quote(variant)+"\\b").matcher(q);
                 if(match.find()){exact.add(new Mention(product,match.start(),match.end()));break;}
