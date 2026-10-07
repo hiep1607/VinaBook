@@ -49,7 +49,11 @@ public class ChatOrchestrator {
             ChatSearchCriteriaDto stated = language.criteria(request.getMessage(), List.of());
             List<vn.fs.entity.Product> relatedAnchors=products!=null && ChatBookFacts.has(plainMessage,"tuong tu|gan giong|lien quan|cung bo")
                 ?new ChatCatalogQuery(language,data).named(request.getMessage(),products.findByStatusTrue()):List.of();
-            if(new ChatPolicyService(language).handlesReturn(request.getMessage(),state)) {
+            String customerTool = ChatCustomerActions.tool(plainMessage);
+            if(!customerTool.isEmpty()) {
+                tool=customerTool;
+                result=registry.execute(tool,ChatCustomerActions.arguments(tool,plainMessage),new ChatTool.Context(request,state));status=result.status();
+            } else if(new ChatPolicyService(language).handlesReturn(request.getMessage(),state)) {
                 tool="getPolicy";
                 result=registry.execute(tool,mapper.createObjectNode(),new ChatTool.Context(request,state));
                 status=result.status();

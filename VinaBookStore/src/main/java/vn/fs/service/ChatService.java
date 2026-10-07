@@ -111,6 +111,7 @@ public class ChatService {
 						effective.setContextProductIds(request.getContextProductIds());
 						effective.setActiveProductId(request.getActiveProductId());
 						effective.setCartItems(request.getCartItems());
+                        effective.setWishlistProductIds(request.getWishlistProductIds());
 					}
 					response = dialogue(effective, state, false);
 					// A planner/classifier miss must not leak a recommendation before intake is complete.
@@ -196,6 +197,9 @@ public class ChatService {
 		if (request.getActiveProductId() != null && catalog.stream().anyMatch(p -> request.getActiveProductId().equals(p.getProductId())))
 			s.focus = request.getActiveProductId();
 		ChatIntent classified = intents.classify(question);
+        String customerTool = ChatCustomerActions.tool(q);
+        if (tools != null && !customerTool.isEmpty())
+            return localDiscovery(request, s, customerTool, ChatCustomerActions.arguments(customerTool, q), started);
 		if(policies.handlesReturn(question,s)) {
 			String answer=policies.answer(question,s);
 			return finish(request,answer,ChatIntent.POLICY,List.of(),false,false,s,started);

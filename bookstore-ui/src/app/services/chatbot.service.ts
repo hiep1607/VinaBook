@@ -82,7 +82,7 @@ export class ChatbotService {
     };
   }
 
-  ask(input: string, history: ChatMessage[], activeProductId?: number, cartItems: { productId: number; quantity: number }[] = []): Observable<ChatMessage> {
+  ask(input: string, history: ChatMessage[], activeProductId?: number, cartItems: { productId: number; quantity: number }[] = [], wishlistProductIds: number[] = []): Observable<ChatMessage> {
     return new Observable<ChatMessage>(observer => {
       const controller = new AbortController();
       let fallbackSub: Subscription | undefined;
@@ -97,6 +97,7 @@ export class ChatbotService {
         requestId: 'turn-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2),
         activeProductId,
         cartItems,
+        wishlistProductIds,
         sessionId: this.sessionId(),
 		contextProductIds: this.contextProductIds(history),
         history: this.prepareHistory(history)
