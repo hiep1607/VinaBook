@@ -5,7 +5,7 @@ Tài liệu này chỉ giữ vấn đề còn hiệu lực. Các mô tả protot
 ## Ưu tiên cao
 
 1. **Angular 12 đã cũ.** Admin có dependency tree legacy và cảnh báo `npm audit`; cần nâng cấp theo từng major, không dùng `npm audit fix --force`.
-2. **Test coverage còn mỏng ở storefront/admin.** Backend có kiểm thử hồi quy chatbot; storefront/admin phần lớn mới dừng ở compile/build. Ngày 02/10/2026, `tsc -p tsconfig.spec.json --noEmit` thất bại ở spec login/search tham chiếu thuộc tính và handler đã bỏ (`showPassword`, `totalPages`, `pagedProducts`, ...). Một số smoke spec cũ cũng thiếu `HttpClientTestingModule` hoặc service mock. Build ứng dụng storefront vẫn thành công; cần cập nhật riêng các spec này theo giao diện hiện tại.
+2. **Test coverage còn mỏng ở storefront/admin.** CI chạy build và toàn bộ test Angular; storefront có kiểm thử hành vi checkout, chatbot, review và giỏ hàng, nhưng một số trang/admin vẫn chủ yếu có smoke test khởi tạo. Cần bổ sung kiểm thử tích hợp các luồng người dùng. Ngày 07/10/2026 đã sửa mock checkout thiếu `StoreKnowledgeService` và mock route chi tiết sách thiếu `queryParamMap`; toàn bộ 149 test storefront đạt trên bản source Git với dependency cài sạch bằng `npm ci`.
 3. **Cart chưa đồng bộ đa thiết bị.** Cart local chỉ được đẩy lên backend lúc checkout.
 
 ## Ưu tiên trung bình
@@ -20,6 +20,7 @@ Tài liệu này chỉ giữ vấn đề còn hiệu lực. Các mô tả protot
 
 ## Đã xử lý gần đây
 
+- CI storefront: cập nhật mock theo dependency/chính sách giao hàng hiện tại, giữ các kiểm thử chống đặt lặp và thanh mua cố định; bổ sung kiểm thử phí giao hàng và chặn tạo đơn khi chính sách chưa tải được. Kiểm tra bằng đúng lệnh CI (`tsc -p tsconfig.spec.json --noEmit`, `ng test --watch=false --browsers=ChromeHeadlessCI`) thay vì chỉ chạy nhóm test chatbot.
 - Catalog tĩnh và các service chết đã được loại khỏi luồng runtime.
 - Production Angular không còn gọi `localhost` của máy người dùng.
 - JWT expiry, route guard và admin role guard đã được bổ sung.
