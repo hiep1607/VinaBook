@@ -34,3 +34,29 @@ Tác vụ SSE dùng common pool phải nhận context classloader của request 
 Lỗi xử lý trả sự kiện SSE error với thông báo chung rồi đóng stream, không gửi chi tiết exception chứa thông tin tài khoản. Giao diện hủy stream nếu chưa nhận kết quả sau 60 giây; transport JSON dự phòng cũng có timeout 60 giây. Hết hạn hiển thị lỗi và nút thử lại thay vì giữ dấu ba chấm vô hạn. Stream hết hạn không tự gửi lại cùng yêu cầu qua JSON.
 
 Ba kiểm thử ChatApiStreamTest xác minh classloader/principal, lỗi SSE an toàn và rate limit. Sáu kiểm thử ChatbotService xác minh fetch treo, stream thiếu done, error event, JSON fallback treo, trả lời hoàn tất và unsubscribe. Tổng 22 kiểm thử giao diện gồm 16 ca commerce đều đạt. Trên web localhost với backend/MySQL thật và phiên đăng nhập sẵn có, hai câu hỏi “trong giỏ hàng của tôi có những sách nào” và “Đơn hàng của tôi” đều trả lời đầy đủ. Không thay đổi giỏ hay tạo đơn trong kiểm tra này.
+
+## Sửa đặt mua và gợi ý theo ngân sách — 06/10/2026
+
+Các cách nói “đặt cho tôi cuốn …” và “đặt giúp tôi …” được nhận diện là yêu cầu mua. Tên sách trước phần chú thích ấn bản trong ngoặc được dùng làm tên rút gọn; nếu nhiều ấn bản cùng khớp, bot vẫn hỏi khách chọn. Từ “Bộ” trong tên Bộ Luật không còn bị hiểu như lệnh bỏ sách khỏi giỏ. Đề xuất sửa giỏ hoặc mua một sách cập nhật cuốn đang chọn để câu tiếp theo “mua cuốn này” dùng đúng sản phẩm.
+
+Ở lần sửa ban đầu, yêu cầu gợi ý chỉ có ngân sách được xử lý trực tiếp theo điều kiện giá. Quy tắc này đã được thay bằng bước thu thập nhu cầu và người đọc ở mục bên dưới. Sau khi đủ thông tin, lựa chọn không có chủ đề hay thứ tự sắp xếp cụ thể vẫn luân phiên các danh mục, ưu tiên số lượng bán trong từng nhóm, thay vì lấy các ID đầu catalog vốn có nhiều sách luật. Bộ lọc chủ đề/tác giả và yêu cầu giá tăng dần, sách bán chạy, sách mới vẫn được giữ.
+
+Bộ hồi quy gồm 402 kiểm thử backend đều đạt; 24 kiểm thử giao diện gồm ca hiển thị và thực thi nút BUY_NOW đều đạt. Trên phiên đăng nhập thật, “Gợi ý sách dưới 150k” trả Nhà Giả Kim, Đắc Nhân Tâm, Doraemon - Tập 1, Mắt Biếc và Từ Tốt Đến Vĩ Đại, thuộc năm danh mục. “đặt cho tôi cuốn luật đất đai” rồi “mua cuốn này” đều hiện nút Tiếp tục đặt hàng cho đúng cuốn, mở form và nhận báo giá từ backend/MySQL. Kiểm tra dừng trước nút Xác nhận đặt hàng; chưa tạo đơn trong lượt kiểm tra này.
+
+## Hai thông tin bắt buộc trước khi tư vấn — 06/10/2026
+
+Bot cần biết (1) chủ đề hoặc mục đích đọc và (2) người đọc/người nhận trước khi đề xuất sách. Ngân sách là tùy chọn: đủ hai thông tin thì tìm sách ngay, không chặn để hỏi giá hoặc trình độ. Khi chỉ có “Gợi ý sách dưới 150k”, bot hỏi cả hai; khi đã có chủ đề thì chỉ hỏi người đọc; “Mình muốn đọc trinh thám” đã đủ thông tin.
+
+ChatRecommendationIntake kiểm tra trước cả AI và chế độ local. Các công cụ tìm/tư vấn/sách liên quan kiểm tra lại điều kiện khi được gọi từ ChatService. Bằng chứng chỉ lấy từ lời khách và các lượt user của lịch sử; không lấy lời assistant, trường do AI suy đoán hoặc lịch sử xem sách làm xác nhận. Thông tin và các lượt chưa hoàn tất lưu cùng state hội thoại, tách theo tài khoản và session. Câu ngắn như “cho mình” hoàn tất nhu cầu trước đó; ngân sách đã nói vẫn được giữ, ngân sách mới thay số cũ. Tuổi người đọc không được tính thành tiền. Đổi người đọc không tự chuyển sở thích của người trước sang người mới.
+
+Tra một tên sách cụ thể, so sánh các sách đã chọn, xem giỏ, mua sách đã xác định và tra đơn vẫn xử lý theo luồng hiện có. Lời chào nêu rõ ngân sách là thông tin bổ sung. Planner nhận nhu cầu/người đọc đã xác nhận; nếu planner cố hỏi ngân sách hoặc trình độ khi đã đủ hai thông tin, công cụ respond chuyển sang tìm sách.
+
+424 kiểm thử backend (chatbot, CartSyncService, OrderCancellationService) và 24 kiểm thử widget/commerce đều đạt. Các ca mới xác minh hỏi đúng phần thiếu, không dùng giới tính để đoán sở thích, hoàn tất qua nhiều lượt, lưu/khôi phục state, tách owner/session, ngân sách tùy chọn và cập nhật giá, tra tên sách, bảo vệ công cụ tìm kiếm và tuổi không bị hiểu thành ngân sách. Máy chủ localhost đã biên dịch lại bản mới; kiểm tra thực tế dùng phiên khách độc lập.
+
+## Giọng trò chuyện và hướng dẫn rõ lý do — 06/10/2026
+
+ChatVoice cung cấp quy tắc giọng nói chung cho planner, phần diễn giải hội thoại và phần giải thích sách: xưng mình/bạn, ghi nhận đúng thông tin khách đã chia sẻ, hỏi phần còn thiếu và giải thích thông tin đó giúp ích thế nào. Không lặp máy móc một câu mở đầu, đoán cảm xúc hoặc thêm lời hứa không có căn cứ. Câu trả lời trực tiếp vẫn có thể ngắn; phần cần hướng dẫn nêu rõ bước tiếp theo và mục đích.
+
+Các câu trả lời cố định ở backend và widget cũng áp dụng cách viết này, gồm thu thập nhu cầu, chọn đúng sách/số lượng, so sánh, giỏ hàng, đăng nhập/tra đơn, chính sách, thông tin giao hàng, báo giá/xác nhận và xử lý lỗi. Lời xác nhận vẫn phân biệt đề xuất, chờ khách duyệt và thao tác đã hoàn tất. Không đổi điều kiện mua hàng, dữ kiện sách, giá/tồn kho hoặc quyền truy cập để làm câu trả lời thân thiện hơn. Hai thông tin bắt buộc và ngân sách tùy chọn được giữ nguyên.
+
+424 kiểm thử backend và 24 kiểm thử widget/commerce đều đạt; build production thành công. Build còn cảnh báo dung lượng bundle và stylesheet trang chi tiết sách đang có. Backend đang chạy đã biên dịch lại; kiểm tra web/API thật xác minh hỏi người đọc sau khi biết chủ đề, hỏi nhu cầu sau khi biết người nhận, giải thích đăng nhập để bảo vệ thông tin đơn hàng, hướng dẫn giỏ trống và trả sách ngay khi bổ sung đủ hai thông tin mà không hỏi ngân sách. Không tạo đơn hoặc thay đổi giỏ trong lượt kiểm tra này. Ảnh kiểm tra và ghi chú bàn giao nằm trong outputs của tác vụ.

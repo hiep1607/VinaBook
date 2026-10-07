@@ -16,6 +16,16 @@ final class ChatVoice {
             + "Trả lời thẳng câu hỏi; thông tin đơn giản có thể chỉ một câu, phần cần hướng dẫn thường 2–4 câu ngắn. Giọng thân thiện không được làm thay đổi dữ kiện hoặc điều kiện bắt buộc. ";
     }
 
+    static String intakeQuestion(ChatDialogueMemory.State state) {
+        if (state.recommendationNeed.isBlank() && state.recommendationReader.isBlank())
+            return "Mình sẵn lòng giúp bạn chọn sách nhé. Để gợi ý sát hơn, bạn muốn đọc về chủ đề gì hoặc để làm gì, và sách này bạn chọn cho mình hay cho ai?";
+        if (state.recommendationNeed.isBlank())
+            return "Mình đã biết bạn chọn sách cho ai rồi. Người đọc muốn đọc về chủ đề gì hoặc để làm gì — chẳng hạn giải trí, học một kỹ năng hay tìm hiểu một lĩnh vực? Biết thêm điều này sẽ giúp mình chọn nội dung hợp với người đọc hơn.";
+        var topics = new ChatIntentService().criteria(state.recommendationNeed, List.of()).getTopics();
+        String acknowledgement = topics.isEmpty() ? "Mình đã ghi nhận nhu cầu bạn vừa chia sẻ. "
+            : "Mình đã ghi nhận bạn đang quan tâm đến " + String.join(", ", topics.stream().limit(3).toList()) + ". ";
+        return acknowledgement + "Sách này bạn chọn cho mình hay cho ai? Biết người đọc sẽ giúp mình chọn nội dung và mức độ phù hợp hơn; nếu là trẻ em hoặc người mới bắt đầu, bạn có thể nói thêm.";
+    }
 
     static final String ASK_PRODUCT = "Bạn đang nói đến cuốn sách nào? Bạn gửi tên sách hoặc số thứ tự trong danh sách vừa xem nhé, để mình chọn đúng cuốn và tránh thao tác nhầm.";
     static final String ASK_COMPARISON = "Bạn muốn so sánh những cuốn nào? Bạn gửi tên hai cuốn hoặc chọn từ danh sách vừa xem, để mình chỉ rõ khác biệt theo điều bạn đang cần.";

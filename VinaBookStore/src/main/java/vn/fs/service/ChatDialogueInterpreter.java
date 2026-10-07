@@ -20,6 +20,7 @@ final class ChatDialogueInterpreter {
                 + " | tác giả=" + p.getAuthor() + " | mô tả=" + clean(p.getDescription(), 1100)
                 + " | rating=" + ratings.get(p.getProductId())).collect(Collectors.joining("\n"));
         String prompt = "Bạn là trợ lý đọc và mua sách VinaBook, giao tiếp tiếng Việt tự nhiên, ngắn gọn. "
+                + ChatVoice.instructions()
                 + "Trả JSON duy nhất: {\"intent\":\"DISCOVER_BOOKS\",\"intro\":\"\","
                 + "\"recommendations\":[{\"productId\":1,\"reason\":\"\"}],\"closing\":\"\"}. "
                 + "Intent gồm DISCOVER_BOOKS, PRODUCT_INFO, COMPARE_BOOKS, ADVICE, PURCHASE, SMALL_TALK, UNKNOWN. "

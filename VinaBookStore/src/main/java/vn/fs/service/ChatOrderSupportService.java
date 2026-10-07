@@ -31,6 +31,7 @@ public class ChatOrderSupportService {
 		return orders.findByUserOrderByOrdersIdDesc(user).stream().findFirst().map(Order::getOrdersId).orElse(null);
 	}
 
+
 	public ChatOrderSupportService(CurrentUserAccess access, UserRepository users, OrderRepository orders) {
 		this.access = access;
 		this.users = users;
@@ -40,18 +41,18 @@ public class ChatOrderSupportService {
 	@Transactional(readOnly = true)
 	public String latestOrders() {
 		String email = access.currentEmail();
-		if (email == null) return "Bạn cần đăng nhập để mình tra cứu đơn hàng. Sau khi đăng nhập, hãy hỏi lại “Đơn hàng của tôi đang ở đâu?”.";
+		if (email == null) return ChatVoice.ORDER_LOGIN;
 		User user = users.findByEmail(email).orElse(null);
-		if (user == null) return "Mình chưa tìm thấy tài khoản hiện tại. Bạn vui lòng đăng nhập lại.";
+		if (user == null) return "Mình chưa xác định được tài khoản hiện tại nên chưa thể tra đúng đơn cho bạn. Bạn vui lòng đăng nhập lại rồi gửi yêu cầu nhé.";
 		List<Order> list = orders.findByUserOrderByOrdersIdDesc(user);
-		if (list.isEmpty()) return "Tài khoản của bạn chưa có đơn hàng nào.";
-		StringBuilder answer = new StringBuilder("Các đơn gần nhất của bạn:\n");
+		if (list.isEmpty()) return "Tài khoản của bạn chưa có đơn hàng nào để mình tra cứu. Nếu bạn mới chọn sách, bạn có thể xem giỏ và tiếp tục đặt hàng nhé.";
+		StringBuilder answer = new StringBuilder("Mình tìm thấy các đơn gần nhất của bạn:\n");
 		for (Order order : list.subList(0, Math.min(3, list.size()))) {
 			answer.append("• #").append(order.getOrdersId()).append(" — ")
 					.append(status(order.getStatus())).append(" — ")
 					.append(NumberFormat.getNumberInstance(new Locale("vi", "VN")).format(order.getAmount())).append("đ\n");
 		}
-		answer.append("Mở mục Đơn hàng để xem đầy đủ và tiếp tục thanh toán nếu cần.");
+		answer.append("Bạn mở mục Đơn hàng để xem đầy đủ thông tin từng đơn và tiếp tục thanh toán nếu cần nhé.");
 		return answer.toString();
 	}
 
@@ -65,12 +66,12 @@ public class ChatOrderSupportService {
 	@Transactional(readOnly = true)
 	public String orderById(Long id) {
 		String email = access.currentEmail();
-		if (email == null) return "Bạn cần đăng nhập để tra cứu đơn hàng.";
+		if (email == null) return ChatVoice.ORDER_LOGIN;
 		User user = users.findByEmail(email).orElse(null);
-		if (user == null) return "Vui lòng đăng nhập lại.";
+		if (user == null) return "Mình chưa xác định được phiên đăng nhập hiện tại. Bạn đăng nhập lại để mình kiểm tra đúng đơn của bạn nhé.";
 		Order order = orders.findByUserOrderByOrdersIdDesc(user).stream()
 			.filter(o -> id.equals(o.getOrdersId())).findFirst().orElse(null);
-		if (order == null) return "Mình không tìm thấy mã đơn này trong tài khoản của bạn. Bạn kiểm tra lại mã đơn nhé.";
+		if (order == null) return "Mình không tìm thấy mã đơn này trong tài khoản của bạn. Bạn kiểm tra lại mã đơn trong mục Đơn hàng nhé, để mình tra đúng đơn; nếu bạn đã dùng tài khoản khác để mua, hãy đăng nhập tài khoản đó.";
 		StringBuilder items=new StringBuilder();
 		if(details!=null)for(var item:details.findByOrder(order)) {
 			items.append("\n• ").append(item.getProduct()==null?"Sản phẩm không còn thông tin":item.getProduct().getName())
@@ -82,6 +83,6 @@ public class ChatOrderSupportService {
 			+ "đ. Phương thức: " + order.getPaymentMethod() + ". "
 			+ ("PAID".equals(order.getPaymentStatus()) ? "Đã thanh toán." : "Chưa ghi nhận thanh toán.")
 			+ items.toString()
-			+ "\nMình chưa có dữ liệu vị trí vận chuyển trực tiếp; bạn có thể mở mục Đơn hàng để xem chi tiết.";
+			+ "\nMình chưa có dữ liệu vị trí vận chuyển trực tiếp nên chưa thể nói chính xác sách đang ở đâu. Bạn có thể mở mục Đơn hàng để xem chi tiết trạng thái hiện tại nhé.";
 	}
 }

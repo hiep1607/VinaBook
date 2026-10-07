@@ -72,6 +72,7 @@ public class ChatService {
 		String owner = userId == null ? null : userId.toString();
 		ChatDialogueMemory.State state = memory.get(owner, request.getSessionId());
 		synchronized (state) {
+			state.recommendationIntakeRequired = true;
 			if (memoryStore != null && !state.loaded) memoryStore.restore(userId, request.getSessionId(), state);
 			if (request.getRequestId() != null && request.getRequestId().equals(state.lastRequest) && state.lastResponse != null)
 				return state.lastResponse;
@@ -89,7 +90,37 @@ public class ChatService {
 				}
 			}
 			if (accountMemory != null && userId != null) state.accountMemory = accountMemory.context(userId);
-			ChatResponseDto response = dialogue(request, state, false);
+			ChatResponseDto response;
+			if (guardedAnswer(request.getMessage()) != null || privateText(request.getMessage())) {
+				response = dialogue(request, state, false);
+			} else {
+				List<Product> catalog = products.findByStatusTrue().stream()
+					.filter(p -> Boolean.TRUE.equals(p.getStatus())).collect(Collectors.toList());
+				ChatRecommendationIntake intake = new ChatRecommendationIntake(intents, retrieval);
+				ChatRecommendationIntake.Decision decision = intake.prepare(request, state, catalog);
+				if (!decision.question().isBlank()) {
+					response = intakeClarification(request, decision.question());
+				} else {
+					ChatRequestDto effective = request;
+					if (!request.getMessage().equals(decision.message())) {
+						effective = new ChatRequestDto();
+						effective.setMessage(decision.message());
+						effective.setSessionId(request.getSessionId());
+						effective.setRequestId(request.getRequestId());
+						effective.setHistory(request.getHistory());
+						effective.setContextProductIds(request.getContextProductIds());
+						effective.setActiveProductId(request.getActiveProductId());
+						effective.setCartItems(request.getCartItems());
+					}
+					response = dialogue(effective, state, false);
+					// A planner/classifier miss must not leak a recommendation before intake is complete.
+					if (response.getIntent() == ChatIntent.DISCOVER_BOOKS && !response.getProducts().isEmpty()
+						&& !ChatRecommendationIntake.ready(state) && !intake.exempt(request.getMessage(), catalog)) {
+						state.recommendationPending = true;
+						response = intakeClarification(request, ChatRecommendationIntake.question(state));
+					}
+				}
+			}
 			state.lastRequest = response.getIntent() == ChatIntent.ORDER_SUPPORT ? null : request.getRequestId();
 			state.lastResponse = response.getIntent() == ChatIntent.ORDER_SUPPORT ? null : response;
 			if (memoryStore != null) memoryStore.save(userId, request.getSessionId(), request.getRequestId(),
@@ -123,7 +154,7 @@ public class ChatService {
 		String question = request.getMessage().trim(), q = intents.normalize(question);
 		String guard = guardedAnswer(question);
 		if (guard != null) return clarification(request, guard, started);
-		if (privateText(question)) return clarification(request, "Bạn nhập thông tin giao hàng vào bản nháp đơn để mình xử lý đúng tài khoản nhé.", started);
+		if (privateText(question)) return clarification(request, "Bạn điền thông tin giao hàng vào form đặt hàng nhé. Mình cần thông tin ở đúng bước đó để lập đơn cho tài khoản của bạn; bạn không cần gửi địa chỉ hay số điện thoại trong tin nhắn.", started);
         var purchaseCount=java.util.regex.Pattern.compile("\\b(?:mua|dat mua|chot|lay)\\s+(?:ngay\\s+)?(-?[0-9]+(?:[.,][0-9]+)?)\\s+(?:ban|cuon|quyen)\\b").matcher(q);
         if(!q.matches(".*\\b(?:khong|chua|dung)\\b.*") && purchaseCount.find()) {
             String count=purchaseCount.group(1);
@@ -165,14 +196,23 @@ public class ChatService {
 		if (request.getActiveProductId() != null && catalog.stream().anyMatch(p -> request.getActiveProductId().equals(p.getProductId())))
 			s.focus = request.getActiveProductId();
 		ChatIntent classified = intents.classify(question);
-        if(tools!=null && !ChatOrchestrator.cartTool(q).isEmpty()) {
-            String tool=ChatOrchestrator.cartTool(q);
-            return localDiscovery(request,s,tool,ChatOrchestrator.cartArguments(tool),started);
-        }
 		if(policies.handlesReturn(question,s)) {
 			String answer=policies.answer(question,s);
 			return finish(request,answer,ChatIntent.POLICY,List.of(),false,false,s,started);
 		}
+        if(tools!=null && !ChatOrchestrator.cartTool(q).isEmpty()) {
+            String tool=ChatOrchestrator.cartTool(q);
+            return localDiscovery(request,s,tool,ChatOrchestrator.cartArguments(tool),started);
+        }
+        if(tools!=null && intents.isBudgetOnlyDiscovery(question)
+                && (s.toolSearch.isEmpty() && s.pendingQuestion.isBlank() && s.clarificationFacts.isEmpty()
+                    || ChatBookFacts.has(q,"goi y|gioi thieu|chon sach"))) {
+            var args=new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("scope","new").put("query","");
+            ChatSearchCriteriaDto constraints=intents.criteria(question,List.of());
+            if(constraints.getMinPrice()!=null)args.put("minPrice",constraints.getMinPrice());
+            if(constraints.getMaxPrice()!=null)args.put("maxPrice",constraints.getMaxPrice());
+            return localDiscovery(request,s,args,started);
+        }
 		if(ChatConversationSupport.audienceOnly(question,intents) && search.named(question,catalog).isEmpty())
 			return finish(request,ChatConversationSupport.readerQuestion(s,question),ChatIntent.UNKNOWN,List.of(),false,false,s,started);
         if(tools!=null && ChatConversationSupport.giftDiscovery(question,intents) && search.named(question,catalog).isEmpty()) {
@@ -198,6 +238,13 @@ public class ChatService {
 			return finish(request,explained.answer(),explained.intent(),search.byIds(explained.products().stream().map(ChatProductDto::getId).collect(Collectors.toList()),catalog),false,false,s,started);
 		}
 		boolean buy = isPurchaseRequest(q);
+
+        if (tools!=null && ChatBookFacts.has(q,"huy") && ChatBookFacts.has(q,"don|don hang")) {
+            var args=new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode();
+            var id=java.util.regex.Pattern.compile("(?:#|\\bdon(?: hang)?(?: so)?\\s*)([0-9]{1,15})\\b").matcher(q);
+            if(id.find())args.put("orderId",Long.parseLong(id.group(1)));
+            return localDiscovery(request,s,"prepareCancelOrder",args,started);
+        }
 		if (classified == ChatIntent.ORDER_SUPPORT && !buy) {
 			java.util.regex.Matcher id = java.util.regex.Pattern.compile("(?:#|don(?: hang)?(?: so)?\\s*)([0-9]{1,18})").matcher(q);
 			return finish(request, id.find() ? orderSupport.orderById(Long.parseLong(id.group(1))) : orderSupport.latestOrders(),
@@ -308,11 +355,11 @@ public class ChatService {
 		if(s.awaitingComparison && named.size()>=2) compare=true;
 		if (!title.isEmpty() && named.isEmpty() && !q.matches(".*(?:trong ten|co tu).*")) {
 			s.missingTitle = title; s.emptySearch = true; setList(s, List.of(), true);
-			return finish(request, "Mình chưa tìm thấy “" + title + "” trong catalog hiện tại, nên chưa thể xác nhận giá hay tồn kho. Bạn muốn tìm tên gần giống hoặc sách cùng chủ đề không?",
+			return finish(request, "Mình chưa tìm thấy “" + title + "” trong danh mục sách hiện tại, nên chưa thể xác nhận giá hay tồn kho. Bạn muốn tìm tên gần giống hoặc sách cùng chủ đề không?",
 				ChatIntent.PRODUCT_INFO, List.of(), false, false, s, started);
 		}
 		if (!s.missingTitle.isEmpty() && named.isEmpty() && (similar || q.matches(".*\\b(cuon do|no|hom qua|kiem tra lai)\\b.*"))) {
-			if (!similar) return finish(request, "Mình vẫn chưa tìm thấy “" + s.missingTitle + "” trong catalog hiện tại. Mình chưa có lịch sử ẩn/xóa sản phẩm để xác minh lần bạn thấy trước đó và không thể đưa giá khi chưa xác định được sách.",
+			if (!similar) return finish(request, "Mình vẫn chưa tìm thấy “" + s.missingTitle + "” trong danh mục sách hiện tại. Mình chưa có lịch sử ẩn/xóa sản phẩm để xác minh lần bạn thấy trước đó và không thể đưa giá khi chưa xác định được sách.",
 				ChatIntent.PRODUCT_INFO, List.of(), false, false, s, started);
 			String missing = s.missingTitle;
 			List<Product> near = catalog.stream().filter(p -> similarity(missing,p.getName()) >= 0.25)
@@ -330,9 +377,20 @@ public class ChatService {
 			if (named.isEmpty() && !isImplicitPurchase(q) && !ordinal && !q.matches(".*\\b(cuon nay|cuon do|sach nay|quyen nay|mua no)\\b.*")) choices = List.of();
 			s.awaitingPurchase = choices.size() != 1;
 			if (choices.size() == 1) { s.focus = choices.get(0).getProductId(); s.displayed = List.of(s.focus); }
+            if(tools!=null && choices.size()==1) {
+                var args=new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("title",choices.get(0).getName());
+                var quantity=java.util.regex.Pattern.compile("(?<![\\w.,])(-?[0-9]+(?:[.,][0-9]+)?)\\s*(?:ban|cuon|quyen)\\b").matcher(q);
+                if(quantity.find()) {
+                    String count=quantity.group(1);
+                    if(!count.matches("[0-9]{1,2}") || Integer.parseInt(count)<1)
+                        return clarification(request,ChatVoice.INVALID_QUANTITY,started);
+                    args.put("quantity",Integer.parseInt(count));
+                }
+                return localDiscovery(request,s,"prepareCheckout",args,started);
+            }
 			String answer = choices.size() == 1 ? "Bạn có thể mở trang “" + choices.get(0).getName() + "” bên dưới để thêm vào giỏ hoặc mua sách. Tổng tiền và thông tin giao hàng sẽ được xác nhận ở bước thanh toán."
-				: choices.isEmpty() ? "Bạn muốn mua cuốn nào? Bạn nhắn tên sách để mình tìm đúng trang sản phẩm nhé."
-				: "Bạn muốn mua cuốn nào trong danh sách này? Bạn có thể nhắn tên hoặc số thứ tự.";
+				: choices.isEmpty() ? "Bạn muốn mua cuốn nào? Bạn nhắn tên sách để mình tìm đúng cuốn và chuẩn bị bước đặt hàng nhé."
+				: "Bạn muốn mua cuốn nào trong danh sách này? Bạn có thể nhắn tên hoặc số thứ tự, để mình chuẩn bị đúng sách bạn muốn đặt.";
 			return finish(request,answer,ChatIntent.PURCHASE,choices,false,false,s,started);
 		}
 		if (q.matches(".*\\b(loai|bo)\\s+(cuon|quyen|sach)\\b.*")) {
@@ -341,13 +399,13 @@ public class ChatService {
 			Product removed = q.contains("dat nhat") ? list.stream().max(java.util.Comparator.comparingLong(retrieval::effectivePrice)).orElse(null)
 				: q.contains("re nhat") ? list.stream().min(java.util.Comparator.comparingLong(retrieval::effectivePrice)).orElse(null)
 				: named.size()==1 ? named.get(0) : ordinal && reference.size()==1 ? reference.get(0) : null;
-			if (removed == null || !list.remove(removed)) return clarification(request,"Bạn muốn bỏ cuốn nào trong danh sách?",started);
+			if (removed == null || !list.remove(removed)) return clarification(request,"Bạn muốn bỏ cuốn nào trong danh sách? Bạn gửi tên hoặc số thứ tự để mình giữ lại đúng những cuốn bạn còn muốn cân nhắc nhé.",started);
 			setList(s,list,true);
 			return finish(request,renderBooks("Đã loại “"+removed.getName()+"” khỏi danh sách gợi ý.",list,null,false),ChatIntent.COMPARE_BOOKS,list,false,false,s,started);
 		}
 		if (detail && (!named.isEmpty() || !reference.isEmpty()) && !compare && !fresh) {
 			List<Product> selected = named.isEmpty() ? reference : named;
-			if (selected.size()>1) return clarification(request,"Bạn muốn hỏi cuốn nào? Bạn nhắn tên hoặc số thứ tự nhé.",started);
+			if (selected.size()>1) return clarification(request,"Mình đang có vài cuốn trong danh sách nên cần bạn chọn rõ một cuốn. Bạn muốn hỏi cuốn nào? Bạn nhắn tên hoặc số thứ tự nhé.",started);
 			Product p=selected.get(0); s.focus=p.getProductId(); s.displayed=List.of(s.focus);
 			if(q.matches(".*\\b(tac gia|co viet|ai viet)\\b.*"))
 				return finish(request,"Theo catalog, tác giả của “"+p.getName()+"” là "+p.getAuthor()+".",ChatIntent.PRODUCT_INFO,selected,false,false,s,started);
@@ -362,7 +420,7 @@ public class ChatService {
 			if(selected.isEmpty()) return clarification(request,emptyReference(s),started);
 			if(named.size()<2 && q.matches(".*(?:hai|2) cuon (?:sach )?nay.*") && selected.size()!=2) {
 				s.awaitingComparison=true;
-				return clarification(request,"Danh sách hiện có "+selected.size()+" cuốn. Bạn muốn so sánh hai cuốn nào? Nhắn tên của cả hai nhé.",started);
+				return clarification(request,"Danh sách hiện có "+selected.size()+" cuốn. Bạn muốn so sánh hai cuốn nào? Nhắn tên của cả hai nhé, để mình đối chiếu đúng cặp sách thay vì tự chọn cho bạn.",started);
 			}
 			s.awaitingComparison=false;
 			if(q.contains("re hon") || q.contains("re nhat")) {
@@ -378,7 +436,7 @@ public class ChatService {
 		if (!named.isEmpty() && q.matches(".*\\b(co ban nao|co tap nao|co quyen nao)\\b.*")) {
 			List<Product> editions = named.stream().limit(requestedCount(question)).collect(Collectors.toList());
 			setList(s, editions, true);
-			return finish(request, renderBooks("Mình tìm thấy các bản sách phù hợp trong catalog:", editions, null, false),
+			return finish(request, renderBooks("Mình tìm thấy các bản sách phù hợp trong danh mục sách:", editions, null, false),
 					ChatIntent.DISCOVER_BOOKS, editions, false, false, s, started);
 		}
 		if(!named.isEmpty() && !fresh) {
@@ -387,7 +445,7 @@ public class ChatService {
 		}
 		if (forceLocal && classified == ChatIntent.UNKNOWN && !continuation(q) && !detail && !compare
 				&& !ordinal && !buy && !s.awaitingPurchase)
-			return clarification(request, "Bạn muốn mình giúp tìm sách, giải đáp chính sách hay tra đơn hàng? Bạn nói rõ nhu cầu một chút nhé.", started);
+			return clarification(request, "Bạn muốn mình giúp tìm sách, giải đáp chính sách hay tra đơn hàng? Mình chưa rõ bạn đang cần hỗ trợ phần nào; bạn nói thêm một chút để mình trả lời đúng ý nhé.", started);
 		updateSearch(question,s,catalog,continuation(q) || within);
         if(tools!=null && !compare && !within && named.isEmpty()
                 && (classified==ChatIntent.DISCOVER_BOOKS || search.semanticConstraint(s.query) || intents.isBudgetOnlyDiscovery(question))) {
@@ -483,7 +541,7 @@ public class ChatService {
 				selected=(search.semanticConstraint(s.query) || !s.criteria.getAuthor().isEmpty() || !s.criteria.getCategory().isEmpty()
 						|| intents.normalize(s.query).matches("^(con )?(cuon|sach) khac(?: khong)?[?!]*$")
 						? candidates : retrieval.directMatches(question,s.criteria,candidates)).stream().limit(requestedCount(question)).collect(Collectors.toList());
-				answer=selected.isEmpty()?"Bạn muốn đọc chủ đề gì, cho bản thân hay làm quà? Mình sẽ dựa vào đó để chọn sách phù hợp.":renderBooks("Bạn có thể tham khảo:",selected,null,false);
+				answer=selected.isEmpty()?"Mình cần biết thêm một chút để chọn sách sát nhu cầu hơn. Bạn muốn đọc chủ đề gì, cho bản thân hay làm quà?":renderBooks("Mình tìm được những lựa chọn này để bạn cân nhắc:",selected,null,false);
 			}
 		}
 		if(intent==ChatIntent.DISCOVER_BOOKS) {
@@ -534,7 +592,7 @@ public class ChatService {
 	}
 	private String emptyReference(ChatDialogueMemory.State s) {
 		return s.emptySearch?"Ở lượt trước mình chưa tìm được sách phù hợp nên chưa có cuốn nào để chọn hoặc so sánh. Bạn muốn tìm tài liệu nền tảng liên quan không?"
-			:"Bạn đang hỏi cuốn sách nào? Bạn nhắn tên hoặc số thứ tự trong danh sách để mình trả lời đúng nhé.";
+			:"Bạn đang hỏi cuốn sách nào? Bạn nhắn tên hoặc số thứ tự trong danh sách để mình trả lời đúng cuốn, thay vì tự chọn nhầm nhé.";
 	}
 	private String emptySearch(ChatDialogueMemory.State s,List<Product> catalog) {
 		ChatSearchCriteriaDto c=s.criteria;
@@ -561,7 +619,7 @@ public class ChatService {
 		return out.toString().trim();
 	}
 	private String comparisonTable(List<Product> list) {
-		StringBuilder b=new StringBuilder("So sánh nhanh theo dữ liệu hiện có:\n\n| Sách | Tác giả | Giá | Rating |\n|---|---|---:|---:|");
+		StringBuilder b=new StringBuilder("Mình đặt các thông tin cạnh nhau để bạn dễ cân nhắc. So sánh nhanh theo dữ liệu hiện có:\n\n| Sách | Tác giả | Giá | Rating |\n|---|---|---:|---:|");
 		for(Product p:list) { Double rating=retrieval.averageRating(p); b.append("\n| ").append(p.getName().replace("|"," ")).append(" | ").append(value(p.getAuthor(),"Chưa có dữ liệu").replace("|"," ")).append(" | ").append(money(retrieval.effectivePrice(p))).append(" | ").append(rating==null?"Chưa có đánh giá":String.format(Locale.ROOT,"%.1f/5",rating)).append(" |"); }
 		return b.toString();
 	}
@@ -584,16 +642,22 @@ public class ChatService {
 		x.removeAll(java.util.Set.of("sach","cuon","voi","with","the","and")); y.removeAll(java.util.Set.of("sach","cuon","voi","with","the","and"));
 		return (double)x.stream().filter(y::contains).count()/Math.max(1,Math.min(x.size(),y.size()));
 	}
-	private static boolean privateText(String value) { return value!=null && value.matches("(?is).*(?:\\b0[0-9 .-]{9,14}\\b|[\\w.+-]+@[\\w.-]+\\.[a-z]{2,}|mật khẩu|OTP).*"); }
+	static boolean privateText(String value) { return value!=null && value.matches("(?is).*(?:\\b0[0-9 .-]{9,14}\\b|[\\w.+-]+@[\\w.-]+\\.[a-z]{2,}|mật khẩu|OTP).*"); }
 	private String adviceFallback(String question) {
 		String q=intents.normalize(question);
 		if(q.contains("python") && q.contains("java")) return "Nếu bạn mới bắt đầu và chưa chọn hướng đi, Python thường dễ làm quen nhờ cú pháp gọn. Nếu mục tiêu là backend Java/Spring Boot hoặc chương trình học dùng Java, bạn có thể bắt đầu thẳng với Java. Bạn muốn học để làm web, phân tích dữ liệu hay theo môn học?";
-		return "Bạn muốn học để làm gì và hiện đã biết đến đâu? Mình cần hai thông tin này để đề xuất lộ trình phù hợp.";
+		return "Mình có thể giúp bạn chọn hướng học. Bạn muốn học để làm gì và hiện đã biết đến đâu? Biết mục tiêu và nền tảng hiện tại sẽ giúp mình gợi ý điểm bắt đầu vừa sức hơn.";
 	}
 
 	public ChatStatusDto status() {
 		return new ChatStatusDto(ai.isConfigured() ? ai.provider() : "local",
 				ai.isConfigured() ? ai.model() : "", ai.isConfigured());
+	}
+
+	private ChatResponseDto intakeClarification(ChatRequestDto request, String answer) {
+		ChatResponseDto response = clarification(request, answer, System.currentTimeMillis());
+		response.setExecution(java.util.Map.of("tool", "recommendationIntake", "status", "NEEDS_INPUT"));
+		return response;
 	}
 
 	private ChatResponseDto clarification(ChatRequestDto request, String answer, long started) {
@@ -623,7 +687,7 @@ public class ChatService {
 		if (q.contains("giup toi lam gi") || q.contains("lam duoc gi"))
 			return "Mình có thể tìm và so sánh sách, tư vấn theo nhu cầu và ngân sách, giải đáp giao hàng và tra cứu đơn hàng của bạn.";
 		if (q.matches(".*(?:khong biet nen doc gi|kieu kieu).*" ) || q.matches("[?\\s]*sach[?\\s]*"))
-			return "Bạn muốn đọc để thư giãn hay học thêm kiến thức? Cho mình biết chủ đề yêu thích và khoảng ngân sách để gợi ý phù hợp nhé.";
+			return "Bạn muốn đọc để thư giãn hay học thêm kiến thức? Bạn chọn sách cho mình hay cho ai? Hai thông tin này giúp mình gợi ý sát hơn; ngân sách có thể bổ sung nếu bạn muốn.";
 		return null;
 	}
 
@@ -653,7 +717,7 @@ public class ChatService {
 	private String smallTalk(String question) {
 		String q = intents.normalize(question);
 		if (q.contains("cam on")) return "Rất vui được giúp bạn. Bạn cần tìm hiểu thêm cuốn nào thì cứ nhắn mình nhé.";
-		return "Chào bạn! Mình có thể tìm và so sánh sách, giải đáp giao hàng và tra cứu đơn hàng của bạn. Bạn đang cần hỗ trợ gì?";
+		return "Chào bạn! Mình có thể cùng bạn tìm và so sánh sách, chọn quà hoặc hỗ trợ chuyện giao hàng và tra cứu đơn hàng. Bạn đang tìm một cuốn để đọc hay cần giúp ở bước mua hàng nào?";
 	}
 
 	private String productInfo(String question, Product product) {
@@ -703,7 +767,7 @@ public class ChatService {
 
 	private String categoryAnswer(List<Product> catalog) {
 		String categories = catalog.stream().map(this::category).filter(value -> !"Khác".equals(value)).distinct().sorted().collect(Collectors.joining(", "));
-		return "VinaBook hiện có các thể loại: " + categories + ". Bạn có thể chọn một thể loại và thêm ngân sách để mình gợi ý chính xác hơn.";
+		return "VinaBook hiện có các thể loại: " + categories + ". Bạn cho mình biết thể loại muốn đọc và người đọc nhé, để mình chọn sách phù hợp. Ngân sách có thể nói thêm nếu bạn đã có mức dự kiến.";
 	}
 
 	private boolean isCategoryList(String value) {

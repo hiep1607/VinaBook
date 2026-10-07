@@ -82,6 +82,7 @@ public class ChatBookNarrator {
                 +"Không suy ra sách không đề cập đến điều gì chỉ vì mô tả không nhắc điều đó. Không nói hoàn toàn tách biệt, giải trí thuần túy hay bảo đảm hiệu quả. "
                 +"Thể hiện nhận xét như căn cứ cân nhắc dựa vào mô tả; không biến lợi ích quảng cáo thành kết quả mà khách chắc chắn đạt được. ";
             String raw=ai.complete("Bạn giải thích sự phù hợp hoặc khác biệt giữa những cuốn sách đã được backend chọn. "
+                + ChatVoice.instructions()
                 + "Chỉ trả JSON {\"reasons\":[{\"productId\":1,\"evidenceField\":\"summary\",\"evidence\":\"trích nguyên văn dữ liệu\",\"reason\":\"giải thích ngắn\"}],\"preferredProductId\":null}. "
                 + "evidenceField là trường trong approvedReadingFacts của cuốn đó; evidence phải là trích nguyên văn từ đúng trường. Độ khó, đối tượng, phong cách chỉ dựa vào trường tương ứng hoặc mô tả có nói rõ. "
                 + "Trả lời đúng điều khách hỏi, dùng tiếng Việt tự nhiên. Mỗi reason tối đa "+reasonLimit+" ký tự, dựa hoàn toàn vào các approvedReadingFacts đã cho; evidence là một trích dẫn xác thực làm căn cứ. "

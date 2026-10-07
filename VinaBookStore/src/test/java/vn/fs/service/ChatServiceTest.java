@@ -66,6 +66,8 @@ class ChatServiceTest {
 		assertThat(response.getProducts()).isEmpty();
 	}
 
+
+
 	@Test
 	void providerFailureFallsBackToVerifiedStorePolicy() {
 		when(ai.isConfigured()).thenReturn(true);
@@ -155,7 +157,7 @@ class ChatServiceTest {
 
 	@Test
 	void productQuestionReturnsGroundedProductCards() {
-		ChatResponseDto response = service.reply(request("Tìm sách của Paulo Coelho"));
+		ChatResponseDto response = service.reply(request("Tìm sách của Paulo Coelho cho mình"));
 
 		assertThat(response.getProducts()).isNotEmpty();
 		assertThat(response.getProducts().get(0).getName()).isEqualTo("Nhà Giả Kim");
@@ -182,7 +184,7 @@ class ChatServiceTest {
 	@Test
 	void naturalDiscoveryQuestionWithWordsInBetweenReturnsSuggestions() {
 
-		ChatResponseDto response = service.reply(request("Giúp tôi tìm vài cuốn sách chủ đề phiêu lưu"));
+		ChatResponseDto response = service.reply(request("Giúp tôi tìm vài cuốn sách chủ đề phiêu lưu cho mình đọc"));
 
 		assertThat(response.getProducts()).isNotEmpty();
 		assertThat(response.getChips()).containsExactly("Còn cuốn khác không?", "So sánh các cuốn này", "Sách rẻ hơn");
@@ -204,6 +206,7 @@ class ChatServiceTest {
 	void followUpAlternativeExcludesPreviouslyShownProduct() {
 		ChatRequestDto request = request("Còn cuốn khác không?");
 		request.setContextProductIds(List.of(57L));
+		request.setHistory(List.of(new ChatTurnDto("user", "Mình muốn đọc phiêu lưu hoặc giao tiếp")));
 
 		ChatResponseDto response = service.reply(request);
 
@@ -214,7 +217,7 @@ class ChatServiceTest {
 	void followUpAlternativeKeepsPreviousTopicAndBudget() {
 		ChatRequestDto request = request("Sách rẻ hơn");
 		request.setContextProductIds(List.of(57L));
-		request.setHistory(List.of(new ChatTurnDto("user", "Tìm sách giao tiếp dưới 150k")));
+		request.setHistory(List.of(new ChatTurnDto("user", "Tìm sách giao tiếp dưới 150k cho mình")));
 
 		ChatResponseDto response = service.reply(request);
 
@@ -269,7 +272,7 @@ class ChatServiceTest {
 		when(ai.complete(anyString(), anyList(), anyString())).thenReturn(
 				"{\"intro\":\"Mình đã kiểm tra catalog.\",\"recommendations\":[{\"productId\":57,\"reason\":\"Phù hợp để bắt đầu.\"}],\"closing\":\"\"}");
 
-		ChatResponseDto response = service.reply(request("Gợi ý sách hay"));
+		ChatResponseDto response = service.reply(request("Gợi ý sách giao tiếp cho mình"));
 
 		assertThat(response.isFallback()).isFalse();
 		assertThat(response.getProvider()).isEqualTo("openai");
@@ -298,7 +301,7 @@ class ChatServiceTest {
 				.thenReturn(
 						"{\"intro\":\"Mình đã kiểm tra catalog.\",\"recommendations\":[{\"productId\":58,\"reason\":\"Phù hợp để bắt đầu đọc.\"}],\"closing\":\"\"}");
 
-		ChatResponseDto response = service.reply(request("Gợi ý sách hay"));
+		ChatResponseDto response = service.reply(request("Gợi ý sách phiêu lưu cho mình"));
 
 		assertThat(response.getProducts()).extracting("name").containsExactly("Nhà Giả Kim");
 	}
@@ -308,7 +311,7 @@ class ChatServiceTest {
 		when(products.findByStatusTrue()).thenReturn(java.util.stream.LongStream.rangeClosed(1, 12)
 				.mapToObj(id -> product(id, "Giao tiếp tập " + id, "Tác giả", "Kỹ năng", 50000D, 0, 10))
 				.collect(java.util.stream.Collectors.toList()));
-		ChatResponseDto response = service.reply(request("Gợi ý sách giao tiếp"));
+		ChatResponseDto response = service.reply(request("Gợi ý sách giao tiếp cho mình"));
 		assertThat(response.getProducts()).hasSize(5);
 		response.getProducts().forEach(p -> assertThat(response.getAnswer()).contains(p.getName()));
 		assertThat(response.getActions()).hasSize(10);
@@ -360,7 +363,7 @@ class ChatServiceTest {
 	void repeatedAlternativesKeepOriginalTopicAndBudget() {
 		ChatRequestDto followUp = request("Còn cuốn khác không?");
 		followUp.setContextProductIds(List.of(57L));
-		followUp.setHistory(List.of(new ChatTurnDto("user", "Tìm sách giao tiếp dưới 150k"),
+		followUp.setHistory(List.of(new ChatTurnDto("user", "Tìm sách giao tiếp dưới 150k cho mình"),
 				new ChatTurnDto("assistant", "Đắc Nhân Tâm"), new ChatTurnDto("user", "Còn cuốn khác không?")));
 		ChatResponseDto response = service.reply(followUp);
 		assertThat(response.getCriteria().getMaxPrice()).isEqualTo(150000L);
@@ -451,22 +454,19 @@ class ChatServiceTest {
 
 	@org.junit.jupiter.params.ParameterizedTest
 	@org.junit.jupiter.params.provider.ValueSource(strings = {"Gợi ý sách dưới 150k", "sách dưới 150k", "Tìm sách từ 60k đến 150k"})
-	void budgetOnlyDiscoveryFiltersEffectivePrice(String message) {
-		when(products.findByStatusTrue()).thenReturn(List.of(
-				product(1L, "Sách rẻ", "A", "Khác", 90000D, 0, 10),
-				product(2L, "Sách giảm giá", "B", "Khác", 180000D, 20, 10),
-				product(3L, "Sách đắt", "C", "Khác", 200000D, 0, 10)));
+	void budgetAloneAsksForNeedAndReaderBeforeDiscovery(String message) {
 		ChatResponseDto response = service.reply(request(message));
-		assertThat(response.getProducts()).extracting("id").containsExactlyInAnyOrder(1L, 2L);
-		assertThat(response.getCriteria().getMaxPrice()).isEqualTo(150000L);
+		assertThat(response.getProducts()).isEmpty();
+		assertThat(response.getAnswer()).contains("chủ đề", "cho mình hay cho ai");
 	}
 
 	@Test
-	void budgetOnlySurvivesAiFailureWithoutDroppingValidBooks() {
+	void budgetIntakeDoesNotNeedAnAiCall() {
 		ChatResponseDto response = service.reply(request("Gợi ý sách dưới 150k"));
 		assertThat(response.getProvider()).isEqualTo("local");
 		org.mockito.Mockito.verify(ai, org.mockito.Mockito.never()).complete(anyString(), anyList(), anyString());
-		assertThat(response.getProducts()).hasSize(2);
+		assertThat(response.getProducts()).isEmpty();
+		assertThat(response.getAnswer()).contains("chủ đề", "cho mình hay cho ai");
 	}
 
 	@Test
@@ -502,14 +502,14 @@ class ChatServiceTest {
 	}
 
 	@Test void questionBelowBudgetDoesNotTurnIntoMinimum() {
-		ChatResponseDto r = service.reply(request("Có sách dưới 100.000 đồng không?"));
+		ChatResponseDto r = service.reply(request("Mình muốn đọc giao tiếp, có sách dưới 100.000 đồng không?"));
 		assertThat(r.getCriteria().getMinPrice()).isNull();
 		assertThat(r.getCriteria().getMaxPrice()).isEqualTo(100000L);
 		assertThat(r.getProducts()).allMatch(p -> p.getPrice() <= 100000L);
 	}
 
 	@Test void bundleRespectsTotalBudgetAndCount() {
-		ChatResponseDto r = service.reply(request("Tôi có 150000 đồng, chọn giúp tôi 2 cuốn sách."));
+		ChatResponseDto r = service.reply(request("Tôi có 150000 đồng, chọn giúp tôi 2 cuốn sách phiêu lưu hoặc giao tiếp cho mình."));
 		assertThat(r.getProducts()).hasSize(2);
 		assertThat(r.getProducts().stream().mapToLong(p -> p.getPrice()).sum()).isLessThanOrEqualTo(150000L);
 		assertThat(r.getAnswer()).contains("Tổng tiền sách");
@@ -524,7 +524,7 @@ class ChatServiceTest {
 		Product science=product(74L,"10 Vạn Câu Hỏi Vì Sao","Tác giả","Khoa học",50000D,0,110);
 		science.setDescription("Khám phá thiên nhiên, cơ thể và công nghệ cho trẻ em.");
 		when(products.findByStatusTrue()).thenReturn(List.of(science,java,algorithms,database));
-		ChatResponseDto r=service.reply(request("Tôi có 300.000 đồng, chọn giúp tôi 2 cuốn sách học lập trình."));
+		ChatResponseDto r=service.reply(request("Tôi có 300.000 đồng, chọn giúp tôi 2 cuốn sách học lập trình cho mình."));
 		assertThat(r.getProducts()).extracting("name").containsExactly(java.getName(),algorithms.getName());
 	}
 

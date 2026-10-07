@@ -45,6 +45,6 @@ final class ChatConversationSupport {
     static String readerQuestion(ChatDialogueMemory.State state, String message) {
         state.clarificationFacts.clear();
         state.clarificationFacts.put("recipient",ChatDialogueInterpreter.clean(message,180));
-        return "Sở thích đọc khác nhau ở từng người nên mình chưa thể chọn chỉ từ giới tính, và cửa hàng chưa có thống kê sách được yêu thích theo nhóm này. Bạn đang tìm cho người thích đọc chủ đề gì — chẳng hạn tình cảm, khám phá hay học một kỹ năng?";
+        return "Mình đã biết bạn đang chọn sách cho ai. Để gợi ý hợp người đọc hơn, bạn cho mình biết người ấy thích chủ đề gì — chẳng hạn tình cảm, khám phá hay học một kỹ năng nhé. Sở thích đọc khác nhau ở từng người nên mình chưa thể chọn chỉ từ giới tính.";
     }
 }

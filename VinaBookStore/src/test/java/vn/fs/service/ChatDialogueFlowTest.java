@@ -45,7 +45,7 @@ class ChatDialogueFlowTest {
         assertThat(r.getProducts()).extracting(ChatProductDto::getId).containsExactly(2L,3L,1L,4L,5L);
     }
     @Test void dialogueFindDetailBuyUsesTheSameBookWithoutButton() {
-        var first=turn("a","Tìm 3 cuốn sách lập trình dưới 150k");
+        var first=turn("a","Tìm 3 cuốn sách lập trình dưới 150k cho mình");
         Long second=first.getProducts().get(1).getId();
         assertThat(turn("a","Nói rõ hơn về cuốn thứ hai").getProducts()).extracting(ChatProductDto::getId).containsExactly(second);
         var buy=turn("a","giúp t mua");
@@ -59,14 +59,14 @@ class ChatDialogueFlowTest {
         assertThat(turn("a","mua ngay").getProducts()).extracting(ChatProductDto::getId).containsExactly(6L);
     }
     @Test void shortlistSurvivesDetailedFocusAndCanRemoveAnItem() {
-        turn("a","Tìm 3 cuốn sách lập trình rẻ nhất");
+        turn("a","Tìm 3 cuốn sách lập trình rẻ nhất cho mình");
         turn("a","Nói rõ hơn về cuốn đầu tiên");
         var remaining=turn("a","Loại cuốn đắt nhất ra");
         assertThat(remaining.getProducts()).extracting(ChatProductDto::getId).containsExactly(2L,3L);
         assertThat(turn("a","Lập bảng so sánh hai cuốn này").getProducts()).extracting(ChatProductDto::getId).containsExactly(2L,3L);
     }
     @Test void retryIdDoesNotRemoveTwoBooks() {
-        turn("a","Tìm 3 cuốn sách lập trình rẻ nhất");
+        turn("a","Tìm 3 cuốn sách lập trình rẻ nhất cho mình");
         ChatRequestDto r=request("a","Loại cuốn đắt nhất ra"); r.setRequestId("same-turn");
         ChatResponseDto first=chat.reply(r);
         assertThat(chat.reply(r)).isSameAs(first);
@@ -90,11 +90,11 @@ class ChatDialogueFlowTest {
         assertThat(turn("a","mua ngay").getProducts()).isEmpty();
     }
     @Test void noPythonDoesNotFabricateButConsentCanOpenRelatedBooks() {
-        assertThat(turn("a","Tìm sách Python dưới 200k").getProducts()).isEmpty();
+        assertThat(turn("a","Tìm sách Python dưới 200k cho mình").getProducts()).isEmpty();
         assertThat(turn("a","đồng ý").getProducts()).isNotEmpty().allMatch(p -> p.getPrice()<=200000 && p.getId()!=6L);
     }
     @Test void budgetAndTopicsSurviveMoreThanEightTurns() {
-        turn("a","Tìm sách lập trình dưới 150k");
+        turn("a","Tìm sách lập trình dưới 150k cho mình");
         for(int i=0;i<12;i++) turn("a","Phí giao hàng thế nào?");
         var r=turn("a","Chỉ lấy những cuốn dưới 90k");
         assertThat(r.getProducts()).extracting(ChatProductDto::getId).containsExactly(2L);
@@ -102,7 +102,7 @@ class ChatDialogueFlowTest {
     @Test void modelMayNotReturnProductOutsideEligibleCatalog() {
         when(ai.isConfigured()).thenReturn(true);
         when(ai.complete(anyString(),anyList(),anyString())).thenReturn("{\"intro\":\"Gợi ý\",\"recommendations\":[{\"productId\":6,\"reason\":\"Hay\"}]}");
-        assertThat(turn("a","Tìm sách lập trình").getProducts()).noneMatch(p -> p.getId()==6L);
+        assertThat(turn("a","Tìm sách lập trình cho mình").getProducts()).noneMatch(p -> p.getId()==6L);
     }
     @Test void adviceDoesNotDependOnCatalogHavingPython() {
         var r=turn("a","Tôi chưa biết lập trình, nên học Python hay Java trước?");
@@ -110,7 +110,7 @@ class ChatDialogueFlowTest {
         assertThat(r.getProducts()).isEmpty();
     }
     @Test void pendingChoiceResolvesOrdinalDirectlyToPurchase() {
-        turn("a","Tìm 3 cuốn sách lập trình rẻ nhất");
+        turn("a","Tìm 3 cuốn sách lập trình rẻ nhất cho mình");
         assertThat(turn("a","giúp t mua").getProducts()).hasSize(3);
         var r=turn("a","cuốn thứ hai");
         assertThat(r.getIntent()).isEqualTo(ChatIntent.PURCHASE);
@@ -130,7 +130,7 @@ class ChatDialogueFlowTest {
         verify(ai,times(1)).complete(anyString(),anyList(),anyString());
     }
     @Test void acceptingAnEnglishAlternativeNeverSwitchesToProgramming() {
-        assertThat(turn("a","Tìm sách tiếng Anh dưới 200k").getProducts()).isEmpty();
+        assertThat(turn("a","Tìm sách tiếng Anh dưới 200k cho mình").getProducts()).isEmpty();
         var answer=turn("a","đồng ý");
         assertThat(answer.getProducts()).isEmpty();
         assertThat(answer.getAnswer()).contains("chủ đề");
@@ -150,7 +150,7 @@ class ChatDialogueFlowTest {
         assertThat(r.getAnswer()).contains("Giáo Trình Lập Trình Java");
     }
     @Test void ambiguousPairRequiresNamesInsteadOfDroppingARandomBook() {
-        turn("a","Tìm 3 cuốn sách lập trình rẻ nhất");
+        turn("a","Tìm 3 cuốn sách lập trình rẻ nhất cho mình");
         var response=turn("a","So sánh hai cuốn sách này giúp tôi");
         assertThat(response.getProducts()).isEmpty();
         assertThat(response.getAnswer()).contains("hiện có 3 cuốn");
@@ -177,7 +177,7 @@ class ChatDialogueFlowTest {
     @Test void internalProductReferencesAreNeverPrintedAsExtraRecommendations() {
         when(ai.isConfigured()).thenReturn(true); when(ai.provider()).thenReturn("gemini"); when(ai.model()).thenReturn("test");
         when(ai.complete(anyString(),anyList(),anyString())).thenReturn("{\"intent\":\"DISCOVER_BOOKS\",\"intro\":\"Nền tảng:\",\"recommendations\":[{\"productId\":1,\"reason\":\"Có bài tập thực hành.\"}],\"closing\":\"Bạn cũng nên xem productId 6\"}");
-        var r=turn("a","Tìm sách lập trình");
+        var r=turn("a","Tìm sách lập trình cho mình");
         assertThat(r.getAnswer()).doesNotContain("productId", "Bạn cũng nên xem");
         assertThat(r.getProducts()).extracting(ChatProductDto::getId).containsExactly(1L);
     }
