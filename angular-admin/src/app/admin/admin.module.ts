@@ -42,6 +42,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { ChatAnalyticsComponent } from './chat-analytics/chat-analytics.component';
 import { BookKnowledgeComponent } from './book-knowledge/book-knowledge.component';
 import { StoreKnowledgeComponent } from './store-knowledge/store-knowledge.component';
+import { SupportRequestsComponent } from './support-requests/support-requests.component';
 
 const routes: Routes = [
   {
@@ -59,6 +60,7 @@ const routes: Routes = [
       { path: 'soldest', component: SoldestComponent, canActivate: [AuthGuard] },
       { path: 'chatbot-analytics', component: ChatAnalyticsComponent, canActivate: [AuthGuard] },
       { path: 'store-knowledge', component: StoreKnowledgeComponent, canActivate: [AuthGuard] },
+      { path: 'support-requests', component: SupportRequestsComponent, canActivate: [AuthGuard] },
       { path: 'order', component: OrderComponent, canActivate: [AuthGuard] }
     ]
   }
@@ -91,7 +93,8 @@ const routes: Routes = [
     HomepageComponent,
     ChatAnalyticsComponent,
     BookKnowledgeComponent,
-    StoreKnowledgeComponent
+    StoreKnowledgeComponent,
+    SupportRequestsComponent
   ],
   imports: [
     CommonModule,

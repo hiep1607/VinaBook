@@ -102,6 +102,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/api/orders/user/**").hasRole("USER")
 				.antMatchers(HttpMethod.POST, "/api/orders/me/*/cancel").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/api/orders/me/*/cancellation", "/api/orders/me/*/reorder").hasRole("USER")
+                .antMatchers("/api/support/me/**", "/api/support/me").hasRole("USER")
 				.antMatchers(HttpMethod.GET, "/api/orderDetail/**").hasAnyRole("USER", "ADMIN")
 				.antMatchers(HttpMethod.POST, "/api/orders/*").hasRole("USER")
 				.antMatchers(HttpMethod.POST, "/api/payments/orders/*/start").hasRole("USER")
@@ -112,6 +113,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 				// ---- 4) CHỈ ADMIN — quản trị catalog, đơn hàng, khách hàng, thống kê ----
 				.antMatchers("/api/admin/products/**").hasRole("ADMIN")
+                .antMatchers("/api/support/admin/**", "/api/support/admin").hasRole("ADMIN")
 				.antMatchers("/api/admin/products", "/api/admin/books/**").hasRole("ADMIN")
 				.antMatchers("/api/admin/store-knowledge/**", "/api/admin/store-knowledge").hasRole("ADMIN")
 				.antMatchers(HttpMethod.POST, "/api/products").hasRole("ADMIN")

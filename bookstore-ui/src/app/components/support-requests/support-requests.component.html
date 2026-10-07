@@ -1,0 +1,8 @@
+<section class="requests" aria-label="Yêu cầu đã gửi"><h2>Yêu cầu đã gửi và phản hồi</h2><p>Hiển thị 50 yêu cầu gần nhất của tài khoản này.</p>
+  <button type="button" (click)="load()" [disabled]="busy">{{ busy ? 'Đang tải...' : 'Cập nhật trạng thái' }}</button><p *ngIf="error" role="alert">{{ error }}</p>
+  <p *ngIf="!busy && !error && !requests.length">Bạn chưa có yêu cầu nào. Khi cần hỗ trợ, bạn gửi yêu cầu để theo dõi phản hồi ở đây nhé.</p>
+  <article *ngFor="let request of requests"><h3>#{{ request.id }} · {{ request.kind === 'RETURN' ? 'Đổi trả' : 'Hỗ trợ' }}</h3>
+    <p>{{ support.statusLabel(request.status) }} · {{ request.createdAt | date:'dd/MM/yyyy HH:mm' }}<span *ngIf="request.orderId"> · Đơn #{{ request.orderId }}</span></p><p class="message">{{ request.message }}</p>
+    <p class="reply" *ngIf="request.reply"><strong>Phản hồi của nhân viên:</strong> {{ request.reply }}</p><p *ngIf="!request.reply">Đang chờ nhân viên xem xét và phản hồi. Bạn chưa cần gửi lại cùng yêu cầu nhé.</p>
+  </article>
+</section>

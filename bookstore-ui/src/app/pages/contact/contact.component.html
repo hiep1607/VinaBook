@@ -31,12 +31,17 @@
           <span class="icon" aria-hidden="true">24h</span>
           <div>
             <strong>Thời gian phản hồi</strong>
-            <p>Yêu cầu được tiếp nhận qua email và phản hồi trong giờ làm việc.</p>
+            <p>Bạn đăng nhập để gửi và theo dõi yêu cầu trên web. Cửa hàng phản hồi trong giờ làm việc; bạn cũng có thể liên hệ qua email.</p>
           </div>
         </div>
       </div>
 
       <div class="form-panel" appReveal="right">
+        <ng-container *ngIf="auth.isLoggedIn()">
+          <h2>Gửi yêu cầu cho nhân viên</h2>
+          <app-support-request kind="SUPPORT" [dismissable]="false"></app-support-request>
+        </ng-container>
+        <ng-container *ngIf="!auth.isLoggedIn()">
         <h2>Soạn lời nhắn</h2>
         <p class="form-note">Biểu mẫu sẽ mở ứng dụng email trên thiết bị của bạn. Nội dung chỉ được gửi sau khi bạn xác nhận trong ứng dụng email.</p>
 
@@ -63,9 +68,11 @@
 
           <button type="submit" class="submit-btn">Mở ứng dụng email</button>
         </form>
+        </ng-container>
       </div>
     </div>
 
+    <app-support-requests *ngIf="auth.isLoggedIn()"></app-support-requests>
     <section class="faq-section">
       <h2 class="display-title" appReveal="up">Câu hỏi thường gặp</h2>
 

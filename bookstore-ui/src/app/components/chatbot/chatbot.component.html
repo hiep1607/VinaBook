@@ -125,6 +125,9 @@
       (busyChange)="commerceBusy = $event" (updated)="commerceUpdated()"></app-order-cancellation>
     <app-order-reorder *ngIf="reorderOrderId" [orderId]="reorderOrderId"
       (closed)="reorderOrderId = 0; commerceBusy = false" (busyChange)="commerceBusy = $event" (updated)="commerceUpdated()"></app-order-reorder>
+    <app-support-request *ngIf="supportKind" [kind]="supportKind" [orderId]="supportOrderId" [summary]="supportSummary"
+      (closed)="supportKind = undefined; supportSummary = ''; commerceBusy = false" (busyChange)="commerceBusy = $event" (updated)="commerceUpdated()"></app-support-request>
+    <div *ngIf="showSupportRequests"><button type="button" (click)="showSupportRequests = false">Đóng danh sách yêu cầu</button><app-support-requests></app-support-requests></div>
   </div>
 
   <footer class="chat-composer">

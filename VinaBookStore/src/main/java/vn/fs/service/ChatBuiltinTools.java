@@ -22,6 +22,9 @@ public class ChatBuiltinTools {
     private OrderCancellationService cancellation;
     private BookKnowledgeService knowledge;
     private vn.fs.config.CurrentUserAccess access;
+    private CustomerSupportService support;
+    @org.springframework.beans.factory.annotation.Autowired
+    public void setSupport(CustomerSupportService value){support=value;}
     @org.springframework.beans.factory.annotation.Autowired
     public void setAccess(vn.fs.config.CurrentUserAccess value){access=value;}
     @org.springframework.beans.factory.annotation.Autowired(required=false)
@@ -712,6 +715,28 @@ public class ChatBuiltinTools {
                 return new ChatTool.Result(e.getReason()==null?"Mình chưa mở được đơn đã mua. Bạn kiểm tra lại mã đơn nhé.":e.getReason(),ChatIntent.ORDER_SUPPORT,List.of(),
                     e.getStatus()==org.springframework.http.HttpStatus.UNAUTHORIZED?List.of(new ChatActionDto("LOGIN","Đăng nhập",null,"/login",false)):List.of(),"NEEDS_INPUT");
             }
+        });
+    }
+    @Bean public ChatTool prepareReturnRequest() {
+        return tool("prepareReturnRequest","Chuẩn bị biểu mẫu yêu cầu đổi trả cho đơn đã hoàn thành của chính khách. Cần mã đơn hoặc đơn đang hỏi; không tự chấp nhận/hoàn tiền. Khách xem lại rồi xác nhận gửi.",Map.of("orderId",integer("Mã đơn",1,9007199254740991L)),(a,c)->{
+            Long id=a.hasNonNull("orderId")?Long.valueOf(integerLong(a,"orderId")):c.state().focusedOrderId;
+            if(id==null)return new ChatTool.Result("Bạn muốn đổi trả sách trong đơn nào? Bạn chọn đơn đã nhận trong mục Đơn hàng hoặc gửi mã đơn nhé, để mình lấy đúng sách và giúp cửa hàng kiểm tra yêu cầu của bạn.",ChatIntent.ORDER_SUPPORT,List.of(),List.of(new ChatActionDto("VIEW_ORDERS","Chọn đơn đã nhận",null,"/orders",false)),"NEEDS_INPUT");
+            try {
+                support.returnOptions(id);c.state().focusedOrderId=id;
+                var action=new ChatActionDto("CREATE_RETURN_REQUEST","Soạn yêu cầu đổi trả đơn #"+id,null,null,true);action.setOrderId(id);
+                return new ChatTool.Result("Mình đã tìm thấy đơn #"+id+" đã hoàn thành. Bạn mở biểu mẫu bên dưới, chọn cuốn sách, điền ngày nhận và lý do để cửa hàng xem xét đúng trường hợp nhé. Bạn sẽ kiểm tra lại trước khi gửi; cửa hàng chưa chấp nhận đổi trả hay hoàn tiền ở bước này.",ChatIntent.ORDER_SUPPORT,List.of(),List.of(action),"AWAITING_INPUT");
+            } catch(org.springframework.web.server.ResponseStatusException e) {
+                return new ChatTool.Result(e.getReason()==null?"Mình chưa mở được đơn cần đổi trả. Bạn kiểm tra lại mã đơn nhé.":e.getReason(),ChatIntent.ORDER_SUPPORT,List.of(),List.of(new ChatActionDto("VIEW_ORDERS","Kiểm tra đơn hàng",null,"/orders",false)),"NEEDS_INPUT");
+            }
+        });
+    }
+    private ChatTool.Result supportLogin() {
+        return new ChatTool.Result("Bạn đăng nhập để yêu cầu hỗ trợ được lưu đúng tài khoản và chỉ bạn xem được phản hồi nhé. Sau đó mình sẽ giúp bạn soạn nội dung để nhân viên hiểu rõ tình huống.",ChatIntent.ORDER_SUPPORT,List.of(),List.of(new ChatActionDto("LOGIN","Đăng nhập",null,"/login",false)),"NEEDS_INPUT");
+    }
+    @Bean public ChatTool getSupportRequests() {
+        return tool("getSupportRequests","Mở danh sách yêu cầu hỗ trợ/đổi trả và phản hồi của chính khách trong chat. Không đưa nội dung riêng tư của ticket vào prompt hoặc history.",Map.of(),(a,c)->{
+            if(access==null || access.currentEmail()==null)return supportLogin();
+            return new ChatTool.Result("Bạn bấm nút bên dưới để xem yêu cầu đã gửi, trạng thái mới nhất và phản hồi của nhân viên nhé. Danh sách chỉ lấy từ tài khoản đang đăng nhập của bạn.",ChatIntent.ORDER_SUPPORT,List.of(),List.of(new ChatActionDto("SHOW_SUPPORT_REQUESTS","Xem yêu cầu và phản hồi",null,null,false)),"COMPLETED");
         });
     }
     @Bean public ChatTool getWishlist() {
