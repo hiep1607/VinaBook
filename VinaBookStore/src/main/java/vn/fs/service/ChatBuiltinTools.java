@@ -700,6 +700,20 @@ public class ChatBuiltinTools {
         return new ChatTool.Result("Bạn đăng nhập để mình mở đúng danh sách yêu thích của tài khoản trên thiết bị này nhé. Sau đó bạn có thể lưu sách để xem lại khi cần.",ChatIntent.PRODUCT_INFO,List.of(),
             List.of(new ChatActionDto("LOGIN","Đăng nhập",null,"/login",false)),"AWAITING_INPUT");
     }
+    @Bean public ChatTool prepareReorder() {
+        return tool("prepareReorder","Mua lại sách từ đơn cũ của chính khách: kiểm tra đơn, mở bước xem giá/tồn kho hiện tại, chờ xác nhận thêm giỏ. Không tạo đơn mới.",Map.of("orderId",integer("Mã đơn",1,9007199254740991L)),(a,c)->{
+            try {
+                Long requested=a.hasNonNull("orderId")?Long.valueOf(integerLong(a,"orderId")):c.state().focusedOrderId;
+                if(!a.hasNonNull("orderId") && ChatBookFacts.has(language.normalize(c.request().getMessage()),"gan nhat|moi nhat"))requested=null;
+                var preview=orders.reorderPreview(requested); Long id=((Number)preview.get("orderId")).longValue();c.state().focusedOrderId=id;
+                var action=new ChatActionDto("REORDER_ORDER","Xem sách để mua lại đơn #"+id,null,null,true);action.setOrderId(id);
+                return new ChatTool.Result("Mình có thể giúp bạn mua lại sách từ đơn #"+id+". Bạn bấm nút bên dưới để kiểm tra giá và tồn kho hiện tại, chỉnh số lượng rồi xác nhận thêm vào giỏ nhé. Bước này chưa đặt đơn mới.",ChatIntent.ORDER_SUPPORT,List.of(),List.of(action),"AWAITING_CONFIRMATION");
+            } catch(org.springframework.web.server.ResponseStatusException e) {
+                return new ChatTool.Result(e.getReason()==null?"Mình chưa mở được đơn đã mua. Bạn kiểm tra lại mã đơn nhé.":e.getReason(),ChatIntent.ORDER_SUPPORT,List.of(),
+                    e.getStatus()==org.springframework.http.HttpStatus.UNAUTHORIZED?List.of(new ChatActionDto("LOGIN","Đăng nhập",null,"/login",false)):List.of(),"NEEDS_INPUT");
+            }
+        });
+    }
     @Bean public ChatTool getWishlist() {
         return tool("getWishlist","Xem danh sách yêu thích đang dùng trên website/thiết bị của khách đăng nhập. Không suy ra từ sở thích đọc.",Map.of(),(a,c)->{
             if(access==null || access.currentEmail()==null)return wishlistLogin();

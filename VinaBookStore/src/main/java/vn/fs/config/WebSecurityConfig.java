@@ -101,7 +101,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				// ---- 3) CHỈ KHÁCH ĐÃ ĐĂNG NHẬP (ROLE_USER) — giỏ hàng, đơn hàng, đánh giá của chính mình ----
 				.antMatchers(HttpMethod.GET, "/api/orders/user/**").hasRole("USER")
 				.antMatchers(HttpMethod.POST, "/api/orders/me/*/cancel").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/api/orders/me/*/cancellation").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/api/orders/me/*/cancellation", "/api/orders/me/*/reorder").hasRole("USER")
 				.antMatchers(HttpMethod.GET, "/api/orderDetail/**").hasAnyRole("USER", "ADMIN")
 				.antMatchers(HttpMethod.POST, "/api/orders/*").hasRole("USER")
 				.antMatchers(HttpMethod.POST, "/api/payments/orders/*/start").hasRole("USER")

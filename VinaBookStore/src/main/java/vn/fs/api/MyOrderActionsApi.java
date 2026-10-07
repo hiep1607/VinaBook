@@ -12,7 +12,9 @@ import vn.fs.service.OrderCancellationService;
 @RestController @RequestMapping("/api/orders/me")
 public class MyOrderActionsApi {
     private final OrderCancellationService service;
-    public MyOrderActionsApi(OrderCancellationService service){this.service=service;}
+    private final vn.fs.service.ChatOrderSupportService history;
+    public MyOrderActionsApi(OrderCancellationService service,vn.fs.service.ChatOrderSupportService history){this.service=service;this.history=history;}
+    @GetMapping("/{id}/reorder") public Map<String,Object> reorder(@PathVariable Long id){return history.reorderPreview(id);}
     @GetMapping("/{id}/cancellation") public Map<String,Object> preview(@PathVariable Long id){return service.previewDetails(id);}
     @PostMapping("/{id}/cancel") public Map<String,Object> cancel(@PathVariable Long id,@Valid @RequestBody Confirmation body){return service.cancel(id);}
     @Data public static class Confirmation { @AssertTrue private boolean confirmed; }

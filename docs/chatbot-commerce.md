@@ -76,3 +76,9 @@ Giao diện khóa bấm lặp, xóa state khi đổi tài khoản/đơn, bỏ re
 Đã kiểm tra website có trang Yêu thích, nút lưu tại sách và nút xóa. Chat dùng cùng WishlistService và key wishlist_{email}; không tạo danh sách riêng. Snapshot wishlistProductIds chỉ là danh sách local của thiết bị, được lọc ID/sách còn bán; backend vẫn xác minh đăng nhập từ JWT. “Xem danh sách yêu thích của tôi” trả sách và giá hiện tại, “lưu/bỏ cuốn này vào/khỏi yêu thích” chuẩn bị nút cho sách đã xác định. Nút chỉ cập nhật sau khi khách bấm; thao tác thêm là idempotent, không dùng toggle gây đảo kết quả khi bấm lặp. “Mình thích trinh thám” vẫn là sở thích đọc, không bị hiểu là yêu cầu sửa yêu thích. Hỏi yêu thích không bị bước thu thập nhu cầu tư vấn chặn.
 
 142 ca ChatToolsTest và 34 kiểm thử giao diện đạt sau khi bổ sung kiểm thử routing và sửa tham số công cụ đọc. Web thật xác minh cùng cuốn Muôn Kiếp Nhân Sinh ở trang Yêu thích và câu trả lời chat; không thay đổi danh sách thật khi kiểm tra. Danh sách này tiếp tục là dữ liệu trên thiết bị theo cơ chế website hiện có, chưa đồng bộ đa thiết bị.
+
+## Mua lại đơn cũ — 07/10/2026
+
+Trang Đơn hàng chưa có mua lại nên đã bổ sung OrderReorderComponent trước khi nối action REORDER_ORDER vào chat. GET /api/orders/me/{id}/reorder đọc đơn của chính JWT và chỉ trả mã sách/tên/số lượng cũ. ProductService tải giá, trạng thái bán và tồn kho hiện tại; khách xem lại và chỉnh số lượng rồi xác nhận thêm vào cùng CartService của website. Không giữ giá đơn cũ hoặc tự tạo đơn/thanh toán. Sách không còn khả dụng ngăn thêm toàn bộ bản nháp; khách được hướng dẫn chọn sách còn bán ở trang Sách.
+
+CartService.addBooks kiểm tra mọi dòng và tổng số lượng trước khi lưu một lần, tránh giỏ bị thêm một phần khi có dòng không hợp lệ. Kết quả đồng bộ chưa rõ yêu cầu kiểm tra giỏ trước khi thao tác tiếp. Response cũ khi đổi tài khoản/đơn bị bỏ qua. Chat “mua lại đơn #…” chỉ chuẩn bị cùng biểu mẫu web; không gọi thêm giỏ trong công cụ backend.

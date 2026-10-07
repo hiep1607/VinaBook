@@ -35,7 +35,7 @@ class ChatToolsTest {
         builtins.setCancellation(cancellation);
         when(rates.findByProductOrderByIdDesc(any(Product.class))).thenReturn(List.of());
         registry=new ChatToolRegistry(List.of(builtins.searchProducts(),builtins.recommendBooks(),builtins.getProducts(),builtins.updateSelection(),
-            builtins.prepareCartChange(),builtins.prepareClearCart(),builtins.prepareCheckout(),builtins.prepareCancelOrder(),builtins.getWishlist(),builtins.prepareWishlistChange(),builtins.getCart(),builtins.getMyOrders(),builtins.getOrderDetail(),builtins.getPolicy(),builtins.respond(),builtins.findRelatedBooks()));
+            builtins.prepareCartChange(),builtins.prepareClearCart(),builtins.prepareCheckout(),builtins.prepareCancelOrder(),builtins.prepareReorder(),builtins.getWishlist(),builtins.prepareWishlistChange(),builtins.getCart(),builtins.getMyOrders(),builtins.getOrderDetail(),builtins.getPolicy(),builtins.respond(),builtins.findRelatedBooks()));
         when(ai.provider()).thenReturn("gemini");when(ai.modelUsed()).thenReturn("fixture");when(ai.isConfigured()).thenReturn(true);
         when(analytics.record(any(),any(),anyString(),anyBoolean(),anyInt(),anyLong())).thenReturn("event");
         orchestrator=new ChatOrchestrator(ai,mapper,registry,analytics);
@@ -90,6 +90,14 @@ class ChatToolsTest {
         var request=request("s","Danh sách yêu thích của tôi"); request.setWishlistProductIds(List.of(2L));
         var result=orchestrator.reply(request,state);
         assertThat(result.getProducts()).extracting(ChatProductDto::getId).containsExactly(2L);
+        assertThat(result.isFallback()).isFalse();
+    }
+    @Test void reorderIsPreparedWithoutCreatingAnOrderOrChangingCart() {
+        when(orders.reorderPreview(7L)).thenReturn(Map.of("orderId",7L,"items",List.of()));
+        var result=orchestrator.reply(request("s","mua lại đơn #7"),state);
+        assertThat(result.getActions().get(0).getType()).isEqualTo("REORDER_ORDER");
+        assertThat(result.getActions().get(0).getOrderId()).isEqualTo(7L);
+        assertThat(result.getActions().get(0).isRequiresConfirmation()).isTrue();
         assertThat(result.isFallback()).isFalse();
     }
     @Test void continuationRetainsTopicAndExplicitNullClearsPrice() throws Exception {
