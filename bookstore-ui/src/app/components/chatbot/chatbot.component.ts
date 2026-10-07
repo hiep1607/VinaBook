@@ -318,7 +318,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
 
     this.syncAccount();
     if (this.commerceBusy || this.supportForm?.uncertain) return;
-    if (action.type === 'CREATE_RETURN_REQUEST') {
+    if (action.type === 'CREATE_RETURN_REQUEST' || action.type === 'CREATE_SUPPORT_REQUEST') {
       if (!this.actionAvailable(message) || (action.type === 'CREATE_RETURN_REQUEST' && !action.orderId)
         || (action.orderId != null && (!Number.isSafeInteger(action.orderId) || action.orderId < 1))) return;
       if (this.commerce?.checkout || this.commerce?.uncertainConfirmation) return;
