@@ -197,9 +197,9 @@ public class ChatService {
 		if (request.getActiveProductId() != null && catalog.stream().anyMatch(p -> request.getActiveProductId().equals(p.getProductId())))
 			s.focus = request.getActiveProductId();
 		ChatIntent classified = intents.classify(question);
-        String customerTool = ChatCustomerActions.tool(q);
+        String customerTool = ChatCustomerActions.tool(q, s, !s.pendingReviewMode.isBlank() && !search.named(question,catalog).isEmpty());
         if (tools != null && !customerTool.isEmpty())
-            return localDiscovery(request, s, customerTool, ChatCustomerActions.arguments(customerTool, q), started);
+            return localDiscovery(request, s, customerTool, ChatCustomerActions.arguments(customerTool, q, s), started);
 		if(policies.handlesReturn(question,s)) {
 			String answer=policies.answer(question,s);
 			return finish(request,answer,ChatIntent.POLICY,List.of(),false,false,s,started);

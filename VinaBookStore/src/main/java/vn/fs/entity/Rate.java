@@ -34,6 +34,7 @@ public class Rate implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Double rating;
+	@javax.persistence.Column(length = 2000)
 	private String comment;
 	private Date rateDate;
 

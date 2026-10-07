@@ -23,10 +23,13 @@ public class ChatBuiltinTools {
     private BookKnowledgeService knowledge;
     private vn.fs.config.CurrentUserAccess access;
     private CustomerSupportService support;
+    private vn.fs.repository.RateRepository rates;
     @org.springframework.beans.factory.annotation.Autowired
     public void setSupport(CustomerSupportService value){support=value;}
     @org.springframework.beans.factory.annotation.Autowired
     public void setAccess(vn.fs.config.CurrentUserAccess value){access=value;}
+    @org.springframework.beans.factory.annotation.Autowired
+    public void setRates(vn.fs.repository.RateRepository value){rates=value;}
     @org.springframework.beans.factory.annotation.Autowired(required=false)
     public void setKnowledge(BookKnowledgeService value){knowledge=value;}
     @org.springframework.beans.factory.annotation.Autowired
@@ -974,6 +977,78 @@ public class ChatBuiltinTools {
         return new ChatTool.Result(text.toString(),intent,books.stream().map(this::dto).collect(Collectors.toList()),actions,books.isEmpty()?"NEEDS_INPUT":"COMPLETED");
     }
 
+    @Bean public ChatTool bookReviews() {
+        Map<String,ChatTool.Parameter> parameters=new LinkedHashMap<>(referenceParameters());
+        parameters.put("mode",choice("Khách muốn xem đánh giá, viết/cập nhật, hoặc cần làm rõ ý định", "read","write","clarify"));
+        parameters.put("index",integer("Số thứ tự khách chọn trong danh sách sách đang chờ đánh giá",1,8));
+        return tool("bookReviews","Xem các nhận xét thật theo đúng sách; hoặc mở biểu mẫu để khách tự viết/cập nhật đánh giá sau khi đăng nhập. Không tự gửi đánh giá thay khách.",parameters,(a,c)->{
+            int index=a.hasNonNull("index")?intArg(a,"index",1)-1:-1;
+            List<Product> selected=a.hasNonNull("index")
+                ?index>=0 && index<c.state().displayed.size()?byIds(List.of(c.state().displayed.get(index))):List.of():resolve(a,c);
+            String question=language.normalize(c.request().getMessage());
+            // Choosing read/write does not identify a book after a missing or ambiguous title.
+            if(!c.state().pendingReviewMode.isBlank() && c.state().pendingReviewProductId==null
+                    && !ChatCustomerActions.shortReviewMode(question).isEmpty()) selected=List.of();
+            var subject=java.util.regex.Pattern.compile("\\b(?:sach|cuon|quyen)(?: sach)?\\s+(.+)").matcher(question);
+            if(!a.hasNonNull("index") && new ChatCatalogQuery(language,data).quoted(c.request().getMessage()).isBlank() && subject.find()
+                    && !subject.group(1).matches("(?:nay|do|ay|nao|vua|thu|so|dau|cuoi|re|dat|co|duoc|dang|may|bao)\\b.*")
+                    && new ChatCatalogQuery(language,data).named(c.request().getMessage(),catalog()).isEmpty()) selected=List.of();
+            String mode=a.path("mode").asText("read");
+            if(selected.size()!=1) {
+                c.state().pendingReviewMode=mode; c.state().pendingReviewProductId=null;
+                if(selected.size()>1) {
+                    c.state().displayed=ids(selected); c.state().shortlist=ids(selected); c.state().focus=null;
+                    return new ChatTool.Result("Mình tìm thấy vài cuốn khớp tên bạn nói. Bạn chọn tên sách hoặc số thứ tự bên dưới để mình mở đúng phần đánh giá nhé.",
+                        ChatIntent.PRODUCT_INFO,selected.stream().map(this::dto).collect(Collectors.toList()),List.of(),"NEEDS_INPUT");
+                }
+                return ChatTool.Result.clarify("Mình cần biết tên cuốn sách bạn muốn xem hoặc viết đánh giá, để lấy đúng nhận xét và tránh chọn nhầm. Bạn gửi tên sách hoặc chọn một cuốn trong danh sách gần nhất nhé.");
+            }
+            Product book=selected.get(0);
+            c.state().focus=book.getProductId(); c.state().displayed=List.of(book.getProductId());
+            ChatProductDto product=dto(book);
+            if("clarify".equals(mode)) {
+                c.state().pendingReviewMode=mode; c.state().pendingReviewProductId=book.getProductId();
+                return new ChatTool.Result("Mình hiểu bạn đang hỏi về đánh giá của cuốn “"+book.getName()+"”. Bạn muốn xem nhận xét của độc giả hay muốn tự viết đánh giá? Mình hỏi để mở đúng phần bạn cần.",
+                    ChatIntent.PRODUCT_INFO,List.of(product),List.of(new ChatActionDto("VIEW_PRODUCT","Mở trang sách",book.getProductId(),"/product/"+book.getProductId(),false)),"NEEDS_INPUT");
+            }
+            ChatCustomerActions.clearReview(c.state());
+            if("write".equals(mode)) {
+                if(access==null || access.currentUserId()==null)return new ChatTool.Result("Mình có thể giúp bạn viết đánh giá cho “"+book.getName()+"”. Bạn đăng nhập để nhận xét được lưu đúng tài khoản; sau đó bạn sẽ chọn số sao, xem lại nội dung và tự bấm gửi.",
+                    ChatIntent.PRODUCT_INFO,List.of(product),List.of(new ChatActionDto("LOGIN","Đăng nhập để viết đánh giá",null,"/login",false)),"NEEDS_INPUT");
+                boolean editing=rates!=null && rates.findByProductOrderByIdDesc(book).stream()
+                    .anyMatch(rate->rate.getUser()!=null && Objects.equals(rate.getUser().getUserId(),access.currentUserId()));
+                String label=editing?"Cập nhật đánh giá":"Viết đánh giá";
+                return new ChatTool.Result("Mình hiểu bạn muốn chia sẻ cảm nhận về “"+book.getName()+"”. Bạn mở biểu mẫu bên dưới, chọn số sao và nhập nhận xét để người đọc khác tham khảo nhé. Mình chưa lưu gì; bạn sẽ chủ động bấm gửi sau khi xem lại.",
+                    ChatIntent.PRODUCT_INFO,List.of(product),List.of(new ChatActionDto("WRITE_REVIEW",label,book.getProductId(),null,false)),"AWAITING_INPUT");
+            }
+            List<vn.fs.entity.Rate> reviews=rates==null?List.of():rates.findByProductOrderByIdDesc(book).stream()
+                .filter(rate->rate.getRating()!=null && rate.getRating()>=1 && rate.getRating()<=5)
+                .collect(Collectors.toList());
+            ChatActionDto writeAction=access!=null && access.currentUserId()!=null
+                ?new ChatActionDto("WRITE_REVIEW","Viết đánh giá",book.getProductId(),null,false)
+                :new ChatActionDto("LOGIN","Đăng nhập để viết đánh giá",null,"/login",false);
+            if(reviews.isEmpty())return new ChatTool.Result("Mình vừa kiểm tra đánh giá của “"+book.getName()+"”; hiện chưa có nhận xét hợp lệ nào để bạn tham khảo. Nếu bạn đã đọc cuốn này, bạn có thể chia sẻ cảm nhận của mình.",
+                ChatIntent.PRODUCT_INFO,List.of(product),List.of(writeAction),"COMPLETED");
+            double average=reviews.stream().mapToDouble(rate->rate.getRating()).average().orElse(0);
+            long positive=reviews.stream().filter(rate->rate.getRating()>=4).count();
+            long critical=reviews.stream().filter(rate->rate.getRating()<=2).count();
+            StringBuilder answer=new StringBuilder("Mình đã kiểm tra ").append(reviews.size()).append(" đánh giá của “").append(book.getName())
+                .append("”. Điểm trung bình là ").append(String.format(Locale.ROOT,"%.1f/5",average)).append(".");
+            if(positive>0)answer.append(" Có ").append(positive).append(" đánh giá từ 4 sao trở lên");
+            if(critical>0)answer.append(positive>0?" và ":" Có ").append(critical).append(" đánh giá từ 2 sao trở xuống");
+            if(positive>0 || critical>0)answer.append(".");
+            List<vn.fs.entity.Rate> comments=reviews.stream().filter(rate->rate.getComment()!=null && !rate.getComment().trim().isEmpty()).collect(Collectors.toList());
+            List<vn.fs.entity.Rate> sample=new ArrayList<>(comments.stream().limit(5).collect(Collectors.toList()));
+            if(sample.stream().noneMatch(rate->rate.getRating()>=4))comments.stream().filter(rate->rate.getRating()>=4).findFirst().ifPresent(sample::add);
+            if(sample.stream().noneMatch(rate->rate.getRating()<=2))comments.stream().filter(rate->rate.getRating()<=2).findFirst().ifPresent(sample::add);
+            answer.append(sample.isEmpty()?"\nHiện các đánh giá này chỉ có điểm sao, chưa có nhận xét bằng lời.":"\n\nMột số nhận xét để bạn tham khảo:");
+            for(vn.fs.entity.Rate rate:sample) {
+                String comment=ChatDialogueInterpreter.clean(rate.getComment().trim().replaceAll("[\\r\\n\\t]+"," "),260);
+                answer.append("\n• ").append(String.format(Locale.ROOT,rate.getRating()==Math.rint(rate.getRating())?"%.0f/5 sao":"%.1f/5 sao",rate.getRating())).append(" — “").append(comment).append("”");
+            }
+            return new ChatTool.Result(answer.toString(),ChatIntent.PRODUCT_INFO,List.of(product),List.of(writeAction),"COMPLETED");
+        });
+    }
     private ChatProductDto dto(Product b){return new ChatProductDto(b.getProductId(),b.getName(),b.getAuthor(),category(b),data.effectivePrice(b),b.getPrice()==null?0:b.getPrice(),b.getDiscount(),b.getQuantity(),b.getImage());}
     private String description(Product b){return readingFacts(b).getOrDefault("summary",Objects.toString(b.getDescription(),""));}
     private ChatTool.Result explainSelection(List<Product> selected,ChatTool.Context c) {

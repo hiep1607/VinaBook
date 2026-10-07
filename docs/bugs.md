@@ -5,7 +5,7 @@ Tài liệu này chỉ giữ vấn đề còn hiệu lực. Các mô tả protot
 ## Ưu tiên cao
 
 1. **Angular 12 đã cũ.** Admin có dependency tree legacy và cảnh báo `npm audit`; cần nâng cấp theo từng major, không dùng `npm audit fix --force`.
-2. **Test coverage còn mỏng ở storefront/admin.** CI chạy build và toàn bộ test Angular; một số trang/admin vẫn chủ yếu có smoke test khởi tạo. Cần bổ sung kiểm thử tích hợp các luồng người dùng. Mock checkout đã được cập nhật theo `StoreKnowledgeService`, và mock route chi tiết sách đã có `queryParamMap` để từng commit tính năng có thể chạy bộ kiểm thử storefront đầy đủ.
+2. **Test coverage còn mỏng ở storefront/admin.** CI chạy build và toàn bộ test Angular; storefront có kiểm thử hành vi checkout, chatbot, review và giỏ hàng, nhưng một số trang/admin vẫn chủ yếu có smoke test khởi tạo. Cần bổ sung kiểm thử tích hợp các luồng người dùng. Ngày 07/10/2026 đã sửa mock checkout thiếu `StoreKnowledgeService` và mock route chi tiết sách thiếu `queryParamMap`; toàn bộ 149 test storefront đạt trên bản source Git với dependency cài sạch bằng `npm ci`.
 3. **Cart chưa đồng bộ đa thiết bị.** Cart local chỉ được đẩy lên backend lúc checkout.
 
 ## Ưu tiên trung bình
@@ -13,13 +13,14 @@ Tài liệu này chỉ giữ vấn đề còn hiệu lực. Các mô tả protot
 4. `buyNowItem` là state in-memory; cần bảo đảm luôn clear khi user rời checkout giữa chừng.
 5. Storefront còn dùng nhiều `any`, chưa có model/domain types dùng chung.
 6. Tất cả page storefront đang eager-loaded; bundle có thể giảm bằng feature modules/lazy routes.
-7. Contact chỉ mở email client, chưa có ticket API hoặc theo dõi trạng thái.
+7. Yêu cầu hỗ trợ/đổi trả đã có API, lịch sử trạng thái và phản hồi từ admin; chưa có chat trực tiếp với nhân viên hoặc thông báo chủ động khi có phản hồi.
 8. Avatar, address, wishlist và search history còn device-local.
 9. Backend đang dùng Spring Boot 2.6 và `open-in-view`/SQL logging cần cấu hình rõ theo profile production.
 10. VietQR hiện đối soát thủ công trong admin; muốn tự động cần dịch vụ webhook ngân hàng hoặc payOS/Open Banking.
 
 ## Đã xử lý gần đây
 
+- CI storefront: cập nhật mock theo dependency/chính sách giao hàng hiện tại, giữ các kiểm thử chống đặt lặp và thanh mua cố định; bổ sung kiểm thử phí giao hàng và chặn tạo đơn khi chính sách chưa tải được. Kiểm tra bằng đúng lệnh CI (`tsc -p tsconfig.spec.json --noEmit`, `ng test --watch=false --browsers=ChromeHeadlessCI`) thay vì chỉ chạy nhóm test chatbot.
 - Catalog tĩnh và các service chết đã được loại khỏi luồng runtime.
 - Production Angular không còn gọi `localhost` của máy người dùng.
 - JWT expiry, route guard và admin role guard đã được bổ sung.
@@ -31,3 +32,6 @@ Tài liệu này chỉ giữ vấn đề còn hiệu lực. Các mô tả protot
 - COD, VietQR, VNPay Sandbox và MoMo Test đã có luồng server-side; chữ ký và số tiền callback được xác thực trước khi đổi trạng thái.
 - Footer, 404, mobile menu, loading/error/empty state và accessibility chính đã được củng cố.
 - Chatbot đã gom rule về backend, có intent eval tiếng Việt, follow-up context, SSE/fallback transport, action xác nhận thêm giỏ, tra đơn theo principal, feedback và metrics admin không lưu nội dung chat.
+- Hủy đơn, yêu thích, mua lại, yêu cầu đổi trả và hỗ trợ nhân viên dùng chung chức năng web với chat. Thao tác thay đổi đơn/gửi yêu cầu có bước khách xem lại và xác nhận; hỗ trợ là yêu cầu được lưu, chưa phải hội thoại trực tiếp với nhân viên.
+- Đánh giá sách trong chat dùng chung nhận xét, biểu mẫu và API với trang chi tiết sách; yêu cầu đọc/viết được làm rõ, nội dung chỉ lưu khi khách tự gửi.
+- Rà soát đánh giá ngày 07/10/2026: POST không nhận ID của client để ghi đè rate, POST/PUT khóa owner từ JWT khi upsert; điểm sao/cache thống nhất web và chat, form có timeout và bảo vệ đổi ngữ cảnh. Giới hạn 2.000 ký tự đã đồng bộ schema local bằng `db/06-review-comment-length.sql`; database triển khai cần migration tương ứng.

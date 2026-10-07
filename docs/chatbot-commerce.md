@@ -106,3 +106,34 @@ MyOrderActionsApi/SupportRequestsApi chỉ cho CORS từ localhost/127.0.0.1 c�
 Kiểm tra localhost với backend/MySQL thật: hủy đơn mở xem lại trên web/chat và chọn Giữ đơn; mua lại đơn #46 mở đúng sách, giá hiện tại và tồn kho trên cả hai giao diện, dừng trước thêm giỏ; yêu thích đọc cùng danh sách hiện hành; đổi trả đơn đang chờ được giải thích điều kiện và hướng dẫn hỗ trợ; biểu mẫu hỗ trợ cho xem/sửa nội dung trước xác nhận; danh sách yêu cầu trong chat và Liên hệ cùng trạng thái trống của tài khoản. Không hủy, mua lại, gửi phiếu hoặc thanh toán thật trong QA. Nhánh lưu phiếu/phản hồi/đổi trả đơn hoàn thành được kiểm thử tự động bằng dữ liệu giả, chưa gửi một phiếu thật trong đợt này.
 
 Widget chờ lượt render tiếp theo trước khi cuộn xuống cuối, để phản hồi/biểu mẫu mới không nằm ngoài khung nhìn khi lịch sử dài. Backend đang chạy được biên dịch và khởi động lại đầy đủ sau các thay đổi: tránh Spring devtools quét class trong lúc Maven đang biên dịch khiến một số API tạm thiếu. OPTIONS thật xác minh API hủy/hỗ trợ/admin cho origin local và từ chối origin lạ; các endpoint vẫn cần JWT/role ở request thực thi.
+
+## Đánh giá sách trong chat — 07/10/2026
+
+Trang chi tiết sách đã có điểm sao, nhận xét và biểu mẫu gửi/cập nhật, nên chat dùng chung ReviewService và API `/api/rates`. Khi khách hỏi nhận xét, bot chỉ đọc đánh giá của đúng sách, tính điểm trung bình và trích một số nhận xét thực tế; không đưa tên hay email người đánh giá vào câu trả lời. Nếu chưa rõ khách muốn đọc hay tự viết, bot hỏi lại trước khi mở đúng biểu mẫu.
+
+Khách đăng nhập có thể mở form ngay trong chat, chọn 1–5 sao, nhập tối đa 2.000 ký tự, xem lại rồi chủ động gửi. Form nhận diện đánh giá hiện có để cập nhật thay vì tạo thêm. Khách chưa đăng nhập được hướng dẫn đăng nhập; backend lấy chủ sở hữu từ JWT và chỉ cho sửa đánh giá của chính tài khoản. POST lặp cùng sách/tài khoản cập nhật đánh giá hiện có, tránh tạo bản trùng khi giao diện chưa kịp nạp cache. Bot không tự ghi nhận đánh giá.
+
+152 kiểm thử backend cho ChatToolsTest và RateApiTest đều đạt; 7 kiểm thử ChromeHeadless riêng cho biểu mẫu đánh giá đều đạt. Build production Angular thành công. Bộ test storefront mặc định vẫn có các spec tìm kiếm cũ lỗi compile; spec đánh giá được chạy bằng entry và tsconfig tạm chỉ nạp test của chức năng này. Build còn cảnh báo dung lượng bundle và stylesheet trang chi tiết sách.
+
+### 5 kịch bản để Luna kiểm tra thủ công
+
+Chạy trên web local/dev với sách có dữ liệu phù hợp và tài khoản test. Không dùng tài khoản khách thật hoặc ghi đánh giá lên production.
+
+1. **Đọc nhận xét của đúng sách:** hỏi “Cho mình xem đánh giá của [tên sách]”. Bot phải nêu điểm trung bình/nhận xét lấy từ sách đó, không hiện tên/email người đánh giá và không tự chuyển sang sách luật hoặc sách khác.
+2. **Sách chưa có đánh giá:** hỏi nhận xét của một sách chưa có rate. Bot phải nói hiện chưa có nhận xét, không bịa số sao/câu trích, và có thể đưa lựa chọn viết đánh giá.
+3. **Câu hỏi chưa rõ ý:** mở ngữ cảnh một sách rồi nhắn “Đánh giá cuốn này”. Bot phải hỏi muốn xem nhận xét hay tự viết; trước câu trả lời đó không được mở form hoặc lưu dữ liệu.
+4. **Khách chưa đăng nhập:** yêu cầu “Mình muốn viết đánh giá cuốn [tên sách]”. Bot phải giải thích cần đăng nhập để lưu đúng tài khoản và đưa nút đăng nhập; không hiện trạng thái đã lưu và không tạo rate.
+5. **Viết mới, kiểm tra dữ liệu web và cập nhật:** dùng tài khoản/sách test đã đăng nhập. Mở form từ chat, thử gửi khi chưa chọn sao hoặc chưa nhập nhận xét (bị chặn), sau đó gửi 4 sao cùng nhận xét thử. Xác minh thành công, mở trang chi tiết sách thấy cùng nội dung/điểm và chỉ một rate của tài khoản. Mở form lại, đổi sao/nội dung rồi gửi; đánh giá hiện có phải được cập nhật, không nhân đôi. Dùng dữ liệu local/dev để có thể dọn dẹp sau.
+
+### Rà soát chất lượng đánh giá sách — 07/10/2026
+
+Đợt rà soát phát hiện và sửa các lỗi sau:
+
+- Các câu “cuốn này mấy sao”, “xem đánh giá 5 sao” được xử lý là đọc đánh giá. Câu trả lời ngắn “xem”/“viết”, tên sách và số thứ tự tiếp tục đúng yêu cầu đang chờ; cuốn được chọn cập nhật ngữ cảnh cho lượt sau. Khi tên sách không tồn tại hoặc còn nhiều lựa chọn, chỉ nói “xem”/“viết” vẫn cần chọn sách, không lấy cuốn cũ thay thế.
+- Điểm trung bình dùng cùng phạm vi dữ liệu 1–5 sao trên web và chat, gồm điểm thập phân cũ và đánh giá chỉ có sao; không bịa nhận xét khi thiếu nội dung. Cache nhận bản lưu được backend xác nhận ngay, bỏ qua GET cũ về muộn và giữ dữ liệu khi refresh lỗi. Form có timeout 20 giây, hủy thao tác giao diện khi đổi tài khoản/sách hoặc bị đóng và không hiện kết quả của ngữ cảnh cũ. Các panel giỏ/đơn/hỗ trợ thay thế form đánh giá để tránh chồng thao tác.
+- POST từ chối ID do client gửi, tránh ghi đè một rate khác. POST/PUT khóa bản ghi tài khoản lấy từ JWT trong transaction trước khi tìm/lưu để các yêu cầu đồng thời của cùng owner được xử lý tuần tự; kiểm tra chủ sở hữu và sản phẩm của order detail nếu có. POST lặp cập nhật rate gần nhất của cùng tài khoản/sách.
+- Cột `rates.comment` trước đây chỉ có 255 ký tự dù form/API nhận 2.000. Entity và migration [06-review-comment-length.sql](../db/06-review-comment-length.sql) đã đồng bộ giới hạn. Migration đã chạy trên MySQL local `book`: cột thành `VARCHAR(2000)`, vẫn giữ đủ 3 rate cũ. Cần áp dụng migration cho database triển khai trước khi dùng giới hạn mới; chưa chạy trên production.
+
+Kết quả: **481 test backend, 27 test ChromeHeadless** của widget/form/ReviewService đều đạt; **production build Angular thành công**. Backend khởi động bằng các class vừa biên dịch và kết nối MySQL local. Tám bước API liên tiếp đều đạt: đọc Muôn Kiếp Nhân Sinh (5.0/5 từ rate thật), hỏi “mấy sao”, làm rõ đọc/viết, trả lời “xem”, khách yêu cầu viết được hướng dẫn đăng nhập, tên không tồn tại, “xem” vẫn không lấy cuốn cũ, rồi chọn một tên sách khác chưa có đánh giá.
+
+Kiểm tra runtime dùng `AI_PROVIDER=local`, chưa đánh giá Gemini trực tiếp. Không tạo/sửa/xóa nhận xét trong lượt kiểm tra dữ liệu thật; lưu/cập nhật, kiểm tra quyền, timeout và đổi ngữ cảnh được xác minh bằng test tự động. Bộ test storefront mặc định còn lỗi compile ở các spec cũ; 27 test trên được chạy qua entry riêng. Build còn cảnh báo dung lượng bundle và stylesheet trang chi tiết sách.

@@ -315,7 +315,23 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
   }
 
   runAction(action: ChatAction, message: ChatMessage): void {
-
+    if (action.type === 'WRITE_REVIEW') {
+      this.syncAccount();
+      if (!this.messages.includes(message) || !this.actionAvailable(message) || !Number.isSafeInteger(action.productId)
+          || !action.productId || action.productId < 1 || this.commerce?.checkout || this.commerce?.uncertainConfirmation
+          || this.supportForm?.uncertain) return;
+      const product = message.products?.find(item => item.id === action.productId);
+      if (!product) return;
+      this.commerce?.dismiss();
+      this.cancellationOrderId = 0;
+      this.reorderOrderId = 0;
+      this.supportKind = undefined;
+      this.supportSummary = '';
+      this.showSupportRequests = false;
+      this.reviewProduct = product;
+      this.shouldScroll = true;
+      return;
+    }
     this.syncAccount();
     if (this.commerceBusy || this.supportForm?.uncertain) return;
     if (action.type === 'CREATE_RETURN_REQUEST' || action.type === 'CREATE_SUPPORT_REQUEST') {

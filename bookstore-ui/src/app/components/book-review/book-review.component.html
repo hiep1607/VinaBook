@@ -1,0 +1,40 @@
+<section class="book-review-card" aria-label="Đánh giá sách" [attr.aria-busy]="busy">
+  <header>
+    <strong>{{ editing ? 'Cập nhật đánh giá' : 'Viết đánh giá' }}</strong>
+    <button type="button" class="close" (click)="close()" [disabled]="busy" aria-label="Đóng biểu mẫu đánh giá">Đóng</button>
+  </header>
+
+  <p class="book-name">{{ productName }}</p>
+  <p class="hint">Chia sẻ cảm nhận thật của bạn để người đọc sau có thêm thông tin chọn sách nhé.</p>
+
+  <ng-container *ngIf="auth.isLoggedIn(); else loginPrompt">
+    <form (ngSubmit)="save()">
+      <div class="rating" role="group" aria-label="Chọn số sao">
+        <button *ngFor="let star of stars" type="button" [disabled]="busy"
+          [class.selected]="star <= rating" [attr.aria-pressed]="star === rating"
+          [attr.aria-label]="star + ' sao'" (click)="chooseRating(star)">{{ star <= rating ? '★' : '☆' }}</button>
+        <span>{{ rating ? rating + '/5 sao' : 'Chọn số sao' }}</span>
+      </div>
+
+      <label for="chat-review-content">Nhận xét
+        <textarea id="chat-review-content" name="reviewContent" [(ngModel)]="content"
+          (ngModelChange)="markContentChanged()" maxlength="2000" rows="4" required
+          [disabled]="busy" placeholder="Điều gì bạn thích hoặc muốn người đọc biết về cuốn sách này?"></textarea>
+      </label>
+      <div class="form-footer">
+        <small>{{ remainingCharacters }} ký tự còn lại</small>
+        <button type="submit" class="primary" [disabled]="busy || !rating || !content.trim()">
+          {{ busy ? 'Đang gửi…' : editing ? 'Cập nhật đánh giá' : 'Gửi đánh giá' }}
+        </button>
+      </div>
+    </form>
+  </ng-container>
+
+  <ng-template #loginPrompt>
+    <p class="login-copy">Bạn đăng nhập để đánh giá được lưu đúng tài khoản nhé.</p>
+    <button type="button" class="primary" (click)="goToLogin()">Đăng nhập</button>
+  </ng-template>
+
+  <p class="status success" *ngIf="success" role="status">{{ success }}</p>
+  <p class="status error" *ngIf="error" role="alert">{{ error }}</p>
+</section>

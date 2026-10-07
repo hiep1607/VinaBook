@@ -11,6 +11,7 @@ import { ChatbotService, ChatMessage } from 'src/app/services/chatbot.service';
 import { FabCollisionService } from 'src/app/services/fab-collision.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
 import { ReviewService } from 'src/app/services/review.service';
+import { BookReviewComponent } from '../book-review/book-review.component';
 import { ChatbotComponent } from './chatbot.component';
 
 describe('Chatbot purchase actions', () => {
@@ -39,7 +40,7 @@ describe('Chatbot purchase actions', () => {
     reviews = { changes$: new BehaviorSubject(undefined), getUserReview: () => null,
       upsertReview: jasmine.createSpy('upsertReview').and.returnValue(of({})), refresh: () => {} };
     await TestBed.configureTestingModule({
-      imports: [CommonModule, FormsModule], declarations: [ChatbotComponent], schemas: [NO_ERRORS_SCHEMA],
+      imports: [CommonModule, FormsModule], declarations: [ChatbotComponent, BookReviewComponent], schemas: [NO_ERRORS_SCHEMA],
       providers: [
         { provide: ChatbotService, useValue: { useAccount: () => {}, history: () => of([]),
           greeting: () => ({ from: 'bot', text: 'Chào bạn' }), ask: () => replies } },
@@ -104,8 +105,62 @@ describe('Chatbot purchase actions', () => {
     fixture.componentInstance.runAction(reply.actions![0], reply); fixture.componentInstance.runAction(reply.actions![0], reply);
     expect(TestBed.inject(WishlistService).addToWishlist).toHaveBeenCalledOnceWith('buyer@test.invalid', 7);
   });
+  it('opens a support draft for review and does not send the conversation automatically', () => {
+    const reply: ChatMessage = { from: 'bot', text: 'Bạn xem lại trước khi gửi nhé.', actions: [{ type: 'CREATE_SUPPORT_REQUEST', orderId: null as any, label: 'Soạn yêu cầu', requiresConfirmation: true }] };
+    fixture.componentInstance.send('Nhờ nhân viên hỗ trợ giao sách'); replies.next(reply); replies.complete(); fixture.detectChanges();
+    fixture.componentInstance.runAction(reply.actions![0], reply); fixture.detectChanges();
+    expect(fixture.componentInstance.supportKind).toBe('SUPPORT'); expect(fixture.componentInstance.supportSummary).toContain('Nhờ nhân viên hỗ trợ');
+    expect(fixture.nativeElement.querySelector('app-support-request')).not.toBeNull();
+  });
 
+  it('opens the real review component for the selected book and replaces it with another panel', () => {
+    const reply: ChatMessage = { ...purchase, actions: [
+      { type: 'WRITE_REVIEW', label: 'Viết đánh giá', productId: 7, requiresConfirmation: false },
+      { type: 'CREATE_SUPPORT_REQUEST', label: 'Soạn yêu cầu', requiresConfirmation: true }
+    ] };
+    fixture.componentInstance.send('Viết đánh giá cuốn này'); replies.next(reply); replies.complete(); fixture.detectChanges();
+    fixture.componentInstance.runAction(reply.actions![0], reply); fixture.detectChanges();
+    expect(fixture.debugElement.query(By.directive(BookReviewComponent)).componentInstance.productId).toBe(7);
+    fixture.componentInstance.runAction(reply.actions![1], reply); fixture.detectChanges();
+    expect(fixture.componentInstance.reviewProduct).toBeNull();
+    expect(fixture.debugElement.query(By.directive(BookReviewComponent))).toBeNull();
+    expect(fixture.componentInstance.supportKind).toBe('SUPPORT');
+  });
 
+  it('keeps widget actions blocked until the review save completes', () => {
+    auth.currentUser = { userId: 7, email: 'book-review-qa@test.invalid', token: 'fixture' };
+    fixture.detectChanges();
+    const pending = new Subject<any>(); reviews.upsertReview.and.returnValue(pending);
+    const reply: ChatMessage = { ...purchase, actions: [{ type: 'WRITE_REVIEW', label: 'Viết đánh giá', productId: 7, requiresConfirmation: false }] };
+    fixture.componentInstance.send('Viết đánh giá cuốn này'); replies.next(reply); replies.complete(); fixture.detectChanges();
+    fixture.componentInstance.runAction(reply.actions![0], reply); fixture.detectChanges();
+    const review: BookReviewComponent = fixture.debugElement.query(By.directive(BookReviewComponent)).componentInstance;
+    review.chooseRating(4); review.content = 'Nhận xét QA'; review.save(); fixture.detectChanges();
+    expect(fixture.componentInstance.commerceBusy).toBeTrue();
+    const count = fixture.componentInstance.messages.length;
+    fixture.componentInstance.send('Câu hỏi khác'); fixture.componentInstance.showCart(); fixture.componentInstance.toggle();
+    expect(fixture.componentInstance.messages.length).toBe(count);
+    expect(fixture.componentInstance.reviewProduct?.id).toBe(7);
+    expect(fixture.componentInstance.open).toBeTrue();
+    pending.next({}); pending.complete(); fixture.detectChanges();
+    expect(fixture.componentInstance.commerceBusy).toBeFalse();
+  });
 
+  it('clears the review panel on a new question, opening the cart, or closing the widget', () => {
+    fixture.componentInstance.reviewProduct = purchase.products![0];
+    fixture.componentInstance.send('Câu hỏi khác');
+    expect(fixture.componentInstance.reviewProduct).toBeNull();
+    fixture.componentInstance.reviewProduct = purchase.products![0];
+    const showCart = jasmine.createSpy('showCart'); fixture.componentInstance.commerce = { showCart } as any;
+    fixture.componentInstance.showCart();
+    expect(fixture.componentInstance.reviewProduct).toBeNull(); expect(showCart).toHaveBeenCalled();
+    fixture.componentInstance.reviewProduct = purchase.products![0]; fixture.componentInstance.toggle();
+    expect(fixture.componentInstance.reviewProduct).toBeNull();
+  });
 
+  it('never opens a review action restored from old conversation history', () => {
+    const reply: ChatMessage = { ...purchase, actions: [{ type: 'WRITE_REVIEW', label: 'Viết đánh giá', productId: 7, requiresConfirmation: false }] };
+    fixture.componentInstance.messages = [reply]; fixture.componentInstance.runAction(reply.actions![0], reply);
+    expect(fixture.componentInstance.reviewProduct).toBeNull();
+  });
 });

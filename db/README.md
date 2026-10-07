@@ -10,6 +10,7 @@ Thư mục `db/` gom toàn bộ script SQL của dự án, đánh số theo th�
 | `02-product-catalog-refresh.sql` | Thay các sản phẩm placeholder bằng catalog nhà sách Việt Nam thực tế (chỉ `UPDATE`, giữ nguyên khóa ngoại) | Sau bước 01, nếu muốn dùng catalog mới |
 | `03-category-data-fix.sql` | Sửa category #8 (thừa khoảng trắng đầu tên) và gộp category #9 trùng lặp vào #3 | Sau khi đã có dữ liệu products |
 | `04-product57-category-fix.sql` | Sửa thể loại sai cho sản phẩm «Đắc Nhân Tâm» (idempotent) | **Chờ chủ dự án phê duyệt**, chạy thủ công |
+| `06-review-comment-length.sql` | Mở rộng `rates.comment` từ 255 lên 2.000 ký tự, giữ dữ liệu; chạy lại an toàn | Sau khi có bảng `rates`, trước khi dùng chức năng đánh giá nhận 2.000 ký tự |
 
 ## Thứ tự chuẩn trên máy dev sạch
 
@@ -24,6 +25,8 @@ cmd /c "mysql -u <user> -p --default-character-set=utf8mb4 book < D:\book\book\d
 ```
 
 `04-product57-category-fix.sql` chỉ chạy sau khi được chủ dự án phê duyệt (xem blocker trong `docs/bugs.md`).
+
+`06-review-comment-length.sql` cần được chạy với database ứng dụng đã chọn. Ngày 07/10/2026 đã áp dụng trên MySQL local `book` cổng 3306, xác minh `VARCHAR(2000)` và giữ nguyên 3 đánh giá hiện có. Chưa áp dụng trên production.
 
 ## Lưu ý quan trọng
 
