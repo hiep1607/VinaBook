@@ -4,6 +4,17 @@ import { forkJoin, Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { StoreKnowledgeService } from './store-knowledge.service';
+import { timeout } from 'rxjs/operators';
+
+export interface OrderCancellationPreview {
+  orderId: number;
+  orderDate: string | null;
+  total: number;
+  statusCode: number;
+  canCancel: boolean;
+  reason: string;
+  items: { name: string; quantity: number }[];
+}
 
 /** Đơn hàng server-side: quote tính giá/ship, confirm tạo đơn và giữ tồn kho. */
 @Injectable({
@@ -14,6 +25,18 @@ export class OrderService {
   private api = environment.apiUrl;
 
   constructor(private http: HttpClient, private knowledge: StoreKnowledgeService) { }
+
+  cancellationPreview(orderId: number): Observable<OrderCancellationPreview> {
+    return this.http.get<OrderCancellationPreview>(this.api + '/api/orders/me/' + orderId + '/cancellation').pipe(timeout(20000));
+  }
+
+  cancelOrder(orderId: number): Observable<{ orderId: number; status: string }> {
+    return this.http.post<{ orderId: number; status: string }>(this.api + '/api/orders/me/' + orderId + '/cancel', { confirmed: true }).pipe(timeout(20000));
+  }
+
+  canCancel(order: any): boolean {
+    return order?.statusCode === 0 && (!order.paymentMethod || order.paymentMethod === 'COD') && order.paymentStatus !== 'PAID';
+  }
 
   statusLabel(status: number): string {
     switch (status) {

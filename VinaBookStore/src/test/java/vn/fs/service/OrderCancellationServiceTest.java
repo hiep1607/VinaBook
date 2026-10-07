@@ -27,6 +27,32 @@ class OrderCancellationServiceTest {
         when(details.findByOrder(order)).thenReturn(List.of(new OrderDetail(1L,2,100000D,product,order)));
     }
     @Test void previewNeverMutatesAndCanResolveLatest(){assertThat(service.preview(null)).isEqualTo(7L);assertThat(order.getStatus()).isZero();verify(orders,never()).save(order);}
+    @Test void previewDetailsOnlyIncludesConfirmationData(){
+        var result=service.previewDetails(7L);
+        assertThat(result).containsEntry("orderId",7L).containsEntry("canCancel",true).containsEntry("reason","");
+        assertThat(result).doesNotContainKeys("user","email","phone","address");
+        assertThat((List<?>)result.get("items")).hasSize(1);
+        verify(orders,never()).save(any());
+    }
+    @Test void previewExplainsIneligibleOrAlreadyCancelledWithoutMutating(){
+        order.setPaymentMethod("VNPAY");
+        assertThat(service.previewDetails(7L)).containsEntry("canCancel",false);
+        order.setStatus(3);
+        assertThat(service.previewDetails(7L)).containsEntry("statusCode",3).containsEntry("canCancel",false);
+        verify(orders,never()).save(any());
+    }
+    @Test void previewDetailsRejectsOtherOwnerAndGuest(){
+        when(access.currentEmail()).thenReturn("other@test.invalid");
+        assertThatThrownBy(()->service.previewDetails(7L)).isInstanceOf(ResponseStatusException.class);
+        when(access.currentEmail()).thenReturn(null);
+        assertThatThrownBy(()->service.previewDetails(7L)).isInstanceOf(ResponseStatusException.class);
+    }
+    @Test void statusChangeAfterPreviewPreventsCancellation(){
+        assertThat(service.previewDetails(7L)).containsEntry("canCancel",true);
+        order.setStatus(1);
+        assertThatThrownBy(()->service.cancel(7L)).isInstanceOf(ResponseStatusException.class);
+        verify(orders,never()).save(any());
+    }
     @Test void cancelRestoresReservationExactlyOnce(){order.setStockReserved(true);service.cancel(7L);service.cancel(7L);assertThat(order.getStatus()).isEqualTo(3);assertThat(product.getQuantity()).isEqualTo(10);verify(orders,times(1)).save(order);}
     @Test void legacyOrderWithoutReservationDoesNotInventStock(){service.cancel(7L);assertThat(product.getQuantity()).isEqualTo(8);}
     @Test void cannotCancelAnotherAccount(){when(access.currentEmail()).thenReturn("other@test.invalid");assertThatThrownBy(()->service.cancel(7L)).isInstanceOf(ResponseStatusException.class);assertThat(order.getStatus()).isZero();}

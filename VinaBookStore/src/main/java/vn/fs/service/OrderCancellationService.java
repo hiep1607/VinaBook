@@ -40,6 +40,24 @@ public class OrderCancellationService {
     // Expected validation failures become chat replies; do not poison the enclosing read transaction.
     @Transactional(readOnly=true, noRollbackFor=ResponseStatusException.class)
     public Long preview(Long id){Order order=owned(id,false);eligible(order);return order.getOrdersId();}
+    @Transactional(readOnly=true, noRollbackFor=ResponseStatusException.class)
+    public Map<String,Object> previewDetails(Long id) {
+        Order order=owned(id,false);
+        String reason="";
+        if(order.getStatus()==3) reason="Đơn này đã được hủy.";
+        else try { eligible(order); } catch(ResponseStatusException e) { reason=e.getReason(); }
+        Map<String,Object> result=new LinkedHashMap<>();
+        result.put("orderId",order.getOrdersId());
+        result.put("orderDate",order.getOrderDate());
+        result.put("total",order.getAmount());
+        result.put("statusCode",order.getStatus());
+        result.put("canCancel",reason.isEmpty());
+        result.put("reason",reason);
+        result.put("items",details.findByOrder(order).stream().map(line->Map.of(
+            "name",line.getProduct()==null || line.getProduct().getName()==null?"Sách không còn thông tin":line.getProduct().getName(),
+            "quantity",line.getQuantity())).collect(java.util.stream.Collectors.toList()));
+        return result;
+    }
     @Transactional public Map<String,Object> cancel(Long id) {
         return cancelOwned(owned(id,true));
     }

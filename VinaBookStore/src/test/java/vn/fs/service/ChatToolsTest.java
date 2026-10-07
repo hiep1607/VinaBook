@@ -54,6 +54,17 @@ class ChatToolsTest {
         assertThat(state.criteria.getMaxPrice()).isEqualTo(200000);
         assertThat(state.criteria.getMinRating()).isEqualTo(4.5);
     }
+    @Test void cancellationProducesTypedConfirmationWithoutMutatingTheOrder() throws Exception {
+        when(cancellation.preview(7L)).thenReturn(7L);
+        var result=run("prepareCancelOrder","{\"orderId\":7}");
+        assertThat(result.actions()).hasSize(1);
+        var action=result.actions().get(0);
+        assertThat(action.getType()).isEqualTo("CANCEL_ORDER");
+        assertThat(action.getOrderId()).isEqualTo(7L);
+        assertThat(action.isRequiresConfirmation()).isTrue();
+        assertThat(state.focusedOrderId).isEqualTo(7L);
+        verify(cancellation,never()).cancel(any());
+    }
     @Test void continuationRetainsTopicAndExplicitNullClearsPrice() throws Exception {
         run("searchProducts","{\"query\":\"Python\",\"maxPrice\":100000}");
         run("searchProducts","{\"scope\":\"continue\",\"minRating\":4.5}");

@@ -8,10 +8,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 import vn.fs.service.OrderCancellationService;
 
+@CrossOrigin(origins={"http://localhost:4200","http://localhost:4300","http://127.0.0.1:4200","http://127.0.0.1:4300"})
 @RestController @RequestMapping("/api/orders/me")
 public class MyOrderActionsApi {
     private final OrderCancellationService service;
     public MyOrderActionsApi(OrderCancellationService service){this.service=service;}
+    @GetMapping("/{id}/cancellation") public Map<String,Object> preview(@PathVariable Long id){return service.previewDetails(id);}
     @PostMapping("/{id}/cancel") public Map<String,Object> cancel(@PathVariable Long id,@Valid @RequestBody Confirmation body){return service.cancel(id);}
     @Data public static class Confirmation { @AssertTrue private boolean confirmed; }
     @ExceptionHandler(ResponseStatusException.class) public ResponseEntity<?> failure(ResponseStatusException e){return ResponseEntity.status(e.getStatus()).body(Map.of("message",e.getReason()==null?"Không thể hủy đơn":e.getReason()));}

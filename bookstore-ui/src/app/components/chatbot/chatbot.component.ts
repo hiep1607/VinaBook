@@ -313,7 +313,21 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
 
 
 
-
+    if (action.type === 'CANCEL_ORDER') {
+      if (!this.actionAvailable(message) || !Number.isSafeInteger(action.orderId) || !action.orderId || action.orderId < 1) return;
+      if (this.commerce?.checkout || this.commerce?.uncertainConfirmation) {
+        this.commerce.error = 'Bạn hoàn tất hoặc đóng bước đặt hàng trước khi mở thao tác với đơn cũ nhé, để mình giữ rõ từng yêu cầu.';
+        return;
+      }
+      this.commerce?.dismiss();
+      this.reviewProduct = null;
+      this.supportKind = undefined; this.supportSummary = '';
+      this.showSupportRequests = false;
+      this.cancellationOrderId = action.orderId;
+      this.reorderOrderId = 0;
+      this.shouldScroll = true;
+      return;
+    }
     if (['ADD_TO_CART', 'REMOVE_FROM_CART', 'UPDATE_CART_QUANTITY', 'CLEAR_CART', 'SHOW_CART', 'BUY_NOW', 'CHECKOUT_CART'].includes(action.type)) {
       if (!this.actionAvailable(message)) return;
       this.reviewProduct = null;
