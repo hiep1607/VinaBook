@@ -103,4 +103,59 @@ class ChatCheckoutServiceTest {
         assertThat(q.getOrderId()).isNull();
         verify(tx).rollback(any());
     }
+    @Test void shippingChangeRequiresAnotherExplicitQuote() {
+        StoreKnowledgeService store=mock(StoreKnowledgeService.class);
+        when(store.shipping(100000)).thenReturn(20000L,30000L);
+        service.setStore(store);
+        var quote=service.quote(input);
+        assertThatThrownBy(()->service.confirm(quote.getToken())).isInstanceOf(ResponseStatusException.class)
+            .hasMessageContaining("Phí giao hàng đã thay đổi");
+        verify(orders,never()).save(any()); verify(tx).rollback(any());
+    }
+    @Test void unavailablePaymentCannotQuoteOrCreateAnOrder() {
+        input.setPaymentMethod("VNPAY");
+        assertThatThrownBy(()->service.quote(input)).isInstanceOf(ResponseStatusException.class);
+        verifyNoInteractions(orders,details);
+    }
+    @Test void disabledPaymentAfterQuoteCannotCreateAnOrder() {
+        PaymentGatewayService payment=mock(PaymentGatewayService.class);
+        when(payment.availableMethods()).thenReturn(
+            java.util.Map.of("BANK_QR",java.util.Map.of("available",true)),
+            java.util.Map.of("BANK_QR",java.util.Map.of("available",false)));
+        service.setPayments(payment); input.setPaymentMethod("BANK_QR");
+        var quote=service.quote(input);
+        assertThatThrownBy(()->service.confirm(quote.getToken())).isInstanceOf(ResponseStatusException.class);
+        verify(orders,never()).save(any());
+    }
+    @Test void multiBookCartQuoteConsumesExactlyOnceAfterConfirmation() {
+        Product second=new Product();second.setProductId(2L);second.setName("Sách thứ hai");
+        second.setPrice(80000D);second.setQuantity(5);second.setStatus(true);
+        when(products.findById(2L)).thenReturn(Optional.of(second));
+        when(em.find(Product.class,2L,LockModeType.PESSIMISTIC_WRITE)).thenReturn(second);
+        CartSyncService carts=mock(CartSyncService.class);service.setCarts(carts);
+        when(carts.get()).thenReturn(new CartSyncService.Snapshot(4L,java.util.List.of(
+            new CartSyncService.Item(1L,"Sách thử","","",100000,2,10),
+            new CartSyncService.Item(2L,"Sách thứ hai","","",80000,1,5)),280000));
+        input.setItems(java.util.List.of(line(1L,2),line(2L,1))); input.setFromCart(true);input.setCartRevision(4);
+        var quote=service.quote(input);
+        assertThat(quote.getItems()).hasSize(2);assertThat(quote.getTotal()).isEqualTo(300000);
+        verify(carts,never()).consume(anyList(),anyLong());verify(orders,never()).save(any());
+        service.confirm(quote.getToken());service.confirm(quote.getToken());
+        verify(carts,times(1)).consume(quote.getItems(),4L);
+        verify(orders,times(1)).save(any());verify(details,times(2)).save(any());
+        assertThat(product.getQuantity()).isEqualTo(8);assertThat(second.getQuantity()).isEqualTo(4);
+    }
+    @Test void cartRevisionAndQuantitiesAreValidatedBeforeQuoting() {
+        CartSyncService carts=mock(CartSyncService.class);service.setCarts(carts);
+        when(carts.get()).thenReturn(new CartSyncService.Snapshot(8L,java.util.List.of(
+            new CartSyncService.Item(1L,"Sách thử","","",100000,2,10)),200000));
+        input.setFromCart(true);input.setCartRevision(7);
+        assertThatThrownBy(()->service.quote(input)).isInstanceOf(ResponseStatusException.class).hasMessageContaining("Giỏ hàng đã thay đổi");
+        input.setCartRevision(8);
+        assertThatThrownBy(()->service.quote(input)).isInstanceOf(ResponseStatusException.class).hasMessageContaining("Sách hoặc số lượng");
+        verifyNoInteractions(orders,details);
+    }
+    private CartSyncService.Line line(long id,int quantity) {
+        CartSyncService.Line line=new CartSyncService.Line();line.setProductId(id);line.setQuantity(quantity);return line;
+    }
 }

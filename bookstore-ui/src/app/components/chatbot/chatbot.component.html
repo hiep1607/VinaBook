@@ -30,10 +30,13 @@
     </div>
 
     <div class="chat-actions">
-      <button type="button" (click)="clearConversation()" [disabled]="clearing" aria-label="Xóa cuộc trò chuyện" title="Xóa cuộc trò chuyện">
+      <button type="button" (click)="showCart()" [disabled]="commerceBusy || !!commerce?.uncertainConfirmation" aria-label="Xem giỏ trong chat" title="Giỏ hàng">
+        <lucide-icon name="shopping-cart" [size]="17"></lucide-icon>
+      </button>
+      <button type="button" (click)="clearConversation()" [disabled]="clearing || commerceBusy || !!commerce?.uncertainConfirmation" aria-label="Xóa cuộc trò chuyện" title="Xóa cuộc trò chuyện">
         <lucide-icon name="trash-2" [size]="17"></lucide-icon>
       </button>
-      <button type="button" (click)="toggle()" aria-label="Đóng trợ lý" title="Đóng">
+      <button type="button" (click)="toggle()" [disabled]="commerceBusy || !!commerce?.uncertainConfirmation" aria-label="Đóng trợ lý" title="Đóng">
         <lucide-icon name="x" [size]="19"></lucide-icon>
       </button>
     </div>
@@ -76,20 +79,12 @@
               <button
                 type="button"
                 class="primary"
-                *ngIf="actionFor(msg, p.id, 'ADD_TO_CART') as addAction"
-                [disabled]="addedProductIds.has(p.id)"
-                (click)="runAction(addAction, msg)"
-              >{{ addedProductIds.has(p.id) ? 'Đã thêm' : 'Thêm giỏ' }}</button>
+                *ngFor="let action of productActions(msg, p.id)"
+                [disabled]="commerceBusy || (action.type === 'ADD_TO_CART' && addedProductIds.has(p.id))"
+                (click)="runAction(action, msg)"
+              >{{ action.type === 'ADD_TO_CART' && addedProductIds.has(p.id) ? 'Đã thêm' : action.label }}</button>
             </span>
           </article>
-        </div>
-
-        <div class="inline-confirm" *ngIf="pendingAction?.message === msg">
-          <span>Thêm {{ pendingAction?.action?.quantity || 1 }} cuốn “{{ pendingAction?.product?.name }}” vào giỏ hàng?</span>
-          <div>
-            <button type="button" class="primary" (click)="confirmAddToCart()">Đồng ý</button>
-            <button type="button" (click)="cancelAction()">Hủy</button>
-          </div>
         </div>
 
         <div class="message-actions" *ngIf="genericActions(msg).length">
@@ -123,6 +118,8 @@
       <span>{{ errorText }}</span>
       <button type="button" (click)="retry()">Thử lại</button>
     </div>
+    <app-chat-commerce (busyChange)="commerceBusy = $event" (updated)="commerceUpdated()"
+      (added)="addedProductIds.add($event)" (navigated)="open = false; commerceBusy = false"></app-chat-commerce>
   </div>
 
   <footer class="chat-composer">
@@ -139,7 +136,7 @@
         autocomplete="off"
         (keydown)="onInputKeydown($event)"
       ></textarea>
-      <button type="submit" [disabled]="!draft.trim() || typing" aria-label="Gửi câu hỏi">
+      <button type="submit" [disabled]="!draft.trim() || typing || commerceBusy || !!commerce?.checkout || !!commerce?.uncertainConfirmation" aria-label="Gửi câu hỏi">
         <lucide-icon name="send" [size]="18"></lucide-icon>
       </button>
     </form>

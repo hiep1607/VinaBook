@@ -1,4 +1,4 @@
-import { of, Subject } from 'rxjs';
+import { of, Subject, throwError } from 'rxjs';
 
 import { CheckoutComponent } from './checkout.component';
 
@@ -6,6 +6,7 @@ describe('CheckoutComponent', () => {
   let cartService: any;
   let router: any;
   let notification: any;
+  let knowledge: any;
   let component: CheckoutComponent;
 
   beforeEach(() => {
@@ -19,6 +20,13 @@ describe('CheckoutComponent', () => {
       error: jasmine.createSpy('error'),
       success: jasmine.createSpy('success')
     };
+    knowledge = {
+      get: jasmine.createSpy('get').and.returnValue(of({
+        settings: { shippingFee: 20000, freeShippingThreshold: 300000, deliveryMinDays: 2, deliveryMaxDays: 5 },
+        policies: [],
+        paymentMethods: {}
+      }))
+    };
 
     component = new CheckoutComponent(
       cartService,
@@ -31,7 +39,8 @@ describe('CheckoutComponent', () => {
       { getMethods: jasmine.createSpy('getMethods').and.returnValue(of({})) } as any,
       router,
       notification,
-      { bump: jasmine.createSpy('bump'), orderSuccess: jasmine.createSpy('orderSuccess') } as any
+      { bump: jasmine.createSpy('bump'), orderSuccess: jasmine.createSpy('orderSuccess') } as any,
+      knowledge
     );
   });
 
@@ -89,6 +98,8 @@ describe('CheckoutComponent', () => {
   it('chỉ gửi một đơn khi bấm hai lần trong lúc đồng bộ giỏ', async () => {
     let finish: () => void = () => {};
     cartService.flush = () => new Promise<void>(resolve => finish = resolve);
+    cartService.getCartItems.and.returnValue([{ id: 7, price: 100000, quantity: 1, selected: true }]);
+    component.ngOnInit();
     component.shippingForm = { label: '', name: 'Kiểm thử', phone: '0900000000', street: '12 Nguyễn Trãi, Hà Nội' };
     const order = (component as any).orderService.placeOrder;
     order.and.returnValue(new Subject());
@@ -96,5 +107,27 @@ describe('CheckoutComponent', () => {
     await component.placeOrder();
     finish(); await first;
     expect(order).toHaveBeenCalledTimes(1);
+  });
+
+  it('tính phí giao hàng từ chính sách được tải trước checkout', () => {
+    cartService.getCartItems.and.returnValue([{ id: 7, price: 100000, quantity: 1, selected: true }]);
+
+    component.ngOnInit();
+
+    expect(knowledge.get).toHaveBeenCalled();
+    expect(component.getTotal()).toBe(120000);
+    component.cartItems[0].quantity = 3;
+    expect(component.getShipping()).toBe(0);
+  });
+
+  it('không tạo đơn khi chưa tải được chính sách giao hàng', async () => {
+    knowledge.get.and.returnValue(throwError(new Error('Không tải được chính sách')));
+    component.ngOnInit();
+
+    await component.placeOrder();
+
+    expect(component.shippingUnavailable).toBeTrue();
+    expect(component.formError).toContain('Chưa tải được chính sách giao hàng');
+    expect((component as any).orderService.placeOrder).not.toHaveBeenCalled();
   });
 });

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subscriber, Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, timeout } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 export type ChatIntent =
@@ -9,7 +9,7 @@ export type ChatIntent =
   | 'POLICY' | 'ORDER_SUPPORT' | 'SMALL_TALK' | 'UNKNOWN' | 'PURCHASE';
 
 export interface ChatAction {
-  type: 'VIEW_PRODUCT' | 'ADD_TO_CART' | 'REMOVE_FROM_CART' | 'UPDATE_CART_QUANTITY' | 'CLEAR_CART' | 'CANCEL_ORDER' | 'SHOW_CART' | 'LOGIN' | 'VIEW_ORDERS' | 'BUY_NOW';
+  type: 'VIEW_PRODUCT' | 'ADD_TO_CART' | 'REMOVE_FROM_CART' | 'UPDATE_CART_QUANTITY' | 'CLEAR_CART' | 'CANCEL_ORDER' | 'SHOW_CART' | 'LOGIN' | 'VIEW_ORDERS' | 'BUY_NOW' | 'CHECKOUT_CART' | 'ADD_TO_WISHLIST' | 'REMOVE_FROM_WISHLIST' | 'REORDER_ORDER' | 'CREATE_RETURN_REQUEST' | 'CREATE_SUPPORT_REQUEST' | 'SHOW_SUPPORT_REQUESTS' | 'WRITE_REVIEW';
   orderId?: number;
   label: string;
   productId?: number;
@@ -86,6 +86,12 @@ export class ChatbotService {
     return new Observable<ChatMessage>(observer => {
       const controller = new AbortController();
       let fallbackSub: Subscription | undefined;
+      let streamTimedOut = false;
+      const deadline = setTimeout(() => {
+        streamTimedOut = true;
+        controller.abort();
+        observer.error(this.transportError(504));
+      }, 60000);
       const body = {
         message: input,
         requestId: 'turn-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2),
@@ -124,31 +130,34 @@ export class ChatbotService {
               const event = this.parseEvent(frame);
               if (!event) continue;
               if (event.name === 'done') {
+                clearTimeout(deadline);
                 // The answer has been grounded and checked by the backend. Reveal
                 // this completed response locally so unverified text never flashes.
                 await this.reveal(event.data as ChatApiResponse, observer, controller.signal);
                 observer.complete();
                 return;
               } else if (event.name === 'error') {
-                observer.error(new Error(event.data.message || 'Trợ lý chưa xử lý được yêu cầu. Vui lòng thử lại.'));
+                observer.error(new Error(event.data.message || 'Mình chưa hoàn tất câu trả lời. Bạn thử gửi lại câu hỏi nhé để mình kiểm tra tiếp.'));
                 return;
               }
             }
           }
           throw new Error('stream-ended');
         } catch (error) {
-          if (controller.signal.aborted) return;
-          fallbackSub = this.http.post<ChatApiResponse>(this.api, body).subscribe({
+          clearTimeout(deadline);
+          if (streamTimedOut || controller.signal.aborted || observer.closed) return;
+          fallbackSub = this.http.post<ChatApiResponse>(this.api, body).pipe(timeout(60000)).subscribe({
             next: response => {
               this.reveal(response, observer, controller.signal).then(() => observer.complete());
             },
-            error: error => observer.error(this.transportError(error.status))
+            error: error => observer.error(this.transportError(error.name === 'TimeoutError' ? 504 : error.status))
           });
         }
       };
 
       run();
       return () => {
+        clearTimeout(deadline);
         controller.abort();
         fallbackSub?.unsubscribe();
       };
@@ -208,15 +217,15 @@ export class ChatbotService {
 
   private transportError(status: number): Error {
     const messages: {[key: number]: string} = {
-      400: 'Câu hỏi hoặc lịch sử chat không hợp lệ. Hãy rút gọn câu hỏi hoặc bắt đầu cuộc trò chuyện mới.',
-      413: 'Lịch sử chat quá dài. Hãy bắt đầu cuộc trò chuyện mới.',
-      401: 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.',
-      403: 'Phiên hiện tại không có quyền gửi yêu cầu này.',
-      429: 'Bạn gửi câu hỏi quá nhanh. Vui lòng thử lại sau một phút.',
-      504: 'Trợ lý phản hồi quá lâu. Vui lòng thử lại.',
-      0: 'Không kết nối được máy chủ VinaBook. Hãy kiểm tra mạng và thử lại.'
+      400: 'Mình chưa đọc được câu hỏi hoặc lịch sử chat này. Bạn thử rút gọn câu hỏi hoặc bắt đầu cuộc trò chuyện mới để mình nhận đủ nội dung nhé.',
+      413: 'Lịch sử chat đã quá dài để gửi đầy đủ. Bạn bắt đầu cuộc trò chuyện mới rồi nói lại nhu cầu hiện tại nhé.',
+      401: 'Phiên đăng nhập đã hết hạn nên mình chưa thể xử lý yêu cầu cho tài khoản của bạn. Bạn đăng nhập lại rồi gửi câu hỏi nhé.',
+      403: 'Mình chưa thể thực hiện yêu cầu trong phiên hiện tại. Bạn kiểm tra tài khoản đang đăng nhập rồi thử lại nhé.',
+      429: 'Mình đang nhận nhiều câu hỏi liên tiếp. Bạn chờ khoảng một phút rồi gửi lại nhé, để mình xử lý đầy đủ từng yêu cầu.',
+      504: 'Mình mất nhiều thời gian hơn dự kiến và chưa hoàn tất câu trả lời. Bạn thử gửi lại câu hỏi nhé.',
+      0: 'Mình chưa kết nối được với VinaBook. Bạn kiểm tra mạng rồi thử gửi lại câu hỏi nhé; nội dung đã hiển thị vẫn còn trong cuộc trò chuyện.'
     };
-    return new Error(messages[status] || 'Máy chủ chưa xử lý được câu hỏi. Vui lòng thử lại.');
+    return new Error(messages[status] || 'Mình chưa xử lý xong câu hỏi này. Bạn thử gửi lại nhé để mình kiểm tra tiếp.');
   }
 
   private fromResponse(response: ChatApiResponse): ChatMessage {

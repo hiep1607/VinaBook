@@ -34,6 +34,7 @@ import vn.fs.service.ChatService;
 @RestController
 @RequestMapping("api/chat")
 public class ChatApi {
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ChatApi.class);
 
 	private final ChatService chat;
 	private final ChatRateLimiter rateLimiter;
@@ -55,7 +56,7 @@ public class ChatApi {
 		String clientId = clientIp(servletRequest);
 		if (!rateLimiter.allow(clientId)) {
 			return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
-					.body(Map.of("message", "Bạn gửi câu hỏi quá nhanh. Vui lòng thử lại sau một phút."));
+					.body(Map.of("message", "Mình đang nhận nhiều câu hỏi liên tiếp. Bạn chờ khoảng một phút rồi gửi lại nhé, để mình xử lý đầy đủ từng yêu cầu."));
 		}
 		ChatResponseDto response = chat.reply(request);
 		return ResponseEntity.ok(response);
@@ -98,7 +99,7 @@ public class ChatApi {
 		if (!rateLimiter.allow(clientId)) {
 			try {
 				emitter.send(SseEmitter.event().name("error").data(Map.of("message",
-						"Bạn gửi câu hỏi quá nhanh. Vui lòng thử lại sau một phút.")));
+						"Mình đang nhận nhiều câu hỏi liên tiếp. Bạn chờ khoảng một phút rồi gửi lại nhé, để mình xử lý đầy đủ từng yêu cầu.")));
 				emitter.complete();
 			} catch (Exception ex) {
 				emitter.completeWithError(ex);
@@ -106,7 +107,12 @@ public class ChatApi {
 			return emitter;
 		}
 		SecurityContext callerContext = SecurityContextHolder.getContext();
+		// The common pool uses the base loader, while devtools loads entities in
+		// the restart loader. JPA must resolve query parameter types with the caller's loader.
+		ClassLoader callerLoader = Thread.currentThread().getContextClassLoader();
 		CompletableFuture.runAsync(() -> {
+			ClassLoader workerLoader = Thread.currentThread().getContextClassLoader();
+			Thread.currentThread().setContextClassLoader(callerLoader);
 			SecurityContextHolder.setContext(callerContext);
 			try {
 				emitter.send(SseEmitter.event().name("ready").data(Map.of("status", "thinking")));
@@ -117,9 +123,18 @@ public class ChatApi {
 				emitter.send(SseEmitter.event().name("done").data(response));
 				emitter.complete();
 			} catch (Exception ex) {
-				emitter.completeWithError(ex);
+				// Entity exceptions may contain account fields; expose only a generic error.
+				log.warn("Chat stream failed ({})", ex.getClass().getSimpleName());
+				try {
+					emitter.send(SseEmitter.event().name("error").data(Map.of("message",
+							"Mình chưa hoàn tất câu trả lời do lỗi kết nối hoặc xử lý. Bạn thử gửi lại câu hỏi nhé để mình kiểm tra tiếp.")));
+					emitter.complete();
+				} catch (Exception disconnected) {
+					emitter.complete();
+				}
 			} finally {
 				SecurityContextHolder.clearContext();
+				Thread.currentThread().setContextClassLoader(workerLoader);
 			}
 		});
 		return emitter;
