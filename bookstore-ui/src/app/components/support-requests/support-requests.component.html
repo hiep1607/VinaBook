@@ -4,5 +4,7 @@
   <article *ngFor="let request of requests"><h3>#{{ request.id }} · {{ request.kind === 'RETURN' ? 'Đổi trả' : 'Hỗ trợ' }}</h3>
     <p>{{ support.statusLabel(request.status) }} · {{ request.createdAt | date:'dd/MM/yyyy HH:mm' }}<span *ngIf="request.orderId"> · Đơn #{{ request.orderId }}</span></p><p class="message">{{ request.message }}</p>
     <p class="reply" *ngIf="request.reply"><strong>Phản hồi của nhân viên:</strong> {{ request.reply }}</p><p *ngIf="!request.reply">Đang chờ nhân viên xem xét và phản hồi. Bạn chưa cần gửi lại cùng yêu cầu nhé.</p>
+    <button type="button" (click)="chatId = chatId === request.id ? 0 : request.id">{{ chatId === request.id ? 'Đóng hội thoại' : 'Nhắn với nhân viên' }}</button>
+    <app-support-chat *ngIf="chatId === request.id" [requestId]="request.id" [closed]="request.status === 'RESOLVED' || request.status === 'REJECTED'"></app-support-chat>
   </article>
 </section>

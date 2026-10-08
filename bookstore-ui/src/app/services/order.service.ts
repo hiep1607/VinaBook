@@ -6,6 +6,15 @@ import { environment } from 'src/environments/environment';
 import { StoreKnowledgeService } from './store-knowledge.service';
 import { timeout } from 'rxjs/operators';
 
+export interface CustomerOrder {
+  id: number; date: string | null; total: number; statusCode: number; status: string;
+  paymentMethod: string; paymentStatus: string; paidAt: string | null;
+  discount?:number;voucherCode?:string;shippingFee?:number;
+  refunds?: {refunded:number;refunds:{id:number;amount:number;provider:string;status:string;createdAt:string}[]};
+  shippingAddress: { name: string; phone: string; street: string };
+  items: { productId: number | null; name: string; image: string; quantity: number; price: number }[];
+}
+
 export interface OrderCancellationPreview {
   orderId: number;
   orderDate: string | null;
@@ -25,6 +34,12 @@ export class OrderService {
   private api = environment.apiUrl;
 
   constructor(private http: HttpClient, private knowledge: StoreKnowledgeService) { }
+
+  getOrder(orderId: number): Observable<CustomerOrder> {
+    return this.http.get<CustomerOrder>(this.api + '/api/orders/me/' + orderId).pipe(
+      timeout(20000), map(order => ({ ...order, status: this.statusLabel(order.statusCode) }))
+    );
+  }
 
   cancellationPreview(orderId: number): Observable<OrderCancellationPreview> {
     return this.http.get<OrderCancellationPreview>(this.api + '/api/orders/me/' + orderId + '/cancellation').pipe(timeout(20000));
@@ -80,20 +95,20 @@ export class OrderService {
    */
   private pendingQuotes = new Map<string, string>();
 
-  placeOrder(email: string, street: string, phone: string, items: any[], paymentMethod = 'COD', fromCart = false, cartRevision = 0, displayedTotal?: number): Observable<any> {
-    const key = JSON.stringify([email, street, phone, items.map(i => [i.id, i.quantity, i.price]), paymentMethod, fromCart]);
+  placeOrder(email: string, street: string, phone: string, items: any[], paymentMethod = 'COD', fromCart = false, cartRevision = 0, displayedTotal?: number, voucherCode = '', voucherDiscount = 0): Observable<any> {
+    const key = JSON.stringify([email, street, phone, items.map(i => [i.id, i.quantity, i.price]), paymentMethod, fromCart, voucherCode, voucherDiscount]);
     const recipient = street.match(/\(Người nhận: (.*?)\)$/)?.[1] || 'Khách hàng';
     const address = street.replace(/\s*\(Người nhận: .*?\)$/, '');
     const expectedSubtotal = items.reduce((sum, i) => sum + Number(i.price) * i.quantity, 0);
     return this.knowledge.getFresh().pipe(switchMap(({ settings }) => {
-      const expectedTotal = expectedSubtotal + StoreKnowledgeService.shipping(expectedSubtotal, settings);
+      const expectedTotal = expectedSubtotal + StoreKnowledgeService.shipping(expectedSubtotal, settings) - voucherDiscount;
       if (displayedTotal !== undefined && displayedTotal !== expectedTotal) {
         throw new Error('Phí giao hàng đã thay đổi. Vui lòng kiểm tra lại tổng tiền trước khi đặt hàng.');
       }
       const saved = this.pendingQuotes.get(key);
       const quote = saved ? of({token: saved, total: expectedTotal}) : this.http.post<any>(this.api + '/api/chat/checkout/quote', {
         items: items.map(i => ({productId: i.id, quantity: i.quantity})), recipient, phone, street: address,
-        paymentMethod, fromCart, cartRevision
+        paymentMethod, fromCart, cartRevision, voucherCode
       });
       return quote.pipe(switchMap(q => {
         if (q.total !== expectedTotal) throw new Error('Giá hoặc phí giao hàng đã thay đổi. Vui lòng tải lại giỏ và kiểm tra tổng tiền.');

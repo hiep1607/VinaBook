@@ -1,102 +1,14 @@
 import { Injectable } from '@angular/core';
-
-@Injectable({
-  providedIn: 'root'
-})
+import { CustomerPreferencesService, SavedAddress } from './customer-preferences.service';
+@Injectable({providedIn:'root'})
 export class AddressService {
-
-  private key(email: string): string {
-    return 'addresses_' + email;
-  }
-
-  getAddresses(email: string): any[] {
-
-    const saved = localStorage.getItem(this.key(email));
-    return saved ? JSON.parse(saved) : [];
-
-  }
-
-  saveAddresses(email: string, addresses: any[]): void {
-
-    localStorage.setItem(
-      this.key(email),
-      JSON.stringify(addresses)
-    );
-
-  }
-
-  addAddress(email: string, form: any): any {
-
-    const addresses = this.getAddresses(email);
-
-    const newAddress = {
-      id: Date.now(),
-      label: (form.label || '').trim() || 'Địa chỉ',
-      name: (form.name || '').trim(),
-      phone: (form.phone || '').trim(),
-      street: (form.street || '').trim(),
-      isDefault: addresses.length === 0
-    };
-
-    addresses.push(newAddress);
-    this.saveAddresses(email, addresses);
-
-    return newAddress;
-
-  }
-
-  updateAddress(email: string, id: number, form: any): void {
-
-    const addresses = this.getAddresses(email);
-
-    const index = addresses.findIndex(a => a.id === id);
-
-    if (index !== -1) {
-      addresses[index] = {
-        ...addresses[index],
-        label: (form.label || '').trim() || 'Địa chỉ',
-        name: (form.name || '').trim(),
-        phone: (form.phone || '').trim(),
-        street: (form.street || '').trim()
-      };
-      this.saveAddresses(email, addresses);
-    }
-
-  }
-
-  deleteAddress(email: string, id: number): void {
-
-    let addresses = this.getAddresses(email);
-
-    const deleted = addresses.find(a => a.id === id);
-
-    addresses = addresses.filter(a => a.id !== id);
-
-    if (deleted && deleted.isDefault && addresses.length > 0) {
-      addresses[0].isDefault = true;
-    }
-
-    this.saveAddresses(email, addresses);
-
-  }
-
-  setDefault(email: string, id: number): void {
-
-    const addresses = this.getAddresses(email);
-
-    addresses.forEach(a => {
-      a.isDefault = a.id === id;
-    });
-
-    this.saveAddresses(email, addresses);
-
-  }
-
-  getDefault(email: string): any {
-
-    const addresses = this.getAddresses(email);
-    return addresses.find(a => a.isDefault) || null;
-
-  }
-
+  constructor(private preferences:CustomerPreferencesService){}
+  refresh(email:string){return this.preferences.refresh(email,true);}
+  getAddresses(email:string):SavedAddress[]{return this.preferences.cached(email).addresses.map(a=>({...a}));}
+  async saveAddresses(email:string,addresses:SavedAddress[]):Promise<void>{await this.preferences.mutate(email,'addresses',addresses);}
+  async addAddress(email:string,form:any):Promise<SavedAddress>{let address!:SavedAddress;await this.preferences.mutate(email,'addresses',(current:any)=>{const addresses=current.addresses;let id=Date.now();while(addresses.some((a:SavedAddress)=>a.id===id))id++;address={id,label:form.label?.trim()||'Địa chỉ',name:form.name.trim(),phone:form.phone.trim(),street:form.street.trim(),isDefault:!addresses.length};return [...addresses,address];});return address;}
+  async updateAddress(email:string,id:number,form:any):Promise<void>{await this.preferences.mutate(email,'addresses',(current:any)=>current.addresses.map((a:SavedAddress)=>a.id===id?{...a,label:form.label?.trim()||'Địa chỉ',name:form.name.trim(),phone:form.phone.trim(),street:form.street.trim()}:a));}
+  async deleteAddress(email:string,id:number):Promise<void>{await this.preferences.mutate(email,'addresses',(current:any)=>{const addresses=current.addresses.filter((a:SavedAddress)=>a.id!==id).map((a:SavedAddress)=>({...a}));if(addresses.length && !addresses.some((a:SavedAddress)=>a.isDefault))addresses[0].isDefault=true;return addresses;});}
+  async setDefault(email:string,id:number):Promise<void>{await this.preferences.mutate(email,'addresses',(current:any)=>current.addresses.map((a:SavedAddress)=>({...a,isDefault:a.id===id})));}
+  getDefault(email:string):SavedAddress|undefined{return this.getAddresses(email).find(a=>a.isDefault);}
 }

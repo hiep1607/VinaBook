@@ -3,6 +3,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { SupportRequest, SupportRequestService } from 'src/app/services/support-request.service';
 @Component({ selector: 'app-support-requests', templateUrl: './support-requests.component.html', styleUrls: ['./support-requests.component.scss'] })
 export class SupportRequestsComponent implements OnInit, DoCheck, OnDestroy {
+  chatId = 0;
   requests: SupportRequest[] = []; busy = false; error = ''; private owner = ''; private version = 0;
   constructor(public support: SupportRequestService, private auth: AuthService) {}
   ngOnInit(): void { this.owner = this.auth.currentUser?.email || ''; void this.load(); }

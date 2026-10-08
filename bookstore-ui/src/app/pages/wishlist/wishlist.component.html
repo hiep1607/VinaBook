@@ -12,6 +12,8 @@
 
     </div>
 
+    <button type="button" (click)="refresh()" [disabled]="syncing">{{syncing?'Đang đồng bộ...':'Đồng bộ dữ liệu mới'}}</button>
+    <p *ngIf="wishlistService.syncError" role="alert">{{wishlistService.syncError}}</p>
     <!-- PRODUCT GRID -->
 
     <div class="wishlist-grid" *ngIf="wishlistProducts.length > 0">

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, DoCheck } from '@angular/core';
 
 import { Router } from '@angular/router';
 
@@ -14,7 +14,9 @@ import { ReviewService } from 'src/app/services/review.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, DoCheck {
+  private owner='';
+  ngDoCheck():void {if(this.owner && this.owner!==(this.authService.currentUser?.token||this.authService.currentUser?.email||'')){this.owner='';this.previewAvatar='';this.addresses=[];this.recentOrders=[];this.editName='';this.editPhone='';this.currentPwd='';this.newPwd='';this.confirmPwd='';this.addressForm={label:'',name:'',phone:'',street:''};this.router.navigate(['/login']);}}
 
   activeTab = 'info';
 
@@ -73,6 +75,7 @@ export class ProfileComponent implements OnInit {
     }
 
     const user = this.authService.currentUser;
+    this.owner=user.token||user.email;
 
     this.editName = user.name || '';
     this.editPhone = user.phone || '';
@@ -90,7 +93,8 @@ export class ProfileComponent implements OnInit {
 
   // ===== PERSONAL INFO =====
 
-  saveInfo(): void {
+  async saveInfo(): Promise<void> {
+    try {
 
     this.infoError = '';
 
@@ -104,13 +108,14 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
-    this.authService.updateUser({
+    await this.authService.updateUser({
       name: this.editName.trim(),
       phone: this.editPhone.trim()
     });
 
     this.notification.success('Cập nhật thông tin thành công');
 
+    } catch(error) { this.infoError=(error as any)?.error?.message || 'Chưa lưu được thay đổi. Bạn thử lại nhé.'; this.notification.error(this.infoError); }
   }
 
   // ===== AVATAR =====
@@ -123,6 +128,7 @@ export class ProfileComponent implements OnInit {
       return;
     }
 
+    if(!['image/png','image/jpeg','image/gif','image/webp'].includes(file.type) || file.size>262144){this.notification.error('Bạn chọn ảnh PNG/JPEG/GIF/WebP tối đa 256 KB nhé.');return;}
     const reader = new FileReader();
 
     reader.onload = () => {
@@ -133,25 +139,29 @@ export class ProfileComponent implements OnInit {
 
   }
 
-  saveAvatar(): void {
+  async saveAvatar(): Promise<void> {
+    try {
 
     if (!this.previewAvatar) {
       return;
     }
 
-    this.authService.updateUser({ avatar: this.previewAvatar });
+    await this.authService.updateUser({ avatar: this.previewAvatar });
 
     this.notification.success('Cập nhật ảnh đại diện thành công');
 
+    } catch(error) { this.infoError=(error as any)?.error?.message || 'Chưa lưu được thay đổi. Bạn thử lại nhé.'; this.notification.error(this.infoError); }
   }
 
-  removeAvatar(): void {
+  async removeAvatar(): Promise<void> {
+    try {
 
     this.previewAvatar = '';
-    this.authService.updateUser({ avatar: '' });
+    await this.authService.updateUser({ avatar: '' });
 
     this.notification.success('Đã xoá ảnh đại diện');
 
+    } catch(error) { this.infoError=(error as any)?.error?.message || 'Chưa lưu được thay đổi. Bạn thử lại nhé.'; this.notification.error(this.infoError); }
   }
 
   // ===== ADDRESSES =====
@@ -160,8 +170,9 @@ export class ProfileComponent implements OnInit {
     return this.authService.currentUser.email;
   }
 
-  loadAddresses(): void {
-    this.addresses = this.addressService.getAddresses(this.email);
+  async loadAddresses(): Promise<void> {
+    try { await this.addressService.refresh(this.email); this.addresses = this.addressService.getAddresses(this.email); this.previewAvatar=this.authService.currentUser?.avatar || '';const notice=localStorage.getItem('vinabook_preferences_import:'+encodeURIComponent(this.email)+':notice');if(notice)this.addressError=notice; }
+    catch(error) { this.addressError=(error as any)?.error?.message || 'Chưa tải được dữ liệu đồng bộ. Bạn thử lại nhé.'; }
   }
 
   openAddAddress(): void {
@@ -192,7 +203,8 @@ export class ProfileComponent implements OnInit {
     this.editingAddressId = null;
   }
 
-  saveAddress(): void {
+  async saveAddress(): Promise<void> {
+    try {
 
     this.addressError = '';
 
@@ -206,13 +218,13 @@ export class ProfileComponent implements OnInit {
     }
 
     if (this.editingAddressId !== null) {
-      this.addressService.updateAddress(
+      await this.addressService.updateAddress(
         this.email,
         this.editingAddressId,
         this.addressForm
       );
     } else {
-      this.addressService.addAddress(this.email, this.addressForm);
+      await this.addressService.addAddress(this.email, this.addressForm);
     }
 
     this.loadAddresses();
@@ -220,21 +232,26 @@ export class ProfileComponent implements OnInit {
     this.editingAddressId = null;
     this.notification.success('Lưu địa chỉ thành công');
 
+    } catch(error) { this.addressError=(error as any)?.error?.message || 'Chưa lưu được thay đổi. Bạn thử lại nhé.'; this.notification.error(this.addressError); }
   }
 
-  deleteAddress(address: any): void {
+  async deleteAddress(address: any): Promise<void> {
+    try {
 
-    this.addressService.deleteAddress(this.email, address.id);
+    await this.addressService.deleteAddress(this.email, address.id);
     this.loadAddresses();
     this.notification.success('Đã xoá địa chỉ');
 
+    } catch(error) { this.addressError=(error as any)?.error?.message || 'Chưa lưu được thay đổi. Bạn thử lại nhé.'; this.notification.error(this.addressError); }
   }
 
-  setDefaultAddress(address: any): void {
+  async setDefaultAddress(address: any): Promise<void> {
+    try {
 
-    this.addressService.setDefault(this.email, address.id);
+    await this.addressService.setDefault(this.email, address.id);
     this.loadAddresses();
 
+    } catch(error) { this.addressError=(error as any)?.error?.message || 'Chưa lưu được thay đổi. Bạn thử lại nhé.'; this.notification.error(this.addressError); }
   }
 
   // ===== CHANGE PASSWORD =====

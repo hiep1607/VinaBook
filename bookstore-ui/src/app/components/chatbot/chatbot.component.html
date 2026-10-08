@@ -84,6 +84,7 @@
                 (click)="runAction(action, msg)"
               >{{ action.type === 'ADD_TO_CART' && addedProductIds.has(p.id) ? 'Đã thêm' : action.label }}</button>
             </span>
+            <app-restock-watch *ngIf="p.quantity===0" [productId]="p.id"></app-restock-watch>
           </article>
         </div>
 

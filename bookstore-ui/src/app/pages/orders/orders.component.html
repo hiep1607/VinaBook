@@ -116,6 +116,7 @@
 
       <!-- TOTAL -->
       <div class="order-actions">
+        <a [routerLink]="['/orders', order.id]">Xem chi tiết đơn #{{ order.id }}</a>
         <button type="button" (click)="reorderOrderId = order.id; cancellingOrderId = 0; returnOrderId = 0" [disabled]="cancellationBusy || !!payingOrderId">Mua lại đơn #{{ order.id }}</button>
         <button type="button" *ngIf="order.statusCode === 2" (click)="returnOrderId = order.id; reorderOrderId = 0; cancellingOrderId = 0" [disabled]="cancellationBusy || !!payingOrderId">Yêu cầu đổi trả đơn #{{ order.id }}</button>
         <button type="button" *ngIf="orderService.canCancel(order) && cancellingOrderId !== order.id"

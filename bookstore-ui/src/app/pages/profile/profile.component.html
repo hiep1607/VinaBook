@@ -463,7 +463,7 @@
           >
 
             <div class="summary-left">
-              <strong>Đơn #{{ order.id }}</strong>
+              <a [routerLink]="['/orders', order.id]">Đơn #{{ order.id }} · Xem chi tiết</a>
               <span class="summary-date">
                 {{ order.date | date:'dd/MM/yyyy' }}
               </span>

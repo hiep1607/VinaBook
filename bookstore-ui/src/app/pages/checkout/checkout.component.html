@@ -183,6 +183,8 @@
           <strong>{{ selectedPaymentLabel() }}</strong>
         </div>
 
+        <app-voucher-input [items]="cartItems" [disabled]="placing" (busyChange)="voucherBusy=$event" (applied)="voucherCode=$event.code;voucherDiscount=$event.discount"></app-voucher-input>
+        <div class="summary-row" *ngIf="voucherDiscount"><span>Giảm giá {{voucherCode}}</span><strong>−{{voucherDiscount|number}}đ</strong></div>
         <div class="summary-total">
           <span>Tổng cộng</span>
           <strong>{{ shippingSettings ? (getTotal() | number) + 'đ' : 'Đang kiểm tra' }}</strong>

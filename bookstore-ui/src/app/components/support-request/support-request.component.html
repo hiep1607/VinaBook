@@ -2,7 +2,7 @@
   <h3>{{ kind === 'RETURN' ? 'Yêu cầu đổi trả' : 'Nhờ nhân viên hỗ trợ' }}</h3>
   <p *ngIf="orderId">Đơn #{{ orderId }}</p><p *ngIf="busy" role="status">Đang kiểm tra với VinaBook...</p><p *ngIf="error" class="error" role="alert">{{ error }}</p>
   <ng-container *ngIf="!review && !result && !uncertain">
-    <p>{{ kind === 'RETURN' ? 'Bạn chia sẻ đúng sách, ngày nhận và tình trạng hiện tại để cửa hàng xem xét nhé. Gửi yêu cầu chưa đồng nghĩa được chấp nhận đổi trả hoặc hoàn tiền.' : 'Bạn xem lại và bổ sung nội dung muốn nhân viên hỗ trợ nhé. Phản hồi sẽ được lưu tại mục Liên hệ; đây là yêu cầu hỗ trợ, chưa phải cuộc trò chuyện trực tiếp.' }}</p>
+    <p>{{ kind === 'RETURN' ? 'Bạn chia sẻ đúng sách, ngày nhận và tình trạng hiện tại để cửa hàng xem xét nhé. Gửi yêu cầu chưa đồng nghĩa được chấp nhận đổi trả hoặc hoàn tiền.' : 'Bạn xem lại và bổ sung nội dung muốn nhân viên hỗ trợ nhé. Phản hồi sẽ được lưu tại mục Liên hệ; sau khi gửi, bạn có thể tiếp tục nhắn với nhân viên trong cùng yêu cầu.' }}</p>
     <form (ngSubmit)="prepare()">
       <ng-container *ngIf="kind === 'RETURN'">
         <label>Cuốn sách <select [(ngModel)]="productId" name="returnBook" [disabled]="busy"><option [ngValue]="0">Chọn sách trong đơn</option><option *ngFor="let item of items" [ngValue]="item.productId">{{ item.name }}</option></select></label>
@@ -20,5 +20,6 @@
     <button type="button" (click)="confirm()" [disabled]="busy || uncertain">Xác nhận gửi yêu cầu</button><button type="button" (click)="edit()" [disabled]="busy || uncertain">Sửa nội dung</button>
   </ng-container>
   <p *ngIf="result" role="status">Yêu cầu #{{ result.id }} đã được lưu. Bạn <a routerLink="/contact">mở mục Liên hệ</a> để theo dõi trạng thái và phản hồi của nhân viên nhé. <span *ngIf="result.kind === 'RETURN'">Cửa hàng chưa tự đổi sách hoặc hoàn tiền ở bước này.</span></p>
+  <app-support-chat *ngIf="result" [requestId]="result.id" [closed]="result.status === 'RESOLVED' || result.status === 'REJECTED'"></app-support-chat>
   <button type="button" *ngIf="uncertain" (click)="recover()" [disabled]="busy">Kiểm tra kết quả gửi</button><button type="button" *ngIf="dismissable" (click)="dismiss()" [disabled]="busy || uncertain">Đóng</button>
 </section>

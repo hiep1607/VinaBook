@@ -22,6 +22,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   shippingSettings?: StoreSettings;
   shippingUnavailable = false;
 
+  voucherCode='';voucherDiscount=0;voucherBusy=false;
   cartItems: any[] = [];
   addresses: any[] = [];
   selectedAddress: any = null;
@@ -128,8 +129,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     return this.authService.currentUser ? this.authService.currentUser.email : '';
   }
 
-  loadAddresses(): void {
-    this.addresses = this.addressService.getAddresses(this.email);
+  async loadAddresses(): Promise<void> {
+    try { await this.addressService.refresh(this.email); if(this.destroyed)return; this.addresses = this.addressService.getAddresses(this.email); } catch { this.addresses=[]; this.formError='Chưa tải được địa chỉ đã lưu. Bạn có thể nhập địa chỉ giao hàng bên dưới nhé.'; }
 
     if (this.addresses.length === 0) {
       this.mode = 'form';
@@ -169,12 +170,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   getTotal(): number {
-    return this.getSubtotal() + this.getShipping();
+    return this.getSubtotal() + this.getShipping() - this.voucherDiscount;
   }
 
   async placeOrder(): Promise<void> {
     if (!this.shippingSettings) { this.formError = 'Chưa tải được chính sách giao hàng. Vui lòng thử lại.'; return; }
-    if (this.placing || this.preparing || this.orderPlaced) return;
+    if (this.placing || this.preparing || this.orderPlaced || this.voucherBusy) return;
     this.preparing = true;
     try { await this.cartService.flush(); } catch { this.formError = this.cartService.syncError || 'Chưa đồng bộ được giỏ hàng. Vui lòng kiểm tra lại.'; return; }
     finally { this.preparing = false; }
@@ -214,11 +215,11 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.placing = true;
 
     this.orderService
-      .placeOrder(this.email, addressLine, shippingAddress.phone, this.cartItems, this.selectedPayment, !this.cartService.buyNowItem, this.cartService.serverRevision, this.getTotal())
+      .placeOrder(this.email, addressLine, shippingAddress.phone, this.cartItems, this.selectedPayment, !this.cartService.buyNowItem, this.cartService.serverRevision, this.getTotal(), this.voucherCode, this.voucherDiscount)
       .subscribe(
         (order: any) => {
           if (isNewAddress && this.saveToProfile) {
-            this.addressService.addAddress(this.email, this.shippingForm);
+            void this.addressService.addAddress(this.email, this.shippingForm).catch(()=>this.notification.error('Đơn đã tạo, nhưng chưa lưu được địa chỉ vào tài khoản. Bạn lưu lại trong Hồ sơ nhé.'));
           }
           if (!this.cartService.buyNowItem) {
             this.cartService.refresh();

@@ -43,6 +43,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
   clearing = false;
   messages: ChatMessage[] = [];
   commerceBusy = false;
+  wishlistBusy = false;
   cancellationOrderId = 0;
   reorderOrderId = 0;
   supportKind?: 'RETURN' | 'SUPPORT';
@@ -144,7 +145,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     this.reorderOrderId = 0;
     this.supportKind = undefined; this.supportSummary = '';
     this.showSupportRequests = false;
-    this.commerceBusy = false;
+    this.commerceBusy = false; this.wishlistBusy = false;
     this.addedProductIds.clear();
     this.errorText = '';
     this.lastFailedInput = '';
@@ -314,7 +315,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     return message.actions?.find(action => action.productId === productId && action.type === type);
   }
 
-  runAction(action: ChatAction, message: ChatMessage): void {
+  async runAction(action: ChatAction, message: ChatMessage): Promise<void> {
     if (action.type === 'WRITE_REVIEW') {
       this.syncAccount();
       if (!this.messages.includes(message) || !this.actionAvailable(message) || !Number.isSafeInteger(action.productId)
@@ -333,7 +334,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
       return;
     }
     this.syncAccount();
-    if (this.commerceBusy || this.supportForm?.uncertain) return;
+    if (this.commerceBusy || this.wishlistBusy || this.supportForm?.uncertain) return;
     if (action.type === 'CREATE_RETURN_REQUEST' || action.type === 'CREATE_SUPPORT_REQUEST') {
       if (!this.actionAvailable(message) || (action.type === 'CREATE_RETURN_REQUEST' && !action.orderId)
         || (action.orderId != null && (!Number.isSafeInteger(action.orderId) || action.orderId < 1))) return;
@@ -356,14 +357,17 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
       if (!this.actionAvailable(message) || !action.productId || !this.accountEmail) return;
       const product = message.products?.find(item => item.id === action.productId);
       if (!product) return;
+      const owner = this.accountEmail; const version = this.historyVersion; this.wishlistBusy = true;
       try {
-        if (action.type === 'ADD_TO_WISHLIST') this.wishlist.addToWishlist(this.accountEmail, product.id);
-        else this.wishlist.removeFromWishlist(this.accountEmail, product.id);
+        if (action.type === 'ADD_TO_WISHLIST') await this.wishlist.addToWishlist(this.accountEmail, product.id);
+        else await this.wishlist.removeFromWishlist(this.accountEmail, product.id);
+        if (owner !== this.auth.currentUser?.email || version !== this.historyVersion) return;
         this.messages.push({ from: 'bot', text: action.type === 'ADD_TO_WISHLIST'
-          ? `Mình đã lưu “${product.name}” vào yêu thích trên thiết bị này. Bạn có thể xem lại ở mục Yêu thích trên web nhé.`
-          : `Mình đã bỏ “${product.name}” khỏi danh sách yêu thích trên thiết bị này.`, intent: 'PRODUCT_INFO' });
+          ? `Mình đã lưu “${product.name}” vào yêu thích trong tài khoản của bạn. Bạn có thể xem lại ở mục Yêu thích trên web nhé.`
+          : `Mình đã bỏ “${product.name}” khỏi danh sách yêu thích trong tài khoản của bạn.`, intent: 'PRODUCT_INFO' });
         this.persistMessages(); this.shouldScroll = true;
-      } catch { this.errorText = 'Trình duyệt chưa lưu được thay đổi. Bạn kiểm tra quyền lưu dữ liệu rồi thử lại nhé.'; }
+      } catch (error) { if(owner === this.auth.currentUser?.email && version === this.historyVersion) this.errorText = (error as any)?.error?.message || 'Mình chưa lưu được thay đổi trên server. Bạn thử lại nhé.'; }
+      finally { if(version === this.historyVersion) this.wishlistBusy = false; }
       return;
     }
     if (action.type === 'CANCEL_ORDER' || action.type === 'REORDER_ORDER') {
@@ -400,7 +404,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
   }
 
   actionAvailable(message: ChatMessage): boolean {
-    return !this.typing && !this.commerceBusy && this.actionSnapshots.has(message)
+    return !this.typing && !this.commerceBusy && !this.wishlistBusy && this.actionSnapshots.has(message)
       && this.messages[this.messages.length - 1] === message;
   }
 

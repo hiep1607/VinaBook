@@ -294,14 +294,15 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
     );
   }
 
-  toggleWishlist(): void {
+  async toggleWishlist(): Promise<void> {
     if (!this.authService.isLoggedIn()) {
       this.notification.error('Vui lòng đăng nhập để lưu sản phẩm yêu thích');
       this.router.navigate(['/login']);
       return;
     }
 
-    const added = this.wishlistService.toggleWishlist(
+    try {
+    const added = await this.wishlistService.toggleWishlist(
       this.authService.currentUser.email,
       this.product.id
     );
@@ -309,6 +310,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
     this.notification.success(
       added ? 'Đã thêm vào danh sách yêu thích ♥' : 'Đã xóa khỏi danh sách yêu thích'
     );
+    } catch (error) { this.notification.error((error as any)?.error?.message || 'Chưa lưu được yêu thích. Bạn thử lại nhé.'); }
   }
 
   // ---- star picker helpers ----

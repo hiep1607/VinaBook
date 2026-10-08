@@ -1,0 +1,10 @@
+import {Component,OnInit,OnDestroy,DoCheck} from '@angular/core';import {Router} from '@angular/router';import {Subscription,timer} from 'rxjs';import {exhaustMap} from 'rxjs/operators';import {AuthService} from 'src/app/services/auth.service';import {RestockService,StockNotice} from 'src/app/services/restock.service';
+@Component({selector:'app-notifications',templateUrl:'./notifications.component.html',styles:[':host{display:block;max-width:900px;margin:32px auto;padding:0 20px}article{border:1px solid var(--border,#ddd);padding:18px;margin:12px 0;border-radius:12px}button,a{margin-right:12px} .unread{border-color:var(--accent,#861841)}']})
+export class NotificationsComponent implements OnInit,OnDestroy,DoCheck {
+ rows:StockNotice[]=[];error='';busy=false;actionId=0;private owner='';private poll?:Subscription;private request?:Subscription;
+ constructor(private stock:RestockService,private auth:AuthService,private router:Router){}
+ ngOnInit():void{this.owner=this.auth.currentUser?.token||'';this.load();this.poll=timer(60000,60000).subscribe(()=>this.load());}ngOnDestroy():void{this.poll?.unsubscribe();this.request?.unsubscribe();}
+ ngDoCheck():void{if(this.owner!==(this.auth.currentUser?.token||'')){this.poll?.unsubscribe();this.request?.unsubscribe();this.rows=[];this.owner='';this.router.navigate(['/login']);}}
+ load():void{if(this.busy||!this.owner||this.actionId)return;this.busy=true;this.error='';const key=this.owner;this.request=this.stock.list().subscribe({next:rows=>{if(key===this.auth.currentUser?.token){this.rows=rows;this.busy=false;}},error:e=>{this.busy=false;this.error=e?.error?.message||'Chưa tải được thông báo. Bạn thử lại nhé.';}});}
+ act(row:StockNotice,remove=false):void{if(this.busy||this.actionId)return;this.actionId=row.productId;const key=this.owner;this.request=(remove?this.stock.remove(row.productId):this.stock.seen(row.productId)).subscribe({next:()=>{if(key!==this.auth.currentUser?.token)return;this.actionId=0;this.load();},error:e=>{if(key!==this.auth.currentUser?.token)return;this.actionId=0;this.error=e?.error?.message||'Chưa cập nhật được thông báo.';}});}
+}

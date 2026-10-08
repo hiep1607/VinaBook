@@ -1,0 +1,9 @@
+<section class="support-chat" aria-label="Trò chuyện với nhân viên">
+<h3>Trò chuyện · Yêu cầu #{{ requestId }}</h3><p class="hint">Tin nhắn tự cập nhật. Nhân viên sẽ trả lời khi tiếp nhận yêu cầu của bạn.</p>
+<button type="button" *ngIf="hasOlder" (click)="older()" [disabled]="loading">Xem tin nhắn trước</button>
+<p *ngIf="loading && !messages.length" role="status">Đang tải hội thoại...</p><p *ngIf="error" role="alert">{{ error }}</p>
+<div class="messages" role="log" aria-live="polite" aria-relevant="additions">
+<article *ngFor="let message of messages; trackBy:track" [class.mine]="message.mine"><strong>{{ message.staff ? 'Nhân viên VinaBook' : 'Khách hàng' }}</strong><p>{{ message.content }}</p><time>{{ message.createdAt | date:'dd/MM HH:mm' }}</time></article>
+</div><p *ngIf="closed">Yêu cầu đã đóng. Bạn mở yêu cầu mới nếu cần hỗ trợ thêm nhé.</p>
+<form *ngIf="!closed" (ngSubmit)="send()"><label>Tin nhắn <textarea name="supportChatMessage" [(ngModel)]="draft" maxlength="2000" rows="3" [disabled]="sending || uncertain"></textarea></label><button type="submit" [disabled]="sending || (!uncertain && !draft.trim())">{{ sending ? 'Đang gửi...' : (uncertain ? 'Kiểm tra/gửi lại cùng tin' : 'Gửi tin nhắn') }}</button></form>
+</section>

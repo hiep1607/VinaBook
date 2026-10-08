@@ -161,6 +161,7 @@
             {{ authService.currentUser.name }}
           </a>
 
+          <a *ngIf="authService.isLoggedIn()" routerLink="/notifications" aria-label="Thông báo có hàng" title="Thông báo có hàng" class="wishlist-icon"><lucide-icon name="bell"></lucide-icon></a>
           <!-- WISHLIST -->
 
           <a

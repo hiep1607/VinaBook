@@ -1,0 +1,17 @@
+import {CountUpDirective} from '../shared/directives/count-up.directive';
+import {SupportRequestsComponent} from '../components/support-requests/support-requests.component';
+import {LucideAngularModule} from 'lucide-angular';
+import {ProductCardComponent} from '../components/product-card/product-card.component';
+import {RestockWatchComponent} from '../components/restock-watch/restock-watch.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
+import {OrderCancellationComponent} from '../components/order-cancellation/order-cancellation.component';
+import {OrderReorderComponent} from '../components/order-reorder/order-reorder.component';
+import {SupportRequestComponent} from '../components/support-request/support-request.component';
+import {SupportChatComponent} from '../components/support-chat/support-chat.component';
+import {VoucherInputComponent} from '../components/voucher-input/voucher-input.component';
+import {RevealDirective} from '../shared/directives/reveal.directive';
+@NgModule({imports:[LucideAngularModule,CommonModule,FormsModule,RouterModule],declarations:[CountUpDirective,SupportRequestsComponent,ProductCardComponent,RestockWatchComponent,OrderCancellationComponent,OrderReorderComponent,SupportRequestComponent,SupportChatComponent,VoucherInputComponent,RevealDirective],exports:[CountUpDirective,SupportRequestsComponent,ProductCardComponent,RestockWatchComponent,OrderCancellationComponent,OrderReorderComponent,SupportRequestComponent,SupportChatComponent,VoucherInputComponent,RevealDirective]})
+export class CustomerComponentsModule {}

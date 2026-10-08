@@ -15,6 +15,8 @@ import { NotificationService } from 'src/app/services/notification.service';
 export class WishlistComponent implements OnInit {
 
   private catalog: any[] = [];
+  syncing=false;
+  async refresh():Promise<void>{if(this.syncing)return;this.syncing=true;try{await this.wishlistService.refresh(this.email);}catch{}finally{this.syncing=false;}}
 
   constructor(
     public authService: AuthService,
@@ -36,7 +38,7 @@ export class WishlistComponent implements OnInit {
   }
 
   private get email(): string {
-    return this.authService.currentUser.email;
+    return this.authService.currentUser?.email || '';
   }
 
   get wishlistProducts(): any[] {
@@ -59,9 +61,8 @@ export class WishlistComponent implements OnInit {
     return '★'.repeat(full) + '☆'.repeat(5 - full);
   }
 
-  remove(productId: number): void {
-    this.wishlistService.removeFromWishlist(this.email, productId);
-    this.notification.success('Đã xóa khỏi danh sách yêu thích');
+  async remove(productId: number): Promise<void> {
+    try { await this.wishlistService.removeFromWishlist(this.email, productId); this.notification.success('Đã xóa khỏi danh sách yêu thích'); } catch(error) { this.notification.error((error as any)?.error?.message || 'Chưa lưu được thay đổi. Bạn thử lại nhé.'); }
   }
 
   goToDetail(productId: number): void {

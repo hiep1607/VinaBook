@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 export interface ChatShipping {
+  voucherCode?:string;
   productId?: number;
   quantity?: number;
   items?: { productId: number; quantity: number }[];
@@ -17,6 +18,7 @@ export interface ChatQuote extends ChatShipping {
   token: string;
   name: string;
   unitPrice: number;
+  discount?:number;
   subtotal: number;
   shipping: number;
   total: number;

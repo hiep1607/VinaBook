@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
+import { CustomerPreferencesService } from './customer-preferences.service';
 import { environment } from 'src/environments/environment';
 
 /**
@@ -19,8 +20,10 @@ export class AuthService {
 
   currentUser: any = null;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private preferences: CustomerPreferencesService = null as any) {
 
+    this.preferences?.changes$.subscribe(data => { if (this.currentUser?.email === data.ownerEmail) { this.currentUser.avatar = data.avatar; this.persist(); } });
+    Promise.resolve().then(() => { if(this.currentUser?.email)void this.preferences?.refresh(this.currentUser.email).catch(()=>{}); });
     const savedUser = localStorage.getItem('currentUser');
     if (savedUser) {
       try {
@@ -96,28 +99,20 @@ export class AuthService {
 
   // ===== CẬP NHẬT THÔNG TIN =====
 
-  updateUser(updates: any): void {
+  async updateUser(updates: any): Promise<void> {
 
     if (!this.currentUser) {
       return;
     }
 
-    this.currentUser = { ...this.currentUser, ...updates };
-
-    // Avatar chỉ lưu local, không đẩy về backend
+    const owner = this.currentUser.email, token = this.currentUser.token;
     if ('avatar' in updates) {
-      this.saveAvatar(this.currentUser.email, updates.avatar);
-      this.persist();
-      return;
+      if (!this.preferences) throw new Error('Chưa kết nối được đồng bộ ảnh.');
+      await this.preferences.mutate(owner,'avatar',updates.avatar); return;
     }
-
-    this.persist();
-
-    // Đồng bộ name/phone/address về backend (fire-and-forget)
-    this.http
-      .put(this.url + '/' + this.currentUser.userId, this.toUserEntity())
-      .subscribe({ error: () => { /* offline thì thông tin vẫn còn ở local */ } });
-
+    const body = {...this.toUserEntity(),...updates};
+    await this.http.put(this.url+'/'+this.currentUser.userId,body).toPromise();
+    if(this.currentUser?.email===owner && this.currentUser?.token===token){this.currentUser={...this.currentUser,...updates};this.persist();}
   }
 
   // ===== ĐỔI MẬT KHẨU =====

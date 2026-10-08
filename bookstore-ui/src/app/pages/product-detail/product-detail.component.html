@@ -103,6 +103,7 @@
 
         </p>
 
+        <app-restock-watch *ngIf="maxQty===0" [productId]="product.id"></app-restock-watch>
         <div class="purchase-box">
           <!-- QUANTITY -->
 

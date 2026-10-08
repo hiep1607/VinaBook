@@ -7,8 +7,6 @@
   margin: auto;
 }
 
-/* BREADCRUMB */
-
 .breadcrumb {
   margin-bottom: 16px;
   font-size: 13px;
@@ -64,9 +62,6 @@
     flex-shrink: 1;
     min-width: 0;
     max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 }
 
@@ -76,16 +71,12 @@
   gap: clamp(36px, 4.2vw, 64px);
 }
 
-/* IMAGE */
-
 .detail-image {
   height: clamp(420px, calc(100dvh - 260px), 540px);
   border: 1px solid var(--c-border);
   border-radius: var(--radius-lg);
   background: var(--c-muted);
 }
-
-/* INFO */
 
 .detail-info {
   display: flex;
@@ -157,8 +148,6 @@
   font-style: italic;
 }
 
-/* PRICE */
-
 .price-box {
   margin-top: 20px;
   display: flex;
@@ -179,8 +168,6 @@
   text-decoration: line-through;
 }
 
-/* DESCRIPTION */
-
 .description {
   display: -webkit-box;
   max-width: 66ch;
@@ -192,8 +179,6 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
 }
-
-/* QUANTITY STEPPER */
 
 .purchase-box {
   margin-top: 20px;
@@ -263,8 +248,6 @@
   color: var(--c-muted-fg);
 }
 
-/* ACTIONS */
-
 .actions {
   margin-top: 14px;
   display: flex;
@@ -272,15 +255,20 @@
 }
 
 .buy-btn,
-.cart-btn {
+.cart-btn,
+.wishlist-btn {
   height: 50px;
-  padding: 0 24px;
   border-radius: var(--radius-md);
-  border: none;
   font-size: 14px;
   font-weight: 700;
   white-space: nowrap;
   cursor: pointer;
+}
+
+.buy-btn,
+.cart-btn {
+  padding: 0 24px;
+  border: none;
   transition: transform 0.2s var(--ease), background 0.2s var(--ease), box-shadow 0.2s var(--ease);
 }
 
@@ -306,16 +294,10 @@
 }
 
 .wishlist-btn {
-  height: 50px;
   padding: 0 16px;
-  border-radius: var(--radius-md);
   border: 1px solid var(--c-border);
   background: var(--c-surface);
   color: var(--c-muted-fg);
-  font-size: 14px;
-  font-weight: 700;
-  white-space: nowrap;
-  cursor: pointer;
   transition: transform 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease), background 0.2s var(--ease);
   display: flex;
   align-items: center;
@@ -328,8 +310,6 @@
   color: var(--c-danger);
   background: color-mix(in srgb, var(--c-danger) 7%, var(--c-surface));
 }
-/* RELATED BOOKS */
-
 .related-section {
   margin-top: 88px;
 }
@@ -1003,8 +983,6 @@
 @media (prefers-reduced-motion: reduce) {
   .sticky-buy-bar { animation: none; }
 }
-
-/* RESPONSIVE */
 
 @media (max-width: 992px) {
 

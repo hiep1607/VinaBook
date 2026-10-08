@@ -80,6 +80,7 @@
         <option *ngFor="let method of paymentMethods" [value]="method.code">{{ method.label }}</option>
       </select>
     </label>
+    <app-voucher-input [items]="voucherItems" [disabled]="busy" (busyChange)="voucherBusy=$event" (applied)="voucherCode=$event.code;voucherDiscount=$event.discount"></app-voucher-input>
     <p class="hint">Bạn điền thông tin bên trên để mình chuẩn bị giao sách đúng nơi và tính tổng tiền nhé. Chưa tạo đơn ở bước này; bạn sẽ xem lại trước khi xác nhận.</p>
     <button type="submit" class="primary" [disabled]="busy || shippingForm.invalid || !paymentMethods.length">Xem báo giá</button>
   </form>
@@ -90,6 +91,7 @@
     <dl class="totals">
       <div><dt>Tiền sách</dt><dd>{{ quote.subtotal | number:'1.0-0' }}đ</dd></div>
       <div><dt>Phí giao</dt><dd>{{ quote.shipping | number:'1.0-0' }}đ</dd></div>
+      <div *ngIf="quote.discount"><dt>Mã {{quote.voucherCode}}</dt><dd>−{{quote.discount|number}}đ</dd></div>
       <div class="total"><dt>Tổng thanh toán</dt><dd>{{ quote.total | number:'1.0-0' }}đ</dd></div>
     </dl>
     <p class="shipping-summary">{{ quote.recipient }} · {{ quote.phone }}<br />{{ quote.street }}</p>

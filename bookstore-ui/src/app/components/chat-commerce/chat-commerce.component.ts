@@ -35,6 +35,8 @@ export class ChatCommerceComponent implements OnDestroy, OnInit {
   settings?: StoreSettings;
   addresses: ShippingAddress[] = [];
   paymentMethods: { code: string; label: string }[] = [];
+  voucherCode='';voucherDiscount=0;voucherBusy=false;
+  get voucherItems():{id:number;quantity:number;price?:number}[]{return this.checkout?.fromCart?this.cartItems:this.checkout?.product?[{id:this.checkout.product.id,quantity:this.checkout.quantity,price:this.checkout.product.price}]:[];}
   form = { recipient: '', phone: '', street: '', paymentMethod: 'COD' };
   private catalog = new Map<number, ChatProduct>();
   private version = 0;
@@ -234,6 +236,8 @@ export class ChatCommerceComponent implements OnDestroy, OnInit {
       }
       this.checkout = { fromCart, product, quantity };
       this.placed = undefined; this.failedConfirmation = false;
+      await this.addressesService.refresh(owner);
+      if (!this.current(version, owner)) return;
       this.addresses = this.addressesService.getAddresses(owner);
       const saved = this.addresses.find(address => address.isDefault) || this.addresses[0];
       this.form = { recipient: saved?.name || this.auth.currentUser?.name || '', phone: saved?.phone || this.auth.currentUser?.phone || '',
@@ -247,7 +251,7 @@ export class ChatCommerceComponent implements OnDestroy, OnInit {
     if (address) this.form = { ...this.form, recipient: address.name, phone: address.phone, street: address.street };
   }
   async requestQuote(): Promise<void> {
-    if (!this.checkout || this.busy || this.quote) return;
+    if (!this.checkout || this.busy || this.quote || this.voucherBusy) return;
     const form = { recipient: this.form.recipient.trim(), phone: this.form.phone.trim(), street: this.form.street.trim(), paymentMethod: this.form.paymentMethod };
     if (!form.recipient || form.recipient.length > 80 || !/^0\d{9}$/.test(form.phone) || !form.street || form.street.length > 160) {
       this.error = 'Bạn điền tên người nhận, số điện thoại 10 chữ số bắt đầu bằng 0 và địa chỉ đầy đủ nhé. Mình cần các thông tin này để chuẩn bị giao sách đúng người, đúng nơi.'; return;
@@ -257,7 +261,7 @@ export class ChatCommerceComponent implements OnDestroy, OnInit {
     try {
       await this.cart.flush();
       if (!this.current(version, owner)) return;
-      const input: ChatShipping = { ...form, fromCart: selection.fromCart, cartRevision: this.cart.serverRevision };
+      const input: ChatShipping = { ...form, voucherCode:this.voucherCode, fromCart: selection.fromCart, cartRevision: this.cart.serverRevision };
       if (selection.fromCart) input.items = this.cart.getCartItems().map(item => ({ productId: item.id, quantity: item.quantity }));
       else { input.productId = selection.product!.id; input.quantity = selection.quantity; }
       if (selection.fromCart && !input.items?.length) throw new Error('Giỏ hàng đã trống nên chưa có sách để tính tổng tiền. Bạn chọn lại sách rồi mình tiếp tục chuẩn bị đơn nhé.');
@@ -364,7 +368,7 @@ export class ChatCommerceComponent implements OnDestroy, OnInit {
     const token = this.quote?.token;
     if (token && !this.failedConfirmation) this.checkoutService.cancelDraft(token).subscribe({ error: () => {} });
     this.quote = undefined; this.checkout = undefined; this.placed = undefined; this.pending = undefined;
-    this.failedConfirmation = false; this.addresses = [];
+    this.failedConfirmation = false; this.addresses = [];this.voucherCode='';this.voucherDiscount=0;this.voucherBusy=false;
     this.form = { recipient: '', phone: '', street: '', paymentMethod: 'COD' };
   }
   ngOnDestroy(): void { this.version++; this.discard(); }
