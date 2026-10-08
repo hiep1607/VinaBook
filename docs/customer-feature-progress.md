@@ -65,3 +65,22 @@ SQL db/11-restock-watches.sql. Mỗi tài khoản tối đa 100 đăng ký hoạ
 3. Admin tăng tồn kho: trong tối đa một chu kỳ job có thông báo; đọc/tải lại không nhân đôi.
 4. Bỏ theo dõi trước khi nhập hàng: không tạo thông báo; đã đọc trên thiết bị A thấy trạng thái trên B.
 5. Sách bị ẩn/xóa hoặc lại hết hàng: không hứa mua được, không tự đặt/giữ sách; đổi tài khoản xóa dữ liệu hiển thị cũ.
+
+Chat có hướng dẫn riêng cho mã giảm giá, thông báo có hàng và tra trạng thái hoàn tiền, không chuyển nhầm thành gợi ý sách. API tra đơn kiểm tra JWT trước khi hiển thị chi tiết hoàn tiền. Avatar cũ quá lớn/khác định dạng giữ nguyên trong bản sao trình duyệt và có thông báo chọn ảnh mới.
+
+Các trang tài khoản/checkout/đơn hàng/yêu thích/thông báo tải theo nhu cầu để giữ bundle khởi động trong giới hạn; AuthGuard vẫn bảo vệ từng route. Các biểu mẫu dùng chung nằm trong CustomerComponentsModule để web và chat giữ cùng hành vi.
+
+Trang chi tiết sách và bìa 3D cũng tải riêng khi mở sách, giữ hành vi route /product/:id và giảm mã tải lúc vào trang chủ.
+
+## Kiểm tra và chạy thử
+- Build production storefront đạt, hash 536c57e6717f7226c2b2. Bundle khởi động ES5 1005,38 KB và CSS chi tiết sách 13,99 KB nằm dưới ngưỡng lỗi; còn cảnh báo dung lượng ở ngưỡng khuyến nghị. Các trang tải riêng và guard đã được kiểm tra trên trình duyệt.
+- 58 test backend trong 10 lớp liên quan: chi tiết đơn, hội thoại, preferences, refunds, voucher, restock, checkout và điều hướng chat; không có failure/error.
+- 5 test chi tiết đơn + 5 hội thoại + 25 test tích hợp storefront + 5 form hoàn tiền admin đã đạt (scoped tests; không chạy lại toàn bộ các spec local cũ).
+- Admin kiểm tra kiểu dữ liệu/template đạt. Backend đã khởi động với MySQL local, có 56 sản phẩm; preferences/voucher admin/restock/refund admin trả 401 khi chưa đăng nhập.
+- Source storefront chạy tại http://localhost:4200; admin tại http://localhost:4300. Đường dẫn các log chạy nằm trong thư mục kiểm tra Codex, không chứa secret và không đưa vào Git.
+- UI đã thử câu “Dùng mã giảm giá thế nào?”: trả hướng dẫn áp mã, tổng tiền và nút giỏ/checkout. Mở trang sách sau khi tải riêng vẫn dựng bìa 3D.
+- Chưa thử hoàn tiền thật qua merchant; cần cấu hình và bật PAYMENT_REFUNDS_ENABLED. Thông báo có hàng là thông báo trong tài khoản, chưa tích hợp email/push.
+
+Trang giỏ hàng tải theo nhu cầu cùng module khách hàng, vẫn mở được cho khách chưa đăng nhập; chỉ checkout và các trang riêng tư yêu cầu AuthGuard.
+
+Trang Giới thiệu/Liên hệ cũng tải khi mở; cả hai và Giỏ hàng không yêu cầu đăng nhập để đọc. Biểu mẫu gửi yêu cầu vẫn kiểm tra phiên tài khoản.

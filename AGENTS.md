@@ -8,7 +8,7 @@ Workspace có ba ứng dụng liên quan:
 - `angular-admin/`: admin Angular 12 tại `http://localhost:4300`.
 - `VinaBookStore/`: Spring Boot 2.6/Java 17 tại `http://localhost:8080`.
 
-Catalog, tài khoản, đơn hàng và đánh giá dùng backend/MySQL. Địa chỉ, avatar, wishlist, lịch sử tìm kiếm và giỏ hàng trước checkout còn lưu trong `localStorage`.
+Catalog, tài khoản, đơn hàng và đánh giá dùng backend/MySQL. Địa chỉ, avatar, wishlist và giỏ hàng đồng bộ theo tài khoản trên backend; localStorage giữ cache và bản sao migration. Lịch sử tìm kiếm còn lưu trên thiết bị. Có trò chuyện nhân viên, voucher và thông báo có hàng trong tài khoản.
 
 Đọc `docs/bugs.md` trước khi sửa auth/cart/checkout. Khi thay đổi hành vi, cập nhật tài liệu liên quan trong `docs/`.
 

@@ -50,3 +50,4 @@ Công cụ `apply-reviewed-book-profiles.py` nhập manifest đã biên tập v�
 - `09-payment-refunds.sql`: lịch sử hoàn tiền và thời điểm giao dịch VNPay gốc.
 - `10-vouchers.sql`: mã giảm giá, lượt sử dụng và discount/ship lưu trên đơn.
 - `11-restock-watches.sql`: theo dõi và thông báo có hàng theo tài khoản.
+Chạy theo thứ tự sau khi có bảng users/orders/products/support_requests. Các câu ALTER ở 09/10 chỉ chạy một lần; kiểm tra schema trước nếu local đã dùng Hibernate ddl-auto=update. Không chạy lại dump seed trên database đang có đơn hàng.

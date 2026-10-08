@@ -13,8 +13,8 @@ Tài liệu này chỉ giữ vấn đề còn hiệu lực. Các mô tả protot
 4. `buyNowItem` là state in-memory; cần bảo đảm luôn clear khi user rời checkout giữa chừng.
 5. Storefront còn dùng nhiều `any`, chưa có model/domain types dùng chung.
 6. Tất cả page storefront đang eager-loaded; bundle có thể giảm bằng feature modules/lazy routes.
-7. Yêu cầu hỗ trợ/đổi trả đã có API, lịch sử trạng thái và phản hồi từ admin; chưa có chat trực tiếp với nhân viên hoặc thông báo chủ động khi có phản hồi.
-8. Avatar, address, wishlist và search history còn device-local.
+7. Yêu cầu hỗ trợ đã có hội thoại với nhân viên theo ticket (polling); chưa có thông báo email/push khi nhân viên phản hồi.
+8. Avatar, address và wishlist đã đồng bộ server; search history còn trên thiết bị. Thông báo có hàng hiện chỉ nằm trong tài khoản trên web.
 9. Backend đang dùng Spring Boot 2.6 và `open-in-view`/SQL logging cần cấu hình rõ theo profile production.
 10. VietQR hiện đối soát thủ công trong admin; muốn tự động cần dịch vụ webhook ngân hàng hoặc payOS/Open Banking.
 
