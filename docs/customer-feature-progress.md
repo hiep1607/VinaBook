@@ -55,3 +55,13 @@ SQL db/10-vouchers.sql (ALTER một lần); không tự tạo chương trình kh
 3. Giảm % có trần; mã lớn hơn tiền sách: tối đa tiền sách, không tổng âm, ship theo quy định.
 4. Mã còn 1 lượt, hai tài khoản xác nhận đồng thời: chỉ một đơn được giảm; đơn còn lại xem lại báo giá.
 5. Retry confirm không dùng thêm lượt; tài khoản đã hết lượt hoặc client sửa discount/giá không được hưởng thêm ưu đãi.
+
+## 6. Thông báo khi có hàng
+Trang sách hết hàng và thẻ sách hết hàng trong chat dùng chung RestockWatchComponent/API. Theo dõi nằm trên server theo JWT, một dòng/tài khoản/sách; thao tác lặp không tạo trùng. Job mỗi 60 giây và đọc thông báo cập nhật khi sách được bán lại/tồn kho > 0. Khách mở /notifications từ biểu tượng chuông, xem thời điểm, đánh dấu đã đọc, bỏ theo dõi. Thông báo trong tài khoản, chưa gửi email/push ra ngoài. Không giữ chỗ hoặc hứa ngày nhập sách.
+SQL db/11-restock-watches.sql. Mỗi tài khoản tối đa 100 đăng ký hoạt động.
+5 kịch bản Luna:
+1. Theo dõi một sách hết hàng từ web, mở chat cùng sách thấy đã theo dõi.
+2. Nhấp/gửi PUT lặp: một đăng ký; chưa đăng nhập không đăng ký dưới tên người khác.
+3. Admin tăng tồn kho: trong tối đa một chu kỳ job có thông báo; đọc/tải lại không nhân đôi.
+4. Bỏ theo dõi trước khi nhập hàng: không tạo thông báo; đã đọc trên thiết bị A thấy trạng thái trên B.
+5. Sách bị ẩn/xóa hoặc lại hết hàng: không hứa mua được, không tự đặt/giữ sách; đổi tài khoản xóa dữ liệu hiển thị cũ.

@@ -1150,7 +1150,7 @@ public class ChatBuiltinTools {
             List<String> facts=new ArrayList<>();
             if(fields.contains("author"))facts.add("Tác giả: "+(book.getAuthor()==null || book.getAuthor().isBlank()?"chưa có dữ liệu":book.getAuthor()));
             if(fields.contains("price"))facts.add("Giá sau giảm: "+money(data.effectivePrice(book)));
-            if(fields.contains("inventory"))facts.add(book.getQuantity()>0?"Đang bán, còn "+book.getQuantity()+" bản theo tồn kho hiện tại.":"Đang có trong catalog nhưng hiện hết hàng.");
+            if(fields.contains("inventory"))facts.add(book.getQuantity()>0?"Đang bán, còn "+book.getQuantity()+" bản theo tồn kho hiện tại.":"Cuốn này hiện hết hàng. Bạn có thể chọn Báo mình khi có hàng trên thẻ sách bên dưới; mình lưu thông báo vào tài khoản để bạn xem khi sách về nhé.");
             if(fields.contains("rating"))facts.add(ratings.containsKey(book.getProductId())?String.format(Locale.ROOT,"Rating: %.1f/5",ratings.get(book.getProductId())):"Chưa có đánh giá.");
             if(fields.contains("description"))facts.add(ChatDialogueInterpreter.clean(description(book),650));
             Map<String,String> reading=readingFacts(book);

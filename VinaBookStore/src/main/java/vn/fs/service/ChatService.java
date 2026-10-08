@@ -93,7 +93,9 @@ public class ChatService {
 			ChatResponseDto response;
 			if (guardedAnswer(request.getMessage()) != null || privateText(request.getMessage())) {
 				response = dialogue(request, state, false);
-			} else {
+			} else if(customerFeatureQuestion(intents.normalize(request.getMessage()))) {
+                response=customerFeatureHelp(request,state);
+            } else {
 				List<Product> catalog = products.findByStatusTrue().stream()
 					.filter(p -> Boolean.TRUE.equals(p.getStatus())).collect(Collectors.toList());
 				ChatRecommendationIntake intake = new ChatRecommendationIntake(intents, retrieval);
@@ -132,6 +134,28 @@ public class ChatService {
 		}
 	}
 
+    private boolean customerFeatureQuestion(String q) {
+        return q.matches("(?s).*(?:ma giam gia|voucher|ma uu dai|thong bao (?:co hang|cua toi)|bao (?:minh|toi|cho toi) khi (?:co|sach ve) hang|kiem tra hoan tien|trang thai hoan tien|tinh trang hoan tien).*" );
+    }
+    private ChatResponseDto customerFeatureHelp(ChatRequestDto request,ChatDialogueMemory.State state) {
+        String q=intents.normalize(request.getMessage());long started=System.currentTimeMillis();
+        if(q.matches("(?s).*(?:ma giam gia|voucher|ma uu dai).*")) {
+            var response=finish(request,"Bạn có mã ưu đãi thì nhập ở ô Mã giảm giá trong bước thanh toán trên web hoặc trong chat nhé. Mình cần kiểm tra sách trong đơn, thời hạn và lượt dùng để báo đúng số tiền được giảm; bạn sẽ thấy tổng tiền trước khi xác nhận đặt hàng.",ChatIntent.PURCHASE,List.of(),false,false,state,started);
+            response.getActions().clear();response.getActions().add(new ChatActionDto("VIEW_CART","Mở giỏ hàng",null,"/cart",false));
+            if(request.getCartItems()!=null&&!request.getCartItems().isEmpty())response.getActions().add(new ChatActionDto("CHECKOUT_CART","Đặt hàng và áp dụng mã",null,null,false));
+            return response;
+        }
+        if(q.contains("hoan tien")) {
+            var matcher=java.util.regex.Pattern.compile("(?:don|#)\\s*#?\\s*([0-9]{1,15})").matcher(q);Long id=matcher.find()?Long.valueOf(matcher.group(1)):state.focusedOrderId;
+            String answer=id==null?"Mình giúp bạn kiểm tra được nhé. Bạn gửi mã đơn để mình xem trạng thái hoàn tiền đúng đơn trong tài khoản của bạn; việc hoàn tiền do nhân viên xác nhận sau khi đối soát.":orderSupport.orderById(id);
+            var response=finish(request,answer,ChatIntent.ORDER_SUPPORT,List.of(),false,false,state,started);response.getActions().clear();
+            if(id!=null&&answer.startsWith("Đơn #"))response.getActions().add(new ChatActionDto("VIEW_ORDER","Xem trạng thái hoàn tiền",null,"/orders/"+id,false));return response;
+        }
+        List<Product> selected=new ArrayList<>();Long id=request.getActiveProductId()!=null?request.getActiveProductId():state.focus;
+        if(id!=null)products.findById(id).filter(p->Boolean.TRUE.equals(p.getStatus())).ifPresent(selected::add);
+        String answer=selected.isEmpty()?"Mình có thể báo khi cuốn bạn đang chờ có hàng trở lại. Bạn mở đúng cuốn sách rồi chọn Báo mình khi có hàng; cần đăng nhập để mình lưu thông báo vào tài khoản của bạn nhé.":selected.get(0).getQuantity()>0?"Cuốn này đang có hàng theo catalog. Bạn có thể mở trang sách để kiểm tra và đặt mua nhé.":"Mình hiểu bạn đang chờ cuốn này. Bạn chọn Báo mình khi có hàng trên thẻ sách bên dưới nhé; thông báo sẽ nằm trong tài khoản khi sách về, và bạn có thể bỏ theo dõi bất cứ lúc nào.";
+        var response=finish(request,answer,ChatIntent.PRODUCT_INFO,selected,false,false,state,started);response.getActions().add(new ChatActionDto("VIEW_NOTIFICATIONS","Xem thông báo của tôi",null,"/notifications",false));return response;
+    }
 	public List<java.util.Map<String, Object>> history(String sessionId) {
 		return memoryStore == null ? List.of() : memoryStore.history(access.currentUserId(), sessionId);
 	}

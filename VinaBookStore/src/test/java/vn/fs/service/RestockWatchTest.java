@@ -1,0 +1,15 @@
+package vn.fs.service;
+import static org.assertj.core.api.Assertions.*;import static org.mockito.Mockito.*;
+import java.util.*;import javax.persistence.*;
+import org.junit.jupiter.api.Test;import org.junit.jupiter.api.BeforeEach;
+import org.springframework.web.server.ResponseStatusException;
+import vn.fs.config.CurrentUserAccess;import vn.fs.entity.*;import vn.fs.repository.*;
+class RestockWatchTest {
+ CurrentUserAccess access=mock(CurrentUserAccess.class);RestockWatchRepository watches=mock(RestockWatchRepository.class);ProductRepository products=mock(ProductRepository.class);EntityManager em=mock(EntityManager.class);RestockWatchService service=new RestockWatchService(access,watches,products,em);Product product=new Product();RestockWatch row;
+ @BeforeEach void setup(){when(access.currentUserId()).thenReturn(3L);when(em.find(User.class,3L,LockModeType.PESSIMISTIC_WRITE)).thenReturn(new User());product.setProductId(7L);product.setName("Sách thử");product.setStatus(true);product.setQuantity(0);when(products.findById(7L)).thenReturn(Optional.of(product));when(watches.findByOwnerIdAndProductId(3L,7L)).thenAnswer(c->Optional.ofNullable(row));when(watches.findTop100ByOwnerIdAndStateNotOrderByIdDesc(3L,"CANCELLED")).thenAnswer(c->row==null?List.of():List.of(row));when(watches.save(any())).thenAnswer(c->{row=c.getArgument(0);row.setId(1L);return row;});}
+ @Test void repeatedWatchIsIdempotentAndUsesPrincipal(){service.watch(7L);service.watch(7L);verify(watches,times(1)).save(any());assertThat(row.getOwnerId()).isEqualTo(3L);assertThat(row.getState()).isEqualTo("WAITING");}
+ @Test void availabilityCreatesOneNotificationAndSurvivesReads(){service.watch(7L);product.setQuantity(5);assertThat(service.list().get(0)).containsEntry("state","AVAILABLE").containsEntry("seen",false);var at=row.getAvailableAt();service.list();assertThat(row.getAvailableAt()).isEqualTo(at);verify(watches,times(2)).save(any());}
+ @Test void cancellationStopsNotificationsAndCanResubscribe(){service.watch(7L);service.remove(7L);product.setQuantity(5);assertThat(service.list()).isEmpty();assertThat(row.getState()).isEqualTo("CANCELLED");product.setQuantity(0);service.watch(7L);assertThat(row.getState()).isEqualTo("WAITING");}
+ @Test void anonymousOtherAccountAndInStockCannotSubscribe(){product.setQuantity(1);assertThatThrownBy(()->service.watch(7L)).isInstanceOf(ResponseStatusException.class);when(access.currentUserId()).thenReturn(null);assertThatThrownBy(()->service.watch(7L)).isInstanceOf(ResponseStatusException.class);when(access.currentUserId()).thenReturn(4L);assertThatThrownBy(()->service.watch(7L)).isInstanceOf(ResponseStatusException.class);verify(watches,never()).save(any());}
+ @Test void hiddenBookNeverTriggersAvailableAndSeenOnlyUpdatesOwner(){service.watch(7L);product.setStatus(false);product.setQuantity(5);service.list();assertThat(row.getState()).isEqualTo("WAITING");service.seen(7L);assertThat(row.isSeen()).isTrue();verify(watches,times(2)).findByOwnerIdAndProductId(3L,7L);}
+}
