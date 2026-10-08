@@ -1,15 +1,42 @@
-<section class="support-page"><h1>Yêu cầu hỗ trợ và đổi trả</h1>
-  <p>Phản hồi được hiển thị trong mục Liên hệ của khách. Thao tác này cập nhật yêu cầu; xử lý giao dịch, gửi lại sách hoặc hoàn tiền cần thực hiện theo quy trình cửa hàng.</p>
-  <label>Lọc trạng thái <select [(ngModel)]="status" (change)="page = 0; load()" [disabled]="busy || !!saving"><option value="OPEN">Mới tiếp nhận</option><option value="IN_REVIEW">Đang xem xét</option><option value="RESOLVED">Đã hoàn tất</option><option value="REJECTED">Không chấp nhận</option><option value="">Tất cả</option></select></label>
-  <button type="button" (click)="load()" [disabled]="busy || !!saving">Tải lại</button><p *ngIf="busy" role="status">Đang tải yêu cầu...</p><p *ngIf="error" role="alert" class="error">{{ error }}</p>
-  <p *ngIf="!busy && !error && !requests.length">Không có yêu cầu trong trạng thái này.</p>
-  <article *ngFor="let request of requests"><h2>#{{ request.id }} · {{ request.kind === 'RETURN' ? 'Đổi trả' : 'Hỗ trợ' }}</h2>
-    <p>{{ request.createdAt | date:'dd/MM/yyyy HH:mm' }} · {{ request.status }} <span *ngIf="request.orderId">· Đơn #{{ request.orderId }}</span></p>
-    <p *ngIf="request.kind === 'RETURN'">Sách #{{ request.productId }} · Nhận ngày {{ request.receivedOn | date:'dd/MM/yyyy' }} · Mong muốn: {{ request.outcome === 'EXCHANGE' ? 'Đổi sách' : 'Trả sách/hoàn tiền' }}</p>
-    <p class="message">{{ request.message }}</p>
-    <label>Trạng thái xử lý <select [(ngModel)]="request.draftStatus" [disabled]="busy || !!saving"><option value="IN_REVIEW">Đang xem xét</option><option value="RESOLVED">Đã phản hồi, hoàn tất</option><option value="REJECTED">Không chấp nhận yêu cầu</option></select></label>
-    <label>Phản hồi cho khách <textarea [(ngModel)]="request.draftReply" rows="4" maxlength="2000" [disabled]="busy || !!saving"></textarea></label>
-    <button type="button" (click)="save(request)" [disabled]="busy || !!saving || !request.draftReply?.trim()">{{ saving === request.id ? 'Đang lưu...' : 'Lưu phản hồi' }}</button>
-  </article>
-  <div class="pagination"><button type="button" (click)="page = page - 1; load()" [disabled]="page === 0 || busy || !!saving">Trang trước</button><span>Trang {{ page + 1 }}</span><button type="button" (click)="page = page + 1; load()" [disabled]="!hasNext || busy || !!saving">Trang sau</button></div>
+<section class="workspace-page support-page">
+  <header class="workspace-heading"><div><div class="workspace-eyebrow">Chăm sóc khách hàng</div><h1>Hỗ trợ &amp; đổi trả</h1><p>Tiếp nhận yêu cầu, trao đổi với khách và theo dõi kết quả xử lý.</p></div><div class="ws-actions"><button type="button" class="ws-button" (click)="load()" [disabled]="busy || !!saving"><i class="fas fa-sync-alt" aria-hidden="true"></i>Tải lại yêu cầu</button></div></header>
+  <div *ngIf="success" class="ws-alert ws-alert-success" role="status"><i class="fas fa-check-circle" aria-hidden="true"></i>{{ success }}</div>
+  <div *ngIf="error" class="ws-alert" role="alert"><i class="fas fa-exclamation-circle" aria-hidden="true"></i><span>{{ error }}</span></div>
+  <div class="support-layout">
+    <aside class="ws-panel request-queue" aria-label="Danh sách yêu cầu">
+      <div class="ws-panel-head"><div><h2>Danh sách yêu cầu</h2><p>Chọn một yêu cầu để xem và phản hồi.</p></div><span class="queue-icon"><i class="fas fa-inbox" aria-hidden="true"></i></span></div>
+      <div class="queue-filter"><label class="ws-field" for="support-status">Trạng thái<select class="ws-select" id="support-status" [(ngModel)]="status" (change)="changeStatus()" [disabled]="busy || !!saving"><option value="OPEN">Mới tiếp nhận</option><option value="IN_REVIEW">Đang xem xét</option><option value="RESOLVED">Đã hoàn tất</option><option value="REJECTED">Không chấp nhận</option><option value="">Tất cả yêu cầu</option></select></label></div>
+      <div *ngIf="busy" class="ws-state queue-state" role="status"><span class="ws-spinner"></span><p>Đang tải yêu cầu...</p></div>
+      <div *ngIf="!busy && !requests.length" class="ws-state queue-state"><span class="ws-state-icon"><i class="fas" [class.fa-inbox]="!error" [class.fa-unlink]="!!error" aria-hidden="true"></i></span><h3>{{ error ? 'Chưa tải được yêu cầu' : 'Không có yêu cầu' }}</h3><p>{{ error ? 'Bạn thử tải lại để tiếp tục xử lý.' : 'Chưa có yêu cầu trong trạng thái này.' }}</p><button *ngIf="error" type="button" class="ws-button" (click)="load()">Thử lại</button></div>
+      <div *ngIf="!busy" class="request-items" role="list"><div role="listitem" *ngFor="let request of requests; trackBy: track"><button type="button" class="request-item" [class.selected]="selectedRequest?.id === request.id" [attr.aria-pressed]="selectedRequest?.id === request.id" (click)="select(request)" [disabled]="!!saving">
+        <span class="request-item-top"><strong>Yêu cầu #{{ request.id }}</strong><time>{{ request.createdAt | date:'dd/MM' }}</time></span>
+        <span class="request-kind"><i class="fas" [class.fa-box-open]="request.kind === 'RETURN'" [class.fa-headset]="request.kind !== 'RETURN'" aria-hidden="true"></i>{{ request.kind === 'RETURN' ? 'Đổi trả sách' : 'Hỗ trợ khách hàng' }}<span *ngIf="request.orderId">Đơn #{{ request.orderId }}</span></span>
+        <span class="request-snippet">{{ request.message }}</span><span class="ws-badge" [ngClass]="statusClass(request.status)">{{ statusLabel(request.status) }}</span>
+      </button></div></div>
+      <div class="ws-panel-footer queue-pagination"><button type="button" class="ws-button ws-button-small" aria-label="Trang yêu cầu trước" (click)="changePage(-1)" [disabled]="page === 0 || busy || !!saving"><i class="fas fa-chevron-left" aria-hidden="true"></i></button><span>Trang {{ page + 1 }}</span><button type="button" class="ws-button ws-button-small" aria-label="Trang yêu cầu sau" (click)="changePage(1)" [disabled]="!hasNext || busy || !!saving"><i class="fas fa-chevron-right" aria-hidden="true"></i></button></div>
+    </aside>
+    <div class="request-detail">
+      <div *ngIf="busy" class="ws-panel ws-state" role="status"><span class="ws-spinner"></span><h3>Đang tải thông tin</h3><p>Nội dung yêu cầu sẽ hiển thị tại đây.</p></div>
+      <ng-container *ngIf="!busy && selectedRequest as request">
+        <section class="ws-panel detail-panel" aria-label="Chi tiết yêu cầu">
+          <div class="ws-panel-head detail-heading"><div><span class="detail-kind">{{ request.kind === 'RETURN' ? 'Yêu cầu đổi trả' : 'Yêu cầu hỗ trợ' }}</span><h2>Yêu cầu #{{ request.id }}</h2><p>Tiếp nhận {{ request.createdAt | date:'dd/MM/yyyy HH:mm' }}</p></div><span class="ws-badge" [ngClass]="statusClass(request.status)">{{ statusLabel(request.status) }}</span></div>
+          <div class="request-body">
+            <dl class="request-metadata" *ngIf="request.orderId || request.kind === 'RETURN'">
+              <div *ngIf="request.orderId"><dt>Đơn hàng</dt><dd>#{{ request.orderId }}</dd></div><div *ngIf="request.productId"><dt>Sách</dt><dd>#{{ request.productId }}</dd></div><div *ngIf="request.receivedOn"><dt>Ngày nhận</dt><dd>{{ request.receivedOn | date:'dd/MM/yyyy' }}</dd></div><div *ngIf="request.kind === 'RETURN'"><dt>Mong muốn</dt><dd>{{ request.outcome === 'EXCHANGE' ? 'Đổi sách' : 'Trả sách / hoàn tiền' }}</dd></div>
+            </dl>
+            <h3 class="detail-section-title">Nội dung từ khách</h3><div class="customer-message"><i class="fas fa-quote-left" aria-hidden="true"></i><p>{{ request.message }}</p></div>
+            <div class="response-heading"><div><h3 class="detail-section-title">Phản hồi &amp; xử lý</h3><p>Phản hồi được hiển thị trong yêu cầu của khách.</p></div></div>
+            <label class="ws-field response-status" [for]="'request-status-' + request.id">Trạng thái xử lý<select class="ws-select" [id]="'request-status-' + request.id" [(ngModel)]="request.draftStatus" [disabled]="busy || !!saving"><option value="IN_REVIEW">Đang xem xét</option><option value="RESOLVED">Đã phản hồi, hoàn tất</option><option value="REJECTED">Không chấp nhận yêu cầu</option></select></label>
+            <label class="ws-field response-text" [for]="'request-reply-' + request.id">Phản hồi cho khách<textarea class="ws-textarea" [id]="'request-reply-' + request.id" [(ngModel)]="request.draftReply" rows="5" maxlength="2000" placeholder="Nhập hướng xử lý hoặc thông tin cần trao đổi với khách..." [disabled]="busy || !!saving"></textarea></label>
+            <div class="response-footer"><span>{{ request.draftReply?.length || 0 }} / 2.000 ký tự</span><button type="button" class="ws-button ws-button-primary" (click)="save(request)" [disabled]="busy || !!saving || !request.draftReply?.trim()"><i class="fas fa-check" aria-hidden="true"></i>{{ saving === request.id ? 'Đang lưu...' : 'Lưu phản hồi' }}</button></div>
+          </div>
+          <div class="detail-tools"><div><i class="fas fa-comments" aria-hidden="true"></i><span><strong>Trao đổi với khách</strong><small>Xem tin nhắn và tiếp tục hội thoại.</small></span></div><button type="button" class="ws-button ws-button-small" (click)="chatId = chatId === request.id ? 0 : request.id" [attr.aria-expanded]="chatId === request.id">{{ chatId === request.id ? 'Đóng hội thoại' : 'Mở hội thoại' }}<i class="fas" [class.fa-chevron-up]="chatId === request.id" [class.fa-chevron-down]="chatId !== request.id" aria-hidden="true"></i></button></div>
+          <div class="detail-widget" *ngIf="chatId === request.id"><app-support-chat [requestId]="request.id" [closed]="request.status === 'RESOLVED' || request.status === 'REJECTED'"></app-support-chat></div>
+        </section>
+        <section *ngIf="request.kind === 'RETURN' && request.orderId" class="ws-panel refund-section"><div class="detail-tools"><div><i class="fas fa-undo-alt" aria-hidden="true"></i><span><strong>Thông tin hoàn tiền</strong><small>Xem hạn mức và giao dịch của đơn #{{ request.orderId }}.</small></span></div><button type="button" class="ws-button ws-button-small" (click)="refundOpen = !refundOpen" [attr.aria-expanded]="refundOpen">{{ refundOpen ? 'Thu gọn' : 'Xem chi tiết' }}<i class="fas" [class.fa-chevron-up]="refundOpen" [class.fa-chevron-down]="!refundOpen" aria-hidden="true"></i></button></div><div class="detail-widget" *ngIf="refundOpen"><app-payment-refunds [orderId]="request.orderId"></app-payment-refunds></div></section>
+        <div class="ws-note support-note"><i class="fas fa-info-circle" aria-hidden="true"></i><p>Lưu phản hồi cập nhật yêu cầu của khách. Giao dịch hoàn tiền có bước xem lại và xác nhận riêng.</p></div>
+      </ng-container>
+      <div *ngIf="!busy && !selectedRequest" class="ws-panel ws-state empty-detail"><span class="ws-state-icon"><i class="far fa-comment-dots" aria-hidden="true"></i></span><h3>Chọn yêu cầu cần xử lý</h3><p>Nội dung, phản hồi và hội thoại sẽ hiển thị trong khu vực này.</p></div>
+    </div>
+  </div>
 </section>

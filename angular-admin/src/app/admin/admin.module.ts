@@ -25,7 +25,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTabsModule } from '@angular/material/tabs';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrModule } from 'ngx-toastr';
 import { AddProductComponent } from './add-product/add-product.component';
@@ -42,11 +41,14 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { ChatAnalyticsComponent } from './chat-analytics/chat-analytics.component';
 import { BookKnowledgeComponent } from './book-knowledge/book-knowledge.component';
 import { StoreKnowledgeComponent } from './store-knowledge/store-knowledge.component';
+import { VouchersComponent } from './vouchers/vouchers.component';
+import { PaymentRefundsComponent } from './payment-refunds/payment-refunds.component';
+import { SupportChatComponent } from './support-chat/support-chat.component';
 import { SupportRequestsComponent } from './support-requests/support-requests.component';
 
 const routes: Routes = [
   {
-    path: 'admin', component: AdminComponent,
+    path: '', component: AdminComponent,
     children : [
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
       { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
@@ -60,6 +62,7 @@ const routes: Routes = [
       { path: 'soldest', component: SoldestComponent, canActivate: [AuthGuard] },
       { path: 'chatbot-analytics', component: ChatAnalyticsComponent, canActivate: [AuthGuard] },
       { path: 'store-knowledge', component: StoreKnowledgeComponent, canActivate: [AuthGuard] },
+      { path: 'vouchers', component: VouchersComponent, canActivate: [AuthGuard] },
       { path: 'support-requests', component: SupportRequestsComponent, canActivate: [AuthGuard] },
       { path: 'order', component: OrderComponent, canActivate: [AuthGuard] }
     ]
@@ -68,7 +71,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  declarations: [
+  declarations: [VouchersComponent, PaymentRefundsComponent,
     AdminComponent,
     HeaderComponent,
     FooterComponent,
@@ -94,13 +97,13 @@ const routes: Routes = [
     ChatAnalyticsComponent,
     BookKnowledgeComponent,
     StoreKnowledgeComponent,
-    SupportRequestsComponent
+    SupportRequestsComponent,
+    SupportChatComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule,
     NgbModule,
     MatTableModule,
     MatTabsModule,
@@ -112,13 +115,7 @@ const routes: Routes = [
     OrderModule,
     NgxPaginationModule,
     MatTableExporterModule,
-    ToastrModule.forRoot({
-      timeOut: 2500,
-      // progressBar: true,
-      progressAnimation: 'increasing',
-      // preventDuplicates: true,
-      closeButton: true,
-    }),
+    ToastrModule,
     RouterModule.forChild(routes)
   ],
   providers:[AuthGuard]

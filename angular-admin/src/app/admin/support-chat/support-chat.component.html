@@ -1,0 +1,11 @@
+<section class="support-chat" aria-label="Hội thoại với khách hàng">
+  <div class="chat-heading"><div><h3>Hội thoại với khách</h3><p>Yêu cầu #{{ requestId }}. Tin nhắn tự cập nhật.</p></div><button type="button" class="ws-button ws-button-small" *ngIf="hasOlder" (click)="older()" [disabled]="loading">Xem tin cũ</button></div>
+  <p *ngIf="loading && !messages.length" class="chat-hint" role="status">Đang tải hội thoại...</p>
+  <div *ngIf="error" class="ws-alert" role="alert"><i class="fas fa-exclamation-circle" aria-hidden="true"></i>{{ error }}</div>
+  <div class="messages" role="log" aria-live="polite" aria-relevant="additions">
+    <p *ngIf="!loading && !messages.length" class="chat-empty">Chưa có tin nhắn. Bạn có thể bắt đầu trao đổi với khách tại đây.</p>
+    <article *ngFor="let message of messages; trackBy:track" [class.mine]="message.mine"><strong>{{ message.staff ? 'Nhân viên VinaBook' : 'Khách hàng' }}</strong><p>{{ message.content }}</p><time>{{ message.createdAt | date:'dd/MM HH:mm' }}</time></article>
+  </div>
+  <p *ngIf="closed" class="chat-closed"><i class="fas fa-lock" aria-hidden="true"></i>Yêu cầu đã đóng. Hội thoại được giữ lại để tra cứu.</p>
+  <form *ngIf="!closed" (ngSubmit)="send()" class="chat-compose"><label class="ws-field" [for]="'support-message-' + requestId">Tin nhắn cho khách<textarea class="ws-textarea" [id]="'support-message-' + requestId" name="supportChatMessage" [(ngModel)]="draft" maxlength="2000" rows="3" placeholder="Nhập tin nhắn..." [disabled]="sending || uncertain"></textarea></label><div class="chat-compose-footer"><span>{{ draft.length }} / 2.000</span><button type="submit" class="ws-button ws-button-primary" [disabled]="sending || (!uncertain && !draft.trim())"><i class="fas fa-paper-plane" aria-hidden="true"></i>{{ sending ? 'Đang gửi...' : (uncertain ? 'Kiểm tra / gửi lại cùng tin' : 'Gửi tin nhắn') }}</button></div></form>
+</section>

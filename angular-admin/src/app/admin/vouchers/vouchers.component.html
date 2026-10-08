@@ -1,0 +1,60 @@
+<section class="workspace-page voucher-page">
+  <header class="workspace-heading">
+    <div><div class="workspace-eyebrow">Khuyến mãi</div><h1>Mã giảm giá</h1><p>Quản lý ưu đãi, thời gian và hạn mức áp dụng cho đơn hàng.</p></div>
+    <div class="ws-actions">
+      <button type="button" class="ws-button" (click)="load()" [disabled]="busy || saving"><i class="fas fa-sync-alt" aria-hidden="true"></i>Tải lại</button>
+      <button type="button" class="ws-button ws-button-primary" (click)="edit()" [disabled]="busy || saving"><i class="fas fa-plus" aria-hidden="true"></i>Tạo mã mới</button>
+    </div>
+  </header>
+  <div *ngIf="success" class="ws-alert ws-alert-success" role="status"><i class="fas fa-check-circle" aria-hidden="true"></i>{{ success }}</div>
+  <div class="voucher-layout">
+    <section class="ws-panel voucher-list" aria-label="Danh sách mã giảm giá" [attr.aria-busy]="busy">
+      <div class="ws-panel-head"><div><h2>Danh sách ưu đãi</h2><p>Theo dõi điều kiện và trạng thái của từng mã.</p></div><span class="ws-count" *ngIf="loaded">{{ rows.length }} mã đã tải</span></div>
+      <div class="voucher-toolbar">
+        <label class="search-field"><i class="fas fa-search" aria-hidden="true"></i><input class="ws-input" type="search" placeholder="Tìm theo mã giảm giá..." aria-label="Tìm mã giảm giá" [(ngModel)]="query"></label>
+        <select class="ws-select" aria-label="Lọc trạng thái mã" [(ngModel)]="stateFilter"><option value="">Tất cả trạng thái</option><option value="active">Đang áp dụng</option><option value="scheduled">Sắp bắt đầu</option><option value="expired">Hết hạn</option><option value="disabled">Đã tắt</option></select>
+      </div>
+      <div *ngIf="busy" class="ws-state" role="status"><span class="ws-spinner"></span><h3>Đang tải mã giảm giá</h3><p>Danh sách ưu đãi sẽ hiển thị ngay khi có dữ liệu.</p></div>
+      <div *ngIf="!busy && error" class="ws-state ws-state-error" role="alert"><span class="ws-state-icon"><i class="fas fa-unlink" aria-hidden="true"></i></span><h3>Chưa tải được danh sách</h3><p>{{ error }}</p><button type="button" class="ws-button" (click)="load()" [disabled]="saving">Thử lại</button></div>
+      <ng-container *ngIf="!busy && !error">
+        <div class="voucher-table-wrap" *ngIf="filteredRows.length; else emptyList">
+          <table class="voucher-table"><thead><tr><th scope="col">Mã &amp; ưu đãi</th><th scope="col">Điều kiện</th><th scope="col">Thời gian</th><th scope="col">Trạng thái</th><th scope="col"><span class="sr-only">Thao tác</span></th></tr></thead>
+            <tbody><tr *ngFor="let row of filteredRows; trackBy: track" [class.is-editing]="draft.id === row.id">
+              <td><span class="voucher-code">{{ row.code }}</span><strong class="voucher-value">Giảm {{ row.value | number }}{{ row.kind === 'PERCENT' ? '%' : 'đ' }}</strong><small *ngIf="row.maximumDiscount">Tối đa {{ row.maximumDiscount | number }}đ</small></td>
+              <td><span>Từ {{ row.minimumSubtotal | number }}đ</span><small>{{ row.usageLimit | number }} lượt tổng</small><small>{{ row.perUserLimit | number }} lượt / tài khoản</small></td>
+              <td><span>{{ row.startsAt | date:'dd/MM/yyyy' }}</span><small>đến {{ row.expiresAt | date:'dd/MM/yyyy' }}</small></td>
+              <td><span class="ws-badge" [ngClass]="'ws-badge-' + state(row)">{{ stateLabel(row) }}</span></td>
+              <td><button type="button" class="ws-button ws-button-small" (click)="edit(row)" [disabled]="saving" [attr.aria-label]="'Chỉnh sửa mã ' + row.code"><i class="fas fa-pen" aria-hidden="true"></i>Sửa</button></td>
+            </tr></tbody>
+          </table>
+        </div>
+        <ng-template #emptyList><div class="ws-state"><span class="ws-state-icon"><i class="fas fa-ticket-alt" aria-hidden="true"></i></span><h3>{{ rows.length ? 'Không tìm thấy mã phù hợp' : 'Chưa có mã giảm giá' }}</h3><p>{{ rows.length ? 'Thử mã khác hoặc chọn lại trạng thái để xem ưu đãi.' : 'Tạo ưu đãi đầu tiên bằng biểu mẫu bên cạnh.' }}</p><button *ngIf="rows.length" type="button" class="ws-button" (click)="query = ''; stateFilter = ''">Xóa bộ lọc</button></div></ng-template>
+      </ng-container>
+      <div class="ws-panel-footer"><span *ngIf="loaded">Hiển thị {{ filteredRows.length }} / {{ rows.length }} mã đã tải</span><span>Giảm giá áp dụng cho tiền sách</span></div>
+    </section>
+    <aside class="ws-panel voucher-editor" aria-label="Biểu mẫu mã giảm giá">
+      <div class="ws-panel-head"><div><h2>{{ draft.id ? 'Chỉnh sửa mã' : 'Tạo mã giảm giá' }}</h2><p>{{ draft.id ? draft.code : 'Thiết lập một ưu đãi cho khách hàng.' }}</p></div><span class="editor-mark"><i class="fas fa-ticket-alt" aria-hidden="true"></i></span></div>
+      <form (ngSubmit)="save()" #f="ngForm" class="voucher-form">
+        <div *ngIf="saveError" class="ws-alert" role="alert"><i class="fas fa-exclamation-circle" aria-hidden="true"></i>{{ saveError }}</div>
+        <fieldset class="ws-form-section" [disabled]="busy || saving"><legend>Thông tin ưu đãi</legend><div class="ws-form-grid">
+          <label class="ws-field ws-full" for="voucher-code">Mã giảm giá<input class="ws-input code-input" id="voucher-code" name="code" [(ngModel)]="draft.code" required minlength="3" maxlength="32" pattern="[A-Za-z0-9_-]{3,32}" placeholder="Ví dụ: DOCSACH10" [readonly]="!!draft.id"><small>{{ draft.id ? 'Mã đã tạo giữ nguyên tên.' : '3-32 chữ, số, dấu gạch ngang hoặc gạch dưới.' }}</small></label>
+          <label class="ws-field" for="voucher-kind">Loại ưu đãi<select class="ws-select" id="voucher-kind" name="kind" [(ngModel)]="draft.kind"><option value="FIXED">Giảm số tiền</option><option value="PERCENT">Giảm phần trăm</option></select></label>
+          <label class="ws-field" for="voucher-value">Giá trị {{ draft.kind === 'PERCENT' ? '(%)' : '(đ)' }}<input class="ws-input" id="voucher-value" type="number" name="value" [(ngModel)]="draft.value" min="1" [max]="draft.kind === 'PERCENT' ? 100 : 50000000" step="1" required></label>
+          <label class="ws-field" for="voucher-maximum">Giảm tối đa (đ)<input class="ws-input" id="voucher-maximum" type="number" name="maximum" [(ngModel)]="draft.maximumDiscount" min="0" max="50000000" step="1" required><small>0 là không giới hạn.</small></label>
+          <label class="ws-field" for="voucher-minimum">Tiền sách tối thiểu (đ)<input class="ws-input" id="voucher-minimum" type="number" name="minimum" [(ngModel)]="draft.minimumSubtotal" min="0" max="50000000" step="1" required></label>
+        </div></fieldset>
+        <fieldset class="ws-form-section" [disabled]="busy || saving"><legend>Hạn mức sử dụng</legend><div class="ws-form-grid">
+          <label class="ws-field" for="voucher-limit">Tổng lượt<input class="ws-input" id="voucher-limit" type="number" name="limit" [(ngModel)]="draft.usageLimit" min="1" max="1000000" step="1" required></label>
+          <label class="ws-field" for="voucher-user-limit">Lượt / tài khoản<input class="ws-input" id="voucher-user-limit" type="number" name="perUser" [(ngModel)]="draft.perUserLimit" min="1" [max]="draft.usageLimit" step="1" required></label>
+        </div></fieldset>
+        <fieldset class="ws-form-section" [disabled]="busy || saving"><legend>Thời gian áp dụng</legend><div class="ws-form-grid">
+          <label class="ws-field ws-full" for="voucher-start">Bắt đầu<input class="ws-input" id="voucher-start" type="datetime-local" name="start" [(ngModel)]="start" required></label>
+          <label class="ws-field ws-full" for="voucher-end">Kết thúc<input class="ws-input" id="voucher-end" type="datetime-local" name="end" [(ngModel)]="end" required></label>
+          <label class="voucher-switch ws-full"><input type="checkbox" name="active" [(ngModel)]="draft.active"><span class="switch-track" aria-hidden="true"></span><span><strong>Cho phép sử dụng mã</strong><small>Áp dụng trong thời gian đã chọn.</small></span></label>
+        </div></fieldset>
+        <div class="ws-note voucher-note"><i class="fas fa-info-circle" aria-hidden="true"></i><p>Mã không giảm phí giao hàng. Chỉ trừ lượt khi đơn được tạo thành công.</p></div>
+        <div class="editor-actions"><button type="button" class="ws-button" (click)="edit()" [disabled]="busy || saving">Làm mới</button><button type="submit" class="ws-button ws-button-primary" [disabled]="busy || saving || f.invalid"><i class="fas" [class.fa-save]="!saving" [class.fa-circle-notch]="saving" [class.fa-spin]="saving" aria-hidden="true"></i>{{ saving ? 'Đang lưu...' : 'Lưu mã giảm giá' }}</button></div>
+      </form>
+    </aside>
+  </div>
+</section>

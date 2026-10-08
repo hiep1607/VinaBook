@@ -51,5 +51,6 @@
         <button mat-raised-button color="warn" *ngIf="order.status==0" (click)="cancel()" class="col-2 ml-2">Huỷ đơn</button>
         <button mat-raised-button color="accent" *ngIf="order.status==1" (click)="confirm()" class="ml-2">Hoàn thành giao hàng</button>
     </div>
+    <app-payment-refunds [orderId]="orderId"></app-payment-refunds>
 </ng-template>
 <a class="fas fa-clipboard-check" style="cursor: pointer; color: teal; font-size: 19px;" (click)="open(content)"></a>
