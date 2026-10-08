@@ -30,6 +30,8 @@ import vn.fs.repository.UserRepository;
 @RestController
 @RequestMapping("api/favorites")
 public class FavoritesApi {
+    @Autowired vn.fs.config.CurrentUserAccess access;
+    @javax.persistence.PersistenceContext javax.persistence.EntityManager em;
 
 	@Autowired
 	FavoriteRepository favoriteRepository;
@@ -42,6 +44,7 @@ public class FavoritesApi {
 
 	@GetMapping("email/{email}")
 	public ResponseEntity<List<Favorite>> findByEmail(@PathVariable("email") String email) {
+        if(!access.canAccessEmail(email))return ResponseEntity.status(403).build();
 		if (userRepository.existsByEmail(email)) {
 			return ResponseEntity.ok(favoriteRepository.findByUser(userRepository.findByEmail(email).get()));
 		}
@@ -59,6 +62,7 @@ public class FavoritesApi {
 	@GetMapping("{productId}/{email}")
 	public ResponseEntity<Favorite> findByProductAndUser(@PathVariable("productId") Long productId,
 			@PathVariable("email") String email) {
+        if(!access.canAccessEmail(email))return ResponseEntity.status(403).build();
 		if (userRepository.existsByEmail(email)) {
 			if (productRepository.existsById(productId)) {
 				Product product = productRepository.findById(productId).get();
@@ -69,13 +73,24 @@ public class FavoritesApi {
 		return ResponseEntity.notFound().build();
 	}
 
-	@PostMapping("email")
+	@org.springframework.transaction.annotation.Transactional
+    @PostMapping("email")
 	public ResponseEntity<Favorite> post(@RequestBody Favorite favorite) {
-		return ResponseEntity.ok(favoriteRepository.save(favorite));
+        if(access.currentUserId()==null)return ResponseEntity.status(401).build();
+        User user=em.find(User.class,access.currentUserId(),javax.persistence.LockModeType.PESSIMISTIC_WRITE);
+        if(user==null || favorite.getProduct()==null || favorite.getProduct().getProductId()==null)return ResponseEntity.badRequest().build();
+        Product product=productRepository.findById(favorite.getProduct().getProductId()).orElse(null);
+        if(product==null)return ResponseEntity.notFound().build();
+        Favorite existing=favoriteRepository.findByProductAndUser(product,user);
+        if(existing!=null)return ResponseEntity.ok(existing);
+        favorite.setFavoriteId(null);favorite.setUser(user);favorite.setProduct(product);
+        return ResponseEntity.ok(favoriteRepository.save(favorite));
 	}
 
 	@DeleteMapping("{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+        Favorite stored=favoriteRepository.findById(id).orElse(null);
+        if(stored==null || stored.getUser()==null || !access.ownsUserId(stored.getUser().getUserId()))return ResponseEntity.notFound().build();
 		if (favoriteRepository.existsById(id)) {
 			favoriteRepository.deleteById(id);
 			return ResponseEntity.ok().build();

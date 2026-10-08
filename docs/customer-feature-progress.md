@@ -23,3 +23,14 @@ Khách và nhân viên nhắn trực tiếp trong cùng yêu cầu; cập nhật
 3. Tài khoản khác/khách thường gọi route admin không được đọc hoặc gửi tin.
 4. Mạng mất sau khi gửi: thử lại cùng tin chỉ lưu một bản, không mất nội dung đang nhập.
 5. Đổi tài khoản/phiếu hoặc đóng widget: polling cũ dừng, nội dung riêng tư xóa; phiếu hoàn tất không nhận tin mới.
+
+## 3. Đồng bộ tài khoản
+
+Wishlist dùng bảng favorites hiện có; địa chỉ/avatar lưu ở customer_preferences với API theo JWT. Có backup trước khi chuyển dữ liệu local, khóa migration theo trình duyệt và revision chống ghi đè từ thiết bị khác. Giá/tồn kho vẫn theo ProductService. Avatar giới hạn PNG/JPEG/GIF/WebP 256 KB. Các thao tác web và chat đợi biên nhận server trước khi báo thành công. Migration: `db/08-customer-preferences.sql`.
+
+5 kịch bản:
+1. Đăng nhập cùng tài khoản trên hai trình duyệt; thay đổi yêu thích/địa chỉ/avatar, cập nhật ở trình duyệt kia phải nhận cùng dữ liệu.
+2. Tài khoản có dữ liệu local cũ được chuyển một lần và giữ backup; đăng nhập lại không tạo bản trùng hoặc phục hồi sách đã xóa.
+3. Hai thiết bị sửa địa chỉ cùng lúc: bản cũ bị yêu cầu tải lại, không ghi đè âm thầm.
+4. Mất mạng khi lưu: không báo thành công, không thay cache bằng dữ liệu chưa được server xác nhận.
+5. Đổi tài khoản khi đang tải hoặc gửi request: response cũ không cập nhật dữ liệu của tài khoản mới; avatar quá lớn/SVG bị từ chối.
