@@ -1,0 +1,3409 @@
+{
+  "testedAt": "2026-10-04T19:58:43.295842+07:00",
+  "app": "VinaBook localhost:4200 -> Spring Boot/Gemini/MySQL",
+  "method": "Actual storefront proxy API, fresh guest sessions, server conversation memory; no browser UI/account test",
+  "scenarioCount": 12,
+  "turnCount": 36,
+  "scenarios": [
+    {
+      "id": "01_mo_ho_nhu_cau",
+      "questions": [
+        "Tôi muốn mua sách tặng một bạn nữ.",
+        "Bạn ấy 22 tuổi, thích truyện nhẹ nhàng, không thích sách dạy thành công.",
+        "Khoảng 150 nghìn trở xuống, bạn chọn giúp tôi 2 cuốn nhé."
+      ]
+    },
+    {
+      "id": "02_tim_theo_y_nghia",
+      "questions": [
+        "Dạo này tôi hay nghĩ quá nhiều, chuyện nhỏ cũng khiến tôi lo cả ngày. Có sách nào phù hợp không?",
+        "Tôi muốn đọc dễ hiểu, không muốn kiểu giáo trình tâm lý.",
+        "Trong những cuốn đó, cuốn nào sát với điều tôi đang gặp nhất? Vì sao?"
+      ]
+    },
+    {
+      "id": "03_het_sach_cung_chu_de",
+      "questions": [
+        "Giới thiệu cho tôi tối đa 5 cuốn truyện trinh thám đang có.",
+        "Còn cuốn nào khác cùng chủ đề không? Đừng lấy lại những cuốn vừa rồi.",
+        "Nếu hết rồi thì có cuốn nào gần với sở thích này không? Nói rõ khác ở điểm nào nhé."
+      ]
+    },
+    {
+      "id": "04_yeu_cau_6_cuon",
+      "questions": [
+        "Tôi cần 6 cuốn sách về quản lý tiền cá nhân cho người mới đi làm.",
+        "Trong số đó, cuốn nào đúng chủ đề, cuốn nào chỉ gần giống?",
+        "Vậy chỉ giữ những cuốn đúng yêu cầu thôi, không cần đủ 6."
+      ]
+    },
+    {
+      "id": "05_giai_thich_ca_danh_sach",
+      "questions": [
+        "Gợi ý 3 cuốn văn học phù hợp cho người ít đọc sách.",
+        "Nói kỹ hơn về cuốn thứ hai.",
+        "Tại sao bạn lại chọn cả 3 cuốn này cho tôi?"
+      ]
+    },
+    {
+      "id": "06_hoi_sau_hon",
+      "questions": [
+        "Gợi ý một cuốn giúp tôi giao tiếp tốt hơn.",
+        "Vì sao cuốn đó phù hợp với tôi?",
+        "Bạn nói kỹ hơn được không? Tôi muốn hiểu nội dung nào có thể giúp mình, chứ không chỉ nghe nói cuốn này hay."
+      ]
+    },
+    {
+      "id": "07_phu_dinh_va_doi_yeu_cau",
+      "questions": [
+        "Tìm sách phát triển bản thân, nhưng đừng giới thiệu Đắc Nhân Tâm.",
+        "Tôi cũng không thích kiểu truyền động lực chung chung, muốn có cách áp dụng cụ thể.",
+        "Thôi đổi sang truyện để thư giãn nhé, vẫn dưới 100 nghìn."
+      ]
+    },
+    {
+      "id": "08_nho_dieu_kien_sau_cau_chen",
+      "questions": [
+        "Tôi muốn tìm truyện cho bé 8 tuổi, dễ đọc, dưới 100 nghìn.",
+        "Cửa hàng tính phí giao hàng thế nào?",
+        "Quay lại những cuốn vừa rồi, cuốn nào hợp với bé nhất?"
+      ]
+    },
+    {
+      "id": "09_sach_theo_lop",
+      "questions": [
+        "Tôi muốn tìm sách toán cho học sinh lớp 7.",
+        "Có cuốn nào đúng lớp 7 không, hay những cuốn bạn đưa ra chỉ là sách tham khảo chung?",
+        "Nếu không có đúng lớp thì nói giúp tôi, đừng chọn sách tiểu học hay đại học để thay nhé."
+      ]
+    },
+    {
+      "id": "10_tra_hang_sach_loi",
+      "questions": [
+        "Tôi muốn trả cuốn sách vừa mua.",
+        "Sách bị thiếu mấy trang ở giữa.",
+        "Tôi nhận được khoảng 10 ngày rồi, giờ phải làm sao?"
+      ]
+    },
+    {
+      "id": "11_tra_hang_doi_y",
+      "questions": [
+        "Tôi mua một cuốn rồi nhưng đọc thấy không hợp, muốn trả.",
+        "Sách không bị lỗi gì, tôi chỉ không thích nội dung thôi.",
+        "Vậy tôi có được hoàn tiền không, và cần liên hệ ở đâu để hỏi?"
+      ]
+    },
+    {
+      "id": "12_phan_biet_gio_va_don",
+      "questions": [
+        "Tìm trong giỏ hàng giúp tôi cuốn tôi đã mua tuần trước.",
+        "À tôi đã thanh toán và nhận sách rồi, tôi muốn tìm lại đơn đó.",
+        "Tôi chưa đăng nhập, bạn có xem được đơn của tôi không?"
+      ]
+    }
+  ],
+  "results": [
+    {
+      "scenario": "01_mo_ho_nhu_cau",
+      "turn": 1,
+      "question": "Tôi muốn mua sách tặng một bạn nữ.",
+      "httpStatus": 200,
+      "elapsedMs": 312,
+      "answer": "Sở thích đọc khác nhau ở từng người nên mình chưa thể chọn chỉ từ giới tính, và cửa hàng chưa có thống kê sách được yêu thích theo nhóm này. Bạn đang tìm cho người thích đọc chủ đề gì — chẳng hạn tình cảm, khám phá hay học một kỹ năng?",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "status": "NEEDS_INPUT",
+        "tool": "respond"
+      },
+      "response": {
+        "answer": "Sở thích đọc khác nhau ở từng người nên mình chưa thể chọn chỉ từ giới tính, và cửa hàng chưa có thống kê sách được yêu thích theo nhóm này. Bạn đang tìm cho người thích đọc chủ đề gì — chẳng hạn tình cảm, khám phá hay học một kỹ năng?",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "40e9d6d0-b7b9-4452-b6b2-dcf1e2fef7ef",
+        "intent": "UNKNOWN",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "NEEDS_INPUT",
+          "tool": "respond"
+        }
+      }
+    },
+    {
+      "scenario": "01_mo_ho_nhu_cau",
+      "turn": 2,
+      "question": "Bạn ấy 22 tuổi, thích truyện nhẹ nhàng, không thích sách dạy thành công.",
+      "httpStatus": 200,
+      "elapsedMs": 5407,
+      "answer": "Mình chọn được 5 cuốn phù hợp để bạn cân nhắc: Các lựa chọn này đáp ứng điều kiện bắt buộc, nhưng hiện chưa có cuốn đáp ứng phần ưu tiên “truyện nhẹ nhàng”.\n\nMình chọn theo nội dung và thể loại; dữ liệu hiện chưa xác nhận mức đọc cho mọi cuốn, nên chưa thể bảo đảm tất cả đều dễ đọc hoặc nhẹ nhàng.\n\n**Sách đúng yêu cầu:**\n\n• “Mắt Biếc” — 85.500đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nChuyện tình day dứt của Ngạn dành cho Hà Lan từ làng Đo Đo đến phố thị. Một trong những tác phẩm lãng mạn được yêu thích nhất của Nguyễn Nhật Ánh.\n\n• “Hoàng Tử Bé” — 69.920đ · Antoine de Saint-Exupéry · Chưa có đánh giá\nCâu chuyện trong trẻo và sâu sắc về cậu hoàng tử nhỏ đến từ tiểu hành tinh B612. Tác phẩm văn học được yêu thích nhất nước Pháp, dành cho mọi lứa tuổi.\n\n• “Harry Potter Và Hòn Đá Phù Thủy” — 118.800đ · J.K. Rowling · Chưa có đánh giá\nKhởi đầu của loạt truyện phù thủy huyền thoại. Cậu bé Harry bước vào trường Hogwarts và khám phá thế giới phép thuật kỳ diệu. Hiện tượng xuất bản toàn cầu.\n\n• “Những Người Khốn Khổ” — 185.300đ · Victor Hugo · Chưa có đánh giá\nĐại tiểu thuyết về Jean Valjean và hành trình cứu rỗi giữa nước Pháp đầy biến động. Bản hùng ca bất hủ về lòng nhân ái, công lý và phẩm giá con người.\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nChú mèo máy Doraemon từ tương lai cùng những bảo bối thần kỳ và cậu bạn Nobita. Bộ truyện tranh tuổi thơ thân thương của bao thế hệ thiếu nhi.\n\nNgoài nội dung, nếu bạn muốn biết thêm về cách hành văn hay độ khó của từng cuốn, hãy cho mình biết nhé, vì hiện tại các dữ liệu đó chưa được xác thực cụ thể.",
+      "products": [
+        {
+          "id": 53,
+          "name": "Mắt Biếc",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 85500,
+          "oldPrice": 95000.0,
+          "discount": 10,
+          "quantity": 180,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254910/products/ytjtlnudjncbcb776ies.jpg"
+        },
+        {
+          "id": 37,
+          "name": "Hoàng Tử Bé",
+          "author": "Antoine de Saint-Exupéry",
+          "category": "Sách thiếu nhi",
+          "price": 69920,
+          "oldPrice": 76000.0,
+          "discount": 8,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+        },
+        {
+          "id": 52,
+          "name": "Harry Potter Và Hòn Đá Phù Thủy",
+          "author": "J.K. Rowling",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 118800,
+          "oldPrice": 135000.0,
+          "discount": 12,
+          "quantity": 200,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254644/products/o7nbnyebfglziwxbhzm4.jpg"
+        },
+        {
+          "id": 41,
+          "name": "Những Người Khốn Khổ",
+          "author": "Victor Hugo",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 185300,
+          "oldPrice": 218000.0,
+          "discount": 15,
+          "quantity": 85,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255531/products/yusyyulbk20nhvvtdun7.jpg"
+        },
+        {
+          "id": 51,
+          "name": "Doraemon - Tập 1",
+          "author": "Fujiko F. Fujio",
+          "category": "Sách thiếu nhi",
+          "price": 19800,
+          "oldPrice": 22000.0,
+          "discount": 10,
+          "quantity": 300,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "recommendBooks"
+      },
+      "response": {
+        "answer": "Mình chọn được 5 cuốn phù hợp để bạn cân nhắc: Các lựa chọn này đáp ứng điều kiện bắt buộc, nhưng hiện chưa có cuốn đáp ứng phần ưu tiên “truyện nhẹ nhàng”.\n\nMình chọn theo nội dung và thể loại; dữ liệu hiện chưa xác nhận mức đọc cho mọi cuốn, nên chưa thể bảo đảm tất cả đều dễ đọc hoặc nhẹ nhàng.\n\n**Sách đúng yêu cầu:**\n\n• “Mắt Biếc” — 85.500đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nChuyện tình day dứt của Ngạn dành cho Hà Lan từ làng Đo Đo đến phố thị. Một trong những tác phẩm lãng mạn được yêu thích nhất của Nguyễn Nhật Ánh.\n\n• “Hoàng Tử Bé” — 69.920đ · Antoine de Saint-Exupéry · Chưa có đánh giá\nCâu chuyện trong trẻo và sâu sắc về cậu hoàng tử nhỏ đến từ tiểu hành tinh B612. Tác phẩm văn học được yêu thích nhất nước Pháp, dành cho mọi lứa tuổi.\n\n• “Harry Potter Và Hòn Đá Phù Thủy” — 118.800đ · J.K. Rowling · Chưa có đánh giá\nKhởi đầu của loạt truyện phù thủy huyền thoại. Cậu bé Harry bước vào trường Hogwarts và khám phá thế giới phép thuật kỳ diệu. Hiện tượng xuất bản toàn cầu.\n\n• “Những Người Khốn Khổ” — 185.300đ · Victor Hugo · Chưa có đánh giá\nĐại tiểu thuyết về Jean Valjean và hành trình cứu rỗi giữa nước Pháp đầy biến động. Bản hùng ca bất hủ về lòng nhân ái, công lý và phẩm giá con người.\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nChú mèo máy Doraemon từ tương lai cùng những bảo bối thần kỳ và cậu bạn Nobita. Bộ truyện tranh tuổi thơ thân thương của bao thế hệ thiếu nhi.\n\nNgoài nội dung, nếu bạn muốn biết thêm về cách hành văn hay độ khó của từng cuốn, hãy cho mình biết nhé, vì hiện tại các dữ liệu đó chưa được xác thực cụ thể.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 53,
+            "name": "Mắt Biếc",
+            "author": "Nguyễn Nhật Ánh",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 85500,
+            "oldPrice": 95000.0,
+            "discount": 10,
+            "quantity": 180,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254910/products/ytjtlnudjncbcb776ies.jpg"
+          },
+          {
+            "id": 37,
+            "name": "Hoàng Tử Bé",
+            "author": "Antoine de Saint-Exupéry",
+            "category": "Sách thiếu nhi",
+            "price": 69920,
+            "oldPrice": 76000.0,
+            "discount": 8,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+          },
+          {
+            "id": 52,
+            "name": "Harry Potter Và Hòn Đá Phù Thủy",
+            "author": "J.K. Rowling",
+            "category": "Sách Truyện, tiểu thuyết",
+            "price": 118800,
+            "oldPrice": 135000.0,
+            "discount": 12,
+            "quantity": 200,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254644/products/o7nbnyebfglziwxbhzm4.jpg"
+          },
+          {
+            "id": 41,
+            "name": "Những Người Khốn Khổ",
+            "author": "Victor Hugo",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 185300,
+            "oldPrice": 218000.0,
+            "discount": 15,
+            "quantity": 85,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255531/products/yusyyulbk20nhvvtdun7.jpg"
+          },
+          {
+            "id": 51,
+            "name": "Doraemon - Tập 1",
+            "author": "Fujiko F. Fujio",
+            "category": "Sách thiếu nhi",
+            "price": 19800,
+            "oldPrice": 22000.0,
+            "discount": 10,
+            "quantity": 300,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "410f03ec-408c-4724-ba6a-a26c1af3e34c",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 53,
+            "route": "/product/53",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 53,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 37,
+            "route": "/product/37",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 37,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 52,
+            "route": "/product/52",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 52,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 41,
+            "route": "/product/41",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 41,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 51,
+            "route": "/product/51",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 51,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "recommendBooks"
+        }
+      }
+    },
+    {
+      "scenario": "01_mo_ho_nhu_cau",
+      "turn": 3,
+      "question": "Khoảng 150 nghìn trở xuống, bạn chọn giúp tôi 2 cuốn nhé.",
+      "httpStatus": 200,
+      "elapsedMs": 3562,
+      "answer": "Bạn muốn 2 cuốn; mình tìm được 2 cuốn đúng yêu cầu. Các lựa chọn này đáp ứng điều kiện bắt buộc, nhưng hiện chưa có cuốn đáp ứng phần ưu tiên “truyện nhẹ nhàng”.\n\nMình chọn theo nội dung và thể loại; dữ liệu hiện chưa xác nhận mức đọc cho mọi cuốn, nên chưa thể bảo đảm tất cả đều dễ đọc hoặc nhẹ nhàng.\n\n**Sách đúng yêu cầu:**\n\n• “Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam (Hiện Hành)” — 45.000đ · Quốc Hội Việt Nam · Chưa có đánh giá\nĐây là tài liệu pháp lý cơ bản, cung cấp cái nhìn tổng quan về hệ thống pháp luật quốc gia, phù hợp để tra cứu thông tin chính thống.\n\n• “Luật Doanh Nghiệp (Hiện Hành)” — 74.100đ · Quốc Hội Việt Nam · Chưa có đánh giá\nCuốn này tập trung vào các quy định về vận hành doanh nghiệp, hỗ trợ người đọc hiểu rõ các nguyên tắc pháp lý trong quản lý kinh doanh.",
+      "products": [
+        {
+          "id": 3,
+          "name": "Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam (Hiện Hành)",
+          "author": "Quốc Hội Việt Nam",
+          "category": "Sách Chính trị – pháp luật",
+          "price": 45000,
+          "oldPrice": 45000.0,
+          "discount": 0,
+          "quantity": 150,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320474/products/aifrungfs4soocyvpsnk.webp"
+        },
+        {
+          "id": 4,
+          "name": "Luật Doanh Nghiệp (Hiện Hành)",
+          "author": "Quốc Hội Việt Nam",
+          "category": "Sách Chính trị – pháp luật",
+          "price": 74100,
+          "oldPrice": 78000.0,
+          "discount": 5,
+          "quantity": 120,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320139/products/vbad4nshdikvyfrdaq0d.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "recommendBooks"
+      },
+      "response": {
+        "answer": "Bạn muốn 2 cuốn; mình tìm được 2 cuốn đúng yêu cầu. Các lựa chọn này đáp ứng điều kiện bắt buộc, nhưng hiện chưa có cuốn đáp ứng phần ưu tiên “truyện nhẹ nhàng”.\n\nMình chọn theo nội dung và thể loại; dữ liệu hiện chưa xác nhận mức đọc cho mọi cuốn, nên chưa thể bảo đảm tất cả đều dễ đọc hoặc nhẹ nhàng.\n\n**Sách đúng yêu cầu:**\n\n• “Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam (Hiện Hành)” — 45.000đ · Quốc Hội Việt Nam · Chưa có đánh giá\nĐây là tài liệu pháp lý cơ bản, cung cấp cái nhìn tổng quan về hệ thống pháp luật quốc gia, phù hợp để tra cứu thông tin chính thống.\n\n• “Luật Doanh Nghiệp (Hiện Hành)” — 74.100đ · Quốc Hội Việt Nam · Chưa có đánh giá\nCuốn này tập trung vào các quy định về vận hành doanh nghiệp, hỗ trợ người đọc hiểu rõ các nguyên tắc pháp lý trong quản lý kinh doanh.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 3,
+            "name": "Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam (Hiện Hành)",
+            "author": "Quốc Hội Việt Nam",
+            "category": "Sách Chính trị – pháp luật",
+            "price": 45000,
+            "oldPrice": 45000.0,
+            "discount": 0,
+            "quantity": 150,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781320474/products/aifrungfs4soocyvpsnk.webp"
+          },
+          {
+            "id": 4,
+            "name": "Luật Doanh Nghiệp (Hiện Hành)",
+            "author": "Quốc Hội Việt Nam",
+            "category": "Sách Chính trị – pháp luật",
+            "price": 74100,
+            "oldPrice": 78000.0,
+            "discount": 5,
+            "quantity": 120,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781320139/products/vbad4nshdikvyfrdaq0d.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "d9d58a5d-7284-4783-bd2e-d1eedad11560",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": 150000,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 3,
+            "route": "/product/3",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 3,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 4,
+            "route": "/product/4",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 4,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "recommendBooks"
+        }
+      }
+    },
+    {
+      "scenario": "02_tim_theo_y_nghia",
+      "turn": 1,
+      "question": "Dạo này tôi hay nghĩ quá nhiều, chuyện nhỏ cũng khiến tôi lo cả ngày. Có sách nào phù hợp không?",
+      "httpStatus": 200,
+      "elapsedMs": 2734,
+      "answer": "Việc thường xuyên suy nghĩ quá mức về những chuyện nhỏ dễ khiến tâm trí mệt mỏi; mình gợi ý một cuốn sách có thể hỗ trợ bạn cải thiện tình trạng này.\n\nMình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nSách cung cấp các phương pháp để đối diện với tình trạng lo âu, giúp bạn học cách buông bỏ những suy nghĩ vụn vặt và tìm lại sự bình tâm trong cuộc sống thường nhật.",
+      "products": [
+        {
+          "id": 32,
+          "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+          "author": "Dale Carnegie",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "recommendBooks"
+      },
+      "response": {
+        "answer": "Việc thường xuyên suy nghĩ quá mức về những chuyện nhỏ dễ khiến tâm trí mệt mỏi; mình gợi ý một cuốn sách có thể hỗ trợ bạn cải thiện tình trạng này.\n\nMình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nSách cung cấp các phương pháp để đối diện với tình trạng lo âu, giúp bạn học cách buông bỏ những suy nghĩ vụn vặt và tìm lại sự bình tâm trong cuộc sống thường nhật.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 32,
+            "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+            "author": "Dale Carnegie",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 90160,
+            "oldPrice": 98000.0,
+            "discount": 8,
+            "quantity": 130,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "94b98a4c-533e-4921-910c-a63fa0408b73",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 32,
+            "route": "/product/32",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 32,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "recommendBooks"
+        }
+      }
+    },
+    {
+      "scenario": "02_tim_theo_y_nghia",
+      "turn": 2,
+      "question": "Tôi muốn đọc dễ hiểu, không muốn kiểu giáo trình tâm lý.",
+      "httpStatus": 200,
+      "elapsedMs": 2344,
+      "answer": "Để tránh cách tiếp cận hàn lâm, bạn có thể tham khảo góc nhìn thực tiễn trong cuốn sách này để điều chỉnh thói quen suy nghĩ quá nhiều hiện tại.\n\nMình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nCuốn sách tập trung vào các phương pháp thiết thực giúp chuyển đổi trạng thái tâm lý thay vì đi sâu vào lý thuyết, phù hợp để bạn áp dụng trực tiếp vào việc kiểm soát những lo âu vụn vặt hàng ngày.\n\nNếu bạn muốn thử cách tiếp cận dựa trên rèn luyện thói quen thay vì thay đổi tư duy, mình có thể tìm thêm các lựa chọn khác cho bạn.",
+      "products": [
+        {
+          "id": 32,
+          "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+          "author": "Dale Carnegie",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      },
+      "response": {
+        "answer": "Để tránh cách tiếp cận hàn lâm, bạn có thể tham khảo góc nhìn thực tiễn trong cuốn sách này để điều chỉnh thói quen suy nghĩ quá nhiều hiện tại.\n\nMình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nCuốn sách tập trung vào các phương pháp thiết thực giúp chuyển đổi trạng thái tâm lý thay vì đi sâu vào lý thuyết, phù hợp để bạn áp dụng trực tiếp vào việc kiểm soát những lo âu vụn vặt hàng ngày.\n\nNếu bạn muốn thử cách tiếp cận dựa trên rèn luyện thói quen thay vì thay đổi tư duy, mình có thể tìm thêm các lựa chọn khác cho bạn.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 32,
+            "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+            "author": "Dale Carnegie",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 90160,
+            "oldPrice": 98000.0,
+            "discount": 8,
+            "quantity": 130,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "e123ce90-cc77-4a4b-87af-2986b3bb031e",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 32,
+            "route": "/product/32",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 32,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "searchProducts"
+        }
+      }
+    },
+    {
+      "scenario": "02_tim_theo_y_nghia",
+      "turn": 3,
+      "question": "Trong những cuốn đó, cuốn nào sát với điều tôi đang gặp nhất? Vì sao?",
+      "httpStatus": 200,
+      "elapsedMs": 1625,
+      "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Quẳng Gánh Lo Đi Và Vui Sống”\nCuốn này tập trung vào các phương pháp thiết thực để vượt qua lo âu, đúng với mong muốn tìm cách giải tỏa suy nghĩ quá mức về những chuyện nhỏ. Cách tiếp cận này hướng đến việc áp dụng hàng ngày, giúp bạn tránh được cảm giác nặng nề như khi đọc các giáo trình lý thuyết.",
+      "products": [
+        {
+          "id": 32,
+          "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+          "author": "Dale Carnegie",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Quẳng Gánh Lo Đi Và Vui Sống”\nCuốn này tập trung vào các phương pháp thiết thực để vượt qua lo âu, đúng với mong muốn tìm cách giải tỏa suy nghĩ quá mức về những chuyện nhỏ. Cách tiếp cận này hướng đến việc áp dụng hàng ngày, giúp bạn tránh được cảm giác nặng nề như khi đọc các giáo trình lý thuyết.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 32,
+            "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+            "author": "Dale Carnegie",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 90160,
+            "oldPrice": 98000.0,
+            "discount": 8,
+            "quantity": 130,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "a2f36013-0c1c-4bca-a925-d4b5bc8c6f27",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "03_het_sach_cung_chu_de",
+      "turn": 1,
+      "question": "Giới thiệu cho tôi tối đa 5 cuốn truyện trinh thám đang có.",
+      "httpStatus": 200,
+      "elapsedMs": 3828,
+      "answer": "Mình chọn được 2 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nSách xây dựng tình huống nhân vật chính phải đối mặt với thử thách cơ thể bị teo nhỏ trong khi vẫn nỗ lực giải quyết các vụ án phức tạp, phù hợp nếu bạn thích kết hợp giữa yếu tố kỳ ảo và phá án.\n\n• “Sherlock Holmes Toàn Tập - Tập 1” — 193.500đ · Arthur Conan Doyle · Chưa có đánh giá\nNội dung tập trung vào khả năng phân tích logic đỉnh cao của nhân vật chính qua các vụ án kinh điển, thích hợp nếu bạn ưu tiên trải nghiệm suy luận chặt chẽ.\n\nNếu bạn muốn tìm kiếm những vụ án có tính logic thuần túy hay thiên về hành động phá án, hãy cho mình biết thêm để mình lọc lại gợi ý nhé.",
+      "products": [
+        {
+          "id": 48,
+          "name": "Thám Tử Lừng Danh Conan - Tập 1",
+          "author": "Gosho Aoyama",
+          "category": "Sách thiếu nhi",
+          "price": 23750,
+          "oldPrice": 25000.0,
+          "discount": 5,
+          "quantity": 250,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+        },
+        {
+          "id": 26,
+          "name": "Sherlock Holmes Toàn Tập - Tập 1",
+          "author": "Arthur Conan Doyle",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 193500,
+          "oldPrice": 215000.0,
+          "discount": 10,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319589/products/ptjyfdchzgieobq2kuwg.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      },
+      "response": {
+        "answer": "Mình chọn được 2 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nSách xây dựng tình huống nhân vật chính phải đối mặt với thử thách cơ thể bị teo nhỏ trong khi vẫn nỗ lực giải quyết các vụ án phức tạp, phù hợp nếu bạn thích kết hợp giữa yếu tố kỳ ảo và phá án.\n\n• “Sherlock Holmes Toàn Tập - Tập 1” — 193.500đ · Arthur Conan Doyle · Chưa có đánh giá\nNội dung tập trung vào khả năng phân tích logic đỉnh cao của nhân vật chính qua các vụ án kinh điển, thích hợp nếu bạn ưu tiên trải nghiệm suy luận chặt chẽ.\n\nNếu bạn muốn tìm kiếm những vụ án có tính logic thuần túy hay thiên về hành động phá án, hãy cho mình biết thêm để mình lọc lại gợi ý nhé.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 48,
+            "name": "Thám Tử Lừng Danh Conan - Tập 1",
+            "author": "Gosho Aoyama",
+            "category": "Sách thiếu nhi",
+            "price": 23750,
+            "oldPrice": 25000.0,
+            "discount": 5,
+            "quantity": 250,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+          },
+          {
+            "id": 26,
+            "name": "Sherlock Holmes Toàn Tập - Tập 1",
+            "author": "Arthur Conan Doyle",
+            "category": "Sách Truyện, tiểu thuyết",
+            "price": 193500,
+            "oldPrice": 215000.0,
+            "discount": 10,
+            "quantity": 110,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319589/products/ptjyfdchzgieobq2kuwg.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "4da25251-f9eb-45e7-8d1a-5e6d66dcebba",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 48,
+            "route": "/product/48",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 48,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 26,
+            "route": "/product/26",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 26,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "searchProducts"
+        }
+      }
+    },
+    {
+      "scenario": "03_het_sach_cung_chu_de",
+      "turn": 2,
+      "question": "Còn cuốn nào khác cùng chủ đề không? Đừng lấy lại những cuốn vừa rồi.",
+      "httpStatus": 200,
+      "elapsedMs": 2141,
+      "answer": "Mình đã kiểm tra lại các sách đang bán và loại những cuốn đã giới thiệu. Hiện chưa có cuốn nào khác đúng chủ đề hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn.\n\nNếu bạn sẵn lòng thử một sắc thái mới, mình có thể mở rộng tìm kiếm sang các thể loại hồi hộp hoặc tâm lý tội phạm thay vì trinh thám đơn thuần.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      },
+      "response": {
+        "answer": "Mình đã kiểm tra lại các sách đang bán và loại những cuốn đã giới thiệu. Hiện chưa có cuốn nào khác đúng chủ đề hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn.\n\nNếu bạn sẵn lòng thử một sắc thái mới, mình có thể mở rộng tìm kiếm sang các thể loại hồi hộp hoặc tâm lý tội phạm thay vì trinh thám đơn thuần.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "3d5409ef-5a6d-43a9-ac64-f20b650e6dcf",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "searchProducts"
+        }
+      }
+    },
+    {
+      "scenario": "03_het_sach_cung_chu_de",
+      "turn": 3,
+      "question": "Nếu hết rồi thì có cuốn nào gần với sở thích này không? Nói rõ khác ở điểm nào nhé.",
+      "httpStatus": 200,
+      "elapsedMs": 2765,
+      "answer": "Mình đã kiểm tra lại các sách đang bán và loại những cuốn đã giới thiệu. Hiện chưa có cuốn nào khác đúng chủ đề hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn.\n\nNếu bạn muốn khám phá các thể loại này, hãy cho mình biết nhé.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      },
+      "response": {
+        "answer": "Mình đã kiểm tra lại các sách đang bán và loại những cuốn đã giới thiệu. Hiện chưa có cuốn nào khác đúng chủ đề hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn.\n\nNếu bạn muốn khám phá các thể loại này, hãy cho mình biết nhé.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "e1927cb3-419d-475e-89e7-0b8ca4fdad5c",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "searchProducts"
+        }
+      }
+    },
+    {
+      "scenario": "04_yeu_cau_6_cuon",
+      "turn": 1,
+      "question": "Tôi cần 6 cuốn sách về quản lý tiền cá nhân cho người mới đi làm.",
+      "httpStatus": 200,
+      "elapsedMs": 4281,
+      "answer": "Bạn muốn 6 cuốn; mình tìm được 0 cuốn đúng yêu cầu và thêm 2 cuốn có chủ đề hoặc nội dung gần với hướng đó. Tổng cộng có 2 lựa chọn; hiện chưa đủ 6 cuốn khác nhau trong các điều kiện này.\n\nMình chọn theo nội dung và thể loại; dữ liệu hiện chưa xác nhận mức đọc cho mọi cuốn, nên chưa thể bảo đảm tất cả đều dễ đọc hoặc nhẹ nhàng.\n\n**Gợi ý gần chủ đề — các cuốn này chỉ đáp ứng một phần nhu cầu ban đầu:**\n\n• “Nhà Đầu Tư Thông Minh” — 178.200đ · Benjamin Graham · Chưa có đánh giá\nCuốn sách hướng đến việc xây dựng tư duy kỷ luật và chiến lược đầu tư giá trị, giúp người đọc thiết lập nền tảng để gia tăng tài sản bền vững thay vì chỉ quản lý chi tiêu đơn thuần.\nNội dung nhắc đến “đầu tư”, gần với hướng đọc bạn đang tìm.\n\n• “Blockchain Fundamentals - Nền Tảng Công Nghệ Chuỗi Khối” — 133.400đ · Don Tapscott · Chưa có đánh giá\nNội dung tập trung vào các công nghệ tài chính mới và xu hướng chuỗi khối, cung cấp cái nhìn tổng quan về cách các công cụ này tác động đến hệ thống tài chính hiện đại.\nNội dung nhắc đến “tài chính”, gần với hướng đọc bạn đang tìm.",
+      "products": [
+        {
+          "id": 43,
+          "name": "Nhà Đầu Tư Thông Minh",
+          "author": "Benjamin Graham",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 178200,
+          "oldPrice": 198000.0,
+          "discount": 10,
+          "quantity": 100,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255428/products/uvnrlqxxeel4r1rf8dw7.webp"
+        },
+        {
+          "id": 18,
+          "name": "Blockchain Fundamentals - Nền Tảng Công Nghệ Chuỗi Khối",
+          "author": "Don Tapscott",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 133400,
+          "oldPrice": 145000.0,
+          "discount": 8,
+          "quantity": 95,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319781/products/ptjxp427gba0zja7ivmv.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "recommendBooks"
+      },
+      "response": {
+        "answer": "Bạn muốn 6 cuốn; mình tìm được 0 cuốn đúng yêu cầu và thêm 2 cuốn có chủ đề hoặc nội dung gần với hướng đó. Tổng cộng có 2 lựa chọn; hiện chưa đủ 6 cuốn khác nhau trong các điều kiện này.\n\nMình chọn theo nội dung và thể loại; dữ liệu hiện chưa xác nhận mức đọc cho mọi cuốn, nên chưa thể bảo đảm tất cả đều dễ đọc hoặc nhẹ nhàng.\n\n**Gợi ý gần chủ đề — các cuốn này chỉ đáp ứng một phần nhu cầu ban đầu:**\n\n• “Nhà Đầu Tư Thông Minh” — 178.200đ · Benjamin Graham · Chưa có đánh giá\nCuốn sách hướng đến việc xây dựng tư duy kỷ luật và chiến lược đầu tư giá trị, giúp người đọc thiết lập nền tảng để gia tăng tài sản bền vững thay vì chỉ quản lý chi tiêu đơn thuần.\nNội dung nhắc đến “đầu tư”, gần với hướng đọc bạn đang tìm.\n\n• “Blockchain Fundamentals - Nền Tảng Công Nghệ Chuỗi Khối” — 133.400đ · Don Tapscott · Chưa có đánh giá\nNội dung tập trung vào các công nghệ tài chính mới và xu hướng chuỗi khối, cung cấp cái nhìn tổng quan về cách các công cụ này tác động đến hệ thống tài chính hiện đại.\nNội dung nhắc đến “tài chính”, gần với hướng đọc bạn đang tìm.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 43,
+            "name": "Nhà Đầu Tư Thông Minh",
+            "author": "Benjamin Graham",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 178200,
+            "oldPrice": 198000.0,
+            "discount": 10,
+            "quantity": 100,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255428/products/uvnrlqxxeel4r1rf8dw7.webp"
+          },
+          {
+            "id": 18,
+            "name": "Blockchain Fundamentals - Nền Tảng Công Nghệ Chuỗi Khối",
+            "author": "Don Tapscott",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 133400,
+            "oldPrice": 145000.0,
+            "discount": 8,
+            "quantity": 95,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319781/products/ptjxp427gba0zja7ivmv.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "7d1c7d70-d50b-49af-977b-ddd5b06aa7eb",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 43,
+            "route": "/product/43",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 43,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 18,
+            "route": "/product/18",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 18,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "recommendBooks"
+        }
+      }
+    },
+    {
+      "scenario": "04_yeu_cau_6_cuon",
+      "turn": 2,
+      "question": "Trong số đó, cuốn nào đúng chủ đề, cuốn nào chỉ gần giống?",
+      "httpStatus": 200,
+      "elapsedMs": 78,
+      "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Nhà Đầu Tư Thông Minh”\nĐây là lựa chọn gần với yêu cầu, để bạn cân nhắc bổ sung. Nội dung nhắc đến “đầu tư”, gần với hướng đọc bạn đang tìm. Kinh thánh của đầu tư giá trị, cuốn sách gối đầu giường của Warren Buffett. Tư duy kỷ luật giúp bạn đầu tư an toàn và sinh lời bền vững.\n\n• “Blockchain Fundamentals - Nền Tảng Công Nghệ Chuỗi Khối”\nĐây là lựa chọn gần với yêu cầu, để bạn cân nhắc bổ sung. Nội dung nhắc đến “tài chính”, gần với hướng đọc bạn đang tìm. Khám phá cách blockchain định hình lại tài chính, kinh doanh và xã hội. Từ Bitcoin đến hợp đồng thông minh, một bức tranh toàn cảnh về cuộc cách mạng chuỗi khối.",
+      "products": [
+        {
+          "id": 43,
+          "name": "Nhà Đầu Tư Thông Minh",
+          "author": "Benjamin Graham",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 178200,
+          "oldPrice": 198000.0,
+          "discount": 10,
+          "quantity": 100,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255428/products/uvnrlqxxeel4r1rf8dw7.webp"
+        },
+        {
+          "id": 18,
+          "name": "Blockchain Fundamentals - Nền Tảng Công Nghệ Chuỗi Khối",
+          "author": "Don Tapscott",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 133400,
+          "oldPrice": 145000.0,
+          "discount": 8,
+          "quantity": 95,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319781/products/ptjxp427gba0zja7ivmv.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Nhà Đầu Tư Thông Minh”\nĐây là lựa chọn gần với yêu cầu, để bạn cân nhắc bổ sung. Nội dung nhắc đến “đầu tư”, gần với hướng đọc bạn đang tìm. Kinh thánh của đầu tư giá trị, cuốn sách gối đầu giường của Warren Buffett. Tư duy kỷ luật giúp bạn đầu tư an toàn và sinh lời bền vững.\n\n• “Blockchain Fundamentals - Nền Tảng Công Nghệ Chuỗi Khối”\nĐây là lựa chọn gần với yêu cầu, để bạn cân nhắc bổ sung. Nội dung nhắc đến “tài chính”, gần với hướng đọc bạn đang tìm. Khám phá cách blockchain định hình lại tài chính, kinh doanh và xã hội. Từ Bitcoin đến hợp đồng thông minh, một bức tranh toàn cảnh về cuộc cách mạng chuỗi khối.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 43,
+            "name": "Nhà Đầu Tư Thông Minh",
+            "author": "Benjamin Graham",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 178200,
+            "oldPrice": 198000.0,
+            "discount": 10,
+            "quantity": 100,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255428/products/uvnrlqxxeel4r1rf8dw7.webp"
+          },
+          {
+            "id": 18,
+            "name": "Blockchain Fundamentals - Nền Tảng Công Nghệ Chuỗi Khối",
+            "author": "Don Tapscott",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 133400,
+            "oldPrice": 145000.0,
+            "discount": 8,
+            "quantity": 95,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319781/products/ptjxp427gba0zja7ivmv.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "a1d88b1f-617b-4668-82f5-86ea42ff42c4",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "04_yeu_cau_6_cuon",
+      "turn": 3,
+      "question": "Vậy chỉ giữ những cuốn đúng yêu cầu thôi, không cần đủ 6.",
+      "httpStatus": 200,
+      "elapsedMs": 1625,
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Vì vậy mình chưa thể giới thiệu đủ 6 cuốn khác nhau.\n\nNếu bạn muốn thu hẹp phạm vi, chúng ta có thể thử tìm kiếm các tài liệu tập trung vào lập ngân sách hoặc tiết kiệm thay vì đầu tư hay công nghệ tài chính.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      },
+      "response": {
+        "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Vì vậy mình chưa thể giới thiệu đủ 6 cuốn khác nhau.\n\nNếu bạn muốn thu hẹp phạm vi, chúng ta có thể thử tìm kiếm các tài liệu tập trung vào lập ngân sách hoặc tiết kiệm thay vì đầu tư hay công nghệ tài chính.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "ab80ebba-78d5-4cbf-81d0-69d0a006a15e",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "searchProducts"
+        }
+      }
+    },
+    {
+      "scenario": "05_giai_thich_ca_danh_sach",
+      "turn": 1,
+      "question": "Gợi ý 3 cuốn văn học phù hợp cho người ít đọc sách.",
+      "httpStatus": 200,
+      "elapsedMs": 4172,
+      "answer": "Để bắt đầu hành trình làm quen với văn học, bạn có thể cân nhắc các tác phẩm kinh điển dưới đây. Các tựa sách này phản ánh những mảnh đời cụ thể, giúp bạn dễ hình dung về bối cảnh văn hóa Việt Nam.\n\nBạn muốn 3 cuốn; mình tìm được 3 cuốn đúng yêu cầu.\n\nMình chọn theo nội dung và thể loại; dữ liệu hiện chưa xác nhận mức đọc cho mọi cuốn, nên chưa thể bảo đảm tất cả đều dễ đọc hoặc nhẹ nhàng.\n\n**Sách đúng yêu cầu:**\n\n• “Truyện Kiều” — 64.600đ · Nguyễn Du · Chưa có đánh giá\nTác phẩm sử dụng thể thơ lục bát truyền thống, giúp bạn tiếp cận văn học kinh điển thông qua câu chuyện giàu cảm xúc về cuộc đời nhân vật chính.\n\n• “Tắt Đèn” — 55.200đ · Ngô Tất Tố · Chưa có đánh giá\nBức tranh chân thực về số phận người nông dân dưới ách sưu thuế qua hình tượng chị Dậu. Một bản án đanh thép với xã hội thực dân phong kiến.\n\n• “Chí Phèo” — 49.500đ · Nam Cao · Chưa có đánh giá\nVới hình thức là truyện ngắn, nội dung cô đọng và trực diện về bi kịch cá nhân, đây là lựa chọn giúp bạn bắt đầu làm quen với văn học hiện thực.\n\nNếu bạn muốn thử sức với các tác phẩm dài hay ngắn hơn, hãy cho mình biết nhé. Bạn có thể bắt đầu từ truyện ngắn để cảm thấy ít áp lực hơn khi tập đọc.",
+      "products": [
+        {
+          "id": 10,
+          "name": "Truyện Kiều",
+          "author": "Nguyễn Du",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 64600,
+          "oldPrice": 68000.0,
+          "discount": 5,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320037/products/tcsofukigsxxa4o1fb2k.webp"
+        },
+        {
+          "id": 40,
+          "name": "Tắt Đèn",
+          "author": "Ngô Tất Tố",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 55200,
+          "oldPrice": 60000.0,
+          "discount": 8,
+          "quantity": 95,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255547/products/qlas6inf9k7gnsak8r8d.webp"
+        },
+        {
+          "id": 39,
+          "name": "Chí Phèo",
+          "author": "Nam Cao",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 49500,
+          "oldPrice": 55000.0,
+          "discount": 10,
+          "quantity": 120,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254605/products/tjgtuub4otjky9gm7c6q.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "recommendBooks"
+      },
+      "response": {
+        "answer": "Để bắt đầu hành trình làm quen với văn học, bạn có thể cân nhắc các tác phẩm kinh điển dưới đây. Các tựa sách này phản ánh những mảnh đời cụ thể, giúp bạn dễ hình dung về bối cảnh văn hóa Việt Nam.\n\nBạn muốn 3 cuốn; mình tìm được 3 cuốn đúng yêu cầu.\n\nMình chọn theo nội dung và thể loại; dữ liệu hiện chưa xác nhận mức đọc cho mọi cuốn, nên chưa thể bảo đảm tất cả đều dễ đọc hoặc nhẹ nhàng.\n\n**Sách đúng yêu cầu:**\n\n• “Truyện Kiều” — 64.600đ · Nguyễn Du · Chưa có đánh giá\nTác phẩm sử dụng thể thơ lục bát truyền thống, giúp bạn tiếp cận văn học kinh điển thông qua câu chuyện giàu cảm xúc về cuộc đời nhân vật chính.\n\n• “Tắt Đèn” — 55.200đ · Ngô Tất Tố · Chưa có đánh giá\nBức tranh chân thực về số phận người nông dân dưới ách sưu thuế qua hình tượng chị Dậu. Một bản án đanh thép với xã hội thực dân phong kiến.\n\n• “Chí Phèo” — 49.500đ · Nam Cao · Chưa có đánh giá\nVới hình thức là truyện ngắn, nội dung cô đọng và trực diện về bi kịch cá nhân, đây là lựa chọn giúp bạn bắt đầu làm quen với văn học hiện thực.\n\nNếu bạn muốn thử sức với các tác phẩm dài hay ngắn hơn, hãy cho mình biết nhé. Bạn có thể bắt đầu từ truyện ngắn để cảm thấy ít áp lực hơn khi tập đọc.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 10,
+            "name": "Truyện Kiều",
+            "author": "Nguyễn Du",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 64600,
+            "oldPrice": 68000.0,
+            "discount": 5,
+            "quantity": 130,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781320037/products/tcsofukigsxxa4o1fb2k.webp"
+          },
+          {
+            "id": 40,
+            "name": "Tắt Đèn",
+            "author": "Ngô Tất Tố",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 55200,
+            "oldPrice": 60000.0,
+            "discount": 8,
+            "quantity": 95,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255547/products/qlas6inf9k7gnsak8r8d.webp"
+          },
+          {
+            "id": 39,
+            "name": "Chí Phèo",
+            "author": "Nam Cao",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 49500,
+            "oldPrice": 55000.0,
+            "discount": 10,
+            "quantity": 120,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254605/products/tjgtuub4otjky9gm7c6q.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "56849ddf-3d9b-4f6f-bc75-b41df96dfea8",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 10,
+            "route": "/product/10",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 10,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 40,
+            "route": "/product/40",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 40,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 39,
+            "route": "/product/39",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 39,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "recommendBooks"
+        }
+      }
+    },
+    {
+      "scenario": "05_giai_thich_ca_danh_sach",
+      "turn": 2,
+      "question": "Nói kỹ hơn về cuốn thứ hai.",
+      "httpStatus": 200,
+      "elapsedMs": 4906,
+      "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Tắt Đèn”\nTác phẩm khắc họa trực diện hoàn cảnh ngặt nghèo của người nông dân thông qua nhân vật chính. Đây là lựa chọn phù hợp nếu bạn muốn tìm hiểu về hiện thực xã hội qua một câu chuyện có tính phê phán mạnh mẽ.",
+      "products": [
+        {
+          "id": 40,
+          "name": "Tắt Đèn",
+          "author": "Ngô Tất Tố",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 55200,
+          "oldPrice": 60000.0,
+          "discount": 8,
+          "quantity": 95,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255547/products/qlas6inf9k7gnsak8r8d.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Tắt Đèn”\nTác phẩm khắc họa trực diện hoàn cảnh ngặt nghèo của người nông dân thông qua nhân vật chính. Đây là lựa chọn phù hợp nếu bạn muốn tìm hiểu về hiện thực xã hội qua một câu chuyện có tính phê phán mạnh mẽ.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 40,
+            "name": "Tắt Đèn",
+            "author": "Ngô Tất Tố",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 55200,
+            "oldPrice": 60000.0,
+            "discount": 8,
+            "quantity": 95,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255547/products/qlas6inf9k7gnsak8r8d.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "195978c2-13c0-448b-a947-47d612789b9e",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "05_giai_thich_ca_danh_sach",
+      "turn": 3,
+      "question": "Tại sao bạn lại chọn cả 3 cuốn này cho tôi?",
+      "httpStatus": 200,
+      "elapsedMs": 2250,
+      "answer": "Mình chọn ba tác phẩm này dựa trên tính đại diện cho dòng văn học Việt Nam, giúp bạn tiếp cận từ các hình thức khác nhau.\n\n• “Truyện Kiều”\nSử dụng thể thơ lục bát gần gũi, tác phẩm giúp bạn làm quen với văn học cổ điển qua câu chuyện đời người đầy cảm xúc, phù hợp nếu bạn muốn bắt đầu với văn vần truyền thống.\n\n• “Tắt Đèn”\nCuốn sách khắc họa hoàn cảnh ngặt nghèo của người nông dân một cách trực diện. Đây là lựa chọn giúp bạn hiểu về hiện thực xã hội xưa qua một câu chuyện có tính phê phán mạnh mẽ.\n\n• “Chí Phèo”\nVới hình thức truyện ngắn, nội dung cô đọng và trực diện về bi kịch cá nhân, đây là lựa chọn giúp người mới bắt đầu làm quen với văn học hiện thực mà không bị áp lực bởi độ dài.",
+      "products": [
+        {
+          "id": 10,
+          "name": "Truyện Kiều",
+          "author": "Nguyễn Du",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 64600,
+          "oldPrice": 68000.0,
+          "discount": 5,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320037/products/tcsofukigsxxa4o1fb2k.webp"
+        },
+        {
+          "id": 40,
+          "name": "Tắt Đèn",
+          "author": "Ngô Tất Tố",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 55200,
+          "oldPrice": 60000.0,
+          "discount": 8,
+          "quantity": 95,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255547/products/qlas6inf9k7gnsak8r8d.webp"
+        },
+        {
+          "id": 39,
+          "name": "Chí Phèo",
+          "author": "Nam Cao",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 49500,
+          "oldPrice": 55000.0,
+          "discount": 10,
+          "quantity": 120,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254605/products/tjgtuub4otjky9gm7c6q.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Mình chọn ba tác phẩm này dựa trên tính đại diện cho dòng văn học Việt Nam, giúp bạn tiếp cận từ các hình thức khác nhau.\n\n• “Truyện Kiều”\nSử dụng thể thơ lục bát gần gũi, tác phẩm giúp bạn làm quen với văn học cổ điển qua câu chuyện đời người đầy cảm xúc, phù hợp nếu bạn muốn bắt đầu với văn vần truyền thống.\n\n• “Tắt Đèn”\nCuốn sách khắc họa hoàn cảnh ngặt nghèo của người nông dân một cách trực diện. Đây là lựa chọn giúp bạn hiểu về hiện thực xã hội xưa qua một câu chuyện có tính phê phán mạnh mẽ.\n\n• “Chí Phèo”\nVới hình thức truyện ngắn, nội dung cô đọng và trực diện về bi kịch cá nhân, đây là lựa chọn giúp người mới bắt đầu làm quen với văn học hiện thực mà không bị áp lực bởi độ dài.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 10,
+            "name": "Truyện Kiều",
+            "author": "Nguyễn Du",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 64600,
+            "oldPrice": 68000.0,
+            "discount": 5,
+            "quantity": 130,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781320037/products/tcsofukigsxxa4o1fb2k.webp"
+          },
+          {
+            "id": 40,
+            "name": "Tắt Đèn",
+            "author": "Ngô Tất Tố",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 55200,
+            "oldPrice": 60000.0,
+            "discount": 8,
+            "quantity": 95,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255547/products/qlas6inf9k7gnsak8r8d.webp"
+          },
+          {
+            "id": 39,
+            "name": "Chí Phèo",
+            "author": "Nam Cao",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 49500,
+            "oldPrice": 55000.0,
+            "discount": 10,
+            "quantity": 120,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254605/products/tjgtuub4otjky9gm7c6q.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "db827926-8364-45b2-9b2e-886ac67d8ee5",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "06_hoi_sau_hon",
+      "turn": 1,
+      "question": "Gợi ý một cuốn giúp tôi giao tiếp tốt hơn.",
+      "httpStatus": 200,
+      "elapsedMs": 3641,
+      "answer": "Để cải thiện kỹ năng giao tiếp, mình tìm thấy một lựa chọn tập trung vào nghệ thuật kết nối và gây dựng mối quan hệ.\n\nBạn muốn 1 cuốn; mình tìm được 1 cuốn đúng yêu cầu.\n\n**Sách đúng yêu cầu:**\n\n• “Đắc Nhân Tâm” — 70.520đ · Dale Carnegie · Chưa có đánh giá\nCuốn này tập trung vào các nguyên tắc cốt lõi trong đối nhân xử thế, giúp bạn nắm bắt phương pháp ứng xử để xây dựng mối quan hệ hiệu quả hơn trong thực tế.",
+      "products": [
+        {
+          "id": 57,
+          "name": "Đắc Nhân Tâm",
+          "author": "Dale Carnegie",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 70520,
+          "oldPrice": 86000.0,
+          "discount": 18,
+          "quantity": 220,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252580/products/lo4gmiaypwfzes99fouo.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "recommendBooks"
+      },
+      "response": {
+        "answer": "Để cải thiện kỹ năng giao tiếp, mình tìm thấy một lựa chọn tập trung vào nghệ thuật kết nối và gây dựng mối quan hệ.\n\nBạn muốn 1 cuốn; mình tìm được 1 cuốn đúng yêu cầu.\n\n**Sách đúng yêu cầu:**\n\n• “Đắc Nhân Tâm” — 70.520đ · Dale Carnegie · Chưa có đánh giá\nCuốn này tập trung vào các nguyên tắc cốt lõi trong đối nhân xử thế, giúp bạn nắm bắt phương pháp ứng xử để xây dựng mối quan hệ hiệu quả hơn trong thực tế.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 57,
+            "name": "Đắc Nhân Tâm",
+            "author": "Dale Carnegie",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 70520,
+            "oldPrice": 86000.0,
+            "discount": 18,
+            "quantity": 220,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781252580/products/lo4gmiaypwfzes99fouo.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "25eecd6f-77d5-4973-a85f-d9cebf721c91",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 57,
+            "route": "/product/57",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 57,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "recommendBooks"
+        }
+      }
+    },
+    {
+      "scenario": "06_hoi_sau_hon",
+      "turn": 2,
+      "question": "Vì sao cuốn đó phù hợp với tôi?",
+      "httpStatus": 200,
+      "elapsedMs": 1531,
+      "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Đắc Nhân Tâm”\nNội dung cuốn sách tập trung vào nghệ thuật đối nhân xử thế, trực tiếp cung cấp các phương pháp để bạn kết nối và gây dựng mối quan hệ. Điều này hỗ trợ mục tiêu giao tiếp hiệu quả hơn của bạn thông qua việc áp dụng các nguyên tắc ứng xử cụ thể trong thực tế.",
+      "products": [
+        {
+          "id": 57,
+          "name": "Đắc Nhân Tâm",
+          "author": "Dale Carnegie",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 70520,
+          "oldPrice": 86000.0,
+          "discount": 18,
+          "quantity": 220,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252580/products/lo4gmiaypwfzes99fouo.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Đắc Nhân Tâm”\nNội dung cuốn sách tập trung vào nghệ thuật đối nhân xử thế, trực tiếp cung cấp các phương pháp để bạn kết nối và gây dựng mối quan hệ. Điều này hỗ trợ mục tiêu giao tiếp hiệu quả hơn của bạn thông qua việc áp dụng các nguyên tắc ứng xử cụ thể trong thực tế.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 57,
+            "name": "Đắc Nhân Tâm",
+            "author": "Dale Carnegie",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 70520,
+            "oldPrice": 86000.0,
+            "discount": 18,
+            "quantity": 220,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781252580/products/lo4gmiaypwfzes99fouo.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "77929b62-5335-425f-bad6-61ccfecd88fc",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "06_hoi_sau_hon",
+      "turn": 3,
+      "question": "Bạn nói kỹ hơn được không? Tôi muốn hiểu nội dung nào có thể giúp mình, chứ không chỉ nghe nói cuốn này hay.",
+      "httpStatus": 200,
+      "elapsedMs": 5860,
+      "answer": "Để bạn cân nhắc kỹ hơn, mình đi thêm vào nội dung và đối tượng đọc đã được xác nhận:\n\n• “Đắc Nhân Tâm”\nNội dung này hướng đến việc ứng dụng các nguyên tắc vào thực tế để gây dựng thiện cảm và sự kết nối. Nếu bạn muốn cải thiện giao tiếp bằng cách hiểu tâm lý người đối diện để đạt hiệu quả cao hơn, đây là nền tảng đáng cân nhắc.",
+      "products": [
+        {
+          "id": 57,
+          "name": "Đắc Nhân Tâm",
+          "author": "Dale Carnegie",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 70520,
+          "oldPrice": 86000.0,
+          "discount": 18,
+          "quantity": 220,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252580/products/lo4gmiaypwfzes99fouo.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Để bạn cân nhắc kỹ hơn, mình đi thêm vào nội dung và đối tượng đọc đã được xác nhận:\n\n• “Đắc Nhân Tâm”\nNội dung này hướng đến việc ứng dụng các nguyên tắc vào thực tế để gây dựng thiện cảm và sự kết nối. Nếu bạn muốn cải thiện giao tiếp bằng cách hiểu tâm lý người đối diện để đạt hiệu quả cao hơn, đây là nền tảng đáng cân nhắc.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 57,
+            "name": "Đắc Nhân Tâm",
+            "author": "Dale Carnegie",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 70520,
+            "oldPrice": 86000.0,
+            "discount": 18,
+            "quantity": 220,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781252580/products/lo4gmiaypwfzes99fouo.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "82e399c8-c3dd-4e1e-9e0e-893d2a4724c3",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "07_phu_dinh_va_doi_yeu_cau",
+      "turn": 1,
+      "question": "Tìm sách phát triển bản thân, nhưng đừng giới thiệu Đắc Nhân Tâm.",
+      "httpStatus": 200,
+      "elapsedMs": 3859,
+      "answer": "Để hỗ trợ bạn phát triển bản thân theo hướng mới, mình có hai lựa chọn tập trung vào khai thác nội lực và điều chỉnh tư duy.\n\nMình chọn được 2 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Sức Mạnh Tiềm Thức” — 99.000đ · Joseph Murphy · Chưa có đánh giá\nCuốn này hướng dẫn cách vận dụng tiềm thức để tạo ra những thay đổi tích cực, giúp bạn làm chủ tư duy thay vì dựa vào các kỹ năng giao tiếp thông thường.\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nNội dung tập trung vào kỹ năng quản trị cảm xúc và giải tỏa căng thẳng, rất hữu ích nếu bạn đang tìm cách cải thiện sự ổn định tinh thần trong công việc.\n\nNếu bạn ưu tiên phát triển khả năng kiểm soát cảm xúc, hãy cân nhắc chọn cuốn thứ hai, hoặc nếu muốn tập trung vào tiềm năng cá nhân, cuốn đầu tiên sẽ phù hợp hơn.",
+      "products": [
+        {
+          "id": 31,
+          "name": "Sức Mạnh Tiềm Thức",
+          "author": "Joseph Murphy",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 99000,
+          "oldPrice": 110000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1686548250/products/mn4damiiyjtm4pbeslxu.jpg"
+        },
+        {
+          "id": 32,
+          "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+          "author": "Dale Carnegie",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      },
+      "response": {
+        "answer": "Để hỗ trợ bạn phát triển bản thân theo hướng mới, mình có hai lựa chọn tập trung vào khai thác nội lực và điều chỉnh tư duy.\n\nMình chọn được 2 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Sức Mạnh Tiềm Thức” — 99.000đ · Joseph Murphy · Chưa có đánh giá\nCuốn này hướng dẫn cách vận dụng tiềm thức để tạo ra những thay đổi tích cực, giúp bạn làm chủ tư duy thay vì dựa vào các kỹ năng giao tiếp thông thường.\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nNội dung tập trung vào kỹ năng quản trị cảm xúc và giải tỏa căng thẳng, rất hữu ích nếu bạn đang tìm cách cải thiện sự ổn định tinh thần trong công việc.\n\nNếu bạn ưu tiên phát triển khả năng kiểm soát cảm xúc, hãy cân nhắc chọn cuốn thứ hai, hoặc nếu muốn tập trung vào tiềm năng cá nhân, cuốn đầu tiên sẽ phù hợp hơn.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 31,
+            "name": "Sức Mạnh Tiềm Thức",
+            "author": "Joseph Murphy",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 99000,
+            "oldPrice": 110000.0,
+            "discount": 10,
+            "quantity": 140,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1686548250/products/mn4damiiyjtm4pbeslxu.jpg"
+          },
+          {
+            "id": 32,
+            "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+            "author": "Dale Carnegie",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 90160,
+            "oldPrice": 98000.0,
+            "discount": 8,
+            "quantity": 130,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "8554ec2e-51a5-4a12-9457-ad0099223a92",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 31,
+            "route": "/product/31",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 31,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 32,
+            "route": "/product/32",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 32,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "searchProducts"
+        }
+      }
+    },
+    {
+      "scenario": "07_phu_dinh_va_doi_yeu_cau",
+      "turn": 2,
+      "question": "Tôi cũng không thích kiểu truyền động lực chung chung, muốn có cách áp dụng cụ thể.",
+      "httpStatus": 200,
+      "elapsedMs": 2297,
+      "answer": "Nếu bạn ưu tiên tính ứng dụng thực tế để giải quyết các vấn đề cụ thể thay vì chỉ tiếp nhận lý thuyết, mình gợi ý hướng tiếp cận sau:\n\nMình chọn được 2 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Sức Mạnh Tiềm Thức” — 99.000đ · Joseph Murphy · Chưa có đánh giá\nCuốn này tập trung vào kỹ thuật vận dụng tiềm thức, phù hợp nếu bạn muốn tìm một cơ chế thay đổi từ nội tại thay vì chỉ nghe những lời khuyên truyền cảm hứng đơn thuần.\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nSách đi sâu vào các phương pháp thiết thực để quản lý lo âu, cung cấp các bước giải quyết tình huống cụ thể trong cuộc sống thay vì các lý thuyết chung chung.\n\nNếu bạn muốn biết chi tiết hơn về một phương pháp cụ thể nào đó trong hai cuốn này, mình có thể tìm thêm thông tin để bạn cân nhắc kỹ hơn.",
+      "products": [
+        {
+          "id": 31,
+          "name": "Sức Mạnh Tiềm Thức",
+          "author": "Joseph Murphy",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 99000,
+          "oldPrice": 110000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1686548250/products/mn4damiiyjtm4pbeslxu.jpg"
+        },
+        {
+          "id": 32,
+          "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+          "author": "Dale Carnegie",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      },
+      "response": {
+        "answer": "Nếu bạn ưu tiên tính ứng dụng thực tế để giải quyết các vấn đề cụ thể thay vì chỉ tiếp nhận lý thuyết, mình gợi ý hướng tiếp cận sau:\n\nMình chọn được 2 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Sức Mạnh Tiềm Thức” — 99.000đ · Joseph Murphy · Chưa có đánh giá\nCuốn này tập trung vào kỹ thuật vận dụng tiềm thức, phù hợp nếu bạn muốn tìm một cơ chế thay đổi từ nội tại thay vì chỉ nghe những lời khuyên truyền cảm hứng đơn thuần.\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nSách đi sâu vào các phương pháp thiết thực để quản lý lo âu, cung cấp các bước giải quyết tình huống cụ thể trong cuộc sống thay vì các lý thuyết chung chung.\n\nNếu bạn muốn biết chi tiết hơn về một phương pháp cụ thể nào đó trong hai cuốn này, mình có thể tìm thêm thông tin để bạn cân nhắc kỹ hơn.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 31,
+            "name": "Sức Mạnh Tiềm Thức",
+            "author": "Joseph Murphy",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 99000,
+            "oldPrice": 110000.0,
+            "discount": 10,
+            "quantity": 140,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1686548250/products/mn4damiiyjtm4pbeslxu.jpg"
+          },
+          {
+            "id": 32,
+            "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+            "author": "Dale Carnegie",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 90160,
+            "oldPrice": 98000.0,
+            "discount": 8,
+            "quantity": 130,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "899ebb38-af21-4c5c-b61d-9103de6bb4cf",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 31,
+            "route": "/product/31",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 31,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 32,
+            "route": "/product/32",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 32,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "searchProducts"
+        }
+      }
+    },
+    {
+      "scenario": "07_phu_dinh_va_doi_yeu_cau",
+      "turn": 3,
+      "question": "Thôi đổi sang truyện để thư giãn nhé, vẫn dưới 100 nghìn.",
+      "httpStatus": 200,
+      "elapsedMs": 3859,
+      "answer": "Mình chọn được 2 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Sức Mạnh Tiềm Thức” — 99.000đ · Joseph Murphy · Chưa có đánh giá\nKhám phá nguồn sức mạnh vô tận ẩn trong tiềm thức và cách khai mở nó để thay đổi cuộc đời. Một trong những cuốn sách phát triển bản thân có ảnh hưởng nhất.\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nNội dung cung cấp các phương pháp để quản lý nỗi lo âu, giúp bạn thiết lập trạng thái tinh thần bình an thay vì cảm giác căng thẳng thường thấy.",
+      "products": [
+        {
+          "id": 31,
+          "name": "Sức Mạnh Tiềm Thức",
+          "author": "Joseph Murphy",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 99000,
+          "oldPrice": 110000.0,
+          "discount": 10,
+          "quantity": 140,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1686548250/products/mn4damiiyjtm4pbeslxu.jpg"
+        },
+        {
+          "id": 32,
+          "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+          "author": "Dale Carnegie",
+          "category": "Sách Tâm lý, tâm linh, tôn giáo",
+          "price": 90160,
+          "oldPrice": 98000.0,
+          "discount": 8,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      },
+      "response": {
+        "answer": "Mình chọn được 2 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Sức Mạnh Tiềm Thức” — 99.000đ · Joseph Murphy · Chưa có đánh giá\nKhám phá nguồn sức mạnh vô tận ẩn trong tiềm thức và cách khai mở nó để thay đổi cuộc đời. Một trong những cuốn sách phát triển bản thân có ảnh hưởng nhất.\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nNội dung cung cấp các phương pháp để quản lý nỗi lo âu, giúp bạn thiết lập trạng thái tinh thần bình an thay vì cảm giác căng thẳng thường thấy.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 31,
+            "name": "Sức Mạnh Tiềm Thức",
+            "author": "Joseph Murphy",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 99000,
+            "oldPrice": 110000.0,
+            "discount": 10,
+            "quantity": 140,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1686548250/products/mn4damiiyjtm4pbeslxu.jpg"
+          },
+          {
+            "id": 32,
+            "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+            "author": "Dale Carnegie",
+            "category": "Sách Tâm lý, tâm linh, tôn giáo",
+            "price": 90160,
+            "oldPrice": 98000.0,
+            "discount": 8,
+            "quantity": 130,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "5c7da3e3-6ad6-4864-ae5e-2d1d6bfbb06f",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": 100000,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 31,
+            "route": "/product/31",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 31,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 32,
+            "route": "/product/32",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 32,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "searchProducts"
+        }
+      }
+    },
+    {
+      "scenario": "08_nho_dieu_kien_sau_cau_chen",
+      "turn": 1,
+      "question": "Tôi muốn tìm truyện cho bé 8 tuổi, dễ đọc, dưới 100 nghìn.",
+      "httpStatus": 200,
+      "elapsedMs": 9484,
+      "answer": "Mình chọn được 5 cuốn phù hợp để bạn cân nhắc:\n\nMình chọn theo nội dung và thể loại; dữ liệu hiện chưa xác nhận mức đọc cho mọi cuốn, nên chưa thể bảo đảm tất cả đều dễ đọc hoặc nhẹ nhàng.\n\n**Sách đúng yêu cầu:**\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nChú mèo máy Doraemon từ tương lai cùng những bảo bối thần kỳ và cậu bạn Nobita. Bộ truyện tranh tuổi thơ thân thương của bao thế hệ thiếu nhi.\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.\n\n• “Hoàng Tử Bé” — 69.920đ · Antoine de Saint-Exupéry · Chưa có đánh giá\nCâu chuyện trong trẻo và sâu sắc về cậu hoàng tử nhỏ đến từ tiểu hành tinh B612. Tác phẩm văn học được yêu thích nhất nước Pháp, dành cho mọi lứa tuổi.\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nCuộc phiêu lưu của chú Dế Mèn qua thế giới loài vật — bài học về lòng dũng cảm, tình bạn và khát vọng. Tác phẩm gối đầu giường của bao thế hệ thiếu nhi Việt Nam.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ” — 71.760đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nTấm vé đưa người đọc trở về thế giới hồn nhiên của tuổi thơ với bao trò nghịch ngợm đáng yêu. Cuốn sách gối đầu giường của cả trẻ em và người lớn.\n\nNếu bạn muốn bé bắt đầu với các hình ảnh trực quan, các bộ truyện tranh sẽ là khởi đầu tốt, còn các tác phẩm văn học sẽ phù hợp nếu bạn muốn cùng bé đọc mỗi tối.",
+      "products": [
+        {
+          "id": 51,
+          "name": "Doraemon - Tập 1",
+          "author": "Fujiko F. Fujio",
+          "category": "Sách thiếu nhi",
+          "price": 19800,
+          "oldPrice": 22000.0,
+          "discount": 10,
+          "quantity": 300,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+        },
+        {
+          "id": 48,
+          "name": "Thám Tử Lừng Danh Conan - Tập 1",
+          "author": "Gosho Aoyama",
+          "category": "Sách thiếu nhi",
+          "price": 23750,
+          "oldPrice": 25000.0,
+          "discount": 5,
+          "quantity": 250,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+        },
+        {
+          "id": 37,
+          "name": "Hoàng Tử Bé",
+          "author": "Antoine de Saint-Exupéry",
+          "category": "Sách thiếu nhi",
+          "price": 69920,
+          "oldPrice": 76000.0,
+          "discount": 8,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+        },
+        {
+          "id": 13,
+          "name": "Dế Mèn Phiêu Lưu Ký",
+          "author": "Tô Hoài",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 50400,
+          "oldPrice": 56000.0,
+          "discount": 10,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+        },
+        {
+          "id": 50,
+          "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 71760,
+          "oldPrice": 78000.0,
+          "discount": 8,
+          "quantity": 150,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "recommendBooks"
+      },
+      "response": {
+        "answer": "Mình chọn được 5 cuốn phù hợp để bạn cân nhắc:\n\nMình chọn theo nội dung và thể loại; dữ liệu hiện chưa xác nhận mức đọc cho mọi cuốn, nên chưa thể bảo đảm tất cả đều dễ đọc hoặc nhẹ nhàng.\n\n**Sách đúng yêu cầu:**\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nChú mèo máy Doraemon từ tương lai cùng những bảo bối thần kỳ và cậu bạn Nobita. Bộ truyện tranh tuổi thơ thân thương của bao thế hệ thiếu nhi.\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.\n\n• “Hoàng Tử Bé” — 69.920đ · Antoine de Saint-Exupéry · Chưa có đánh giá\nCâu chuyện trong trẻo và sâu sắc về cậu hoàng tử nhỏ đến từ tiểu hành tinh B612. Tác phẩm văn học được yêu thích nhất nước Pháp, dành cho mọi lứa tuổi.\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nCuộc phiêu lưu của chú Dế Mèn qua thế giới loài vật — bài học về lòng dũng cảm, tình bạn và khát vọng. Tác phẩm gối đầu giường của bao thế hệ thiếu nhi Việt Nam.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ” — 71.760đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nTấm vé đưa người đọc trở về thế giới hồn nhiên của tuổi thơ với bao trò nghịch ngợm đáng yêu. Cuốn sách gối đầu giường của cả trẻ em và người lớn.\n\nNếu bạn muốn bé bắt đầu với các hình ảnh trực quan, các bộ truyện tranh sẽ là khởi đầu tốt, còn các tác phẩm văn học sẽ phù hợp nếu bạn muốn cùng bé đọc mỗi tối.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 51,
+            "name": "Doraemon - Tập 1",
+            "author": "Fujiko F. Fujio",
+            "category": "Sách thiếu nhi",
+            "price": 19800,
+            "oldPrice": 22000.0,
+            "discount": 10,
+            "quantity": 300,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+          },
+          {
+            "id": 48,
+            "name": "Thám Tử Lừng Danh Conan - Tập 1",
+            "author": "Gosho Aoyama",
+            "category": "Sách thiếu nhi",
+            "price": 23750,
+            "oldPrice": 25000.0,
+            "discount": 5,
+            "quantity": 250,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+          },
+          {
+            "id": 37,
+            "name": "Hoàng Tử Bé",
+            "author": "Antoine de Saint-Exupéry",
+            "category": "Sách thiếu nhi",
+            "price": 69920,
+            "oldPrice": 76000.0,
+            "discount": 8,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+          },
+          {
+            "id": 13,
+            "name": "Dế Mèn Phiêu Lưu Ký",
+            "author": "Tô Hoài",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 50400,
+            "oldPrice": 56000.0,
+            "discount": 10,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+          },
+          {
+            "id": 50,
+            "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+            "author": "Nguyễn Nhật Ánh",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 71760,
+            "oldPrice": 78000.0,
+            "discount": 8,
+            "quantity": 150,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "8f6fe1cb-2e8a-44e2-8cc6-2f5fd67862c7",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": 100000,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 51,
+            "route": "/product/51",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 51,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 48,
+            "route": "/product/48",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 48,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 37,
+            "route": "/product/37",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 37,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 13,
+            "route": "/product/13",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 13,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 50,
+            "route": "/product/50",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 50,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "recommendBooks"
+        }
+      }
+    },
+    {
+      "scenario": "08_nho_dieu_kien_sau_cau_chen",
+      "turn": 2,
+      "question": "Cửa hàng tính phí giao hàng thế nào?",
+      "httpStatus": 200,
+      "elapsedMs": 47,
+      "answer": "Phí giao hàng 20.000đ, miễn phí khi tiền sách từ 300.000đ. Thời gian giao dự kiến 2–4 ngày làm việc.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getPolicy"
+      },
+      "response": {
+        "answer": "Phí giao hàng 20.000đ, miễn phí khi tiền sách từ 300.000đ. Thời gian giao dự kiến 2–4 ngày làm việc.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "10d83d56-42e4-43ea-87cc-a4a701b55cfb",
+        "intent": "POLICY",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": 100000,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getPolicy"
+        }
+      }
+    },
+    {
+      "scenario": "08_nho_dieu_kien_sau_cau_chen",
+      "turn": 3,
+      "question": "Quay lại những cuốn vừa rồi, cuốn nào hợp với bé nhất?",
+      "httpStatus": 200,
+      "elapsedMs": 4657,
+      "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Doraemon - Tập 1”\nVới hướng đọc “truyện thiếu nhi dễ đọc”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Chú mèo máy Doraemon từ tương lai cùng những bảo bối thần kỳ và cậu bạn Nobita. Bộ truyện tranh tuổi thơ thân thương của bao thế hệ thiếu nhi.\n\n• “Thám Tử Lừng Danh Conan - Tập 1”\nVới hướng đọc “truyện thiếu nhi dễ đọc”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Thám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.\n\n• “Hoàng Tử Bé”\nVới hướng đọc “truyện thiếu nhi dễ đọc”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Câu chuyện trong trẻo và sâu sắc về cậu hoàng tử nhỏ đến từ tiểu hành tinh B612. Tác phẩm văn học được yêu thích nhất nước Pháp, dành cho mọi lứa tuổi.\n\n• “Dế Mèn Phiêu Lưu Ký”\nVới hướng đọc “truyện thiếu nhi dễ đọc”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Cuộc phiêu lưu của chú Dế Mèn qua thế giới loài vật — bài học về lòng dũng cảm, tình bạn và khát vọng. Tác phẩm gối đầu giường của bao thế hệ thiếu nhi Việt Nam.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ”\nVới hướng đọc “truyện thiếu nhi dễ đọc”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Tấm vé đưa người đọc trở về thế giới hồn nhiên của tuổi thơ với bao trò nghịch ngợm đáng yêu. Cuốn sách gối đầu giường của cả trẻ em và người lớn.",
+      "products": [
+        {
+          "id": 51,
+          "name": "Doraemon - Tập 1",
+          "author": "Fujiko F. Fujio",
+          "category": "Sách thiếu nhi",
+          "price": 19800,
+          "oldPrice": 22000.0,
+          "discount": 10,
+          "quantity": 300,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+        },
+        {
+          "id": 48,
+          "name": "Thám Tử Lừng Danh Conan - Tập 1",
+          "author": "Gosho Aoyama",
+          "category": "Sách thiếu nhi",
+          "price": 23750,
+          "oldPrice": 25000.0,
+          "discount": 5,
+          "quantity": 250,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+        },
+        {
+          "id": 37,
+          "name": "Hoàng Tử Bé",
+          "author": "Antoine de Saint-Exupéry",
+          "category": "Sách thiếu nhi",
+          "price": 69920,
+          "oldPrice": 76000.0,
+          "discount": 8,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+        },
+        {
+          "id": 13,
+          "name": "Dế Mèn Phiêu Lưu Ký",
+          "author": "Tô Hoài",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 50400,
+          "oldPrice": 56000.0,
+          "discount": 10,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+        },
+        {
+          "id": 50,
+          "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 71760,
+          "oldPrice": 78000.0,
+          "discount": 8,
+          "quantity": 150,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getProducts"
+      },
+      "response": {
+        "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Doraemon - Tập 1”\nVới hướng đọc “truyện thiếu nhi dễ đọc”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Chú mèo máy Doraemon từ tương lai cùng những bảo bối thần kỳ và cậu bạn Nobita. Bộ truyện tranh tuổi thơ thân thương của bao thế hệ thiếu nhi.\n\n• “Thám Tử Lừng Danh Conan - Tập 1”\nVới hướng đọc “truyện thiếu nhi dễ đọc”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Thám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.\n\n• “Hoàng Tử Bé”\nVới hướng đọc “truyện thiếu nhi dễ đọc”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Câu chuyện trong trẻo và sâu sắc về cậu hoàng tử nhỏ đến từ tiểu hành tinh B612. Tác phẩm văn học được yêu thích nhất nước Pháp, dành cho mọi lứa tuổi.\n\n• “Dế Mèn Phiêu Lưu Ký”\nVới hướng đọc “truyện thiếu nhi dễ đọc”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Cuộc phiêu lưu của chú Dế Mèn qua thế giới loài vật — bài học về lòng dũng cảm, tình bạn và khát vọng. Tác phẩm gối đầu giường của bao thế hệ thiếu nhi Việt Nam.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ”\nVới hướng đọc “truyện thiếu nhi dễ đọc”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Tấm vé đưa người đọc trở về thế giới hồn nhiên của tuổi thơ với bao trò nghịch ngợm đáng yêu. Cuốn sách gối đầu giường của cả trẻ em và người lớn.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 51,
+            "name": "Doraemon - Tập 1",
+            "author": "Fujiko F. Fujio",
+            "category": "Sách thiếu nhi",
+            "price": 19800,
+            "oldPrice": 22000.0,
+            "discount": 10,
+            "quantity": 300,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+          },
+          {
+            "id": 48,
+            "name": "Thám Tử Lừng Danh Conan - Tập 1",
+            "author": "Gosho Aoyama",
+            "category": "Sách thiếu nhi",
+            "price": 23750,
+            "oldPrice": 25000.0,
+            "discount": 5,
+            "quantity": 250,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+          },
+          {
+            "id": 37,
+            "name": "Hoàng Tử Bé",
+            "author": "Antoine de Saint-Exupéry",
+            "category": "Sách thiếu nhi",
+            "price": 69920,
+            "oldPrice": 76000.0,
+            "discount": 8,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+          },
+          {
+            "id": 13,
+            "name": "Dế Mèn Phiêu Lưu Ký",
+            "author": "Tô Hoài",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 50400,
+            "oldPrice": 56000.0,
+            "discount": 10,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+          },
+          {
+            "id": 50,
+            "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+            "author": "Nguyễn Nhật Ánh",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 71760,
+            "oldPrice": 78000.0,
+            "discount": 8,
+            "quantity": 150,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "e6c677a8-09c5-444e-8d00-c8699e76d01f",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": 100000,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getProducts"
+        }
+      }
+    },
+    {
+      "scenario": "09_sach_theo_lop",
+      "turn": 1,
+      "question": "Tôi muốn tìm sách toán cho học sinh lớp 7.",
+      "httpStatus": 200,
+      "elapsedMs": 20907,
+      "answer": "Mình chọn được 5 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật” — 83.600đ · Đinh Mạnh Tường · Chưa có đánh giá\nSách tập trung vào các nội dung như thuật toán và tìm kiếm cho sinh viên chuyên ngành, không phải giáo trình toán học bậc trung học cơ sở.\n\n• “AI Cơ Bản - Trí Tuệ Nhân Tạo Cho Mọi Người” — 125.400đ · Phạm Huy Hoàng · Chưa có đánh giá\nTài liệu này giải thích về trí tuệ nhân tạo và nhấn mạnh tính chất không tập trung vào các công thức toán học phức tạp.\n\n• “Sherlock Holmes Toàn Tập - Tập 1” — 193.500đ · Arthur Conan Doyle · Chưa có đánh giá\nNhững vụ án ly kỳ của thám tử lừng danh phố Baker. Tài suy luận thiên tài của Sherlock Holmes đã làm say mê độc giả khắp thế giới hơn một thế kỷ qua.\n\n• “Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam (Hiện Hành)” — 45.000đ · Quốc Hội Việt Nam · Chưa có đánh giá\nToàn văn Hiến pháp hiện hành của nước CHXHCN Việt Nam — văn bản pháp lý cao nhất, nền tảng cho toàn bộ hệ thống pháp luật quốc gia. Ấn bản chuẩn, tiện tra cứu.\n\n• “Sapiens: Lược Sử Loài Người” — 160.650đ · Yuval Noah Harari · Chưa có đánh giá\nHành trình 70.000 năm của loài người từ vượn người đến chúa tể địa cầu. Cuốn sách bán chạy toàn cầu thay đổi cách ta nhìn nhận về chính mình và lịch sử.\n\nBạn có muốn tìm tài liệu về lĩnh vực khoa học máy tính hoặc các thể loại truyện đọc giải trí thay thế không?",
+      "products": [
+        {
+          "id": 20,
+          "name": "Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật",
+          "author": "Đinh Mạnh Tường",
+          "category": "Sách Giáo trình",
+          "price": 83600,
+          "oldPrice": 88000.0,
+          "discount": 5,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319743/products/x6ssqusalnhgpbux28uv.webp"
+        },
+        {
+          "id": 17,
+          "name": "AI Cơ Bản - Trí Tuệ Nhân Tạo Cho Mọi Người",
+          "author": "Phạm Huy Hoàng",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 125400,
+          "oldPrice": 132000.0,
+          "discount": 5,
+          "quantity": 120,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319801/products/yrcackuuxv0bxefp3dah.jpg"
+        },
+        {
+          "id": 26,
+          "name": "Sherlock Holmes Toàn Tập - Tập 1",
+          "author": "Arthur Conan Doyle",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 193500,
+          "oldPrice": 215000.0,
+          "discount": 10,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319589/products/ptjyfdchzgieobq2kuwg.webp"
+        },
+        {
+          "id": 3,
+          "name": "Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam (Hiện Hành)",
+          "author": "Quốc Hội Việt Nam",
+          "category": "Sách Chính trị – pháp luật",
+          "price": 45000,
+          "oldPrice": 45000.0,
+          "discount": 0,
+          "quantity": 150,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781320474/products/aifrungfs4soocyvpsnk.webp"
+        },
+        {
+          "id": 56,
+          "name": "Sapiens: Lược Sử Loài Người",
+          "author": "Yuval Noah Harari",
+          "category": "Sách Văn hóa xã hội – Lịch sử",
+          "price": 160650,
+          "oldPrice": 189000.0,
+          "discount": 15,
+          "quantity": 180,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252589/products/cdcgqyejh8w71vtetrz0.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      },
+      "response": {
+        "answer": "Mình chọn được 5 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật” — 83.600đ · Đinh Mạnh Tường · Chưa có đánh giá\nSách tập trung vào các nội dung như thuật toán và tìm kiếm cho sinh viên chuyên ngành, không phải giáo trình toán học bậc trung học cơ sở.\n\n• “AI Cơ Bản - Trí Tuệ Nhân Tạo Cho Mọi Người” — 125.400đ · Phạm Huy Hoàng · Chưa có đánh giá\nTài liệu này giải thích về trí tuệ nhân tạo và nhấn mạnh tính chất không tập trung vào các công thức toán học phức tạp.\n\n• “Sherlock Holmes Toàn Tập - Tập 1” — 193.500đ · Arthur Conan Doyle · Chưa có đánh giá\nNhững vụ án ly kỳ của thám tử lừng danh phố Baker. Tài suy luận thiên tài của Sherlock Holmes đã làm say mê độc giả khắp thế giới hơn một thế kỷ qua.\n\n• “Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam (Hiện Hành)” — 45.000đ · Quốc Hội Việt Nam · Chưa có đánh giá\nToàn văn Hiến pháp hiện hành của nước CHXHCN Việt Nam — văn bản pháp lý cao nhất, nền tảng cho toàn bộ hệ thống pháp luật quốc gia. Ấn bản chuẩn, tiện tra cứu.\n\n• “Sapiens: Lược Sử Loài Người” — 160.650đ · Yuval Noah Harari · Chưa có đánh giá\nHành trình 70.000 năm của loài người từ vượn người đến chúa tể địa cầu. Cuốn sách bán chạy toàn cầu thay đổi cách ta nhìn nhận về chính mình và lịch sử.\n\nBạn có muốn tìm tài liệu về lĩnh vực khoa học máy tính hoặc các thể loại truyện đọc giải trí thay thế không?",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 20,
+            "name": "Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật",
+            "author": "Đinh Mạnh Tường",
+            "category": "Sách Giáo trình",
+            "price": 83600,
+            "oldPrice": 88000.0,
+            "discount": 5,
+            "quantity": 130,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319743/products/x6ssqusalnhgpbux28uv.webp"
+          },
+          {
+            "id": 17,
+            "name": "AI Cơ Bản - Trí Tuệ Nhân Tạo Cho Mọi Người",
+            "author": "Phạm Huy Hoàng",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 125400,
+            "oldPrice": 132000.0,
+            "discount": 5,
+            "quantity": 120,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319801/products/yrcackuuxv0bxefp3dah.jpg"
+          },
+          {
+            "id": 26,
+            "name": "Sherlock Holmes Toàn Tập - Tập 1",
+            "author": "Arthur Conan Doyle",
+            "category": "Sách Truyện, tiểu thuyết",
+            "price": 193500,
+            "oldPrice": 215000.0,
+            "discount": 10,
+            "quantity": 110,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319589/products/ptjyfdchzgieobq2kuwg.webp"
+          },
+          {
+            "id": 3,
+            "name": "Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam (Hiện Hành)",
+            "author": "Quốc Hội Việt Nam",
+            "category": "Sách Chính trị – pháp luật",
+            "price": 45000,
+            "oldPrice": 45000.0,
+            "discount": 0,
+            "quantity": 150,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781320474/products/aifrungfs4soocyvpsnk.webp"
+          },
+          {
+            "id": 56,
+            "name": "Sapiens: Lược Sử Loài Người",
+            "author": "Yuval Noah Harari",
+            "category": "Sách Văn hóa xã hội – Lịch sử",
+            "price": 160650,
+            "oldPrice": 189000.0,
+            "discount": 15,
+            "quantity": 180,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781252589/products/cdcgqyejh8w71vtetrz0.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "377902db-c85c-4790-b185-4d3bafb008a9",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 20,
+            "route": "/product/20",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 20,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 17,
+            "route": "/product/17",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 17,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 26,
+            "route": "/product/26",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 26,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 3,
+            "route": "/product/3",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 3,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 56,
+            "route": "/product/56",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 56,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "searchProducts"
+        }
+      }
+    },
+    {
+      "scenario": "09_sach_theo_lop",
+      "turn": 2,
+      "question": "Có cuốn nào đúng lớp 7 không, hay những cuốn bạn đưa ra chỉ là sách tham khảo chung?",
+      "httpStatus": 200,
+      "elapsedMs": 3094,
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn.\n\nBạn có thể cân nhắc mở rộng tìm kiếm sang các chủ đề khoa học tư duy hoặc logic nếu muốn hỗ trợ thêm kỹ năng học tập.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      },
+      "response": {
+        "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn.\n\nBạn có thể cân nhắc mở rộng tìm kiếm sang các chủ đề khoa học tư duy hoặc logic nếu muốn hỗ trợ thêm kỹ năng học tập.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "25e74a83-0e8a-44e3-9364-8c636f6e2165",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "searchProducts"
+        }
+      }
+    },
+    {
+      "scenario": "09_sach_theo_lop",
+      "turn": 3,
+      "question": "Nếu không có đúng lớp thì nói giúp tôi, đừng chọn sách tiểu học hay đại học để thay nhé.",
+      "httpStatus": 200,
+      "elapsedMs": 4406,
+      "answer": "Mình chọn được 5 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật” — 83.600đ · Đinh Mạnh Tường · Chưa có đánh giá\nGiáo trình nền tảng về cấu trúc dữ liệu và thuật toán: danh sách, cây, đồ thị, sắp xếp, tìm kiếm. Kèm ví dụ minh họa cho sinh viên công nghệ thông tin.\n\n• “AI Cơ Bản - Trí Tuệ Nhân Tạo Cho Mọi Người” — 125.400đ · Phạm Huy Hoàng · Chưa có đánh giá\nGiải thích trí tuệ nhân tạo, machine learning và deep learning bằng ngôn ngữ dễ hiểu, không nặng toán. Khởi đầu hoàn hảo cho người mới bước vào lĩnh vực AI.\n\n• “Sherlock Holmes Toàn Tập - Tập 1” — 193.500đ · Arthur Conan Doyle · Chưa có đánh giá\nNhững vụ án ly kỳ của thám tử lừng danh phố Baker. Tài suy luận thiên tài của Sherlock Holmes đã làm say mê độc giả khắp thế giới hơn một thế kỷ qua.\n\n• “Sapiens: Lược Sử Loài Người” — 160.650đ · Yuval Noah Harari · Chưa có đánh giá\nHành trình 70.000 năm của loài người từ vượn người đến chúa tể địa cầu. Cuốn sách bán chạy toàn cầu thay đổi cách ta nhìn nhận về chính mình và lịch sử.\n\n• “Lịch Sử Thế Giới Hiện Đại” — 145.360đ · Nguyễn Anh Thái · Chưa có đánh giá\nTổng quan các biến cố lớn định hình thế giới hiện đại: hai cuộc thế chiến, chiến tranh lạnh, toàn cầu hóa. Tài liệu nền tảng cho người yêu lịch sử.",
+      "products": [
+        {
+          "id": 20,
+          "name": "Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật",
+          "author": "Đinh Mạnh Tường",
+          "category": "Sách Giáo trình",
+          "price": 83600,
+          "oldPrice": 88000.0,
+          "discount": 5,
+          "quantity": 130,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319743/products/x6ssqusalnhgpbux28uv.webp"
+        },
+        {
+          "id": 17,
+          "name": "AI Cơ Bản - Trí Tuệ Nhân Tạo Cho Mọi Người",
+          "author": "Phạm Huy Hoàng",
+          "category": "Sách Khoa học công nghệ – Kinh tế",
+          "price": 125400,
+          "oldPrice": 132000.0,
+          "discount": 5,
+          "quantity": 120,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319801/products/yrcackuuxv0bxefp3dah.jpg"
+        },
+        {
+          "id": 26,
+          "name": "Sherlock Holmes Toàn Tập - Tập 1",
+          "author": "Arthur Conan Doyle",
+          "category": "Sách Truyện, tiểu thuyết",
+          "price": 193500,
+          "oldPrice": 215000.0,
+          "discount": 10,
+          "quantity": 110,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319589/products/ptjyfdchzgieobq2kuwg.webp"
+        },
+        {
+          "id": 56,
+          "name": "Sapiens: Lược Sử Loài Người",
+          "author": "Yuval Noah Harari",
+          "category": "Sách Văn hóa xã hội – Lịch sử",
+          "price": 160650,
+          "oldPrice": 189000.0,
+          "discount": 15,
+          "quantity": 180,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781252589/products/cdcgqyejh8w71vtetrz0.webp"
+        },
+        {
+          "id": 15,
+          "name": "Lịch Sử Thế Giới Hiện Đại",
+          "author": "Nguyễn Anh Thái",
+          "category": "Sách Văn hóa xã hội – Lịch sử",
+          "price": 145360,
+          "oldPrice": 158000.0,
+          "discount": 8,
+          "quantity": 90,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319872/products/oscnv2zjikeyzoini0wl.webp"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "searchProducts"
+      },
+      "response": {
+        "answer": "Mình chọn được 5 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật” — 83.600đ · Đinh Mạnh Tường · Chưa có đánh giá\nGiáo trình nền tảng về cấu trúc dữ liệu và thuật toán: danh sách, cây, đồ thị, sắp xếp, tìm kiếm. Kèm ví dụ minh họa cho sinh viên công nghệ thông tin.\n\n• “AI Cơ Bản - Trí Tuệ Nhân Tạo Cho Mọi Người” — 125.400đ · Phạm Huy Hoàng · Chưa có đánh giá\nGiải thích trí tuệ nhân tạo, machine learning và deep learning bằng ngôn ngữ dễ hiểu, không nặng toán. Khởi đầu hoàn hảo cho người mới bước vào lĩnh vực AI.\n\n• “Sherlock Holmes Toàn Tập - Tập 1” — 193.500đ · Arthur Conan Doyle · Chưa có đánh giá\nNhững vụ án ly kỳ của thám tử lừng danh phố Baker. Tài suy luận thiên tài của Sherlock Holmes đã làm say mê độc giả khắp thế giới hơn một thế kỷ qua.\n\n• “Sapiens: Lược Sử Loài Người” — 160.650đ · Yuval Noah Harari · Chưa có đánh giá\nHành trình 70.000 năm của loài người từ vượn người đến chúa tể địa cầu. Cuốn sách bán chạy toàn cầu thay đổi cách ta nhìn nhận về chính mình và lịch sử.\n\n• “Lịch Sử Thế Giới Hiện Đại” — 145.360đ · Nguyễn Anh Thái · Chưa có đánh giá\nTổng quan các biến cố lớn định hình thế giới hiện đại: hai cuộc thế chiến, chiến tranh lạnh, toàn cầu hóa. Tài liệu nền tảng cho người yêu lịch sử.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 20,
+            "name": "Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật",
+            "author": "Đinh Mạnh Tường",
+            "category": "Sách Giáo trình",
+            "price": 83600,
+            "oldPrice": 88000.0,
+            "discount": 5,
+            "quantity": 130,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319743/products/x6ssqusalnhgpbux28uv.webp"
+          },
+          {
+            "id": 17,
+            "name": "AI Cơ Bản - Trí Tuệ Nhân Tạo Cho Mọi Người",
+            "author": "Phạm Huy Hoàng",
+            "category": "Sách Khoa học công nghệ – Kinh tế",
+            "price": 125400,
+            "oldPrice": 132000.0,
+            "discount": 5,
+            "quantity": 120,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319801/products/yrcackuuxv0bxefp3dah.jpg"
+          },
+          {
+            "id": 26,
+            "name": "Sherlock Holmes Toàn Tập - Tập 1",
+            "author": "Arthur Conan Doyle",
+            "category": "Sách Truyện, tiểu thuyết",
+            "price": 193500,
+            "oldPrice": 215000.0,
+            "discount": 10,
+            "quantity": 110,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319589/products/ptjyfdchzgieobq2kuwg.webp"
+          },
+          {
+            "id": 56,
+            "name": "Sapiens: Lược Sử Loài Người",
+            "author": "Yuval Noah Harari",
+            "category": "Sách Văn hóa xã hội – Lịch sử",
+            "price": 160650,
+            "oldPrice": 189000.0,
+            "discount": 15,
+            "quantity": 180,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781252589/products/cdcgqyejh8w71vtetrz0.webp"
+          },
+          {
+            "id": 15,
+            "name": "Lịch Sử Thế Giới Hiện Đại",
+            "author": "Nguyễn Anh Thái",
+            "category": "Sách Văn hóa xã hội – Lịch sử",
+            "price": 145360,
+            "oldPrice": 158000.0,
+            "discount": 8,
+            "quantity": 90,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319872/products/oscnv2zjikeyzoini0wl.webp"
+          }
+        ],
+        "chips": [],
+        "messageId": "a47c7def-0ef3-4141-a4a1-b415c58b8fd1",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 20,
+            "route": "/product/20",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 20,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 17,
+            "route": "/product/17",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 17,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 26,
+            "route": "/product/26",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 26,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 56,
+            "route": "/product/56",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 56,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 15,
+            "route": "/product/15",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 15,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "searchProducts"
+        }
+      }
+    },
+    {
+      "scenario": "10_tra_hang_sach_loi",
+      "turn": 1,
+      "question": "Tôi muốn trả cuốn sách vừa mua.",
+      "httpStatus": 200,
+      "elapsedMs": 31,
+      "answer": "Mình sẽ hướng dẫn theo tình trạng sách để bạn biết bước tiếp theo. Bạn muốn trả vì sách bị lỗi, giao sai hay vì không còn nhu cầu đọc?",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "status": "NEEDS_INPUT",
+        "tool": "getPolicy"
+      },
+      "response": {
+        "answer": "Mình sẽ hướng dẫn theo tình trạng sách để bạn biết bước tiếp theo. Bạn muốn trả vì sách bị lỗi, giao sai hay vì không còn nhu cầu đọc?",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "195e8bec-c482-4513-9a63-e8c3c8039bfd",
+        "intent": "POLICY",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "NEEDS_INPUT",
+          "tool": "getPolicy"
+        }
+      }
+    },
+    {
+      "scenario": "10_tra_hang_sach_loi",
+      "turn": 2,
+      "question": "Sách bị thiếu mấy trang ở giữa.",
+      "httpStatus": 200,
+      "elapsedMs": 47,
+      "answer": "Với lý do “sách lỗi in hoặc thiếu trang”, bạn nên gửi thông tin để cửa hàng đối chiếu điều kiện đổi trả; mình chưa thể xác nhận yêu cầu đã được chấp nhận.\n\nChính sách đang áp dụng: Sách lỗi in, rách hoặc giao sai được hỗ trợ đổi trả trong 7 ngày kể từ khi nhận hàng. Bạn giữ hóa đơn và liên hệ trang Hỗ trợ.\n\nBạn có thể làm theo các bước này:\n1. Mở mục Đơn hàng, lấy mã đơn và tên cuốn cần trả. Sách đã mua nằm trong đơn hàng, không phải giỏ hiện tại.\n2. Gửi yêu cầu qua trang Liên hệ, nêu lý do “sách lỗi in hoặc thiếu trang”, ngày nhận sách và tình trạng hiện tại; nếu sách có lỗi, gửi kèm ảnh để cửa hàng kiểm tra.\n3. Giữ sách và hóa đơn, chờ cửa hàng xác nhận điều kiện và cách gửi lại trước khi gửi hàng. Việc đổi sách hoặc hoàn tiền cần được cửa hàng xác nhận.\n\nBạn có thể gửi yêu cầu tại trang Liên hệ hoặc email hotro@vinabook.vn. Không gửi mật khẩu, OTP hay thông tin thẻ.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getPolicy"
+      },
+      "response": {
+        "answer": "Với lý do “sách lỗi in hoặc thiếu trang”, bạn nên gửi thông tin để cửa hàng đối chiếu điều kiện đổi trả; mình chưa thể xác nhận yêu cầu đã được chấp nhận.\n\nChính sách đang áp dụng: Sách lỗi in, rách hoặc giao sai được hỗ trợ đổi trả trong 7 ngày kể từ khi nhận hàng. Bạn giữ hóa đơn và liên hệ trang Hỗ trợ.\n\nBạn có thể làm theo các bước này:\n1. Mở mục Đơn hàng, lấy mã đơn và tên cuốn cần trả. Sách đã mua nằm trong đơn hàng, không phải giỏ hiện tại.\n2. Gửi yêu cầu qua trang Liên hệ, nêu lý do “sách lỗi in hoặc thiếu trang”, ngày nhận sách và tình trạng hiện tại; nếu sách có lỗi, gửi kèm ảnh để cửa hàng kiểm tra.\n3. Giữ sách và hóa đơn, chờ cửa hàng xác nhận điều kiện và cách gửi lại trước khi gửi hàng. Việc đổi sách hoặc hoàn tiền cần được cửa hàng xác nhận.\n\nBạn có thể gửi yêu cầu tại trang Liên hệ hoặc email hotro@vinabook.vn. Không gửi mật khẩu, OTP hay thông tin thẻ.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "cf37903a-89ed-4c67-a7ca-93fa79f9989a",
+        "intent": "POLICY",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getPolicy"
+        }
+      }
+    },
+    {
+      "scenario": "10_tra_hang_sach_loi",
+      "turn": 3,
+      "question": "Tôi nhận được khoảng 10 ngày rồi, giờ phải làm sao?",
+      "httpStatus": 200,
+      "elapsedMs": 31,
+      "answer": "Bạn đã nhận sách khoảng 10 ngày, với lý do “sách lỗi in hoặc thiếu trang”. Thời điểm bạn nhận sách đã vượt mốc 7 ngày trong chính sách hiện hành. Mình chưa thể xác nhận yêu cầu được nhận trả hoặc hoàn tiền.\n\nSách lỗi in, rách hoặc giao sai được hỗ trợ đổi trả trong 7 ngày kể từ khi nhận hàng. Bạn giữ hóa đơn và liên hệ trang Hỗ trợ.\n\nBạn hãy gửi mã đơn, ngày nhận thực tế và ảnh tình trạng sách qua trang Liên hệ, nói rõ thời gian đã nhận và nhờ cửa hàng xem xét cách xử lý. Giữ sách và hóa đơn, chờ hướng dẫn trước khi gửi lại.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getPolicy"
+      },
+      "response": {
+        "answer": "Bạn đã nhận sách khoảng 10 ngày, với lý do “sách lỗi in hoặc thiếu trang”. Thời điểm bạn nhận sách đã vượt mốc 7 ngày trong chính sách hiện hành. Mình chưa thể xác nhận yêu cầu được nhận trả hoặc hoàn tiền.\n\nSách lỗi in, rách hoặc giao sai được hỗ trợ đổi trả trong 7 ngày kể từ khi nhận hàng. Bạn giữ hóa đơn và liên hệ trang Hỗ trợ.\n\nBạn hãy gửi mã đơn, ngày nhận thực tế và ảnh tình trạng sách qua trang Liên hệ, nói rõ thời gian đã nhận và nhờ cửa hàng xem xét cách xử lý. Giữ sách và hóa đơn, chờ hướng dẫn trước khi gửi lại.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "e26672a0-db2d-4f48-a597-016ec2b7b496",
+        "intent": "POLICY",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getPolicy"
+        }
+      }
+    },
+    {
+      "scenario": "11_tra_hang_doi_y",
+      "turn": 1,
+      "question": "Tôi mua một cuốn rồi nhưng đọc thấy không hợp, muốn trả.",
+      "httpStatus": 200,
+      "elapsedMs": 32,
+      "answer": "Mình hiểu là bạn không còn hứng thú với cuốn vừa mua. Mình chưa có điều khoản xác nhận đổi trả chỉ vì thay đổi sở thích, nên cần cửa hàng xem xét trước khi kết luận có nhận trả hay không.\n\nChính sách đang áp dụng: Sách lỗi in, rách hoặc giao sai được hỗ trợ đổi trả trong 7 ngày kể từ khi nhận hàng. Bạn giữ hóa đơn và liên hệ trang Hỗ trợ.\n\nBạn có thể làm theo các bước này:\n1. Mở mục Đơn hàng, lấy mã đơn và tên cuốn cần trả. Sách đã mua nằm trong đơn hàng, không phải giỏ hiện tại.\n2. Gửi yêu cầu qua trang Liên hệ, nêu lý do “không còn nhu cầu hoặc không thích nội dung”, ngày nhận sách và tình trạng hiện tại; nếu sách có lỗi, gửi kèm ảnh để cửa hàng kiểm tra.\n3. Giữ sách và hóa đơn, chờ cửa hàng xác nhận điều kiện và cách gửi lại trước khi gửi hàng. Việc đổi sách hoặc hoàn tiền cần được cửa hàng xác nhận.\n\nBạn có thể gửi yêu cầu tại trang Liên hệ hoặc email hotro@vinabook.vn. Không gửi mật khẩu, OTP hay thông tin thẻ.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getPolicy"
+      },
+      "response": {
+        "answer": "Mình hiểu là bạn không còn hứng thú với cuốn vừa mua. Mình chưa có điều khoản xác nhận đổi trả chỉ vì thay đổi sở thích, nên cần cửa hàng xem xét trước khi kết luận có nhận trả hay không.\n\nChính sách đang áp dụng: Sách lỗi in, rách hoặc giao sai được hỗ trợ đổi trả trong 7 ngày kể từ khi nhận hàng. Bạn giữ hóa đơn và liên hệ trang Hỗ trợ.\n\nBạn có thể làm theo các bước này:\n1. Mở mục Đơn hàng, lấy mã đơn và tên cuốn cần trả. Sách đã mua nằm trong đơn hàng, không phải giỏ hiện tại.\n2. Gửi yêu cầu qua trang Liên hệ, nêu lý do “không còn nhu cầu hoặc không thích nội dung”, ngày nhận sách và tình trạng hiện tại; nếu sách có lỗi, gửi kèm ảnh để cửa hàng kiểm tra.\n3. Giữ sách và hóa đơn, chờ cửa hàng xác nhận điều kiện và cách gửi lại trước khi gửi hàng. Việc đổi sách hoặc hoàn tiền cần được cửa hàng xác nhận.\n\nBạn có thể gửi yêu cầu tại trang Liên hệ hoặc email hotro@vinabook.vn. Không gửi mật khẩu, OTP hay thông tin thẻ.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "9684db4d-0a58-4957-a96c-a63960883066",
+        "intent": "POLICY",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getPolicy"
+        }
+      }
+    },
+    {
+      "scenario": "11_tra_hang_doi_y",
+      "turn": 2,
+      "question": "Sách không bị lỗi gì, tôi chỉ không thích nội dung thôi.",
+      "httpStatus": 200,
+      "elapsedMs": 32,
+      "answer": "Mình hiểu là bạn không còn hứng thú với cuốn vừa mua. Mình chưa có điều khoản xác nhận đổi trả chỉ vì thay đổi sở thích, nên cần cửa hàng xem xét trước khi kết luận có nhận trả hay không.\n\nChính sách đang áp dụng: Sách lỗi in, rách hoặc giao sai được hỗ trợ đổi trả trong 7 ngày kể từ khi nhận hàng. Bạn giữ hóa đơn và liên hệ trang Hỗ trợ.\n\nBạn có thể làm theo các bước này:\n1. Mở mục Đơn hàng, lấy mã đơn và tên cuốn cần trả. Sách đã mua nằm trong đơn hàng, không phải giỏ hiện tại.\n2. Gửi yêu cầu qua trang Liên hệ, nêu lý do “không còn nhu cầu hoặc không thích nội dung”, ngày nhận sách và tình trạng hiện tại; nếu sách có lỗi, gửi kèm ảnh để cửa hàng kiểm tra.\n3. Giữ sách và hóa đơn, chờ cửa hàng xác nhận điều kiện và cách gửi lại trước khi gửi hàng. Việc đổi sách hoặc hoàn tiền cần được cửa hàng xác nhận.\n\nBạn có thể gửi yêu cầu tại trang Liên hệ hoặc email hotro@vinabook.vn. Không gửi mật khẩu, OTP hay thông tin thẻ.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getPolicy"
+      },
+      "response": {
+        "answer": "Mình hiểu là bạn không còn hứng thú với cuốn vừa mua. Mình chưa có điều khoản xác nhận đổi trả chỉ vì thay đổi sở thích, nên cần cửa hàng xem xét trước khi kết luận có nhận trả hay không.\n\nChính sách đang áp dụng: Sách lỗi in, rách hoặc giao sai được hỗ trợ đổi trả trong 7 ngày kể từ khi nhận hàng. Bạn giữ hóa đơn và liên hệ trang Hỗ trợ.\n\nBạn có thể làm theo các bước này:\n1. Mở mục Đơn hàng, lấy mã đơn và tên cuốn cần trả. Sách đã mua nằm trong đơn hàng, không phải giỏ hiện tại.\n2. Gửi yêu cầu qua trang Liên hệ, nêu lý do “không còn nhu cầu hoặc không thích nội dung”, ngày nhận sách và tình trạng hiện tại; nếu sách có lỗi, gửi kèm ảnh để cửa hàng kiểm tra.\n3. Giữ sách và hóa đơn, chờ cửa hàng xác nhận điều kiện và cách gửi lại trước khi gửi hàng. Việc đổi sách hoặc hoàn tiền cần được cửa hàng xác nhận.\n\nBạn có thể gửi yêu cầu tại trang Liên hệ hoặc email hotro@vinabook.vn. Không gửi mật khẩu, OTP hay thông tin thẻ.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "9e8182ce-63bd-456b-83a0-e88d683069fb",
+        "intent": "POLICY",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getPolicy"
+        }
+      }
+    },
+    {
+      "scenario": "11_tra_hang_doi_y",
+      "turn": 3,
+      "question": "Vậy tôi có được hoàn tiền không, và cần liên hệ ở đâu để hỏi?",
+      "httpStatus": 200,
+      "elapsedMs": 31,
+      "answer": "Với lý do “không còn nhu cầu hoặc không thích nội dung”, việc hoàn tiền cần cửa hàng xác nhận sau khi kiểm tra yêu cầu. Chính sách hiện hành: Sách lỗi in, rách hoặc giao sai được hỗ trợ đổi trả trong 7 ngày kể từ khi nhận hàng. Bạn giữ hóa đơn và liên hệ trang Hỗ trợ.\n\nMình chưa có điều khoản xác nhận thời gian hoặc cách hoàn tiền cho trường hợp của bạn. Bạn gửi mã đơn và lý do qua trang Liên hệ, yêu cầu cửa hàng xác nhận có nhận trả hay không, hình thức xử lý và thời gian dự kiến trước khi gửi lại sách.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getPolicy"
+      },
+      "response": {
+        "answer": "Với lý do “không còn nhu cầu hoặc không thích nội dung”, việc hoàn tiền cần cửa hàng xác nhận sau khi kiểm tra yêu cầu. Chính sách hiện hành: Sách lỗi in, rách hoặc giao sai được hỗ trợ đổi trả trong 7 ngày kể từ khi nhận hàng. Bạn giữ hóa đơn và liên hệ trang Hỗ trợ.\n\nMình chưa có điều khoản xác nhận thời gian hoặc cách hoàn tiền cho trường hợp của bạn. Bạn gửi mã đơn và lý do qua trang Liên hệ, yêu cầu cửa hàng xác nhận có nhận trả hay không, hình thức xử lý và thời gian dự kiến trước khi gửi lại sách.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "5ce418a4-5038-463e-976d-0528629ab0e4",
+        "intent": "POLICY",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getPolicy"
+        }
+      }
+    },
+    {
+      "scenario": "12_phan_biet_gio_va_don",
+      "turn": 1,
+      "question": "Tìm trong giỏ hàng giúp tôi cuốn tôi đã mua tuần trước.",
+      "httpStatus": 200,
+      "elapsedMs": 31,
+      "answer": "Sách đã mua nằm trong mục Đơn hàng; giỏ hiện tại chỉ chứa các sách đang định mua.\n\nBạn cần đăng nhập để mình tra cứu đơn hàng. Sau khi đăng nhập, hãy hỏi lại “Đơn hàng của tôi đang ở đâu?”.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getMyOrders"
+      },
+      "response": {
+        "answer": "Sách đã mua nằm trong mục Đơn hàng; giỏ hiện tại chỉ chứa các sách đang định mua.\n\nBạn cần đăng nhập để mình tra cứu đơn hàng. Sau khi đăng nhập, hãy hỏi lại “Đơn hàng của tôi đang ở đâu?”.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "830e557f-1c0e-49eb-9995-9bc9412cebcf",
+        "intent": "ORDER_SUPPORT",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getMyOrders"
+        }
+      }
+    },
+    {
+      "scenario": "12_phan_biet_gio_va_don",
+      "turn": 2,
+      "question": "À tôi đã thanh toán và nhận sách rồi, tôi muốn tìm lại đơn đó.",
+      "httpStatus": 200,
+      "elapsedMs": 1312,
+      "answer": "Bạn cần đăng nhập để mình tra cứu đơn hàng. Sau khi đăng nhập, hãy hỏi lại “Đơn hàng của tôi đang ở đâu?”.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getMyOrders"
+      },
+      "response": {
+        "answer": "Bạn cần đăng nhập để mình tra cứu đơn hàng. Sau khi đăng nhập, hãy hỏi lại “Đơn hàng của tôi đang ở đâu?”.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "aa1e798d-1f15-4fb0-9f73-c5a20ef315df",
+        "intent": "ORDER_SUPPORT",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getMyOrders"
+        }
+      }
+    },
+    {
+      "scenario": "12_phan_biet_gio_va_don",
+      "turn": 3,
+      "question": "Tôi chưa đăng nhập, bạn có xem được đơn của tôi không?",
+      "httpStatus": 200,
+      "elapsedMs": 31,
+      "answer": "Bạn cần đăng nhập để mình tra cứu đơn hàng. Sau khi đăng nhập, hãy hỏi lại “Đơn hàng của tôi đang ở đâu?”.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "status": "COMPLETED",
+        "tool": "getOrderDetail"
+      },
+      "response": {
+        "answer": "Bạn cần đăng nhập để mình tra cứu đơn hàng. Sau khi đăng nhập, hãy hỏi lại “Đơn hàng của tôi đang ở đâu?”.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "6d90a52e-9922-4607-b885-8f8acae9e2ee",
+        "intent": "ORDER_SUPPORT",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": null,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "status": "COMPLETED",
+          "tool": "getOrderDetail"
+        }
+      }
+    }
+  ],
+  "cleanup": [
+    {
+      "scenario": "01_mo_ho_nhu_cau",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "02_tim_theo_y_nghia",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "03_het_sach_cung_chu_de",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "04_yeu_cau_6_cuon",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "05_giai_thich_ca_danh_sach",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "06_hoi_sau_hon",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "07_phu_dinh_va_doi_yeu_cau",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "08_nho_dieu_kien_sau_cau_chen",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "09_sach_theo_lop",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "10_tra_hang_sach_loi",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "11_tra_hang_doi_y",
+      "httpStatus": 204
+    },
+    {
+      "scenario": "12_phan_biet_gio_va_don",
+      "httpStatus": 204
+    }
+  ]
+}

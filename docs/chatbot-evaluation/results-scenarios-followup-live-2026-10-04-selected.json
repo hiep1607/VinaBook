@@ -1,0 +1,454 @@
+{
+  "testedAt": "2026-10-04T20:24:36.365101+07:00",
+  "app": "VinaBook localhost:4200 -> Spring Boot/Gemini/MySQL",
+  "method": "Actual storefront proxy API, fresh guest sessions, server conversation memory; no browser UI/account test",
+  "scenarioCount": 1,
+  "turnCount": 3,
+  "scenarios": [
+    {
+      "id": "08_nho_dieu_kien_sau_cau_chen",
+      "questions": [
+        "Tôi muốn tìm truyện cho bé 8 tuổi, dễ đọc, dưới 100 nghìn.",
+        "Cửa hàng tính phí giao hàng thế nào?",
+        "Quay lại những cuốn vừa rồi, cuốn nào hợp với bé nhất?"
+      ]
+    }
+  ],
+  "results": [
+    {
+      "scenario": "08_nho_dieu_kien_sau_cau_chen",
+      "turn": 1,
+      "question": "Tôi muốn tìm truyện cho bé 8 tuổi, dễ đọc, dưới 100 nghìn.",
+      "httpStatus": 200,
+      "elapsedMs": 13547,
+      "answer": "Chào bạn, mình xin gợi ý các tựa truyện nằm trong ngân sách và phù hợp với độ tuổi của bé để bạn cùng bé khám phá thế giới văn học.\n\nMình chọn được 5 cuốn phù hợp để bạn cân nhắc:\n\nMình chọn theo nội dung và thể loại; dữ liệu hiện chưa xác nhận mức đọc cho mọi cuốn, nên chưa thể bảo đảm tất cả đều dễ đọc hoặc nhẹ nhàng.\n\n**Sách đúng yêu cầu:**\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nSách thuộc thể loại truyện tranh với nội dung về tình bạn và các bảo bối kỳ ảo, giúp trẻ dễ dàng làm quen với việc đọc thông qua hình ảnh trực quan.\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ” — 71.760đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nTấm vé đưa người đọc trở về thế giới hồn nhiên của tuổi thơ với bao trò nghịch ngợm đáng yêu. Cuốn sách gối đầu giường của cả trẻ em và người lớn.\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nThông qua hình tượng loài vật, sách dẫn dắt trẻ đến với các bài học nhân văn về lòng dũng cảm, giúp làm phong phú tư duy ngôn ngữ cho bé.\n\n• “Hoàng Tử Bé” — 69.920đ · Antoine de Saint-Exupéry · Chưa có đánh giá\nCâu chuyện trong trẻo và sâu sắc về cậu hoàng tử nhỏ đến từ tiểu hành tinh B612. Tác phẩm văn học được yêu thích nhất nước Pháp, dành cho mọi lứa tuổi.",
+      "products": [
+        {
+          "id": 51,
+          "name": "Doraemon - Tập 1",
+          "author": "Fujiko F. Fujio",
+          "category": "Sách thiếu nhi",
+          "price": 19800,
+          "oldPrice": 22000.0,
+          "discount": 10,
+          "quantity": 300,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+        },
+        {
+          "id": 48,
+          "name": "Thám Tử Lừng Danh Conan - Tập 1",
+          "author": "Gosho Aoyama",
+          "category": "Sách thiếu nhi",
+          "price": 23750,
+          "oldPrice": 25000.0,
+          "discount": 5,
+          "quantity": 250,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+        },
+        {
+          "id": 50,
+          "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 71760,
+          "oldPrice": 78000.0,
+          "discount": 8,
+          "quantity": 150,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+        },
+        {
+          "id": 13,
+          "name": "Dế Mèn Phiêu Lưu Ký",
+          "author": "Tô Hoài",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 50400,
+          "oldPrice": 56000.0,
+          "discount": 10,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+        },
+        {
+          "id": 37,
+          "name": "Hoàng Tử Bé",
+          "author": "Antoine de Saint-Exupéry",
+          "category": "Sách thiếu nhi",
+          "price": 69920,
+          "oldPrice": 76000.0,
+          "discount": 8,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "recommendBooks",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Chào bạn, mình xin gợi ý các tựa truyện nằm trong ngân sách và phù hợp với độ tuổi của bé để bạn cùng bé khám phá thế giới văn học.\n\nMình chọn được 5 cuốn phù hợp để bạn cân nhắc:\n\nMình chọn theo nội dung và thể loại; dữ liệu hiện chưa xác nhận mức đọc cho mọi cuốn, nên chưa thể bảo đảm tất cả đều dễ đọc hoặc nhẹ nhàng.\n\n**Sách đúng yêu cầu:**\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nSách thuộc thể loại truyện tranh với nội dung về tình bạn và các bảo bối kỳ ảo, giúp trẻ dễ dàng làm quen với việc đọc thông qua hình ảnh trực quan.\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ” — 71.760đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nTấm vé đưa người đọc trở về thế giới hồn nhiên của tuổi thơ với bao trò nghịch ngợm đáng yêu. Cuốn sách gối đầu giường của cả trẻ em và người lớn.\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nThông qua hình tượng loài vật, sách dẫn dắt trẻ đến với các bài học nhân văn về lòng dũng cảm, giúp làm phong phú tư duy ngôn ngữ cho bé.\n\n• “Hoàng Tử Bé” — 69.920đ · Antoine de Saint-Exupéry · Chưa có đánh giá\nCâu chuyện trong trẻo và sâu sắc về cậu hoàng tử nhỏ đến từ tiểu hành tinh B612. Tác phẩm văn học được yêu thích nhất nước Pháp, dành cho mọi lứa tuổi.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 51,
+            "name": "Doraemon - Tập 1",
+            "author": "Fujiko F. Fujio",
+            "category": "Sách thiếu nhi",
+            "price": 19800,
+            "oldPrice": 22000.0,
+            "discount": 10,
+            "quantity": 300,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+          },
+          {
+            "id": 48,
+            "name": "Thám Tử Lừng Danh Conan - Tập 1",
+            "author": "Gosho Aoyama",
+            "category": "Sách thiếu nhi",
+            "price": 23750,
+            "oldPrice": 25000.0,
+            "discount": 5,
+            "quantity": 250,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+          },
+          {
+            "id": 50,
+            "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+            "author": "Nguyễn Nhật Ánh",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 71760,
+            "oldPrice": 78000.0,
+            "discount": 8,
+            "quantity": 150,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+          },
+          {
+            "id": 13,
+            "name": "Dế Mèn Phiêu Lưu Ký",
+            "author": "Tô Hoài",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 50400,
+            "oldPrice": 56000.0,
+            "discount": 10,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+          },
+          {
+            "id": 37,
+            "name": "Hoàng Tử Bé",
+            "author": "Antoine de Saint-Exupéry",
+            "category": "Sách thiếu nhi",
+            "price": 69920,
+            "oldPrice": 76000.0,
+            "discount": 8,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "d3a51948-aab4-4089-a5d1-b38e4c28990c",
+        "intent": "DISCOVER_BOOKS",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": 100000,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 51,
+            "route": "/product/51",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 51,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 48,
+            "route": "/product/48",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 48,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 50,
+            "route": "/product/50",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 50,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 13,
+            "route": "/product/13",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 13,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "VIEW_PRODUCT",
+            "label": "Xem sách",
+            "productId": 37,
+            "route": "/product/37",
+            "requiresConfirmation": false,
+            "orderId": null,
+            "quantity": 1
+          },
+          {
+            "type": "ADD_TO_CART",
+            "label": "Thêm giỏ",
+            "productId": 37,
+            "route": null,
+            "requiresConfirmation": true,
+            "orderId": null,
+            "quantity": 1
+          }
+        ],
+        "execution": {
+          "tool": "recommendBooks",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "08_nho_dieu_kien_sau_cau_chen",
+      "turn": 2,
+      "question": "Cửa hàng tính phí giao hàng thế nào?",
+      "httpStatus": 200,
+      "elapsedMs": 62,
+      "answer": "Phí giao hàng 20.000đ, miễn phí khi tiền sách từ 300.000đ. Thời gian giao dự kiến 2–4 ngày làm việc.",
+      "products": [],
+      "fallback": false,
+      "execution": {
+        "tool": "getPolicy",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Phí giao hàng 20.000đ, miễn phí khi tiền sách từ 300.000đ. Thời gian giao dự kiến 2–4 ngày làm việc.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [],
+        "chips": [],
+        "messageId": "47473637-261c-458e-aaed-2e2fd13d6d97",
+        "intent": "POLICY",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": 100000,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "tool": "getPolicy",
+          "status": "COMPLETED"
+        }
+      }
+    },
+    {
+      "scenario": "08_nho_dieu_kien_sau_cau_chen",
+      "turn": 3,
+      "question": "Quay lại những cuốn vừa rồi, cuốn nào hợp với bé nhất?",
+      "httpStatus": 200,
+      "elapsedMs": 1907,
+      "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Doraemon - Tập 1”\nVới hướng đọc “truyện”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Chú mèo máy Doraemon từ tương lai cùng những bảo bối thần kỳ và cậu bạn Nobita. Bộ truyện tranh tuổi thơ thân thương của bao thế hệ thiếu nhi.\n\n• “Thám Tử Lừng Danh Conan - Tập 1”\nVới hướng đọc “truyện”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Thám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ”\nVới hướng đọc “truyện”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Tấm vé đưa người đọc trở về thế giới hồn nhiên của tuổi thơ với bao trò nghịch ngợm đáng yêu. Cuốn sách gối đầu giường của cả trẻ em và người lớn.\n\n• “Dế Mèn Phiêu Lưu Ký”\nVới hướng đọc “truyện”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Cuộc phiêu lưu của chú Dế Mèn qua thế giới loài vật — bài học về lòng dũng cảm, tình bạn và khát vọng. Tác phẩm gối đầu giường của bao thế hệ thiếu nhi Việt Nam.\n\n• “Hoàng Tử Bé”\nVới hướng đọc “truyện”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Câu chuyện trong trẻo và sâu sắc về cậu hoàng tử nhỏ đến từ tiểu hành tinh B612. Tác phẩm văn học được yêu thích nhất nước Pháp, dành cho mọi lứa tuổi.\n\nCửa hàng chưa xác nhận độ tuổi đọc cho từng cuốn, nên mình chưa đủ căn cứ chọn cuốn hợp với bé nhất chỉ theo tuổi. Bạn có thể cân nhắc nội dung và xem thử cùng bé trước khi chọn; tuổi nhân vật không phải độ tuổi đọc của sách.",
+      "products": [
+        {
+          "id": 51,
+          "name": "Doraemon - Tập 1",
+          "author": "Fujiko F. Fujio",
+          "category": "Sách thiếu nhi",
+          "price": 19800,
+          "oldPrice": 22000.0,
+          "discount": 10,
+          "quantity": 300,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+        },
+        {
+          "id": 48,
+          "name": "Thám Tử Lừng Danh Conan - Tập 1",
+          "author": "Gosho Aoyama",
+          "category": "Sách thiếu nhi",
+          "price": 23750,
+          "oldPrice": 25000.0,
+          "discount": 5,
+          "quantity": 250,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+        },
+        {
+          "id": 50,
+          "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+          "author": "Nguyễn Nhật Ánh",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 71760,
+          "oldPrice": 78000.0,
+          "discount": 8,
+          "quantity": 150,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+        },
+        {
+          "id": 13,
+          "name": "Dế Mèn Phiêu Lưu Ký",
+          "author": "Tô Hoài",
+          "category": "Sách Văn học nghệ thuật",
+          "price": 50400,
+          "oldPrice": 56000.0,
+          "discount": 10,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+        },
+        {
+          "id": 37,
+          "name": "Hoàng Tử Bé",
+          "author": "Antoine de Saint-Exupéry",
+          "category": "Sách thiếu nhi",
+          "price": 69920,
+          "oldPrice": 76000.0,
+          "discount": 8,
+          "quantity": 160,
+          "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+        }
+      ],
+      "fallback": false,
+      "execution": {
+        "tool": "getProducts",
+        "status": "COMPLETED"
+      },
+      "response": {
+        "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Doraemon - Tập 1”\nVới hướng đọc “truyện”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Chú mèo máy Doraemon từ tương lai cùng những bảo bối thần kỳ và cậu bạn Nobita. Bộ truyện tranh tuổi thơ thân thương của bao thế hệ thiếu nhi.\n\n• “Thám Tử Lừng Danh Conan - Tập 1”\nVới hướng đọc “truyện”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Thám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ”\nVới hướng đọc “truyện”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Tấm vé đưa người đọc trở về thế giới hồn nhiên của tuổi thơ với bao trò nghịch ngợm đáng yêu. Cuốn sách gối đầu giường của cả trẻ em và người lớn.\n\n• “Dế Mèn Phiêu Lưu Ký”\nVới hướng đọc “truyện”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Cuộc phiêu lưu của chú Dế Mèn qua thế giới loài vật — bài học về lòng dũng cảm, tình bạn và khát vọng. Tác phẩm gối đầu giường của bao thế hệ thiếu nhi Việt Nam.\n\n• “Hoàng Tử Bé”\nVới hướng đọc “truyện”, cuốn này thuộc nhóm đáp ứng điều kiện bạn đã nêu. Câu chuyện trong trẻo và sâu sắc về cậu hoàng tử nhỏ đến từ tiểu hành tinh B612. Tác phẩm văn học được yêu thích nhất nước Pháp, dành cho mọi lứa tuổi.\n\nCửa hàng chưa xác nhận độ tuổi đọc cho từng cuốn, nên mình chưa đủ căn cứ chọn cuốn hợp với bé nhất chỉ theo tuổi. Bạn có thể cân nhắc nội dung và xem thử cùng bé trước khi chọn; tuổi nhân vật không phải độ tuổi đọc của sách.",
+        "provider": "gemini",
+        "model": "gemini-3.1-flash-lite",
+        "fallback": false,
+        "products": [
+          {
+            "id": 51,
+            "name": "Doraemon - Tập 1",
+            "author": "Fujiko F. Fujio",
+            "category": "Sách thiếu nhi",
+            "price": 19800,
+            "oldPrice": 22000.0,
+            "discount": 10,
+            "quantity": 300,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp"
+          },
+          {
+            "id": 48,
+            "name": "Thám Tử Lừng Danh Conan - Tập 1",
+            "author": "Gosho Aoyama",
+            "category": "Sách thiếu nhi",
+            "price": 23750,
+            "oldPrice": 25000.0,
+            "discount": 5,
+            "quantity": 250,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp"
+          },
+          {
+            "id": 50,
+            "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+            "author": "Nguyễn Nhật Ánh",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 71760,
+            "oldPrice": 78000.0,
+            "discount": 8,
+            "quantity": 150,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp"
+          },
+          {
+            "id": 13,
+            "name": "Dế Mèn Phiêu Lưu Ký",
+            "author": "Tô Hoài",
+            "category": "Sách Văn học nghệ thuật",
+            "price": 50400,
+            "oldPrice": 56000.0,
+            "discount": 10,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp"
+          },
+          {
+            "id": 37,
+            "name": "Hoàng Tử Bé",
+            "author": "Antoine de Saint-Exupéry",
+            "category": "Sách thiếu nhi",
+            "price": 69920,
+            "oldPrice": 76000.0,
+            "discount": 8,
+            "quantity": 160,
+            "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg"
+          }
+        ],
+        "chips": [],
+        "messageId": "c498e2b8-1009-423a-bb5d-b335a7e4c51c",
+        "intent": "PRODUCT_INFO",
+        "criteria": {
+          "minPrice": null,
+          "maxPrice": 100000,
+          "category": "",
+          "author": "",
+          "sort": "",
+          "topics": [],
+          "minRating": null
+        },
+        "actions": [],
+        "execution": {
+          "tool": "getProducts",
+          "status": "COMPLETED"
+        }
+      }
+    }
+  ],
+  "cleanup": [
+    {
+      "scenario": "08_nho_dieu_kien_sau_cau_chen",
+      "httpStatus": 204
+    }
+  ]
+}
