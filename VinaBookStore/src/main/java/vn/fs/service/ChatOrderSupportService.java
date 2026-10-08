@@ -55,6 +55,36 @@ public class ChatOrderSupportService {
 		this.orders = orders;
 	}
 
+    @Transactional(readOnly = true)
+    public java.util.Map<String,Object> customerDetails(Long id) {
+        String email = access.currentEmail();
+        if (email == null) throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.UNAUTHORIZED, "Bạn đăng nhập để xem đúng đơn của mình nhé.");
+        Order order = id == null || id < 1 ? null : orders.findById(id).orElse(null);
+        if (order == null || order.getUser() == null || !email.equals(order.getUser().getEmail()))
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND, "Không tìm thấy đơn hàng này trong tài khoản của bạn.");
+        java.util.Map<String,Object> result = new java.util.LinkedHashMap<>();
+        result.put("id", order.getOrdersId()); result.put("date", order.getOrderDate());
+        result.put("total", order.getAmount()); result.put("statusCode", order.getStatus());
+        result.put("paymentMethod", order.getPaymentMethod() == null ? "COD" : order.getPaymentMethod());
+        result.put("paymentStatus", order.getPaymentStatus() == null ? "UNPAID" : order.getPaymentStatus());
+        result.put("paidAt", order.getPaidAt());
+        String street = order.getAddress() == null ? "" : order.getAddress();
+        String recipient = order.getUser().getName() == null ? "" : order.getUser().getName();
+        var match = java.util.regex.Pattern.compile("\\s*\\(Người nhận: (.*?)\\)$").matcher(street);
+        if (match.find()) { recipient = match.group(1); street = street.substring(0, match.start()); }
+        result.put("shippingAddress", java.util.Map.of("name", recipient, "phone", order.getPhone() == null ? "" : order.getPhone(), "street", street));
+        java.util.List<java.util.Map<String,Object>> items = new java.util.ArrayList<>();
+        for (var line : details.findByOrder(order)) {
+            var product = line.getProduct(); java.util.Map<String,Object> item = new java.util.LinkedHashMap<>();
+            item.put("productId", product == null ? null : product.getProductId());
+            item.put("name", product == null ? "Sách không còn thông tin" : product.getName());
+            item.put("image", product == null ? "" : product.getImage());
+            item.put("price", line.getPrice()); item.put("quantity", line.getQuantity()); items.add(item);
+        }
+        result.put("items", items);
+        return result;
+    }
+
 	@Transactional(readOnly = true)
 	public String latestOrders() {
 		String email = access.currentEmail();

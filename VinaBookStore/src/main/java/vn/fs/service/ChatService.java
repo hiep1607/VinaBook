@@ -251,8 +251,11 @@ public class ChatService {
         }
 		if (classified == ChatIntent.ORDER_SUPPORT && !buy) {
 			java.util.regex.Matcher id = java.util.regex.Pattern.compile("(?:#|don(?: hang)?(?: so)?\\s*)([0-9]{1,18})").matcher(q);
-			return finish(request, id.find() ? orderSupport.orderById(Long.parseLong(id.group(1))) : orderSupport.latestOrders(),
-				ChatIntent.ORDER_SUPPORT, List.of(), false, false, s, started);
+            Long orderId = id.find() ? Long.parseLong(id.group(1)) : null;
+            String answer = orderId == null ? orderSupport.latestOrders() : orderSupport.orderById(orderId);
+            var response = finish(request, answer, ChatIntent.ORDER_SUPPORT, List.of(), false, false, s, started);
+            if (orderId != null && answer.startsWith("Đơn #")) response.getActions().add(new ChatActionDto("VIEW_ORDER", "Xem chi tiết đơn #"+orderId, null, "/orders/"+orderId, false));
+            return response;
 		}
         ChatReadingRequest reading=new ChatReadingRequest(intents);
         if(tools!=null && !s.toolSearch.isEmpty() && (reading.contextPatch(question) || reading.budgetPatch(question))

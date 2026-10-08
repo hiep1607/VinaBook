@@ -791,6 +791,8 @@ public class ChatBuiltinTools {
                     }
                     String answer=orders.orderById(id);
                     if(answer.startsWith("Đơn #"))c.state().focusedOrderId=id;
+                    if (answer.startsWith("Đơn #")) return new ChatTool.Result(answer,ChatIntent.ORDER_SUPPORT,List.of(),
+                        List.of(new ChatActionDto("VIEW_ORDER","Xem chi tiết đơn #"+id,null,"/orders/"+id,false)),"COMPLETED");
                     return ChatTool.Result.text(answer,ChatIntent.ORDER_SUPPORT);
                 });
     }
