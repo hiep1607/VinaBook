@@ -47,3 +47,4 @@ Công cụ `apply-reviewed-book-profiles.py` nhập manifest đã biên tập v�
 ## Chức năng khách hàng 08/10/2026
 - `07-support-chat.sql`: tin nhắn khách/nhân viên, chống gửi trùng.
 - `08-customer-preferences.sql`: địa chỉ, avatar, phiên bản dữ liệu và dấu migration local.
+- `09-payment-refunds.sql`: lịch sử hoàn tiền và thời điểm giao dịch VNPay gốc.

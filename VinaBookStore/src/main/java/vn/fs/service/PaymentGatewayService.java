@@ -88,6 +88,67 @@ public class PaymentGatewayService {
 		this.objectMapper = objectMapper;
 	}
 
+    @Value("${payment.refunds.enabled:false}") private boolean refundsEnabled;
+    @Value("${payment.vnpay.refund-url:https://sandbox.vnpayment.vn/merchant_webapi/api/transaction}") private String vnpayRefundUrl;
+    @Value("${payment.momo.refund-url:https://test-payment.momo.vn/v2/gateway/api/refund}") private String momoRefundUrl;
+    public String refundUnavailable(Order order) {
+        if (!refundsEnabled) return "Cửa hàng chưa bật hoàn tiền qua cổng thanh toán.";
+        if (!PAID.equals(paymentStatus(order))) return "Đơn này chưa được xác nhận thanh toán.";
+        if (!notBlank(order.getPaymentReference()) || !notBlank(order.getPaymentTransactionId())) return "Thiếu mã giao dịch gốc để hoàn tiền. Cần đối soát với cổng thanh toán.";
+        if (VNPAY.equals(paymentMethod(order))) {
+            if (!vnpayConfigured()) return "Chưa cấu hình VNPay.";
+            if (order.getPaymentGatewayDate()==null || !order.getPaymentGatewayDate().matches("[0-9]{14}")) return "Đơn cũ thiếu thời điểm tạo giao dịch VNPay. Nhân viên cần đối soát trên cổng thanh toán.";
+        } else if (MOMO.equals(paymentMethod(order))) {
+            if (!momoConfigured() || !order.getPaymentTransactionId().matches("[0-9]+")) return "Thiếu cấu hình hoặc mã giao dịch MoMo hợp lệ.";
+        } else return "Hoàn tiền tự động chỉ áp dụng với VNPay và MoMo. COD/chuyển khoản cần đối soát riêng.";
+        return "";
+    }
+    public String refund(Order order,vn.fs.entity.PaymentRefund refund) {
+        try {
+            String ref=refund.getGatewayReference(), description="Refund VB"+order.getOrdersId()+" R"+refund.getId();
+            Map<String,Object> payload=new LinkedHashMap<>(); String url;
+            if (VNPAY.equals(refund.getProvider())) {
+                url=vnpayRefundUrl;
+                payload.put("vnp_RequestId",ref);payload.put("vnp_Version","2.1.0");payload.put("vnp_Command","refund");payload.put("vnp_TmnCode",vnpayTmnCode);
+                payload.put("vnp_TransactionType",refund.getAmount()==Math.round(order.getAmount())?"02":"03");
+                payload.put("vnp_TxnRef",order.getPaymentReference());payload.put("vnp_Amount",String.valueOf(Math.multiplyExact(refund.getAmount(),100)));
+                payload.put("vnp_TransactionNo",order.getPaymentTransactionId());payload.put("vnp_TransactionDate",order.getPaymentGatewayDate());
+                payload.put("vnp_CreateBy","staff"+refund.getStaffId());payload.put("vnp_CreateDate",vnpayDate(0));payload.put("vnp_IpAddr","127.0.0.1");payload.put("vnp_OrderInfo",description);
+                payload.put("vnp_SecureHash",hmac("HmacSHA512",vnpayHashSecret,pipe(payload,"vnp_RequestId","vnp_Version","vnp_Command","vnp_TmnCode","vnp_TransactionType","vnp_TxnRef","vnp_Amount","vnp_TransactionNo","vnp_TransactionDate","vnp_CreateBy","vnp_CreateDate","vnp_IpAddr","vnp_OrderInfo")));
+            } else {
+                url=momoRefundUrl;payload.put("partnerCode",momoPartnerCode);payload.put("orderId",ref);payload.put("requestId",ref);payload.put("amount",refund.getAmount());
+                payload.put("transId",Long.parseLong(order.getPaymentTransactionId()));payload.put("lang","vi");payload.put("description",description);
+                payload.put("signature",hmac("HmacSHA256",momoSecretKey,"accessKey="+momoAccessKey+"&amount="+refund.getAmount()+"&description="+description+"&orderId="+ref+"&partnerCode="+momoPartnerCode+"&requestId="+ref+"&transId="+order.getPaymentTransactionId()));
+            }
+            return refundResult(order,refund,payload,postRefund(url,payload));
+        } catch (Exception ex) { if(ex instanceof InterruptedException)Thread.currentThread().interrupt(); return "UNKNOWN"; }
+    }
+    // An uncertain transport response must never trigger another refund request.
+    protected Map<String,Object> postRefund(String url,Map<String,Object> payload) throws Exception {
+        URI endpoint=URI.create(url);if(!"https".equalsIgnoreCase(endpoint.getScheme()) || endpoint.getUserInfo()!=null)throw new IllegalStateException("Refund endpoint must use HTTPS");
+        HttpRequest request=HttpRequest.newBuilder(endpoint).timeout(Duration.ofSeconds(35)).header("Content-Type","application/json")
+            .POST(HttpRequest.BodyPublishers.ofString(objectMapper.writeValueAsString(payload))).build();
+        HttpResponse<String> response=httpClient.send(request,HttpResponse.BodyHandlers.ofString());
+        if(response.statusCode()!=200)throw new IllegalStateException("Uncertain refund response");
+        return objectMapper.readValue(response.body(),new TypeReference<Map<String,Object>>(){});
+    }
+    String refundResult(Order order,vn.fs.entity.PaymentRefund refund,Map<String,Object> request,Map<String,Object> response) {
+        if(VNPAY.equals(refund.getProvider())) {
+            String signature=hmac("HmacSHA512",vnpayHashSecret,pipe(response,"vnp_ResponseId","vnp_Command","vnp_ResponseCode","vnp_Message","vnp_TmnCode","vnp_TxnRef","vnp_Amount","vnp_BankCode","vnp_PayDate","vnp_TransactionNo","vnp_TransactionType","vnp_TransactionStatus","vnp_OrderInfo"));
+            if(!secureEquals(signature,string(response,"vnp_SecureHash")) || !"refund".equals(string(response,"vnp_Command"))
+                || !vnpayTmnCode.equals(string(response,"vnp_TmnCode")) || !order.getPaymentReference().equals(string(response,"vnp_TxnRef"))
+                || !string(request,"vnp_TransactionType").equals(string(response,"vnp_TransactionType"))
+                || !string(request,"vnp_OrderInfo").equals(string(response,"vnp_OrderInfo"))
+                || parseLong(string(response,"vnp_Amount"),-1)!=refund.getAmount()*100) return "UNKNOWN";
+            if(!"00".equals(string(response,"vnp_ResponseCode")))return "UNKNOWN";
+            String status=string(response,"vnp_TransactionStatus");return "00".equals(status)?"SUCCEEDED":"09".equals(status)?"FAILED":"PENDING";
+        }
+        if(!momoPartnerCode.equals(string(response,"partnerCode")) || !refund.getGatewayReference().equals(string(response,"orderId"))
+            || !refund.getGatewayReference().equals(string(response,"requestId")) || parseLong(string(response,"amount"),-1)!=refund.getAmount())return "UNKNOWN";
+        String result=string(response,"resultCode");return "0".equals(result)?"SUCCEEDED":("7000".equals(result)||"7002".equals(result))?"PENDING":"UNKNOWN";
+    }
+    private String pipe(Map<String,?> fields,String...names) {return java.util.Arrays.stream(names).map(name->string(fields,name)).collect(java.util.stream.Collectors.joining("|"));}
+
 	public Map<String, Object> availableMethods() {
 		Map<String, Object> result = new LinkedHashMap<>();
 		result.put(COD, method(true, "Thanh toán khi nhận hàng", "Thanh toán cho nhân viên giao hàng."));
@@ -247,6 +308,7 @@ public class PaymentGatewayService {
 		fields.put("vnp_ReturnUrl", backendUrl.replaceAll("/+$", "") + "/api/payments/vnpay/return");
 		fields.put("vnp_IpAddr", normalizeIp(clientIp));
 		fields.put("vnp_CreateDate", vnpayDate(0));
+        order.setPaymentGatewayDate(fields.get("vnp_CreateDate"));
 		fields.put("vnp_ExpireDate", vnpayDate(15 * 60 * 1000L));
 		String signData = canonicalUrlEncoded(fields);
 		String secureHash = hmac("HmacSHA512", vnpayHashSecret, signData);

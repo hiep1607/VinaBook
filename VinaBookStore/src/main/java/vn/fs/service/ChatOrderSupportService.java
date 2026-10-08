@@ -15,6 +15,7 @@ import vn.fs.repository.UserRepository;
 
 @Service
 public class ChatOrderSupportService {
+    @org.springframework.beans.factory.annotation.Autowired(required=false) private PaymentRefundService paymentRefunds;
 	private final CurrentUserAccess access;
 	private final UserRepository users;
 	private final OrderRepository orders;
@@ -66,6 +67,7 @@ public class ChatOrderSupportService {
         result.put("id", order.getOrdersId()); result.put("date", order.getOrderDate());
         result.put("total", order.getAmount()); result.put("statusCode", order.getStatus());
         result.put("paymentMethod", order.getPaymentMethod() == null ? "COD" : order.getPaymentMethod());
+        result.put("refunds", paymentRefunds == null ? java.util.Collections.emptyMap() : paymentRefunds.preview(id,false));
         result.put("paymentStatus", order.getPaymentStatus() == null ? "UNPAID" : order.getPaymentStatus());
         result.put("paidAt", order.getPaidAt());
         String street = order.getAddress() == null ? "" : order.getAddress();
@@ -111,6 +113,13 @@ public class ChatOrderSupportService {
 	}
 
 	@Transactional(readOnly = true)
+    private String refundSummary(Long id) {
+        if(paymentRefunds==null)return "";var info=paymentRefunds.preview(id,false);
+        Object rows=info.get("refunds");if(!(rows instanceof java.util.List<?> list)||list.isEmpty())return "";
+        StringBuilder text=new StringBuilder("\nHoàn tiền: đã hoàn "+info.get("refunded")+"đ.");
+        for(Object value:list)if(value instanceof java.util.Map<?,?> row){String status=String.valueOf(row.get("status"));String label=switch(status){case "SUCCEEDED"->"đã hoàn tiền";case "FAILED"->"không hoàn thành";case "UNKNOWN"->"cửa hàng đang đối soát";default->"đang xử lý";};text.append("\n• ").append(row.get("amount")).append("đ — ").append(label);}
+        return text.toString();
+    }
 	public String orderById(Long id) {
 		String email = access.currentEmail();
 		if (email == null) return ChatVoice.ORDER_LOGIN;
@@ -129,6 +138,7 @@ public class ChatOrderSupportService {
 			+ NumberFormat.getNumberInstance(new Locale("vi", "VN")).format(order.getAmount())
 			+ "đ. Phương thức: " + order.getPaymentMethod() + ". "
 			+ ("PAID".equals(order.getPaymentStatus()) ? "Đã thanh toán." : "Chưa ghi nhận thanh toán.")
+			+ refundSummary(id)
 			+ items.toString()
 			+ "\nMình chưa có dữ liệu vị trí vận chuyển trực tiếp nên chưa thể nói chính xác sách đang ở đâu. Bạn có thể mở mục Đơn hàng để xem chi tiết trạng thái hiện tại nhé.";
 	}

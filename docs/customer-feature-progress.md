@@ -34,3 +34,14 @@ Wishlist dùng bảng favorites hiện có; địa chỉ/avatar lưu ở custome
 3. Hai thiết bị sửa địa chỉ cùng lúc: bản cũ bị yêu cầu tải lại, không ghi đè âm thầm.
 4. Mất mạng khi lưu: không báo thành công, không thay cache bằng dữ liệu chưa được server xác nhận.
 5. Đổi tài khoản khi đang tải hoặc gửi request: response cũ không cập nhật dữ liệu của tài khoản mới; avatar quá lớn/SVG bị từ chối.
+
+## 4. Hoàn tiền VNPay/MoMo
+Nhân viên mở chi tiết đơn hoặc yêu cầu đổi trả, nhập số tiền/lý do, xem lại rồi xác nhận. Backend giữ hạn mức trong transaction trước khi gửi HTTP, khóa đơn và chống gửi trùng. Timeout/thiếu chữ ký/sai số tiền giữ trạng thái cần đối soát; không tự gửi thêm giao dịch. Kết quả chưa chắc chắn chỉ được nhân viên đối soát với mã biên bản. Khách xem trạng thái trên chi tiết đơn (chatbot có nút mở cùng trang). Thanh toán gốc giữ nguyên PAID; giao hàng/tồn kho không đổi do hoàn tiền.
+`PAYMENT_REFUNDS_ENABLED=false` mặc định. Bật sau khi cấu hình merchant và quyền hoàn tiền; đơn VNPay cũ thiếu vnp_CreateDate không đủ dữ liệu để hoàn tự động. MoMo tối thiểu 10.000đ để bao phủ thẻ ATM. SQL: db/09-payment-refunds.sql, chạy ALTER một lần.
+Tài liệu giao thức: [VNPay](https://sandbox.vnpayment.vn/apis/docs/truy-van-hoan-tien/querydr&refund.html), [MoMo](https://developers.momo.vn/v3/docs/payment/api/payment-api/refund/).
+5 kịch bản Luna:
+1. Hoàn một phần đơn sandbox đã trả tiền; xem hạn mức còn lại và trạng thái khách.
+2. Nhấp xác nhận/gửi lại cùng request nhiều lần: chỉ một giao dịch hoàn.
+3. Hai yêu cầu đồng thời vượt tổng tiền đơn: yêu cầu sau bị chặn.
+4. Timeout hoặc response sai chữ ký/số tiền: chưa báo thành công, giữ hạn mức, đối soát trước yêu cầu mới.
+5. Tài khoản khách gọi admin API, xem đơn người khác, đơn COD/chưa trả tiền/cấu hình tắt: bị từ chối, không gửi tiền.
