@@ -43,3 +43,6 @@ cmd /c "mysql -u <user> -p --default-character-set=utf8mb4 book < D:\book\book\d
 Công cụ `apply-reviewed-book-profiles.py` nhập manifest đã biên tập vào các hồ sơ sách hiện có. Mặc định dry-run, so khớp đúng tên/tác giả, sao lưu catalog/hồ sơ/chủ đề và ghi trong một transaction. Manifest có `catalog` chỉ được sửa các trường có nguồn đối chiếu, khớp thêm ID; giá và tồn kho không được ghi. Cần MySQL 8.0.16+ để transaction guard hoạt động. Xem [hướng dẫn và độ phủ dữ liệu](../docs/book-knowledge/README.md). Hai đợt 33 + 23 cuốn ngày 2026-10-05 đã được chủ dự án đồng ý và áp dụng trên database local `book` cổng 3306; đây không phải seed cho database sạch.
 
 `test_reviewed_book_profiles.py` kiểm tra các điều kiện nhập. Tùy chọn `--integration` dùng trước khi nhập manifest 23 cuốn để chứng minh kế hoạch có dữ liệu cũ bị từ chối và mọi thay đổi catalog/hồ sơ/chủ đề trong transaction bị rollback. Sau nhập, chạy lại hai manifest ở chế độ dry-run để kiểm tra không có thay đổi.
+
+## Chức năng khách hàng 08/10/2026
+- `07-support-chat.sql`: tin nhắn khách/nhân viên, chống gửi trùng.

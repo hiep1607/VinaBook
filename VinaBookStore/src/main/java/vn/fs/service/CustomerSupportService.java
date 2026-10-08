@@ -20,6 +20,47 @@ public class CustomerSupportService {
     public CustomerSupportService(CurrentUserAccess access,SupportRequestRepository requests,OrderRepository orders,ChatOrderSupportService history,EntityManager em) {
         this.access=access;this.requests=requests;this.orders=orders;this.history=history;this.em=em;
     }
+    private SupportMessageRepository messages;
+    @org.springframework.beans.factory.annotation.Autowired public void setMessages(SupportMessageRepository messages) { this.messages=messages; }
+    private SupportRequest thread(Long id,boolean staff,boolean lock) {
+        Long sender=owner(); if(staff)admin();
+        SupportRequest request=lock?em.find(SupportRequest.class,id,LockModeType.PESSIMISTIC_WRITE):requests.findById(id).orElse(null);
+        if(request==null || !staff && !sender.equals(request.getOwnerId()))throw failure(HttpStatus.NOT_FOUND,"Không tìm thấy hội thoại trong tài khoản của bạn.");
+        return request;
+    }
+    @Transactional(readOnly=true) public List<Map<String,Object>> threadMessages(Long id,long after,long before,boolean staff) {
+        thread(id,staff,false);
+        if(after<0 || before<0 || after>0 && before>0)throw failure(HttpStatus.BAD_REQUEST,"Mốc tin nhắn chưa hợp lệ.");
+        List<SupportMessage> rows;
+        if(before>0)rows=new ArrayList<>(messages.findTop50ByRequestIdAndIdLessThanOrderByIdDesc(id,before));
+        else if(after>0)rows=new ArrayList<>(messages.findTop50ByRequestIdAndIdGreaterThanOrderByIdAsc(id,after));
+        else rows=new ArrayList<>(messages.findTop50ByRequestIdOrderByIdDesc(id));
+        rows.sort(Comparator.comparing(SupportMessage::getId));
+        return rows.stream().map(this::messageDto).collect(java.util.stream.Collectors.toList());
+    }
+    @Transactional public Map<String,Object> sendMessage(Long id,Message input,boolean staff) {
+        SupportRequest request=thread(id,staff,true); Long sender=owner();
+        if(input.content==null || input.content.trim().isBlank() || input.content.length()>2000)throw failure(HttpStatus.BAD_REQUEST,"Bạn nhập tin nhắn từ 1 đến 2.000 ký tự nhé.");
+        var saved=messages.findByRequestIdAndSenderIdAndClientKey(id,sender,input.clientKey);
+        if(saved.isPresent()) {
+            if(!saved.get().getContent().equals(input.content.trim()))throw failure(HttpStatus.CONFLICT,"Tin nhắn đã gửi có nội dung khác. Bạn kiểm tra hội thoại trước khi gửi lại nhé.");
+            return messageDto(saved.get());
+        }
+        if(Set.of("RESOLVED","REJECTED").contains(request.getStatus()))throw failure(HttpStatus.CONFLICT,"Yêu cầu đã đóng. Bạn mở yêu cầu mới nếu cần hỗ trợ thêm nhé.");
+        var previous=messages.findTopByRequestIdAndSenderIdOrderByIdDesc(id,sender);
+        if(previous.isPresent() && previous.get().getCreatedAt().isAfter(Instant.now().minusSeconds(1)))throw failure(HttpStatus.TOO_MANY_REQUESTS,"Bạn chờ một chút rồi gửi tin tiếp theo nhé.");
+        var message=new SupportMessage(); message.setRequestId(id); message.setSenderId(sender); message.setClientKey(input.clientKey);
+        message.setStaff(staff); message.setContent(input.content.trim()); message.setCreatedAt(Instant.now());
+        request.setUpdatedAt(message.getCreatedAt()); if(staff && "OPEN".equals(request.getStatus()))request.setStatus("IN_REVIEW");
+        requests.save(request); return messageDto(messages.saveAndFlush(message));
+    }
+    private Map<String,Object> messageDto(SupportMessage message) {
+        return Map.of("id",message.getId(),"content",message.getContent(),"staff",message.isStaff(),"mine",Objects.equals(message.getSenderId(),access.currentUserId()),"createdAt",message.getCreatedAt());
+    }
+    @Data public static class Message {
+        @NotBlank @Pattern(regexp="[A-Za-z0-9-]{10,80}") private String clientKey;
+        @NotBlank @Size(max=2000) private String content;
+    }
     private Long owner() { Long id=access.currentUserId();if(id==null)throw failure(HttpStatus.UNAUTHORIZED,"Bạn đăng nhập để yêu cầu được lưu đúng tài khoản và xem được phản hồi nhé.");return id; }
     private void admin() { if(!access.isAdmin())throw failure(HttpStatus.FORBIDDEN,"Chỉ nhân viên quản trị được xử lý yêu cầu."); }
     private static ResponseStatusException failure(HttpStatus status,String reason) { return new ResponseStatusException(status,reason); }
