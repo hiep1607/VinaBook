@@ -105,7 +105,7 @@ Bộ nhận diện hiểu các cách hỏi tự nhiên có từ chen giữa như
 
 Prompt AI nhận mô tả rút gọn của các sách liên quan và kiến thức về quy trình mua, tài khoản, đơn hàng, giao hàng, thanh toán, đổi trả để trả lời được nhiều cách hỏi hơn. Giao diện chỉ hiện quick replies ở tin nhắn bot mới nhất; các bộ nút cũ vẫn được lưu trong lịch sử nhưng không lặp lại trên màn hình.
 
-Các quick reply “Còn cuốn khác không?”, “Sách rẻ hơn” và “So sánh các cuốn này” gửi product ID của câu trả lời gần nhất làm ngữ cảnh. ID chỉ dùng để chọn lại catalog hiện hành; giá và tồn kho vẫn đọc lại từ database. Action `ADD_TO_CART` luôn mở xác nhận inline trước khi gọi `CartService`. Action đơn hàng chỉ tra dữ liệu khi JWT hợp lệ và dùng principal hiện tại; client không gửi email/user ID để chọn chủ sở hữu.
+Các quick reply “Còn cuốn khác không?”, “Sách rẻ hơn” và “So sánh các cuốn này” gửi product ID của câu trả lời gần nhất làm ngữ cảnh. ID chỉ dùng để chọn lại catalog hiện hành; giá và tồn kho vẫn đọc lại từ database. Các action sửa giỏ luôn mở xác nhận trước khi gọi `CartService`. Action đơn hàng chỉ tra dữ liệu khi JWT hợp lệ và dùng principal hiện tại; client không gửi email/user ID để chọn chủ sở hữu. Luồng giỏ và báo giá mới được mô tả trong [đặt sách trong chat](chatbot-commerce.md).
 
 Ở chế độ `local`, câu hỏi nêu đúng tên sách về tồn kho, giá hoặc phần trăm giảm được trả lời trực tiếp từ catalog. Số lượng luôn kèm lưu ý có thể thay đổi khi phát sinh đơn hàng mới.
 
