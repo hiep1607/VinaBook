@@ -45,3 +45,13 @@ Tài liệu giao thức: [VNPay](https://sandbox.vnpayment.vn/apis/docs/truy-van
 3. Hai yêu cầu đồng thời vượt tổng tiền đơn: yêu cầu sau bị chặn.
 4. Timeout hoặc response sai chữ ký/số tiền: chưa báo thành công, giữ hạn mức, đối soát trước yêu cầu mới.
 5. Tài khoản khách gọi admin API, xem đơn người khác, đơn COD/chưa trả tiền/cấu hình tắt: bị từ chối, không gửi tiền.
+
+## 5. Mã giảm giá
+Admin quản lý mã tại /admin/vouchers. Web checkout và checkout trong chat dùng chung ô áp dụng mã và API tính từ catalog thật. Có giảm tiền/%, trần giảm, tiền sách tối thiểu, thời gian, tổng lượt và lượt theo JWT. Báo giá chưa trừ lượt; confirm khóa mã, kiểm tra lại và ghi lượt cùng transaction đơn/tồn kho. Mã không giảm phí ship; ngưỡng miễn ship vẫn tính trước mã. Chi tiết đơn lưu đúng discount/ship lịch sử. Lượt đã dùng không tự trả lại khi hủy/hoàn tiền.
+SQL db/10-vouchers.sql (ALTER một lần); không tự tạo chương trình khuyến mãi thật.
+5 kịch bản Luna:
+1. Admin tạo mã tiền/%, khách áp dụng trên web và chat: cùng tổng, lưu đúng đơn.
+2. Mã hết hạn/chưa bắt đầu/tắt/sai/không đủ tiền sách: giải thích lý do, có thể bỏ mã.
+3. Giảm % có trần; mã lớn hơn tiền sách: tối đa tiền sách, không tổng âm, ship theo quy định.
+4. Mã còn 1 lượt, hai tài khoản xác nhận đồng thời: chỉ một đơn được giảm; đơn còn lại xem lại báo giá.
+5. Retry confirm không dùng thêm lượt; tài khoản đã hết lượt hoặc client sửa discount/giá không được hưởng thêm ưu đãi.

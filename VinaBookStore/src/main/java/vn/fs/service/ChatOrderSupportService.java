@@ -64,6 +64,7 @@ public class ChatOrderSupportService {
         if (order == null || order.getUser() == null || !email.equals(order.getUser().getEmail()))
             throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND, "Không tìm thấy đơn hàng này trong tài khoản của bạn.");
         java.util.Map<String,Object> result = new java.util.LinkedHashMap<>();
+        result.put("voucherCode",order.getVoucherCode());result.put("discount",order.getVoucherDiscount()==null?0:order.getVoucherDiscount());result.put("shippingFee",order.getShippingFee());
         result.put("id", order.getOrdersId()); result.put("date", order.getOrderDate());
         result.put("total", order.getAmount()); result.put("statusCode", order.getStatus());
         result.put("paymentMethod", order.getPaymentMethod() == null ? "COD" : order.getPaymentMethod());

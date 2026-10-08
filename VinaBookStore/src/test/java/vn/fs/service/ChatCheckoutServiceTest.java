@@ -41,6 +41,14 @@ class ChatCheckoutServiceTest {
         input = new ChatCheckoutService.Input(); input.setProductId(1L); input.setQuantity(1);
         input.setRecipient("Người thử"); input.setPhone("0900000000"); input.setStreet("Địa chỉ kiểm thử");
     }
+    @Test void voucherTotalsAndUsageAreSharedByQuoteAndConfirm() {
+        VoucherService vouchers=mock(VoucherService.class);service.setVouchers(vouchers);input.setVoucherCode("READ10");
+        when(vouchers.preview("READ10",100000)).thenReturn(10000L);
+        Voucher voucher=new Voucher();when(vouchers.reserve("READ10",100000,10000)).thenReturn(voucher);
+        var quote=service.quote(input);assertThat(quote.getTotal()).isEqualTo(110000);assertThat(quote.getShipping()).isEqualTo(20000);
+        service.confirm(quote.getToken());service.confirm(quote.getToken());verify(vouchers,times(1)).record(voucher,9L,10000);
+        verify(orders).save(argThat(o->o.getVoucherDiscount()==10000 && "READ10".equals(o.getVoucherCode()) && o.getAmount()==110000));
+    }
     @Test void quoteDoesNotWriteAndUsesServerPrice() {
         var q=service.quote(input);
         assertThat(q.getTotal()).isEqualTo(120000);

@@ -26,6 +26,8 @@ public class ChatCheckoutService {
     private final EntityManager em;
     private final TransactionTemplate tx;
     private final Map<String, Draft> drafts = new HashMap<>();
+    private VoucherService vouchers;
+    @org.springframework.beans.factory.annotation.Autowired public void setVouchers(VoucherService value){vouchers=value;}
     private CartSyncService carts;
     @org.springframework.beans.factory.annotation.Autowired public void setCarts(CartSyncService value){carts=value;}
     private StoreKnowledgeService store;
@@ -79,7 +81,10 @@ public class ChatCheckoutService {
         d.recipient=input.recipient.trim(); d.phone=input.phone.trim(); d.street=input.street.trim();
         d.unitPrice=lines.get(0).unitPrice();d.subtotal=lines.stream().mapToLong(i->i.unitPrice()*i.quantity()).sum();
         d.shipping=store==null?(d.subtotal>0 && d.subtotal<300000 ? 20000 : 0):store.shipping(d.subtotal);
-        d.total=d.subtotal+d.shipping;
+        d.voucherCode=VoucherService.code(input.voucherCode);
+        if(!d.voucherCode.isEmpty() && vouchers==null)throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,"Chưa kiểm tra được mã giảm giá.");
+        d.discount=d.voucherCode.isEmpty()?0:vouchers.preview(d.voucherCode,d.subtotal);
+        d.total=d.subtotal+d.shipping-d.discount;
         d.expiresAt=System.currentTimeMillis()+15*60*1000;
         drafts.put(d.token,d); return d;
     }
@@ -105,13 +110,16 @@ public class ChatCheckoutService {
                 if(pricing.effectivePrice(p)!=line.unitPrice())throw new ResponseStatusException(HttpStatus.CONFLICT,"Giá đã thay đổi. Vui lòng xem lại bản nháp.");
                 locked.put(line.productId(),p);
             }
+            Voucher voucher=vouchers==null?null:vouchers.reserve(d.voucherCode,d.subtotal,d.discount);
             User user=users.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED));
             Order order=new Order(); order.setUser(user); order.setOrderDate(new Date());
             order.setAmount((double)d.total); order.setAddress(d.street+" (Người nhận: "+d.recipient+")");
             order.setPhone(d.phone); order.setStatus(0); order.setPaymentMethod(d.paymentMethod); order.setPaymentStatus("COD".equals(d.paymentMethod)?"UNPAID":"PENDING");
             order.setPaymentReference("CHAT-"+token);
+            order.setVoucherCode(d.voucherCode);order.setVoucherDiscount(d.discount);order.setShippingFee(d.shipping);
             order.setStockReserved(true);
             Order saved=orders.save(order);
+            if(vouchers!=null)vouchers.record(voucher,saved.getOrdersId(),d.discount);
             for(QuoteLine line:d.items) {
                 Product p=locked.get(line.productId());p.setQuantity(p.getQuantity()-line.quantity());
                 details.save(new OrderDetail(0L,line.quantity(),(double)(line.unitPrice()*line.quantity()),p,saved));
@@ -140,6 +148,7 @@ public class ChatCheckoutService {
             throw new ResponseStatusException(HttpStatus.CONFLICT,"Phương thức thanh toán này hiện không khả dụng. Vui lòng chọn lại.");
     }
     @Data public static class Input {
+        @Size(max=32) private String voucherCode;
         @Positive private Long productId;
         @javax.validation.Valid @Size(max=100) private List<CartSyncService.@NotNull Line> items;
         @NotBlank @Pattern(regexp="COD|BANK_QR|VNPAY|MOMO") private String paymentMethod="COD";
@@ -155,6 +164,8 @@ public class ChatCheckoutService {
         private String token,name,recipient,phone,street;
         private Long productId,orderId;
         private int quantity;
+        private String voucherCode="";
+        private long discount;
         private long unitPrice,subtotal,shipping,total,expiresAt;
         private String paymentMethod="COD";
         private List<QuoteLine> items;

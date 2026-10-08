@@ -45,6 +45,9 @@ public class Order implements Serializable {
 	private String paymentTransactionId;
 	private Date paidAt;
 	private String paymentGatewayDate;
+    private String voucherCode;
+    private Long voucherDiscount;
+    private Long shippingFee;
 
 	@ManyToOne
 	@JoinColumn(name = "userId")

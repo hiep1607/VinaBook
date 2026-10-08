@@ -1,0 +1,15 @@
+package vn.fs.service;
+import static org.assertj.core.api.Assertions.*;import static org.mockito.Mockito.*;
+import java.time.Instant;import java.util.Optional;
+import org.junit.jupiter.api.Test;import org.junit.jupiter.api.BeforeEach;
+import org.springframework.web.server.ResponseStatusException;
+import vn.fs.config.CurrentUserAccess;import vn.fs.entity.*;import vn.fs.repository.*;
+class VoucherServiceTest {
+ VoucherRepository vouchers=mock(VoucherRepository.class);VoucherUseRepository uses=mock(VoucherUseRepository.class);CurrentUserAccess access=mock(CurrentUserAccess.class);VoucherService service=new VoucherService(vouchers,uses,access);Voucher voucher=new Voucher();
+ @BeforeEach void setup(){when(access.currentUserId()).thenReturn(3L);voucher.setId(1L);voucher.setCode("READ10");voucher.setKind("PERCENT");voucher.setValue(10);voucher.setMaximumDiscount(20000);voucher.setMinimumSubtotal(100000);voucher.setActive(true);voucher.setStartsAt(Instant.now().minusSeconds(60));voucher.setExpiresAt(Instant.now().plusSeconds(3600));voucher.setUsageLimit(10);voucher.setPerUserLimit(1);when(vouchers.findByCode("READ10")).thenReturn(Optional.of(voucher));when(vouchers.lockByCode("READ10")).thenReturn(Optional.of(voucher));}
+ @Test void calculatesDiscountCapAndDoesNotConsumeOnPreview(){assertThat(service.preview(" read10 ",150000)).isEqualTo(15000);assertThat(service.preview("READ10",500000)).isEqualTo(20000);verify(uses,never()).save(any());}
+ @Test void fixedAmountCannotMakeBooksTotalNegative(){voucher.setKind("FIXED");voucher.setValue(999999);voucher.setMaximumDiscount(0);assertThat(service.preview("READ10",100000)).isEqualTo(100000);}
+ @Test void expiryMinimumAndDisabledAreRejected(){assertThatThrownBy(()->service.preview("READ10",90000)).isInstanceOf(ResponseStatusException.class);voucher.setExpiresAt(Instant.now().minusSeconds(1));assertThatThrownBy(()->service.preview("READ10",200000)).isInstanceOf(ResponseStatusException.class);voucher.setExpiresAt(Instant.now().plusSeconds(60));voucher.setActive(false);assertThatThrownBy(()->service.preview("READ10",200000)).isInstanceOf(ResponseStatusException.class);}
+ @Test void confirmLocksAndRechecksUsageAndDiscount(){assertThat(service.reserve("READ10",150000,15000)).isSameAs(voucher);verify(vouchers).lockByCode("READ10");assertThatThrownBy(()->service.reserve("READ10",150000,30000)).isInstanceOf(ResponseStatusException.class);when(uses.countByVoucherId(1L)).thenReturn(10L);assertThatThrownBy(()->service.reserve("READ10",150000,15000)).isInstanceOf(ResponseStatusException.class);}
+ @Test void accountUsageAndAdminRoleAreEnforced(){when(uses.countByVoucherIdAndOwnerId(1L,3L)).thenReturn(1L);assertThatThrownBy(()->service.preview("READ10",150000)).isInstanceOf(ResponseStatusException.class);assertThatThrownBy(()->service.save(voucher)).isInstanceOf(ResponseStatusException.class);when(access.currentUserId()).thenReturn(null);assertThatThrownBy(()->service.preview("READ10",150000)).isInstanceOf(ResponseStatusException.class);}
+}
