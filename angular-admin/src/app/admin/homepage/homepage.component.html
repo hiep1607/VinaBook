@@ -6,14 +6,14 @@
       <p>Điều chỉnh nội dung, thứ tự ưu tiên và các khu vực hiển thị trên trang chủ VinaBook.</p>
     </div>
     <div class="hero-actions">
-      <span class="change-state" [class.has-change]="form && form.dirty">
-        <i class="fas" [class.fa-check-circle]="!form || !form.dirty" [class.fa-circle]="form && form.dirty"></i>
-        {{ form && form.dirty ? 'Có thay đổi chưa lưu' : 'Đã đồng bộ' }}
+      <span class="change-state" [class.has-change]="loadError || (form && form.dirty)">
+        <i class="fas" [class.fa-check-circle]="!loading && !loadError && (!form || !form.dirty)" [class.fa-circle]="loading || (form && form.dirty)" [class.fa-exclamation-circle]="loadError"></i>
+        {{ loading ? 'Đang tải dữ liệu' : loadError ? 'Chưa đồng bộ' : form && form.dirty ? 'Có thay đổi chưa lưu' : 'Đã đồng bộ' }}
       </span>
       <button type="button" class="button button-ghost" (click)="openStorefront()">
         <i class="fas fa-external-link-alt"></i> Xem trang chủ
       </button>
-      <button type="button" class="button button-primary" (click)="save()" [disabled]="saving || loading || !form || !form.dirty">
+      <button type="button" class="button button-primary" (click)="save()" [disabled]="saving || loading || loadError || !form || !form.dirty">
         <i class="fas" [class.fa-save]="!saving" [class.fa-circle-notch]="saving" [class.fa-spin]="saving"></i>
         {{ saving ? 'Đang lưu...' : 'Lưu thay đổi' }}
       </button>
@@ -28,8 +28,9 @@
 
   <div class="error-state" *ngIf="loadError && !loading">
     <i class="fas fa-unlink"></i>
-    <div><strong>Chưa thể kết nối dữ liệu</strong><p>Hãy kiểm tra backend rồi tải lại trang.</p></div>
-    <button type="button" class="button button-ghost" (click)="ngOnInit()">Thử lại</button>
+    <div><strong>{{ loadErrorTitle }}</strong><p>{{ loadErrorMessage }}</p></div>
+    <button type="button" class="button button-ghost" *ngIf="!sessionError" (click)="retryLoad()">Thử lại</button>
+    <a *ngIf="sessionError" class="button button-ghost" routerLink="/login">Đăng nhập lại</a>
   </div>
 
   <form *ngIf="!loading && !loadError" [formGroup]="form" (ngSubmit)="save()" class="editor-layout">

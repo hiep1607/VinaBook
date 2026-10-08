@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Observable, Subject, throwError } from 'rxjs';
+import { catchError, takeUntil, timeout } from 'rxjs/operators';
 import { Category } from '../../common/Category';
 import { DEFAULT_HOMEPAGE_CONFIG, HomepageConfig } from '../../common/HomepageConfig';
 import { Product } from '../../common/Product';
@@ -16,13 +17,17 @@ import { environment } from '../../../environments/environment';
   templateUrl: './homepage.component.html',
   styleUrls: ['./homepage.component.css']
 })
-export class HomepageComponent implements OnInit {
+export class HomepageComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   products: Product[] = [];
   categories: Category[] = [];
   loading = true;
   saving = false;
   loadError = false;
+  sessionError = false;
+  loadErrorTitle = '';
+  loadErrorMessage = '';
+  private readonly destroy$ = new Subject<void>();
   readonly storefrontUrl = environment.storefrontUrl;
   readonly iconOptions = [
     { value: 'truck', label: 'Giao hàng', icon: 'fa-truck' },
@@ -54,21 +59,51 @@ export class HomepageComponent implements OnInit {
     return this.form.get('benefits.items') as FormArray;
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  retryLoad(): void {
+    if (!this.loading) { this.loadData(); }
+  }
+
+  private loadSection<T>(section: string, request: Observable<T>): Observable<T> {
+    return request.pipe(catchError(error => throwError({ section, error })));
+  }
+
   private loadData(): void {
     this.loading = true;
+    this.loadError = false;
+    this.sessionError = false;
+    this.loadErrorTitle = '';
+    this.loadErrorMessage = '';
     forkJoin({
-      config: this.homepageService.getConfig(),
-      products: this.productService.getAll(),
-      categories: this.categoryService.getAll()
-    }).subscribe(result => {
+      config: this.loadSection('cấu hình trang chủ', this.homepageService.getConfig()),
+      products: this.loadSection('danh sách sách', this.productService.getAll()),
+      categories: this.loadSection('thể loại', this.categoryService.getAll())
+    }).pipe(timeout(15000), takeUntil(this.destroy$)).subscribe(result => {
       this.products = (result.products as Product[]).filter(item => item.status !== false);
       this.categories = (result.categories as Category[]).filter(item => item.status !== false);
       this.createForm(this.mergeDefaults(result.config));
       this.loading = false;
-    }, () => {
+    }, failure => {
+      const status = failure.error?.status;
+      const section = failure.section || 'dữ liệu trang chủ';
       this.loadError = true;
       this.loading = false;
-      this.toastr.error('Không thể tải cấu hình trang chủ.', 'VinaBook');
+      this.sessionError = status === 401;
+      if (status === 401) {
+        this.loadErrorTitle = 'Cần đăng nhập lại';
+        this.loadErrorMessage = 'Phiên quản trị không còn hợp lệ. Bạn đăng nhập lại để tiếp tục chỉnh sửa trang chủ nhé.';
+      } else if (status === 403) {
+        this.loadErrorTitle = 'Không có quyền tải dữ liệu';
+        this.loadErrorMessage = 'Tài khoản hiện tại không được phép tải ' + section + '. Bạn cần dùng tài khoản quản trị.';
+      } else {
+        this.loadErrorTitle = 'Chưa thể tải ' + section;
+        this.loadErrorMessage = 'Kết nối chưa thành công. Bạn thử tải lại nhé; nội dung đã lưu trên cửa hàng vẫn được giữ nguyên.';
+      }
+      this.toastr.error(this.loadErrorMessage, 'VinaBook');
     });
   }
 
@@ -178,13 +213,14 @@ export class HomepageComponent implements OnInit {
   }
 
   save(): void {
+    if (this.loading || this.loadError || this.saving) { return; }
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       this.toastr.warning('Vui lòng điền đầy đủ các trường bắt buộc.', 'VinaBook');
       return;
     }
     this.saving = true;
-    this.homepageService.updateConfig(this.form.getRawValue() as HomepageConfig).subscribe(config => {
+    this.homepageService.updateConfig(this.form.getRawValue() as HomepageConfig).pipe(takeUntil(this.destroy$)).subscribe(config => {
       this.createForm(this.mergeDefaults(config));
       this.saving = false;
       this.toastr.success('Trang chủ đã được cập nhật.', 'VinaBook');
