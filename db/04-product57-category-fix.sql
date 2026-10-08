@@ -10,8 +10,8 @@
 --   7 = 'Sách Tâm lý, tâm linh, tôn giáo'   ← đúng chủ đề Đắc Nhân Tâm
 --
 -- LƯU Ý: bản seed `database.sql` chỉ chứa product_id 3..55, tức bản ghi
---   #57 chỉ tồn tại trong MySQL đang chạy. Script này phải được CHỦ DỰ ÁN
---   duyệt và chạy thủ công (xem blocker trong AI_WORKLOG.md / docs/bugs.md).
+--   #57 chỉ tồn tại trong MySQL đang chạy. Chủ dự án đã duyệt sửa sau
+--   kiểm thử chatbot ngày 2026-10-04; đã cập nhật bản ghi và search_text.
 --
 -- Idempotent: chạy lại nhiều lần không đổi thêm dữ liệu — chỉ UPDATE khi
 --   category hiện tại chưa đúng; match theo TÊN sách (khóa nghiệp vụ),
@@ -23,14 +23,22 @@ START TRANSACTION;
 
 UPDATE products p
 JOIN categories wrong_cat ON wrong_cat.category_id = p.category_id
-SET p.category_id = (
-    SELECT c.category_id
-    FROM categories c
-    WHERE c.category_name = 'Sách Tâm lý, tâm linh, tôn giáo'
-    LIMIT 1
-)
-WHERE LOWER(TRIM(p.name)) LIKE '%đắc nhân tâm%'
-  AND wrong_cat.category_name <> 'Sách Tâm lý, tâm linh, tôn giáo';
+JOIN categories target ON target.category_name = 'Sách Tâm lý, tâm linh, tôn giáo'
+SET p.category_id = target.category_id
+WHERE LOWER(TRIM(p.name)) = 'đắc nhân tâm'
+  AND p.author = 'Dale Carnegie'
+  AND wrong_cat.category_name = 'Sách Truyện, tiểu thuyết';
+
+-- Làm mới dữ liệu dẫn xuất; worker tạo lại embedding cho hồ sơ đã duyệt.
+UPDATE book_profiles bp
+JOIN products p ON p.product_id = bp.product_id
+JOIN categories c ON c.category_id = p.category_id
+SET bp.search_text = REPLACE(bp.search_text, 'Sách Truyện, tiểu thuyết', c.category_name),
+    bp.embedding_json = NULL, bp.updated_at = NOW()
+WHERE LOWER(TRIM(p.name)) = 'đắc nhân tâm'
+  AND p.author = 'Dale Carnegie'
+  AND c.category_name = 'Sách Tâm lý, tâm linh, tôn giáo'
+  AND bp.search_text LIKE '%Sách Truyện, tiểu thuyết%';
 
 COMMIT;
 
