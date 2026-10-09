@@ -127,7 +127,7 @@ Action mua mang `quantity` trong đường dẫn trang sách. Trang sách điề
 
 ## Gợi ý thêm sách và cách trình bày — 02/10/2026
 
-- Mặc định mỗi lượt giới thiệu tối đa 5 cuốn. Số lượng được nói rõ trong tin nhắn (chữ hoặc số, ví dụ “sáu cuốn”, “9 cuốn”) ưu tiên hơn `limit` do AI điền; không còn giới hạn cố định 3 hoặc 8. Lượt bổ sung bộ lọc giữ số lượng đã yêu cầu, lượt hỏi thêm bắt đầu nhóm mới tối đa 5 nếu khách không nêu số mới. “Tất cả” tìm toàn bộ danh sách đáp ứng yêu cầu.
+- Mặc định mỗi lượt giới thiệu tối đa 3 cuốn. Số lượng được nói rõ trong tin nhắn (chữ hoặc số, ví dụ “sáu cuốn”, “9 cuốn”) ưu tiên hơn `limit` do AI điền; số lượng cụ thể không bị giới hạn ở 3 hoặc 8. Lượt bổ sung bộ lọc giữ số lượng đã yêu cầu, lượt hỏi thêm bắt đầu nhóm mới tối đa 3 nếu khách không nêu số mới. “Tất cả” tìm toàn bộ danh sách đáp ứng yêu cầu.
 - `scope=more` giữ chủ đề và bộ lọc của lượt tìm trước, loại tất cả ID đã xuất hiện trong cuộc trò chuyện. Danh sách này không bị xóa khi tìm chủ đề mới, hỏi chi tiết sách hay chính sách. Nó được lưu cùng trạng thái hội thoại và chỉ mất khi tạo cuộc trò chuyện mới.
 - Khi đọc hội thoại lưu bằng phiên bản cũ, backend khôi phục các ID đã giới thiệu từ toàn bộ transcript một lần rồi lưu phiên bản trạng thái mới. Câu đổi sang chủ đề được nói rõ ưu tiên hơn `scope` sai do AI điền.
 - Chọn sách đúng yêu cầu trước. Khi hỏi thêm hoặc yêu cầu số cụ thể mà thiếu, hỏi khách trước khi mở rộng. Chỉ bổ sung khi khách cho phép qua lời nói hoặc đồng ý đề nghị vừa nhận; số lượng yêu cầu và match do planner tự điền không phải sự cho phép. Dùng nội dung đã xác nhận cho một chủ đề lân cận; danh mục rộng như “Tiểu thuyết” không đủ chứng minh sách gần với “trinh thám”. Hai nhóm được ghi rõ trong câu trả lời, kèm lý do cho nhóm gần chủ đề.

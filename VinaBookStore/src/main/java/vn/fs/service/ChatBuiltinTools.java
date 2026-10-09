@@ -67,7 +67,7 @@ public class ChatBuiltinTools {
         p.put("minRating",number("Rating tối thiểu 0..5; null xóa điều kiện",0,5));
         p.put("category",text("Tên danh mục")); p.put("author",text("Tên tác giả"));
         p.put("sort",choice("Sắp xếp", "price-asc","price-desc","rating","best","new","sale"));
-        p.put("limit",integer("Số cuốn khách yêu cầu; mặc định tối đa 5, số cụ thể theo khách",1,1000));
+        p.put("limit",integer("Số cuốn khách yêu cầu; mặc định tối đa 3, số cụ thể theo khách",1,1000));
         p.put("match",choice("exact_only chỉ đúng yêu cầu; allow_related được bổ sung sách gần chủ đề khi thiếu", "exact_only","allow_related"));
         p.put("level",choice("Mức đọc đã nói; null xóa", "beginner","experienced"));
         p.put("totalBudget",integer("Tổng tiền cho cả nhóm sách; null xóa, khác maxPrice mỗi cuốn",1,1000000000));
@@ -172,7 +172,7 @@ public class ChatBuiltinTools {
             boolean allRequested=ChatBookFacts.has(normalizedMessage,"tat ca|toan bo");
             if(allRequested && requested==null)c.state().discoveryRequestedCount=null;
             int count=requested!=null?requested:allRequested?Math.max(1,catalog().size()):continuing && c.state().discoveryRequestedCount!=null?c.state().discoveryRequestedCount:
-                Math.min(5,intArg(a,"limit",continuing && filters.get("limit") instanceof Number?((Number)filters.get("limit")).intValue():5));
+                Math.min(3,intArg(a,"limit",continuing && filters.get("limit") instanceof Number?((Number)filters.get("limit")).intValue():3));
             if(count<1)return ChatTool.Result.clarify("Bạn muốn mình giới thiệu bao nhiêu cuốn? Mình có thể bắt đầu với vài lựa chọn phù hợp nhé.");
             count=Math.min(1000,count);filters.put("limit",count);
             if(ChatBookFacts.has(normalizedMessage,"chi tim|chi lay|chi dung chu de|chi dung the loai|dung the loai thoi|khong goi y gan|khong lay sach gan|khong lay chu de gan|chi giu.*dung yeu cau|chi.*dung yeu cau thoi"))filters.put("match","exact_only");
@@ -287,16 +287,12 @@ public class ChatBuiltinTools {
             matches=reading.prioritize(matches,filters,data);
             if("exact_only".equals(str(filters,"match")) && fit.active(filters))
                 matches.removeIf(b->!fit.missing(filters,readingFacts(b)).isEmpty());
-            // With no quota, prefer the books with evidence of the requested mood
-            // rather than filling five slots with genre-only matches.
-            if(c.state().discoveryRequestedCount==null && fit.needs(filters).contains("gentle")) {
-                int strongest=matches.stream().mapToInt(b->(int)fit.needs(filters).stream()
-                    .filter(need->fit.confirmed(need,readingFacts(b))).count()).max().orElse(0);
-                if(strongest>0)matches.removeIf(b->fit.needs(filters).stream()
-                    .filter(need->fit.confirmed(need,readingFacts(b))).count()<strongest);
-            }
             if(!matches.isEmpty())c.state().discoverySeeds=new ArrayList<>(ids(matches));
             List<Product> found=matches.stream().filter(b->!another || !c.state().shownProductIds.contains(b.getProductId())).collect(Collectors.toList());
+            // Curate after excluding previously shown books, so "more" can still
+            // offer the next best candidates without repeating the first shortlist.
+            if(c.state().discoveryRequestedCount==null && !allRequested)
+                found=fit.shortlist(found,filters,data);
             if(requestedBestsellers) {
                 filters.put("selection","bestsellers");
                 found=found.stream().filter(b->b.getSold()>0).sorted(Comparator.comparingInt(Product::getSold).reversed().thenComparing(Product::getProductId)).limit(count).collect(Collectors.toList());
@@ -592,7 +588,7 @@ public class ChatBuiltinTools {
     }
 
     @Bean public ChatTool findSimilarProducts() {
-        return tool("findSimilarProducts","Tìm tên gần giống với sản phẩm chưa có trong catalog; luôn nói đây là sách khác.",Map.of("title",text("Tên sách chưa tìm thấy"),"limit",integer("Số cuốn khách muốn, mặc định tối đa 5",1,1000)),(a,c)->{
+        return tool("findSimilarProducts","Tìm tên gần giống với sản phẩm chưa có trong catalog; luôn nói đây là sách khác.",Map.of("title",text("Tên sách chưa tìm thấy"),"limit",integer("Số cuốn khách muốn, mặc định tối đa 3",1,1000)),(a,c)->{
             String title=a.path("title").asText(c.state().missingTitle);
             if(title.isBlank())return missing();
             List<Product> all=catalog();
@@ -606,7 +602,7 @@ public class ChatBuiltinTools {
         });
     }
     @Bean public ChatTool findRelatedBooks() {
-        Map<String,ChatTool.Parameter> parameters=referenceParameters();parameters.put("limit",integer("Số cuốn khách muốn, mặc định tối đa 5",1,1000));
+        Map<String,ChatTool.Parameter> parameters=referenceParameters();parameters.put("limit",integer("Số cuốn khách muốn, mặc định tối đa 3",1,1000));
         parameters.put("minPrice",integer("Giá tối thiểu VND",0,1000000000));
         parameters.put("maxPrice",integer("Giá tối đa VND",0,1000000000));
         parameters.put("minRating",number("Rating tối thiểu",0,5));
@@ -674,7 +670,7 @@ public class ChatBuiltinTools {
     private int discoveryCount(JsonNode arguments,ChatTool.Context context) {
         Integer requested=language.bookCount(context.request().getMessage());
         context.state().discoveryRequestedCount=requested;
-        return requested==null?Math.min(5,intArg(arguments,"limit",5)):Math.max(1,Math.min(1000,requested));
+        return requested==null?Math.min(3,intArg(arguments,"limit",3)):Math.max(1,Math.min(1000,requested));
     }
     @Bean public ChatTool updateSelection() {
         return tool("updateSelection","Bỏ sách khỏi danh sách đang cân nhắc, KHÔNG phải giỏ hàng. most_expensive là giá cao nhất.",referenceParameters(),(a,c)->{

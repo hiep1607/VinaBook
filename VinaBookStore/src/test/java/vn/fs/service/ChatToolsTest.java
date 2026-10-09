@@ -921,10 +921,10 @@ class ChatToolsTest {
         assertThat(state.discoveryExact).containsExactly(1L,2L);
         assertThat(state.discoveryNearby).containsExactly(3L,4L,5L);
     }
-    @Test void defaultIsAtMostFiveAndExplicitNineIsNotCappedAtFiveOrEight() throws Exception {
+    @Test void defaultIsAtMostThreeAndExplicitNineIsNotCapped() throws Exception {
         List<Product> catalog=new ArrayList<>();for(int i=1;i<=10;i++)catalog.add(book(i,50000));
         when(products.findByStatusTrue()).thenReturn(catalog);
-        assertThat(run("searchProducts","{\"query\":\"lập trình\",\"limit\":8}").products()).hasSize(5);
+        assertThat(run("searchProducts","{\"query\":\"lập trình\",\"limit\":8}").products()).hasSize(3);
         var requested=registry.execute("recommendBooks",mapper.readTree("{\"query\":\"lập trình\",\"limit\":3}"),
             new ChatTool.Context(request("s","Cho mình chín cuốn sách lập trình"),state));
         assertThat(requested.products()).hasSize(9);
@@ -988,13 +988,13 @@ class ChatToolsTest {
         assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(1L,2L,3L,4L);
         assertThat(result.answer()).contains("1 cuốn đúng yêu cầu","3 cuốn có chủ đề","chưa đủ 6");
     }
-    @Test void moreWithoutANewCountStartsABatchOfAtMostFive() throws Exception {
+    @Test void moreWithoutANewCountStartsABatchOfAtMostThree() throws Exception {
         List<Product> catalog=new ArrayList<>();for(int i=1;i<=14;i++)catalog.add(book(i,50000));
         when(products.findByStatusTrue()).thenReturn(catalog);
         registry.execute("searchProducts",mapper.readTree("{\"query\":\"lập trình\"}"),
             new ChatTool.Context(request("s","Gợi ý 6 cuốn lập trình"),state));
         var more=orchestrator.reply(request("s","Còn cuốn nào khác?"),state);
-        assertThat(more.getProducts()).hasSize(5);
+        assertThat(more.getProducts()).hasSize(3);
         assertThat(more.getAnswer()).doesNotContain("Bạn muốn 6 cuốn");
     }
     @Test void nearbyUsesContentRatherThanWordsInTheAuthorNameOrGenericFamily() throws Exception {
@@ -1067,9 +1067,9 @@ class ChatToolsTest {
         for(int i=2;i<=8;i++)catalog.add(book(i,i==8?200000:50000));
         when(products.findByStatusTrue()).thenReturn(catalog);
         var first=orchestrator.reply(request("s","Gợi ý sách tương tự Clean Code, dưới 100k"),state);
-        assertThat(first.getProducts()).hasSize(5);
+        assertThat(first.getProducts()).hasSize(3);
         var more=orchestrator.reply(request("s","Còn cuốn nào khác cùng chủ đề?"),state);
-        assertThat(more.getProducts()).extracting(ChatProductDto::getId).containsExactly(7L);
+        assertThat(more.getProducts()).extracting(ChatProductDto::getId).containsExactly(5L,6L,7L);
         assertThat(state.toolSearch).containsEntry("relatedSourceId",1L).containsEntry("maxPrice",100000L);
     }
     @Test void orTopicsAreAUnionWithTheSamePriceLimit() {
@@ -1347,6 +1347,46 @@ class ChatToolsTest {
         var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"Java\"}"),new ChatTool.Context(request("s","Gợi ý sách Java"),state));
         assertThat(result.answer()).contains("Chưa xác nhận phiên bản Java, độ khó hay mục lục đúng bản đang bán.");
     }
+    @Test void aDefaultShortlistDoesNotPadFullySupportedReadingNeedsWithPartialMatches() throws Exception {
+        Product full=discoveryBook(1,"Chuyện Kể","Truyện nhẹ nhàng và dễ đọc về tình bạn.",70000);
+        Product gentle=discoveryBook(2,"Trong Trẻo","Truyện nhẹ nhàng.",60000);
+        Product accessible=discoveryBook(3,"Hồi Ức","Truyện dễ đọc.",50000);
+        when(products.findByStatusTrue()).thenReturn(List.of(gentle,accessible,full));
+        var result=registry.execute("recommendBooks",mapper.readTree("{\"query\":\"truyện\",\"limit\":8}"),
+            new ChatTool.Context(request("s","Gợi ý truyện nhẹ nhàng dễ đọc để thư giãn"),state));
+        assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(1L);
+    }
+    @Test void moreBooksCanUseTheNextSupportedReadingFitWithoutRepeatingTheFirst() throws Exception {
+        Product full=discoveryBook(1,"Chuyện Kể","Truyện nhẹ nhàng và dễ đọc về tình bạn.",70000);
+        Product partial=discoveryBook(2,"Trong Trẻo","Truyện nhẹ nhàng.",60000);
+        when(products.findByStatusTrue()).thenReturn(List.of(full,partial));
+        registry.execute("recommendBooks",mapper.readTree("{\"query\":\"truyện\"}"),
+            new ChatTool.Context(request("s","Gợi ý truyện nhẹ nhàng dễ đọc"),state));
+        var result=registry.execute("recommendBooks",mapper.readTree("{\"scope\":\"continue\"}"),
+            new ChatTool.Context(request("s","Có cuốn nào khác không?"),state));
+        assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(2L);
+        assertThat(result.answer()).contains("Chưa xác nhận độ dễ đọc");
+    }
+    @Test void anExplicitCountCanIncludeQualifiedReadingFitsAndStillRespectsTheBudget() throws Exception {
+        when(products.findByStatusTrue()).thenReturn(List.of(
+            discoveryBook(1,"Chuyện Kể","Truyện nhẹ nhàng và dễ đọc.",70000),
+            discoveryBook(2,"Trong Trẻo","Truyện nhẹ nhàng.",60000),
+            discoveryBook(3,"Hồi Ức","Truyện dễ đọc.",50000)));
+        var result=registry.execute("recommendBooks",mapper.readTree("{\"query\":\"truyện\",\"totalBudget\":200000}"),
+            new ChatTool.Context(request("s","Chọn 3 cuốn truyện nhẹ nhàng dễ đọc, tổng dưới 200k"),state));
+        assertThat(result.products()).hasSize(3);
+        assertThat(result.answer()).contains("180.000đ","Chưa xác nhận độ dễ đọc","Chưa xác nhận mức độ nhẹ nhàng");
+    }
+    @Test void allBooksAndAnExplicitMaximumAreNotLimitedToTheDefaultShortlist() throws Exception {
+        List<Product> catalog=new ArrayList<>();for(int i=1;i<=6;i++)catalog.add(book(i,50000));
+        when(products.findByStatusTrue()).thenReturn(catalog);
+        var all=registry.execute("searchProducts",mapper.readTree("{\"query\":\"lập trình\"}"),
+            new ChatTool.Context(request("s","Tìm tất cả sách lập trình"),state));
+        assertThat(all.products()).hasSize(6);
+        var maximum=registry.execute("recommendBooks",mapper.readTree("{\"query\":\"lập trình\"}"),
+            new ChatTool.Context(request("s","Gợi ý tối đa 4 cuốn sách lập trình"),state));
+        assertThat(maximum.products()).hasSize(4);
+    }
     @Test void readingEvidenceMustBeAffirmedAndEveryOptionalNeedIsConsidered() throws Exception {
         ChatReadingFit fit=new ChatReadingFit(language);
         assertThat(fit.confirmed("gentle",Map.of("summary","Không nên mặc định đây là truyện nhẹ nhàng."))).isFalse();
@@ -1560,8 +1600,8 @@ class ChatToolsTest {
     @Test void budgetOnlyRecommendationsRepresentMultipleGenresInsteadOfFirstCatalogRows() {
         when(products.findByStatusTrue()).thenReturn(mixedGenreCatalog());
         var result=orchestrator.reply(request("s","Gợi ý sách dưới 150k"),state);
-        assertThat(result.getProducts()).hasSize(5);
-        assertThat(result.getProducts().stream().map(ChatProductDto::getCategory).distinct()).hasSize(5);
+        assertThat(result.getProducts()).hasSize(3);
+        assertThat(result.getProducts().stream().map(ChatProductDto::getCategory).distinct()).hasSize(3);
         assertThat(result.getProducts()).allMatch(book->book.getPrice()<=150000);
         assertThat(result.getExecution()).containsEntry("tool","recommendBooks");
         verify(ai,never()).complete(anyString(),anyList(),anyString());
@@ -1570,7 +1610,7 @@ class ChatToolsTest {
         when(products.findByStatusTrue()).thenReturn(mixedGenreCatalog());
         var result=registry.execute("recommendBooks",mapper.readTree("{\"query\":\"pháp luật\",\"maxPrice\":150000,\"limit\":5}"),
             new ChatTool.Context(request("s","Gợi ý sách pháp luật dưới 150k"),state));
-        assertThat(result.products()).hasSize(5).allMatch(book->book.getCategory().equals("Pháp luật"));
+        assertThat(result.products()).hasSize(3).allMatch(book->book.getCategory().equals("Pháp luật"));
     }
     @Test void explicitLowestPriceOrderIsNotReplacedByGenreDiversity() throws Exception {
         when(products.findByStatusTrue()).thenReturn(mixedGenreCatalog());

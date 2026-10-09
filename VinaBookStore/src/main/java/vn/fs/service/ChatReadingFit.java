@@ -108,6 +108,20 @@ final class ChatReadingFit {
         if(filters.get("readerAge") instanceof Number && ((Number)filters.get("readerAge")).intValue()<18 && ageConfirmed(filters,facts))result+=10;
         return result;
     }
+    List<Product> shortlist(List<Product> candidates,Map<String,Object> filters,ChatRetrievalService data) {
+        Set<String> requested=needs(filters);
+        // A single optional ease/practical preference may be incidental to a
+        // technical goal. Multiple reading needs and mood requests need closer fit.
+        if(!requested.contains("gentle") && requested.size()<2)return candidates;
+        Map<Long,Integer> coverage=new HashMap<>();
+        for(Product book:candidates) {
+            Map<String,String> facts=data.approvedReadingFacts(book);
+            coverage.put(book.getProductId(),(int)requested.stream().filter(need->confirmed(need,facts)).count());
+        }
+        int strongest=coverage.values().stream().mapToInt(Integer::intValue).max().orElse(0);
+        if(strongest==0)return candidates;
+        return candidates.stream().filter(book->coverage.get(book.getProductId())==strongest).toList();
+    }
     List<Product> prioritize(List<Product> candidates,Map<String,Object> filters,ChatRetrievalService data) {
         if(!active(filters))return candidates;
         Map<Long,Integer> scores=new HashMap<>();
