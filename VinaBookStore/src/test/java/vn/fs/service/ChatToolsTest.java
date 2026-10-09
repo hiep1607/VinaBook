@@ -883,7 +883,9 @@ class ChatToolsTest {
         var first=orchestrator.reply(request("s","Gợi ý sách trinh thám"),state);
         orchestrator.reply(request("s","Phí giao hàng?"),state);
         var second=orchestrator.reply(request("s","Còn cuốn nào khác cùng chủ đề?"),state);
-        var nearby=orchestrator.reply(request("s","Còn cuốn nào khác không?"),state);
+        var missing=orchestrator.reply(request("s","Còn cuốn nào khác không?"),state);
+        assertThat(missing.getProducts()).isEmpty();assertThat(missing.getAnswer()).contains("mở rộng");
+        var nearby=orchestrator.reply(request("s","Có"),state);
         var exhausted=orchestrator.reply(request("s","Còn cuốn nào khác không?"),state);
         assertThat(first.getProducts()).extracting(ChatProductDto::getId).containsExactly(1L);
         assertThat(second.getProducts()).extracting(ChatProductDto::getId).containsExactly(2L);
@@ -913,7 +915,7 @@ class ChatToolsTest {
             discoveryBook(5,"Bí Mật E","Câu chuyện mật mã.",90000),
             discoveryBook(6,"Chuyện Tình F","Tình yêu và gia đình.",90000)));
         var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"trinh thám\",\"limit\":3}"),
-            new ChatTool.Context(request("s","Cho mình 6 cuốn sách trinh thám"),state));
+            new ChatTool.Context(request("s","Cho mình 6 cuốn sách trinh thám, có thể gợi ý gần chủ đề"),state));
         assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(1L,2L,3L,4L,5L);
         assertThat(result.answer()).contains("6 cuốn","2 cuốn đúng yêu cầu","3 cuốn có chủ đề","chưa đủ 6","Sách đúng yêu cầu","Gợi ý gần chủ đề");
         assertThat(state.discoveryExact).containsExactly(1L,2L);
@@ -953,7 +955,7 @@ class ChatToolsTest {
             discoveryBook(6,"Bí Mật F","Bí ẩn.",35000)));
         when(rates.averageRatings()).thenReturn(List.of(new Object[]{1L,4.8},new Object[]{2L,4.5},new Object[]{3L,4.9},new Object[]{4L,4.0},new Object[]{5L,4.9},new Object[]{6L,4.8}));
         var result=registry.execute("recommendBooks",mapper.readTree("{\"query\":\"trinh thám\",\"minRating\":4.5,\"maxPrice\":100000,\"totalBudget\":80000}"),
-            new ChatTool.Context(request("s","Chọn 6 cuốn trinh thám"),state));
+            new ChatTool.Context(request("s","Chọn 6 cuốn trinh thám, có thể gợi ý gần chủ đề"),state));
         assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(1L,2L);
         assertThat(result.answer()).contains("70.000đ","chưa đủ 6");
     }
@@ -982,7 +984,7 @@ class ChatToolsTest {
             discoveryBook(5,"Sapiens","Hành trình phát triển của nhân loại từ thời tiền sử.",90000),
             discoveryBook(6,"Muôn Kiếp","Hành trình trải nghiệm của linh hồn qua nhiều kiếp sống.",90000)));
         var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"phiêu lưu\"}"),
-            new ChatTool.Context(request("s","Giới thiệu 6 cuốn phiêu lưu"),state));
+            new ChatTool.Context(request("s","Giới thiệu 6 cuốn phiêu lưu, có thể gợi ý gần chủ đề"),state));
         assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(1L,2L,3L,4L);
         assertThat(result.answer()).contains("1 cuốn đúng yêu cầu","3 cuốn có chủ đề","chưa đủ 6");
     }
@@ -1007,7 +1009,7 @@ class ChatToolsTest {
         when(knowledge.rankByMeaning(anyString(),anyList())).thenAnswer(call->call.getArgument(1));
         when(products.findByStatusTrue()).thenReturn(List.of(love,family,falseMatch,friendship,firstLove));
         var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"tình yêu\"}"),
-            new ChatTool.Context(request("s","Cho 6 cuốn về tình yêu"),state));
+            new ChatTool.Context(request("s","Cho 6 cuốn về tình yêu, có thể gợi ý gần chủ đề"),state));
         assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(1L,2L,5L);
         assertThat(result.answer()).contains("tình thân","chưa đủ 6");
     }
@@ -1023,7 +1025,7 @@ class ChatToolsTest {
         when(ai.isConfigured()).thenReturn(false);
         ChatService service=new ChatService(products,ai,language,data,new ChatPolicyService(language),orders,analytics,access);
         service.setTools(registry);
-        var first=service.reply(request("local","Gợi ý 6 cuốn trinh thám cho mình"));
+        var first=service.reply(request("local","Gợi ý 6 cuốn trinh thám cho mình, có thể gợi ý gần chủ đề"));
         assertThat(first.getProducts()).extracting(ChatProductDto::getId).containsExactly(1L,2L);
         assertThat(first.getAnswer()).contains("Gợi ý gần chủ đề","chưa đủ 6");
         service.reply(request("local","Phí giao hàng?"));
@@ -1036,7 +1038,7 @@ class ChatToolsTest {
             discoveryBook(1,"Hồ Sơ A","Trinh thám và phá án.",50000),
             discoveryBook(2,"Bí Mật B","Câu chuyện bí ẩn và ly kỳ.",60000)));
         var base=registry.execute("searchProducts",mapper.readTree("{\"query\":\"trinh thám\"}"),
-            new ChatTool.Context(request("s","Cho 6 cuốn trinh thám"),state));
+            new ChatTool.Context(request("s","Cho 6 cuốn trinh thám, có thể gợi ý gần chủ đề"),state));
         plan("{\"intro\":\"Nếu bạn thích theo dõi manh mối, mình sẽ giúp bạn cân nhắc các hướng đọc.\",\"reasons\":[{\"productId\":2,\"evidence\":\"Câu chuyện bí ẩn và ly kỳ\",\"reason\":\"Có yếu tố bí ẩn để bạn cân nhắc khi muốn mở rộng hướng đọc.\"}],\"closing\":\"Bạn muốn mình so sánh nội dung các lựa chọn này không?\"}");
         var narrated=new ChatBookNarrator(ai,mapper,products,language).present(base,"Cho 6 cuốn trinh thám",state);
         assertThat(narrated.answer()).contains("Nếu bạn thích","chưa đủ 6","Sách đúng yêu cầu","Gợi ý gần chủ đề","50.000đ","60.000đ","Có yếu tố bí ẩn","so sánh nội dung");
@@ -1221,6 +1223,163 @@ class ChatToolsTest {
         assertThat(state.toolSearch).doesNotContainKeys("excludedQuery","excludedLanguages");
         assertThat(result.products()).extracting(ChatProductDto::getId).contains(3L);
     }
+    @Test void tighteningExactGenreKeepsEarlierPriceEvenWithNewPlannerScope() throws Exception {
+        when(products.findByStatusTrue()).thenReturn(List.of(
+            discoveryBook(1,"Hồ Sơ A","Trinh thám.",50000),
+            discoveryBook(2,"Hồ Sơ B","Trinh thám.",193500)));
+        registry.execute("searchProducts",mapper.readTree("{\"query\":\"trinh thám\",\"maxPrice\":150000}"),
+            new ChatTool.Context(request("s","Gợi ý sách trinh thám dưới 150k"),state));
+        var result=registry.execute("searchProducts",mapper.readTree("{\"scope\":\"new\",\"query\":\"trinh thám\"}"),
+            new ChatTool.Context(request("s","Chỉ lấy đúng sách trinh thám, không gợi ý sách gần chủ đề"),state));
+        assertThat(state.criteria.getMaxPrice()).isEqualTo(150000);
+        assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(1L);
+    }
+    @Test void switchingToJavaDoesNotKeepPreviousPythonExclusion() throws Exception {
+        Product java=book(4,91800);java.setName("Giáo Trình Lập Trình Java");java.setDescription("Học lập trình Java cơ bản.");
+        when(products.findByStatusTrue()).thenReturn(List.of(book(1,50000),java));
+        registry.execute("searchProducts",mapper.readTree("{\"query\":\"Python\"}"),
+            new ChatTool.Context(request("s","Chỉ lấy Python, không lấy Java"),state));
+        var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"Java\",\"maxPrice\":150000}"),
+            new ChatTool.Context(request("s","Đổi sang gợi ý sách lập trình Java cho người mới, dưới 150k"),state));
+        assertThat(state.toolSearch).doesNotContainKeys("excludedQuery","excludedLanguages");
+        assertThat(result.products()).extracting(ChatProductDto::getId).contains(4L);
+    }
+    @Test void explicitRemovalOfTheNoJavaConditionAllowsJavaWithoutLosingPrice() throws Exception {
+        Product java=book(4,91800);java.setName("Giáo Trình Lập Trình Java");java.setDescription("Học lập trình Java cơ bản.");
+        when(products.findByStatusTrue()).thenReturn(List.of(book(1,50000),java));
+        registry.execute("searchProducts",mapper.readTree("{\"query\":\"Python\",\"maxPrice\":150000}"),
+            new ChatTool.Context(request("s","Chỉ lấy Python, không lấy Java, dưới 150k"),state));
+        var result=registry.execute("searchProducts",mapper.readTree("{\"scope\":\"continue\"}"),
+            new ChatTool.Context(request("s","Bỏ điều kiện không lấy Java trước đó. Chỉ gợi ý sách Java dưới 150k"),state));
+        assertThat(state.toolSearch).doesNotContainKeys("excludedQuery","excludedLanguages");
+        assertThat(state.criteria.getMaxPrice()).isEqualTo(150000);
+        assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(4L);
+    }
+    @Test void localRemovalRequestSearchesAgainInsteadOfExplainingOldResults() {
+        Product java=book(4,91800);java.setName("Giáo Trình Lập Trình Java");java.setDescription("Học lập trình Java cơ bản.");
+        when(products.findByStatusTrue()).thenReturn(List.of(book(1,50000),java));when(ai.isConfigured()).thenReturn(false);
+        ChatService service=new ChatService(products,ai,language,data,new ChatPolicyService(language),orders,analytics,access);service.setTools(registry);
+        service.reply(request("local-clear","Gợi ý sách lập trình, không lấy Java, dưới 150k"));
+        var result=service.reply(request("local-clear","Bỏ điều kiện không lấy Java trước đó. Chỉ gợi ý sách Java dưới 150k"));
+        assertThat(result.getProducts()).extracting(ChatProductDto::getId).containsExactly(4L);
+    }
+    @Test void requestedNovelFormatDoesNotAcceptComicsShortStoriesOrAnUnverifiedShelf() throws Exception {
+        Product novel=discoveryBook(1,"Một Tiểu Thuyết","Tiểu thuyết về tình bạn.",60000);
+        Product comic=discoveryBook(2,"Truyện Tranh","Bộ truyện tranh phiêu lưu.",20000);
+        Product shortStory=discoveryBook(3,"Truyện Ngắn","Tập truyện ngắn về đời sống.",30000);
+        Product unknown=discoveryBook(4,"Chuyện Kể","Câu chuyện về tình bạn.",30000);
+        for(Product p:List.of(novel,comic,shortStory,unknown))p.setCategory(new Category(1L,"Tiểu thuyết"));
+        when(products.findByStatusTrue()).thenReturn(List.of(comic,shortStory,unknown,novel));
+        var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"tiểu thuyết\",\"totalBudget\":200000}"),
+            new ChatTool.Context(request("s","Chọn 3 cuốn tiểu thuyết, tổng dưới 200k"),state));
+        assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(1L);
+        assertThat(result.answer()).contains("chưa đủ 3");
+    }
+    @Test void shortStoryAndComicRequestsUseTheirOwnVerifiedFormats() {
+        Product novel=discoveryBook(1,"A","Tiểu thuyết phiêu lưu.",50000);
+        Product shortStory=discoveryBook(2,"B","Truyện ngắn về tình bạn.",50000);
+        Product comic=discoveryBook(3,"C","Bộ truyện tranh phiêu lưu.",50000);
+        var query=new ChatCatalogQuery(language,data);var books=List.of(novel,shortStory,comic);
+        assertThat(query.search("truyện ngắn",ChatSearchCriteriaDto.empty(),books)).containsExactly(shortStory);
+        assertThat(query.search("truyện tranh",ChatSearchCriteriaDto.empty(),books)).containsExactly(comic);
+        assertThat(query.search("tiểu thuyết hoặc truyện ngắn",ChatSearchCriteriaDto.empty(),books)).containsExactly(novel,shortStory);
+    }
+    @Test void aNegatedOrUnconfirmedFormatCannotQualifyANovel() {
+        var filter=new ChatExplicitFilters(language,data);
+        assertThat(filter.matchesFormat("tiểu thuyết",discoveryBook(1,"A","Truyện ngắn. Không phải tiểu thuyết.",50000))).isFalse();
+        assertThat(filter.matchesFormat("tiểu thuyết",discoveryBook(2,"B","Chưa xác nhận đây là tiểu thuyết.",50000))).isFalse();
+    }
+    @Test void programmingEvidenceCannotComeFromNegationOrTheTechnologyShelf() throws Exception {
+        Product code=book(1,90000);
+        Product popular=discoveryBook(2,"AI Phổ Thông","Tìm hiểu AI trong đời sống, không cần lập trình.",50000);
+        Product blockchain=discoveryBook(3,"Blockchain","Giải thích công nghệ chuỗi khối mà không cần mã nguồn.",50000);
+        popular.setCategory(new Category(1L,"Lập trình"));blockchain.setCategory(popular.getCategory());
+        when(products.findByStatusTrue()).thenReturn(List.of(popular,blockchain,code));
+        var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"lập trình\"}"),
+            new ChatTool.Context(request("s","Gợi ý sách lập trình"),state));
+        assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(1L);
+        var filter=new ChatExplicitFilters(language,data);
+        assertThat(filter.matches("lập trình",discoveryBook(4,"AI","Giới thiệu AI. Không tập trung lập trình chuyên sâu.",50000))).isFalse();
+        assertThat(filter.matches("lập trình",discoveryBook(5,"Blockchain","Giải thích blockchain. Không dùng công thức toán hay lập trình.",50000))).isFalse();
+    }
+    @Test void aBroadPlannerQueryCannotRemoveTheCustomersNovelConstraint() throws Exception {
+        Product novel=discoveryBook(1,"A","Tiểu thuyết về tình bạn.",60000);
+        Product comic=discoveryBook(2,"B","Truyện tranh về tình bạn.",20000);
+        when(products.findByStatusTrue()).thenReturn(List.of(novel,comic));
+        var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"truyện\"}"),
+            new ChatTool.Context(request("s","Gợi ý tiểu thuyết"),state));
+        assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(1L);
+    }
+    @Test void moneyCeilingDoesNotCancelTheRequestedBookCount() throws Exception {
+        when(products.findByStatusTrue()).thenReturn(List.of(discoveryBook(1,"A","Tiểu thuyết.",80000),discoveryBook(2,"B","Tiểu thuyết.",90000)));
+        var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"tiểu thuyết\",\"totalBudget\":200000}"),
+            new ChatTool.Context(request("s","Gợi ý 3 cuốn tiểu thuyết, tổng tiền cả 3 cuốn không quá 200k"),state));
+        assertThat(state.discoveryRequestedCount).isEqualTo(3);
+        assertThat(result.answer()).contains("chưa đủ 3","170.000đ");
+    }
+    @Test void aRequestedCountDoesNotAuthorizePaddingWithNearbyBooks() throws Exception {
+        when(products.findByStatusTrue()).thenReturn(List.of(discoveryBook(1,"A","Trinh thám.",50000),discoveryBook(2,"B","Câu chuyện bí ẩn.",50000)));
+        var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"trinh thám\",\"match\":\"allow_related\"}"),
+            new ChatTool.Context(request("s","Gợi ý 5 cuốn trinh thám"),state));
+        assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(1L);
+        assertThat(result.answer()).contains("chưa đủ 5","mở rộng").doesNotContain("Gợi ý gần chủ đề");
+    }
+    @Test void aSharedComicTagCannotJustifyANearbyDetectiveRecommendation() {
+        Product comic=discoveryBook(1,"Doraemon","Truyện tranh về tình bạn.",20000);
+        BookKnowledgeService knowledge=mock(BookKnowledgeService.class);data.setKnowledge(knowledge);
+        when(knowledge.approvedDescription(any())).thenReturn(comic.getDescription());
+        when(knowledge.searchableText(any())).thenReturn(comic.getDescription());
+        when(knowledge.relatedEvidence(anyList())).thenReturn(Map.of(1L,"Có chung chủ đề truyện tranh"));
+        when(knowledge.semanticEvidence(anyString(),anyList())).thenReturn(Map.of(1L,"Hồ sơ truyện tranh"));
+        assertThat(new ChatCatalogQuery(language,data).nearby("trinh thám",ChatSearchCriteriaDto.empty(),List.of(comic),List.of(2L),Set.of())).isEmpty();
+    }
+    @Test void recommendationExplainsTopicPriceAndMissingBeginnerEvidenceWithoutInventingIt() throws Exception {
+        Product java=discoveryBook(1,"Java Căn Bản","Giáo trình lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java.",91800);
+        when(products.findByStatusTrue()).thenReturn(List.of(java));
+        var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"Java\",\"maxPrice\":150000}"),
+            new ChatTool.Context(request("s","Gợi ý sách lập trình Java cho người mới dưới 150k"),state));
+        assertThat(result.answer()).contains("Bạn đang tìm sách Java","91.800đ","150.000đ mỗi cuốn","chưa xác nhận độ khó cho người mới","Chưa có mục lục đúng bản");
+        assertThat(result.answer()).doesNotContain("phù hợp nhất","rất dễ đọc");
+    }
+    @Test void recommendationKeepsTheFullVerifiedLimitationRatherThanCuttingItOff() throws Exception {
+        String summary="Giáo trình lập trình Java do nhóm tác giả biên soạn, giới thiệu phạm vi môn học và nội dung học tập để người đọc tìm hiểu kiến thức nền tảng của ngôn ngữ qua phần mô tả đang được cửa hàng lưu trữ. Chưa xác nhận phiên bản Java, độ khó hay mục lục đúng bản đang bán.";
+        when(products.findByStatusTrue()).thenReturn(List.of(discoveryBook(1,"Java",summary,50000)));
+        var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"Java\"}"),new ChatTool.Context(request("s","Gợi ý sách Java"),state));
+        assertThat(result.answer()).contains("Chưa xác nhận phiên bản Java, độ khó hay mục lục đúng bản đang bán.");
+    }
+    @Test void readingEvidenceMustBeAffirmedAndEveryOptionalNeedIsConsidered() throws Exception {
+        ChatReadingFit fit=new ChatReadingFit(language);
+        assertThat(fit.confirmed("gentle",Map.of("summary","Không nên mặc định đây là truyện nhẹ nhàng."))).isFalse();
+        assertThat(fit.confirmed("accessible",Map.of("readingLevel","Chưa xác nhận sách dễ đọc."))).isFalse();
+        assertThat(fit.confirmed("accessible",Map.of("readingLevel","Nhà xuất bản nhận xét là dễ đọc."))).isTrue();
+        Product accessible=discoveryBook(1,"Hồi Ức","Câu chuyện về tuổi thơ. Ngôn ngữ giản dị, dễ đọc.",70000);
+        Product gentle=discoveryBook(2,"Một Chuyện Kể","Truyện nhẹ nhàng và trong trẻo.",70000);
+        Product unverified=discoveryBook(3,"Trào Phúng","Truyện trào phúng, không nên mặc định là nhẹ nhàng.",70000);
+        when(products.findByStatusTrue()).thenReturn(List.of(accessible,gentle,unverified));
+        var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"truyện\"}"),
+            new ChatTool.Context(request("s","Gợi ý truyện nhẹ nhàng dễ đọc để thư giãn"),state));
+        assertThat(result.products()).extracting(ChatProductDto::getId).containsExactlyInAnyOrder(1L,2L);
+        assertThat(result.answer()).contains("Chưa xác nhận mức độ nhẹ nhàng","Chưa xác nhận độ dễ đọc");
+    }
+    @Test void switchingFromProgrammingToRelaxationDoesNotCarryBeginnerContext() {
+        when(ai.isConfigured()).thenReturn(false);
+        when(products.findByStatusTrue()).thenReturn(List.of(book(1,90000),discoveryBook(2,"Chuyện Kể","Truyện nhẹ nhàng.",50000)));
+        ChatService service=new ChatService(products,ai,language,data,new ChatPolicyService(language),orders,analytics,access);service.setTools(registry);
+        service.reply(request("new-need","Gợi ý sách lập trình Python cho người mới"));
+        var result=service.reply(request("new-need","Đổi sang gợi ý truyện nhẹ nhàng để thư giãn"));
+        assertThat(result.getProducts()).extracting(ChatProductDto::getId).containsExactly(2L);
+        assertThat(result.getAnswer()).doesNotContain("độ khó cho người mới");
+    }
+    @Test void removingAnOldExclusionStillHonorsANewExclusionInTheSameTurn() throws Exception {
+        Product java=book(4,90000);java.setName("Java");java.setDescription("Học lập trình Java cơ bản.");
+        when(products.findByStatusTrue()).thenReturn(List.of(book(1,50000),java));
+        registry.execute("searchProducts",mapper.readTree("{\"query\":\"lập trình\"}"),
+            new ChatTool.Context(request("s","Gợi ý sách lập trình, không lấy Java"),state));
+        var result=registry.execute("searchProducts",mapper.readTree("{\"scope\":\"continue\"}"),
+            new ChatTool.Context(request("s","Bỏ điều kiện không lấy Java trước đó. Không lấy Python, giữ yêu cầu lập trình"),state));
+        assertThat(state.toolSearch).containsEntry("excludedQuery","python");
+        assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(4L);
+    }
     @Test void plannerCannotInventReadingPurposeOrRecipient() throws Exception {
         registry.execute("searchProducts",mapper.readTree("{\"query\":\"Python\",\"purpose\":\"ôn thi\",\"recipient\":\"bé 8 tuổi\",\"preferredQuery\":\"Java\"}"),
             new ChatTool.Context(request("s","Tìm sách Python."),state));
@@ -1240,7 +1399,8 @@ class ChatToolsTest {
         state.recentDialogue.add(Map.of("user","Tìm sách nuôi ong dưới 50k","assistant","Mình đang tìm theo nhu cầu đó."));
         plan("{\"reasons\":[],\"closing\":\"Bạn có muốn mình thử nới khoảng giá đang chọn không?\"}");
         var result=new ChatBookNarrator(ai,mapper,products,language).present(base,"Còn cuốn nào khác?",state);
-        assertThat(result.answer()).contains("chưa tìm được sách","nới điều kiện giá").doesNotContain("Khi bạn muốn chuyển");
+        assertThat(result.answer()).contains("chưa tìm được sách","mở rộng").doesNotContain("Khi bạn muốn chuyển");
+        assertThat(state.criteria.getMaxPrice()).isEqualTo(50000);
         assertThat(result.products()).isEmpty();assertThat(result.status()).isEqualTo("COMPLETED");
         verify(ai,never()).complete(anyString(),anyList(),anyString());
     }
@@ -1259,7 +1419,7 @@ class ChatToolsTest {
             candidates.forEach(p->evidence.put(p.getProductId(),"Hồ sơ đã duyệt: "+p.getDescription()));return evidence;
         });
         var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"hay xao nhãng khi làm việc\",\"maxPrice\":100000,\"excludedQuery\":\"thiền\"}"),
-            new ChatTool.Context(request("s","Tìm sách vì hay xao nhãng khi làm việc, dưới 100k, không lấy thiền."),state));
+            new ChatTool.Context(request("s","Tìm sách vì hay xao nhãng khi làm việc, dưới 100k, không lấy thiền. Có thể gợi ý gần chủ đề."),state));
         assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(1L);
         assertThat(state.discoveryExact).isEmpty();assertThat(state.discoveryNearby).containsExactly(1L);
         assertThat(result.answer()).contains("chỉ đáp ứng một phần","Hồ sơ đã duyệt");
@@ -1434,12 +1594,14 @@ class ChatToolsTest {
         assertThat(state.displayed).isEmpty();
         assertThat(run("findRelatedBooks","{\"productId\":1}").products()).isEmpty();
     }
-    @Test void completedIntakeMakesBudgetQuestionOptional() throws Exception {
+    @org.junit.jupiter.params.ParameterizedTest
+    @org.junit.jupiter.params.provider.ValueSource(strings={"budget","level","recipient"})
+    void knownNeedPreventsPlannerFromBlockingOnOptionalFacts(String missing) throws Exception {
         state.recommendationIntakeRequired=true;
-        state.recommendationNeed="Python";state.recommendationReader="cho mình";
-        var result=run("respond","{\"kind\":\"clarify\",\"topic\":\"preferences\",\"missing\":\"budget\"}");
+        state.recommendationNeed="Python";
+        var result=run("respond","{\"kind\":\"clarify\",\"topic\":\"preferences\",\"missing\":\""+missing+"\"}");
         assertThat(result.products()).isNotEmpty();
-        assertThat(result.answer()).doesNotContain("bao nhiêu tiền");
+        assertThat(result.answer()).doesNotContain("bao nhiêu tiền", "khoảng tuổi nào");
         assertThat(state.criteria.getMaxPrice()).isNull();
         assertThat(state.recommendationBudget).isNull();
     }

@@ -1,0 +1,91 @@
+{
+  "date": "2026-10-08",
+  "provider": "local",
+  "surface": "direct chatbot UI localhost:4200",
+  "checks": [
+    {
+      "prompt": "Đổi sang gợi ý sách trinh thám dưới 150k",
+      "answer": "Mình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nBạn đang tìm sách trinh thám; mình chọn cuốn này dựa trên nội dung đã được xác nhận.\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.\nGiá 23.750đ nằm trong mức 150.000đ mỗi cuốn bạn chọn.Thám Tử Lừng Danh Conan - Tập 1Gosho Aoyama 23,750đ Giảm 5%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+      "status": "PASS",
+      "observation": "Conan 23.750đ; nêu đúng giá tối đa 150.000đ mỗi cuốn."
+    },
+    {
+      "prompt": "Chỉ lấy đúng sách trinh thám, không gợi ý sách gần chủ đề",
+      "answer": "Mình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nBạn đang tìm sách trinh thám; mình chọn cuốn này dựa trên nội dung đã được xác nhận.\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.\nGiá 23.750đ nằm trong mức 150.000đ mỗi cuốn bạn chọn.Thám Tử Lừng Danh Conan - Tập 1Gosho Aoyama 23,750đ Giảm 5%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+      "status": "PASS",
+      "observation": "Giữ mức 150k, chỉ Conan; không thêm Sherlock Holmes 193.500đ."
+    },
+    {
+      "prompt": "Còn cuốn nào khác không?",
+      "answer": "Mình đã kiểm tra lại các sách đang bán và loại những cuốn đã giới thiệu. Hiện chưa có cuốn nào khác đúng chủ đề trong các điều kiện bạn chọn. Bạn muốn mình thử mở rộng sang sách có nội dung gần với hướng đọc này không? Mình sẽ giữ các điều kiện về giá, dạng sách và phần bạn muốn loại trừ, rồi nói rõ điểm khác biệt.Câu trả lời hữu ích?👍👎",
+      "status": "PASS",
+      "observation": "Không lặp sách đã giới thiệu, không tự bổ sung Doraemon; hỏi mở rộng."
+    },
+    {
+      "prompt": "Có",
+      "answer": "Với yêu cầu đang giữ, mình vẫn chưa tìm được cuốn mới đúng chủ đề hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn. Bạn có muốn nới điều kiện giá hoặc đánh giá một chút không? Như vậy mình có thể kiểm tra thêm lựa chọn, nhưng vẫn giữ chủ đề bạn cần.Câu trả lời hữu ích?👍👎",
+      "status": "PASS",
+      "observation": "Hiểu đồng ý mở rộng, giữ giá và sách đã xem; chưa có lựa chọn đủ căn cứ trong phiên này."
+    },
+    {
+      "prompt": "Đổi sang sách lập trình Python, chỉ lấy Python, không lấy Java, mỗi cuốn dưới 200k",
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Bạn có muốn nới điều kiện giá hoặc đánh giá một chút không? Như vậy mình có thể kiểm tra thêm lựa chọn, nhưng vẫn giữ chủ đề bạn cần.Câu trả lời hữu ích?👍👎",
+      "status": "PASS",
+      "observation": "Không có sách Python trong catalog nên không trả sách khác thay thế."
+    },
+    {
+      "prompt": "Đổi sang gợi ý sách lập trình Java cho người mới, dưới 150k",
+      "answer": "Mình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Phạm Xuân Lâm (chủ biên) · Chưa có đánh giá\nBạn đang tìm sách Java; mình chọn cuốn này dựa trên nội dung đã được xác nhận.\nGiáo trình Lập trình Java do Phạm Xuân Lâm chủ biên, được xác nhận qua bìa và thư mục quốc gia. Có thể dùng làm tài liệu học lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java, các thư viện, framework hoặc các chủ đề cụ thể; không khẳng định sách dạy Spring Boot hay Java 21.\nGiá 91.800đ nằm trong mức 150.000đ mỗi cuốn bạn chọn.\nHồ sơ chưa xác nhận độ khó cho người mới. Bạn nên xem mục lục hoặc phần đọc thử trước khi chọn để biết có theo được cách trình bày không nhé.Giáo Trình Lập Trình JavaPhạm Xuân Lâm (chủ biên) 91,800đ Giảm 10%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+      "status": "PASS",
+      "observation": "Bỏ loại trừ Java của nhu cầu trước; Java 91.800đ. Nêu thiếu dữ liệu về mức đọc và mục lục."
+    },
+    {
+      "prompt": "Đổi sang gợi ý sách lập trình, không lấy Java, mỗi cuốn dưới 150k",
+      "answer": "Mình chọn được 2 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật” — 83.600đ · Đỗ Trung Kiên (chủ biên), Đặng Xuân Thọ, Nguyễn Thị Hồng, Phạm Thị Lan · Chưa có đánh giá\nGiáo trình do Đỗ Trung Kiên chủ biên, giới thiệu giải thuật, phân tích giải thuật và đệ quy, cùng các cấu trúc như danh sách liên kết, ngăn xếp, hàng đợi và cây. Có nội dung tìm kiếm và sắp xếp. Chưa có căn cứ để xác nhận ngôn ngữ lập trình hoặc mức bao quát đồ thị của đúng bản đang bán.\nGiá 83.600đ nằm trong mức 150.000đ mỗi cuốn bạn chọn.\n\n• “Giáo Trình Cơ Sở Dữ Liệu” — 90.160đ · Phan Tấn Quốc & Nguyễn Thị Uyên Nhi · Chưa có đánh giá\nGiáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học cơ sở dữ liệu. Chưa có mục lục đúng bản để xác nhận chương SQL, hệ quản trị sử dụng hoặc nội dung chi tiết.\nGiá 90.160đ nằm trong mức 150.000đ mỗi cuốn bạn chọn.Giáo Trình Cấu Trúc Dữ Liệu Và Giải ThuậtĐỗ Trung Kiên (chủ biên), Đặng Xuân Thọ, Nguyễn Thị Hồng, Phạm Thị Lan 83,600đ Giảm 5%Xem sáchThêm giỏGiáo Trình Cơ Sở Dữ LiệuPhan Tấn Quốc & Nguyễn Thị Uyên Nhi 90,160đ Giảm 8%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+      "status": "PASS",
+      "observation": "Chỉ Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật 83.600đ và Giáo Trình Cơ Sở Dữ Liệu 90.160đ; không AI phổ thông/Blockchain."
+    },
+    {
+      "prompt": "Bỏ điều kiện không lấy Java trước đó. Không lấy Python, chỉ gợi ý sách Java dưới 150k",
+      "answer": "Mình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Phạm Xuân Lâm (chủ biên) · Chưa có đánh giá\nBạn đang tìm sách Java; mình chọn cuốn này dựa trên nội dung đã được xác nhận.\nGiáo trình Lập trình Java do Phạm Xuân Lâm chủ biên, được xác nhận qua bìa và thư mục quốc gia. Có thể dùng làm tài liệu học lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java, các thư viện, framework hoặc các chủ đề cụ thể; không khẳng định sách dạy Spring Boot hay Java 21.\nGiá 91.800đ nằm trong mức 150.000đ mỗi cuốn bạn chọn.Giáo Trình Lập Trình JavaPhạm Xuân Lâm (chủ biên) 91,800đ Giảm 10%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+      "status": "PASS",
+      "observation": "Bỏ loại trừ Java, vẫn nhận loại trừ Python mới; trả Java 91.800đ."
+    },
+    {
+      "prompt": "Đổi nhu cầu: gợi ý 3 cuốn tiểu thuyết, tổng tiền cả 3 cuốn không quá 200k",
+      "answer": "Bạn muốn 3 cuốn; mình tìm được 2 cuốn đúng yêu cầu. Tổng cộng có 2 lựa chọn; hiện chưa đủ 3 cuốn khác nhau trong các điều kiện này. Mình giữ đúng yêu cầu trước; nếu bạn muốn mở rộng sang nội dung gần chủ đề, mình sẽ kiểm tra thêm và ghi rõ sự khác biệt.\n\n**Sách đúng yêu cầu:**\n\n• “Tắt Đèn” — 55.200đ · Ngô Tất Tố · Chưa có đánh giá\nBạn đang tìm sách tiểu thuyết; mình chọn cuốn này dựa trên nội dung đã được xác nhận.\nTiểu thuyết hiện thực về chị Dậu và cảnh sống đau khổ của dân quê trong nghèo đói, bị người có thế lực áp bức. Nhân vật vẫn hết lòng vì chồng con giữa hoàn cảnh khắc nghiệt.\n\n• “Bố Già (The Godfather)” — 133.400đ · Mario Puzo · 5.0/5\nBạn đang tìm sách tiểu thuyết; mình chọn cuốn này dựa trên nội dung đã được xác nhận.\nTiểu thuyết về gia đình Corleone trong thế giới ngầm mafia Mỹ. Câu chuyện đan xen quyền lực, bạo lực, lòng trung thành, quan hệ gia đình và sự phản kháng.\n\nTổng tiền sách: 188.600đ. Chưa gồm phí giao hàng.Tắt ĐènNgô Tất Tố 55,200đ Giảm 8%Xem sáchThêm giỏBố Già (The Godfather)Mario Puzo 133,400đ Giảm 8%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+      "status": "PASS",
+      "observation": "Tắt Đèn + Bố Già = 188.600đ. Báo thiếu 1 cuốn, không dùng truyện tranh/truyện ngắn để bù."
+    },
+    {
+      "prompt": "Đổi sang gợi ý truyện nhẹ nhàng dễ đọc để thư giãn",
+      "answer": "Mình chọn được 5 lựa chọn theo nội dung để bạn xem thử:\n\nCó vài điểm cần xem thêm trước khi quyết định; mình ghi rõ dưới từng cuốn. Dữ liệu hiện chưa xác nhận mức đọc cho mọi cuốn.\n\n**Sách theo nội dung bạn tìm:**\n\n• “Hoàng Tử Bé” — 69.920đ · Antoine de Saint-Exupéry · Chưa có đánh giá\nTruyện về hoàng tử nhỏ và cách cậu nhìn thế giới, gửi gắm suy ngẫm về con người và đời sống. Tác phẩm kết hợp chất thơ với những câu hỏi mang tính triết lý.\nĐể bạn cân nhắc nhu cầu đọc, hồ sơ ghi: Truyện giàu chất thơ, nhẹ nhàng truyền tải suy ngẫm về tình bạn và cách nhìn thế giới.\nChưa xác nhận độ dễ đọc cho cuốn này.\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nTruyện tranh về Doraemon, Nobita và nhóm bạn với những bảo bối từ tương lai. Các câu chuyện gắn tiếng cười, thế giới tưởng tượng và tình bạn.\nĐể bạn cân nhắc nhu cầu đọc, hồ sơ ghi: Truyện tranh với không khí hồn nhiên, trong sáng và hài hước.\nChưa xác nhận độ dễ đọc cho cuốn này.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ” — 71.760đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nNgười kể hồi tưởng những trò chơi và cách nhìn thế giới của cu Mùi, Hải cò, Tủn và Tí sún. Từ ký ức tuổi thơ, câu chuyện nối sang suy nghĩ của người lớn về cách thấu hiểu trẻ em.\nĐể bạn cân nhắc nhu cầu đọc, hồ sơ ghi: Được bài giới thiệu đăng trên NXB Trẻ nhận xét là dễ đọc.\nChưa xác nhận mức độ nhẹ nhàng cho cuốn này.\n\n• “Tôi Thấy Hoa Vàng Trên Cỏ Xanh” — 79.200đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nThiều, Tường và những đứa trẻ trong một ngôi làng cùng nô đùa, cãi cọ, yêu thương và lớn lên giữa nhiều biến cố. Câu chuyện có tình cảm anh em, bạn bè, cùng những cảnh đói ăn, cháy nhà và lụt lội.\nĐể bạn cân nhắc nhu cầu đọc, hồ sơ ghi: Nhiều chương ngắn, giọng kể trong sáng và hồn nhiên của trẻ con; có chi tiết cảm động và những biến cố.\nChưa xác nhận độ dễ đọc cho cuốn này.\n\n• “Đường Xưa Mây Trắng” — 145.200đ · Thích Nhất Hạnh · Chưa có đánh giá\nThích Nhất Hạnh kể cuộc đời và lời dạy của Đức Phật, dựa trên các nguồn kinh điển. Một phần câu chuyện được nhìn qua Svasti, cậu bé chăn trâu, và một phần qua Đức Phật.\nĐể bạn cân nhắc nhu cầu đọc, hồ sơ ghi: Lời kể chậm rãi, nhẹ nhàng về cuộc đời và lời dạy của Đức Phật.\nChưa xác nhận độ dễ đọc cho cuốn này.Hoàng Tử BéAntoine de Saint-Exupéry 69,920đ Giảm 8%Xem sáchThêm giỏDoraemon - Tập 1Fujiko F. Fujio 19,800đ Giảm 10%Xem sáchThêm giỏCho Tôi Xin Một Vé Đi Tuổi ThơNguyễn Nhật Ánh 71,760đ Giảm 8%Xem sáchThêm giỏTôi Thấy Hoa Vàng Trên Cỏ XanhNguyễn Nhật Ánh 79,200đ Giảm 10%Xem sáchThêm giỏĐường Xưa Mây TrắngThích Nhất Hạnh 145,200đ Giảm 12%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+      "status": "PASS",
+      "observation": "Bỏ Số Đỏ; có Cho Tôi Xin Một Vé Đi Tuổi Thơ với căn cứ dễ đọc từ hồ sơ. Không mang người mới học Java sang. Ghi riêng mức độ nhẹ nhàng hoặc dễ đọc còn thiếu."
+    },
+    {
+      "prompt": "Gợi ý sách cho mẹ",
+      "answer": "Mình đã biết bạn chọn sách cho ai rồi. Người đọc muốn đọc về chủ đề gì hoặc để làm gì — chẳng hạn giải trí, học một kỹ năng hay tìm hiểu một lĩnh vực? Biết thêm điều này sẽ giúp mình chọn nội dung hợp với người đọc hơn.Câu trả lời hữu ích?👍👎",
+      "status": "PASS",
+      "observation": "Hỏi nhu cầu của mẹ; không dùng sở thích đọc trước đó để tự đề xuất."
+    },
+    {
+      "prompt": "Mẹ thích chăm sóc cây cảnh",
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Bạn muốn mình thử mở rộng sang sách có nội dung gần với hướng đọc này không? Mình sẽ giữ các điều kiện về giá, dạng sách và phần bạn muốn loại trừ, rồi nói rõ điểm khác biệt.Câu trả lời hữu ích?👍👎",
+      "status": "PASS",
+      "observation": "Không tìm được sách cây cảnh; không bịa sản phẩm."
+    }
+  ],
+  "tests": {
+    "ChatToolsTest": 180,
+    "ChatServiceTest": 59,
+    "ChatRecommendationIntakeTest": 20,
+    "total": 259,
+    "failures": 0,
+    "errors": 0
+  },
+  "limitations": [
+    "Kiểm thử live dùng provider local; chưa kiểm tra Gemini thật.",
+    "PASS chỉ áp dụng cho các điều kiện quan sát của 12 ca này; hồ sơ còn thiếu dữ liệu độ khó, dạng tác phẩm hoặc tuổi đọc ở một số sách."
+  ]
+}

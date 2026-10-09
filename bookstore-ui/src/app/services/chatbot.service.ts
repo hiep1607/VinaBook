@@ -75,7 +75,7 @@ export class ChatbotService {
   greeting(): ChatMessage {
     return {
       from: 'bot',
-      text: 'Chào bạn! Mình là trợ lý sách của VinaBook, có thể cùng bạn tìm một cuốn để đọc, chọn quà hoặc so sánh những cuốn đang cân nhắc. Bạn muốn đọc về chủ đề gì hoặc để làm gì, và chọn sách cho mình hay cho ai? Biết hai điều này sẽ giúp mình gợi ý sát hơn; ngân sách bạn có thể nói thêm nếu đã có mức dự kiến.',
+      text: 'Chào bạn! Mình là trợ lý sách của VinaBook, có thể cùng bạn tìm một cuốn để đọc, chọn quà hoặc so sánh những cuốn đang cân nhắc. Bạn muốn đọc về chủ đề gì hoặc để làm gì? Biết hướng đọc sẽ giúp mình gợi ý sát hơn. Nếu có người nhận cụ thể, mức đọc hoặc ngân sách dự kiến, bạn có thể nói thêm để mình chọn kỹ hơn.',
       chips: ['Gợi ý sách dưới 150k', 'Tìm sách làm quà', 'So sánh hai cuốn', 'Đơn hàng của tôi'],
       source: 'local',
       intent: 'SMALL_TALK'

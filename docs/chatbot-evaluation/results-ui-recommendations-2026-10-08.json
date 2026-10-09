@@ -1,0 +1,116 @@
+{
+  "date": "2026-10-08",
+  "method": "Nhập và gửi từng câu trong khung chatbot bằng browser UI; đọc phản hồi và thẻ sách sau khi trả lời hoàn tất.",
+  "runtime": "Backend localhost:8080, AI_PROVIDER=local; storefront localhost:4200 (tài khoản kiểm thử) và 127.0.0.1:4200 (khách mới).",
+  "counts": {
+    "PASS": 8,
+    "FAIL": 5,
+    "REVIEW": 1
+  },
+  "limits": "Không gọi Gemini thật, không đặt hàng hoặc sửa catalog. Catalog API công khai chỉ được đọc để đối chiếu tên, giá và sự có mặt của sách Python/Java.",
+  "cases": [
+    {
+      "case": "Chỉ có ngân sách",
+      "prompt": "Gợi ý sách dưới 150k",
+      "visible": "Gợi ý sách dưới 150k\n\nMình sẵn lòng giúp bạn chọn sách nhé. Bạn muốn đọc về chủ đề gì hoặc để làm gì — chẳng hạn thư giãn, học một kỹ năng hay tìm hiểu một lĩnh vực? Biết hướng đọc sẽ giúp mình chọn những cuốn sát với nhu cầu của bạn hơn.Câu trả lời hữu ích?👍👎",
+      "status": "PASS",
+      "assessment": "Chỉ hỏi chủ đề/mục đích, không hỏi người nhận, chưa trả sách."
+    },
+    {
+      "case": "Bổ sung chủ đề, giữ ngân sách",
+      "prompt": "trinh thám",
+      "visible": "trinh thám\n\nMình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.Thám Tử Lừng Danh Conan - Tập 1Gosho Aoyama 23,750đ Giảm 5%Xem sáchCâu trả lời hữu ích?👍👎",
+      "status": "PASS",
+      "assessment": "Trả Conan 23.750đ ngay sau khi bổ sung chủ đề, giữ giới hạn 150k."
+    },
+    {
+      "case": "Hỏi thêm không lặp sách",
+      "prompt": "còn cuốn khác không?",
+      "visible": "còn cuốn khác không?\n\nNhững cuốn đúng chủ đề mình đã giới thiệu hết theo dữ liệu hiện tại. Có thêm 2 cuốn gần với hướng đọc đó để bạn cân nhắc:\n\n**Gợi ý gần chủ đề — các cuốn này chỉ đáp ứng một phần nhu cầu ban đầu:**\n\n• “Harry Potter Và Hòn Đá Phù Thủy” — 118.800đ · J.K. Rowling · Chưa có đánh giá\nHarry nhận các lá thư bí ẩn và phát hiện mình là phù thủy, được nhận vào trường Hogwarts. Đây là khởi đầu những cuộc phiêu lưu của Harry trong thế giới phép thuật.\nNội dung nhắc đến “bí ẩn”, gần với hướng đọc bạn đang tìm.\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nTruyện tranh về Doraemon, Nobita và nhóm bạn với những bảo bối từ tương lai. Các câu chuyện gắn tiếng cười, thế giới tưởng tượng và tình bạn.\nCó chung chủ đề “truyện tranh” trong hồ sơ sách đã duyệt.Harry Potter Và Hòn Đá Phù ThủyJ.K. Rowling 118,800đ Giảm 12%Xem sáchDoraemon - Tập 1Fujiko F. Fujio 19,800đ Giảm 10%Xem sáchCâu trả lời hữu ích?👍👎",
+      "status": "FAIL",
+      "assessment": "Không lặp Conan nhưng gợi ý Doraemon cho trinh thám chỉ vì cùng truyện tranh; căn cứ quá rộng."
+    },
+    {
+      "case": "Chỉ lấy đúng chủ đề",
+      "prompt": "Chỉ lấy đúng sách trinh thám, không gợi ý sách gần chủ đề",
+      "visible": "Chỉ lấy đúng sách trinh thám, không gợi ý sách gần chủ đề\n\nMình chọn được 2 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Sherlock Holmes Toàn Tập - Tập 1” — 193.500đ · Arthur Conan Doyle · Chưa có đánh giá\nCác câu chuyện trinh thám về Sherlock Holmes và bác sĩ Watson. Việc điều tra các vụ án gắn với khả năng quan sát và suy luận của Holmes.\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.Sherlock Holmes Toàn Tập - Tập 1Arthur Conan Doyle 193,500đ Giảm 10%Xem sáchThám Tử Lừng Danh Conan - Tập 1Gosho Aoyama 23,750đ Giảm 5%Xem sáchCâu trả lời hữu ích?👍👎",
+      "status": "FAIL",
+      "assessment": "Chọn đúng trinh thám nhưng mất mức 150k trước đó: Sherlock Holmes 193.500đ xuất hiện."
+    },
+    {
+      "case": "Python, loại Java và giới hạn giá",
+      "prompt": "Đổi sang sách lập trình Python, chỉ lấy Python, không lấy Java, mỗi cuốn dưới 200k",
+      "visible": "Đổi sang sách lập trình Python, chỉ lấy Python, không lấy Java, mỗi cuốn dưới 200k\n\nMình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Bạn có muốn nới điều kiện giá hoặc đánh giá một chút không? Như vậy mình có thể kiểm tra thêm lựa chọn, nhưng vẫn giữ chủ đề bạn cần.Câu trả lời hữu ích?👍👎",
+      "status": "PASS",
+      "assessment": "Không bịa sách Python hoặc thay bằng Java; catalog thực tế không có sách Python."
+    },
+    {
+      "case": "Nới giá và giữ điều kiện loại trừ",
+      "prompt": "Tăng lên 350k mỗi cuốn, vẫn chỉ lấy Python và không lấy Java",
+      "visible": "Tăng lên 350k mỗi cuốn, vẫn chỉ lấy Python và không lấy Java\n\nMình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Bạn có muốn nới điều kiện giá hoặc đánh giá một chút không? Như vậy mình có thể kiểm tra thêm lựa chọn, nhưng vẫn giữ chủ đề bạn cần.Câu trả lời hữu ích?👍👎",
+      "status": "PASS",
+      "assessment": "Tăng giới hạn vẫn không bịa sách Python khi catalog không có."
+    },
+    {
+      "case": "Java cho người mới và giá dưới 150k",
+      "prompt": "Đổi sang gợi ý sách lập trình Java cho người mới, dưới 150k",
+      "visible": "Đổi sang gợi ý sách lập trình Java cho người mới, dưới 150k\n\nHiện mình chưa tìm được cuốn đúng chủ đề. Có 5 lựa chọn gần với hướng đọc đó để bạn cân nhắc:\n\n**Gợi ý gần chủ đề — các cuốn này chỉ đáp ứng một phần nhu cầu ban đầu:**\n\n• “AI - Sức Mạnh Của Trí Tuệ Nhân Tạo” — 125.400đ · Nguyễn Văn Lượng · Chưa có đánh giá\nGiới thiệu các khái niệm trí tuệ nhân tạo và học máy, cùng ứng dụng trong công việc, học tập, sáng tạo và kinh doanh. Sách của Nguyễn Văn Lượng hướng đến người mới tìm hiểu, bằng cách trình bày phổ th…\nNội dung nhắc đến “lập trình”, gần với hướng đọc bạn đang tìm.\n\n• “Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật” — 83.600đ · Đỗ Trung Kiên (chủ biên), Đặng Xuân Thọ, Nguyễn Thị Hồng, Phạm Thị Lan · Chưa có đánh giá\nGiáo trình do Đỗ Trung Kiên chủ biên, giới thiệu giải thuật, phân tích giải thuật và đệ quy, cùng các cấu trúc như danh sách liên kết, ngăn xếp, hàng đợi và cây. Có nội dung tìm kiếm và sắp xếp. Chưa …\nNội dung nhắc đến “lập trình”, gần với hướng đọc bạn đang tìm.\n\n• “Blockchain Cơ Bản” — 133.400đ · Daniel Drescher · Chưa có đánh giá\nDaniel Drescher giải thích blockchain qua 25 bước, dùng hình ảnh, phép so sánh và ví dụ để nối các khái niệm. Người đọc tìm hiểu cơ chế, tiềm năng và giới hạn của công nghệ chuỗi khối mà không cần côn…\nNội dung nhắc đến “lập trình”, gần với hướng đọc bạn đang tìm.\n\n• “Giáo Trình Nhập Môn Trí Tuệ Nhân Tạo” — 103.040đ · Từ Minh Phương · Chưa có đánh giá\nGiáo trình do Từ Minh Phương biên soạn, giới thiệu trí tuệ nhân tạo và các hướng giải quyết vấn đề bằng tìm kiếm, biểu diễn tri thức và logic, suy diễn xác suất, học máy. Phù hợp nhu cầu học nền tảng …\nNội dung nhắc đến “lập trình”, gần với hướng đọc bạn đang tìm.\n\n• “Giáo Trình Cơ Sở Dữ Liệu” — 90.160đ · Phan Tấn Quốc & Nguyễn Thị Uyên Nhi · Chưa có đánh giá\nGiáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học c…\nNội dung nhắc đến “cơ sở dữ liệu”, gần với hướng đọc bạn đang tìm.AI - Sức Mạnh Của Trí Tuệ Nhân TạoNguyễn Văn Lượng 125,400đ Giảm 5%Xem sáchGiáo Trình Cấu Trúc Dữ Liệu Và Giải ThuậtĐỗ Trung Kiên (chủ biên), Đặng Xuân Thọ, Nguyễn Thị Hồng, Phạm Thị Lan 83,600đ Giảm 5%Xem sáchBlockchain Cơ BảnDaniel Drescher 133,400đ Giảm 8%Xem sáchGiáo Trình Nhập Môn Trí Tuệ Nhân TạoTừ Minh Phương 103,040đ Giảm 8%Xem sáchGiáo Trình Cơ Sở Dữ LiệuPhan Tấn Quốc & Nguyễn Thị Uyên Nhi 90,160đ Giảm 8%Xem sáchCâu trả lời hữu ích?👍👎",
+      "status": "FAIL",
+      "assessment": "Đổi sang Java nhưng bỏ sót Giáo Trình Lập Trình Java 91.800đ; trả 5 sách AI/Blockchain/cơ sở dữ liệu gần chủ đề."
+    },
+    {
+      "case": "Bỏ loại trừ cũ khi chuyển sang Java",
+      "prompt": "Bỏ điều kiện không lấy Java trước đó. Chỉ gợi ý sách Java dưới 150k",
+      "visible": "Bỏ điều kiện không lấy Java trước đó. Chỉ gợi ý sách Java dưới 150k\n\nMình chưa tìm được sách đang bán đáp ứng yêu cầu này hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn. Bạn có muốn nới điều kiện giá hoặc đánh giá một chút không? Như vậy mình có thể kiểm tra thêm lựa chọn, nhưng vẫn giữ chủ đề bạn cần.Câu trả lời hữu ích?👍👎",
+      "status": "FAIL",
+      "assessment": "Nói rõ bỏ điều kiện loại Java vẫn không nhận được sách Java. Ở phiên mới cùng yêu cầu có kết quả đúng."
+    },
+    {
+      "case": "Ba tiểu thuyết trong tổng ngân sách 200k",
+      "prompt": "Đổi nhu cầu: gợi ý 3 cuốn tiểu thuyết, tổng tiền cả 3 cuốn không quá 200k",
+      "visible": "Đổi nhu cầu: gợi ý 3 cuốn tiểu thuyết, tổng tiền cả 3 cuốn không quá 200k\n\nMình chọn được 3 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nTruyện tranh về Doraemon, Nobita và nhóm bạn với những bảo bối từ tương lai. Các câu chuyện gắn tiếng cười, thế giới tưởng tượng và tình bạn.\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.\n\n• “Chí Phèo” — 49.500đ · Nam Cao · Chưa có đánh giá\nTruyện ngắn của Nam Cao về bi kịch của người nông dân trong xã hội cũ, đặt ra câu hỏi về con người và cách xã hội đối xử với họ. Có thể đọc để tìm hiểu văn học hiện thực và thảo luận về nội dung, nghệ…\n\nTổng tiền sách: 93.050đ. Chưa gồm phí giao hàng.Doraemon - Tập 1Fujiko F. Fujio 19,800đ Giảm 10%Xem sáchThêm giỏThám Tử Lừng Danh Conan - Tập 1Gosho Aoyama 23,750đ Giảm 5%Xem sáchThêm giỏChí PhèoNam Cao 49,500đ Giảm 10%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+      "status": "FAIL",
+      "assessment": "Đủ 3 sách, tổng 93.050đ đúng, nhưng cả Doraemon, Conan và Chí Phèo đều không phải tiểu thuyết theo yêu cầu."
+    },
+    {
+      "case": "Java ở phiên mới không có điều kiện cũ",
+      "prompt": "Gợi ý sách lập trình Java cho người mới, dưới 150k",
+      "visible": "Gợi ý sách lập trình Java cho người mới, dưới 150k\n\nMình chọn được 1 cuốn phù hợp để bạn cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Phạm Xuân Lâm (chủ biên) · Chưa có đánh giá\nGiáo trình Lập trình Java do Phạm Xuân Lâm chủ biên, được xác nhận qua bìa và thư mục quốc gia. Có thể dùng làm tài liệu học lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java, các th…Giáo Trình Lập Trình JavaPhạm Xuân Lâm (chủ biên) 91,800đ Giảm 10%Xem sáchCâu trả lời hữu ích?👍👎",
+      "session": "guest",
+      "status": "PASS",
+      "assessment": "Phiên khách mới trả Giáo Trình Lập Trình Java 91.800đ, không hỏi người nhận; nêu giới hạn dữ liệu mục lục."
+    },
+    {
+      "case": "Truyện nhẹ nhàng dễ đọc",
+      "prompt": "Đổi sang gợi ý truyện nhẹ nhàng dễ đọc để thư giãn",
+      "visible": "Đổi sang gợi ý truyện nhẹ nhàng dễ đọc để thư giãn\n\nMình chọn được 5 lựa chọn theo nội dung để bạn xem thử:\n\nCó vài điểm cần xem thêm trước khi quyết định; mình ghi rõ dưới từng cuốn. Dữ liệu hiện chưa xác nhận mức đọc cho mọi cuốn.\n\n**Sách theo nội dung bạn tìm:**\n\n• “Hoàng Tử Bé” — 69.920đ · Antoine de Saint-Exupéry · Chưa có đánh giá\nTruyện về hoàng tử nhỏ và cách cậu nhìn thế giới, gửi gắm suy ngẫm về con người và đời sống. Tác phẩm kết hợp chất thơ với những câu hỏi mang tính triết lý.\nChưa xác nhận độ dễ đọc cho cuốn này.\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nTruyện tranh về Doraemon, Nobita và nhóm bạn với những bảo bối từ tương lai. Các câu chuyện gắn tiếng cười, thế giới tưởng tượng và tình bạn.\nChưa xác nhận độ dễ đọc cho cuốn này.\n\n• “Tôi Thấy Hoa Vàng Trên Cỏ Xanh” — 79.200đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nThiều, Tường và những đứa trẻ trong một ngôi làng cùng nô đùa, cãi cọ, yêu thương và lớn lên giữa nhiều biến cố. Câu chuyện có tình cảm anh em, bạn bè, cùng những cảnh đói ăn, cháy nhà và lụt lội.\nChưa xác nhận độ dễ đọc cho cuốn này.\n\n• “Số Đỏ” — 72.000đ · Vũ Trọng Phụng · Chưa có đánh giá\nTác phẩm trào phúng của Vũ Trọng Phụng, dựng những chân dung hí họa để phơi bày sự lố bịch trong xã hội. Sự hài hước đi cùng phê phán và châm biếm, phù hợp người muốn đọc văn học Việt Nam có giọng sắc…\nChưa xác nhận độ dễ đọc cho cuốn này.\n\n• “Đường Xưa Mây Trắng” — 145.200đ · Thích Nhất Hạnh · Chưa có đánh giá\nThích Nhất Hạnh kể cuộc đời và lời dạy của Đức Phật, dựa trên các nguồn kinh điển. Một phần câu chuyện được nhìn qua Svasti, cậu bé chăn trâu, và một phần qua Đức Phật.\nChưa xác nhận độ dễ đọc cho cuốn này.Hoàng Tử BéAntoine de Saint-Exupéry 69,920đ Giảm 8%Xem sáchDoraemon - Tập 1Fujiko F. Fujio 19,800đ Giảm 10%Xem sáchTôi Thấy Hoa Vàng Trên Cỏ XanhNguyễn Nhật Ánh 79,200đ Giảm 10%Xem sáchSố ĐỏVũ Trọng Phụng 72,000đ Xem sáchĐường Xưa Mây TrắngThích Nhất Hạnh 145,200đ Giảm 12%Xem sáchCâu trả lời hữu ích?👍👎",
+      "session": "guest",
+      "status": "REVIEW",
+      "assessment": "Có ghi chú chưa xác nhận độ dễ đọc; lựa chọn Số Đỏ và Đường Xưa Mây Trắng cần căn cứ rõ hơn cho nhu cầu nhẹ nhàng, dễ đọc."
+    },
+    {
+      "case": "Thông tin người nhận và tuổi vẫn được dùng",
+      "prompt": "Gợi ý truyện cho bé 8 tuổi, dưới 150k",
+      "visible": "Gợi ý truyện cho bé 8 tuổi, dưới 150k\n\nMình chọn được 5 lựa chọn theo nội dung để bạn xem thử:\n\nCó vài điểm cần xem thêm trước khi quyết định; mình ghi rõ dưới từng cuốn.\n\n**Sách theo nội dung bạn tìm:**\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nTruyện tranh về Doraemon, Nobita và nhóm bạn với những bảo bối từ tương lai. Các câu chuyện gắn tiếng cười, thế giới tưởng tượng và tình bạn.\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nTruyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận.\nChưa xác nhận độ tuổi đọc cho cuốn này.\n\n• “Hoàng Tử Bé” — 69.920đ · Antoine de Saint-Exupéry · Chưa có đánh giá\nTruyện về hoàng tử nhỏ và cách cậu nhìn thế giới, gửi gắm suy ngẫm về con người và đời sống. Tác phẩm kết hợp chất thơ với những câu hỏi mang tính triết lý.\nChưa xác nhận độ tuổi đọc cho cuốn này.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ” — 71.760đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nNgười kể hồi tưởng những trò chơi và cách nhìn thế giới của cu Mùi, Hải cò, Tủn và Tí sún. Từ ký ức tuổi thơ, câu chuyện nối sang suy nghĩ của người lớn về cách thấu hiểu trẻ em.\nChưa xác nhận độ tuổi đọc cho cuốn này.\n\n• “Kho Tàng Truyện Cổ Tích Việt Nam” — 121.500đ · Nguyễn Đổng Chi · Chưa có đánh giá\nCông trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam k…\nChưa xác nhận độ tuổi đọc cho cuốn này.Doraemon - Tập 1Fujiko F. Fujio 19,800đ Giảm 10%Xem sáchDế Mèn Phiêu Lưu KýTô Hoài 50,400đ Giảm 10%Xem sáchHoàng Tử BéAntoine de Saint-Exupéry 69,920đ Giảm 8%Xem sáchCho Tôi Xin Một Vé Đi Tuổi ThơNguyễn Nhật Ánh 71,760đ Giảm 8%Xem sáchKho Tàng Truyện Cổ Tích Việt NamNguyễn Đổng Chi 121,500đ Giảm 10%Xem sáchCâu trả lời hữu ích?👍👎",
+      "session": "guest",
+      "status": "PASS",
+      "assessment": "Giữ giá dưới 150k, có ghi chú thiếu xác nhận tuổi cho các cuốn liên quan, không hỏi lại người nhận."
+    },
+    {
+      "case": "Đổi người nhận không tự đoán sở thích",
+      "prompt": "Gợi ý sách cho mẹ",
+      "visible": "Gợi ý sách cho mẹ\n\nMình đã biết bạn chọn sách cho ai rồi. Người đọc muốn đọc về chủ đề gì hoặc để làm gì — chẳng hạn giải trí, học một kỹ năng hay tìm hiểu một lĩnh vực? Biết thêm điều này sẽ giúp mình chọn nội dung hợp với người đọc hơn.Câu trả lời hữu ích?👍👎",
+      "session": "guest",
+      "status": "PASS",
+      "assessment": "Đổi sang mẹ thì hỏi nhu cầu, không dùng sở thích của bé để tự đề xuất."
+    },
+    {
+      "case": "Nhu cầu không có sách phù hợp trong catalog",
+      "prompt": "Mẹ thích chăm sóc cây cảnh",
+      "visible": "Mẹ thích chăm sóc cây cảnh\n\nMình chưa tìm được sách đang bán đáp ứng yêu cầu này hoặc có nội dung đủ gần mà vẫn đáp ứng các điều kiện bạn chọn. Bạn muốn thử một chủ đề gần với hướng đọc này không? Mình sẽ tìm tiếp theo lựa chọn của bạn.Câu trả lời hữu ích?👍👎",
+      "session": "guest",
+      "status": "PASS",
+      "assessment": "Không có sách chăm sóc cây cảnh phù hợp: nói rõ chưa tìm được, không bịa sách."
+    }
+  ]
+}

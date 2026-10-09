@@ -9,7 +9,7 @@ import vn.fs.entity.Product;
 final class ChatReadingRequest {
     private static final List<String> FIELDS=List.of("purpose","recipient","preferredQuery","excludedQuery");
     private static final Pattern PREFERENCE=Pattern.compile("\\b(?:uu tien|thich hon|neu co thi chon)\\s+([^,;.!?]+)");
-    private static final Pattern TOPIC_SWITCH=Pattern.compile("(?iu)\\b(?:chuyển sang|chuyen sang|đổi sang|doi sang|đổi chủ đề sang|doi chu de sang)\\s+");
+    private static final Pattern TOPIC_SWITCH=Pattern.compile("(?iu)\\b(?:chuyển sang|chuyen sang|đổi sang|doi sang|đổi chủ đề sang|doi chu de sang|đổi nhu cầu[:：]?|doi nhu cau[:：]?)\\s+");
     private static final Pattern EXCLUSION=Pattern.compile("\\b(?:khong lay|khong chon|loai tru|tranh sach|bo qua|dung gioi thieu|khong thich|khong muon)\\s+([^,;.!?]+)");
     private static final Pattern RAW_EXCLUSION=Pattern.compile("(?iu)\\b(?:không lấy|khong lay|không chọn|khong chon|loại trừ|loai tru|tránh sách|tranh sach|bỏ qua|bo qua|đừng giới thiệu|dung gioi thieu|không thích|khong thich|không muốn|khong muon)\\s+([^,;.!?]+)");
     private static final Pattern TOTAL=Pattern.compile("\\b(?:tong(?: ngan sach| cong| tien| chi)?|ngan sach cho ca(?: [0-9]+ cuon)?|ca [0-9]+ cuon|cho tat ca)\\s*(?:(?:la|duoi|toi da|khong qua|khoang|tam|cho [0-9]+ cuon)\\s+)*([0-9]+(?:[.,][0-9]+)*\\s*(?:trieu|nghin|ngan|dong|vnd|lit|tr|k|d)?\\b)(?!\\s*(?:cuon|quyen))");
@@ -56,19 +56,19 @@ final class ChatReadingRequest {
             String value=cleanClause(preferred.group(1));
             if(!value.isBlank() && !referenceValue(value))filters.put("preferredQuery",value);
         }
-        Matcher excluded=EXCLUSION.matcher(q);
-        if(!clearsExclusions(message) && excluded.find()) {
+        if(clearsExclusions(message)) {
+            filters.remove("excludedQuery");filters.remove("excludedLanguages");
+        }
+        Matcher excluded=EXCLUSION.matcher(language.normalize(activeMessage(message)));
+        if(excluded.find()) {
             String value=cleanClause(excluded.group(1)).replaceFirst("^(?:kieu |sach )","");
-            Matcher rawExcluded=RAW_EXCLUSION.matcher(message);
+            Matcher rawExcluded=RAW_EXCLUSION.matcher(activeMessage(message));
             if(rawExcluded.find() && !new ChatExplicitFilters(language).requiredEconomicScopes(rawExcluded.group(1)).isEmpty())
                 value=rawExcluded.group(1).trim();
             String old=Objects.toString(filters.get("excludedQuery"),"");
             if(!value.isBlank())filters.put("excludedQuery",!old.isBlank() && !old.contains(value)?old+", "+value:value);
         }
         if(ChatBookFacts.has(q,"bo uu tien|khong can uu tien|khong uu tien nua"))filters.remove("preferredQuery");
-        if(clearsExclusions(message)) {
-            filters.remove("excludedQuery");filters.remove("excludedLanguages");
-        }
         String query=Objects.toString(filters.get("query"),"");
         String originalQuery=query;
         for(String field:List.of("preferredQuery","excludedQuery")) {
@@ -94,13 +94,17 @@ final class ChatReadingRequest {
         }
     }
 
+    String activeMessage(String message) {
+        return message.replaceAll("(?iu)\\b(?:bỏ|bo|hủy|huy|xóa|xoa) (?:điều kiện |dieu kien )?(?:không lấy|khong lay|không chọn|khong chon|loại trừ|loai tru)\\s+[^,;.!?]+", " ");
+    }
+
     String hardMessage(String message) {
-        String q=language.normalize(subjectMessage(message));
+        String q=language.normalize(activeMessage(subjectMessage(message)));
         return PREFERENCE.matcher(q).replaceAll(" ");
     }
 
     String semanticMessage(String message) {
-        return subjectMessage(message).replaceAll("(?iu)\\b(?:ưu tiên|uu tien|thích hơn|thich hon|nếu có thì chọn|neu co thi chon|không lấy|khong lay|không chọn|khong chon|loại trừ|loai tru)\\s+[^,;.!?]+"," ")
+        return activeMessage(subjectMessage(message)).replaceAll("(?iu)\\b(?:ưu tiên|uu tien|thích hơn|thich hon|nếu có thì chọn|neu co thi chon|không lấy|khong lay|không chọn|khong chon|loại trừ|loai tru)\\s+[^,;.!?]+"," ")
             .replaceAll("\\s+"," ").trim();
     }
 
@@ -115,6 +119,10 @@ final class ChatReadingRequest {
         return subject;
     }
 
+    boolean explicitNewTopic(String message) {
+        return TOPIC_SWITCH.matcher(message).find() || ChatBookFacts.has(language.normalize(message),"doi chu de|the loai khac");
+    }
+
     boolean needsAnalysis(String message) {
         String q=language.normalize(message);
         return PREFERENCE.matcher(q).find() || isTotalBudget(message)
@@ -123,9 +131,15 @@ final class ChatReadingRequest {
 
     boolean contextPatch(String message) {
         String q=language.normalize(message);
-        return ChatBookFacts.has(q,"giu.*(?:dieu kien|yeu cau|chu de|uu tien|bo loc)|uu tien cu|bo uu tien|bo loai tru|khong can uu tien|khong loai tru nua")
+        return clearsExclusions(message) || ChatBookFacts.has(q,"chi lay dung|chi dung sach|khong goi y sach gan|khong goi y gan|mo rong|co the goi y gan chu de|chap nhan.*gan chu de")
+            || ChatBookFacts.has(q,"giu.*(?:dieu kien|yeu cau|chu de|uu tien|bo loc)|uu tien cu|bo uu tien|bo loai tru|khong can uu tien|khong loai tru nua")
             || ChatBookFacts.has(q,"doc de hieu|de doc hon|khong muon kieu|khong thich kieu|ap dung cu the|chi giu.*dung yeu cau|khong can du [0-9]+|van duoi|van giu|khong co dung lop|dung lop|sach tham khao chung")
             || q.matches("(?s).*\\b(?:tang|giam|doi|bo)\\b.*\\b(?:ngan sach|muc gia|gioi han gia)\\b.*");
+    }
+
+    boolean acceptsRelated(String message,Map<String,Object> previous) {
+        return Boolean.TRUE.equals(previous.get("relatedOffer")) && language.normalize(message)
+            .matches("(?:co|ok|oke|dong y|duoc|duoc roi|mo rong)(?: nhe| nha| di)?[.!]*");
     }
 
     boolean budgetPatch(String message) {
@@ -152,7 +166,7 @@ final class ChatReadingRequest {
     }
 
     boolean clearsExclusions(String message) {
-        return ChatBookFacts.has(language.normalize(message),"bo loai tru|khong loai tru nua|khong can loai tru");
+        return ChatBookFacts.has(language.normalize(message),"(?:bo|huy|xoa) (?:dieu kien )?(?:khong lay|khong chon|loai tru)|khong loai tru nua|khong can loai tru");
     }
 
     boolean excluded(Map<String,Object> filters,Product book,ChatRetrievalService data) {
@@ -191,7 +205,7 @@ final class ChatReadingRequest {
 
     Map<String,Object> context(ChatDialogueMemory.State state) {
         Map<String,Object> required=new LinkedHashMap<>();
-        for(String field:List.of("query","title","category","author","minPrice","maxPrice","minRating","excludedQuery","excludedLanguages","match","grade","readerGroup","requiredEconomicScopes","requiredLanguageQuery"))
+        for(String field:List.of("query","title","category","author","minPrice","maxPrice","minRating","excludedQuery","excludedLanguages","match","grade","readerGroup","requiredEconomicScopes","requiredLanguageQuery","requiredTopicQuery"))
             if(state.toolSearch.containsKey(field))required.put(field,state.toolSearch.get(field));
         Map<String,Object> result=new LinkedHashMap<>();result.put("required",required);
         result.put("preferred",Objects.toString(state.toolSearch.get("preferredQuery"),""));

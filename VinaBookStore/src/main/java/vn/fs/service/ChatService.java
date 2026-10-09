@@ -258,7 +258,8 @@ public class ChatService {
             return finish(request,compared.answer(),compared.intent(),search.byIds(compared.products().stream()
                 .map(ChatProductDto::getId).collect(Collectors.toList()),catalog),false,false,s,started);
         }
-		if(tools!=null && (!s.shortlist.isEmpty() || s.emptySearch) && ChatConversationSupport.explanation(question,intents)
+		if(tools!=null && (!s.shortlist.isEmpty() || s.emptySearch) && !new ChatReadingRequest(intents).contextPatch(question)
+                && ChatConversationSupport.explanation(question,intents)
 				&& (ChatConversationSupport.pluralReference(question,intents) || ChatBookFacts.has(q,"cuon|sach|goi y|lua chon"))) {
 			var args=new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("field","explanation");
 			if(ChatConversationSupport.pluralReference(question,intents))args.put("reference","selection");
@@ -282,7 +283,7 @@ public class ChatService {
             return response;
 		}
         ChatReadingRequest reading=new ChatReadingRequest(intents);
-        if(tools!=null && !s.toolSearch.isEmpty() && (reading.contextPatch(question) || reading.budgetPatch(question))
+        if(tools!=null && !s.toolSearch.isEmpty() && (reading.contextPatch(question) || reading.budgetPatch(question) || reading.acceptsRelated(question,s.toolSearch))
                 && !ChatBookFacts.has(q,"doi sang|chuyen sang|gio hang|vao gio|trong gio|dat hang")) {
             var args=new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("scope","continue");
             ChatSearchCriteriaDto constraints=intents.criteria(question,catalog);
@@ -718,7 +719,7 @@ public class ChatService {
 		if (q.contains("giup toi lam gi") || q.contains("lam duoc gi"))
 			return "Mình có thể tìm và so sánh sách, tư vấn theo nhu cầu và ngân sách, giải đáp giao hàng và tra cứu đơn hàng của bạn.";
 		if (q.matches(".*(?:khong biet nen doc gi|kieu kieu).*" ) || q.matches("[?\\s]*sach[?\\s]*"))
-			return "Bạn muốn đọc để thư giãn hay học thêm kiến thức? Bạn chọn sách cho mình hay cho ai? Hai thông tin này giúp mình gợi ý sát hơn; ngân sách có thể bổ sung nếu bạn muốn.";
+			return "Bạn muốn đọc về chủ đề gì hoặc để thư giãn, học thêm kiến thức? Biết hướng đọc sẽ giúp mình chọn sách sát với nhu cầu của bạn hơn; ngân sách có thể bổ sung nếu bạn muốn.";
 		return null;
 	}
 

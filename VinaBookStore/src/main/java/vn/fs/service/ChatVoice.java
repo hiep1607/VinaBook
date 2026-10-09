@@ -1,7 +1,5 @@
 package vn.fs.service;
 
-import java.util.List;
-
 /** Conversation style shared by AI presentation and deterministic recovery. */
 final class ChatVoice {
     private ChatVoice() {}
@@ -17,14 +15,9 @@ final class ChatVoice {
     }
 
     static String intakeQuestion(ChatDialogueMemory.State state) {
-        if (state.recommendationNeed.isBlank() && state.recommendationReader.isBlank())
-            return "Mình sẵn lòng giúp bạn chọn sách nhé. Để gợi ý sát hơn, bạn muốn đọc về chủ đề gì hoặc để làm gì, và sách này bạn chọn cho mình hay cho ai?";
-        if (state.recommendationNeed.isBlank())
+        if (!state.recommendationReader.isBlank())
             return "Mình đã biết bạn chọn sách cho ai rồi. Người đọc muốn đọc về chủ đề gì hoặc để làm gì — chẳng hạn giải trí, học một kỹ năng hay tìm hiểu một lĩnh vực? Biết thêm điều này sẽ giúp mình chọn nội dung hợp với người đọc hơn.";
-        var topics = new ChatIntentService().criteria(state.recommendationNeed, List.of()).getTopics();
-        String acknowledgement = topics.isEmpty() ? "Mình đã ghi nhận nhu cầu bạn vừa chia sẻ. "
-            : "Mình đã ghi nhận bạn đang quan tâm đến " + String.join(", ", topics.stream().limit(3).toList()) + ". ";
-        return acknowledgement + "Sách này bạn chọn cho mình hay cho ai? Biết người đọc sẽ giúp mình chọn nội dung và mức độ phù hợp hơn; nếu là trẻ em hoặc người mới bắt đầu, bạn có thể nói thêm.";
+        return "Mình sẵn lòng giúp bạn chọn sách nhé. Bạn muốn đọc về chủ đề gì hoặc để làm gì — chẳng hạn thư giãn, học một kỹ năng hay tìm hiểu một lĩnh vực? Biết hướng đọc sẽ giúp mình chọn những cuốn sát với nhu cầu của bạn hơn.";
     }
 
     static final String ASK_PRODUCT = "Bạn đang nói đến cuốn sách nào? Bạn gửi tên sách hoặc số thứ tự trong danh sách vừa xem nhé, để mình chọn đúng cuốn và tránh thao tác nhầm.";

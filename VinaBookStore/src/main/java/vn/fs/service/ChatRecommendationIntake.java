@@ -8,7 +8,7 @@ import vn.fs.dto.chat.ChatIntent;
 import vn.fs.dto.chat.ChatRequestDto;
 import vn.fs.entity.Product;
 
-/** Required recommendation facts come from customer text, never model guesses or browsing. */
+/** Reading need is required; recipient is optional. Both come only from customer text. */
 final class ChatRecommendationIntake {
     record Decision(String question, String message) {}
     private final ChatIntentService language;
@@ -26,6 +26,11 @@ final class ChatRecommendationIntake {
                 observe(message,state,catalog,false);
             return new Decision("", message);
         }
+        ChatReadingRequest reading=new ChatReadingRequest(language);
+        // Constraint edits already have a subject in toolSearch. Repeating the old
+        // utterance here would reintroduce the very exclusion the customer removed.
+        if(ready(state) && !state.toolSearch.isEmpty() && !reading.explicitNewTopic(message)
+            && (reading.contextPatch(message) || reading.budgetPatch(message)))return new Decision("",message);
         boolean discovery = discovery(message) || state.recommendationPending;
         if (!discovery) return new Decision("", message);
         // Restore explicit customer facts for existing conversations; assistant replies are not evidence.
@@ -52,7 +57,8 @@ final class ChatRecommendationIntake {
         }
         if (language.classify(message) == ChatIntent.UNKNOWN) message = "Gợi ý sách. " + message;
         // Supply confirmed context on a short continuation, without inventing a price limit.
-        if (reader(message).isBlank()) message += ". Sách " + state.recommendationReader;
+        if (reader(message).isBlank() && !state.recommendationReader.isBlank())
+            message += ". Sách " + state.recommendationReader;
         return new Decision("", message);
     }
 
@@ -82,9 +88,10 @@ final class ChatRecommendationIntake {
 
     private void observe(String message, ChatDialogueMemory.State state, List<Product> catalog, boolean pending) {
         String recipient = reader(message), need = need(message, catalog, pending);
+        if(new ChatReadingRequest(language).explicitNewTopic(message) && recipient.isBlank())state.recommendationReader="";
         if (!recipient.isBlank()) {
             // A new recipient needs their own reading need; do not transfer the previous person's tastes.
-            if (!state.recommendationReader.isBlank() && !recipient.equals(state.recommendationReader) && need.isBlank())
+            if (!pending && !recipient.equals(state.recommendationReader) && need.isBlank())
                 state.recommendationNeed = "";
             state.recommendationReader = recipient;
         }
@@ -122,7 +129,7 @@ final class ChatRecommendationIntake {
     }
 
     static boolean ready(ChatDialogueMemory.State state) {
-        return !state.recommendationNeed.isBlank() && !state.recommendationReader.isBlank();
+        return !state.recommendationNeed.isBlank();
     }
 
     static String question(ChatDialogueMemory.State state) {

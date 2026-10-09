@@ -152,18 +152,18 @@ final class ChatCatalogQuery {
         if(grade.find())domain+=" lớp "+grade.group(1);
         if(ChatBookFacts.has(q,"nghi qua nhieu|lo ca ngay|lo au|lo lang|giao tiep|tam ly|cam xuc|phat trien ban than|ky nang song|quan ly tien ca nhan|tai chinh ca nhan"))domain+=" "+q;
         final String required=domain;
-        candidates.removeIf(p->!mandatory.matches(required,p));
-        Map<Long,String> linked=data.relatedEvidence(seeds);
+        candidates.removeIf(p->!mandatory.matches(required,p) || !mandatory.matchesFormat(query,p));
+        boolean hasNeighbor=NEIGHBORS.stream().anyMatch(edge->ChatBookFacts.has(q,edge.get(0)));
         Map<Long,String> semantic=data.semanticEvidence(semanticQuery,candidates);
         List<Nearby> found=new ArrayList<>();
         for(Product book:candidates) {
-            String reason=linked.get(book.getProductId()), content=language.normalize(data.descriptiveText(book));
+            String reason=null, content=language.normalize(data.descriptiveText(book));
             if(reason==null)for(List<String> edge:NEIGHBORS) {
                 if(!ChatBookFacts.has(q,edge.get(0)))continue;
-                String match=Arrays.stream(edge.get(1).split("\\|")).filter(term->word(content,language.normalize(term))).findFirst().orElse(null);
+                String match=Arrays.stream(edge.get(1).split("\\|")).filter(term->mandatory.affirmed(content,language.normalize(term))).findFirst().orElse(null);
                 if(match!=null) { reason="Nội dung nhắc đến “"+match+"”, gần với hướng đọc bạn đang tìm.";break; }
             }
-            if(reason==null)reason=semantic.get(book.getProductId());
+            if(reason==null && (!hasNeighbor || !search(query,hard,List.of(book)).isEmpty()))reason=semantic.get(book.getProductId());
             if(reason!=null)found.add(new Nearby(book,reason));
         }
         List<Product> ranked=data.rankByMeaning(query,found.stream().map(Nearby::book).collect(Collectors.toList()));

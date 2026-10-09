@@ -53,12 +53,16 @@ final class ChatReadingFit {
     }
     boolean confirmed(String need,Map<String,String> facts) {
         return switch(need) {
-            case "gentle" -> ChatBookFacts.has(source(facts,"summary","readingStyle"),"nhe nhang|thu gian|trong treo|hon nhien|dung di")
+            case "gentle" -> confirmedEvidence(source(facts,"summary","readingStyle"),"nhe nhang|thu gian|trong treo|hon nhien|dung di")
                 && !ChatBookFacts.has(source(facts,"summary","readingStyle"),"bi kich|dau dau|day dut|vu an|mafia");
-            case "accessible" -> ChatBookFacts.has(source(facts,"summary","readingLevel","readingStyle"),"de doc|de hieu|nguoi it doc|nguoi moi doc|ngon ngu don gian|ngon ngu gian di");
-            case "practical" -> ChatBookFacts.has(source(facts,"summary","learningGoal","readingStyle"),"bai tap|vi du cu the|tinh huong thuc te|huong dan ap dung|cac buoc");
+            case "accessible" -> confirmedEvidence(source(facts,"summary","readingLevel","readingStyle"),"de doc|de hieu|nguoi it doc|nguoi moi doc|ngon ngu don gian|ngon ngu gian di");
+            case "practical" -> confirmedEvidence(source(facts,"summary","learningGoal","readingStyle"),"bai tap|vi du cu the|tinh huong thuc te|huong dan ap dung|cac buoc");
             default -> false;
         };
+    }
+    private boolean confirmedEvidence(String facts,String alternatives) {
+        ChatExplicitFilters evidence=new ChatExplicitFilters(language);
+        return Arrays.stream(alternatives.split("\\|")).anyMatch(term->evidence.affirmed(facts,term));
     }
     boolean ageConfirmed(Map<String,Object> filters,Map<String,String> facts) {
         if(!(filters.get("readerAge") instanceof Number))return true;

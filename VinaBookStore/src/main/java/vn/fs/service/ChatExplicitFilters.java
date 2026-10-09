@@ -20,11 +20,11 @@ final class ChatExplicitFilters {
         String q = intents.normalize(question);
         String name = intents.normalize(product.getName());
         String category = product.getCategory() == null ? "" : intents.normalize(product.getCategory().getCategoryName());
-        String rawBookFacts = retrieval == null ? product.getName()+" "+product.getDescription() : retrieval.searchableText(product);
+        String rawBookFacts = retrieval == null ? product.getName()+" "+product.getDescription() : retrieval.descriptiveText(product);
         // A disclaimer about Java 21 does not invalidate a verified Java title.
         String bookFacts = intents.normalize(product.getName()+". "+rawBookFacts);
         String text = bookFacts + " " + category;
-        if(!matchesReadingPurpose(question,product))return false;
+        if(!matchesReadingPurpose(question,product) || !matchesFormat(question,product))return false;
         if(ChatBookFacts.has(q,"quan ly tien ca nhan|tai chinh ca nhan|quan ly chi tieu")
                 && !ChatBookFacts.has(q,"blockchain|bitcoin|tien ma hoa|tien dien tu")
                 && ChatBookFacts.has(bookFacts,"blockchain|bitcoin|chuoi khoi|tien ma hoa"))return false;
@@ -42,7 +42,7 @@ final class ChatExplicitFilters {
         }
         if(!matchesEconomicScopes(requiredEconomicScopes(question),product))return false;
         if (programmingRequest(question)) {
-            if (!Pattern.compile("\\b(lap trinh|code|ma nguon|phan mem|thuat toan|cau truc du lieu|co so du lieu|java|python|javascript|backend|frontend|html|css|web development|sql|coding)\\b").matcher(bookFacts).find()) return false;
+            if (List.of("lap trinh","code","ma nguon","phan mem","thuat toan","cau truc du lieu","co so du lieu","java","python","javascript","backend","frontend","html","css","web development","sql","coding").stream().noneMatch(term->affirmed(bookFacts,term))) return false;
         } else if (word(q, "cong nghe") || word(q, "cntt")) {
             if (!Pattern.compile("\\b(lap trinh|cong nghe|tri tue nhan tao|dien tu|robot|ma nguon|phan mem|cau truc du lieu|co so du lieu|may tinh|java|python|javascript|backend|frontend|html|css|web development)\\b").matcher(bookFacts).find()) return false;
         }
@@ -50,7 +50,7 @@ final class ChatExplicitFilters {
                 && !Pattern.compile("\\b(tre em|thieu nhi|cho be|co tich|dong thoai)\\b").matcher(text).find()) return false;
         if (word(q, "tieng anh") && !word(text, "tieng anh") && !word(text, "english")) return false;
         if ((word(q,"truyen") || word(q,"tieu thuyet") || word(q,"van hoc"))
-                && (!Pattern.compile("\\b(truyen|tieu thuyet|van hoc)\\b").matcher(text).find()
+                && (!Pattern.compile("\\b(truyen|tieu thuyet|van hoc|cau chuyen|dong thoai|co tich)\\b").matcher(text).find()
                     || programmingRequest(bookFacts)
                     || ChatBookFacts.has(bookFacts,"doi nhan xu the|ky nang giao tiep|nghe thuat giao tiep")
                        && !ChatBookFacts.has(bookFacts,"tieu thuyet|truyen ngan|truyen dai|tac pham van hoc"))) return false;
@@ -58,6 +58,18 @@ final class ChatExplicitFilters {
                 && Pattern.compile("\\b(nang cao|chuyen sau|advanced)\\b").matcher(text).find()
                 && !Pattern.compile("\\b(can ban|co ban|nhap mon|nguoi moi)\\b").matcher(text).find()) return false;
         return true;
+    }
+
+    /** A broad literature/children shelf cannot prove the requested literary form. */
+    boolean matchesFormat(String question,Product product) {
+        String q=intents.normalize(question);
+        String facts=intents.normalize(retrieval==null?product.getName()+". "+product.getDescription():retrieval.descriptiveText(product));
+        List<String> forms=List.of("tieu thuyet","truyen ngan","truyen tranh");
+        List<String> required=forms.stream().filter(form->affirmed(q,form)).toList();
+        if(required.isEmpty())return true;
+        boolean either=word(q,"hoac") || word(q,"or");
+        return either?required.stream().anyMatch(form->affirmed(facts,form))
+            :required.stream().allMatch(form->affirmed(facts,form));
     }
 
     boolean matchesReadingPurpose(String question, Product product) {
@@ -80,7 +92,7 @@ final class ChatExplicitFilters {
     }
 
     boolean onlyLanguage(String question) {
-        return Pattern.compile("\\b(?:chi\\s+(?:(?:lay|chon|can|muon)\\s+)?|only\\s+)(?:sach\\s+(?:ve\\s+)?)?(?:java|python|javascript|spring boot)\\b")
+        return Pattern.compile("\\b(?:chi\\s+(?:(?:lay|chon|can|muon|goi y|gioi thieu|tim)\\s+)?|only\\s+)(?:sach\\s+(?:ve\\s+)?)?(?:java|python|javascript|spring boot)\\b")
             .matcher(intents.normalize(question)).find();
     }
 
@@ -107,10 +119,10 @@ final class ChatExplicitFilters {
             .replaceAll("(?iu)\\bvi\\s+mô\\b"," microeconomics "));
     }
 
-    private boolean affirmed(String facts,String term) {
+    boolean affirmed(String facts,String term) {
         for(String clause:facts.split("[,.!?;\\n]+"))
             if(word(clause,term) && !ChatBookFacts.has(clause,
-                "chua (?:co|xac nhan|biet|du|the)|khong (?:phai|khang dinh|xac nhan|bao gom|co)"))return true;
+                "chua (?:co|xac nhan|biet|du|the)|khong (?:phai|khang dinh|xac nhan|bao gom|co|lay|chon|muon|can|tap trung|dung|su dung|yeu cau|doi hoi|nen|mac dinh)|loai tru"))return true;
         return false;
     }
 

@@ -481,10 +481,10 @@ class ChatServiceTest {
 
 	@org.junit.jupiter.params.ParameterizedTest
 	@org.junit.jupiter.params.provider.ValueSource(strings = {"Gợi ý sách dưới 150k", "sách dưới 150k", "Tìm sách từ 60k đến 150k"})
-	void budgetAloneAsksForNeedAndReaderBeforeDiscovery(String message) {
+	void budgetAloneAsksOnlyForNeedBeforeDiscovery(String message) {
 		ChatResponseDto response = service.reply(request(message));
 		assertThat(response.getProducts()).isEmpty();
-		assertThat(response.getAnswer()).contains("chủ đề", "cho mình hay cho ai");
+		assertThat(response.getAnswer()).contains("chủ đề").doesNotContain("cho mình hay cho ai");
 	}
 
 	@Test
@@ -493,7 +493,7 @@ class ChatServiceTest {
 		assertThat(response.getProvider()).isEqualTo("local");
 		org.mockito.Mockito.verify(ai, org.mockito.Mockito.never()).complete(anyString(), anyList(), anyString());
 		assertThat(response.getProducts()).isEmpty();
-		assertThat(response.getAnswer()).contains("chủ đề", "cho mình hay cho ai");
+		assertThat(response.getAnswer()).contains("chủ đề").doesNotContain("cho mình hay cho ai");
 	}
 
 	@Test
