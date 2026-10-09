@@ -1081,7 +1081,7 @@ class ChatToolsTest {
             discoveryBook(5,"Lịch Sử","Lịch sử thế giới.",60000)));
         var result=orchestrator.reply(request("s","Gợi ý trinh thám hoặc tình yêu, mỗi cuốn dưới 150k, tối đa 5 cuốn"),state);
         assertThat(result.getProducts()).extracting(ChatProductDto::getId).containsExactlyInAnyOrder(1L,2L,4L);
-        assertThat(result.getAnswer()).contains("3 cuốn phù hợp").doesNotContain("chưa đủ 5");
+        assertThat(result.getAnswer()).contains("3 cuốn để bạn dễ cân nhắc").doesNotContain("chưa đủ 5");
         assertThat(state.discoveryExact).containsExactlyInAnyOrder(1L,2L,4L);
         verify(ai,never()).complete(anyString(),anyList(),anyString());
     }
@@ -1338,7 +1338,7 @@ class ChatToolsTest {
         when(products.findByStatusTrue()).thenReturn(List.of(java));
         var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"Java\",\"maxPrice\":150000}"),
             new ChatTool.Context(request("s","Gợi ý sách lập trình Java cho người mới dưới 150k"),state));
-        assertThat(result.answer()).contains("Bạn đang tìm sách Java","91.800đ","150.000đ mỗi cuốn","chưa xác nhận độ khó cho người mới","Chưa có mục lục đúng bản");
+        assertThat(result.answer()).contains("hướng đọc Java","91.800đ","150.000đ mỗi cuốn","xác nhận độ khó cho người mới","Chưa có mục lục đúng bản");
         assertThat(result.answer()).doesNotContain("phù hợp nhất","rất dễ đọc");
     }
     @Test void recommendationKeepsTheFullVerifiedLimitationRatherThanCuttingItOff() throws Exception {
@@ -1346,6 +1346,33 @@ class ChatToolsTest {
         when(products.findByStatusTrue()).thenReturn(List.of(discoveryBook(1,"Java",summary,50000)));
         var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"Java\"}"),new ChatTool.Context(request("s","Gợi ý sách Java"),state));
         assertThat(result.answer()).contains("Chưa xác nhận phiên bản Java, độ khó hay mục lục đúng bản đang bán.");
+    }
+    @Test void anUnavailableRequiredLanguageExplainsWhyChangingPriceCannotHelp() throws Exception {
+        when(products.findByStatusTrue()).thenReturn(List.of(discoveryBook(1,"Java","Giáo trình lập trình Java.",50000)));
+        var result=registry.execute("recommendBooks",mapper.readTree("{\"query\":\"Python\",\"maxPrice\":200000}"),
+            new ChatTool.Context(request("s","Chỉ lấy sách lập trình Python dưới 200k"),state));
+        assertThat(result.products()).isEmpty();
+        assertThat(result.answer()).contains("tăng ngân sách cũng chưa giúp","hướng học khác")
+            .doesNotContain("Bạn có muốn nới điều kiện giá");
+    }
+    @Test void recommendationUsesEachBooksContentAndMentionsThePriceLimitOnlyOnce() throws Exception {
+        when(products.findByStatusTrue()).thenReturn(List.of(
+            discoveryBook(1,"Vụ Án Bên Sông","Truyện trinh thám về một vụ án bên sông.",50000),
+            discoveryBook(2,"Bí Mật Thư Viện","Truyện trinh thám về một bí mật trong thư viện.",60000)));
+        var result=registry.execute("recommendBooks",mapper.readTree("{\"query\":\"trinh thám\",\"maxPrice\":100000}"),
+            new ChatTool.Context(request("s","Gợi ý sách trinh thám dưới 100k"),state));
+        assertThat(result.answer()).contains("vụ án bên sông","bí mật trong thư viện","hướng đọc trinh thám");
+        assertThat(result.answer().split("100.000đ mỗi cuốn",-1)).hasSize(2);
+        assertThat(result.answer()).doesNotContain("Bạn đang tìm sách","dựa trên nội dung đã được xác nhận","hồ sơ ghi");
+    }
+    @Test void readingReasonUsesTheFieldThatActuallySupportsTheRequestedNeed() {
+        ChatReadingFit fit=new ChatReadingFit(language);
+        Map<String,String> facts=Map.of("summary","Câu chuyện về tình bạn.",
+            "readingLevel","Chưa xác nhận sách dễ đọc.","readingStyle","Giọng kể nhẹ nhàng và trong trẻo.");
+        assertThat(fit.evidence("gentle",facts)).isEqualTo("Giọng kể nhẹ nhàng và trong trẻo.");
+        assertThat(fit.evidence("accessible",facts)).isEmpty();
+        assertThat(fit.evidence("practical",Map.of("learningGoal","Có ví dụ cụ thể để thực hành.")))
+            .isEqualTo("Có ví dụ cụ thể để thực hành.");
     }
     @Test void aDefaultShortlistDoesNotPadFullySupportedReadingNeedsWithPartialMatches() throws Exception {
         Product full=discoveryBook(1,"Chuyện Kể","Truyện nhẹ nhàng và dễ đọc về tình bạn.",70000);
@@ -1365,7 +1392,7 @@ class ChatToolsTest {
         var result=registry.execute("recommendBooks",mapper.readTree("{\"scope\":\"continue\"}"),
             new ChatTool.Context(request("s","Có cuốn nào khác không?"),state));
         assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(2L);
-        assertThat(result.answer()).contains("Chưa xác nhận độ dễ đọc");
+        assertThat(result.answer()).contains("Mình chưa đủ thông tin để xác nhận độ dễ đọc");
     }
     @Test void anExplicitCountCanIncludeQualifiedReadingFitsAndStillRespectsTheBudget() throws Exception {
         when(products.findByStatusTrue()).thenReturn(List.of(
@@ -1375,7 +1402,7 @@ class ChatToolsTest {
         var result=registry.execute("recommendBooks",mapper.readTree("{\"query\":\"truyện\",\"totalBudget\":200000}"),
             new ChatTool.Context(request("s","Chọn 3 cuốn truyện nhẹ nhàng dễ đọc, tổng dưới 200k"),state));
         assertThat(result.products()).hasSize(3);
-        assertThat(result.answer()).contains("180.000đ","Chưa xác nhận độ dễ đọc","Chưa xác nhận mức độ nhẹ nhàng");
+        assertThat(result.answer()).contains("180.000đ","Mình chưa đủ thông tin để xác nhận độ dễ đọc","Mình chưa đủ thông tin để xác nhận mức độ nhẹ nhàng");
     }
     @Test void allBooksAndAnExplicitMaximumAreNotLimitedToTheDefaultShortlist() throws Exception {
         List<Product> catalog=new ArrayList<>();for(int i=1;i<=6;i++)catalog.add(book(i,50000));
@@ -1399,7 +1426,7 @@ class ChatToolsTest {
         var result=registry.execute("searchProducts",mapper.readTree("{\"query\":\"truyện\"}"),
             new ChatTool.Context(request("s","Gợi ý truyện nhẹ nhàng dễ đọc để thư giãn"),state));
         assertThat(result.products()).extracting(ChatProductDto::getId).containsExactlyInAnyOrder(1L,2L);
-        assertThat(result.answer()).contains("Chưa xác nhận mức độ nhẹ nhàng","Chưa xác nhận độ dễ đọc");
+        assertThat(result.answer()).contains("Mình chưa đủ thông tin để xác nhận mức độ nhẹ nhàng","Mình chưa đủ thông tin để xác nhận độ dễ đọc");
     }
     @Test void switchingFromProgrammingToRelaxationDoesNotCarryBeginnerContext() {
         when(ai.isConfigured()).thenReturn(false);

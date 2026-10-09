@@ -1,0 +1,139 @@
+{
+  "date": "2026-10-09",
+  "provider": "local",
+  "method": "Direct chatbot UI via browser",
+  "results": [
+    {
+      "stage": 1,
+      "prompt": "Đổi sang gợi ý truyện nhẹ nhàng dễ đọc để thư giãn",
+      "answer": "Mình chọn được 3 lựa chọn theo nội dung để bạn xem thử:\n\nCó vài điểm cần xem thêm trước khi quyết định; mình ghi rõ dưới từng cuốn. Dữ liệu hiện chưa xác nhận mức đọc cho mọi cuốn.\n\n**Sách theo nội dung bạn tìm:**\n\n• “Hoàng Tử Bé” — 69.920đ · Antoine de Saint-Exupéry · Chưa có đánh giá\nTruyện về hoàng tử nhỏ và cách cậu nhìn thế giới, gửi gắm suy ngẫm về con người và đời sống. Tác phẩm kết hợp chất thơ với những câu hỏi mang tính triết lý.\nĐể bạn cân nhắc nhu cầu đọc, hồ sơ ghi: Truyện giàu chất thơ, nhẹ nhàng truyền tải suy ngẫm về tình bạn và cách nhìn thế giới.\nChưa xác nhận độ dễ đọc cho cuốn này.\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nTruyện tranh về Doraemon, Nobita và nhóm bạn với những bảo bối từ tương lai. Các câu chuyện gắn tiếng cười, thế giới tưởng tượng và tình bạn.\nĐể bạn cân nhắc nhu cầu đọc, hồ sơ ghi: Truyện tranh với không khí hồn nhiên, trong sáng và hài hước.\nChưa xác nhận độ dễ đọc cho cuốn này.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ” — 71.760đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nNgười kể hồi tưởng những trò chơi và cách nhìn thế giới của cu Mùi, Hải cò, Tủn và Tí sún. Từ ký ức tuổi thơ, câu chuyện nối sang suy nghĩ của người lớn về cách thấu hiểu trẻ em.\nĐể bạn cân nhắc nhu cầu đọc, hồ sơ ghi: Được bài giới thiệu đăng trên NXB Trẻ nhận xét là dễ đọc.\nChưa xác nhận mức độ nhẹ nhàng cho cuốn này.Hoàng Tử BéAntoine de Saint-Exupéry 69,920đ Giảm 8%Xem sáchThêm giỏDoraemon - Tập 1Fujiko F. Fujio 19,800đ Giảm 10%Xem sáchThêm giỏCho Tôi Xin Một Vé Đi Tuổi ThơNguyễn Nhật Ánh 71,760đ Giảm 8%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+      "titles": [
+        "Hoàng Tử Bé",
+        "Doraemon - Tập 1",
+        "Cho Tôi Xin Một Vé Đi Tuổi Thơ"
+      ],
+      "status": "PASS",
+      "checks": [
+        "Mặc định tối đa 3 sách; điểm chưa xác nhận hiện dưới từng cuốn."
+      ]
+    },
+    {
+      "stage": 1,
+      "prompt": "Đổi sang gợi ý 5 cuốn tiểu thuyết, mỗi cuốn dưới 150k",
+      "answer": "Bạn muốn 5 cuốn; mình tìm được 2 cuốn đúng yêu cầu. Tổng cộng có 2 lựa chọn; hiện chưa đủ 5 cuốn khác nhau trong các điều kiện này. Mình giữ đúng yêu cầu trước; nếu bạn muốn mở rộng sang nội dung gần chủ đề, mình sẽ kiểm tra thêm và ghi rõ sự khác biệt.\n\n**Sách đúng yêu cầu:**\n\n• “Tắt Đèn” — 55.200đ · Ngô Tất Tố · Chưa có đánh giá\nBạn đang tìm sách tiểu thuyết; mình chọn cuốn này dựa trên nội dung đã được xác nhận.\nTiểu thuyết hiện thực về chị Dậu và cảnh sống đau khổ của dân quê trong nghèo đói, bị người có thế lực áp bức. Nhân vật vẫn hết lòng vì chồng con giữa hoàn cảnh khắc nghiệt.\nGiá 55.200đ nằm trong mức 150.000đ mỗi cuốn bạn chọn.\n\n• “Bố Già (The Godfather)” — 133.400đ · Mario Puzo · 5.0/5\nBạn đang tìm sách tiểu thuyết; mình chọn cuốn này dựa trên nội dung đã được xác nhận.\nTiểu thuyết về gia đình Corleone trong thế giới ngầm mafia Mỹ. Câu chuyện đan xen quyền lực, bạo lực, lòng trung thành, quan hệ gia đình và sự phản kháng.\nGiá 133.400đ nằm trong mức 150.000đ mỗi cuốn bạn chọn.Tắt ĐènNgô Tất Tố 55,200đ Giảm 8%Xem sáchThêm giỏBố Già (The Godfather)Mario Puzo 133,400đ Giảm 8%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+      "titles": [
+        "Tắt Đèn",
+        "Bố Già (The Godfather)"
+      ],
+      "status": "PASS",
+      "checks": [
+        "Giữ số lượng khách yêu cầu; báo thiếu, không tự thêm sách khác dạng."
+      ]
+    },
+    {
+      "stage": 1,
+      "prompt": "Chọn 3 cuốn tiểu thuyết, tổng tiền cả 3 cuốn không quá 200k",
+      "answer": "Bạn muốn 3 cuốn; mình tìm được 2 cuốn đúng yêu cầu. Tổng cộng có 2 lựa chọn; hiện chưa đủ 3 cuốn khác nhau trong các điều kiện này. Mình giữ đúng yêu cầu trước; nếu bạn muốn mở rộng sang nội dung gần chủ đề, mình sẽ kiểm tra thêm và ghi rõ sự khác biệt.\n\n**Sách đúng yêu cầu:**\n\n• “Tắt Đèn” — 55.200đ · Ngô Tất Tố · Chưa có đánh giá\nBạn đang tìm sách tiểu thuyết; mình chọn cuốn này dựa trên nội dung đã được xác nhận.\nTiểu thuyết hiện thực về chị Dậu và cảnh sống đau khổ của dân quê trong nghèo đói, bị người có thế lực áp bức. Nhân vật vẫn hết lòng vì chồng con giữa hoàn cảnh khắc nghiệt.\n\n• “Bố Già (The Godfather)” — 133.400đ · Mario Puzo · 5.0/5\nBạn đang tìm sách tiểu thuyết; mình chọn cuốn này dựa trên nội dung đã được xác nhận.\nTiểu thuyết về gia đình Corleone trong thế giới ngầm mafia Mỹ. Câu chuyện đan xen quyền lực, bạo lực, lòng trung thành, quan hệ gia đình và sự phản kháng.\n\nTổng tiền sách: 188.600đ. Chưa gồm phí giao hàng.Tắt ĐènNgô Tất Tố 55,200đ Giảm 8%Xem sáchThêm giỏBố Già (The Godfather)Mario Puzo 133,400đ Giảm 8%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+      "titles": [
+        "Tắt Đèn",
+        "Bố Già (The Godfather)"
+      ],
+      "status": "PASS",
+      "checks": [
+        "Đúng dạng tiểu thuyết; tổng 188.600đ dưới 200k; báo thiếu cuốn thứ ba."
+      ]
+    },
+    {
+      "stage": 2,
+      "prompt": "Đổi sang gợi ý sách lập trình Java cho người mới, mỗi cuốn dưới 150k",
+      "answer": "Với hướng đọc Java bạn chọn, mình chọn trước 1 cuốn để bạn dễ cân nhắc: Các cuốn đều nằm trong mức 150.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Phạm Xuân Lâm (chủ biên) · Chưa có đánh giá\nGiáo trình Lập trình Java do Phạm Xuân Lâm chủ biên, được xác nhận qua bìa và thư mục quốc gia. Có thể dùng làm tài liệu học lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java, các thư viện, framework hoặc các chủ đề cụ thể; không khẳng định sách dạy Spring Boot hay Java 21.\nMình chưa đủ thông tin để xác nhận độ khó cho người mới. Bạn nên xem mục lục hoặc đọc thử vài trang để biết cách trình bày có hợp với mình không nhé.Giáo Trình Lập Trình JavaPhạm Xuân Lâm (chủ biên) 91,800đ Giảm 10%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+      "titles": [
+        "Giáo Trình Lập Trình Java"
+      ],
+      "status": "PASS",
+      "checks": [
+        "Giữ giá và nội dung có căn cứ; không tự khẳng định phù hợp người mới; giới hạn giá nhắc một lần."
+      ]
+    },
+    {
+      "stage": 2,
+      "prompt": "Đổi sang gợi ý truyện nhẹ nhàng, dễ đọc để thư giãn",
+      "answer": "Với mong muốn tìm sách nhẹ nhàng và dễ đọc của bạn, mình chọn trước 3 cuốn để bạn xem điểm hợp và điều còn cần cân nhắc:\n\nCác lựa chọn này mới đáp ứng một phần mong muốn của bạn. Mình ghi rõ phần còn thiếu thông tin dưới từng cuốn để bạn chọn dễ hơn nhé.\n\n**Sách theo nội dung bạn tìm:**\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nTruyện tranh về Doraemon, Nobita và nhóm bạn với những bảo bối từ tương lai. Các câu chuyện gắn tiếng cười, thế giới tưởng tượng và tình bạn.\nVề giọng kể: Truyện tranh với không khí hồn nhiên, trong sáng và hài hước.\nMình chưa đủ thông tin để xác nhận độ dễ đọc cho cuốn này.\n\n• “Hoàng Tử Bé” — 69.920đ · Antoine de Saint-Exupéry · Chưa có đánh giá\nTruyện về hoàng tử nhỏ và cách cậu nhìn thế giới, gửi gắm suy ngẫm về con người và đời sống. Tác phẩm kết hợp chất thơ với những câu hỏi mang tính triết lý.\nVề giọng kể: Truyện giàu chất thơ, nhẹ nhàng truyền tải suy ngẫm về tình bạn và cách nhìn thế giới.\nMình chưa đủ thông tin để xác nhận độ dễ đọc cho cuốn này.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ” — 71.760đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nNgười kể hồi tưởng những trò chơi và cách nhìn thế giới của cu Mùi, Hải cò, Tủn và Tí sún. Từ ký ức tuổi thơ, câu chuyện nối sang suy nghĩ của người lớn về cách thấu hiểu trẻ em.\nVề độ dễ đọc: Được bài giới thiệu đăng trên NXB Trẻ nhận xét là dễ đọc.\nMình chưa đủ thông tin để xác nhận mức độ nhẹ nhàng cho cuốn này.Doraemon - Tập 1Fujiko F. Fujio 19,800đ Giảm 10%Xem sáchThêm giỏHoàng Tử BéAntoine de Saint-Exupéry 69,920đ Giảm 8%Xem sáchThêm giỏCho Tôi Xin Một Vé Đi Tuổi ThơNguyễn Nhật Ánh 71,760đ Giảm 8%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+      "titles": [
+        "Doraemon - Tập 1",
+        "Hoàng Tử Bé",
+        "Cho Tôi Xin Một Vé Đi Tuổi Thơ"
+      ],
+      "status": "PASS",
+      "checks": [
+        "Lý do đúng với giọng kể/độ dễ đọc; nói rõ phần còn thiếu; không mang ngữ cảnh người mới sang nhu cầu mới."
+      ]
+    },
+    {
+      "stage": 2,
+      "prompt": "Đổi sang gợi ý sách trinh thám dưới 150k",
+      "answer": "Với hướng đọc trinh thám bạn chọn, mình chọn trước 1 cuốn để bạn dễ cân nhắc: Các cuốn đều nằm trong mức 150.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.Thám Tử Lừng Danh Conan - Tập 1Gosho Aoyama 23,750đ Giảm 5%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+      "titles": [
+        "Thám Tử Lừng Danh Conan - Tập 1"
+      ],
+      "status": "PASS",
+      "checks": [
+        "Đổi chủ đề đúng; Conan 23.750đ; không lặp câu xác nhận chủ đề hoặc giá dưới sách."
+      ]
+    },
+    {
+      "stage": 2,
+      "prompt": "Đổi sang sách lập trình Python, chỉ lấy Python, không lấy Java, mỗi cuốn dưới 200k",
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Bạn có muốn nới điều kiện giá hoặc đánh giá một chút không? Như vậy mình có thể kiểm tra thêm lựa chọn, nhưng vẫn giữ chủ đề bạn cần.Câu trả lời hữu ích?👍👎",
+      "titles": [],
+      "status": "REPAIRED",
+      "checks": [
+        "Phát hiện gợi ý nới giá khi chưa có Python; đã sửa và kiểm tra lại ở lượt kế tiếp."
+      ]
+    },
+    {
+      "stage": 2,
+      "revision": "final",
+      "prompt": "Đổi sang chỉ tìm sách lập trình Python, mỗi cuốn dưới 200k",
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Phần nội dung bạn yêu cầu hiện chưa có lựa chọn phù hợp trong danh mục đang bán, nên tăng ngân sách cũng chưa giúp tìm thêm sách. Bạn có thể chọn một ngôn ngữ lập trình hoặc hướng học khác để mình kiểm tra tiếp nhé.Câu trả lời hữu ích?👍👎",
+      "titles": [],
+      "status": "PASS",
+      "checks": [
+        "Không bịa sách Python; giải thích thay giá chưa giúp khi nội dung bắt buộc không có."
+      ]
+    },
+    {
+      "stage": 2,
+      "revision": "final",
+      "prompt": "Đổi nhu cầu: chọn 3 cuốn tiểu thuyết, tổng tiền cả 3 cuốn không quá 200k",
+      "answer": "Bạn muốn 3 cuốn; mình tìm được 2 cuốn đúng yêu cầu. Tổng cộng có 2 lựa chọn; hiện chưa đủ 3 cuốn khác nhau trong các điều kiện này. Mình giữ đúng yêu cầu trước; nếu bạn muốn mở rộng sang nội dung gần chủ đề, mình sẽ kiểm tra thêm và ghi rõ sự khác biệt.\n\n**Sách đúng yêu cầu:**\n\n• “Tắt Đèn” — 55.200đ · Ngô Tất Tố · Chưa có đánh giá\nTiểu thuyết hiện thực về chị Dậu và cảnh sống đau khổ của dân quê trong nghèo đói, bị người có thế lực áp bức. Nhân vật vẫn hết lòng vì chồng con giữa hoàn cảnh khắc nghiệt.\n\n• “Bố Già (The Godfather)” — 133.400đ · Mario Puzo · 5.0/5\nTiểu thuyết về gia đình Corleone trong thế giới ngầm mafia Mỹ. Câu chuyện đan xen quyền lực, bạo lực, lòng trung thành, quan hệ gia đình và sự phản kháng.\n\nTổng tiền sách: 188.600đ. Chưa gồm phí giao hàng.Tắt ĐènNgô Tất Tố 55,200đ Giảm 8%Xem sáchThêm giỏBố Già (The Godfather)Mario Puzo 133,400đ Giảm 8%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+      "titles": [
+        "Tắt Đèn",
+        "Bố Già (The Godfather)"
+      ],
+      "status": "PASS",
+      "checks": [
+        "Đúng dạng tiểu thuyết; tổng 188.600đ dưới 200k; báo thiếu cuốn thứ ba."
+      ]
+    },
+    {
+      "stage": 2,
+      "revision": "final",
+      "prompt": "Đổi sang chỉ gợi ý sách trinh thám, mỗi cuốn dưới 150k",
+      "answer": "Với hướng đọc trinh thám bạn chọn, mình chọn trước 1 cuốn để bạn dễ cân nhắc. Cuốn này nằm trong mức 150.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.Thám Tử Lừng Danh Conan - Tập 1Gosho Aoyama 23,750đ Giảm 5%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+      "titles": [
+        "Thám Tử Lừng Danh Conan - Tập 1"
+      ],
+      "status": "PASS",
+      "checks": [
+        "Đổi chủ đề đúng; Conan 23.750đ; không lặp câu xác nhận chủ đề hoặc giá dưới sách."
+      ]
+    }
+  ],
+  "summary": {
+    "passed": 9,
+    "repaired_observations": 1,
+    "console_errors_or_warnings": 0,
+    "backend_tests": 266
+  }
+}

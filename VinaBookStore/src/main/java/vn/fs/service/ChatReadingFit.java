@@ -60,6 +60,20 @@ final class ChatReadingFit {
             default -> false;
         };
     }
+    String evidence(String need,Map<String,String> facts) {
+        if(!confirmed(need,facts))return "";
+        List<String> fields=switch(need) {
+            case "gentle" -> List.of("readingStyle","summary");
+            case "accessible" -> List.of("readingLevel","readingStyle","summary");
+            case "practical" -> List.of("learningGoal","readingStyle","summary");
+            default -> List.of();
+        };
+        for(String field:fields) {
+            String value=facts.getOrDefault(field,"");
+            if(!value.isBlank() && confirmed(need,Map.of(field,value)))return value;
+        }
+        return "";
+    }
     private boolean confirmedEvidence(String facts,String alternatives) {
         ChatExplicitFilters evidence=new ChatExplicitFilters(language);
         return Arrays.stream(alternatives.split("\\|")).anyMatch(term->evidence.affirmed(facts,term));

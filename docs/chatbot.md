@@ -173,3 +173,9 @@ Production dùng `ddl-auto=validate`: chạy [chat-memory.sql](../VinaBookStore/
 ## Siết chất lượng tư vấn — 08/10/2026
 
 Giữ ngân sách khi siết chủ đề; đổi nhu cầu rõ ràng bỏ loại trừ/mức đọc cũ, xử lý câu bỏ loại trừ và nhận loại trừ mới trong cùng lượt. Dạng tiểu thuyết/truyện ngắn/truyện tranh được xác nhận từ nội dung, không suy từ danh mục chung. Câu phủ định không chứng minh chủ đề hay độ dễ đọc. Chatbot giải thích lý do chọn, giá và các dữ kiện còn thiếu, không tự bù đủ số cuốn bằng nhóm gần chủ đề. 259 test backend và 12 ca UI local đạt theo tiêu chí quan sát; xem [báo cáo](chatbot-evaluation/recommendation-improvements-2026-10-08.md).
+
+## Danh sách gọn và lời tư vấn — 09/10/2026
+
+Khi không có yêu cầu số lượng, chatbot chọn tối đa 3 cuốn. Với nhu cầu thư giãn hoặc nhiều tiêu chí đọc, ưu tiên nhóm có nhiều tiêu chí được xác nhận nhất, không bù bằng sách chỉ trùng chủ đề. Nếu không đủ căn cứ cho mọi tiêu chí, từng sách vẫn ghi rõ phần chưa xác nhận. Lượt hỏi thêm loại sách đã xem trước khi chọn nhóm tiếp theo; số lượng cụ thể, “tất cả”, giá và ngân sách vẫn được giữ.
+
+Lời dẫn nối với nhu cầu đọc; giới hạn giá nhắc một lần. Mỗi sách có nội dung riêng và bằng chứng đúng trường về giọng kể, mức đọc hoặc cách áp dụng. Không lặp câu chọn sách chung chung, không dùng thông tin độ khó làm bằng chứng cho giọng kể. Người nhận và ngân sách vẫn tùy chọn. Xem [kết quả kiểm tra](chatbot-evaluation/shortlist-and-voice-2026-10-09.md).
