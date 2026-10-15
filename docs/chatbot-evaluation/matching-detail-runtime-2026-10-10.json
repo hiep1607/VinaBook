@@ -1,0 +1,26 @@
+[
+  {
+    "class": "ChatExplicitFilters",
+    "buildSha256": "4a84b315823fe6e1a1e94e358295b13d60acd1c83404d56c9e1e795efa51a2d2",
+    "runtimeSha256": "4a84b315823fe6e1a1e94e358295b13d60acd1c83404d56c9e1e795efa51a2d2",
+    "matches": true
+  },
+  {
+    "class": "ChatBookFacts",
+    "buildSha256": "39d7b96a10df90cf2ff4ec2428a49f03dd895378f38ea15e76ac44d260d4c69f",
+    "runtimeSha256": "39d7b96a10df90cf2ff4ec2428a49f03dd895378f38ea15e76ac44d260d4c69f",
+    "matches": true
+  },
+  {
+    "class": "ChatBookDetailQuestions",
+    "buildSha256": "41e86ef3ccf47fb2749d606e48c7c7d0584ab17d215c673b553d1f3a6d944723",
+    "runtimeSha256": "41e86ef3ccf47fb2749d606e48c7c7d0584ab17d215c673b553d1f3a6d944723",
+    "matches": true
+  },
+  {
+    "class": "ChatBuiltinTools",
+    "buildSha256": "da4de91e61c9441a04fa90bc9b493babe8c3e8829a2fe879236239404c3f0712",
+    "runtimeSha256": "da4de91e61c9441a04fa90bc9b493babe8c3e8829a2fe879236239404c3f0712",
+    "matches": true
+  }
+]

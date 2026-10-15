@@ -1,0 +1,123 @@
+[
+  {
+    "id": "N01",
+    "prompt": "Đổi chủ đề hoàn toàn: muốn đọc folklore Việt Nam để tìm hiểu văn hóa dân gian.",
+    "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Kho Tàng Truyện Cổ Tích Việt Nam” — 121.500đ · Nguyễn Đổng Chi · Chưa có đánh giá\nSách được biên soạn bởi Nguyễn Đổng Chi, tập trung vào việc sưu tầm truyện cổ tích, mang lại giá trị thực tế cho việc tìm hiểu về truyện kể và các nét văn hóa dân gian Việt Nam.\nCông trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ.\n\nKho Tàng Truyện Cổ Tích Việt Nam\nNguyễn Đổng Chi\n121,500đ\nGiảm 10%\nXem sách\nThêm giỏ",
+    "assessment": "PARTIAL_BEFORE_REPEAT_FIX",
+    "scope": "Selection, stated constraints, references and requested facts only; not an overall prose-quality score."
+  },
+  {
+    "id": "N02",
+    "prompt": "Đổi chủ đề hoàn toàn: muốn đọc folklore Việt Nam để tìm hiểu văn hóa dân gian.",
+    "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Kho Tàng Truyện Cổ Tích Việt Nam” — 121.500đ · Nguyễn Đổng Chi · Chưa có đánh giá\nTác phẩm này được biên soạn bởi Nguyễn Đổng Chi, tập trung vào sưu tầm truyện cổ tích, phù hợp với mục tiêu tìm hiểu văn hóa dân gian của bạn. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ.",
+    "assessment": "PASS_SCOPED",
+    "scope": "Selection, stated constraints, references and requested facts only; not an overall prose-quality score."
+  },
+  {
+    "id": "C01",
+    "prompt": "Đổi chủ đề hoàn toàn: gợi ý 3 cuốn văn học Việt Nam, mỗi cuốn tối đa 100k.",
+    "answer": "Bạn muốn 3 cuốn; mình tìm được 3 cuốn đúng yêu cầu. Các cuốn đều nằm trong mức 100.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Truyện Kiều” — 64.600đ · Nguyễn Du · Chưa có đánh giá\nKiệt tác thi ca của đại thi hào Nguyễn Du — 3254 câu lục bát kể về cuộc đời nàng Kiều. Đỉnh cao của văn học cổ điển Việt Nam, di sản của muôn đời.\n\n• “Số Đỏ” — 72.000đ · Vũ Trọng Phụng · Chưa có đánh giá\nTác phẩm sử dụng giọng trào phúng, châm biếm qua các chân dung hí họa để phê phán xã hội, phù hợp với ai thích văn học Việt Nam có giọng điệu sắc sảo. Sự hài hước đi cùng phê phán và châm biếm, phù hợp người muốn đọc văn học Việt Nam có giọng sắc sảo; không nên mặc định là truyện vui nhẹ nhàng cho mọi lứa tuổi.\n\n• “Chí Phèo” — 49.500đ · Nam Cao · Chưa có đánh giá\nTruyện ngắn này khai thác bi kịch của người nông dân trong xã hội cũ, rất thích hợp để đọc, phân tích và thảo luận về các vấn đề xã hội trong văn học hiện thực. Chưa xác định bản dịch, ngôn ngữ và những truyện khác đi kèm trong bản đang bán.\n\nBạn có muốn mình chia sẻ thêm thông tin cụ thể về nội dung nào trong ba tác phẩm này không?",
+    "assessment": "PASS_SCOPED",
+    "scope": "Selection, stated constraints, references and requested facts only; not an overall prose-quality score.",
+    "observation": "Selection/price passed. The fallback catalog description of Truyện Kiều still contains promotional praise; some explanatory wording remains repetitive."
+  },
+  {
+    "id": "C02",
+    "prompt": "Bỏ Số Đỏ ra nhé, mình muốn đọc tác giả khác.",
+    "answer": "Bạn muốn 3 cuốn; mình tìm được 3 cuốn đúng yêu cầu. Các cuốn đều nằm trong mức 100.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Truyện Kiều” — 64.600đ · Nguyễn Du · Chưa có đánh giá\nĐây là kiệt tác thi ca sử dụng thể thơ lục bát, giúp bạn tìm hiểu về giá trị văn học cổ điển Việt Nam thông qua câu chuyện đời người của nàng Kiều.\n\n• “Chí Phèo” — 49.500đ · Nam Cao · Chưa có đánh giá\nTác phẩm này đi sâu vào bi kịch của người nông dân, giúp bạn có tư liệu để phân tích và suy ngẫm về các vấn đề con người trong xã hội hiện thực. Chưa xác định bản dịch, ngôn ngữ và những truyện khác đi kèm trong bản đang bán.\n\n• “Tắt Đèn” — 55.200đ · Ngô Tất Tố · Chưa có đánh giá\nCuốn sách tập trung khắc họa đời sống cơ cực và hình tượng chị Dậu, phù hợp nếu bạn muốn tìm hiểu về hiện thực xã hội qua tiểu thuyết.",
+    "assessment": "PASS_SCOPED",
+    "scope": "Selection, stated constraints, references and requested facts only; not an overall prose-quality score."
+  },
+  {
+    "id": "C03",
+    "prompt": "Giá cuốn thứ hai bao nhiêu?",
+    "answer": "Về “Chí Phèo”, mình có những thông tin này:\nGiá sau giảm: 49.500đ",
+    "assessment": "PASS_SCOPED",
+    "scope": "Selection, stated constraints, references and requested facts only; not an overall prose-quality score."
+  },
+  {
+    "id": "C04",
+    "prompt": "Phí giao hàng tính sao?",
+    "answer": "Phí giao hàng 20.000đ, miễn phí khi tiền sách từ 300.000đ. Thời gian giao dự kiến 2–4 ngày làm việc.",
+    "assessment": "PASS_SCOPED",
+    "scope": "Selection, stated constraints, references and requested facts only; not an overall prose-quality score."
+  },
+  {
+    "id": "C05",
+    "prompt": "Quay lại cuốn thứ hai vừa chọn, tác giả là ai?",
+    "answer": "Về “Chí Phèo”, mình có những thông tin này:\nTác giả: Nam Cao",
+    "assessment": "PASS_SCOPED",
+    "scope": "Selection, stated constraints, references and requested facts only; not an overall prose-quality score."
+  },
+  {
+    "id": "C06",
+    "prompt": "Mình vẫn muốn văn học Việt Nam nhưng giảm còn tối đa 60k, giữ phần đã loại.",
+    "answer": "Bạn muốn 3 cuốn; mình tìm được 3 cuốn đúng yêu cầu. Các cuốn đều nằm trong mức 60.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Chí Phèo” — 49.500đ · Nam Cao · Chưa có đánh giá\nCuốn này tập trung vào các câu chuyện ngắn phản ánh bi kịch của người nông dân, giúp bạn tìm hiểu sâu về dòng văn học hiện thực Việt Nam. Chưa xác định bản dịch, ngôn ngữ và những truyện khác đi kèm trong bản đang bán.\n\n• “Tắt Đèn” — 55.200đ · Ngô Tất Tố · Chưa có đánh giá\nTác phẩm khắc họa chi tiết đời sống và nỗi đau của người nông dân qua hình tượng nhân vật chị Dậu, phù hợp với người quan tâm đến tiểu thuyết hiện thực.\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nĐây là tác phẩm phù hợp nếu bạn muốn tìm kiếm một góc nhìn khác về văn học Việt Nam thông qua những bài học về tình bạn và lòng dũng cảm.",
+    "assessment": "PASS_SCOPED",
+    "scope": "Selection, stated constraints, references and requested facts only; not an overall prose-quality score.",
+    "observation": "Subject/price/exclusion passed. Some writing is broader than the supplied summary; no universal semantic entailment claim."
+  },
+  {
+    "id": "C07",
+    "prompt": "Có cuốn nào khác nữa không?",
+    "answer": "Bạn muốn 3 cuốn; mình tìm được 2 cuốn đúng yêu cầu. Tổng cộng có 2 lựa chọn; hiện chưa đủ 3 cuốn khác nhau trong các điều kiện này. Mình giữ đúng yêu cầu trước; nếu bạn muốn mở rộng sang nội dung gần chủ đề, mình sẽ kiểm tra thêm và ghi rõ sự khác biệt. Các cuốn đều nằm trong mức 60.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nSách thuộc thể loại truyện tranh trinh thám, tập trung vào các tình huống suy luận hóc búa, phù hợp nếu bạn muốn thay đổi không khí sang dạng nội dung giải trí khác.\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nTruyện tranh về Doraemon, Nobita và nhóm bạn với những bảo bối từ tương lai. Các câu chuyện gắn tiếng cười, thế giới tưởng tượng và tình bạn.",
+    "assessment": "FAIL_BEFORE_FIX",
+    "scope": "Selection, stated constraints, references and requested facts only; not an overall prose-quality score."
+  },
+  {
+    "id": "C08-before",
+    "prompt": "Xem lại những cuốn vừa giới thiệu trong mức 60k.",
+    "answer": "Bạn muốn 3 cuốn; mình tìm được 3 cuốn đúng yêu cầu. Các cuốn đều nằm trong mức 60.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Chí Phèo” — 49.500đ · Nam Cao · Chưa có đánh giá\nĐây là truyện ngắn tập trung vào bi kịch của người nông dân, giúp bạn có cái nhìn cụ thể về dòng văn học hiện thực Việt Nam. Chưa xác định bản dịch, ngôn ngữ và những truyện khác đi kèm trong bản đang bán.\n\n• “Tắt Đèn” — 55.200đ · Ngô Tất Tố · Chưa có đánh giá\nCuốn này phù hợp nếu bạn muốn tìm hiểu về hiện thực xã hội qua hình tượng chị Dậu giữa bối cảnh nghèo đói và áp bức.\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nTruyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận.",
+    "assessment": "PASS_SCOPED",
+    "scope": "Selection, stated constraints, references and requested facts only; not an overall prose-quality score."
+  },
+  {
+    "id": "C07-after",
+    "prompt": "Có cuốn nào khác nữa không?",
+    "answer": "Những cuốn đáp ứng yêu cầu hiện tại đã được giới thiệu hết. Mình vẫn giữ chủ đề và các điều kiện bạn đã chọn, nên chưa có cuốn mới để đưa thêm mà không lặp lại.",
+    "assessment": "PASS_SCOPED",
+    "scope": "Selection, stated constraints, references and requested facts only; not an overall prose-quality score."
+  },
+  {
+    "id": "C09",
+    "prompt": "Đổi hẳn sang giáo trình về lạm phát, thất nghiệp và tỷ giá, không giữ giới hạn giá cũ.",
+    "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Kinh Tế Vĩ Mô” — 94.050đ · Lê Thanh Tùng · Chưa có đánh giá\nCuốn sách đề cập trực tiếp đến các vấn đề bạn quan tâm như lạm phát, thất nghiệp và tỷ giá trong phạm vi kinh tế vĩ mô. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp.\n\nBạn có muốn mình kiểm tra thêm các đầu mục cụ thể nào khác trong giáo trình này không?",
+    "assessment": "PASS_SCOPED",
+    "scope": "Selection, stated constraints, references and requested facts only; not an overall prose-quality score."
+  },
+  {
+    "id": "C10",
+    "prompt": "Cuốn đó có bài tập kèm đáp án không?",
+    "answer": "Về “Giáo Trình Kinh Tế Vĩ Mô”, mình có những thông tin này:\nVề bài tập thực hành: mình chưa có thông tin đã xác nhận cho cuốn này, nên chưa thể trả lời là có hay không.\nVề đáp án hoặc lời giải cho bài tập: mình chưa có thông tin đã xác nhận cho cuốn này, nên chưa thể trả lời là có hay không.",
+    "assessment": "PASS_SCOPED",
+    "scope": "Selection, stated constraints, references and requested facts only; not an overall prose-quality score."
+  },
+  {
+    "id": "C09-after-batch",
+    "prompt": "Đổi hẳn sang giáo trình về lạm phát, thất nghiệp và tỷ giá, không giữ giới hạn giá cũ.",
+    "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Kinh Tế Vĩ Mô” — 94.050đ · Lê Thanh Tùng · Chưa có đánh giá\nCuốn giáo trình này tập trung vào chính những nội dung bạn đang quan tâm là lạm phát, thất nghiệp và tỷ giá trong phạm vi kinh tế vĩ mô. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp.",
+    "assessment": "PASS_SCOPED",
+    "scope": "Selection, stated constraints, references and requested facts only; not an overall prose-quality score."
+  },
+  {
+    "id": "C10-after-batch",
+    "prompt": "Cuốn đó có bài tập kèm đáp án không?",
+    "answer": "Về “Giáo Trình Kinh Tế Vĩ Mô”, mình có những thông tin này:\nVề bài tập thực hành: mình chưa có thông tin đã xác nhận cho cuốn này, nên chưa thể trả lời là có hay không.\nVề đáp án hoặc lời giải cho bài tập: mình chưa có thông tin đã xác nhận cho cuốn này, nên chưa thể trả lời là có hay không.",
+    "assessment": "PASS_SCOPED",
+    "scope": "Selection, stated constraints, references and requested facts only; not an overall prose-quality score."
+  },
+  {
+    "id": "C11",
+    "prompt": "Đổi hẳn sang sách computer networking, không giữ giá trước.",
+    "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Mạng Máy Tính Và Các Hệ Thống Mở” — 95.000đ · Nguyễn Thúc Hải · Chưa có đánh giá\nTác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN. Đây là tài liệu về nền tảng mạng; nguồn mô tả còn đề cập công nghệ của giai đoạn trước. Chưa xác nhận bản cửa hàng có cập nhật các chuẩn mạng mới.",
+    "assessment": "PASS_SCOPED",
+    "scope": "Selection, stated constraints, references and requested facts only; not an overall prose-quality score."
+  },
+  {
+    "id": "C12",
+    "prompt": "Cuốn đó có dạy TCP/IP và Wi-Fi 6 không?",
+    "answer": "Về “Mạng Máy Tính Và Các Hệ Thống Mở”:\nVề “TCP/IP”: thông tin đã xác nhận có đề cập: “Tác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN”. Phần này xác nhận chủ đề được nhắc tới, chưa cho biết mức độ hướng dẫn chi tiết.\nVề “Wi-Fi 6”: mình chưa có thông tin đã xác nhận cuốn này có đề cập đến nội dung đó, nên chưa thể khẳng định là có hay không.",
+    "assessment": "PASS_SCOPED",
+    "scope": "Selection, stated constraints, references and requested facts only; not an overall prose-quality score."
+  }
+]

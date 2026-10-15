@@ -1,0 +1,1210 @@
+{
+  "scope" : "36 queries covering remaining books + 12 synonym probes; editorial, not blind holdout",
+  "groups" : [ {
+    "name" : "remaining36-standard",
+    "count" : 36,
+    "beforeHit1" : 36,
+    "afterHit1" : 36,
+    "beforeHit3" : 36,
+    "afterHit3" : 36,
+    "regressions" : [ ],
+    "cases" : [ {
+      "id" : "E01",
+      "query" : "Văn bản về tổ chức Nhà nước và quyền công dân",
+      "relevantIds" : [ 3 ],
+      "beforeIds" : [ 3 ],
+      "afterIds" : [ 3 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E02",
+      "query" : "Tra cứu luật về thành lập và giải thể doanh nghiệp",
+      "relevantIds" : [ 4 ],
+      "beforeIds" : [ 4, 6, 42, 43 ],
+      "afterIds" : [ 4, 6, 42, 43 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E03",
+      "query" : "Văn bản luật về quyền của người lao động",
+      "relevantIds" : [ 5 ],
+      "beforeIds" : [ 5, 4, 7, 8, 6, 3, 28, 42, 43 ],
+      "afterIds" : [ 5, 4, 7, 8, 6, 28, 3, 42, 43 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E04",
+      "query" : "Cẩm nang pháp luật về hóa đơn chứng từ và thuế",
+      "relevantIds" : [ 6 ],
+      "beforeIds" : [ 6, 4, 42, 3, 28, 7, 43, 8, 5 ],
+      "afterIds" : [ 6, 4, 42, 3, 28, 7, 8, 5, 43 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E05",
+      "query" : "Tra cứu quan hệ tài sản và quyền nhân thân",
+      "relevantIds" : [ 8 ],
+      "beforeIds" : [ 8, 7, 5, 6 ],
+      "afterIds" : [ 8, 5, 7, 4, 6 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E06",
+      "query" : "Thơ lục bát kể cuộc đời nàng Kiều",
+      "relevantIds" : [ 10 ],
+      "beforeIds" : [ 10 ],
+      "afterIds" : [ 10 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E07",
+      "query" : "Văn học trào phúng phê phán xã hội",
+      "relevantIds" : [ 11 ],
+      "beforeIds" : [ 11, 39, 40, 41, 46, 33, 38, 50, 37, 24, 13, 10, 54, 48, 12, 34, 53, 49, 30, 35, 51, 27, 28, 52, 58, 29, 26 ],
+      "afterIds" : [ 11, 39, 40, 41, 46, 33, 10, 38, 50, 37, 24, 13, 54, 48, 30, 12, 34, 53, 49, 35, 51, 27, 28, 52, 58, 29, 26 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E08",
+      "query" : "Truyện tùy bút về nếp sống và thú chơi thời xưa",
+      "relevantIds" : [ 12 ],
+      "beforeIds" : [ 12, 24, 37, 54, 39, 34, 52, 48, 29, 13, 50, 28, 49, 58, 33, 40, 51, 53, 10, 26, 27, 38, 35, 46, 11, 30, 41 ],
+      "afterIds" : [ 12, 24, 37, 54, 49, 39, 34, 52, 48, 29, 13, 50, 28, 58, 33, 40, 51, 53, 10, 26, 27, 38, 35, 46, 11, 30, 41 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E09",
+      "query" : "Lược sử các thời kỳ và triều đại Việt Nam",
+      "relevantIds" : [ 14 ],
+      "beforeIds" : [ 14, 24, 15, 56, 46, 25 ],
+      "afterIds" : [ 14, 24, 15, 56, 46, 25 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E10",
+      "query" : "Lịch sử thế giới từ năm 1917 và quan hệ quốc tế",
+      "relevantIds" : [ 15 ],
+      "beforeIds" : [ 15, 14, 24, 56, 46, 25 ],
+      "afterIds" : [ 15, 14, 24, 56, 46, 25 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E11",
+      "query" : "Hiểu chuỗi khối mà không cần công thức toán",
+      "relevantIds" : [ 18 ],
+      "beforeIds" : [ 18, 4 ],
+      "afterIds" : [ 18, 4 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E12",
+      "query" : "Giáo trình về ngăn xếp hàng đợi cây và đệ quy",
+      "relevantIds" : [ 20 ],
+      "beforeIds" : [ 20 ],
+      "afterIds" : [ 20 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E13",
+      "query" : "Tìm hiểu mô hình OSI và TCP/IP",
+      "relevantIds" : [ 21 ],
+      "beforeIds" : [ 21 ],
+      "afterIds" : [ 21 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E14",
+      "query" : "Giáo trình môn cơ sở dữ liệu cho ngành hệ thống thông tin",
+      "relevantIds" : [ 23 ],
+      "beforeIds" : [ 23, 20, 21, 22, 44 ],
+      "afterIds" : [ 23, 20, 21, 44, 22 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E15",
+      "query" : "Sử liệu biên niên Việt Nam ghi chép theo thời gian",
+      "relevantIds" : [ 24 ],
+      "beforeIds" : [ 24 ],
+      "afterIds" : [ 24 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E16",
+      "query" : "Lịch sử các xã hội qua sản xuất lương thực và công nghệ",
+      "relevantIds" : [ 25 ],
+      "beforeIds" : [ 25, 46 ],
+      "afterIds" : [ 25, 46 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E17",
+      "query" : "Truyện cậu bé Rémi lưu lạc cùng gánh hát rong",
+      "relevantIds" : [ 28 ],
+      "beforeIds" : [ 28, 13, 29, 49, 26, 50, 52, 51, 34, 48, 37, 41, 27, 53, 30, 58, 54, 46, 10, 39, 11, 38, 35, 12, 24, 33, 40 ],
+      "afterIds" : [ 28, 13, 49, 29, 26, 50, 52, 51, 34, 41, 48, 37, 53, 58, 54, 27, 30, 46, 10, 39, 11, 38, 35, 12, 24, 33, 40 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E18",
+      "query" : "Tiểu thuyết về kiến trúc sư và nguyên tắc sáng tạo",
+      "relevantIds" : [ 30 ],
+      "beforeIds" : [ 30, 27, 40, 41 ],
+      "afterIds" : [ 30, 40, 27, 41 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E19",
+      "query" : "Quan điểm về tiềm thức và thay đổi cách suy nghĩ",
+      "relevantIds" : [ 31 ],
+      "beforeIds" : [ 31, 55 ],
+      "afterIds" : [ 31, 55 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E20",
+      "query" : "Hành trình tìm hiểu tư tưởng phương Đông và tâm linh",
+      "relevantIds" : [ 33 ],
+      "beforeIds" : [ 33, 56, 34, 54 ],
+      "afterIds" : [ 33, 56, 34, 54 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E21",
+      "query" : "Truyện kể cuộc đời và lời dạy của Đức Phật",
+      "relevantIds" : [ 34 ],
+      "beforeIds" : [ 34, 52, 49, 10, 41, 58, 37, 33, 38, 39, 35, 54, 29, 46, 48, 26, 24, 28, 12, 53, 13, 30, 50, 40, 51, 11, 27 ],
+      "afterIds" : [ 34, 49, 52, 10, 41, 58, 33, 37, 38, 39, 35, 54, 29, 46, 48, 26, 24, 28, 12, 53, 13, 30, 40, 50, 51, 11, 27 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E22",
+      "query" : "Sưu tầm truyện cổ tích và văn hóa dân gian Việt Nam",
+      "relevantIds" : [ 35 ],
+      "beforeIds" : [ 35, 40, 39, 13, 12, 11, 24, 10, 49, 46, 50, 27, 53, 38, 58, 37, 34, 33, 41, 54, 29, 28, 30, 52, 51, 48, 26 ],
+      "afterIds" : [ 35, 40, 39, 13, 12, 11, 24, 10, 49, 46, 50, 27, 53, 58, 38, 37, 33, 34, 41, 54, 28, 29, 30, 52, 51, 48, 26 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E23",
+      "query" : "Hỏi đáp kiến thức khoa học và đời sống",
+      "relevantIds" : [ 36 ],
+      "beforeIds" : [ 36, 40, 55, 39, 54 ],
+      "afterIds" : [ 36, 40, 39, 55, 54 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E24",
+      "query" : "Truyện ngắn Nam Cao về bi kịch người nông dân",
+      "relevantIds" : [ 39 ],
+      "beforeIds" : [ 39 ],
+      "afterIds" : [ 39 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E25",
+      "query" : "Tiểu thuyết chị Dậu nghèo đói và bị áp bức",
+      "relevantIds" : [ 40 ],
+      "beforeIds" : [ 40 ],
+      "afterIds" : [ 40 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E26",
+      "query" : "Tiểu thuyết Jean Valjean công lý và khát vọng đổi đời",
+      "relevantIds" : [ 41 ],
+      "beforeIds" : [ 41, 40, 27, 30 ],
+      "afterIds" : [ 41, 40, 27, 30 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E27",
+      "query" : "Quản trị doanh nghiệp theo năng lực cốt lõi và tư duy kỷ luật",
+      "relevantIds" : [ 42 ],
+      "beforeIds" : [ 42, 4, 6, 43 ],
+      "afterIds" : [ 42, 4, 6, 43 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E28",
+      "query" : "Giáo trình AI về biểu diễn tri thức và suy diễn xác suất",
+      "relevantIds" : [ 44 ],
+      "beforeIds" : [ 44 ],
+      "afterIds" : [ 44 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E29",
+      "query" : "Kinh tế vĩ mô về lạm phát thất nghiệp và tỷ giá",
+      "relevantIds" : [ 45 ],
+      "beforeIds" : [ 45 ],
+      "afterIds" : [ 45 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E30",
+      "query" : "Tương lai nhân loại với AI và kỹ thuật di truyền",
+      "relevantIds" : [ 46 ],
+      "beforeIds" : [ 46, 50, 51, 29, 52, 13, 30, 12, 40, 49, 39, 24, 48, 11, 37, 34, 38, 26, 28, 41, 54, 58, 10, 53, 33, 27, 35 ],
+      "afterIds" : [ 46, 50, 51, 29, 52, 30, 13, 40, 12, 49, 11, 39, 24, 48, 34, 41, 37, 38, 26, 28, 54, 58, 10, 53, 33, 27, 35 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E31",
+      "query" : "Kinh tế học phân tích động cơ gian lận và hành vi đời sống",
+      "relevantIds" : [ 47 ],
+      "beforeIds" : [ 47, 55 ],
+      "afterIds" : [ 47, 55 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E32",
+      "query" : "Truyện tuổi thơ về tình cảm anh em ở làng quê",
+      "relevantIds" : [ 49 ],
+      "beforeIds" : [ 49, 53, 28 ],
+      "afterIds" : [ 49, 53, 40, 28 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E33",
+      "query" : "Truyện tình cảm kết thúc rất buồn",
+      "relevantIds" : [ 53 ],
+      "beforeIds" : [ 53, 28, 49 ],
+      "afterIds" : [ 53, 40, 49, 28 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E34",
+      "query" : "Chiêm nghiệm nhân quả và các kiếp sống qua góc nhìn tâm linh",
+      "relevantIds" : [ 54 ],
+      "beforeIds" : [ 54, 33, 56, 34 ],
+      "afterIds" : [ 54, 33, 56, 34 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E35",
+      "query" : "Lịch sử loài người về nông nghiệp tiền tệ và tôn giáo",
+      "relevantIds" : [ 56 ],
+      "beforeIds" : [ 56 ],
+      "afterIds" : [ 56 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "E36",
+      "query" : "Truyện ẩn dụ hành trình Santiago qua Sahara",
+      "relevantIds" : [ 58 ],
+      "beforeIds" : [ 58, 52, 13, 26, 33, 49, 28, 34, 12, 30, 48, 29, 54, 50, 53, 27, 35, 46, 11, 24, 37, 41, 10, 51, 39, 38, 40 ],
+      "afterIds" : [ 58, 52, 28, 13, 33, 26, 49, 34, 12, 30, 48, 54, 29, 35, 50, 53, 27, 46, 11, 24, 37, 41, 10, 51, 39, 38, 40 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    } ]
+  }, {
+    "name" : "remaining36-synonyms",
+    "count" : 12,
+    "beforeHit1" : 2,
+    "afterHit1" : 12,
+    "beforeHit3" : 5,
+    "afterHit3" : 12,
+    "regressions" : [ ],
+    "cases" : [ {
+      "id" : "S01",
+      "query" : "sách về constitutional law",
+      "relevantIds" : [ 3 ],
+      "beforeIds" : [ ],
+      "afterIds" : [ 3 ],
+      "beforeHit1" : false,
+      "afterHit1" : true,
+      "beforeHit3" : false,
+      "afterHit3" : true
+    }, {
+      "id" : "S02",
+      "query" : "sách về labor law",
+      "relevantIds" : [ 5 ],
+      "beforeIds" : [ ],
+      "afterIds" : [ 5 ],
+      "beforeHit1" : false,
+      "afterHit1" : true,
+      "beforeHit3" : false,
+      "afterHit3" : true
+    }, {
+      "id" : "S03",
+      "query" : "văn học satire",
+      "relevantIds" : [ 11 ],
+      "beforeIds" : [ 13, 11, 39, 10, 33, 40, 38, 12, 46, 41, 35, 48, 54, 28, 52, 53, 49, 37, 50, 58, 34, 24, 51, 29, 26, 27, 30 ],
+      "afterIds" : [ 11, 10, 39, 33, 13, 40, 12, 35, 38, 46, 41, 48, 54, 28, 52, 53, 49, 37, 50, 58, 34, 24, 51, 29, 26, 27, 30 ],
+      "beforeHit1" : false,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "S04",
+      "query" : "sách blockchain basics",
+      "relevantIds" : [ 18 ],
+      "beforeIds" : [ ],
+      "afterIds" : [ 18 ],
+      "beforeHit1" : false,
+      "afterHit1" : true,
+      "beforeHit3" : false,
+      "afterHit3" : true
+    }, {
+      "id" : "S05",
+      "query" : "giáo trình data structures và recursion",
+      "relevantIds" : [ 20 ],
+      "beforeIds" : [ ],
+      "afterIds" : [ 20 ],
+      "beforeHit1" : false,
+      "afterHit1" : true,
+      "beforeHit3" : false,
+      "afterHit3" : true
+    }, {
+      "id" : "S06",
+      "query" : "sách computer networking",
+      "relevantIds" : [ 21 ],
+      "beforeIds" : [ ],
+      "afterIds" : [ 21 ],
+      "beforeHit1" : false,
+      "afterHit1" : true,
+      "beforeHit3" : false,
+      "afterHit3" : true
+    }, {
+      "id" : "S07",
+      "query" : "giáo trình databases",
+      "relevantIds" : [ 23 ],
+      "beforeIds" : [ 22, 23, 20, 45, 44, 57, 15, 17, 56, 21 ],
+      "afterIds" : [ 23, 22, 45, 20, 44, 21, 15, 56, 57, 17 ],
+      "beforeHit1" : false,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "S08",
+      "query" : "truyện folklore Việt Nam",
+      "relevantIds" : [ 35 ],
+      "beforeIds" : [ 35, 24, 10, 11, 39, 13, 40, 12, 58, 52, 54, 51, 53, 48, 29, 49, 37, 50, 26, 27, 38, 46, 34, 30, 28, 33, 41 ],
+      "afterIds" : [ 35, 10, 24, 11, 39, 13, 40, 12, 58, 52, 54, 51, 53, 48, 29, 49, 37, 50, 26, 27, 38, 46, 34, 30, 28, 33, 41 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "S09",
+      "query" : "sách về core competence của doanh nghiệp",
+      "relevantIds" : [ 42 ],
+      "beforeIds" : [ 4, 42, 6, 19, 45, 17, 56, 55, 43, 47, 18, 23 ],
+      "afterIds" : [ 42, 4, 6, 19, 45, 56, 17, 55, 43, 47, 18, 23 ],
+      "beforeHit1" : false,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "S10",
+      "query" : "giáo trình về knowledge representation",
+      "relevantIds" : [ 44 ],
+      "beforeIds" : [ ],
+      "afterIds" : [ 44 ],
+      "beforeHit1" : false,
+      "afterHit1" : true,
+      "beforeHit3" : false,
+      "afterHit3" : true
+    }, {
+      "id" : "S11",
+      "query" : "giáo trình macroeconomics",
+      "relevantIds" : [ 45 ],
+      "beforeIds" : [ 45 ],
+      "afterIds" : [ 45 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "S12",
+      "query" : "sách về human evolution",
+      "relevantIds" : [ 56 ],
+      "beforeIds" : [ ],
+      "afterIds" : [ 56 ],
+      "beforeHit1" : false,
+      "afterHit1" : true,
+      "beforeHit3" : false,
+      "afterHit3" : true
+    } ]
+  }, {
+    "name" : "pilot-original30",
+    "count" : 30,
+    "beforeHit1" : 30,
+    "afterHit1" : 30,
+    "beforeHit3" : 30,
+    "afterHit3" : 30,
+    "regressions" : [ ],
+    "cases" : [ {
+      "id" : "Q01",
+      "query" : "pháp luật đất đai",
+      "relevantIds" : [ 7 ],
+      "beforeIds" : [ 7, 8, 6, 4, 42, 5, 3, 43, 28 ],
+      "afterIds" : [ 7, 8, 4, 6, 5, 3, 42, 43, 28 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q02",
+      "query" : "kiểm thử đơn vị",
+      "relevantIds" : [ 9 ],
+      "beforeIds" : [ 9, 16 ],
+      "afterIds" : [ 9, 16 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q03",
+      "query" : "truyện phiêu lưu loài vật",
+      "relevantIds" : [ 13 ],
+      "beforeIds" : [ 13 ],
+      "afterIds" : [ 13 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q04",
+      "query" : "tránh lặp kiến thức",
+      "relevantIds" : [ 16 ],
+      "beforeIds" : [ 16, 25, 20, 44, 15, 18, 40 ],
+      "afterIds" : [ 16, 44, 25, 15, 20, 18, 40 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q05",
+      "query" : "AI trong học tập công việc",
+      "relevantIds" : [ 17 ],
+      "beforeIds" : [ 17, 19, 57, 22, 46 ],
+      "afterIds" : [ 17, 19, 57, 46, 22 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q06",
+      "query" : "kiểm chứng ý tưởng khởi nghiệp",
+      "relevantIds" : [ 19 ],
+      "beforeIds" : [ 19, 4 ],
+      "afterIds" : [ 19, 4 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q07",
+      "query" : "lập trình Java",
+      "relevantIds" : [ 22 ],
+      "beforeIds" : [ 22 ],
+      "afterIds" : [ 22 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q08",
+      "query" : "quan sát suy luận vụ án",
+      "relevantIds" : [ 26, 48 ],
+      "beforeIds" : [ 26, 48, 54, 36 ],
+      "afterIds" : [ 26, 48, 54, 36 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q09",
+      "query" : "mafia quyền lực",
+      "relevantIds" : [ 27 ],
+      "beforeIds" : [ 27 ],
+      "afterIds" : [ 27 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q10",
+      "query" : "truyện tuổi thơ nỗi đau",
+      "relevantIds" : [ 29 ],
+      "beforeIds" : [ 29 ],
+      "afterIds" : [ 29 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q11",
+      "query" : "xử lý lo âu",
+      "relevantIds" : [ 32 ],
+      "beforeIds" : [ 32 ],
+      "afterIds" : [ 32 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q12",
+      "query" : "truyện triết lý chất thơ",
+      "relevantIds" : [ 37 ],
+      "beforeIds" : [ 37, 50, 29, 38, 34, 46, 49, 51, 27, 58, 52, 54, 53, 48, 13, 10, 26, 39, 35, 33, 11, 30, 28, 12, 24, 41, 40 ],
+      "afterIds" : [ 37, 50, 29, 49, 38, 46, 10, 34, 51, 27, 41, 58, 52, 54, 53, 48, 13, 26, 39, 35, 33, 11, 30, 28, 12, 24, 40 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q13",
+      "query" : "nhà trường lắng nghe trẻ em",
+      "relevantIds" : [ 38 ],
+      "beforeIds" : [ 38 ],
+      "afterIds" : [ 38 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q14",
+      "query" : "đầu tư giá trị",
+      "relevantIds" : [ 43 ],
+      "beforeIds" : [ 43, 17, 18, 42, 55, 6, 56, 23, 4, 19, 45, 47 ],
+      "afterIds" : [ 43, 17, 42, 18, 55, 6, 56, 23, 4, 19, 45, 47 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q15",
+      "query" : "truyện tranh trinh thám",
+      "relevantIds" : [ 48 ],
+      "beforeIds" : [ 48 ],
+      "afterIds" : [ 48 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q16",
+      "query" : "ký ức tuổi thơ người lớn",
+      "relevantIds" : [ 29, 38, 50 ],
+      "beforeIds" : [ 50, 38, 49, 29, 37 ],
+      "afterIds" : [ 50, 49, 38, 29, 37 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q17",
+      "query" : "truyện tranh bảo bối tương lai",
+      "relevantIds" : [ 51 ],
+      "beforeIds" : [ 51, 48 ],
+      "afterIds" : [ 51, 48 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q18",
+      "query" : "truyện giả tưởng phù thủy",
+      "relevantIds" : [ 52 ],
+      "beforeIds" : [ 52, 50, 51, 46, 30, 29, 37, 34, 49, 11, 33, 40, 58, 54, 13, 26, 27, 38, 35, 28, 24, 53, 48, 10, 39, 41, 12 ],
+      "afterIds" : [ 52, 50, 46, 51, 30, 29, 34, 33, 37, 49, 11, 40, 58, 54, 13, 26, 27, 38, 35, 28, 24, 53, 48, 10, 39, 41, 12 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q19",
+      "query" : "thiên kiến nhận thức",
+      "relevantIds" : [ 55 ],
+      "beforeIds" : [ 55, 16, 44, 36, 20, 21, 40 ],
+      "afterIds" : [ 55, 44, 16, 36, 21, 20, 40 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q20",
+      "query" : "học kỹ năng giao tiếp",
+      "relevantIds" : [ 57 ],
+      "beforeIds" : [ 57 ],
+      "afterIds" : [ 57 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q21",
+      "query" : "refactoring",
+      "relevantIds" : [ 9 ],
+      "beforeIds" : [ 9 ],
+      "afterIds" : [ 9 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q22",
+      "query" : "unit testing",
+      "relevantIds" : [ 9 ],
+      "beforeIds" : [ 9 ],
+      "afterIds" : [ 9 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q23",
+      "query" : "machine learning",
+      "relevantIds" : [ 17 ],
+      "beforeIds" : [ 17 ],
+      "afterIds" : [ 17, 44 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q24",
+      "query" : "build measure learn",
+      "relevantIds" : [ 19 ],
+      "beforeIds" : [ 19 ],
+      "afterIds" : [ 19 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q25",
+      "query" : "value investing",
+      "relevantIds" : [ 43 ],
+      "beforeIds" : [ 43 ],
+      "afterIds" : [ 43 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q26",
+      "query" : "cognitive bias",
+      "relevantIds" : [ 55 ],
+      "beforeIds" : [ 55 ],
+      "afterIds" : [ 55 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q27",
+      "query" : "fantasy phù thủy",
+      "relevantIds" : [ 52 ],
+      "beforeIds" : [ 52 ],
+      "afterIds" : [ 52 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q28",
+      "query" : "worry management",
+      "relevantIds" : [ 32 ],
+      "beforeIds" : [ 32 ],
+      "afterIds" : [ 32 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q29",
+      "query" : "hồi ức tuổi thơ",
+      "relevantIds" : [ 29, 38, 50 ],
+      "beforeIds" : [ 50, 38, 37 ],
+      "afterIds" : [ 50, 38, 37 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "Q30",
+      "query" : "truyện động vật",
+      "relevantIds" : [ 13 ],
+      "beforeIds" : [ 13 ],
+      "afterIds" : [ 13 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    } ]
+  }, {
+    "name" : "pilot-novel30",
+    "count" : 30,
+    "beforeHit1" : 30,
+    "afterHit1" : 30,
+    "beforeHit3" : 30,
+    "afterHit3" : 30,
+    "regressions" : [ ],
+    "cases" : [ {
+      "id" : "H01",
+      "query" : "hồi tưởng về tuổi thơ",
+      "relevantIds" : [ 29, 38, 50 ],
+      "beforeIds" : [ 50, 29, 37, 36, 49, 38, 51 ],
+      "afterIds" : [ 50, 36, 29, 49, 37, 38, 51 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H02",
+      "query" : "truyện về thế giới loài vật",
+      "relevantIds" : [ 13 ],
+      "beforeIds" : [ 13 ],
+      "afterIds" : [ 13 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H03",
+      "query" : "truyện có tình bạn và lòng dũng cảm",
+      "relevantIds" : [ 13 ],
+      "beforeIds" : [ 13, 28, 29, 49, 53, 27, 58, 37, 51, 39, 54, 35, 11, 50, 33, 41, 40, 52, 48, 38, 34, 30, 24, 10, 26, 46, 12 ],
+      "afterIds" : [ 13, 28, 29, 53, 40, 49, 27, 58, 37, 51, 33, 39, 54, 35, 11, 41, 50, 52, 48, 38, 34, 30, 24, 10, 26, 46, 12 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H04",
+      "query" : "tuổi thơ nhìn từ góc nhìn người lớn",
+      "relevantIds" : [ 50 ],
+      "beforeIds" : [ 50, 37, 38, 49 ],
+      "afterIds" : [ 50, 37, 49, 38 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H05",
+      "query" : "truyện về trẻ em và môi trường học",
+      "relevantIds" : [ 38 ],
+      "beforeIds" : [ 38 ],
+      "afterIds" : [ 38 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H06",
+      "query" : "cuộc sống ở trường của cô bé",
+      "relevantIds" : [ 38 ],
+      "beforeIds" : [ 38 ],
+      "afterIds" : [ 38 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H07",
+      "query" : "truyện có tình thương và hoàn cảnh nghèo khó",
+      "relevantIds" : [ 29 ],
+      "beforeIds" : [ 29, 40 ],
+      "afterIds" : [ 29, 40 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H08",
+      "query" : "truyện nhẹ nhàng giàu chất thơ",
+      "relevantIds" : [ 37 ],
+      "beforeIds" : [ 37, 29, 34, 50, 11, 38, 49, 12, 51, 27, 58, 52, 54, 53, 48, 13, 10, 26, 39, 35, 46, 30, 28, 24, 33, 41, 40 ],
+      "afterIds" : [ 37, 29, 34, 50, 11, 49, 38, 10, 12, 51, 27, 58, 52, 54, 53, 48, 13, 26, 39, 35, 46, 30, 28, 24, 33, 41, 40 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H09",
+      "query" : "thế giới phù thủy và trường Hogwarts",
+      "relevantIds" : [ 52 ],
+      "beforeIds" : [ 52 ],
+      "afterIds" : [ 52 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H10",
+      "query" : "truyện tranh có các bảo bối",
+      "relevantIds" : [ 51 ],
+      "beforeIds" : [ 51, 48 ],
+      "afterIds" : [ 51, 48 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H11",
+      "query" : "truyện tranh kể chuyện phá án",
+      "relevantIds" : [ 48 ],
+      "beforeIds" : [ 48 ],
+      "afterIds" : [ 48 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H12",
+      "query" : "truyện chữ quan sát và suy luận",
+      "relevantIds" : [ 26 ],
+      "beforeIds" : [ 26, 54, 38, 46, 48, 13, 27, 37, 29, 39, 49, 41, 30, 50, 53, 28, 12, 58, 51, 33, 40, 52, 10, 35, 34, 11, 24 ],
+      "afterIds" : [ 26, 54, 46, 38, 48, 13, 27, 37, 29, 49, 39, 41, 30, 50, 53, 28, 58, 12, 51, 33, 40, 52, 10, 35, 34, 11, 24 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H13",
+      "query" : "tiểu thuyết về mafia và gia đình",
+      "relevantIds" : [ 27 ],
+      "beforeIds" : [ 27, 30, 41, 40 ],
+      "afterIds" : [ 27, 30, 41, 40 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H14",
+      "query" : "sách về thiên kiến trong phán đoán",
+      "relevantIds" : [ 55 ],
+      "beforeIds" : [ 55, 16, 20, 9, 40 ],
+      "afterIds" : [ 55, 16, 20, 9, 40 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H15",
+      "query" : "trực giác ảnh hưởng quyết định",
+      "relevantIds" : [ 55 ],
+      "beforeIds" : [ 55 ],
+      "afterIds" : [ 55 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H16",
+      "query" : "nguyên tắc ứng xử với đồng nghiệp",
+      "relevantIds" : [ 57 ],
+      "beforeIds" : [ 57, 32, 50 ],
+      "afterIds" : [ 57, 32, 50 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H17",
+      "query" : "học cách xử lý bất đồng",
+      "relevantIds" : [ 57 ],
+      "beforeIds" : [ 57, 48, 55, 47, 9, 25 ],
+      "afterIds" : [ 57, 48, 55, 47, 9, 25 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H18",
+      "query" : "hướng dẫn đối diện lo lắng",
+      "relevantIds" : [ 32 ],
+      "beforeIds" : [ 32 ],
+      "afterIds" : [ 32 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H19",
+      "query" : "đầu tư chứng khoán dài hạn",
+      "relevantIds" : [ 43 ],
+      "beforeIds" : [ 43, 18, 19, 42, 55, 6, 56, 4, 17, 47, 45, 23 ],
+      "afterIds" : [ 43, 18, 42, 19, 6, 55, 56, 4, 17, 47, 45, 23 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H20",
+      "query" : "kiểm chứng ý tưởng kinh doanh",
+      "relevantIds" : [ 19 ],
+      "beforeIds" : [ 19, 4 ],
+      "afterIds" : [ 19, 4 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H21",
+      "query" : "thử nghiệm ý tưởng phát triển sản phẩm",
+      "relevantIds" : [ 19 ],
+      "beforeIds" : [ 19, 4 ],
+      "afterIds" : [ 19, 4 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H22",
+      "query" : "tìm hiểu học máy cho công việc",
+      "relevantIds" : [ 17 ],
+      "beforeIds" : [ 17, 57, 44, 16, 21, 19, 36, 23, 6, 8, 5, 32, 3, 46, 25, 4, 22, 55 ],
+      "afterIds" : [ 17, 44, 21, 57, 16, 36, 23, 19, 46, 3, 25, 8, 4, 6, 5, 32, 22, 55 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H23",
+      "query" : "giới thiệu AI cho học tập",
+      "relevantIds" : [ 17 ],
+      "beforeIds" : [ 17, 44, 19, 13, 57, 10, 48, 20, 21, 28, 51 ],
+      "afterIds" : [ 17, 44, 19, 13, 10, 57, 20, 21, 48, 28, 51 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H24",
+      "query" : "giáo trình ngôn ngữ Java",
+      "relevantIds" : [ 22 ],
+      "beforeIds" : [ 22 ],
+      "afterIds" : [ 22 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H25",
+      "query" : "sách cải thiện chất lượng mã nguồn",
+      "relevantIds" : [ 9 ],
+      "beforeIds" : [ 9, 16, 23, 22, 20 ],
+      "afterIds" : [ 9, 16, 23, 22, 20 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H26",
+      "query" : "nguyên tắc viết kiểm thử đơn vị",
+      "relevantIds" : [ 9 ],
+      "beforeIds" : [ 9 ],
+      "afterIds" : [ 9 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H27",
+      "query" : "bảo trì phần mềm và thói quen nghề nghiệp",
+      "relevantIds" : [ 16 ],
+      "beforeIds" : [ 16, 57, 31, 32 ],
+      "afterIds" : [ 16, 57, 31, 32 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H28",
+      "query" : "tránh lặp lại kiến thức lập trình",
+      "relevantIds" : [ 16 ],
+      "beforeIds" : [ 16, 20, 22, 9, 23 ],
+      "afterIds" : [ 16, 20, 22, 9, 23 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H29",
+      "query" : "tài liệu tra cứu quyền sử dụng đất",
+      "relevantIds" : [ 7 ],
+      "beforeIds" : [ 7, 8 ],
+      "afterIds" : [ 7, 8, 5, 4, 3 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "H30",
+      "query" : "tìm hiểu chế độ quản lý đất đai",
+      "relevantIds" : [ 7 ],
+      "beforeIds" : [ 7, 43, 36, 8 ],
+      "afterIds" : [ 7, 36, 43, 8 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    } ]
+  }, {
+    "name" : "previous-outside-pilot8",
+    "count" : 8,
+    "beforeHit1" : 8,
+    "afterHit1" : 8,
+    "beforeHit3" : 8,
+    "afterHit3" : 8,
+    "regressions" : [ ],
+    "cases" : [ {
+      "id" : "C01",
+      "query" : "cấu trúc dữ liệu danh sách liên kết ngăn xếp",
+      "relevantIds" : [ 20 ],
+      "beforeIds" : [ 20 ],
+      "afterIds" : [ 20 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "C02",
+      "query" : "mạng máy tính TCP/IP và OSI",
+      "relevantIds" : [ 21 ],
+      "beforeIds" : [ 21 ],
+      "afterIds" : [ 21 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "C03",
+      "query" : "blockchain qua 25 bước",
+      "relevantIds" : [ 18 ],
+      "beforeIds" : [ 18, 52 ],
+      "afterIds" : [ 18, 52 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "C04",
+      "query" : "lạm phát thất nghiệp tỷ giá",
+      "relevantIds" : [ 45 ],
+      "beforeIds" : [ 45, 42 ],
+      "afterIds" : [ 45, 42 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "C05",
+      "query" : "lịch sử Việt Nam theo triều đại",
+      "relevantIds" : [ 14, 24 ],
+      "beforeIds" : [ 14, 24, 15, 56, 46, 25 ],
+      "afterIds" : [ 14, 24, 15, 56, 46, 25 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "C06",
+      "query" : "truyện trào phúng châm biếm xã hội",
+      "relevantIds" : [ 11 ],
+      "beforeIds" : [ 11, 46, 39, 30, 38, 40, 41, 50, 54, 37, 34, 24, 33, 58, 52, 51, 53, 48, 29, 49, 13, 10, 26, 27, 35, 28, 12 ],
+      "afterIds" : [ 11, 39, 30, 46, 38, 40, 41, 50, 54, 37, 34, 24, 33, 58, 52, 51, 53, 48, 29, 49, 13, 10, 26, 27, 35, 28, 12 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "C07",
+      "query" : "kiến trúc sư Howard Roark",
+      "relevantIds" : [ 30 ],
+      "beforeIds" : [ 30, 55 ],
+      "afterIds" : [ 30, 55 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    }, {
+      "id" : "C08",
+      "query" : "giáo trình trí tuệ nhân tạo biểu diễn tri thức logic",
+      "relevantIds" : [ 44 ],
+      "beforeIds" : [ 44, 17 ],
+      "afterIds" : [ 44, 17 ],
+      "beforeHit1" : true,
+      "afterHit1" : true,
+      "beforeHit3" : true,
+      "afterHit3" : true
+    } ]
+  } ],
+  "providerCalls" : 0
+}

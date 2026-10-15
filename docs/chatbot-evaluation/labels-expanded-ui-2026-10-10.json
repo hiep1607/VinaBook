@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-10",
+  "environment": "localhost:4200; Gemini thật; khách chưa đăng nhập",
+  "scope": "8 kịch bản, 9 lượt gửi gồm một lượt hỏi lại có bổ sung từ khóa; kiểm tra thủ công không mù. Chỉ xuất các lượt của đợt mở rộng, không xóa lịch sử sẵn có.",
+  "counts": {
+    "pass": 5,
+    "partial": 3,
+    "fail": 1
+  },
+  "turns": [
+    {
+      "id": "U01",
+      "question": "Đổi chủ đề hoàn toàn: mình muốn tìm sách về computer networking.",
+      "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Mạng Máy Tính Và Các Hệ Thống Mở” — 95.000đ · Nguyễn Thúc Hải · Chưa có đánh giá\nTác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN. Đây là tài liệu về nền tảng mạng; nguồn mô tả còn đề cập công nghệ của giai đoạn trước. Chưa xác nhận bản cửa hàng có cập nhật các chuẩn mạng mới.\n\nMạng Máy Tính Và Các Hệ Thống Mở\nNguyễn Thúc Hải\n95,000đ\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Từ computer networking tìm đúng Mạng Máy Tính Và Các Hệ Thống Mở, có giới hạn chuẩn mạng chưa rõ."
+    },
+    {
+      "id": "U02",
+      "question": "Cuốn đó có dạy Wi-Fi 6 và 5G không?",
+      "answer": "Về “Mạng Máy Tính Và Các Hệ Thống Mở”, mình có những thông tin này:\nTác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN. Đây là tài liệu về nền tảng mạng; nguồn mô tả còn đề cập công nghệ của giai đoạn trước. Chưa xác nhận bản cửa hàng có cập nhật các chuẩn mạng mới.\n\nMạng Máy Tính Và Các Hệ Thống Mở\nNguyễn Thúc Hải\n95,000đ\nXem sách\nThêm giỏ",
+      "outcome": "partial",
+      "check": "Đúng cuốn, không bịa chuẩn mạng mới; còn dùng mô tả chung thay vì nêu trực tiếp Wi-Fi 6/5G."
+    },
+    {
+      "id": "U03",
+      "question": "Đổi chủ đề hoàn toàn: muốn đọc folklore Việt Nam để tìm hiểu văn hóa dân gian.",
+      "answer": "Mình chọn trước 3 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Kho Tàng Truyện Cổ Tích Việt Nam” — 121.500đ · Nguyễn Đổng Chi · Chưa có đánh giá\nĐây là lựa chọn trực tiếp nhất cho nhu cầu tìm hiểu văn hóa dân gian vì nội dung tập trung vào việc sưu tầm và biên soạn các câu chuyện cổ tích Việt Nam.\nCông trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ.\n\n• “Việt Nam Sử Lược” — 118.750đ · Trần Trọng Kim · Chưa có đánh giá\nCuốn sách này giúp bạn hiểu bối cảnh lịch sử, từ đó có cái nhìn hệ thống về các thời kỳ đã hình thành nên những nét văn hóa dân gian.\nTác phẩm trình bày lịch sử Việt Nam theo trình tự các thời kỳ và triều đại, nhằm giúp người đọc nắm một mạch lịch sử có hệ thống. Phù hợp nhu cầu tìm hiểu lịch sử tổng quát. Đây là cách trình bày lịch sử của Trần Trọng Kim, không nên xem như kết luận cuối cùng cho mọi tranh luận sử học.\n\n• “Truyện Kiều” — 64.600đ · Nguyễn Du · Chưa có đánh giá\nTác phẩm là di sản văn học cổ điển, hỗ trợ bạn cảm nhận sâu sắc hơn về tâm hồn và ngôn ngữ nghệ thuật truyền thống của Việt Nam.\n\nKho Tàng Truyện Cổ Tích Việt Nam\nNguyễn Đổng Chi\n121,500đ\nGiảm 10%\nXem sách\nThêm giỏ\nViệt Nam Sử Lược\nTrần Trọng Kim\n118,750đ\nGiảm 5%\nXem sách\nThêm giỏ\nTruyện Kiều\nNguyễn Du\n64,600đ\nGiảm 5%\nXem sách\nThêm giỏ",
+      "outcome": "partial",
+      "check": "Kho Tàng Truyện Cổ Tích Việt Nam đứng đầu, nhưng Việt Nam Sử Lược và Truyện Kiều chỉ liên quan rộng mà vẫn bị nhóm Sách đúng yêu cầu."
+    },
+    {
+      "id": "U04",
+      "question": "Kho Tàng Truyện Cổ Tích Việt Nam là bản minh họa cho bé 5 tuổi hả?",
+      "answer": "Về “Kho Tàng Truyện Cổ Tích Việt Nam”, mình có những thông tin này:\nCông trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ.\n\nKho Tàng Truyện Cổ Tích Việt Nam\nNguyễn Đổng Chi\n121,500đ\nGiảm 10%\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Không khẳng định bản minh họa/độ tuổi 5; nêu rõ chưa xác định tập, không mặc định dành riêng trẻ nhỏ."
+    },
+    {
+      "id": "U05",
+      "question": "Đổi chủ đề hoàn toàn: tìm giáo trình về lạm phát, thất nghiệp và tỷ giá.",
+      "answer": "Mình chưa xử lý được lượt này nên vẫn giữ những yêu cầu bạn đã cho trước đó. Bạn thử gửi lại nhé để mình tiếp tục từ đúng ngữ cảnh.\n\nChế độ cơ bản",
+      "outcome": "fail",
+      "check": "Chatbot trả thông báo chưa xử lý được, không trả sách; giữ nguyên kết quả lỗi trong báo cáo."
+    },
+    {
+      "id": "U05R",
+      "question": "Tìm giáo trình kinh tế vĩ mô về lạm phát, thất nghiệp và tỷ giá.",
+      "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Kinh Tế Vĩ Mô” — 94.050đ · Lê Thanh Tùng · Chưa có đánh giá\nGiáo trình này đề cập trực tiếp đến các chủ đề bạn cần là lạm phát, thất nghiệp và tỷ giá trong phạm vi kinh tế vĩ mô, giúp bạn hiểu rõ các chỉ tiêu và cơ chế vận hành của nền kinh tế ở cấp tổng thể.\nGiáo trình Kinh tế vĩ mô của Lê Thanh Tùng bàn về nền kinh tế ở cấp tổng thể, như sản lượng, lạm phát, thất nghiệp, tỷ giá và chính sách kinh tế. Phù hợp học về các chỉ tiêu và cơ chế của nền kinh tế. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp.\n\nGiáo Trình Kinh Tế Vĩ Mô\nLê Thanh Tùng\n94,050đ\nGiảm 5%\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Lượt hỏi lại có thêm từ kinh tế vĩ mô trả đúng Giáo Trình Kinh Tế Vĩ Mô; không xóa lỗi lượt trước, chưa xác định nguyên nhân."
+    },
+    {
+      "id": "U06",
+      "question": "Sách có bài tập kèm đáp án không?",
+      "answer": "Về “Giáo Trình Kinh Tế Vĩ Mô”, mình có những thông tin này:\nVề bài tập thực hành: mình chưa có thông tin đã xác nhận cho cuốn này, nên chưa thể trả lời là có hay không.\nVề đáp án hoặc lời giải cho bài tập: mình chưa có thông tin đã xác nhận cho cuốn này, nên chưa thể trả lời là có hay không.\n\nGiáo Trình Kinh Tế Vĩ Mô\nLê Thanh Tùng\n94,050đ\nGiảm 5%\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Nhớ đúng giáo trình vĩ mô, trả riêng bài tập và đáp án đều chưa xác nhận."
+    },
+    {
+      "id": "U07",
+      "question": "Đổi chủ đề hoàn toàn: muốn đọc truyện trào phúng phê phán xã hội Việt Nam.",
+      "answer": "Mình chọn trước 3 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Số Đỏ” — 72.000đ · Vũ Trọng Phụng · Chưa có đánh giá\nSách sử dụng giọng văn trào phúng, châm biếm qua các chân dung hí họa để phê phán xã hội, đáp ứng trực tiếp nhu cầu tìm truyện trào phúng của bạn.\nTác phẩm trào phúng của Vũ Trọng Phụng, dựng những chân dung hí họa để phơi bày sự lố bịch trong xã hội. Sự hài hước đi cùng phê phán và châm biếm, phù hợp người muốn đọc văn học Việt Nam có giọng sắc sảo; không nên mặc định là truyện vui nhẹ nhàng cho mọi lứa tuổi.\n\n• “Chí Phèo” — 49.500đ · Nam Cao · Chưa có đánh giá\nĐây là truyện ngắn tập trung vào bi kịch của người nông dân, giúp bạn có cái nhìn về cách xã hội đối xử với con người trong bối cảnh lịch sử.\nTruyện ngắn của Nam Cao về bi kịch của người nông dân trong xã hội cũ, đặt ra câu hỏi về con người và cách xã hội đối xử với họ. Có thể đọc để tìm hiểu văn học hiện thực và thảo luận về nội dung, nghệ thuật tác phẩm. Chưa xác định bản dịch, ngôn ngữ và những truyện khác đi kèm trong bản đang bán.\n\n• “Tắt Đèn” — 55.200đ · Ngô Tất Tố · Chưa có đánh giá\nTác phẩm này khắc họa sự đau khổ của người nông dân dưới sự áp bức của các thế lực, phù hợp với mục tiêu tìm đọc văn học hiện thực phê phán.\n\nSố Đỏ\nVũ Trọng Phụng\n72,000đ\nXem sách\nThêm giỏ\nChí Phèo\nNam Cao\n49,500đ\nGiảm 10%\nXem sách\nThêm giỏ\nTắt Đèn\nNgô Tất Tố\n55,200đ\nGiảm 8%\nXem sách\nThêm giỏ",
+      "outcome": "partial",
+      "check": "Số Đỏ đứng đầu và đúng chủ đề; Chí Phèo/Tắt Đèn liên quan hiện thực phê phán nhưng không đáp ứng chắc yêu cầu trào phúng, vẫn nhóm Sách đúng yêu cầu."
+    },
+    {
+      "id": "U08",
+      "question": "Số Đỏ có phải truyện chỉ vui, nhẹ nhàng không?",
+      "answer": "Về “Số Đỏ”, mình có những thông tin này:\nTác phẩm trào phúng của Vũ Trọng Phụng, dựng những chân dung hí họa để phơi bày sự lố bịch trong xã hội. Sự hài hước đi cùng phê phán và châm biếm, phù hợp người muốn đọc văn học Việt Nam có giọng sắc sảo; không nên mặc định là truyện vui nhẹ nhàng cho mọi lứa tuổi.\n\nSố Đỏ\nVũ Trọng Phụng\n72,000đ\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Không coi Số Đỏ là truyện chỉ vui/nhẹ nhàng; nêu đúng hài hước kèm phê phán châm biếm."
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "className": "AiGateway",
+    "buildSha256": "606530e107e6658faeca4c041ef338ad386f9a98e68e0e284e63d6cdd5185c78",
+    "runtimeSha256": "606530e107e6658faeca4c041ef338ad386f9a98e68e0e284e63d6cdd5185c78",
+    "matches": true
+  },
+  {
+    "className": "ChatBookNarrator",
+    "buildSha256": "9b64fa8696b62eb1c845e6235d434cb39b4bacc5447feee21a83dcd18b1827c1",
+    "runtimeSha256": "9b64fa8696b62eb1c845e6235d434cb39b4bacc5447feee21a83dcd18b1827c1",
+    "matches": true
+  },
+  {
+    "className": "ChatReadingClaims",
+    "buildSha256": "4597de89de442838869b78c4a48e83d170be5ea5ef5e5b9419002fbfb4e6bb2c",
+    "runtimeSha256": "4597de89de442838869b78c4a48e83d170be5ea5ef5e5b9419002fbfb4e6bb2c",
+    "matches": true
+  },
+  {
+    "className": "ChatExplicitFilters",
+    "buildSha256": "db7bdb421786d341bd33ca1ab9885a437c22b3085a5dc2fda51b145abda4c4e3",
+    "runtimeSha256": "db7bdb421786d341bd33ca1ab9885a437c22b3085a5dc2fda51b145abda4c4e3",
+    "matches": true
+  },
+  {
+    "className": "ChatStructuredPipeline",
+    "buildSha256": "b55f15e9143dcaab54b7ce3625925b0f75d6c5d773fb3f8c12a34e0b6ccd5c12",
+    "runtimeSha256": "b55f15e9143dcaab54b7ce3625925b0f75d6c5d773fb3f8c12a34e0b6ccd5c12",
+    "matches": true
+  },
+  {
+    "className": "BookKnowledgeService",
+    "buildSha256": "7a81f91f10719cd317c4f6450c7fd5b1c0422d1feffabd0a8d578794ffce7ad0",
+    "runtimeSha256": "7a81f91f10719cd317c4f6450c7fd5b1c0422d1feffabd0a8d578794ffce7ad0",
+    "matches": true
+  },
+  {
+    "className": "ChatRetrievalService",
+    "buildSha256": "47fb8ca97867cd9ee518d127f49f1dfe57d6c09d209f97cd7d58fe2b992d0e24",
+    "runtimeSha256": "47fb8ca97867cd9ee518d127f49f1dfe57d6c09d209f97cd7d58fe2b992d0e24",
+    "matches": true
+  }
+]

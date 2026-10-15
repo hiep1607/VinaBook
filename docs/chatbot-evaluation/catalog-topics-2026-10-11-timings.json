@@ -1,0 +1,82 @@
+[
+  {
+    "stageLog": "catalog-topics-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:16:04.500  INFO 17304 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_timing understandingMs=7661 executionMs=762 narrationMs=0 failureStage="
+  },
+  {
+    "stageLog": "catalog-topics-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:16:04.500  INFO 17304 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_dispatch tool=respond status=NEEDS_INPUT outcome= fallback=false elapsedMs=8503"
+  },
+  {
+    "stageLog": "catalog-topics-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:16:19.444  INFO 17304 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_timing understandingMs=15 executionMs=201 narrationMs=0 failureStage="
+  },
+  {
+    "stageLog": "catalog-topics-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:16:19.445  INFO 17304 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_dispatch tool=recommendBooks status=COMPLETED outcome=matched fallback=false elapsedMs=226"
+  },
+  {
+    "stageLog": "catalog-topics-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:16:54.838  INFO 17304 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_timing understandingMs=5805 executionMs=468 narrationMs=0 failureStage="
+  },
+  {
+    "stageLog": "catalog-topics-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:16:54.839  INFO 17304 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_dispatch tool=respond status=NEEDS_INPUT outcome= fallback=false elapsedMs=6283"
+  },
+  {
+    "stageLog": "catalog-topics-final-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:19:18.676  INFO 24076 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_timing understandingMs=9413 executionMs=1353 narrationMs=0 failureStage="
+  },
+  {
+    "stageLog": "catalog-topics-final-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:19:18.676  INFO 24076 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_dispatch tool=respond status=NEEDS_INPUT outcome= fallback=false elapsedMs=10825"
+  },
+  {
+    "stageLog": "catalog-topics-final-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:19:36.764  INFO 24076 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_timing understandingMs=11 executionMs=125 narrationMs=0 failureStage="
+  },
+  {
+    "stageLog": "catalog-topics-final-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:19:36.765  INFO 24076 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_dispatch tool=recommendBooks status=COMPLETED outcome=matched fallback=false elapsedMs=146"
+  },
+  {
+    "stageLog": "catalog-topics-labels-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:22:30.070  INFO 4148 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_timing understandingMs=11466 executionMs=1999 narrationMs=0 failureStage="
+  },
+  {
+    "stageLog": "catalog-topics-labels-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:22:30.070  INFO 4148 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_dispatch tool=respond status=NEEDS_INPUT outcome= fallback=false elapsedMs=13524"
+  },
+  {
+    "stageLog": "catalog-topics-labels-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:23:08.489  INFO 4148 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_timing understandingMs=10 executionMs=145 narrationMs=0 failureStage="
+  },
+  {
+    "stageLog": "catalog-topics-labels-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:23:08.489  INFO 4148 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_dispatch tool=recommendBooks status=COMPLETED outcome=matched fallback=false elapsedMs=166"
+  },
+  {
+    "stageLog": "catalog-topics-labels-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:23:33.580  INFO 4148 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_timing understandingMs=5568 executionMs=803 narrationMs=0 failureStage="
+  },
+  {
+    "stageLog": "catalog-topics-labels-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:23:33.580  INFO 4148 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_dispatch tool=respond status=NEEDS_INPUT outcome= fallback=false elapsedMs=6382"
+  },
+  {
+    "stageLog": "catalog-topics-labels-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:24:06.642  INFO 4148 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_timing understandingMs=6101 executionMs=374 narrationMs=0 failureStage="
+  },
+  {
+    "stageLog": "catalog-topics-labels-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:24:06.642  INFO 4148 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_dispatch tool=respond status=NEEDS_INPUT outcome= fallback=false elapsedMs=6486"
+  },
+  {
+    "stageLog": "catalog-topics-labels-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:24:32.946  INFO 4148 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_timing understandingMs=9 executionMs=128 narrationMs=0 failureStage="
+  },
+  {
+    "stageLog": "catalog-topics-labels-2026-10-11-backend.log",
+    "entry": "2026-10-11 10:24:32.947  INFO 4148 --- [onPool-worker-1] vn.fs.service.ChatStructuredPipeline     : chat_structured_dispatch tool=recommendBooks status=COMPLETED outcome=matched fallback=false elapsedMs=149"
+  }
+]

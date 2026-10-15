@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-10",
+  "url": "http://localhost:4200/",
+  "scope": "8 real UI turns in three explicitly reset-topic chains, using an existing guest conversation; full catalog and configured Gemini enabled. Post-change qualitative checks only, not a controlled conversational A/B.",
+  "results": [
+    {
+      "chain": "animals",
+      "question": "Đổi chủ đề hoàn toàn: mình muốn một truyện về thế giới loài vật, dưới 100k.",
+      "outcome": "partial",
+      "note": "Dế Mèn đứng đầu và đúng giá; còn kèm Doraemon trong nhóm đúng yêu cầu dù lý do thừa nhận không chuyên về loài vật.",
+      "answer": "Mình chọn trước 2 cuốn để bạn dễ cân nhắc. Các cuốn đều nằm trong mức 100.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nCuốn sách này kể về hành trình khám phá thế giới loài vật của Dế Mèn, hoàn toàn khớp với chủ đề bạn đang tìm kiếm.\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nĐây là truyện tranh tập trung vào các câu chuyện tưởng tượng của nhóm bạn, dù có yếu tố bạn bè nhưng không chuyên biệt về thế giới loài vật như gợi ý trên.\n\nBạn xem qua nội dung và cho mình biết cuốn nào ưng ý hơn để mình hỗ trợ nhé.\n\nDế Mèn Phiêu Lưu Ký\nTô Hoài\n50,400đ\nGiảm 10%\nXem sách\nDoraemon - Tập 1\nFujiko F. Fujio\n19,800đ\nGiảm 10%\nXem sách"
+    },
+    {
+      "chain": "animals",
+      "question": "Cuốn đầu tiên kể chuyện gì, có nói về tình bạn không?",
+      "outcome": "passed",
+      "note": "Nhớ đúng cuốn đầu tiên là Dế Mèn; có căn cứ về tình bạn.",
+      "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Dế Mèn Phiêu Lưu Ký”\nCuốn này nằm trong hướng đọc bạn đang tìm. Truyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận.\n\nDế Mèn Phiêu Lưu Ký\nTô Hoài\n50,400đ\nGiảm 10%\nXem sách"
+    },
+    {
+      "chain": "animals",
+      "question": "Cuốn đó là truyện chữ hay truyện tranh?",
+      "outcome": "partial",
+      "note": "Nhớ đúng Dế Mèn và nói truyện dài, nhưng không trả lời trực tiếp lựa chọn truyện chữ/truyện tranh; chuyển sang giải thích chung.",
+      "answer": "Để bạn cân nhắc kỹ hơn, mình đi thêm vào nội dung và đối tượng đọc đã được xác nhận:\n\n• “Dế Mèn Phiêu Lưu Ký”\nCuốn này nằm trong hướng đọc bạn đang tìm. Truyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận.\nMục tiêu đọc: Suy ngẫm về tình bạn, lòng dũng cảm và sự hòa thuận qua câu chuyện.\nĐối tượng: Độc giả nhỏ tuổi và người quan tâm văn học thiếu nhi Việt Nam.\nCách trình bày: Truyện phiêu lưu qua thế giới loài vật, có khó khăn và nguy hiểm trên hành trình.\n\nDế Mèn Phiêu Lưu Ký\nTô Hoài\n50,400đ\nGiảm 10%\nXem sách"
+    },
+    {
+      "chain": "childhood",
+      "question": "Đổi chủ đề hoàn toàn: tìm truyện về ký ức tuổi thơ cho người lớn, dưới 100k.",
+      "outcome": "passed",
+      "note": "Cho Tôi Xin Một Vé Đi Tuổi Thơ đứng đầu; các lựa chọn liên quan đều dưới 100k, gồm cả sách ngoài mẫu.",
+      "answer": "Mình chọn trước 3 cuốn để bạn dễ cân nhắc. Các cuốn đều nằm trong mức 100.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ” — 71.760đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nNgười kể hồi tưởng những trò chơi và cách nhìn thế giới của cu Mùi, Hải cò, Tủn và Tí sún. Từ ký ức tuổi thơ, câu chuyện nối sang suy nghĩ của người lớn về cách thấu hiểu trẻ em.\n\n• “Tôi Thấy Hoa Vàng Trên Cỏ Xanh” — 79.200đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nĐây là lựa chọn giúp bạn đọc về những kỷ niệm thời niên thiếu thông qua câu chuyện lớn lên của các nhân vật trong một ngôi làng, mang lại cảm giác gần gũi với ký ức tuổi thơ.\n\n• “Cây Cam Ngọt Của Tôi” — 95.040đ · José Mauro de Vasconcelos · Chưa có đánh giá\nCuốn này tập trung vào thế giới nội tâm của một cậu bé cùng những trải nghiệm cảm xúc đặc biệt, giúp người đọc nhìn lại tuổi thơ qua lăng kính sâu sắc và giàu lòng trắc ẩn.\n\nCho Tôi Xin Một Vé Đi Tuổi Thơ\nNguyễn Nhật Ánh\n71,760đ\nGiảm 8%\nXem sách\nTôi Thấy Hoa Vàng Trên Cỏ Xanh\nNguyễn Nhật Ánh\n79,200đ\nGiảm 10%\nXem sách\nCây Cam Ngọt Của Tôi\nJosé Mauro de Vasconcelos\n95,040đ\nGiảm 12%\nXem sách"
+    },
+    {
+      "chain": "childhood",
+      "question": "Mình muốn có cả nỗi đau và hoàn cảnh nghèo khó.",
+      "outcome": "partial",
+      "note": "Cây Cam Ngọt lên đầu, vẫn giữ trần 100k; còn Cho Tôi Xin Một Vé Đi Tuổi Thơ không chứng minh đủ điều kiện nghèo khó/nỗi đau trong nhóm đúng yêu cầu.",
+      "answer": "Mình chọn trước 3 cuốn để bạn dễ cân nhắc. Các cuốn đều nằm trong mức 100.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Cây Cam Ngọt Của Tôi” — 95.040đ · José Mauro de Vasconcelos · Chưa có đánh giá\nCuốn này phản ánh đúng sự kết hợp giữa hoàn cảnh nghèo khó và những nỗi đau tinh thần mà cậu bé Zezé phải trải qua.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ” — 71.760đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nSách này tập trung vào khía cạnh hồi ức tuổi thơ dưới góc nhìn của người lớn, giúp bạn suy ngẫm về cách nhìn nhận trẻ em.\n\n• “Tôi Thấy Hoa Vàng Trên Cỏ Xanh” — 79.200đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nNội dung mô tả những biến cố và cảnh đói ăn, phản ánh thực tế khó khăn trong quá trình lớn lên của các nhân vật.\n\nBạn có thể cân nhắc chọn cuốn đầu tiên nếu muốn câu chuyện tập trung sâu vào nỗi đau cá nhân, hoặc các cuốn còn lại nếu ưu tiên trải nghiệm hồi ức thời niên thiếu.\n\nCây Cam Ngọt Của Tôi\nJosé Mauro de Vasconcelos\n95,040đ\nGiảm 12%\nXem sách\nCho Tôi Xin Một Vé Đi Tuổi Thơ\nNguyễn Nhật Ánh\n71,760đ\nGiảm 8%\nXem sách\nTôi Thấy Hoa Vàng Trên Cỏ Xanh\nNguyễn Nhật Ánh\n79,200đ\nGiảm 10%\nXem sách"
+    },
+    {
+      "chain": "childhood",
+      "question": "Vì sao cuốn đầu tiên phù hợp với nhu cầu vừa rồi?",
+      "outcome": "passed",
+      "note": "Nhớ đúng Cây Cam Ngọt và giải thích theo nỗi đau/nghèo khó vừa thêm.",
+      "answer": "Mình nói kỹ hơn về cuốn vừa chọn để bạn cân nhắc:\n\n• “Cây Cam Ngọt Của Tôi”\nCuốn này phản ánh trực tiếp trải nghiệm của một cậu bé sống trong cảnh nghèo khó và phải chịu đựng những nỗi đau tinh thần từ sự hắt hủi, đúng với nhu cầu tìm kiếm chiều sâu ký ức mà bạn đã chia sẻ.\n\nCây Cam Ngọt Của Tôi\nJosé Mauro de Vasconcelos\n95,040đ\nGiảm 12%\nXem sách"
+    },
+    {
+      "chain": "school",
+      "question": "Đổi chủ đề hoàn toàn: mình muốn truyện về trẻ em và môi trường học.",
+      "outcome": "passed",
+      "note": "AI diễn giải câu hỏi thành công: chỉ đưa Totto-chan, dù truy xuất nguyên câu H05 còn yếu.",
+      "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Totto-chan Bên Cửa Sổ” — 82.800đ · Kuroyanagi Tetsuko · Chưa có đánh giá\nTotto-chan chuyển đến trường Tomoe sau khi bị đuổi học. Ngôi trường có lớp học trong toa xe điện, cách học khác thường và thầy hiệu trưởng chăm chú lắng nghe cô bé; các trải nghiệm ấy gắn với sự lớn lên của nhân vật.\n\nTotto-chan Bên Cửa Sổ\nKuroyanagi Tetsuko\n82,800đ\nGiảm 10%\nXem sách"
+    },
+    {
+      "chain": "school",
+      "question": "Cuốn đó có phải sách dạy kỹ năng giao tiếp không?",
+      "outcome": "partial",
+      "note": "Nhớ đúng Totto-chan nhưng chỉ lặp mô tả; chưa trực tiếp phân biệt truyện kể về trường học với sách dạy kỹ năng giao tiếp.",
+      "answer": "Mình nói kỹ hơn về cuốn vừa chọn để bạn cân nhắc:\n\n• “Totto-chan Bên Cửa Sổ”\nCuốn này nằm trong hướng đọc bạn đang tìm. Totto-chan chuyển đến trường Tomoe sau khi bị đuổi học. Ngôi trường có lớp học trong toa xe điện, cách học khác thường và thầy hiệu trưởng chăm chú lắng nghe cô bé; các trải nghiệm ấy gắn với sự lớn lên của nhân vật.\n\nTotto-chan Bên Cửa Sổ\nKuroyanagi Tetsuko\n82,800đ\nGiảm 10%\nXem sách"
+    }
+  ]
+}

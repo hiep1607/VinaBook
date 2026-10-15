@@ -1,0 +1,96 @@
+{
+  "rows": [
+    {
+      "phase": "before_batch",
+      "timestamp": "2026-10-11 08:42:23.337",
+      "understandingMs": 2869,
+      "executionMs": 4699,
+      "narrationMs": 2,
+      "failureStage": "",
+      "tool": "recommendBooks",
+      "status": "COMPLETED",
+      "outcome": "exhausted",
+      "fallback": false,
+      "elapsedMs": 7663
+    },
+    {
+      "phase": "before_batch",
+      "timestamp": "2026-10-11 08:42:45.728",
+      "understandingMs": 1876,
+      "executionMs": 4733,
+      "narrationMs": 1652,
+      "failureStage": "",
+      "tool": "searchProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": false,
+      "elapsedMs": 8280
+    },
+    {
+      "phase": "before_batch",
+      "timestamp": "2026-10-11 08:44:26.850",
+      "understandingMs": 7311,
+      "executionMs": 61,
+      "narrationMs": 0,
+      "failureStage": "",
+      "tool": "getProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": false,
+      "elapsedMs": 7388
+    },
+    {
+      "phase": "after_batch",
+      "timestamp": "2026-10-11 08:50:05.601",
+      "understandingMs": 2365,
+      "executionMs": 396,
+      "narrationMs": 1667,
+      "failureStage": "",
+      "tool": "searchProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": false,
+      "elapsedMs": 4487
+    },
+    {
+      "phase": "after_batch",
+      "timestamp": "2026-10-11 08:51:30.823",
+      "understandingMs": 1788,
+      "executionMs": 64,
+      "narrationMs": 0,
+      "failureStage": "",
+      "tool": "getProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": false,
+      "elapsedMs": 1862
+    },
+    {
+      "phase": "after_batch",
+      "timestamp": "2026-10-11 08:51:54.173",
+      "understandingMs": 1762,
+      "executionMs": 193,
+      "narrationMs": 1673,
+      "failureStage": "",
+      "tool": "searchProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": false,
+      "elapsedMs": 3637
+    },
+    {
+      "phase": "after_batch",
+      "timestamp": "2026-10-11 08:52:54.191",
+      "understandingMs": 2823,
+      "executionMs": 50,
+      "narrationMs": 0,
+      "failureStage": "",
+      "tool": "getProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": false,
+      "elapsedMs": 2883
+    }
+  ],
+  "scope": "Small sequential local UI sample; not a controlled provider latency benchmark. No raw questions, SQL, account IDs or credentials."
+}

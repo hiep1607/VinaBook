@@ -1,0 +1,356 @@
+{
+  "activeBooks": 56,
+  "newlyLabelledBooks": 36,
+  "preservedPilotBooks": 20,
+  "addedLabelLinks": 284,
+  "detailedLabelLinks": 438,
+  "catalogUnchanged": true,
+  "approvedFactsUnchanged": true,
+  "allOldTopicsPreserved": true,
+  "pilotRowsUnchanged": true,
+  "idempotentDryRun": {
+    "mode": "dry-run",
+    "books": 0,
+    "labels": 0,
+    "committed": false
+  },
+  "frozenQueriesSha256": "f9344b088e35982114aee472212a8d6de1bc2e5a3e1721c279cbdc62f45f6896",
+  "books": [
+    {
+      "productId": 3,
+      "title": "Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam Năm 2013 (Sửa Đổi, Bổ Sung Năm 2025)",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 4,
+      "title": "Luật Doanh Nghiệp",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 5,
+      "title": "Bộ Luật Lao Động",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 6,
+      "title": "Cẩm Nang Pháp Luật Dành Cho Doanh Nghiệp",
+      "detailedLabels": 8,
+      "totalTopics": 14
+    },
+    {
+      "productId": 7,
+      "title": "Luật Đất Đai (Sửa Đổi, Bổ Sung Năm 2024) Và Các Văn Bản Hướng Dẫn Thi Hành",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 8,
+      "title": "Bộ Luật Dân Sự",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 9,
+      "title": "Clean Code - Mã Sạch Và Cách Viết",
+      "detailedLabels": 9,
+      "totalTopics": 13
+    },
+    {
+      "productId": 10,
+      "title": "Truyện Kiều",
+      "detailedLabels": 7,
+      "totalTopics": 10
+    },
+    {
+      "productId": 11,
+      "title": "Số Đỏ",
+      "detailedLabels": 7,
+      "totalTopics": 11
+    },
+    {
+      "productId": 12,
+      "title": "Vang Bóng Một Thời",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 13,
+      "title": "Dế Mèn Phiêu Lưu Ký",
+      "detailedLabels": 9,
+      "totalTopics": 13
+    },
+    {
+      "productId": 14,
+      "title": "Việt Nam Sử Lược",
+      "detailedLabels": 7,
+      "totalTopics": 11
+    },
+    {
+      "productId": 15,
+      "title": "Lịch Sử Thế Giới Hiện Đại",
+      "detailedLabels": 9,
+      "totalTopics": 14
+    },
+    {
+      "productId": 16,
+      "title": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 17,
+      "title": "AI - Sức Mạnh Của Trí Tuệ Nhân Tạo",
+      "detailedLabels": 9,
+      "totalTopics": 14
+    },
+    {
+      "productId": 18,
+      "title": "Blockchain Cơ Bản",
+      "detailedLabels": 9,
+      "totalTopics": 13
+    },
+    {
+      "productId": 19,
+      "title": "Khởi Nghiệp Tinh Gọn (The Lean Startup)",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 20,
+      "title": "Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật",
+      "detailedLabels": 10,
+      "totalTopics": 15
+    },
+    {
+      "productId": 21,
+      "title": "Mạng Máy Tính Và Các Hệ Thống Mở",
+      "detailedLabels": 9,
+      "totalTopics": 14
+    },
+    {
+      "productId": 22,
+      "title": "Giáo Trình Lập Trình Java",
+      "detailedLabels": 6,
+      "totalTopics": 10
+    },
+    {
+      "productId": 23,
+      "title": "Giáo Trình Cơ Sở Dữ Liệu",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 24,
+      "title": "Đại Việt Sử Ký Toàn Thư",
+      "detailedLabels": 7,
+      "totalTopics": 11
+    },
+    {
+      "productId": 25,
+      "title": "Súng, Vi Trùng Và Thép",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 26,
+      "title": "Sherlock Holmes Toàn Tập - Tập 1",
+      "detailedLabels": 7,
+      "totalTopics": 11
+    },
+    {
+      "productId": 27,
+      "title": "Bố Già (The Godfather)",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 28,
+      "title": "Không Gia Đình",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 29,
+      "title": "Cây Cam Ngọt Của Tôi",
+      "detailedLabels": 7,
+      "totalTopics": 11
+    },
+    {
+      "productId": 30,
+      "title": "Suối Nguồn (The Fountainhead)",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 31,
+      "title": "Sức Mạnh Tiềm Thức",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 32,
+      "title": "Quẳng Gánh Lo Đi Và Vui Sống",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 33,
+      "title": "Hành Trình Về Phương Đông",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 34,
+      "title": "Đường Xưa Mây Trắng",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 35,
+      "title": "Kho Tàng Truyện Cổ Tích Việt Nam",
+      "detailedLabels": 7,
+      "totalTopics": 11
+    },
+    {
+      "productId": 36,
+      "title": "10 Vạn Câu Hỏi Vì Sao",
+      "detailedLabels": 7,
+      "totalTopics": 10
+    },
+    {
+      "productId": 37,
+      "title": "Hoàng Tử Bé",
+      "detailedLabels": 7,
+      "totalTopics": 11
+    },
+    {
+      "productId": 38,
+      "title": "Totto-chan Bên Cửa Sổ",
+      "detailedLabels": 7,
+      "totalTopics": 11
+    },
+    {
+      "productId": 39,
+      "title": "Chí Phèo",
+      "detailedLabels": 7,
+      "totalTopics": 12
+    },
+    {
+      "productId": 40,
+      "title": "Tắt Đèn",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 41,
+      "title": "Những Người Khốn Khổ",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 42,
+      "title": "Từ Tốt Đến Vĩ Đại (Good to Great)",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 43,
+      "title": "Nhà Đầu Tư Thông Minh",
+      "detailedLabels": 7,
+      "totalTopics": 11
+    },
+    {
+      "productId": 44,
+      "title": "Giáo Trình Nhập Môn Trí Tuệ Nhân Tạo",
+      "detailedLabels": 9,
+      "totalTopics": 15
+    },
+    {
+      "productId": 45,
+      "title": "Giáo Trình Kinh Tế Vĩ Mô",
+      "detailedLabels": 8,
+      "totalTopics": 13
+    },
+    {
+      "productId": 46,
+      "title": "Homo Deus: Lược Sử Tương Lai",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 47,
+      "title": "Kinh Tế Học Hài Hước (Freakonomics)",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 48,
+      "title": "Thám Tử Lừng Danh Conan - Tập 1",
+      "detailedLabels": 7,
+      "totalTopics": 11
+    },
+    {
+      "productId": 49,
+      "title": "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 50,
+      "title": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+      "detailedLabels": 9,
+      "totalTopics": 13
+    },
+    {
+      "productId": 51,
+      "title": "Doraemon - Tập 1",
+      "detailedLabels": 7,
+      "totalTopics": 11
+    },
+    {
+      "productId": 52,
+      "title": "Harry Potter Và Hòn Đá Phù Thủy",
+      "detailedLabels": 7,
+      "totalTopics": 11
+    },
+    {
+      "productId": 53,
+      "title": "Mắt Biếc",
+      "detailedLabels": 7,
+      "totalTopics": 10
+    },
+    {
+      "productId": 54,
+      "title": "Muôn Kiếp Nhân Sinh",
+      "detailedLabels": 7,
+      "totalTopics": 11
+    },
+    {
+      "productId": 55,
+      "title": "Tư Duy Nhanh Và Chậm",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 56,
+      "title": "Sapiens: Lược Sử Loài Người",
+      "detailedLabels": 8,
+      "totalTopics": 13
+    },
+    {
+      "productId": 57,
+      "title": "Đắc Nhân Tâm",
+      "detailedLabels": 8,
+      "totalTopics": 12
+    },
+    {
+      "productId": 58,
+      "title": "Nhà Giả Kim",
+      "detailedLabels": 7,
+      "totalTopics": 11
+    }
+  ]
+}

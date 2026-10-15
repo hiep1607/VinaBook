@@ -1,0 +1,146 @@
+{
+  "date": "2026-10-10",
+  "provider": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "architecture": "structured-v1",
+  "runtime": "quality-v5-2026-10-10",
+  "note": "before/intermediate ghi cả lỗi trong quá trình sửa; final là các lượt xác nhận sau phục hồi frontend. Nội dung answer trích từ giao diện, có thể gồm thẻ sách.",
+  "before": [
+    {
+      "question": "Đổi nhu cầu nhé: tìm truyện phiêu lưu dưới 100k, chỉ truyện chữ, không truyện tranh.",
+      "answer": "Với hướng đọc phiêu lưu bạn chọn, mình chọn trước 1 cuốn để bạn dễ cân nhắc. Cuốn này nằm trong mức 100.000đ mỗi cuốn bạn chọn. Có 1 cuốn đáp ứng phần ưu tiên “truyện chữ”.\n\n**Sách đúng yêu cầu:**\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nĐây là một tác phẩm truyện dài, hoàn toàn là chữ, giúp bạn tập trung vào hành trình khám phá của nhân vật thay vì hình ảnh."
+    },
+    {
+      "question": "Thêm điều kiện: phải vừa phiêu lưu vừa trinh thám trong cùng một cuốn nhé, vẫn dưới 100k.",
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Bạn muốn mình thử mở rộng sang sách có nội dung gần với hướng đọc này không? Mình sẽ giữ các điều kiện về giá, dạng sách và phần bạn muốn loại trừ, rồi nói rõ điểm khác biệt."
+    },
+    {
+      "question": "Vậy bỏ điều kiện trinh thám thôi, các điều kiện khác giữ nguyên.",
+      "answer": "Với hướng đọc phiêu lưu bạn chọn, mình chọn trước 1 cuốn để bạn dễ cân nhắc. Cuốn này nằm trong mức 100.000đ mỗi cuốn bạn chọn. Có 1 cuốn đáp ứng phần ưu tiên “truyện chữ”.\n\n**Sách đúng yêu cầu:**\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nCuốn này đúng với nhu cầu tìm truyện phiêu lưu và là truyện chữ dài giúp bạn tập trung vào hành trình khám phá thay vì hình ảnh."
+    },
+    {
+      "question": "Giờ mình tìm sách học Python cho người mới bắt đầu, không phải truyện, ngân sách tối đa 200k.",
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Bạn muốn mình thử mở rộng sang sách có nội dung gần với hướng đọc này không? Mình sẽ giữ các điều kiện về giá, dạng sách và phần bạn muốn loại trừ, rồi nói rõ điểm khác biệt."
+    },
+    {
+      "question": "Mình muốn giá từ 300k đến 100k, còn các yêu cầu về Python giữ nguyên.",
+      "answer": "Mình vẫn chưa tìm được cuốn đáp ứng yêu cầu đang giữ trong các điều kiện bạn chọn. Bạn muốn mình thử mở rộng sang sách có nội dung gần với hướng đọc này không? Mình sẽ giữ các điều kiện về giá, dạng sách và phần bạn muốn loại trừ, rồi nói rõ điểm khác biệt."
+    },
+    {
+      "question": "À mình gõ nhầm: tối đa 150k, không có giá tối thiểu. Đổi sang Java cho người mới nhé.",
+      "answer": "Với hướng đọc Java bạn chọn, mình chọn trước 1 cuốn để bạn dễ cân nhắc. Cuốn này nằm trong mức 150.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Phạm Xuân Lâm (chủ biên) · Chưa có đánh giá\n  Cuốn này phù hợp làm tài liệu tham khảo cho người đang học lập trình Java và nằm trong mức ngân sách bạn mong muốn.\nGiáo trình Lập trình Java do Phạm Xuân Lâm chủ biên, được xác nhận qua bìa và thư mục quốc gia. Có thể dùng làm tài liệu học lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java, các thư viện, framework hoặc các chủ đề cụ thể; không khẳng định sách dạy Spring Boot hay Java 21."
+    },
+    {
+      "question": "Cuốn đó có bài tập thực hành kèm đáp án không? Đừng đoán nếu chưa có thông tin nhé.",
+      "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Giáo Trình Lập Trình Java”\nCuốn này nằm trong hướng đọc bạn đang tìm. Giáo trình Lập trình Java do Phạm Xuân Lâm chủ biên, được xác nhận qua bìa và thư mục quốc gia. Có thể dùng làm tài liệu học lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java, các thư viện, framework hoặc các chủ đề cụ thể; không khẳng định sách dạy Spring Boot hay Java 21."
+    },
+    {
+      "question": "Chuyển sang sách kỹ năng giao tiếp: chọn 2 cuốn, mỗi cuốn dưới 150k và tổng tiền sách dưới 200k.",
+      "answer": "Mình chưa xử lý được lượt này nên vẫn giữ những yêu cầu bạn đã cho trước đó. Bạn thử gửi lại nhé để mình tiếp tục từ đúng ngữ cảnh."
+    },
+    {
+      "question": "So sánh hai cuốn đó giúp mình, mình cần nói chuyện với đồng nghiệp, chưa cần mua.",
+      "answer": "Mình chưa xử lý được lượt này nên vẫn giữ những yêu cầu bạn đã cho trước đó. Bạn thử gửi lại nhé để mình tiếp tục từ đúng ngữ cảnh."
+    }
+  ],
+  "intermediate": [
+    {
+      "question": "Chuyển sang sách kỹ năng giao tiếp: chọn 2 cuốn, mỗi cuốn dưới 150k và tổng tiền sách dưới 200k.",
+      "answer": "Mình chưa xử lý được lượt này nên vẫn giữ những yêu cầu bạn đã cho trước đó. Bạn thử gửi lại nhé để mình tiếp tục từ đúng ngữ cảnh."
+    },
+    {
+      "question": "Chuyển sang sách kỹ năng giao tiếp: chọn 2 cuốn, mỗi cuốn dưới 150k và tổng tiền sách dưới 200k.",
+      "answer": "Bạn muốn 2 cuốn; mình tìm được 2 cuốn đúng yêu cầu. Các cuốn đều nằm trong mức 150.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Đắc Nhân Tâm” — 70.520đ · Dale Carnegie · Chưa có đánh giá\n  Cuốn sách tập trung trực tiếp vào các nguyên tắc ứng xử và giao tiếp nơi công sở, hỗ trợ bạn xử lý bất đồng trong mối quan hệ với đồng nghiệp.\nDale Carnegie bàn về giao tiếp và cách ứng xử trong các mối quan hệ cá nhân, công việc. Một nguyên tắc được giới thiệu là tránh chỉ trích, lên án và phàn nàn; nội dung gắn với việc hiểu người khác và xử lý bất đồng.\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ” — 71.760đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nNgười kể hồi tưởng những trò chơi và cách nhìn thế giới của cu Mùi, Hải cò, Tủn và Tí sún. Từ ký ức tuổi thơ, câu chuyện nối sang suy nghĩ của người lớn về cách thấu hiểu trẻ em.\n\nTổng tiền sách: 142.280đ. Chưa gồm phí giao hàng.",
+      "build": "v3"
+    },
+    {
+      "question": "So sánh hai cuốn đó giúp mình, mình cần nói chuyện với đồng nghiệp, chưa cần mua.",
+      "answer": "Bạn muốn so sánh những cuốn nào? Bạn gửi tên hai cuốn hoặc chọn từ danh sách vừa xem, để mình chỉ rõ khác biệt theo điều bạn đang cần.",
+      "build": "v3"
+    },
+    {
+      "question": "Mình muốn giá từ 300k đến 100k, còn các yêu cầu về giao tiếp giữ nguyên.",
+      "answer": "Khoảng giá này chưa hợp lý. Bạn cho mình mức thấp nhất và cao nhất muốn tìm nhé để mình lọc đúng hơn.",
+      "build": "v3"
+    },
+    {
+      "question": "À mình gõ nhầm: tối đa 150k, không có giá tối thiểu. Đổi sang Java cho người mới nhé.",
+      "answer": "Với hướng đọc Java bạn chọn, mình chọn trước 1 cuốn để bạn dễ cân nhắc. Cuốn này nằm trong mức 150.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Phạm Xuân Lâm (chủ biên) · Chưa có đánh giá\n  Sách được biên soạn dưới dạng giáo trình chuyên ngành, giúp bạn tiếp cận các khái niệm nền tảng trong lập trình Java. Đây là tài liệu phù hợp để bắt đầu quá trình nghiên cứu ngôn ngữ này.\nGiáo trình Lập trình Java do Phạm Xuân Lâm chủ biên, được xác nhận qua bìa và thư mục quốc gia. Có thể dùng làm tài liệu học lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java, các thư viện, framework hoặc các chủ đề cụ thể; không khẳng định sách dạy Spring Boot hay Java 21.",
+      "build": "v3"
+    },
+    {
+      "question": "Cuốn đó có bài tập thực hành kèm đáp án không? Đừng đoán nếu chưa có thông tin nhé.",
+      "answer": "Về “Giáo Trình Lập Trình Java”, mình có những thông tin này:\nVề bài tập thực hành: mình chưa có thông tin đã xác nhận cho cuốn này, nên chưa thể trả lời là có hay không.\nVề đáp án hoặc lời giải cho bài tập: mình chưa có thông tin đã xác nhận cho cuốn này, nên chưa thể trả lời là có hay không.",
+      "build": "v3"
+    },
+    {
+      "question": "Chuyển sang sách kỹ năng giao tiếp: chọn 2 cuốn, mỗi cuốn dưới 150k và tổng tiền sách dưới 200k.",
+      "answer": "Bạn muốn 2 cuốn; mình tìm được 2 cuốn đúng yêu cầu. Các cuốn đều nằm trong mức 150.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Đắc Nhân Tâm” — 70.520đ · Dale Carnegie · Chưa có đánh giá\n  Cuốn sách tập trung vào cách ứng xử trong mối quan hệ công việc, giúp bạn hiểu người khác và xử lý bất đồng khi nói chuyện với đồng nghiệp.\nDale Carnegie bàn về giao tiếp và cách ứng xử trong các mối quan hệ cá nhân, công việc. Một nguyên tắc được giới thiệu là tránh chỉ trích, lên án và phàn nàn; nội dung gắn với việc hiểu người khác và xử lý bất đồng.\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\n  Cuốn sách cung cấp nguyên tắc xử lý lo âu, hỗ trợ bạn giữ sự bình tĩnh và giảm bớt "
+    },
+    {
+      "question": "Đổi sang truyện trinh thám hoặc phiêu lưu dưới 100k nhé, chỉ cần 2 cuốn.",
+      "answer": "Bạn muốn 2 cuốn; mình tìm được 2 cuốn đúng yêu cầu. Các cuốn đều nằm trong mức 100.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nĐây là bộ truyện tranh thuộc thể loại trinh thám, tập trung vào việc phá các vụ án hóc búa thông qua khả năng suy luận của nhân vật chính.\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nCuốn sách kể về hành trình khám phá thế giới của nhân vật, thuộc thể loại truyện phiêu lưu qua thế giới loài vật.",
+      "build": "v4"
+    }
+  ],
+  "final": [
+    {
+      "question": "So sánh hai cuốn đó giúp mình, chưa cần mua.",
+      "answer": "| Tên sách | Tác giả | Giá | Rating |\n|---|---|---:|---:|\n| Thám Tử Lừng Danh Conan - Tập 1 | Gosho Aoyama | 23.750đ | Chưa có đánh giá |\n| Dế Mèn Phiêu Lưu Ký | Tô Hoài | 50.400đ | Chưa có đánh giá |\n\nĐể chọn theo mục tiêu đọc, đây là nội dung catalog của từng cuốn:\n• “Thám Tử Lừng Danh Conan - Tập 1”: Cuốn này dành cho người muốn khám phá thể loại trinh thám với nhịp độ tập trung vào các vụ án và khả năng suy luận logic của nhân vật.\n• “Dế Mèn Phiêu Lưu Ký”: Cuốn này thích hợp nếu bạn muốn theo dõi một câu chuyện dài mang tính giáo dục, tập trung vào những bài học về tình bạn và lòng dũng cảm qua lăng kính thế giới loài vật.\n\nThám Tử Lừng Danh Conan - Tập 1\nGosho Aoyama\n23,750đ\nGiảm 5%\nXem sách\nDế Mèn Phiêu Lưu Ký\nTô Hoài\n50,400đ\nGiảm 10%\nXem sách",
+      "build": "v5",
+      "outcome": "pass",
+      "verification": "Đọc phản hồi trực tiếp trên giao diện; đối chiếu yêu cầu và dữ kiện catalog."
+    },
+    {
+      "question": "Giá cuốn thứ hai là bao nhiêu? Mình chỉ hỏi giá, chưa mua.",
+      "answer": "Về “Dế Mèn Phiêu Lưu Ký”, mình có những thông tin này:\nGiá sau giảm: 50.400đ\n\nDế Mèn Phiêu Lưu Ký\nTô Hoài\n50,400đ\nGiảm 10%\nXem sách",
+      "build": "v5",
+      "outcome": "pass",
+      "verification": "Đọc phản hồi trực tiếp trên giao diện; đối chiếu yêu cầu và dữ kiện catalog."
+    },
+    {
+      "question": "Mình muốn giá từ 300k đến 100k, các yêu cầu khác giữ nguyên.",
+      "answer": "Khoảng giá này chưa hợp lý. Bạn cho mình mức thấp nhất và cao nhất muốn tìm nhé để mình lọc đúng hơn.",
+      "build": "v5",
+      "outcome": "pass",
+      "verification": "Đọc phản hồi trực tiếp trên giao diện; đối chiếu yêu cầu và dữ kiện catalog."
+    },
+    {
+      "question": "À mình gõ nhầm: tối đa 150k, không có giá tối thiểu. Đổi sang Java cho người mới nhé.",
+      "answer": "Với hướng đọc Java bạn chọn, mình chọn trước 1 cuốn để bạn dễ cân nhắc. Cuốn này nằm trong mức 150.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Phạm Xuân Lâm (chủ biên) · Chưa có đánh giá\nGiáo trình Lập trình Java do Phạm Xuân Lâm chủ biên, được xác nhận qua bìa và thư mục quốc gia. Có thể dùng làm tài liệu học lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java, các thư viện, framework hoặc các chủ đề cụ thể; không khẳng định sách dạy Spring Boot hay Java 21.\nMình chưa đủ thông tin để xác nhận độ khó cho người mới. Bạn nên xem mục lục hoặc đọc thử vài trang để biết cách trình bày có hợp với mình không nhé.\n\nGiáo Trình Lập Trình Java\nPhạm Xuân Lâm (chủ biên)\n91,800đ\nGiảm 10%\nXem sách",
+      "build": "v5",
+      "outcome": "pass",
+      "verification": "Đọc phản hồi trực tiếp trên giao diện; đối chiếu yêu cầu và dữ kiện catalog."
+    },
+    {
+      "question": "Cuốn đó có bài tập thực hành kèm đáp án không? Đừng đoán nếu chưa có thông tin nhé.",
+      "answer": "Về “Giáo Trình Lập Trình Java”, mình có những thông tin này:\nVề bài tập thực hành: mình chưa có thông tin đã xác nhận cho cuốn này, nên chưa thể trả lời là có hay không.\nVề đáp án hoặc lời giải cho bài tập: mình chưa có thông tin đã xác nhận cho cuốn này, nên chưa thể trả lời là có hay không.\n\nGiáo Trình Lập Trình Java\nPhạm Xuân Lâm (chủ biên)\n91,800đ\nGiảm 10%\nXem sách",
+      "build": "v5",
+      "outcome": "pass",
+      "verification": "Đọc phản hồi trực tiếp trên giao diện; đối chiếu yêu cầu và dữ kiện catalog."
+    },
+    {
+      "question": "Chuyển sang sách kỹ năng giao tiếp: chọn 2 cuốn, mỗi cuốn dưới 150k và tổng tiền sách dưới 200k.",
+      "answer": "Bạn muốn 2 cuốn; mình tìm được 1 cuốn đúng yêu cầu. Tổng cộng có 1 lựa chọn; hiện chưa đủ 2 cuốn khác nhau trong các điều kiện này. Mình giữ đúng yêu cầu trước; nếu bạn muốn mở rộng sang nội dung gần chủ đề, mình sẽ kiểm tra thêm và ghi rõ sự khác biệt. Cuốn này nằm trong mức 150.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Đắc Nhân Tâm” — 70.520đ · Dale Carnegie · Chưa có đánh giá\nSách tập trung vào các nguyên tắc cốt lõi trong giao tiếp và cách xử lý bất đồng, phù hợp trực tiếp với nhu cầu cải thiện ứng xử trong công việc và cuộc sống cá nhân của bạn.\nDale Carnegie bàn về giao tiếp và cách ứng xử trong các mối quan hệ cá nhân, công việc. Một nguyên tắc được giới thiệu là tránh chỉ trích, lên án và phàn nàn; nội dung gắn với việc hiểu người khác và xử lý bất đồng.\n\nTổng tiền sách: 70.520đ. Chưa gồm phí giao hàng.\n\nĐắc Nhân Tâm\nDale Carnegie\n70,520đ\nGiảm 18%\nXem sách\nThêm giỏ",
+      "build": "v5",
+      "outcome": "pass",
+      "verification": "Đọc phản hồi trực tiếp trên giao diện; đối chiếu yêu cầu và dữ kiện catalog."
+    }
+  ],
+  "environmentEvents": [
+    {
+      "event": "frontend_4200_stopped",
+      "result": "Khởi động lại riêng storefront; lượt mất kết nối không được tính là đạt; chạy lại các lượt xác nhận trên giao diện."
+    }
+  ],
+  "automated": {
+    "tests": 538,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "structuredPipelineTests": 42,
+    "newTests": 13,
+    "completedAt": "2026-10-10T00:59:10+07:00",
+    "providerCalls": "mock/local HTTP, không gọi Gemini"
+  }
+}

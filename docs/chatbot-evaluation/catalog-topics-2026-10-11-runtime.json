@@ -1,0 +1,92 @@
+[
+  {
+    "class": "ChatPreparedTopics$Selection.class",
+    "testedSha256": "67584debabfbc60f48ce212eac0f9d9a3c6588afb3f3e8494a4259f34aea3815",
+    "runtimeSha256": "67584debabfbc60f48ce212eac0f9d9a3c6588afb3f3e8494a4259f34aea3815"
+  },
+  {
+    "class": "ChatPreparedTopics.class",
+    "testedSha256": "56e7ee17322cb9a3cf936bc818b9dac8f41708bda03ca8aae90d2e6ace579ac9",
+    "runtimeSha256": "56e7ee17322cb9a3cf936bc818b9dac8f41708bda03ca8aae90d2e6ace579ac9"
+  },
+  {
+    "class": "ChatDialogueMemory$State.class",
+    "testedSha256": "6914e2b84db4744433467aca1886ae80734b264bf457ef726117cf518135c70b",
+    "runtimeSha256": "6914e2b84db4744433467aca1886ae80734b264bf457ef726117cf518135c70b"
+  },
+  {
+    "class": "ChatDialogueMemory.class",
+    "testedSha256": "88b476e5b4571c1768a205ea97366c3f672c7fd2c5c8dd28860c1bc15a6a6588",
+    "runtimeSha256": "88b476e5b4571c1768a205ea97366c3f672c7fd2c5c8dd28860c1bc15a6a6588"
+  },
+  {
+    "class": "ChatTurnContext.class",
+    "testedSha256": "152ac852f6f16862553a706a49a59c66267aa46c72ef37775c74d2948edf86a8",
+    "runtimeSha256": "152ac852f6f16862553a706a49a59c66267aa46c72ef37775c74d2948edf86a8"
+  },
+  {
+    "class": "ChatTopicClarification.class",
+    "testedSha256": "0afb4d1a292224f2c3180a9b59f040f7f46487dc56abcd3cea9157c6728272e0",
+    "runtimeSha256": "0afb4d1a292224f2c3180a9b59f040f7f46487dc56abcd3cea9157c6728272e0"
+  },
+  {
+    "class": "ChatTurnUnderstanding.class",
+    "testedSha256": "b63b74c3a51d33efb50ab3477f1986d0a65763e3fdf0e14c7b82f41a0b28d5aa",
+    "runtimeSha256": "b63b74c3a51d33efb50ab3477f1986d0a65763e3fdf0e14c7b82f41a0b28d5aa"
+  },
+  {
+    "class": "ChatBuiltinTools$1.class",
+    "testedSha256": "99a3b879c744f00a478549ea6e0ee1704a9799417fc2691b3a927bf949dfa346",
+    "runtimeSha256": "99a3b879c744f00a478549ea6e0ee1704a9799417fc2691b3a927bf949dfa346"
+  },
+  {
+    "class": "ChatBuiltinTools.class",
+    "testedSha256": "a890160f0bd9b542374c4d01380f816275bc50e9d4c1acbfe20d943d3997ff1c",
+    "runtimeSha256": "a890160f0bd9b542374c4d01380f816275bc50e9d4c1acbfe20d943d3997ff1c"
+  },
+  {
+    "class": "BookKnowledgeService$1.class",
+    "testedSha256": "09dacc3ddc1403f28dd6d98c07d96a286422ab219f1b3d1456befa688e7e5c2d",
+    "runtimeSha256": "09dacc3ddc1403f28dd6d98c07d96a286422ab219f1b3d1456befa688e7e5c2d"
+  },
+  {
+    "class": "BookKnowledgeService$ProfileInput.class",
+    "testedSha256": "a6e3c6504f32fe4c17b4ba960c59053e1d45864fbdccc1338f091d2427df3ce4",
+    "runtimeSha256": "a6e3c6504f32fe4c17b4ba960c59053e1d45864fbdccc1338f091d2427df3ce4"
+  },
+  {
+    "class": "BookKnowledgeService$RelationInput.class",
+    "testedSha256": "5cb4677e1154f8881d9a00ede2d21ea87e74eedcb1ce693a8dbc2240140e9370",
+    "runtimeSha256": "5cb4677e1154f8881d9a00ede2d21ea87e74eedcb1ce693a8dbc2240140e9370"
+  },
+  {
+    "class": "BookKnowledgeService$SemanticRecall.class",
+    "testedSha256": "5affac75b59ba18bb7fbf04b594b55937f81ffc7854a04f633287f56ef56af3f",
+    "runtimeSha256": "5affac75b59ba18bb7fbf04b594b55937f81ffc7854a04f633287f56ef56af3f"
+  },
+  {
+    "class": "BookKnowledgeService.class",
+    "testedSha256": "ad2b534920daa602d7deb27573638e399030b742c903efddae9535428acf17ac",
+    "runtimeSha256": "ad2b534920daa602d7deb27573638e399030b742c903efddae9535428acf17ac"
+  },
+  {
+    "class": "ChatRetrievalService$RetrievalTerms.class",
+    "testedSha256": "17803233b04b4f6a2723c8b935ceeb8dd6faf3139acd910a80439ac3169facdb",
+    "runtimeSha256": "17803233b04b4f6a2723c8b935ceeb8dd6faf3139acd910a80439ac3169facdb"
+  },
+  {
+    "class": "ChatRetrievalService$ScoredProduct.class",
+    "testedSha256": "ef08c4beeee03c0e8641abc7495c7dc8ce0af36b2aea367d7c6337bd15c3beb4",
+    "runtimeSha256": "ef08c4beeee03c0e8641abc7495c7dc8ce0af36b2aea367d7c6337bd15c3beb4"
+  },
+  {
+    "class": "ChatRetrievalService.class",
+    "testedSha256": "1b3501bbd164b88ceef355cf0723a091c0b24f25da171eb8427013f2c2f3230e",
+    "runtimeSha256": "1b3501bbd164b88ceef355cf0723a091c0b24f25da171eb8427013f2c2f3230e"
+  },
+  {
+    "class": "ChatStructuredPipeline.class",
+    "testedSha256": "3f42f5a3c287ed89b091fcd1e1d3c0abe0946a4dcfa0cec210235ea3f484791c",
+    "runtimeSha256": "3f42f5a3c287ed89b091fcd1e1d3c0abe0946a4dcfa0cec210235ea3f484791c"
+  }
+]

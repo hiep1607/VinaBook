@@ -1,0 +1,89 @@
+{
+  "scope": "Chỉ trường trạng thái/thời gian, không xuất logs SQL hoặc lịch sử khác",
+  "events": [
+    {
+      "tool": "searchProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": "false",
+      "elapsedMs": "23497"
+    },
+    {
+      "tool": "searchProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": "false",
+      "elapsedMs": "23574"
+    },
+    {
+      "tool": "searchProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": "false",
+      "elapsedMs": "20923"
+    },
+    {
+      "tool": "getProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": "false",
+      "elapsedMs": "1586"
+    },
+    {
+      "tool": "searchProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": "false",
+      "elapsedMs": "4732"
+    },
+    {
+      "tool": "getProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": "false",
+      "elapsedMs": "1285"
+    },
+    {
+      "tool": "getProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": "false",
+      "elapsedMs": "1504"
+    },
+    {
+      "tool": "getProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": "false",
+      "elapsedMs": "2409"
+    },
+    {
+      "tool": "searchProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": "false",
+      "elapsedMs": "6352"
+    },
+    {
+      "tool": "getProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": "false",
+      "elapsedMs": "1738"
+    },
+    {
+      "tool": "searchProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": "false",
+      "elapsedMs": "8618"
+    },
+    {
+      "tool": "getProducts",
+      "status": "COMPLETED",
+      "outcome": "matched",
+      "fallback": "false",
+      "elapsedMs": "3371"
+    }
+  ]
+}

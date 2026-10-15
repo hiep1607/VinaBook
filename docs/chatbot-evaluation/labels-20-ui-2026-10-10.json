@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-10",
+  "url": "http://localhost:4200/",
+  "scope": "8 requests through the real chatbot UI in one existing QA session: two before, six after (including one failed Java request and its single retry). Qualitative observation, not a controlled statistical comparison; full runtime catalog and Gemini remain enabled.",
+  "results": [
+    {
+      "phase": "before",
+      "question": "Đổi nhu cầu: tìm sách về unit testing, dưới 200k, chỉ sách đúng chủ đề.",
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Bạn muốn mình thử mở rộng sang sách có nội dung gần với hướng đọc này không? Mình sẽ giữ các điều kiện về giá, dạng sách và phần bạn muốn loại trừ, rồi nói rõ điểm khác biệt.",
+      "outcome": "baseline_no_match"
+    },
+    {
+      "phase": "before",
+      "question": "Đổi nhu cầu: tìm sách về cognitive bias, dưới 200k, chỉ sách đúng chủ đề.",
+      "answer": "Mình vẫn chưa tìm được cuốn đáp ứng yêu cầu đang giữ trong các điều kiện bạn chọn. Bạn muốn mình thử mở rộng sang sách có nội dung gần với hướng đọc này không? Mình sẽ giữ các điều kiện về giá, dạng sách và phần bạn muốn loại trừ, rồi nói rõ điểm khác biệt.",
+      "outcome": "baseline_no_match"
+    },
+    {
+      "phase": "after",
+      "question": "Đổi nhu cầu: tìm sách về unit testing, dưới 200k, chỉ sách đúng chủ đề.",
+      "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc. Cuốn này nằm trong mức 200.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Clean Code - Mã Sạch Và Cách Viết” — 151.200đ · Robert C. Martin · Chưa có đánh giá\nCuốn sách đề cập trực tiếp đến việc viết kiểm thử đơn vị, giúp bạn tham khảo cách đánh giá và chỉnh sửa mã nguồn để đạt chất lượng tốt hơn.\n\nClean Code - Mã Sạch Và Cách Viết\nRobert C. Martin\n151,200đ\nGiảm 10%\nXem sách",
+      "outcome": "passed"
+    },
+    {
+      "phase": "after",
+      "question": "Đổi nhu cầu: tìm sách về cognitive bias, dưới 200k, chỉ sách đúng chủ đề.",
+      "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc. Cuốn này nằm trong mức 200.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Tư Duy Nhanh Và Chậm” — 151.300đ · Daniel Kahneman · Chưa có đánh giá\nSách đi sâu vào việc giải thích các loại thiên kiến nhận thức và ảnh hưởng của chúng đến quá trình phán đoán, quyết định của con người.\nDaniel Kahneman trình bày hai hệ thống tư duy: một thiên về trực giác và cảm xúc, một thiên về suy xét. Sách bàn về thiên kiến nhận thức, sự quá tự tin và cách chúng tác động đến phán đoán, quyết định.\n\nTư Duy Nhanh Và Chậm\nDaniel Kahneman\n151,300đ\nGiảm 15%\nXem sách",
+      "outcome": "passed"
+    },
+    {
+      "phase": "after",
+      "question": "Đổi nhu cầu: mình cần 2 sách dạy kỹ năng giao tiếp với đồng nghiệp, mỗi cuốn dưới 150k và tổng dưới 200k.",
+      "expected": "Chỉ Đắc Nhân Tâm; nói rõ chưa đủ hai sách, giữ giới hạn giá và tổng tiền.",
+      "outcome": "passed",
+      "answer": "Bạn muốn 2 cuốn; mình tìm được 1 cuốn đúng yêu cầu. Tổng cộng có 1 lựa chọn; hiện chưa đủ 2 cuốn khác nhau trong các điều kiện này. Mình giữ đúng yêu cầu trước; nếu bạn muốn mở rộng sang nội dung gần chủ đề, mình sẽ kiểm tra thêm và ghi rõ sự khác biệt. Cuốn này nằm trong mức 150.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Đắc Nhân Tâm” — 70.520đ · Dale Carnegie · Chưa có đánh giá\nCuốn sách tập trung vào cách ứng xử trong môi trường làm việc và hỗ trợ giải quyết bất đồng, phù hợp trực tiếp với nhu cầu giao tiếp đồng nghiệp của bạn.\nDale Carnegie bàn về giao tiếp và cách ứng xử trong các mối quan hệ cá nhân, công việc. Một nguyên tắc được giới thiệu là tránh chỉ trích, lên án và phàn nàn; nội dung gắn với việc hiểu người khác và xử lý bất đồng.\n\nTổng tiền sách: 70.520đ. Chưa gồm phí giao hàng.\n\nĐắc Nhân Tâm\nDale Carnegie\n70,520đ\nGiảm 18%\nXem sách"
+    },
+    {
+      "phase": "after",
+      "question": "Đổi nhu cầu: mình tìm giáo trình lập trình Java dưới 150k cho người mới.",
+      "expected": "Giáo Trình Lập Trình Java; không tự khẳng định phù hợp người mới khi chưa có mức đọc.",
+      "outcome": "infrastructure_failure",
+      "note": "UI báo chưa xử lý được lượt này; backend ghi invalid_response và Gemini HTTP 503.",
+      "answer": "Mình chưa xử lý được lượt này nên vẫn giữ những yêu cầu bạn đã cho trước đó. Bạn thử gửi lại nhé để mình tiếp tục từ đúng ngữ cảnh.\n\nChế độ cơ bản"
+    },
+    {
+      "phase": "after",
+      "question": "Đổi nhu cầu: mình tìm giáo trình lập trình Java dưới 150k cho người mới.",
+      "expected": "Giáo Trình Lập Trình Java; nêu chưa xác nhận độ khó người mới.",
+      "outcome": "passed",
+      "note": "Một lần thử lại sau lỗi dịch vụ AI. Đúng sách/giá; đoạn lưu ý độ khó bị lặp ý.",
+      "answer": "Với hướng đọc Java bạn chọn, mình chọn trước 1 cuốn để bạn dễ cân nhắc. Cuốn này nằm trong mức 150.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Lập Trình Java” — 91.800đ · Phạm Xuân Lâm (chủ biên) · Chưa có đánh giá\nĐây là tài liệu được biên soạn chuyên ngành, dùng cho việc tham khảo học lập trình Java theo yêu cầu của bạn.\nGiáo trình Lập trình Java do Phạm Xuân Lâm chủ biên, được xác nhận qua bìa và thư mục quốc gia. Có thể dùng làm tài liệu học lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java, các thư viện, framework hoặc các chủ đề cụ thể; không khẳng định sách dạy Spring Boot hay Java 21.\nMình chưa đủ thông tin để xác nhận độ khó cho người mới. Bạn nên xem mục lục hoặc đọc thử vài trang để biết cách trình bày có hợp với mình không nhé.\n\nVì chưa có thông tin cụ thể về độ khó, bạn có thể kiểm tra mục lục để xem nội dung có phù hợp với trình độ hiện tại của mình không nhé.\n\nGiáo Trình Lập Trình Java\nPhạm Xuân Lâm (chủ biên)\n91,800đ\nGiảm 10%\nXem sách"
+    },
+    {
+      "phase": "after",
+      "question": "Cuốn này có bài tập kèm đáp án không?",
+      "expected": "Nhớ đúng giáo trình Java; cả bài tập và đáp án đều chưa xác nhận.",
+      "outcome": "passed",
+      "answer": "Về “Giáo Trình Lập Trình Java”, mình có những thông tin này:\nVề bài tập thực hành: mình chưa có thông tin đã xác nhận cho cuốn này, nên chưa thể trả lời là có hay không.\nVề đáp án hoặc lời giải cho bài tập: mình chưa có thông tin đã xác nhận cho cuốn này, nên chưa thể trả lời là có hay không.\n\nGiáo Trình Lập Trình Java\nPhạm Xuân Lâm (chủ biên)\n91,800đ\nGiảm 10%\nXem sách\nThêm giỏ"
+    }
+  ]
+}

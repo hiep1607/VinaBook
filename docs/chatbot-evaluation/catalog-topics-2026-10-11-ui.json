@@ -1,0 +1,72 @@
+{
+  "testedOn": "2026-10-11",
+  "surface": "http://localhost:4200/",
+  "turns": [
+    {
+      "id": "P01",
+      "question": "Nhu cầu mới: mình sắp đi làm lần đầu, muốn mua sách nhưng chưa biết chọn chủ đề nào. Mỗi cuốn dưới 100k.",
+      "answer": "Bạn có nhắc “mình sắp đi làm lần đầu, muốn mua sách nhưng chưa biết chọn chủ đề nào”. Mình gợi ý một chủ đề liên quan để bạn cân nhắc:\n• phát triển bản thân\nMình đã tìm sẵn ít nhất 2 cuốn phù hợp cho mỗi hướng trong các điều kiện bạn chọn. Bạn thấy hướng nào hợp lúc này, hay muốn một chủ đề khác?",
+      "assessment": "pass"
+    },
+    {
+      "id": "P02",
+      "question": "phát triển bản thân (bấm chủ đề)",
+      "answer": "Mình chọn trước 2 cuốn để bạn dễ cân nhắc. Các cuốn đều nằm trong mức 100.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Sức Mạnh Tiềm Thức” — 99.000đ · Joseph Murphy · Chưa có đánh giá\nJoseph Murphy trình bày quan điểm về tiềm thức và việc thay đổi cách suy nghĩ, cùng các kỹ thuật và tình huống thực tế liên quan đến mục tiêu, công việc và các mối quan hệ.\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nDale Carnegie trình bày những nguyên tắc xử lý lo âu trong đời sống và công việc. Các nội dung được giới thiệu gồm tìm giải pháp có thể thực hiện, đối diện lời chỉ trích và giảm bận tâm về công việc, tiền bạc.",
+      "uiElapsedMs": 1971,
+      "assessment": "pass"
+    },
+    {
+      "id": "P03",
+      "question": "Nhu cầu mới: mình muốn mua sách nhưng chưa có chủ đề hay mục đích cụ thể, giá không giới hạn. Bạn gợi ý vài hướng để mình chọn nhé.",
+      "answer": "Bạn có nhắc “mình muốn mua sách nhưng chưa có chủ đề hay mục đích cụ thể”. Mình chưa tìm được vài cuốn đủ phù hợp để gợi ý sẵn một chủ đề trong các điều kiện hiện tại. Bạn muốn đọc về điều gì hoặc giải quyết vấn đề nào? Biết rõ hơn hướng đọc sẽ giúp mình kiểm tra sách sát nhu cầu của bạn nhé.",
+      "assessment": "failed-before-fix",
+      "note": "Câu chưa có chủ đề cụ thể bị nhận nhầm là ngữ cảnh riêng; đã bổ sung kiểm thử và sửa."
+    },
+    {
+      "id": "P03-after",
+      "question": "Nhu cầu mới: mình muốn mua sách nhưng chưa có chủ đề hay mục đích cụ thể, giá không giới hạn. Bạn gợi ý vài hướng để mình chọn nhé.",
+      "answer": "Bạn đang muốn đọc về chủ đề gì hoặc đọc để làm gì? Nếu chưa có ý tưởng, bạn có thể cân nhắc vài hướng:\n• Truyện để thư giãn\n• Khám phá khoa học\n• Truyện phiêu lưu\nMình đã tìm sẵn ít nhất 2 cuốn phù hợp cho mỗi hướng trong các điều kiện bạn chọn. Bạn thấy hướng nào hợp lúc này, hay muốn một chủ đề khác?",
+      "assessment": "context-pass-before-label-fix"
+    },
+    {
+      "id": "P04",
+      "question": "Hướng thứ hai nhé",
+      "answer": "Mình chọn trước 3 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “10 Vạn Câu Hỏi Vì Sao” — 75.650đ · Nhiều Tác Giả · Chưa có đánh giá\nTên chung cho sách hỏi đáp kiến thức khoa học và đời sống, giúp người đọc khám phá các câu hỏi vì sao. Có nhiều bộ, tập và nhóm tuổi mang tên tương tự; dữ liệu cửa hàng chưa xác định bộ hoặc tập cụ thể. Vì vậy chưa thể cam kết các phần về động vật, vũ trụ, cơ thể hay độ tuổi của một ấn bản cụ thể.\n\n• “Hành Trình Về Phương Đông” — 99.750đ · Baird T. Spalding · Chưa có đánh giá\nBản Nguyên Phong phóng tác kể hành trình tìm hiểu tư tưởng và đời sống tinh thần phương Đông, qua các cuộc gặp đạo sĩ và những trao đổi về khoa học, tâm linh, các hiện tượng huyền bí.\n\n• “Kinh Tế Học Hài Hước (Freakonomics)” — 124.960đ · Steven D. Levitt & Stephen J. Dubner · Chưa có đánh giá\nLevitt và Dubner đặt những câu hỏi khác thường về gian lận, tội phạm, nuôi dạy con và thể thao để khám phá động cơ hành vi. Kinh tế học được dùng để tìm hiểu cách con người đạt điều họ muốn.",
+      "uiElapsedMs": 2736,
+      "assessment": "failed-before-label-fix",
+      "note": "Chọn nhanh có hoạt động, nhưng sách chỉ nhắc khoa học còn lọt vào; đã sửa xác minh bằng nhãn chủ đề/thể loại chính."
+    },
+    {
+      "id": "P05-final",
+      "question": "Nhu cầu mới: mình muốn mua sách nhưng chưa có chủ đề hay mục đích cụ thể, giá không giới hạn. Bạn gợi ý vài hướng để mình chọn nhé.",
+      "answer": "Bạn đang muốn đọc về chủ đề gì hoặc đọc để làm gì? Nếu chưa có ý tưởng, bạn có thể cân nhắc vài hướng:\n• Truyện để thư giãn\n• Truyện phiêu lưu\n• Truyện trinh thám\nMình đã tìm sẵn ít nhất 2 cuốn phù hợp cho mỗi hướng trong các điều kiện bạn chọn. Bạn thấy hướng nào hợp lúc này, hay muốn một chủ đề khác?",
+      "assessment": "pass"
+    },
+    {
+      "id": "P06-final",
+      "question": "Hướng thứ ba nhé",
+      "answer": "Với hướng đọc trinh thám bạn chọn, mình chọn trước 2 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Sherlock Holmes Toàn Tập - Tập 1” — 193.500đ · Arthur Conan Doyle · Chưa có đánh giá\nCác câu chuyện trinh thám về Sherlock Holmes và bác sĩ Watson. Việc điều tra các vụ án gắn với khả năng quan sát và suy luận của Holmes.\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.",
+      "uiElapsedMs": 1671,
+      "assessment": "pass"
+    },
+    {
+      "id": "P07-final",
+      "question": "Nhu cầu mới: mình muốn mua sách nhưng chưa biết chủ đề. Mỗi cuốn dưới 1.000đ.",
+      "answer": "Mình chưa tìm được vài cuốn đủ phù hợp để gợi ý sẵn một chủ đề trong các điều kiện hiện tại. Bạn muốn đọc về điều gì hoặc giải quyết vấn đề nào? Biết rõ hơn hướng đọc sẽ giúp mình kiểm tra sách sát nhu cầu của bạn nhé.",
+      "assessment": "pass"
+    },
+    {
+      "id": "P08-final",
+      "question": "Nhu cầu mới: mình sắp đi làm lần đầu, muốn mua sách nhưng chưa biết chọn chủ đề nào. Mỗi cuốn dưới 100k.",
+      "answer": "Bạn có nhắc “mình sắp đi làm lần đầu”. Mình gợi ý một chủ đề liên quan để bạn cân nhắc:\n• phát triển bản thân\nMình đã tìm sẵn ít nhất 2 cuốn phù hợp cho mỗi hướng trong các điều kiện bạn chọn. Bạn thấy hướng nào hợp lúc này, hay muốn một chủ đề khác?",
+      "assessment": "pass"
+    },
+    {
+      "id": "P09-final",
+      "question": "phát triển bản thân (bấm chủ đề)",
+      "answer": "Mình chọn trước 2 cuốn để bạn dễ cân nhắc. Các cuốn đều nằm trong mức 100.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Sức Mạnh Tiềm Thức” — 99.000đ · Joseph Murphy · Chưa có đánh giá\nJoseph Murphy trình bày quan điểm về tiềm thức và việc thay đổi cách suy nghĩ, cùng các kỹ thuật và tình huống thực tế liên quan đến mục tiêu, công việc và các mối quan hệ.\n\n• “Quẳng Gánh Lo Đi Và Vui Sống” — 90.160đ · Dale Carnegie · Chưa có đánh giá\nDale Carnegie trình bày những nguyên tắc xử lý lo âu trong đời sống và công việc. Các nội dung được giới thiệu gồm tìm giải pháp có thể thực hiện, đối diện lời chỉ trích và giảm bận tâm về công việc, tiền bạc.",
+      "uiElapsedMs": 1849,
+      "assessment": "pass"
+    }
+  ]
+}

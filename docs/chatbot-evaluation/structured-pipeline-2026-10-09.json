@@ -1,0 +1,105 @@
+{
+  "provider": "gemini",
+  "model": "gemini-3.1-flash-lite",
+  "architecture": "structured-v1",
+  "note": "Các quan sát trong quá trình triển khai, gồm lỗi tái hiện trước khi sửa; xem biên bản cho kết quả cuối.",
+  "observations": [
+    {
+      "question": "Mình muốn đổi sang truyện phiêu lưu hay trinh thám dưới 100k, gợi ý giúp mình nhé",
+      "answer": "Mình chưa xử lý được lượt này nên vẫn giữ những yêu cầu bạn đã cho trước đó. Bạn thử gửi lại nhé để mình tiếp tục từ đúng ngữ cảnh. Chế độ cơ bản Câu trả lời hữu ích?👍👎",
+      "status": "initial_failure"
+    },
+    {
+      "question": "Mình tìm truyện trinh thám hoặc phiêu lưu dưới 100k",
+      "answer": "Mình chưa xử lý được lượt này nên vẫn giữ những yêu cầu bạn đã cho trước đó. Bạn thử gửi lại nhé để mình tiếp tục từ đúng ngữ cảnh."
+    },
+    {
+      "question": "Đổi sang truyện trinh thám hoặc phiêu lưu dưới 100k nhé",
+      "answer": "Mình chọn trước 2 cuốn để bạn dễ cân nhắc. Các cuốn đều nằm trong mức 100.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nSách đáp ứng sở thích trinh thám với nội dung về các vụ án hóc búa và quá trình nhân vật thực hiện suy luận.\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nSách phù hợp với nhu cầu truyện phiêu lưu, kể về hành trình khám phá thế giới loài vật và những thử thách trên đường đi."
+    },
+    {
+      "question": "Mình thích truyện chữ hơn",
+      "answer": "Mình chọn trước 2 cuốn để bạn dễ cân nhắc. Các cuốn đều nằm trong mức 100.000đ mỗi cuốn bạn chọn. Các lựa chọn này đáp ứng điều kiện bắt buộc, nhưng hiện chưa có cuốn đáp ứng phần ưu tiên “truyện chữ”.\n\n**Sách đúng yêu cầu:**\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nĐây là tác phẩm truyện dài, phù hợp với sở thích đọc truyện chữ của bạn. Nội dung xoay quanh hành trình phiêu lưu đầy thử thách của nhân vật.\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nCuốn này thuộc thể loại truyện tranh, chưa sát với ưu tiên truyện chữ của bạn dù đúng thể loại trinh thám bạn đang tìm."
+    },
+    {
+      "question": "Chỉ trinh thám thôi",
+      "answer": "Mình đã cập nhật lại danh sách, chỉ tập trung vào thể loại trinh thám theo mong muốn mới nhất của bạn.\n\nVới hướng đọc trinh thám bạn chọn, mình chọn trước 1 cuốn để bạn dễ cân nhắc. Cuốn này nằm trong mức 100.000đ mỗi cuốn bạn chọn. Các lựa chọn này đáp ứng điều kiện bắt buộc, nhưng hiện chưa có cuốn đáp ứng phần ưu tiên “truyện chữ”.\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nCuốn này tập trung vào các vụ án và quá trình suy luận đúng với sở thích trinh thám của bạn, dù hiện tại chỉ có phiên bản truyện tranh chứ chưa phải truyện chữ."
+    },
+    {
+      "question": "Giá không quan trọng nữa",
+      "answer": "Với hướng đọc trinh thám bạn chọn, mình chọn trước 2 cuốn để bạn dễ cân nhắc: Các lựa chọn này đáp ứng điều kiện bắt buộc, nhưng hiện chưa có cuốn đáp ứng phần ưu tiên “truyện chữ”.\n\n**Sách đúng yêu cầu:**\n\n• “Sherlock Holmes Toàn Tập - Tập 1” — 193.500đ · Arthur Conan Doyle · Chưa có đánh giá\nSách tập trung vào các câu chuyện trinh thám thuần túy, phù hợp với ưu tiên truyện chữ của bạn qua hình thức tiểu thuyết.\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nĐây là truyện tranh trinh thám, hiện chưa đáp ứng ưu tiên truyện chữ mà bạn mong muốn."
+    },
+    {
+      "question": "Tiếp",
+      "answer": "Những cuốn đáp ứng yêu cầu hiện tại đã được giới thiệu hết. Mình vẫn giữ chủ đề và các điều kiện bạn đã chọn, nên chưa có cuốn mới để đưa thêm mà không lặp lại."
+    },
+    {
+      "question": "?",
+      "answer": "Lượt tìm vừa rồi chưa có sách phù hợp nên chưa có cuốn để chọn. Bạn muốn đổi chủ đề hoặc nới điều kiện tìm kiếm nào? Mình sẽ giữ những điều bạn vẫn ưu tiên để tìm sát hơn."
+    },
+    {
+      "question": "Giữ trinh thám, giới thiệu lại nhé",
+      "answer": "Những cuốn đáp ứng yêu cầu hiện tại đã được giới thiệu hết. Mình vẫn giữ chủ đề và các điều kiện bạn đã chọn, nên chưa có cuốn mới để đưa thêm mà không lặp lại."
+    },
+    {
+      "question": "Cho mình xem thông tin cuốn thứ hai",
+      "answer": "Lượt tìm vừa rồi chưa có sách phù hợp nên chưa có cuốn để chọn. Bạn muốn đổi chủ đề hoặc nới điều kiện tìm kiếm nào? Mình sẽ giữ những điều bạn vẫn ưu tiên để tìm sát hơn."
+    },
+    {
+      "question": "Mình muốn xem lại các cuốn trinh thám đã giới thiệu, không tìm sách mới",
+      "answer": "Với hướng đọc trinh thám bạn chọn, mình chọn trước 2 cuốn để bạn dễ cân nhắc: Các lựa chọn này đáp ứng điều kiện bắt buộc, nhưng hiện chưa có cuốn đáp ứng phần ưu tiên “truyện chữ”.\n\n**Sách đúng yêu cầu:**\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.\n\n• “Sherlock Holmes Toàn Tập - Tập 1” — 193.500đ · Arthur Conan Doyle · Chưa có đánh giá\nSách tập trung vào các câu chuyện trinh thám với nhân vật chính dùng suy luận phá án, đây là lựa chọn phù hợp nếu bạn ưu tiên định dạng truyện chữ."
+    },
+    {
+      "question": "Mình muốn 2 cuốn phiêu lưu hoặc trinh thám, tổng dưới 100k, thích truyện chữ hơn",
+      "answer": "Bạn muốn 2 cuốn; mình tìm được 2 cuốn đúng yêu cầu. Có 1 cuốn đáp ứng phần ưu tiên “truyện chữ”; các cuốn còn lại là lựa chọn thay thế trong cùng điều kiện.\n\n**Sách đúng yêu cầu:**\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nĐây là tác phẩm truyện dài, phù hợp với ưu tiên đọc truyện chữ của bạn trong hành trình phiêu lưu khám phá.\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nSách đi sâu vào các vụ án và quá trình suy luận, tuy nhiên định dạng là truyện tranh nên chưa sát hoàn toàn với sở thích truyện chữ của bạn.\n\nTổng tiền sách: 74.150đ. Chưa gồm phí giao hàng."
+    },
+    {
+      "question": "Cho mình xem thông tin cuốn thứ hai",
+      "answer": "Về “Thám Tử Lừng Danh Conan - Tập 1”, mình có những thông tin này:\nTác giả: Gosho Aoyama\nGiá sau giảm: 23.750đ\nĐang bán, còn 250 bản theo tồn kho hiện tại.\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại."
+    },
+    {
+      "question": "Mua cuốn này",
+      "answer": "Mình đã chọn “Thám Tử Lừng Danh Conan - Tập 1” với số lượng 1 cuốn. Bạn bấm Tiếp tục đặt hàng để chọn thông tin giao hàng và xem tổng tiền; mình sẽ chỉ tạo đơn sau khi bạn xem tổng tiền và xác nhận."
+    },
+    {
+      "question": "Phí giao hàng là bao nhiêu?",
+      "answer": "Phí giao hàng 20.000đ, miễn phí khi tiền sách từ 300.000đ. Thời gian giao dự kiến 2–4 ngày làm việc."
+    },
+    {
+      "question": "Xem lại các sách theo yêu cầu đang giữ nhé",
+      "answer": "Bạn muốn 2 cuốn; mình tìm được 2 cuốn đúng yêu cầu. Có 1 cuốn đáp ứng phần ưu tiên “truyện chữ”; các cuốn còn lại là lựa chọn thay thế trong cùng điều kiện.\n\n**Sách đúng yêu cầu:**\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nĐây là cuốn truyện dài, đáp ứng mong muốn ưu tiên truyện chữ của bạn về chủ đề phiêu lưu.\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nĐây là lựa chọn về chủ đề trinh thám, tuy nhiên định dạng truyện tranh nên chưa khớp hoàn toàn với sở thích truyện chữ.\n\nTổng tiền sách: 74.150đ. Chưa gồm phí giao hàng."
+    },
+    {
+      "question": "Tiếp",
+      "answer": "Những cuốn đáp ứng yêu cầu hiện tại đã được giới thiệu hết. Mình vẫn giữ chủ đề và các điều kiện bạn đã chọn, nên chưa có cuốn mới để đưa thêm mà không lặp lại."
+    },
+    {
+      "question": "?",
+      "answer": "Ý mình là những cuốn phù hợp trong điều kiện đang giữ đã được giới thiệu trước đó. Khi bạn muốn xem thêm, mình loại các cuốn ấy để tránh lặp lại; hiện chưa còn lựa chọn mới đúng yêu cầu.\n\nMình vẫn đang giữ yêu cầu bạn nêu: “phiêu lưu hoặc trinh thám”. Nếu bạn muốn mở rộng phạm vi, mình có thể tìm theo một chủ đề liên quan do bạn chọn."
+    },
+    {
+      "question": "Giá cuốn thứ hai là bao nhiêu?",
+      "answer": "Về “Thám Tử Lừng Danh Conan - Tập 1”, mình có những thông tin này:\nGiá sau giảm: 23.750đ"
+    },
+    {
+      "question": "Mình muốn tìm sách làm quà",
+      "answer": "Mình chưa xử lý được lượt này nên vẫn giữ những yêu cầu bạn đã cho trước đó. Bạn thử gửi lại nhé để mình tiếp tục từ đúng ngữ cảnh."
+    },
+    {
+      "question": "Mình muốn tìm sách làm quà",
+      "answer": "Mình có thể giúp bạn chọn sách nhé. Bạn đang muốn đọc về chủ đề gì hoặc đọc để làm gì? Biết hướng đọc sẽ giúp mình tìm những cuốn có nội dung sát nhu cầu của bạn hơn."
+    },
+    {
+      "question": "Mình đang chán, có cuốn nào thú vị để đọc giải trí không?",
+      "answer": "Mình chưa xử lý được lượt này nên vẫn giữ những yêu cầu bạn đã cho trước đó. Bạn thử gửi lại nhé để mình tiếp tục từ đúng ngữ cảnh."
+    },
+    {
+      "question": "Mình đang chán, có cuốn nào thú vị để đọc giải trí không?",
+      "answer": "Mình chọn trước 3 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “AI - Sức Mạnh Của Trí Tuệ Nhân Tạo” — 125.400đ · Nguyễn Văn Lượng · Chưa có đánh giá\nGiới thiệu các khái niệm trí tuệ nhân tạo và học máy, cùng ứng dụng trong công việc, học tập, sáng tạo và kinh doanh. Sách của Nguyễn Văn Lượng hướng đến người mới tìm hiểu, bằng cách trình bày phổ thông. Đây không phải giáo trình lập trình AI chuyên sâu.\n\n• “Giáo Trình Nhập Môn Trí Tuệ Nhân Tạo” — 103.040đ · Từ Minh Phương · Chưa có đánh giá\nGiáo trình do Từ Minh Phương biên soạn, giới thiệu trí tuệ nhân tạo và các hướng giải quyết vấn đề bằng tìm kiếm, biểu diễn tri thức và logic, suy diễn xác suất, học máy. Phù hợp nhu cầu học nền tảng chuyên ngành. Chưa có căn cứ khẳng định sách hướng dẫn các công cụ AI tạo sinh hoặc lập trình ứng dụng ChatGPT.\n\n• “Tư Duy Nhanh Và Chậm” — 151.300đ · Daniel Kahneman · Chưa có đánh giá\n  Sách này phân tích về cơ chế tư duy của con người qua nhiều tình huống, mang lại góc nhìn thú vị về tâm lý học giúp bạn đổi gió khi cảm thấy chán.\nDaniel Kahneman trình bày hai hệ thống tư duy: một thiên về trực giác và cảm xúc, một thiên về suy xét. Sách bàn về thiên kiến nhận thức, sự quá tự tin và cách chúng tác động đến phán đoán, quyết định.\n\nVới mục tiêu bạn nêu, mình nghiêng về “Tư Duy Nhanh Và Chậm”.\n\nBạn muốn ưu tiên tìm hiểu sâu về tư duy hay những ứng dụng thực tế của công nghệ để mình tư vấn kỹ hơn?"
+    },
+    {
+      "question": "Mình đang chán, có cuốn nào thú vị để đọc giải trí không?",
+      "answer": "Để giúp bạn giải tỏa cảm giác chán, mình đã chọn ra ba tác phẩm với những trải nghiệm khác nhau để bạn xem xét:\n\nBạn đang muốn tìm một cuốn đọc cho đỡ chán; mình chọn trước 3 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nPhù hợp để giải trí qua hành trình phiêu lưu đầy màu sắc của nhân vật chính trong thế giới loài vật.\n\n• “Sherlock Holmes Toàn Tập - Tập 1” — 193.500đ · Arthur Conan Doyle · Chưa có đánh giá\nMang lại sự thú vị cho bạn qua các tình huống điều tra và suy luận logic của nhân vật chính.\n\n• “Bố Già (The Godfather)” — 133.400đ · Mario Puzo · 5.0/5\nTiểu thuyết về gia đình Corleone trong thế giới ngầm mafia Mỹ. Câu chuyện đan xen quyền lực, bạo lực, lòng trung thành, quan hệ gia đình và sự phản kháng.\n\nBạn có thể cân nhắc chọn theo sở thích cá nhân, ví dụ như thích phiêu lưu, trinh thám hay các câu chuyện về xã hội."
+    }
+  ]
+}

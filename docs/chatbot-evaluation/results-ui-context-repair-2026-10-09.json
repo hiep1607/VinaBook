@@ -1,0 +1,79 @@
+[
+  {
+    "case": "resume-existing-after-restart",
+    "prompt": "tiếp",
+    "answer": "Mình chọn thêm 2 cuốn đúng chủ đề, đều khác những cuốn đã giới thiệu:\n\n**Sách đúng yêu cầu:**\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nTruyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận.\n\n• “Không Gia Đình” — 125.400đ · Hector Malot · Chưa có đánh giá\nRémi lưu lạc khắp nước Pháp cùng gánh hát rong và học cách sống qua gian khổ. Câu chuyện gắn cuộc phiêu lưu với tình cảm gia đình, lao động, tự trọng và lòng biết ơn.Dế Mèn Phiêu Lưu KýTô Hoài 50,400đ Giảm 10%Xem sáchThêm giỏKhông Gia ĐìnhHector Malot 125,400đ Giảm 5%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+    "status": "PASS",
+    "note": "Tiếp tục phiên lỗi gốc sau restart; thêm Dế Mèn và Không Gia Đình, không hỏi lại."
+  },
+  {
+    "case": "boredom-suggestion",
+    "prompt": "t đang buồn chán bạn có cuốn nào thú vị ko",
+    "answer": "Bạn đang muốn tìm một cuốn đọc cho đỡ chán; mình chọn trước 3 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Nhà Giả Kim” — 63.200đ · Paulo Coelho · Chưa có đánh giá\nHành trình của Santiago qua sa mạc Sahara đến các kim tự tháp được Paulo Coelho dùng như một ẩn dụ về sự thay đổi của người trải qua hành trình.\n\n• “Harry Potter Và Hòn Đá Phù Thủy” — 118.800đ · J.K. Rowling · Chưa có đánh giá\nHarry nhận các lá thư bí ẩn và phát hiện mình là phù thủy, được nhận vào trường Hogwarts. Đây là khởi đầu những cuộc phiêu lưu của Harry trong thế giới phép thuật.\n\n• “Muôn Kiếp Nhân Sinh” — 154.560đ · Nguyên Phong · 5.0/5\nTác phẩm của Nguyên Phong kể và suy ngẫm về những kiếp sống, nhân quả và các lựa chọn của con người qua góc nhìn tâm linh. Nên đọc như câu chuyện và quan điểm để chiêm nghiệm; không xem các nội dung luân hồi như kết luận khoa học hoặc bảo đảm chữa lành. Chưa xác định chính xác tập và ấn bản cửa hàng, nên không gán cốt truyện riêng của tập 1, 2 hoặc 3.Nhà Giả KimPaulo Coelho 63,200đ Giảm 20%Xem sáchThêm giỏHarry Potter Và Hòn Đá Phù ThủyJ.K. Rowling 118,800đ Giảm 12%Xem sáchThêm giỏMuôn Kiếp Nhân SinhNguyên Phong 154,560đ Giảm 8%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+    "status": "REPAIRED",
+    "note": "Phát hiện Muôn Kiếp Nhân Sinh lọt vào; sửa bằng chứng dạng truyện và kiểm tra lại."
+  },
+  {
+    "case": "casual-or",
+    "prompt": "có cuốn nào về phiêu lưu hay trinh thám gì đó",
+    "answer": "Mình chọn trước 3 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Harry Potter Và Hòn Đá Phù Thủy” — 118.800đ · J.K. Rowling · Chưa có đánh giá\nHarry nhận các lá thư bí ẩn và phát hiện mình là phù thủy, được nhận vào trường Hogwarts. Đây là khởi đầu những cuộc phiêu lưu của Harry trong thế giới phép thuật.\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nTruyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận.Harry Potter Và Hòn Đá Phù ThủyJ.K. Rowling 118,800đ Giảm 12%Xem sáchThêm giỏThám Tử Lừng Danh Conan - Tập 1Gosho Aoyama 23,750đ Giảm 5%Xem sáchThêm giỏDế Mèn Phiêu Lưu KýTô Hoài 50,400đ Giảm 10%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+    "status": "PASS",
+    "note": "Hiểu hay=OR; Harry Potter, Conan và Dế Mèn đều có nội dung phù hợp."
+  },
+  {
+    "case": "question-follows-answer",
+    "prompt": "?",
+    "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Harry Potter Và Hòn Đá Phù Thủy”\nCuốn này nằm trong hướng đọc bạn đang tìm. Harry nhận các lá thư bí ẩn và phát hiện mình là phù thủy, được nhận vào trường Hogwarts. Đây là khởi đầu những cuộc phiêu lưu của Harry trong thế giới phép thuật.\n\n• “Thám Tử Lừng Danh Conan - Tập 1”\nCuốn này nằm trong hướng đọc bạn đang tìm. Thám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.\n\n• “Dế Mèn Phiêu Lưu Ký”\nCuốn này nằm trong hướng đọc bạn đang tìm. Truyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận.Harry Potter Và Hòn Đá Phù ThủyJ.K. Rowling 118,800đ Giảm 12%Xem sáchThám Tử Lừng Danh Conan - Tập 1Gosho Aoyama 23,750đ Giảm 5%Xem sáchDế Mèn Phiêu Lưu KýTô Hoài 50,400đ Giảm 10%Xem sáchCâu trả lời hữu ích?👍👎",
+    "status": "PASS",
+    "note": "Giải thích danh sách vừa gợi ý; không hỏi lại nhu cầu."
+  },
+  {
+    "case": "more-after-explanation",
+    "prompt": "tiếp",
+    "answer": "Mình đã kiểm tra lại các sách đang bán và loại những cuốn đã giới thiệu. Hiện chưa có cuốn nào khác đúng chủ đề trong các điều kiện bạn chọn. Bạn muốn mình thử mở rộng sang sách có nội dung gần với hướng đọc này không? Mình sẽ giữ các điều kiện về giá, dạng sách và phần bạn muốn loại trừ, rồi nói rõ điểm khác biệt.Câu trả lời hữu ích?👍👎",
+    "status": "PASS",
+    "note": "Đã hết sách chưa giới thiệu thì báo rõ, không lặp lại."
+  },
+  {
+    "case": "boredom-suggestion-final",
+    "prompt": "t đang buồn chán bạn có cuốn nào thú vị ko",
+    "answer": "Bạn đang muốn tìm một cuốn đọc cho đỡ chán; mình chọn trước 3 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Harry Potter Và Hòn Đá Phù Thủy” — 118.800đ · J.K. Rowling · Chưa có đánh giá\nHarry nhận các lá thư bí ẩn và phát hiện mình là phù thủy, được nhận vào trường Hogwarts. Đây là khởi đầu những cuộc phiêu lưu của Harry trong thế giới phép thuật.\n\n• “Doraemon - Tập 1” — 19.800đ · Fujiko F. Fujio · Chưa có đánh giá\nTruyện tranh về Doraemon, Nobita và nhóm bạn với những bảo bối từ tương lai. Các câu chuyện gắn tiếng cười, thế giới tưởng tượng và tình bạn.\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.Harry Potter Và Hòn Đá Phù ThủyJ.K. Rowling 118,800đ Giảm 12%Xem sáchThêm giỏDoraemon - Tập 1Fujiko F. Fujio 19,800đ Giảm 10%Xem sáchThêm giỏThám Tử Lừng Danh Conan - Tập 1Gosho Aoyama 23,750đ Giảm 5%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+    "status": "PASS",
+    "note": "Tác phẩm kể chuyện; không còn Muôn Kiếp Nhân Sinh."
+  },
+  {
+    "case": "or-budget-final",
+    "prompt": "có cuốn nào về phiêu lưu hay trinh thám dưới 100k không",
+    "answer": "Mình chọn trước 2 cuốn để bạn dễ cân nhắc. Các cuốn đều nằm trong mức 100.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nTruyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận.\n\n• “Thám Tử Lừng Danh Conan - Tập 1” — 23.750đ · Gosho Aoyama · Chưa có đánh giá\nThám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.Dế Mèn Phiêu Lưu KýTô Hoài 50,400đ Giảm 10%Xem sáchThêm giỏThám Tử Lừng Danh Conan - Tập 1Gosho Aoyama 23,750đ Giảm 5%Xem sáchThêm giỏCâu trả lời hữu ích?👍👎",
+    "status": "PASS",
+    "note": "Conan 23.750đ và Dế Mèn 50.400đ; không đưa sách vượt 100k."
+  },
+  {
+    "case": "short-more-budget-final",
+    "prompt": "thêm nữa",
+    "answer": "Mình đã kiểm tra lại các sách đang bán và loại những cuốn đã giới thiệu. Hiện chưa có cuốn nào khác đúng chủ đề trong các điều kiện bạn chọn. Bạn muốn mình thử mở rộng sang sách có nội dung gần với hướng đọc này không? Mình sẽ giữ các điều kiện về giá, dạng sách và phần bạn muốn loại trừ, rồi nói rõ điểm khác biệt.Câu trả lời hữu ích?👍👎",
+    "status": "PASS",
+    "note": "Báo hết lựa chọn mới, không lặp sách hoặc tự nới giá."
+  },
+  {
+    "case": "question-after-empty-final",
+    "prompt": "?",
+    "answer": "Mình làm rõ thêm vì sao chưa đề xuất được sách: phần nội dung đã được xác nhận chưa đủ để chứng minh một lựa chọn phù hợp. Việc có sách trong kho chưa cho biết nó có đáp ứng mục tiêu đọc của bạn hay không.\n\nMình vẫn đang giữ yêu cầu bạn nêu: “co cuon nao ve phieu luu hoac trinh tham duoi 100k khong. sach cho minh”. Bạn có thể chọn một khía cạnh muốn ưu tiên hoặc một chủ đề rộng hơn; mình sẽ kiểm tra lại từ nội dung thực tế và nói rõ mức độ liên quan.Câu trả lời hữu ích?👍👎",
+    "status": "REPAIRED",
+    "note": "Phát hiện giải thích nhầm thiếu dữ liệu khi đã xem hết; sửa và thử lại ở bản cuối."
+  },
+  {
+    "case": "resume-budget-after-final-restart",
+    "prompt": "thêm nữa",
+    "answer": "Với yêu cầu đang giữ, mình vẫn chưa tìm được cuốn mới đúng chủ đề trong các điều kiện bạn chọn. Bạn muốn mình thử mở rộng sang sách có nội dung gần với hướng đọc này không? Mình sẽ giữ các điều kiện về giá, dạng sách và phần bạn muốn loại trừ, rồi nói rõ điểm khác biệt.Câu trả lời hữu ích?👍👎",
+    "status": "PASS",
+    "note": "Khôi phục ngữ cảnh từ lịch sử; không hỏi lại chủ đề, không tự nới giá."
+  },
+  {
+    "case": "exhausted-books-explanation-final",
+    "prompt": "?",
+    "answer": "Ý mình là những cuốn phù hợp trong điều kiện đang giữ đã được giới thiệu trước đó. Khi bạn muốn xem thêm, mình loại các cuốn ấy để tránh lặp lại; hiện chưa còn lựa chọn mới đúng yêu cầu.\n\nMình vẫn đang giữ yêu cầu bạn nêu: “có cuốn nào về phiêu lưu hay trinh thám dưới 100k không. Sách cho mình”. Bạn có thể chọn một khía cạnh muốn ưu tiên hoặc một chủ đề rộng hơn; mình sẽ kiểm tra lại từ nội dung thực tế và nói rõ mức độ liên quan.Câu trả lời hữu ích?👍👎",
+    "status": "PASS",
+    "note": "Nói đúng đã hết cuốn mới; nhắc lại yêu cầu có dấu và giữ mức dưới 100k."
+  }
+]

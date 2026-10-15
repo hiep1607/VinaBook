@@ -1,0 +1,30 @@
+{
+  "catalogBooksProtected": 56,
+  "labelledBooks": 20,
+  "changedIds": [
+    7,
+    9,
+    13,
+    16,
+    17,
+    19,
+    22,
+    26,
+    27,
+    29,
+    32,
+    37,
+    38,
+    43,
+    48,
+    50,
+    51,
+    52,
+    55,
+    57
+  ],
+  "addedLabels": 154,
+  "outsidePilotUnchanged": 36,
+  "identityPriceStockDiscountSalesAndApprovedFactsUnchanged": true,
+  "runtimeSearchDocumentsMatchAB": true
+}

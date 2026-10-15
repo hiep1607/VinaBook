@@ -1,0 +1,12 @@
+[ {
+  "exactIds" : [ 13 ],
+  "maxPrice" : 99999,
+  "query" : "truyện về thế giới loài vật"
+}, {
+  "exactIds" : [ 29 ],
+  "maxPrice" : 99999,
+  "query" : "truyện tuổi thơ có cả nỗi đau và hoàn cảnh nghèo khó"
+}, {
+  "query" : "truyện về trẻ em và môi trường học",
+  "exactIds" : [ 38 ]
+} ]

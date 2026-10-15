@@ -1,0 +1,92 @@
+{
+  "date": "2026-10-10",
+  "environment": "localhost:4200; Gemini thật; khách chưa đăng nhập",
+  "scope": "11 ca chọn sách/hỏi chi tiết; 12 lượt gửi gồm câu Bluetooth trước và sau sửa. Pass chấm theo tiêu chí ghi riêng, không đánh giá mù hoặc khẳng định mọi văn phong đều tốt.",
+  "turns": [
+    {
+      "id": "M01",
+      "question": "Đổi chủ đề hoàn toàn: muốn đọc truyện trào phúng phê phán xã hội Việt Nam.",
+      "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Số Đỏ” — 72.000đ · Vũ Trọng Phụng · Chưa có đánh giá\nCuốn này tập trung vào thủ pháp trào phúng và châm biếm để phơi bày các mặt trái của xã hội, hoàn toàn đúng với nhu cầu tìm truyện trào phúng phê phán mà bạn đang quan tâm.\nTác phẩm trào phúng của Vũ Trọng Phụng, dựng những chân dung hí họa để phơi bày sự lố bịch trong xã hội. Sự hài hước đi cùng phê phán và châm biếm, phù hợp người muốn đọc văn học Việt Nam có giọng sắc sảo; không nên mặc định là truyện vui nhẹ nhàng cho mọi lứa tuổi.\n\nSố Đỏ\nVũ Trọng Phụng\n72,000đ\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Chỉ Số Đỏ; đã bỏ Chí Phèo và Tắt Đèn khỏi gợi ý chính."
+    },
+    {
+      "id": "M02",
+      "question": "Chỉ lấy cuốn dưới 80k nhé, vẫn đúng hướng đó.",
+      "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc. Cuốn này nằm trong mức 80.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Số Đỏ” — 72.000đ · Vũ Trọng Phụng · Chưa có đánh giá\nNội dung cuốn sách tập trung vào thủ pháp trào phúng để phê phán các mặt trái của xã hội, hoàn toàn đúng với chủ đề bạn đang tìm kiếm.\nTác phẩm trào phúng của Vũ Trọng Phụng, dựng những chân dung hí họa để phơi bày sự lố bịch trong xã hội. Sự hài hước đi cùng phê phán và châm biếm, phù hợp người muốn đọc văn học Việt Nam có giọng sắc sảo; không nên mặc định là truyện vui nhẹ nhàng cho mọi lứa tuổi.\n\nSố Đỏ\nVũ Trọng Phụng\n72,000đ\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Giữ Số Đỏ và trào phúng khi đổi ngân sách dưới 80k, không thêm sách lệch."
+    },
+    {
+      "id": "M03",
+      "question": "Đổi chủ đề hoàn toàn: muốn đọc folklore Việt Nam để tìm hiểu văn hóa dân gian.",
+      "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Kho Tàng Truyện Cổ Tích Việt Nam” — 121.500đ · Nguyễn Đổng Chi · Chưa có đánh giá\nCuốn sách này là công trình sưu tầm và biên soạn bài bản, mang lại giá trị cao để bạn nghiên cứu về truyện kể và các nét văn hóa dân gian Việt Nam đúng như nhu cầu.\nCông trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ.\n\nDo tên tại cửa hàng chưa xác định cụ thể tập nào hay trọn bộ, bạn có thể cân nhắc xem đây là nguồn tư liệu cơ bản để bắt đầu tìm hiểu văn hóa dân gian.\n\nKho Tàng Truyện Cổ Tích Việt Nam\nNguyễn Đổng Chi\n121,500đ\nGiảm 10%\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Chỉ Kho Tàng Truyện Cổ Tích Việt Nam, bỏ Việt Nam Sử Lược/Truyện Kiều. Chấm riêng việc chọn sách.",
+      "observation": "Lời diễn giải vẫn có lời khen giá trị cao và gợi ý cơ bản để bắt đầu; chưa coi đây là bằng chứng độ khó đã xác nhận."
+    },
+    {
+      "id": "M04",
+      "question": "Cuốn đó là bản minh họa cho bé 5 tuổi hả?",
+      "answer": "Về “Kho Tàng Truyện Cổ Tích Việt Nam”:\nVề bản minh họa: mình chưa có thông tin đã xác nhận cho đúng ấn bản đang bán, nên chưa thể khẳng định sách có tranh minh họa.\nVề độ tuổi 5 tuổi bạn hỏi: mình chưa có thông tin đã xác nhận về độ tuổi đọc của đúng ấn bản này, nên chưa thể nói chắc là phù hợp.\n\nKho Tàng Truyện Cổ Tích Việt Nam\nNguyễn Đổng Chi\n121,500đ\nGiảm 10%\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Nhớ đúng cuốn, trả riêng minh họa và độ tuổi 5 đều chưa xác nhận, không lặp toàn mô tả."
+    },
+    {
+      "id": "M05",
+      "question": "Đổi chủ đề hoàn toàn: mình muốn tìm sách về computer networking.",
+      "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Mạng Máy Tính Và Các Hệ Thống Mở” — 95.000đ · Nguyễn Thúc Hải · Chưa có đánh giá\nTác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN. Đây là tài liệu về nền tảng mạng; nguồn mô tả còn đề cập công nghệ của giai đoạn trước. Chưa xác nhận bản cửa hàng có cập nhật các chuẩn mạng mới.\n\nDo sách có đề cập đến một số công nghệ cũ, bạn có thể cân nhắc xem đây là nguồn tài liệu bổ trợ về lý thuyết nền tảng trong lúc tìm kiếm thêm các ấn bản cập nhật mới hơn.\n\nMạng Máy Tính Và Các Hệ Thống Mở\nNguyễn Thúc Hải\n95,000đ\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Đúng Mạng Máy Tính Và Các Hệ Thống Mở, nói rõ chưa xác nhận chuẩn mới."
+    },
+    {
+      "id": "M06",
+      "question": "Cuốn đó có dạy TCP/IP, Wi-Fi 6 và 5G không?",
+      "answer": "Về “Mạng Máy Tính Và Các Hệ Thống Mở”:\nVề “TCP/IP”: thông tin đã xác nhận có đề cập: “Tác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN”. Phần này xác nhận chủ đề được nhắc tới, chưa cho biết mức độ hướng dẫn chi tiết.\nVề “Wi-Fi 6”: mình chưa có thông tin đã xác nhận cuốn này có đề cập đến nội dung đó, nên chưa thể khẳng định là có hay không.\nVề “5G”: mình chưa có thông tin đã xác nhận cuốn này có đề cập đến nội dung đó, nên chưa thể khẳng định là có hay không.\n\nMạng Máy Tính Và Các Hệ Thống Mở\nNguyễn Thúc Hải\n95,000đ\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Nhớ sách mạng, xác nhận có nhắc TCP/IP; Wi-Fi 6 và 5G đều chưa biết, không suy ra là không có."
+    },
+    {
+      "id": "M07-before",
+      "question": "Thế còn Bluetooth 5.3 thì sao?",
+      "answer": "Về “Mạng Máy Tính Và Các Hệ Thống Mở”, mình có những thông tin này:\nTác giả: Nguyễn Thúc Hải\nGiá sau giảm: 95.000đ\nĐang bán, còn 110 bản theo tồn kho hiện tại.\nTác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN. Đây là tài liệu về nền tảng mạng; nguồn mô tả còn đề cập công nghệ của giai đoạn trước. Chưa xác nhận bản cửa hàng có cập nhật các chuẩn mạng mới.\n\nMạng Máy Tính Và Các Hệ Thống Mở\nNguyễn Thúc Hải\n95,000đ\nXem sách\nThêm giỏ",
+      "outcome": "fail",
+      "check": "Tái hiện câu hỏi rút gọn: đúng cuốn nhưng trả metadata/mô tả, không trả Bluetooth 5.3."
+    },
+    {
+      "id": "M07-after",
+      "question": "Thế còn Bluetooth 5.3 thì sao?",
+      "answer": "Về “Mạng Máy Tính Và Các Hệ Thống Mở”:\nVề “Bluetooth 5.3”: mình chưa có thông tin đã xác nhận cuốn này có đề cập đến nội dung đó, nên chưa thể khẳng định là có hay không.\n\nMạng Máy Tính Và Các Hệ Thống Mở\nNguyễn Thúc Hải\n95,000đ\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Thử lại nguyên câu sau sửa: giữ đúng sách mạng, trả thẳng Bluetooth 5.3 chưa xác nhận, không liệt kê metadata."
+    },
+    {
+      "id": "M08",
+      "question": "Đổi chủ đề hoàn toàn: tìm giáo trình cơ sở dữ liệu.",
+      "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Cơ Sở Dữ Liệu” — 90.160đ · Phan Tấn Quốc & Nguyễn Thị Uyên Nhi · Chưa có đánh giá\nĐây là tài liệu được biên soạn chuyên biệt cho môn học cơ sở dữ liệu, phù hợp với đối tượng người học trong các ngành công nghệ thông tin và hệ thống thông tin.\nGiáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học cơ sở dữ liệu. Chưa có mục lục đúng bản để xác nhận chương SQL, hệ quản trị sử dụng hoặc nội dung chi tiết.\n\nGiáo Trình Cơ Sở Dữ Liệu\nPhan Tấn Quốc & Nguyễn Thị Uyên Nhi\n90,160đ\nGiảm 8%\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Chỉ Giáo Trình Cơ Sở Dữ Liệu, giữ giới hạn chưa xác nhận chương SQL/hệ quản trị."
+    },
+    {
+      "id": "M09",
+      "question": "Cuốn đó có hướng dẫn SQL và MySQL không?",
+      "answer": "Về “Giáo Trình Cơ Sở Dữ Liệu”:\nVề “SQL”: mình chưa có thông tin đã xác nhận cuốn này có đề cập đến nội dung đó, nên chưa thể khẳng định là có hay không.\nVề “MySQL”: mình chưa có thông tin đã xác nhận cuốn này có đề cập đến nội dung đó, nên chưa thể khẳng định là có hay không.\n\nGiáo Trình Cơ Sở Dữ Liệu\nPhan Tấn Quốc & Nguyễn Thị Uyên Nhi\n90,160đ\nGiảm 8%\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Trả riêng SQL/MySQL chưa xác nhận, không lấy tên môn học hoặc câu ghi chưa xác nhận làm căn cứ khẳng định có."
+    },
+    {
+      "id": "M10",
+      "question": "Đổi chủ đề hoàn toàn: tìm giáo trình về lạm phát, thất nghiệp và tỷ giá.",
+      "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Giáo Trình Kinh Tế Vĩ Mô” — 94.050đ · Lê Thanh Tùng · Chưa có đánh giá\nSách bao quát trực tiếp các chủ đề bạn quan tâm gồm lạm phát, thất nghiệp và tỷ giá trong phạm vi kinh tế vĩ mô.\nGiáo trình Kinh tế vĩ mô của Lê Thanh Tùng bàn về nền kinh tế ở cấp tổng thể, như sản lượng, lạm phát, thất nghiệp, tỷ giá và chính sách kinh tế. Phù hợp học về các chỉ tiêu và cơ chế của nền kinh tế. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp.\n\nGiáo Trình Kinh Tế Vĩ Mô\nLê Thanh Tùng\n94,050đ\nGiảm 5%\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Thử lại nguyên câu U05 trước đây: lần này trả đúng Giáo Trình Kinh Tế Vĩ Mô, không lỗi xử lý. Chưa kết luận nguyên nhân lỗi cũ đã hết."
+    },
+    {
+      "id": "M11",
+      "question": "Sách có bài tập kèm đáp án không?",
+      "answer": "Về “Giáo Trình Kinh Tế Vĩ Mô”, mình có những thông tin này:\nVề bài tập thực hành: mình chưa có thông tin đã xác nhận cho cuốn này, nên chưa thể trả lời là có hay không.\nVề đáp án hoặc lời giải cho bài tập: mình chưa có thông tin đã xác nhận cho cuốn này, nên chưa thể trả lời là có hay không.\n\nGiáo Trình Kinh Tế Vĩ Mô\nLê Thanh Tùng\n94,050đ\nGiảm 5%\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Nhớ đúng giáo trình vĩ mô, bài tập và đáp án đều chưa xác nhận, không kéo sách mạng/dữ liệu vào câu trả lời."
+    }
+  ]
+}

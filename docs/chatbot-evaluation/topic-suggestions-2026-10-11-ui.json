@@ -1,0 +1,125 @@
+{
+  "testedOn": "2026-10-11",
+  "surface": "VinaBook localhost:4200 chatbot, Gemini enabled",
+  "turns": [
+    {
+      "id": "T01",
+      "question": "Đổi sang chọn sách cho mình nhé. Mình sắp đi làm lần đầu, muốn mua sách dưới 100k mà chưa biết chủ đề nào phù hợp.",
+      "answer": "Bạn có nhắc “Mình sắp đi làm lần đầu, muốn mua sách dưới 100k mà chưa biết chủ đề nào phù hợp.”. Mình gợi ý vài chủ đề liên quan để bạn cân nhắc:\n• kỹ năng giao tiếp công sở\n• quản lý thời gian\n• phát triển bản thân\nBạn thấy hướng nào hợp lúc này, hay muốn một chủ đề khác? Biết hướng đọc sẽ giúp mình tìm sách sát nhu cầu hơn.\n\nCâu trả lời hữu ích?\n👍\n👎\nkỹ năng giao tiếp công sở\nquản lý thời gian\nphát triển bản thân",
+      "assessment": "pass",
+      "note": "Hoàn cảnh đi làm -> 3 hướng, chưa có sách."
+    },
+    {
+      "id": "T02",
+      "question": "[click chip] kỹ năng giao tiếp công sở",
+      "answer": "Với hướng đọc giao tiếp bạn chọn, mình chọn trước 1 cuốn để bạn dễ cân nhắc. Cuốn này nằm trong mức 100.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Đắc Nhân Tâm” — 70.520đ · Dale Carnegie · Chưa có đánh giá\nDale Carnegie bàn về giao tiếp và cách ứng xử trong các mối quan hệ cá nhân, công việc. Một nguyên tắc được giới thiệu là tránh chỉ trích, lên án và phàn nàn; nội dung gắn với việc hiểu người khác và xử lý bất đồng.\n\nĐắc Nhân Tâm\nDale Carnegie\n70,520đ\nGiảm 18%\nXem sách\nThêm giỏ\nCâu trả lời hữu ích?\n👍\n👎",
+      "assessment": "pass",
+      "note": "Bấm chủ đề -> sách giao tiếp, giữ dưới 100k."
+    },
+    {
+      "id": "T03",
+      "question": "Bỏ toàn bộ yêu cầu và ngữ cảnh chọn sách cũ. Bây giờ mình muốn tìm sách nhưng chưa có chủ đề hay mục đích gì cả.",
+      "answer": "Bạn có nhắc “Bây giờ mình muốn tìm sách nhưng chưa có chủ đề hay mục đích gì cả.”. Mình gợi ý vài chủ đề liên quan để bạn cân nhắc:\n• văn học kinh điển\n• tâm lý học\n• kỹ năng quản lý tài chính\nBạn thấy hướng nào hợp lúc này, hay muốn một chủ đề khác? Biết hướng đọc sẽ giúp mình tìm sách sát nhu cầu hơn.\n\nCâu trả lời hữu ích?\n👍\n👎\nvăn học kinh điển\ntâm lý học\nkỹ năng quản lý tài chính",
+      "assessment": "failed_before_fix",
+      "note": "Câu mua sách chung chung bị gọi là ngữ cảnh cụ thể."
+    },
+    {
+      "id": "T04",
+      "question": "Mình chuyển sang mua sách tặng em trai. Em ấy sắp vào đại học nhưng chưa nói thích đọc chủ đề gì.",
+      "answer": "Người nhận quà thích chủ đề gì hoặc muốn đọc để làm gì? Nếu chưa rõ, đây là vài hướng để bạn tham khảo:\n• Truyện để thư giãn\n• Kỹ năng sống\n• Khám phá khoa học\nBạn thấy hướng nào hợp lúc này, hay muốn một chủ đề khác? Biết hướng đọc sẽ giúp mình tìm sách sát nhu cầu hơn.\n\nCâu trả lời hữu ích?\n👍\n👎\nTruyện để thư giãn\nKỹ năng sống\nKhám phá khoa học",
+      "assessment": "partial_before_fix",
+      "note": "Có hỏi và gợi ý chung nhưng chưa dùng hoàn cảnh đại học."
+    },
+    {
+      "id": "T03-after",
+      "question": "Bỏ toàn bộ yêu cầu và ngữ cảnh chọn sách cũ. Bây giờ mình muốn tìm sách nhưng chưa có chủ đề hay mục đích gì cả.",
+      "answer": "Bạn đang muốn đọc về chủ đề gì hoặc đọc để làm gì? Nếu chưa có ý tưởng, bạn có thể cân nhắc vài hướng:\n• Truyện để thư giãn\n• Kỹ năng giao tiếp\n• Khám phá khoa học\nBạn thấy hướng nào hợp lúc này, hay muốn một chủ đề khác? Biết hướng đọc sẽ giúp mình tìm sách sát nhu cầu hơn.\n\nCâu trả lời hữu ích?\n👍\n👎\nTruyện để thư giãn\nKỹ năng giao tiếp\nKhám phá khoa học",
+      "assessment": "pass",
+      "note": "Không có căn cứ -> nói rõ là hướng tham khảo chung."
+    },
+    {
+      "id": "T04-after",
+      "question": "Mình chuyển sang mua sách tặng em trai. Em ấy sắp vào đại học nhưng chưa nói thích đọc chủ đề gì.",
+      "answer": "Bạn có nhắc “Em ấy sắp vào đại học nhưng chưa nói thích đọc chủ đề gì.”. Mình gợi ý vài chủ đề liên quan để bạn cân nhắc:\n• kỹ năng học tập\n• quản lý thời gian\n• tài chính cá nhân\nBạn thấy hướng nào hợp lúc này, hay muốn một chủ đề khác? Biết hướng đọc sẽ giúp mình tìm sách sát nhu cầu hơn.\n\nCâu trả lời hữu ích?\n👍\n👎\nkỹ năng học tập\nquản lý thời gian\ntài chính cá nhân",
+      "assessment": "pass",
+      "note": "Gợi ý học tập/thời gian/tài chính từ hoàn cảnh người nhận."
+    },
+    {
+      "id": "T05-before",
+      "question": "Hướng thứ hai nhé",
+      "answer": "Mình chọn trước 3 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “The Pragmatic Programmer - Lập Trình Viên Thực Dụng” — 154.000đ · Andrew Hunt & David Thomas · Chưa có đánh giá\nBàn về trách nhiệm nghề nghiệp và cách xây dựng phần mềm linh hoạt, dễ bảo trì. Các chủ đề gồm tránh lặp kiến thức, dùng công cụ, hiểu yêu cầu, học liên tục và kiểm thử.\n\n• “Đắc Nhân Tâm” — 70.520đ · Dale Carnegie · Chưa có đánh giá\nDale Carnegie bàn về giao tiếp và cách ứng xử trong các mối quan hệ cá nhân, công việc. Một nguyên tắc được giới thiệu là tránh chỉ trích, lên án và phàn nàn; nội dung gắn với việc hiểu người khác và xử lý bất đồng.\n\n• “Kinh Tế Học Hài Hước (Freakonomics)” — 124.960đ · Steven D. Levitt & Stephen J. Dubner · Chưa có đánh giá\nLevitt và Dubner đặt những câu hỏi khác thường về gian lận, tội phạm, nuôi dạy con và thể thao để khám phá động cơ hành vi. Kinh tế học được dùng để tìm hiểu cách con người đạt điều họ muốn.\n\nThe Pragmatic Programmer - Lập Trình Viên Thực Dụng\nAndrew Hunt & David Thomas\n154,000đ\nGiảm 12%\nXem sách\nThêm giỏ\nĐắc Nhân Tâm\nDale Carnegie\n70,520đ\nGiảm 18%\nXem sách\nThêm giỏ\nKinh Tế Học Hài Hước (Freakonomics)\nSteven D. Levitt & Stephen J. Dubner\n124,960đ\nGiảm 12%\nXem sách\nThêm giỏ\nCâu trả lời hữu ích?\n👍\n👎",
+      "assessment": "failed_before_fix",
+      "note": "Chọn hướng thứ hai nhưng có sách ngoài chủ đề."
+    },
+    {
+      "id": "T06-control",
+      "question": "Mình chọn chủ đề quản lý thời gian nhé",
+      "answer": "Mình chọn trước 3 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “The Pragmatic Programmer - Lập Trình Viên Thực Dụng” — 154.000đ · Andrew Hunt & David Thomas · Chưa có đánh giá\nSách hướng dẫn thói quen làm việc và cách hiểu yêu cầu, giúp ích cho việc định hình phương pháp học tập khoa học hơn.\n\n• “Đắc Nhân Tâm” — 70.520đ · Dale Carnegie · Chưa có đánh giá\nSách tập trung vào kỹ năng ứng xử và giao tiếp, hỗ trợ việc làm quen với môi trường đại học và xây dựng mối quan hệ.\n\n• “Kinh Tế Học Hài Hước (Freakonomics)” — 124.960đ · Steven D. Levitt & Stephen J. Dubner · Chưa có đánh giá\nSách cung cấp phương pháp phân tích động cơ hành vi, giúp người đọc rèn luyện tư duy phản biện khi quan sát các vấn đề đời sống.\n\nNếu em trai bạn cần ưu tiên rèn luyện thói quen làm việc hay kỹ năng ứng xử, bạn cân nhắc các đầu sách trên nhé. Bạn có muốn mình tìm thêm các cuốn tập trung vào kỹ năng học tập không?\n\nThe Pragmatic Programmer - Lập Trình Viên Thực Dụng\nAndrew Hunt & David Thomas\n154,000đ\nGiảm 12%\nXem sách\nThêm giỏ\nĐắc Nhân Tâm\nDale Carnegie\n70,520đ\nGiảm 18%\nXem sách\nThêm giỏ\nKinh Tế Học Hài Hước (Freakonomics)\nSteven D. Levitt & Stephen J. Dubner\n124,960đ\nGiảm 12%\nXem sách\nThêm giỏ\nCâu trả lời hữu ích?\n👍\n👎",
+      "assessment": "failed_before_fix",
+      "note": "Gõ đủ chủ đề vẫn trả sách quá rộng."
+    },
+    {
+      "id": "T07-final",
+      "question": "Mình chuyển sang mua sách tặng em trai. Em ấy sắp vào đại học nhưng chưa nói thích đọc chủ đề gì.",
+      "answer": "Bạn có nhắc “Mình chuyển sang mua sách tặng em trai. Em ấy sắp vào đại học nhưng chưa nói thích đọc chủ đề gì.”. Mình gợi ý vài chủ đề liên quan để bạn cân nhắc:\n• kỹ năng học tập\n• quản lý thời gian\n• tài chính cá nhân\nBạn thấy hướng nào hợp lúc này, hay muốn một chủ đề khác? Biết hướng đọc sẽ giúp mình tìm sách sát nhu cầu hơn.\n\nCâu trả lời hữu ích?\n👍\n👎\nkỹ năng học tập\nquản lý thời gian\ntài chính cá nhân",
+      "assessment": "pass",
+      "note": "Hoàn cảnh quà tặng cho ra lựa chọn mềm."
+    },
+    {
+      "id": "T05-after",
+      "question": "Hướng thứ hai nhé",
+      "answer": "Mình chọn trước 3 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “The Pragmatic Programmer - Lập Trình Viên Thực Dụng” — 154.000đ · Andrew Hunt & David Thomas · Chưa có đánh giá\nBàn về trách nhiệm nghề nghiệp và cách xây dựng phần mềm linh hoạt, dễ bảo trì. Các chủ đề gồm tránh lặp kiến thức, dùng công cụ, hiểu yêu cầu, học liên tục và kiểm thử.\n\n• “Đắc Nhân Tâm” — 70.520đ · Dale Carnegie · Chưa có đánh giá\nDale Carnegie bàn về giao tiếp và cách ứng xử trong các mối quan hệ cá nhân, công việc. Một nguyên tắc được giới thiệu là tránh chỉ trích, lên án và phàn nàn; nội dung gắn với việc hiểu người khác và xử lý bất đồng.\n\n• “Kinh Tế Học Hài Hước (Freakonomics)” — 124.960đ · Steven D. Levitt & Stephen J. Dubner · Chưa có đánh giá\nNội dung giúp người đọc quan sát và phân tích hành vi con người từ góc độ kinh tế, rèn luyện tư duy phản biện cho các vấn đề thực tế trong đời sống.\n\nThe Pragmatic Programmer - Lập Trình Viên Thực Dụng\nAndrew Hunt & David Thomas\n154,000đ\nGiảm 12%\nXem sách\nThêm giỏ\nĐắc Nhân Tâm\nDale Carnegie\n70,520đ\nGiảm 18%\nXem sách\nThêm giỏ\nKinh Tế Học Hài Hước (Freakonomics)\nSteven D. Levitt & Stephen J. Dubner\n124,960đ\nGiảm 12%\nXem sách\nThêm giỏ\nCâu trả lời hữu ích?\n👍\n👎",
+      "assessment": "failed_before_precision_fix",
+      "note": "Đã nối đúng số thứ tự; bộ tìm sách vẫn khớp từ rời rạc."
+    },
+    {
+      "id": "T08-final",
+      "question": "Mình chuyển sang mua sách tặng em trai. Em ấy sắp vào đại học nhưng chưa nói thích đọc chủ đề gì.",
+      "answer": "Mình chưa tìm được sách đang bán đáp ứng yêu cầu này trong các điều kiện bạn chọn. Bạn muốn mình thử mở rộng sang sách có nội dung gần với hướng đọc này không? Mình sẽ giữ các điều kiện về giá, dạng sách và phần bạn muốn loại trừ, rồi nói rõ điểm khác biệt.\n\nCâu trả lời hữu ích?\n👍\n👎",
+      "assessment": "pass",
+      "note": "Chủ đề đã chọn tiếp tục áp dụng; không trả sách lệch sau siết bộ lọc."
+    },
+    {
+      "id": "T09-final",
+      "question": "Bắt đầu nhu cầu mới, bỏ toàn bộ chủ đề đã chọn. Mình muốn mua sách cho em gái sắp vào đại học nhưng chưa chọn hướng đọc nào.",
+      "answer": "Bạn có nhắc “Mình muốn mua sách cho em gái sắp vào đại học nhưng chưa chọn hướng đọc nào.”. Mình gợi ý vài chủ đề liên quan để bạn cân nhắc:\n• kỹ năng học tập\n• quản lý thời gian\n• tài chính cá nhân\nBạn thấy hướng nào hợp lúc này, hay muốn một chủ đề khác? Biết hướng đọc sẽ giúp mình tìm sách sát nhu cầu hơn.\n\nCâu trả lời hữu ích?\n👍\n👎\nkỹ năng học tập\nquản lý thời gian\ntài chính cá nhân",
+      "assessment": "pass",
+      "note": "Nhu cầu mới xóa hướng cũ và gợi ý theo người nhận mới."
+    },
+    {
+      "id": "T05-final",
+      "question": "Hướng thứ hai nhé",
+      "answer": "Mình vẫn chưa tìm được cuốn đáp ứng yêu cầu đang giữ trong các điều kiện bạn chọn. Bạn muốn mình thử mở rộng sang sách có nội dung gần với hướng đọc này không? Mình sẽ giữ các điều kiện về giá, dạng sách và phần bạn muốn loại trừ, rồi nói rõ điểm khác biệt.\n\nCâu trả lời hữu ích?\n👍\n👎",
+      "assessment": "pass",
+      "note": "Chọn hướng 2 không còn trả sách lệch; báo chưa có cuốn khớp."
+    },
+    {
+      "id": "T10-before-source-id",
+      "question": "Bỏ chủ đề vừa tìm nhé. Mình vẫn muốn mua quà cho em ấy nhưng chưa chọn được chủ đề khác; bạn gợi ý vài hướng dựa trên hoàn cảnh mình đã kể đi.",
+      "answer": "Người nhận quà thích chủ đề gì hoặc muốn đọc để làm gì? Nếu chưa rõ, đây là vài hướng để bạn tham khảo:\n• Truyện để thư giãn\n• Kỹ năng sống\n• Khám phá khoa học\nBạn thấy hướng nào hợp lúc này, hay muốn một chủ đề khác? Biết hướng đọc sẽ giúp mình tìm sách sát nhu cầu hơn.\n\nCâu trả lời hữu ích?\n👍\n👎\nTruyện để thư giãn\nKỹ năng sống\nKhám phá khoa học",
+      "assessment": "partial_before_fix",
+      "note": "Trích ngữ cảnh lịch sử chưa khớp -> an toàn dùng gợi ý chung."
+    },
+    {
+      "id": "T10-after-source-id",
+      "question": "Bỏ chủ đề vừa tìm nhé. Mình vẫn muốn mua quà cho em ấy nhưng chưa chọn được chủ đề khác; bạn gợi ý vài hướng dựa trên hoàn cảnh mình đã kể đi.",
+      "answer": "Bạn có nhắc “Mình vẫn muốn mua quà cho em ấy nhưng chưa chọn được chủ đề khác; bạn gợi ý vài hướng dựa trên hoàn cảnh mình đã kể đi.”. Mình gợi ý vài chủ đề liên quan để bạn cân nhắc:\n• Truyện thư giãn\n• Kỹ năng sống\n• Khám phá khoa học\nBạn thấy hướng nào hợp lúc này, hay muốn một chủ đề khác? Biết hướng đọc sẽ giúp mình tìm sách sát nhu cầu hơn.\n\nCâu trả lời hữu ích?\n👍\n👎\nTruyện thư giãn\nKỹ năng sống\nKhám phá khoa học",
+      "assessment": "failed_before_source_filter",
+      "note": "Lấy câu hỏi tiếp làm căn cứ, vẫn chưa dùng đúng hoàn cảnh."
+    },
+    {
+      "id": "T11-final",
+      "question": "Nhu cầu mới: mình muốn mua sách tặng em họ sắp vào đại học, chưa biết chọn chủ đề nào.",
+      "answer": "Bạn có nhắc “mình muốn mua sách tặng em họ sắp vào đại học, chưa biết chọn chủ đề nào”. Mình gợi ý vài chủ đề liên quan để bạn cân nhắc:\n• kỹ năng học tập\n• quản lý thời gian\n• tài chính cá nhân\nBạn thấy hướng nào hợp lúc này, hay muốn một chủ đề khác? Biết hướng đọc sẽ giúp mình tìm sách sát nhu cầu hơn.\n\nCâu trả lời hữu ích?\n👍\n👎\nkỹ năng học tập\nquản lý thời gian\ntài chính cá nhân",
+      "assessment": "pass",
+      "note": "Bản cuối dùng nguồn cụ thể cho hoàn cảnh hiện tại, chưa đưa sách."
+    },
+    {
+      "id": "T12-final-history",
+      "question": "Gợi ý vài hướng dựa trên hoàn cảnh mình đã kể đi",
+      "answer": "Bạn có nhắc “mình muốn mua sách tặng em họ sắp vào đại học”. Mình gợi ý vài chủ đề liên quan để bạn cân nhắc:\n• kỹ năng học tập\n• quản lý thời gian\n• tài chính cá nhân\nBạn thấy hướng nào hợp lúc này, hay muốn một chủ đề khác? Biết hướng đọc sẽ giúp mình tìm sách sát nhu cầu hơn.\n\nCâu trả lời hữu ích?\n👍\n👎\nkỹ năng học tập\nquản lý thời gian\ntài chính cá nhân",
+      "assessment": "pass",
+      "note": "Bản cuối dùng đúng lời ở lượt trước dù tin hiện tại không nhắc lại hoàn cảnh."
+    }
+  ]
+}

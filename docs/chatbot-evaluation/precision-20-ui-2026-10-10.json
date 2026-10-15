@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-10",
+  "environment": "localhost:4200; Gemini thật; guest có lịch sử trước đó",
+  "scope": "8 lượt kiểm tra thủ công các lỗi đã quan sát; không phải đánh giá mù",
+  "turns": [
+    {
+      "id": "P01",
+      "question": "Đổi chủ đề hoàn toàn: mình muốn một truyện về thế giới loài vật, dưới 100k.",
+      "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc. Cuốn này nằm trong mức 100.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Dế Mèn Phiêu Lưu Ký” — 50.400đ · Tô Hoài · Chưa có đánh giá\nSách xoay quanh hành trình phiêu lưu của các loài vật, giúp bạn theo dõi câu chuyện về tình bạn và lòng dũng cảm qua những trải nghiệm thực tế trên đường đi.\n\nBạn xem qua nội dung này xem có phù hợp với sở thích đọc của mình không nhé.\n\nDế Mèn Phiêu Lưu Ký\nTô Hoài\n50,400đ\nGiảm 10%\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Chỉ Dế Mèn, không kèm Doraemon; dưới 100k."
+    },
+    {
+      "id": "P02",
+      "question": "Cuốn đầu tiên kể chuyện gì, có nói về tình bạn không?",
+      "answer": "Mình nói kỹ hơn về cuốn vừa chọn để bạn cân nhắc:\n\n• “Dế Mèn Phiêu Lưu Ký”\nCuốn này nằm trong hướng đọc bạn đang tìm. Truyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận.\n\nDế Mèn Phiêu Lưu Ký\nTô Hoài\n50,400đ\nGiảm 10%\nXem sách",
+      "outcome": "pass",
+      "check": "Giữ tham chiếu Dế Mèn và nêu đúng tình bạn."
+    },
+    {
+      "id": "P03",
+      "question": "Cuốn đó là truyện chữ hay truyện tranh?",
+      "answer": "Về “Dế Mèn Phiêu Lưu Ký”, mình có những thông tin này:\nVề dạng tác phẩm, đây là truyện chữ (truyện dài). Riêng ấn bản đang bán có minh họa hay là bản chuyển thể hay không thì mình chưa có thông tin để xác nhận.\n\nDế Mèn Phiêu Lưu Ký\nTô Hoài\n50,400đ\nGiảm 10%\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Trả lời ngay truyện chữ/truyện dài; phân biệt thông tin ấn bản chưa xác nhận."
+    },
+    {
+      "id": "P04",
+      "question": "Đổi chủ đề hoàn toàn: tìm truyện về ký ức tuổi thơ cho người lớn, dưới 100k.",
+      "answer": "Mình chọn trước 3 cuốn để bạn dễ cân nhắc. Các cuốn đều nằm trong mức 100.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Cho Tôi Xin Một Vé Đi Tuổi Thơ” — 71.760đ · Nguyễn Nhật Ánh · Chưa có đánh giá\nCuốn sách giúp bạn trở về những kỷ niệm ấu thơ qua góc nhìn vừa hóm hỉnh, vừa sâu sắc của người lớn về trẻ em.\n\n• “Cây Cam Ngọt Của Tôi” — 95.040đ · José Mauro de Vasconcelos · Chưa có đánh giá\nĐây là lựa chọn phù hợp nếu bạn muốn tìm kiếm những cung bậc cảm xúc chân thực về cuộc sống và tình thương.\n\n• “Totto-chan Bên Cửa Sổ” — 82.800đ · Kuroyanagi Tetsuko · Chưa có đánh giá\nCuốn sách này khai thác sâu vào môi trường giáo dục và những trải nghiệm hình thành nên tính cách trong quá trình lớn lên.\nTotto-chan chuyển đến trường Tomoe sau khi bị đuổi học. Ngôi trường có lớp học trong toa xe điện, cách học khác thường và thầy hiệu trưởng chăm chú lắng nghe cô bé; các trải nghiệm ấy gắn với sự lớn lên của nhân vật.\n\nCho Tôi Xin Một Vé Đi Tuổi Thơ\nNguyễn Nhật Ánh\n71,760đ\nGiảm 8%\nXem sách\nThêm giỏ\nCây Cam Ngọt Của Tôi\nJosé Mauro de Vasconcelos\n95,040đ\nGiảm 12%\nXem sách\nThêm giỏ\nTotto-chan Bên Cửa Sổ\nKuroyanagi Tetsuko\n82,800đ\nGiảm 10%\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Chủ đề ký ức tuổi thơ; các lựa chọn dưới 100k, không hỏi lại người nhận."
+    },
+    {
+      "id": "P05",
+      "question": "Mình muốn có cả nỗi đau và hoàn cảnh nghèo khó.",
+      "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc. Cuốn này nằm trong mức 100.000đ mỗi cuốn bạn chọn.\n\n**Sách đúng yêu cầu:**\n\n• “Cây Cam Ngọt Của Tôi” — 95.040đ · José Mauro de Vasconcelos · Chưa có đánh giá\nCuốn sách tập trung vào cuộc sống đầy khó khăn của cậu bé Zezé, đáp ứng đúng mong muốn của bạn về một câu chuyện có cả hoàn cảnh nghèo khó và nỗi đau trong ký ức tuổi thơ.\n\nCây Cam Ngọt Của Tôi\nJosé Mauro de Vasconcelos\n95,040đ\nGiảm 12%\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Chỉ Cây Cam đáp ứng cả hai điều kiện; vẫn giữ dưới 100k."
+    },
+    {
+      "id": "P06",
+      "question": "Vì sao cuốn đầu tiên phù hợp với nhu cầu vừa rồi?",
+      "answer": "Mình giải thích dựa trên nội dung của từng cuốn và nhu cầu bạn đã nêu:\n\n• “Cây Cam Ngọt Của Tôi”\nCuốn sách tập trung vào nhân vật Zezé, một cậu bé lớn lên trong hoàn cảnh nghèo khó và phải đối mặt với nỗi đau từ sự hắt hủi. Đây là những yếu tố chính khớp với yêu cầu của bạn về một câu chuyện tuổi thơ có chiều sâu.\n\nCây Cam Ngọt Của Tôi\nJosé Mauro de Vasconcelos\n95,040đ\nGiảm 12%\nXem sách",
+      "outcome": "pass",
+      "check": "Nhớ yêu cầu đau/nghèo và giải thích đúng về Zezé."
+    },
+    {
+      "id": "P07",
+      "question": "Đổi chủ đề hoàn toàn: mình muốn truyện về trẻ em và môi trường học.",
+      "answer": "Mình chọn trước 1 cuốn để bạn dễ cân nhắc:\n\n**Sách đúng yêu cầu:**\n\n• “Totto-chan Bên Cửa Sổ” — 82.800đ · Kuroyanagi Tetsuko · Chưa có đánh giá\nCuốn sách kể về hành trình cô bé Totto-chan chuyển đến trường Tomoe, nơi có mô hình học tập độc đáo trong toa xe điện. Những trải nghiệm tại ngôi trường này phản ánh trực tiếp môi trường học tập đặc biệt và cách giáo dục tôn trọng trẻ nhỏ mà bạn đang tìm kiếm.\nTotto-chan chuyển đến trường Tomoe sau khi bị đuổi học. Ngôi trường có lớp học trong toa xe điện, cách học khác thường và thầy hiệu trưởng chăm chú lắng nghe cô bé; các trải nghiệm ấy gắn với sự lớn lên của nhân vật.\n\nTotto-chan Bên Cửa Sổ\nKuroyanagi Tetsuko\n82,800đ\nGiảm 10%\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Đổi chủ đề đúng, chỉ Totto-chan; không yêu cầu tuổi/người nhận."
+    },
+    {
+      "id": "P08",
+      "question": "Cuốn đó có phải sách dạy kỹ năng giao tiếp không?",
+      "answer": "Về “Totto-chan Bên Cửa Sổ”, mình có những thông tin này:\nMình chưa có căn cứ xếp cuốn này vào sách dạy kỹ năng giao tiếp. Phần giới thiệu nói về: Totto-chan chuyển đến trường Tomoe sau khi bị đuổi học. Ngôi trường có lớp học trong toa xe điện, cách học khác thường và thầy hiệu trưởng chăm chú lắng nghe cô bé; các trải nghiệm ấy gắn với sự lớn lên của nhân vật. Nội dung để suy ngẫm về cách ứng xử chưa đủ để khẳng định sách hướng dẫn hay có bài tập giao tiếp. Nếu bạn muốn học kỹ năng này, mình sẽ ưu tiên sách có nội dung hướng dẫn được xác nhận rõ hơn.\n\nTotto-chan Bên Cửa Sổ\nKuroyanagi Tetsuko\n82,800đ\nGiảm 10%\nXem sách\nThêm giỏ",
+      "outcome": "pass",
+      "check": "Giữ Totto-chan; nói rõ chưa có căn cứ là sách dạy giao tiếp, không lặp lời giải thích chung."
+    }
+  ]
+}

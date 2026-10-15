@@ -1,0 +1,52 @@
+[
+  {
+    "name": "ChatTool",
+    "buildSha256": "a0aa217b8d75fe45fcbcbf1654fa213d8d27594474433bc81b60e196f3f6938c",
+    "runtimeSha256": "a0aa217b8d75fe45fcbcbf1654fa213d8d27594474433bc81b60e196f3f6938c"
+  },
+  {
+    "name": "ChatTool$Result",
+    "buildSha256": "c0889710409cd387c068b25d6d6feba93cff555d1319b76825255fbc81518b35",
+    "runtimeSha256": "c0889710409cd387c068b25d6d6feba93cff555d1319b76825255fbc81518b35"
+  },
+  {
+    "name": "ChatTopicClarification",
+    "buildSha256": "7d6891dda98937650b5fbd9253fca43bda59f7565225169c058b4ed026b34df8",
+    "runtimeSha256": "7d6891dda98937650b5fbd9253fca43bda59f7565225169c058b4ed026b34df8"
+  },
+  {
+    "name": "ChatBuiltinTools",
+    "buildSha256": "a8a1f5ce1217d27f7bc6eb854a286e9502161b4a132c9399ad1bee28040c645d",
+    "runtimeSha256": "a8a1f5ce1217d27f7bc6eb854a286e9502161b4a132c9399ad1bee28040c645d"
+  },
+  {
+    "name": "ChatStructuredPipeline",
+    "buildSha256": "8eaa98b8aa09b37c4dc499876a7074a1c68771998a6dac3dc78ee485d7b9d329",
+    "runtimeSha256": "8eaa98b8aa09b37c4dc499876a7074a1c68771998a6dac3dc78ee485d7b9d329"
+  },
+  {
+    "name": "ChatTurnUnderstanding",
+    "buildSha256": "da9b8757ffffc2f0bddf91f67f189d76ca85cab661d0939daf2bf5ba0895f9d0",
+    "runtimeSha256": "da9b8757ffffc2f0bddf91f67f189d76ca85cab661d0939daf2bf5ba0895f9d0"
+  },
+  {
+    "name": "ChatDialogueMemory",
+    "buildSha256": "88b476e5b4571c1768a205ea97366c3f672c7fd2c5c8dd28860c1bc15a6a6588",
+    "runtimeSha256": "88b476e5b4571c1768a205ea97366c3f672c7fd2c5c8dd28860c1bc15a6a6588"
+  },
+  {
+    "name": "ChatDialogueMemory$State",
+    "buildSha256": "156dca88e8b1739360bc6e2482cb2a775fb48120eb2ac31cfae0d58bda61d810",
+    "runtimeSha256": "156dca88e8b1739360bc6e2482cb2a775fb48120eb2ac31cfae0d58bda61d810"
+  },
+  {
+    "name": "ChatTurnContext",
+    "buildSha256": "8b3235f4c63f2eb734ea29f59c65a9ff53521c18d056c39a510e14432d5aab61",
+    "runtimeSha256": "8b3235f4c63f2eb734ea29f59c65a9ff53521c18d056c39a510e14432d5aab61"
+  },
+  {
+    "name": "ChatExplicitFilters",
+    "buildSha256": "41d5fc2afdf7f7a765a480ec8f53832b2dd8d9e8bab005d7c50a921a6a0f4d8a",
+    "runtimeSha256": "41d5fc2afdf7f7a765a480ec8f53832b2dd8d9e8bab005d7c50a921a6a0f4d8a"
+  }
+]
