@@ -1,0 +1,262 @@
+{
+  "schemaVersion": 1,
+  "frozenBeforeRun": true,
+  "scope": "Fixed 20-book cohort, lexical-only retrieval; approved relevance judgments recorded before results. Not a full-catalog or conversational accuracy estimate.",
+  "cases": [
+    {
+      "id": "Q01",
+      "group": "canonical",
+      "query": "pháp luật đất đai",
+      "relevantIds": [
+        7
+      ]
+    },
+    {
+      "id": "Q02",
+      "group": "canonical",
+      "query": "kiểm thử đơn vị",
+      "relevantIds": [
+        9
+      ]
+    },
+    {
+      "id": "Q03",
+      "group": "canonical",
+      "query": "truyện phiêu lưu loài vật",
+      "relevantIds": [
+        13
+      ]
+    },
+    {
+      "id": "Q04",
+      "group": "canonical",
+      "query": "tránh lặp kiến thức",
+      "relevantIds": [
+        16
+      ]
+    },
+    {
+      "id": "Q05",
+      "group": "canonical",
+      "query": "AI trong học tập công việc",
+      "relevantIds": [
+        17
+      ]
+    },
+    {
+      "id": "Q06",
+      "group": "canonical",
+      "query": "kiểm chứng ý tưởng khởi nghiệp",
+      "relevantIds": [
+        19
+      ]
+    },
+    {
+      "id": "Q07",
+      "group": "canonical",
+      "query": "lập trình Java",
+      "relevantIds": [
+        22
+      ]
+    },
+    {
+      "id": "Q08",
+      "group": "canonical",
+      "query": "quan sát suy luận vụ án",
+      "relevantIds": [
+        26,
+        48
+      ]
+    },
+    {
+      "id": "Q09",
+      "group": "canonical",
+      "query": "mafia quyền lực",
+      "relevantIds": [
+        27
+      ]
+    },
+    {
+      "id": "Q10",
+      "group": "canonical",
+      "query": "truyện tuổi thơ nỗi đau",
+      "relevantIds": [
+        29
+      ]
+    },
+    {
+      "id": "Q11",
+      "group": "canonical",
+      "query": "xử lý lo âu",
+      "relevantIds": [
+        32
+      ]
+    },
+    {
+      "id": "Q12",
+      "group": "canonical",
+      "query": "truyện triết lý chất thơ",
+      "relevantIds": [
+        37
+      ]
+    },
+    {
+      "id": "Q13",
+      "group": "canonical",
+      "query": "nhà trường lắng nghe trẻ em",
+      "relevantIds": [
+        38
+      ]
+    },
+    {
+      "id": "Q14",
+      "group": "canonical",
+      "query": "đầu tư giá trị",
+      "relevantIds": [
+        43
+      ]
+    },
+    {
+      "id": "Q15",
+      "group": "canonical",
+      "query": "truyện tranh trinh thám",
+      "relevantIds": [
+        48
+      ]
+    },
+    {
+      "id": "Q16",
+      "group": "canonical",
+      "query": "ký ức tuổi thơ người lớn",
+      "relevantIds": [
+        29,
+        38,
+        50
+      ]
+    },
+    {
+      "id": "Q17",
+      "group": "canonical",
+      "query": "truyện tranh bảo bối tương lai",
+      "relevantIds": [
+        51
+      ]
+    },
+    {
+      "id": "Q18",
+      "group": "canonical",
+      "query": "truyện giả tưởng phù thủy",
+      "relevantIds": [
+        52
+      ]
+    },
+    {
+      "id": "Q19",
+      "group": "canonical",
+      "query": "thiên kiến nhận thức",
+      "relevantIds": [
+        55
+      ]
+    },
+    {
+      "id": "Q20",
+      "group": "canonical",
+      "query": "học kỹ năng giao tiếp",
+      "relevantIds": [
+        57
+      ]
+    },
+    {
+      "id": "Q21",
+      "group": "synonym",
+      "query": "refactoring",
+      "relevantIds": [
+        9
+      ]
+    },
+    {
+      "id": "Q22",
+      "group": "synonym",
+      "query": "unit testing",
+      "relevantIds": [
+        9
+      ]
+    },
+    {
+      "id": "Q23",
+      "group": "synonym",
+      "query": "machine learning",
+      "relevantIds": [
+        17
+      ]
+    },
+    {
+      "id": "Q24",
+      "group": "synonym",
+      "query": "build measure learn",
+      "relevantIds": [
+        19
+      ]
+    },
+    {
+      "id": "Q25",
+      "group": "synonym",
+      "query": "value investing",
+      "relevantIds": [
+        43
+      ]
+    },
+    {
+      "id": "Q26",
+      "group": "synonym",
+      "query": "cognitive bias",
+      "relevantIds": [
+        55
+      ]
+    },
+    {
+      "id": "Q27",
+      "group": "synonym",
+      "query": "fantasy phù thủy",
+      "relevantIds": [
+        52
+      ]
+    },
+    {
+      "id": "Q28",
+      "group": "synonym",
+      "query": "worry management",
+      "relevantIds": [
+        32
+      ]
+    },
+    {
+      "id": "Q29",
+      "group": "synonym",
+      "query": "hồi ức tuổi thơ",
+      "relevantIds": [
+        29,
+        38,
+        50
+      ]
+    },
+    {
+      "id": "Q30",
+      "group": "synonym",
+      "query": "truyện động vật",
+      "relevantIds": [
+        13
+      ]
+    }
+  ],
+  "guards": [
+    "communication does not include fiction/anxiety",
+    "personal budgeting does not include value investing",
+    "unknown Java reading level stays unknown",
+    "Java exercises and answers stay unknown",
+    "gentle excludes violent/cruel stories",
+    "price ceilings use current discounted price",
+    "unknown facts not indexed as labels",
+    "exactly 20 approved identities and no outside changes"
+  ]
+}

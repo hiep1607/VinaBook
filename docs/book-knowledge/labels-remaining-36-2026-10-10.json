@@ -1,0 +1,4207 @@
+{
+  "schemaVersion": 1,
+  "expansionId": "labels-remaining-36-2026-10-10",
+  "reviewedAt": "2026-10-10",
+  "scope": "36 remaining active approved books; preserves the existing 20-book pilot",
+  "policy": "Editorial classification from existing approved profiles reviewed 2026-10-05. No fresh source or edition verification. Aliases translate evidenced concepts. Unknowns and limitations never indexed.",
+  "dimensions": {
+    "genre": "Thể loại",
+    "topic": "Chủ đề",
+    "purpose": "Mục đích",
+    "format": "Dạng nội dung",
+    "audience": "Độc giả",
+    "style": "Cách trình bày",
+    "level": "Mức đọc"
+  },
+  "books": [
+    {
+      "productId": 3,
+      "title": "Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam Năm 2013 (Sửa Đổi, Bổ Sung Năm 2025)",
+      "author": "Quốc Hội Việt Nam",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "tài liệu pháp luật",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Văn bản Hiến pháp về nền tảng tổ chức Nhà nước, chế độ chính trị, quyền con người và quyền, nghĩa vụ cơ bản của công dân. Bìa đang bán ghi Hiến pháp năm 2013, sửa đổi, bổ sung năm 2025; chưa có ISBN và trang xuất bản để xác nhận chính xác bản in hoặc mọi cập nhật sau đó."
+          },
+          "sourceUrls": [
+            "https://www.nxbctqg.org.vn/xuat-ban-hai-tai-lieu-phap-ly-quan-trong-thiet-yeu.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "Hiến pháp / constitutional law",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Văn bản Hiến pháp về nền tảng tổ chức Nhà nước, chế độ chính trị, quyền con người và quyền, nghĩa vụ cơ bản của công dân. Bìa đang bán ghi Hiến pháp năm 2013, sửa đổi, bổ sung năm 2025; chưa có ISBN và trang xuất bản để xác nhận chính xác bản in hoặc mọi cập nhật sau đó."
+          },
+          "sourceUrls": [
+            "https://www.nxbctqg.org.vn/xuat-ban-hai-tai-lieu-phap-ly-quan-trong-thiet-yeu.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "tổ chức Nhà nước",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Văn bản Hiến pháp về nền tảng tổ chức Nhà nước, chế độ chính trị, quyền con người và quyền, nghĩa vụ cơ bản của công dân. Bìa đang bán ghi Hiến pháp năm 2013, sửa đổi, bổ sung năm 2025; chưa có ISBN và trang xuất bản để xác nhận chính xác bản in hoặc mọi cập nhật sau đó."
+          },
+          "sourceUrls": [
+            "https://www.nxbctqg.org.vn/xuat-ban-hai-tai-lieu-phap-ly-quan-trong-thiet-yeu.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "quyền con người và quyền công dân",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Văn bản Hiến pháp về nền tảng tổ chức Nhà nước, chế độ chính trị, quyền con người và quyền, nghĩa vụ cơ bản của công dân. Bìa đang bán ghi Hiến pháp năm 2013, sửa đổi, bổ sung năm 2025; chưa có ISBN và trang xuất bản để xác nhận chính xác bản in hoặc mọi cập nhật sau đó."
+          },
+          "sourceUrls": [
+            "https://www.nxbctqg.org.vn/xuat-ban-hai-tai-lieu-phap-ly-quan-trong-thiet-yeu.html"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tìm hiểu nguyên tắc hiến định",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tìm hiểu các nguyên tắc hiến định và quyền, nghĩa vụ cơ bản; cần kiểm tra văn bản hiệu lực khi áp dụng."
+          },
+          "sourceUrls": [
+            "https://www.nxbctqg.org.vn/xuat-ban-hai-tai-lieu-phap-ly-quan-trong-thiet-yeu.html"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "văn bản Hiến pháp",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Văn bản Hiến pháp về nền tảng tổ chức Nhà nước, chế độ chính trị, quyền con người và quyền, nghĩa vụ cơ bản của công dân. Bìa đang bán ghi Hiến pháp năm 2013, sửa đổi, bổ sung năm 2025; chưa có ISBN và trang xuất bản để xác nhận chính xác bản in hoặc mọi cập nhật sau đó."
+          },
+          "sourceUrls": [
+            "https://www.nxbctqg.org.vn/xuat-ban-hai-tai-lieu-phap-ly-quan-trong-thiet-yeu.html"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người học và tra cứu Hiến pháp",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người học, tra cứu Hiến pháp và tìm hiểu tổ chức Nhà nước Việt Nam."
+          },
+          "sourceUrls": [
+            "https://www.nxbctqg.org.vn/xuat-ban-hai-tai-lieu-phap-ly-quan-trong-thiet-yeu.html"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "tra cứu theo điều khoản",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Văn bản pháp luật để đọc và tra cứu theo điều khoản."
+          },
+          "sourceUrls": [
+            "https://www.nxbctqg.org.vn/xuat-ban-hai-tai-lieu-phap-ly-quan-trong-thiet-yeu.html"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Đối chiếu bìa với thông báo NXB về Hiến pháp 2013 sửa đổi 2025. Không xác nhận tính hiện hành tại ngày hỏi.",
+        "Không khẳng định văn bản hiện hành hoặc cập nhật mới nhất; nhãn chỉ mô tả phạm vi nội dung."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Đối chiếu bìa với thông báo NXB về Hiến pháp 2013 sửa đổi 2025. Không xác nhận tính hiện hành tại ngày hỏi. Nguồn: https://www.nxbctqg.org.vn/xuat-ban-hai-tai-lieu-phap-ly-quan-trong-thiet-yeu.html"
+    },
+    {
+      "productId": 4,
+      "title": "Luật Doanh Nghiệp",
+      "author": "Quốc Hội Việt Nam",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "tài liệu pháp luật",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Văn bản luật về thành lập, tổ chức quản lý, tổ chức lại, giải thể và hoạt động của doanh nghiệp, bao gồm các loại hình công ty và doanh nghiệp tư nhân. Sách phục vụ tra cứu quy định, không phải cẩm nang khởi nghiệp từng bước. Chưa xác định năm in và các sửa đổi đã được tích hợp trong bản cửa hàng."
+          },
+          "sourceUrls": [
+            "https://vbpl.moj.gov.vn/bolaodong/Pages/vbpq-toanvan.aspx?ItemID=142881&Keyword="
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "pháp luật doanh nghiệp / company law",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Văn bản luật về thành lập, tổ chức quản lý, tổ chức lại, giải thể và hoạt động của doanh nghiệp, bao gồm các loại hình công ty và doanh nghiệp tư nhân. Sách phục vụ tra cứu quy định, không phải cẩm nang khởi nghiệp từng bước. Chưa xác định năm in và các sửa đổi đã được tích hợp trong bản cửa hàng."
+          },
+          "sourceUrls": [
+            "https://vbpl.moj.gov.vn/bolaodong/Pages/vbpq-toanvan.aspx?ItemID=142881&Keyword="
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "thành lập và giải thể doanh nghiệp",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Văn bản luật về thành lập, tổ chức quản lý, tổ chức lại, giải thể và hoạt động của doanh nghiệp, bao gồm các loại hình công ty và doanh nghiệp tư nhân. Sách phục vụ tra cứu quy định, không phải cẩm nang khởi nghiệp từng bước. Chưa xác định năm in và các sửa đổi đã được tích hợp trong bản cửa hàng."
+          },
+          "sourceUrls": [
+            "https://vbpl.moj.gov.vn/bolaodong/Pages/vbpq-toanvan.aspx?ItemID=142881&Keyword="
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "các loại hình công ty",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Văn bản luật về thành lập, tổ chức quản lý, tổ chức lại, giải thể và hoạt động của doanh nghiệp, bao gồm các loại hình công ty và doanh nghiệp tư nhân. Sách phục vụ tra cứu quy định, không phải cẩm nang khởi nghiệp từng bước. Chưa xác định năm in và các sửa đổi đã được tích hợp trong bản cửa hàng."
+          },
+          "sourceUrls": [
+            "https://vbpl.moj.gov.vn/bolaodong/Pages/vbpq-toanvan.aspx?ItemID=142881&Keyword="
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tra cứu khung pháp luật doanh nghiệp",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tham khảo khung pháp luật về doanh nghiệp; kiểm tra hiệu lực và bản sửa đổi trước khi áp dụng vào hồ sơ thực tế."
+          },
+          "sourceUrls": [
+            "https://vbpl.moj.gov.vn/bolaodong/Pages/vbpq-toanvan.aspx?ItemID=142881&Keyword="
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "văn bản luật",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Văn bản luật về thành lập, tổ chức quản lý, tổ chức lại, giải thể và hoạt động của doanh nghiệp, bao gồm các loại hình công ty và doanh nghiệp tư nhân. Sách phục vụ tra cứu quy định, không phải cẩm nang khởi nghiệp từng bước. Chưa xác định năm in và các sửa đổi đã được tích hợp trong bản cửa hàng."
+          },
+          "sourceUrls": [
+            "https://vbpl.moj.gov.vn/bolaodong/Pages/vbpq-toanvan.aspx?ItemID=142881&Keyword="
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người học và người quản lý doanh nghiệp",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người cần tra cứu pháp luật doanh nghiệp, người học và người quản lý doanh nghiệp."
+          },
+          "sourceUrls": [
+            "https://vbpl.moj.gov.vn/bolaodong/Pages/vbpq-toanvan.aspx?ItemID=142881&Keyword="
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "tra cứu theo điều khoản",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Văn bản luật được đọc, tra cứu theo các điều khoản."
+          },
+          "sourceUrls": [
+            "https://vbpl.moj.gov.vn/bolaodong/Pages/vbpq-toanvan.aspx?ItemID=142881&Keyword="
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn luật cho phạm vi chung, không chứng minh bản in cửa hàng tích hợp sửa đổi mới nhất. Bỏ nhãn hiện hành chưa xác minh.",
+        "Không khẳng định văn bản hiện hành hoặc cập nhật mới nhất; nhãn chỉ mô tả phạm vi nội dung."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn luật cho phạm vi chung, không chứng minh bản in cửa hàng tích hợp sửa đổi mới nhất. Bỏ nhãn hiện hành chưa xác minh. Nguồn: https://vbpl.moj.gov.vn/bolaodong/Pages/vbpq-toanvan.aspx?ItemID=142881&Keyword="
+    },
+    {
+      "productId": 5,
+      "title": "Bộ Luật Lao Động",
+      "author": "Quốc Hội Việt Nam",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "tài liệu pháp luật",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bộ luật quy định quan hệ lao động, quyền và nghĩa vụ của người lao động và người sử dụng lao động, cùng các nội dung quản lý nhà nước về lao động. Đây là văn bản luật để tra cứu; chưa có căn cứ cho mô tả cũ về một sách thực hành kèm phân tích tình huống. Bản in và các sửa đổi được tích hợp chưa được xác nhận."
+          },
+          "sourceUrls": [
+            "https://nxbctqg.org.vn/bo-luat-lao-dong-hien-hanh--54.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "pháp luật lao động / labor law",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bộ luật quy định quan hệ lao động, quyền và nghĩa vụ của người lao động và người sử dụng lao động, cùng các nội dung quản lý nhà nước về lao động. Đây là văn bản luật để tra cứu; chưa có căn cứ cho mô tả cũ về một sách thực hành kèm phân tích tình huống. Bản in và các sửa đổi được tích hợp chưa được xác nhận."
+          },
+          "sourceUrls": [
+            "https://nxbctqg.org.vn/bo-luat-lao-dong-hien-hanh--54.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "quan hệ lao động",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bộ luật quy định quan hệ lao động, quyền và nghĩa vụ của người lao động và người sử dụng lao động, cùng các nội dung quản lý nhà nước về lao động. Đây là văn bản luật để tra cứu; chưa có căn cứ cho mô tả cũ về một sách thực hành kèm phân tích tình huống. Bản in và các sửa đổi được tích hợp chưa được xác nhận."
+          },
+          "sourceUrls": [
+            "https://nxbctqg.org.vn/bo-luat-lao-dong-hien-hanh--54.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "quyền và nghĩa vụ người lao động",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bộ luật quy định quan hệ lao động, quyền và nghĩa vụ của người lao động và người sử dụng lao động, cùng các nội dung quản lý nhà nước về lao động. Đây là văn bản luật để tra cứu; chưa có căn cứ cho mô tả cũ về một sách thực hành kèm phân tích tình huống. Bản in và các sửa đổi được tích hợp chưa được xác nhận."
+          },
+          "sourceUrls": [
+            "https://nxbctqg.org.vn/bo-luat-lao-dong-hien-hanh--54.html"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tra cứu quyền và nghĩa vụ trong lao động",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tìm hiểu khung quyền và nghĩa vụ trong quan hệ lao động; đối chiếu văn bản hiệu lực khi giải quyết vụ việc."
+          },
+          "sourceUrls": [
+            "https://nxbctqg.org.vn/bo-luat-lao-dong-hien-hanh--54.html"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "văn bản bộ luật",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bộ luật quy định quan hệ lao động, quyền và nghĩa vụ của người lao động và người sử dụng lao động, cùng các nội dung quản lý nhà nước về lao động. Đây là văn bản luật để tra cứu; chưa có căn cứ cho mô tả cũ về một sách thực hành kèm phân tích tình huống. Bản in và các sửa đổi được tích hợp chưa được xác nhận."
+          },
+          "sourceUrls": [
+            "https://nxbctqg.org.vn/bo-luat-lao-dong-hien-hanh--54.html"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người lao động và người sử dụng lao động",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người lao động, người sử dụng lao động và người học cần tham khảo văn bản pháp luật lao động."
+          },
+          "sourceUrls": [
+            "https://nxbctqg.org.vn/bo-luat-lao-dong-hien-hanh--54.html"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "tra cứu theo điều khoản",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Văn bản luật để tra cứu theo điều khoản."
+          },
+          "sourceUrls": [
+            "https://nxbctqg.org.vn/bo-luat-lao-dong-hien-hanh--54.html"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa là Bộ luật Lao động, khớp NXB và cơ quan ban hành Quốc hội. Loại bỏ tác giả và mô tả thực hành gán nhầm.",
+        "Không khẳng định văn bản hiện hành hoặc cập nhật mới nhất; nhãn chỉ mô tả phạm vi nội dung."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa là Bộ luật Lao động, khớp NXB và cơ quan ban hành Quốc hội. Loại bỏ tác giả và mô tả thực hành gán nhầm. Nguồn: https://nxbctqg.org.vn/bo-luat-lao-dong-hien-hanh--54.html"
+    },
+    {
+      "productId": 6,
+      "title": "Cẩm Nang Pháp Luật Dành Cho Doanh Nghiệp",
+      "author": "Tăng Bình & Ái Phương (hệ thống)",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "cẩm nang pháp luật",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Cẩm nang hệ thống thông tin pháp luật dành cho doanh nghiệp về tiền lương, bảo hiểm, thuế, chi phí hợp lệ, hóa đơn, chứng từ và thanh tra, kiểm tra. Phù hợp nhu cầu tra cứu các vấn đề vận hành doanh nghiệp. Chưa xác nhận bản in cửa hàng và mức cập nhật quy định của bản đó."
+          },
+          "sourceUrls": [
+            "https://thuvien.donga.edu.vn/sach/thong-tin?id=22321"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "tiền lương và bảo hiểm",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Cẩm nang hệ thống thông tin pháp luật dành cho doanh nghiệp về tiền lương, bảo hiểm, thuế, chi phí hợp lệ, hóa đơn, chứng từ và thanh tra, kiểm tra. Phù hợp nhu cầu tra cứu các vấn đề vận hành doanh nghiệp. Chưa xác nhận bản in cửa hàng và mức cập nhật quy định của bản đó."
+          },
+          "sourceUrls": [
+            "https://thuvien.donga.edu.vn/sach/thong-tin?id=22321"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "thuế và chi phí hợp lệ",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Cẩm nang hệ thống thông tin pháp luật dành cho doanh nghiệp về tiền lương, bảo hiểm, thuế, chi phí hợp lệ, hóa đơn, chứng từ và thanh tra, kiểm tra. Phù hợp nhu cầu tra cứu các vấn đề vận hành doanh nghiệp. Chưa xác nhận bản in cửa hàng và mức cập nhật quy định của bản đó."
+          },
+          "sourceUrls": [
+            "https://thuvien.donga.edu.vn/sach/thong-tin?id=22321"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "hóa đơn chứng từ",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Cẩm nang hệ thống thông tin pháp luật dành cho doanh nghiệp về tiền lương, bảo hiểm, thuế, chi phí hợp lệ, hóa đơn, chứng từ và thanh tra, kiểm tra. Phù hợp nhu cầu tra cứu các vấn đề vận hành doanh nghiệp. Chưa xác nhận bản in cửa hàng và mức cập nhật quy định của bản đó."
+          },
+          "sourceUrls": [
+            "https://thuvien.donga.edu.vn/sach/thong-tin?id=22321"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tra cứu pháp luật vận hành doanh nghiệp",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Định hướng tra cứu pháp luật về lương, bảo hiểm, thuế và chứng từ; không thay việc kiểm tra quy định đang có hiệu lực."
+          },
+          "sourceUrls": [
+            "https://thuvien.donga.edu.vn/sach/thong-tin?id=22321"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "cẩm nang hệ thống thông tin",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Cẩm nang hệ thống thông tin pháp luật dành cho doanh nghiệp về tiền lương, bảo hiểm, thuế, chi phí hợp lệ, hóa đơn, chứng từ và thanh tra, kiểm tra. Phù hợp nhu cầu tra cứu các vấn đề vận hành doanh nghiệp. Chưa xác nhận bản in cửa hàng và mức cập nhật quy định của bản đó."
+          },
+          "sourceUrls": [
+            "https://thuvien.donga.edu.vn/sach/thong-tin?id=22321"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người làm quản lý hành chính kế toán",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người làm công việc quản lý, hành chính, kế toán và cần tra cứu pháp luật liên quan doanh nghiệp."
+          },
+          "sourceUrls": [
+            "https://thuvien.donga.edu.vn/sach/thong-tin?id=22321"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "tra cứu theo vấn đề doanh nghiệp",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Cẩm nang hệ thống nội dung tra cứu theo các vấn đề doanh nghiệp."
+          },
+          "sourceUrls": [
+            "https://thuvien.donga.edu.vn/sach/thong-tin?id=22321"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Tên chính và nội dung phụ đề khớp bìa; thư viện ghi Tăng Bình, Ái Phương hệ thống. Không gán cho Trương Thanh Đức.",
+        "Không khẳng định văn bản hiện hành hoặc cập nhật mới nhất; nhãn chỉ mô tả phạm vi nội dung."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Tên chính và nội dung phụ đề khớp bìa; thư viện ghi Tăng Bình, Ái Phương hệ thống. Không gán cho Trương Thanh Đức. Nguồn: https://thuvien.donga.edu.vn/sach/thong-tin?id=22321"
+    },
+    {
+      "productId": 8,
+      "title": "Bộ Luật Dân Sự",
+      "author": "Quốc Hội Việt Nam",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "tài liệu pháp luật",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bộ luật về địa vị pháp lý, quyền và nghĩa vụ dân sự của cá nhân, pháp nhân cùng các quan hệ tài sản và nhân thân. Đây là văn bản luật để tra cứu, không phải tác phẩm bình luận khoa học của Đỗ Văn Đại. Chưa xác nhận năm in hoặc các sửa đổi được tích hợp trong bản cửa hàng."
+          },
+          "sourceUrls": [
+            "https://nxbctqg.org.vn/bo-luat-dan-su-hien-hanh--23.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "pháp luật dân sự / civil law",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bộ luật về địa vị pháp lý, quyền và nghĩa vụ dân sự của cá nhân, pháp nhân cùng các quan hệ tài sản và nhân thân. Đây là văn bản luật để tra cứu, không phải tác phẩm bình luận khoa học của Đỗ Văn Đại. Chưa xác nhận năm in hoặc các sửa đổi được tích hợp trong bản cửa hàng."
+          },
+          "sourceUrls": [
+            "https://nxbctqg.org.vn/bo-luat-dan-su-hien-hanh--23.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "quan hệ tài sản",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bộ luật về địa vị pháp lý, quyền và nghĩa vụ dân sự của cá nhân, pháp nhân cùng các quan hệ tài sản và nhân thân. Đây là văn bản luật để tra cứu, không phải tác phẩm bình luận khoa học của Đỗ Văn Đại. Chưa xác nhận năm in hoặc các sửa đổi được tích hợp trong bản cửa hàng."
+          },
+          "sourceUrls": [
+            "https://nxbctqg.org.vn/bo-luat-dan-su-hien-hanh--23.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "quyền nhân thân",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bộ luật về địa vị pháp lý, quyền và nghĩa vụ dân sự của cá nhân, pháp nhân cùng các quan hệ tài sản và nhân thân. Đây là văn bản luật để tra cứu, không phải tác phẩm bình luận khoa học của Đỗ Văn Đại. Chưa xác nhận năm in hoặc các sửa đổi được tích hợp trong bản cửa hàng."
+          },
+          "sourceUrls": [
+            "https://nxbctqg.org.vn/bo-luat-dan-su-hien-hanh--23.html"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tìm hiểu nền tảng quan hệ dân sự",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tìm hiểu nền tảng các quan hệ dân sự; cần đối chiếu hiệu lực trước khi dùng cho vụ việc cụ thể."
+          },
+          "sourceUrls": [
+            "https://nxbctqg.org.vn/bo-luat-dan-su-hien-hanh--23.html"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "văn bản bộ luật",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bộ luật về địa vị pháp lý, quyền và nghĩa vụ dân sự của cá nhân, pháp nhân cùng các quan hệ tài sản và nhân thân. Đây là văn bản luật để tra cứu, không phải tác phẩm bình luận khoa học của Đỗ Văn Đại. Chưa xác nhận năm in hoặc các sửa đổi được tích hợp trong bản cửa hàng."
+          },
+          "sourceUrls": [
+            "https://nxbctqg.org.vn/bo-luat-dan-su-hien-hanh--23.html"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người học và tra cứu luật dân sự",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người học và người cần tham khảo văn bản pháp luật dân sự."
+          },
+          "sourceUrls": [
+            "https://nxbctqg.org.vn/bo-luat-dan-su-hien-hanh--23.html"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "tra cứu theo điều khoản",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Văn bản luật để tra cứu theo các điều khoản."
+          },
+          "sourceUrls": [
+            "https://nxbctqg.org.vn/bo-luat-dan-su-hien-hanh--23.html"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa là Bộ luật Dân sự, khớp NXB và cơ quan ban hành Quốc hội. Loại bỏ tên và tác giả sách bình luận gán nhầm.",
+        "Không khẳng định văn bản hiện hành hoặc cập nhật mới nhất; nhãn chỉ mô tả phạm vi nội dung."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa là Bộ luật Dân sự, khớp NXB và cơ quan ban hành Quốc hội. Loại bỏ tên và tác giả sách bình luận gán nhầm. Nguồn: https://nxbctqg.org.vn/bo-luat-dan-su-hien-hanh--23.html"
+    },
+    {
+      "productId": 10,
+      "title": "Truyện Kiều",
+      "author": "Nguyễn Du",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "văn học cổ điển Việt Nam",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Kiệt tác thi ca của đại thi hào Nguyễn Du — 3254 câu lục bát kể về cuộc đời nàng Kiều. Đỉnh cao của văn học cổ điển Việt Nam, di sản của muôn đời."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/truyen-kieu"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "cuộc đời nàng Kiều",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Kiệt tác thi ca của đại thi hào Nguyễn Du — 3254 câu lục bát kể về cuộc đời nàng Kiều. Đỉnh cao của văn học cổ điển Việt Nam, di sản của muôn đời."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/truyen-kieu"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "thi ca Việt Nam",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Kiệt tác thi ca của đại thi hào Nguyễn Du — 3254 câu lục bát kể về cuộc đời nàng Kiều. Đỉnh cao của văn học cổ điển Việt Nam, di sản của muôn đời."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/truyen-kieu"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tìm hiểu văn học Việt Nam",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người học và tìm hiểu văn học Việt Nam; tác phẩm được giới thiệu trong tủ sách văn học nhà trường."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/truyen-kieu"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "thơ lục bát",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Kiệt tác thi ca của đại thi hào Nguyễn Du — 3254 câu lục bát kể về cuộc đời nàng Kiều. Đỉnh cao của văn học cổ điển Việt Nam, di sản của muôn đời."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/truyen-kieu"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người học và tìm hiểu văn học Việt Nam",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người học và tìm hiểu văn học Việt Nam; tác phẩm được giới thiệu trong tủ sách văn học nhà trường."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/truyen-kieu"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "kể chuyện bằng thơ lục bát",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Kiệt tác thi ca của đại thi hào Nguyễn Du — 3254 câu lục bát kể về cuộc đời nàng Kiều. Đỉnh cao của văn học cổ điển Việt Nam, di sản của muôn đời."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/truyen-kieu"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ bổ sung đối tượng và chủ đề có trên nguồn; giữ tóm tắt cửa hàng. Chưa đối chiếu bản chú giải, không áp dụng mốc tuổi của ấn bản nguồn."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ bổ sung đối tượng và chủ đề có trên nguồn; giữ tóm tắt cửa hàng. Chưa đối chiếu bản chú giải, không áp dụng mốc tuổi của ấn bản nguồn. Nguồn: https://nxbkimdong.com.vn/truyen-kieu"
+    },
+    {
+      "productId": 11,
+      "title": "Số Đỏ",
+      "author": "Vũ Trọng Phụng",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "văn học trào phúng / satire",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm trào phúng của Vũ Trọng Phụng, dựng những chân dung hí họa để phơi bày sự lố bịch trong xã hội. Sự hài hước đi cùng phê phán và châm biếm, phù hợp người muốn đọc văn học Việt Nam có giọng sắc sảo; không nên mặc định là truyện vui nhẹ nhàng cho mọi lứa tuổi."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/so-do-26"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "phê phán xã hội",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm trào phúng của Vũ Trọng Phụng, dựng những chân dung hí họa để phơi bày sự lố bịch trong xã hội. Sự hài hước đi cùng phê phán và châm biếm, phù hợp người muốn đọc văn học Việt Nam có giọng sắc sảo; không nên mặc định là truyện vui nhẹ nhàng cho mọi lứa tuổi."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/so-do-26"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "chân dung nhân vật hí họa",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm trào phúng của Vũ Trọng Phụng, dựng những chân dung hí họa để phơi bày sự lố bịch trong xã hội. Sự hài hước đi cùng phê phán và châm biếm, phù hợp người muốn đọc văn học Việt Nam có giọng sắc sảo; không nên mặc định là truyện vui nhẹ nhàng cho mọi lứa tuổi."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/so-do-26"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tìm hiểu tiếng cười phê phán xã hội",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tìm hiểu cách văn học dùng tiếng cười để phê phán xã hội."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/so-do-26"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "tác phẩm trào phúng",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm trào phúng của Vũ Trọng Phụng, dựng những chân dung hí họa để phơi bày sự lố bịch trong xã hội. Sự hài hước đi cùng phê phán và châm biếm, phù hợp người muốn đọc văn học Việt Nam có giọng sắc sảo; không nên mặc định là truyện vui nhẹ nhàng cho mọi lứa tuổi."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/so-do-26"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người thích văn học Việt Nam và trào phúng",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người thích văn học Việt Nam, truyện trào phúng và tìm hiểu văn học trong nhà trường."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/so-do-26"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "châm biếm và hài hước sắc sảo",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Trào phúng, châm biếm qua những chân dung nhân vật hí họa."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/so-do-26"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ dùng mô tả chung của tác phẩm, không chuyển tuổi, số trang hoặc đặc điểm bản minh họa từ ấn bản nguồn."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ dùng mô tả chung của tác phẩm, không chuyển tuổi, số trang hoặc đặc điểm bản minh họa từ ấn bản nguồn. Nguồn: https://nxbkimdong.com.vn/so-do-26"
+    },
+    {
+      "productId": 12,
+      "title": "Vang Bóng Một Thời",
+      "author": "Nguyễn Tuân",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "truyện và tùy bút",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tập truyện và tùy bút của Nguyễn Tuân gợi lại nếp sống, thú chơi và vẻ đẹp văn hóa của một thời đã qua. Cách viết chú trọng ngôn ngữ và những con người tài hoa, với không khí hoài cổ. Đây là lựa chọn để thưởng thức văn chương và văn hóa, không phải sách hướng dẫn kỹ năng thực hành."
+          },
+          "sourceUrls": [
+            "https://nhanam.vn/review-sach-vang-bong-mot-thoi-nguyen-tuan"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "nếp sống và thú chơi xưa",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tập truyện và tùy bút của Nguyễn Tuân gợi lại nếp sống, thú chơi và vẻ đẹp văn hóa của một thời đã qua. Cách viết chú trọng ngôn ngữ và những con người tài hoa, với không khí hoài cổ. Đây là lựa chọn để thưởng thức văn chương và văn hóa, không phải sách hướng dẫn kỹ năng thực hành."
+          },
+          "sourceUrls": [
+            "https://nhanam.vn/review-sach-vang-bong-mot-thoi-nguyen-tuan"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "văn hóa truyền thống",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tập truyện và tùy bút của Nguyễn Tuân gợi lại nếp sống, thú chơi và vẻ đẹp văn hóa của một thời đã qua. Cách viết chú trọng ngôn ngữ và những con người tài hoa, với không khí hoài cổ. Đây là lựa chọn để thưởng thức văn chương và văn hóa, không phải sách hướng dẫn kỹ năng thực hành."
+          },
+          "sourceUrls": [
+            "https://nhanam.vn/review-sach-vang-bong-mot-thoi-nguyen-tuan"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "con người tài hoa",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tập truyện và tùy bút của Nguyễn Tuân gợi lại nếp sống, thú chơi và vẻ đẹp văn hóa của một thời đã qua. Cách viết chú trọng ngôn ngữ và những con người tài hoa, với không khí hoài cổ. Đây là lựa chọn để thưởng thức văn chương và văn hóa, không phải sách hướng dẫn kỹ năng thực hành."
+          },
+          "sourceUrls": [
+            "https://nhanam.vn/review-sach-vang-bong-mot-thoi-nguyen-tuan"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "thưởng thức ngôn ngữ văn chương",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Thưởng thức ngôn ngữ và tìm hiểu những nét văn hóa, nếp sống được tái hiện trong tác phẩm."
+          },
+          "sourceUrls": [
+            "https://nhanam.vn/review-sach-vang-bong-mot-thoi-nguyen-tuan"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "tập truyện và tùy bút",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tập truyện và tùy bút của Nguyễn Tuân gợi lại nếp sống, thú chơi và vẻ đẹp văn hóa của một thời đã qua. Cách viết chú trọng ngôn ngữ và những con người tài hoa, với không khí hoài cổ. Đây là lựa chọn để thưởng thức văn chương và văn hóa, không phải sách hướng dẫn kỹ năng thực hành."
+          },
+          "sourceUrls": [
+            "https://nhanam.vn/review-sach-vang-bong-mot-thoi-nguyen-tuan"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người thích văn chương và không khí hoài cổ",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người thích văn chương Nguyễn Tuân, văn hóa truyền thống và không khí hoài cổ."
+          },
+          "sourceUrls": [
+            "https://nhanam.vn/review-sach-vang-bong-mot-thoi-nguyen-tuan"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "giàu ngôn ngữ và vẻ đẹp văn hóa",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Truyện, tùy bút giàu ngôn ngữ, chú trọng vẻ đẹp văn hóa và con người tài hoa."
+          },
+          "sourceUrls": [
+            "https://nhanam.vn/review-sach-vang-bong-mot-thoi-nguyen-tuan"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn đơn vị phát hành về tác phẩm; không áp số lượng truyện và bài tùy bút của bản nguồn cho mọi ấn bản."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn đơn vị phát hành về tác phẩm; không áp số lượng truyện và bài tùy bút của bản nguồn cho mọi ấn bản. Nguồn: https://nhanam.vn/review-sach-vang-bong-mot-thoi-nguyen-tuan"
+    },
+    {
+      "productId": 14,
+      "title": "Việt Nam Sử Lược",
+      "author": "Trần Trọng Kim",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "sách lịch sử",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm trình bày lịch sử Việt Nam theo trình tự các thời kỳ và triều đại, nhằm giúp người đọc nắm một mạch lịch sử có hệ thống. Phù hợp nhu cầu tìm hiểu lịch sử tổng quát. Đây là cách trình bày lịch sử của Trần Trọng Kim, không nên xem như kết luận cuối cùng cho mọi tranh luận sử học."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/viet-nam-su-luoc-ban-dac-biet-26"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "lịch sử Việt Nam",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm trình bày lịch sử Việt Nam theo trình tự các thời kỳ và triều đại, nhằm giúp người đọc nắm một mạch lịch sử có hệ thống. Phù hợp nhu cầu tìm hiểu lịch sử tổng quát. Đây là cách trình bày lịch sử của Trần Trọng Kim, không nên xem như kết luận cuối cùng cho mọi tranh luận sử học."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/viet-nam-su-luoc-ban-dac-biet-26"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "các thời kỳ và triều đại",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm trình bày lịch sử Việt Nam theo trình tự các thời kỳ và triều đại, nhằm giúp người đọc nắm một mạch lịch sử có hệ thống. Phù hợp nhu cầu tìm hiểu lịch sử tổng quát. Đây là cách trình bày lịch sử của Trần Trọng Kim, không nên xem như kết luận cuối cùng cho mọi tranh luận sử học."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/viet-nam-su-luoc-ban-dac-biet-26"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "xây dựng cái nhìn tổng quan lịch sử Việt Nam",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Xây dựng cái nhìn tổng quan và liên hệ các thời kỳ lịch sử Việt Nam."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/viet-nam-su-luoc-ban-dac-biet-26"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "lược sử có hệ thống",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm trình bày lịch sử Việt Nam theo trình tự các thời kỳ và triều đại, nhằm giúp người đọc nắm một mạch lịch sử có hệ thống. Phù hợp nhu cầu tìm hiểu lịch sử tổng quát. Đây là cách trình bày lịch sử của Trần Trọng Kim, không nên xem như kết luận cuối cùng cho mọi tranh luận sử học."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/viet-nam-su-luoc-ban-dac-biet-26"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người tìm hiểu lịch sử Việt Nam tổng quát",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người muốn tìm hiểu lịch sử Việt Nam theo một mạch tổng quan."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/viet-nam-su-luoc-ban-dac-biet-26"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "trình tự thời kỳ và triều đại",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Lược sử trình bày theo trình tự thời kỳ, triều đại."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/viet-nam-su-luoc-ban-dac-biet-26"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Dùng phạm vi tác phẩm và lời giới thiệu; không nhập thông số hoặc phụ lục của bản đặc biệt."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Dùng phạm vi tác phẩm và lời giới thiệu; không nhập thông số hoặc phụ lục của bản đặc biệt. Nguồn: https://nxbkimdong.com.vn/viet-nam-su-luoc-ban-dac-biet-26"
+    },
+    {
+      "productId": 15,
+      "title": "Lịch Sử Thế Giới Hiện Đại",
+      "author": "Nguyễn Anh Thái (chủ biên)",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "giáo trình lịch sử",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình lịch sử thế giới hiện đại do Nguyễn Anh Thái chủ biên, trình bày các biến chuyển từ năm 1917, gồm cách mạng, phong trào giải phóng dân tộc, chủ nghĩa tư bản và quan hệ quốc tế. Có nội dung về Chiến tranh thế giới thứ hai cùng các chuyển biến khoa học, kỹ thuật sau chiến tranh. Chưa xác định mốc kết thúc của đúng bản cửa hàng, không khẳng định bao quát sự kiện đến hiện nay."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/lich-su-the-gioi-hien-dai/63442"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "lịch sử thế giới từ năm 1917",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình lịch sử thế giới hiện đại do Nguyễn Anh Thái chủ biên, trình bày các biến chuyển từ năm 1917, gồm cách mạng, phong trào giải phóng dân tộc, chủ nghĩa tư bản và quan hệ quốc tế. Có nội dung về Chiến tranh thế giới thứ hai cùng các chuyển biến khoa học, kỹ thuật sau chiến tranh. Chưa xác định mốc kết thúc của đúng bản cửa hàng, không khẳng định bao quát sự kiện đến hiện nay."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/lich-su-the-gioi-hien-dai/63442"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "quan hệ quốc tế",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình lịch sử thế giới hiện đại do Nguyễn Anh Thái chủ biên, trình bày các biến chuyển từ năm 1917, gồm cách mạng, phong trào giải phóng dân tộc, chủ nghĩa tư bản và quan hệ quốc tế. Có nội dung về Chiến tranh thế giới thứ hai cùng các chuyển biến khoa học, kỹ thuật sau chiến tranh. Chưa xác định mốc kết thúc của đúng bản cửa hàng, không khẳng định bao quát sự kiện đến hiện nay."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/lich-su-the-gioi-hien-dai/63442"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "giải phóng dân tộc",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình lịch sử thế giới hiện đại do Nguyễn Anh Thái chủ biên, trình bày các biến chuyển từ năm 1917, gồm cách mạng, phong trào giải phóng dân tộc, chủ nghĩa tư bản và quan hệ quốc tế. Có nội dung về Chiến tranh thế giới thứ hai cùng các chuyển biến khoa học, kỹ thuật sau chiến tranh. Chưa xác định mốc kết thúc của đúng bản cửa hàng, không khẳng định bao quát sự kiện đến hiện nay."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/lich-su-the-gioi-hien-dai/63442"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "Chiến tranh thế giới thứ hai",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình lịch sử thế giới hiện đại do Nguyễn Anh Thái chủ biên, trình bày các biến chuyển từ năm 1917, gồm cách mạng, phong trào giải phóng dân tộc, chủ nghĩa tư bản và quan hệ quốc tế. Có nội dung về Chiến tranh thế giới thứ hai cùng các chuyển biến khoa học, kỹ thuật sau chiến tranh. Chưa xác định mốc kết thúc của đúng bản cửa hàng, không khẳng định bao quát sự kiện đến hiện nay."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/lich-su-the-gioi-hien-dai/63442"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "hệ thống các chuyển biến lịch sử thế giới",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Hệ thống các chuyển biến lịch sử thế giới từ năm 1917 và bối cảnh quan hệ quốc tế."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/lich-su-the-gioi-hien-dai/63442"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "giáo trình theo giai đoạn và vấn đề",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình lịch sử thế giới hiện đại do Nguyễn Anh Thái chủ biên, trình bày các biến chuyển từ năm 1917, gồm cách mạng, phong trào giải phóng dân tộc, chủ nghĩa tư bản và quan hệ quốc tế. Có nội dung về Chiến tranh thế giới thứ hai cùng các chuyển biến khoa học, kỹ thuật sau chiến tranh. Chưa xác định mốc kết thúc của đúng bản cửa hàng, không khẳng định bao quát sự kiện đến hiện nay."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/lich-su-the-gioi-hien-dai/63442"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người học lịch sử thế giới hiện đại",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người học và tìm hiểu lịch sử thế giới hiện đại, quan hệ quốc tế và các phong trào chính trị thế kỷ XX."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/lich-su-the-gioi-hien-dai/63442"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "trình bày theo giai đoạn lịch sử",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Giáo trình lịch sử trình bày theo các giai đoạn và vấn đề."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/lich-su-the-gioi-hien-dai/63442"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa và thư viện xác nhận vai trò chủ biên. Không dùng mô tả cũ bao quát cả hai thế chiến hoặc đến hiện nay."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa và thư viện xác nhận vai trò chủ biên. Không dùng mô tả cũ bao quát cả hai thế chiến hoặc đến hiện nay. Nguồn: https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/lich-su-the-gioi-hien-dai/63442"
+    },
+    {
+      "productId": 18,
+      "title": "Blockchain Cơ Bản",
+      "author": "Daniel Drescher",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "sách công nghệ nền tảng",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Daniel Drescher giải thích blockchain qua 25 bước, dùng hình ảnh, phép so sánh và ví dụ để nối các khái niệm. Người đọc tìm hiểu cơ chế, tiềm năng và giới hạn của công nghệ chuỗi khối mà không cần công thức toán hay lập trình. Sách giúp hiểu nền tảng công nghệ, không bảo đảm lợi nhuận đầu tư tiền mã hóa."
+          },
+          "sourceUrls": [
+            "https://nhanam.vn/blockchain-co-ban-nha-nam"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "chuỗi khối / blockchain basics",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Daniel Drescher giải thích blockchain qua 25 bước, dùng hình ảnh, phép so sánh và ví dụ để nối các khái niệm. Người đọc tìm hiểu cơ chế, tiềm năng và giới hạn của công nghệ chuỗi khối mà không cần công thức toán hay lập trình. Sách giúp hiểu nền tảng công nghệ, không bảo đảm lợi nhuận đầu tư tiền mã hóa."
+          },
+          "sourceUrls": [
+            "https://nhanam.vn/blockchain-co-ban-nha-nam"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "cơ chế hoạt động blockchain",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Daniel Drescher giải thích blockchain qua 25 bước, dùng hình ảnh, phép so sánh và ví dụ để nối các khái niệm. Người đọc tìm hiểu cơ chế, tiềm năng và giới hạn của công nghệ chuỗi khối mà không cần công thức toán hay lập trình. Sách giúp hiểu nền tảng công nghệ, không bảo đảm lợi nhuận đầu tư tiền mã hóa."
+          },
+          "sourceUrls": [
+            "https://nhanam.vn/blockchain-co-ban-nha-nam"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "tiềm năng và giới hạn công nghệ chuỗi khối",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Daniel Drescher giải thích blockchain qua 25 bước, dùng hình ảnh, phép so sánh và ví dụ để nối các khái niệm. Người đọc tìm hiểu cơ chế, tiềm năng và giới hạn của công nghệ chuỗi khối mà không cần công thức toán hay lập trình. Sách giúp hiểu nền tảng công nghệ, không bảo đảm lợi nhuận đầu tư tiền mã hóa."
+          },
+          "sourceUrls": [
+            "https://nhanam.vn/blockchain-co-ban-nha-nam"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "hiểu nền tảng blockchain",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Hiểu cách blockchain hoạt động cùng tiềm năng, giới hạn và ý nghĩa ứng dụng."
+          },
+          "sourceUrls": [
+            "https://nhanam.vn/blockchain-co-ban-nha-nam"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "giải thích qua 25 bước",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Daniel Drescher giải thích blockchain qua 25 bước, dùng hình ảnh, phép so sánh và ví dụ để nối các khái niệm. Người đọc tìm hiểu cơ chế, tiềm năng và giới hạn của công nghệ chuỗi khối mà không cần công thức toán hay lập trình. Sách giúp hiểu nền tảng công nghệ, không bảo đảm lợi nhuận đầu tư tiền mã hóa."
+          },
+          "sourceUrls": [
+            "https://nhanam.vn/blockchain-co-ban-nha-nam"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người chưa có kiến thức kỹ thuật chuyên môn",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người muốn hiểu nền tảng blockchain, kể cả người chưa có kiến thức kỹ thuật chuyên môn."
+          },
+          "sourceUrls": [
+            "https://nhanam.vn/blockchain-co-ban-nha-nam"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "hình ảnh phép so sánh và ví dụ",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Giải thích theo 25 bước với hình ảnh, phép so sánh và ví dụ."
+          },
+          "sourceUrls": [
+            "https://nhanam.vn/blockchain-co-ban-nha-nam"
+          ]
+        },
+        {
+          "dimension": "level",
+          "value": "không đòi hỏi nền tảng kỹ thuật",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingLevel",
+            "quote": "Không đòi hỏi nền tảng kỹ thuật; không dùng công thức toán hay lập trình."
+          },
+          "sourceUrls": [
+            "https://nhanam.vn/blockchain-co-ban-nha-nam"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa và Nha Nam xác nhận Blockchain cơ bản của Daniel Drescher; không phải tác phẩm Don Tapscott.",
+        "Sách nền tảng công nghệ, không phải hướng dẫn đầu tư hay cam kết lợi nhuận."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa và Nha Nam xác nhận Blockchain cơ bản của Daniel Drescher; không phải tác phẩm Don Tapscott. Nguồn: https://nhanam.vn/blockchain-co-ban-nha-nam"
+    },
+    {
+      "productId": 20,
+      "title": "Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật",
+      "author": "Đỗ Trung Kiên (chủ biên), Đặng Xuân Thọ, Nguyễn Thị Hồng, Phạm Thị Lan",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "giáo trình công nghệ thông tin",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình do Đỗ Trung Kiên chủ biên, giới thiệu giải thuật, phân tích giải thuật và đệ quy, cùng các cấu trúc như danh sách liên kết, ngăn xếp, hàng đợi và cây. Có nội dung tìm kiếm và sắp xếp. Chưa có căn cứ để xác nhận ngôn ngữ lập trình hoặc mức bao quát đồ thị của đúng bản đang bán."
+          },
+          "sourceUrls": [
+            "https://thuvien.hiu.vn/Opac/DmdInfo.aspx?=&collection_id=27&dmd_id=27629&heading_id=5"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "cấu trúc dữ liệu / data structures",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình do Đỗ Trung Kiên chủ biên, giới thiệu giải thuật, phân tích giải thuật và đệ quy, cùng các cấu trúc như danh sách liên kết, ngăn xếp, hàng đợi và cây. Có nội dung tìm kiếm và sắp xếp. Chưa có căn cứ để xác nhận ngôn ngữ lập trình hoặc mức bao quát đồ thị của đúng bản đang bán."
+          },
+          "sourceUrls": [
+            "https://thuvien.hiu.vn/Opac/DmdInfo.aspx?=&collection_id=27&dmd_id=27629&heading_id=5"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "phân tích giải thuật",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình do Đỗ Trung Kiên chủ biên, giới thiệu giải thuật, phân tích giải thuật và đệ quy, cùng các cấu trúc như danh sách liên kết, ngăn xếp, hàng đợi và cây. Có nội dung tìm kiếm và sắp xếp. Chưa có căn cứ để xác nhận ngôn ngữ lập trình hoặc mức bao quát đồ thị của đúng bản đang bán."
+          },
+          "sourceUrls": [
+            "https://thuvien.hiu.vn/Opac/DmdInfo.aspx?=&collection_id=27&dmd_id=27629&heading_id=5"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "đệ quy / recursion",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình do Đỗ Trung Kiên chủ biên, giới thiệu giải thuật, phân tích giải thuật và đệ quy, cùng các cấu trúc như danh sách liên kết, ngăn xếp, hàng đợi và cây. Có nội dung tìm kiếm và sắp xếp. Chưa có căn cứ để xác nhận ngôn ngữ lập trình hoặc mức bao quát đồ thị của đúng bản đang bán."
+          },
+          "sourceUrls": [
+            "https://thuvien.hiu.vn/Opac/DmdInfo.aspx?=&collection_id=27&dmd_id=27629&heading_id=5"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "danh sách liên kết ngăn xếp hàng đợi và cây",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình do Đỗ Trung Kiên chủ biên, giới thiệu giải thuật, phân tích giải thuật và đệ quy, cùng các cấu trúc như danh sách liên kết, ngăn xếp, hàng đợi và cây. Có nội dung tìm kiếm và sắp xếp. Chưa có căn cứ để xác nhận ngôn ngữ lập trình hoặc mức bao quát đồ thị của đúng bản đang bán."
+          },
+          "sourceUrls": [
+            "https://thuvien.hiu.vn/Opac/DmdInfo.aspx?=&collection_id=27&dmd_id=27629&heading_id=5"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "tìm kiếm và sắp xếp",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình do Đỗ Trung Kiên chủ biên, giới thiệu giải thuật, phân tích giải thuật và đệ quy, cùng các cấu trúc như danh sách liên kết, ngăn xếp, hàng đợi và cây. Có nội dung tìm kiếm và sắp xếp. Chưa có căn cứ để xác nhận ngôn ngữ lập trình hoặc mức bao quát đồ thị của đúng bản đang bán."
+          },
+          "sourceUrls": [
+            "https://thuvien.hiu.vn/Opac/DmdInfo.aspx?=&collection_id=27&dmd_id=27629&heading_id=5"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "hệ thống cấu trúc dữ liệu và giải thuật",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Hệ thống kiến thức về phân tích giải thuật, cấu trúc dữ liệu, tìm kiếm và sắp xếp."
+          },
+          "sourceUrls": [
+            "https://thuvien.hiu.vn/Opac/DmdInfo.aspx?=&collection_id=27&dmd_id=27629&heading_id=5"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "giáo trình chuyên ngành",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình do Đỗ Trung Kiên chủ biên, giới thiệu giải thuật, phân tích giải thuật và đệ quy, cùng các cấu trúc như danh sách liên kết, ngăn xếp, hàng đợi và cây. Có nội dung tìm kiếm và sắp xếp. Chưa có căn cứ để xác nhận ngôn ngữ lập trình hoặc mức bao quát đồ thị của đúng bản đang bán."
+          },
+          "sourceUrls": [
+            "https://thuvien.hiu.vn/Opac/DmdInfo.aspx?=&collection_id=27&dmd_id=27629&heading_id=5"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người học cấu trúc dữ liệu và giải thuật",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người học cấu trúc dữ liệu và giải thuật trong ngành công nghệ thông tin."
+          },
+          "sourceUrls": [
+            "https://thuvien.hiu.vn/Opac/DmdInfo.aspx?=&collection_id=27&dmd_id=27629&heading_id=5"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "khái niệm cấu trúc dữ liệu và giải thuật",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Giáo trình chuyên ngành về các khái niệm, cấu trúc dữ liệu và giải thuật."
+          },
+          "sourceUrls": [
+            "https://thuvien.hiu.vn/Opac/DmdInfo.aspx?=&collection_id=27&dmd_id=27629&heading_id=5"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa khớp bốn tác giả trong bản ghi thư viện; bỏ tên Đinh Mạnh Tường gán nhầm. Không nhập ngôn ngữ code hoặc số trang.",
+        "Không suy ra ngôn ngữ code, framework, chuẩn mới hoặc bài tập/đáp án từ nhãn môn học."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa khớp bốn tác giả trong bản ghi thư viện; bỏ tên Đinh Mạnh Tường gán nhầm. Không nhập ngôn ngữ code hoặc số trang. Nguồn: https://thuvien.hiu.vn/Opac/DmdInfo.aspx?=&collection_id=27&dmd_id=27629&heading_id=5"
+    },
+    {
+      "productId": 21,
+      "title": "Mạng Máy Tính Và Các Hệ Thống Mở",
+      "author": "Nguyễn Thúc Hải",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "giáo trình mạng máy tính",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN. Đây là tài liệu về nền tảng mạng; nguồn mô tả còn đề cập công nghệ của giai đoạn trước. Chưa xác nhận bản cửa hàng có cập nhật các chuẩn mạng mới."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/mang-may-tinh-va-cac-he-thong-mo/67056"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "mạng máy tính / computer networking",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN. Đây là tài liệu về nền tảng mạng; nguồn mô tả còn đề cập công nghệ của giai đoạn trước. Chưa xác nhận bản cửa hàng có cập nhật các chuẩn mạng mới."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/mang-may-tinh-va-cac-he-thong-mo/67056"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "mô hình OSI",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN. Đây là tài liệu về nền tảng mạng; nguồn mô tả còn đề cập công nghệ của giai đoạn trước. Chưa xác nhận bản cửa hàng có cập nhật các chuẩn mạng mới."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/mang-may-tinh-va-cac-he-thong-mo/67056"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "TCP/IP và Internet",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN. Đây là tài liệu về nền tảng mạng; nguồn mô tả còn đề cập công nghệ của giai đoạn trước. Chưa xác nhận bản cửa hàng có cập nhật các chuẩn mạng mới."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/mang-may-tinh-va-cac-he-thong-mo/67056"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "mạng cục bộ",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN. Đây là tài liệu về nền tảng mạng; nguồn mô tả còn đề cập công nghệ của giai đoạn trước. Chưa xác nhận bản cửa hàng có cập nhật các chuẩn mạng mới."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/mang-may-tinh-va-cac-he-thong-mo/67056"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tìm hiểu nền tảng mạng và giao thức",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tìm hiểu mô hình mạng, TCP/IP và Internet ở mức nền tảng."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/mang-may-tinh-va-cac-he-thong-mo/67056"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "giáo trình chuyên ngành",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN. Đây là tài liệu về nền tảng mạng; nguồn mô tả còn đề cập công nghệ của giai đoạn trước. Chưa xác nhận bản cửa hàng có cập nhật các chuẩn mạng mới."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/mang-may-tinh-va-cac-he-thong-mo/67056"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người học công nghệ thông tin về mạng",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người học công nghệ thông tin và người muốn tham khảo kiến thức nền tảng mạng máy tính."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/mang-may-tinh-va-cac-he-thong-mo/67056"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "trình bày mô hình giao thức và hệ thống",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Giáo trình chuyên ngành trình bày các mô hình, giao thức và hệ thống mạng."
+          },
+          "sourceUrls": [
+            "https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/mang-may-tinh-va-cac-he-thong-mo/67056"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa khớp tên tác phẩm cụ thể của Nguyễn Thúc Hải. Không quảng bá Wi-Fi, 5G hoặc bảo mật cập nhật chưa được xác nhận.",
+        "Không suy ra ngôn ngữ code, framework, chuẩn mới hoặc bài tập/đáp án từ nhãn môn học."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa khớp tên tác phẩm cụ thể của Nguyễn Thúc Hải. Không quảng bá Wi-Fi, 5G hoặc bảo mật cập nhật chưa được xác nhận. Nguồn: https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/mang-may-tinh-va-cac-he-thong-mo/67056"
+    },
+    {
+      "productId": 23,
+      "title": "Giáo Trình Cơ Sở Dữ Liệu",
+      "author": "Phan Tấn Quốc & Nguyễn Thị Uyên Nhi",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "giáo trình công nghệ thông tin",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học cơ sở dữ liệu. Chưa có mục lục đúng bản để xác nhận chương SQL, hệ quản trị sử dụng hoặc nội dung chi tiết."
+          },
+          "sourceUrls": [
+            "https://vnuhcmpress.edu.vn/giao-trinh-co-so-du-lieu-b40207.html",
+            "https://thuvien.stu.edu.vn/tracuutailieutruyenthong2xem.aspx?intItemID=9298"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "cơ sở dữ liệu / databases",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học cơ sở dữ liệu. Chưa có mục lục đúng bản để xác nhận chương SQL, hệ quản trị sử dụng hoặc nội dung chi tiết."
+          },
+          "sourceUrls": [
+            "https://vnuhcmpress.edu.vn/giao-trinh-co-so-du-lieu-b40207.html",
+            "https://thuvien.stu.edu.vn/tracuutailieutruyenthong2xem.aspx?intItemID=9298"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "môn học cơ sở dữ liệu",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học cơ sở dữ liệu. Chưa có mục lục đúng bản để xác nhận chương SQL, hệ quản trị sử dụng hoặc nội dung chi tiết."
+          },
+          "sourceUrls": [
+            "https://vnuhcmpress.edu.vn/giao-trinh-co-so-du-lieu-b40207.html",
+            "https://thuvien.stu.edu.vn/tracuutailieutruyenthong2xem.aspx?intItemID=9298"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tham khảo môn cơ sở dữ liệu",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tham khảo môn học cơ sở dữ liệu; cần mục lục để kiểm tra nội dung phù hợp chương trình học."
+          },
+          "sourceUrls": [
+            "https://vnuhcmpress.edu.vn/giao-trinh-co-so-du-lieu-b40207.html",
+            "https://thuvien.stu.edu.vn/tracuutailieutruyenthong2xem.aspx?intItemID=9298"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "giáo trình chuyên ngành cơ sở dữ liệu",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học cơ sở dữ liệu. Chưa có mục lục đúng bản để xác nhận chương SQL, hệ quản trị sử dụng hoặc nội dung chi tiết."
+          },
+          "sourceUrls": [
+            "https://vnuhcmpress.edu.vn/giao-trinh-co-so-du-lieu-b40207.html",
+            "https://thuvien.stu.edu.vn/tracuutailieutruyenthong2xem.aspx?intItemID=9298"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người học máy tính và hệ thống thông tin",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người học máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin."
+          },
+          "sourceUrls": [
+            "https://vnuhcmpress.edu.vn/giao-trinh-co-so-du-lieu-b40207.html",
+            "https://thuvien.stu.edu.vn/tracuutailieutruyenthong2xem.aspx?intItemID=9298"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người học toán ứng dụng",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người học máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin."
+          },
+          "sourceUrls": [
+            "https://vnuhcmpress.edu.vn/giao-trinh-co-so-du-lieu-b40207.html",
+            "https://thuvien.stu.edu.vn/tracuutailieutruyenthong2xem.aspx?intItemID=9298"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "giáo trình chuyên ngành",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Giáo trình chuyên ngành cơ sở dữ liệu."
+          },
+          "sourceUrls": [
+            "https://vnuhcmpress.edu.vn/giao-trinh-co-so-du-lieu-b40207.html",
+            "https://thuvien.stu.edu.vn/tracuutailieutruyenthong2xem.aspx?intItemID=9298"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa và thư viện xác nhận đồng tác giả; NXB xác nhận ngành học. Không dùng mục lục bản một tác giả năm 2007 cho bản này.",
+        "Không suy ra ngôn ngữ code, framework, chuẩn mới hoặc bài tập/đáp án từ nhãn môn học."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa và thư viện xác nhận đồng tác giả; NXB xác nhận ngành học. Không dùng mục lục bản một tác giả năm 2007 cho bản này. Nguồn: https://vnuhcmpress.edu.vn/giao-trinh-co-so-du-lieu-b40207.html | https://thuvien.stu.edu.vn/tracuutailieutruyenthong2xem.aspx?intItemID=9298"
+    },
+    {
+      "productId": 24,
+      "title": "Đại Việt Sử Ký Toàn Thư",
+      "author": "Ngô Sĩ Liên",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "sách lịch sử",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bộ sử biên niên Việt Nam, gắn với Ngô Sĩ Liên và sự tiếp nối của các sử gia triều Lê. Các sự kiện được ghi theo thời gian, là nguồn để tìm hiểu lịch sử và cách người xưa chép sử. Chưa xác định tập, bản dịch hoặc việc sản phẩm cửa hàng là một tập hay trọn bộ; không khẳng định bao quát toàn bộ các phần."
+          },
+          "sourceUrls": [
+            "https://hannom.vass.gov.vn/web/tchn/DATA1/9903v.htm"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "sử biên niên Việt Nam",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bộ sử biên niên Việt Nam, gắn với Ngô Sĩ Liên và sự tiếp nối của các sử gia triều Lê. Các sự kiện được ghi theo thời gian, là nguồn để tìm hiểu lịch sử và cách người xưa chép sử. Chưa xác định tập, bản dịch hoặc việc sản phẩm cửa hàng là một tập hay trọn bộ; không khẳng định bao quát toàn bộ các phần."
+          },
+          "sourceUrls": [
+            "https://hannom.vass.gov.vn/web/tchn/DATA1/9903v.htm"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "cách người xưa chép sử",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bộ sử biên niên Việt Nam, gắn với Ngô Sĩ Liên và sự tiếp nối của các sử gia triều Lê. Các sự kiện được ghi theo thời gian, là nguồn để tìm hiểu lịch sử và cách người xưa chép sử. Chưa xác định tập, bản dịch hoặc việc sản phẩm cửa hàng là một tập hay trọn bộ; không khẳng định bao quát toàn bộ các phần."
+          },
+          "sourceUrls": [
+            "https://hannom.vass.gov.vn/web/tchn/DATA1/9903v.htm"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tham khảo sử liệu lịch sử",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tham khảo sử liệu và đối chiếu cách ghi chép, nhận xét lịch sử của các sử gia."
+          },
+          "sourceUrls": [
+            "https://hannom.vass.gov.vn/web/tchn/DATA1/9903v.htm"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "bộ sử biên niên",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bộ sử biên niên Việt Nam, gắn với Ngô Sĩ Liên và sự tiếp nối của các sử gia triều Lê. Các sự kiện được ghi theo thời gian, là nguồn để tìm hiểu lịch sử và cách người xưa chép sử. Chưa xác định tập, bản dịch hoặc việc sản phẩm cửa hàng là một tập hay trọn bộ; không khẳng định bao quát toàn bộ các phần."
+          },
+          "sourceUrls": [
+            "https://hannom.vass.gov.vn/web/tchn/DATA1/9903v.htm"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người tìm hiểu lịch sử và sử liệu Việt Nam",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người tìm hiểu lịch sử Việt Nam, sử liệu và cách chép sử truyền thống."
+          },
+          "sourceUrls": [
+            "https://hannom.vass.gov.vn/web/tchn/DATA1/9903v.htm"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "ghi chép sự kiện theo thời gian",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Sử biên niên, ghi chép sự kiện theo trình tự thời gian."
+          },
+          "sourceUrls": [
+            "https://hannom.vass.gov.vn/web/tchn/DATA1/9903v.htm"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn Viện Hán Nôm về lịch sử tác phẩm. Không suy ra tập, bản dịch, ISBN hoặc bộ đầy đủ từ tên chung."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn Viện Hán Nôm về lịch sử tác phẩm. Không suy ra tập, bản dịch, ISBN hoặc bộ đầy đủ từ tên chung. Nguồn: https://hannom.vass.gov.vn/web/tchn/DATA1/9903v.htm"
+    },
+    {
+      "productId": 25,
+      "title": "Súng, Vi Trùng Và Thép",
+      "author": "Jared Diamond",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "lịch sử liên ngành",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Đặt câu hỏi vì sao các xã hội phát triển sức mạnh và công nghệ khác nhau. Jared Diamond kết hợp lịch sử với thực vật học, động vật học và vi sinh để trình bày lập luận về sản xuất lương thực, xã hội định cư và công nghệ."
+          },
+          "sourceUrls": [
+            "https://jareddiamond.org/Jared_Diamond/Guns%2C_Germs%2C_and_Steel.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "sự phát triển khác nhau của xã hội",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Đặt câu hỏi vì sao các xã hội phát triển sức mạnh và công nghệ khác nhau. Jared Diamond kết hợp lịch sử với thực vật học, động vật học và vi sinh để trình bày lập luận về sản xuất lương thực, xã hội định cư và công nghệ."
+          },
+          "sourceUrls": [
+            "https://jareddiamond.org/Jared_Diamond/Guns%2C_Germs%2C_and_Steel.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "sản xuất lương thực và xã hội định cư",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Đặt câu hỏi vì sao các xã hội phát triển sức mạnh và công nghệ khác nhau. Jared Diamond kết hợp lịch sử với thực vật học, động vật học và vi sinh để trình bày lập luận về sản xuất lương thực, xã hội định cư và công nghệ."
+          },
+          "sourceUrls": [
+            "https://jareddiamond.org/Jared_Diamond/Guns%2C_Germs%2C_and_Steel.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "lịch sử công nghệ",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Đặt câu hỏi vì sao các xã hội phát triển sức mạnh và công nghệ khác nhau. Jared Diamond kết hợp lịch sử với thực vật học, động vật học và vi sinh để trình bày lập luận về sản xuất lương thực, xã hội định cư và công nghệ."
+          },
+          "sourceUrls": [
+            "https://jareddiamond.org/Jared_Diamond/Guns%2C_Germs%2C_and_Steel.html"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tìm hiểu điều kiện ảnh hưởng phát triển xã hội",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tìm hiểu lập luận của tác giả về các điều kiện ảnh hưởng đến sự phát triển xã hội."
+          },
+          "sourceUrls": [
+            "https://jareddiamond.org/Jared_Diamond/Guns%2C_Germs%2C_and_Steel.html"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "phân tích lịch sử liên ngành",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Phân tích lịch sử bằng cách kết hợp nhiều ngành nghiên cứu."
+          },
+          "sourceUrls": [
+            "https://jareddiamond.org/Jared_Diamond/Guns%2C_Germs%2C_and_Steel.html"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người tìm hiểu lịch sử xã hội qua nhiều ngành",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người muốn tìm hiểu lịch sử các xã hội qua lập luận liên ngành."
+          },
+          "sourceUrls": [
+            "https://jareddiamond.org/Jared_Diamond/Guns%2C_Germs%2C_and_Steel.html"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "kết hợp nhiều ngành nghiên cứu",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Phân tích lịch sử bằng cách kết hợp nhiều ngành nghiên cứu."
+          },
+          "sourceUrls": [
+            "https://jareddiamond.org/Jared_Diamond/Guns%2C_Germs%2C_and_Steel.html"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Tóm lược nội dung tác phẩm; đối tượng theo mối quan tâm là phân loại biên tập từ nội dung nguồn. Không xác nhận tuổi cụ thể, độ khó hay ấn bản."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Tóm lược nội dung tác phẩm; đối tượng theo mối quan tâm là phân loại biên tập từ nội dung nguồn. Không xác nhận tuổi cụ thể, độ khó hay ấn bản. Nguồn: https://jareddiamond.org/Jared_Diamond/Guns%2C_Germs%2C_and_Steel.html"
+    },
+    {
+      "productId": 28,
+      "title": "Không Gia Đình",
+      "author": "Hector Malot",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "truyện phiêu lưu",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Rémi lưu lạc khắp nước Pháp cùng gánh hát rong và học cách sống qua gian khổ. Câu chuyện gắn cuộc phiêu lưu với tình cảm gia đình, lao động, tự trọng và lòng biết ơn."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/khong-gia-dinh-26?view=amp"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "hành trình Rémi lưu lạc",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Rémi lưu lạc khắp nước Pháp cùng gánh hát rong và học cách sống qua gian khổ. Câu chuyện gắn cuộc phiêu lưu với tình cảm gia đình, lao động, tự trọng và lòng biết ơn."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/khong-gia-dinh-26?view=amp"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "tình cảm gia đình",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Rémi lưu lạc khắp nước Pháp cùng gánh hát rong và học cách sống qua gian khổ. Câu chuyện gắn cuộc phiêu lưu với tình cảm gia đình, lao động, tự trọng và lòng biết ơn."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/khong-gia-dinh-26?view=amp"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "lao động tự trọng và lòng biết ơn",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Rémi lưu lạc khắp nước Pháp cùng gánh hát rong và học cách sống qua gian khổ. Câu chuyện gắn cuộc phiêu lưu với tình cảm gia đình, lao động, tự trọng và lòng biết ơn."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/khong-gia-dinh-26?view=amp"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "suy ngẫm về lòng dũng cảm và gia đình",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Suy ngẫm về lòng dũng cảm, tự trọng và tình cảm gia đình."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/khong-gia-dinh-26?view=amp"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "câu chuyện phiêu lưu",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Rémi lưu lạc khắp nước Pháp cùng gánh hát rong và học cách sống qua gian khổ. Câu chuyện gắn cuộc phiêu lưu với tình cảm gia đình, lao động, tự trọng và lòng biết ơn."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/khong-gia-dinh-26?view=amp"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người thích phiêu lưu và tình cảm gia đình",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người thích truyện phiêu lưu và tình cảm gia đình; NXB giới thiệu tác phẩm cho thiếu niên."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/khong-gia-dinh-26?view=amp"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "hành trình có gian khổ và mất mát",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Truyện phiêu lưu có gian khổ, mất mát và tình cảm gia đình."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/khong-gia-dinh-26?view=amp"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không dùng độ tuổi hay thông số của ấn bản nguồn khi chưa xác nhận bản bán tại cửa hàng."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không dùng độ tuổi hay thông số của ấn bản nguồn khi chưa xác nhận bản bán tại cửa hàng. Nguồn: https://nxbkimdong.com.vn/khong-gia-dinh-26?view=amp"
+    },
+    {
+      "productId": 30,
+      "title": "Suối Nguồn (The Fountainhead)",
+      "author": "Ayn Rand",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "tiểu thuyết tư tưởng",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người quan tâm tiểu thuyết tư tưởng, sáng tạo và quan hệ giữa cá nhân với xã hội."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/296786/the-fountainhead-by-ayn-rand/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "nguyên tắc sáng tạo",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Câu chuyện về kiến trúc sư Howard Roark và việc giữ nguyên tắc sáng tạo trước sức ép xã hội. Tiểu thuyết trình bày tư tưởng của Ayn Rand về cái tôi và vai trò của cá nhân."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/296786/the-fountainhead-by-ayn-rand/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "cá nhân trước sức ép xã hội",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Câu chuyện về kiến trúc sư Howard Roark và việc giữ nguyên tắc sáng tạo trước sức ép xã hội. Tiểu thuyết trình bày tư tưởng của Ayn Rand về cái tôi và vai trò của cá nhân."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/296786/the-fountainhead-by-ayn-rand/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "kiến trúc sư Howard Roark",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Câu chuyện về kiến trúc sư Howard Roark và việc giữ nguyên tắc sáng tạo trước sức ép xã hội. Tiểu thuyết trình bày tư tưởng của Ayn Rand về cái tôi và vai trò của cá nhân."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/296786/the-fountainhead-by-ayn-rand/"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tìm hiểu quan điểm về cá nhân và sáng tạo",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tìm hiểu quan điểm của tác giả về cá nhân và sáng tạo qua câu chuyện."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/296786/the-fountainhead-by-ayn-rand/"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "tiểu thuyết",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Câu chuyện về kiến trúc sư Howard Roark và việc giữ nguyên tắc sáng tạo trước sức ép xã hội. Tiểu thuyết trình bày tư tưởng của Ayn Rand về cái tôi và vai trò của cá nhân."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/296786/the-fountainhead-by-ayn-rand/"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người quan tâm sáng tạo và quan hệ cá nhân xã hội",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người quan tâm tiểu thuyết tư tưởng, sáng tạo và quan hệ giữa cá nhân với xã hội."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/296786/the-fountainhead-by-ayn-rand/"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "xung đột giữa nhân vật và xã hội",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Tiểu thuyết tư tưởng với xung đột giữa nhân vật và xã hội."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/296786/the-fountainhead-by-ayn-rand/"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Tóm lược nội dung tác phẩm; đối tượng theo mối quan tâm là phân loại biên tập từ nội dung nguồn. Không xác nhận tuổi cụ thể, độ khó hay ấn bản."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Tóm lược nội dung tác phẩm; đối tượng theo mối quan tâm là phân loại biên tập từ nội dung nguồn. Không xác nhận tuổi cụ thể, độ khó hay ấn bản. Nguồn: https://www.penguinrandomhouse.com/books/296786/the-fountainhead-by-ayn-rand/"
+    },
+    {
+      "productId": 31,
+      "title": "Sức Mạnh Tiềm Thức",
+      "author": "Joseph Murphy",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "phát triển bản thân / self help",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người muốn tham khảo sách phát triển bản thân về suy nghĩ và mục tiêu cá nhân."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/549149/the-power-of-your-subconscious-mind-by-joseph-murphy-phd-dd/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "tiềm thức / subconscious mind",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Joseph Murphy trình bày quan điểm về tiềm thức và việc thay đổi cách suy nghĩ, cùng các kỹ thuật và tình huống thực tế liên quan đến mục tiêu, công việc và các mối quan hệ."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/549149/the-power-of-your-subconscious-mind-by-joseph-murphy-phd-dd/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "thay đổi cách suy nghĩ",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Joseph Murphy trình bày quan điểm về tiềm thức và việc thay đổi cách suy nghĩ, cùng các kỹ thuật và tình huống thực tế liên quan đến mục tiêu, công việc và các mối quan hệ."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/549149/the-power-of-your-subconscious-mind-by-joseph-murphy-phd-dd/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "mục tiêu công việc và mối quan hệ",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Joseph Murphy trình bày quan điểm về tiềm thức và việc thay đổi cách suy nghĩ, cùng các kỹ thuật và tình huống thực tế liên quan đến mục tiêu, công việc và các mối quan hệ."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/549149/the-power-of-your-subconscious-mind-by-joseph-murphy-phd-dd/"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tham khảo cách thay đổi lối suy nghĩ",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tham khảo cách tác giả đề xuất thay đổi lối suy nghĩ khi hướng tới mục tiêu cá nhân."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/549149/the-power-of-your-subconscious-mind-by-joseph-murphy-phd-dd/"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "kỹ thuật và tình huống thực tế",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Joseph Murphy trình bày quan điểm về tiềm thức và việc thay đổi cách suy nghĩ, cùng các kỹ thuật và tình huống thực tế liên quan đến mục tiêu, công việc và các mối quan hệ."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/549149/the-power-of-your-subconscious-mind-by-joseph-murphy-phd-dd/"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người quan tâm suy nghĩ và mục tiêu cá nhân",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người muốn tham khảo sách phát triển bản thân về suy nghĩ và mục tiêu cá nhân."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/549149/the-power-of-your-subconscious-mind-by-joseph-murphy-phd-dd/"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "trình bày theo quan điểm tác giả",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Trình bày kỹ thuật và tình huống thực tế theo quan điểm của tác giả."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/549149/the-power-of-your-subconscious-mind-by-joseph-murphy-phd-dd/"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ mô tả quan điểm và nội dung tác phẩm; không duyệt lời hứa chữa bệnh, thành công hoặc tác dụng khoa học đã được chứng minh. Không nhập tác phẩm tặng kèm của bản nguồn.",
+        "Quan điểm và câu chuyện của tác giả không chứng minh tác dụng khoa học hoặc chữa lành."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ mô tả quan điểm và nội dung tác phẩm; không duyệt lời hứa chữa bệnh, thành công hoặc tác dụng khoa học đã được chứng minh. Không nhập tác phẩm tặng kèm của bản nguồn. Nguồn: https://www.penguinrandomhouse.com/books/549149/the-power-of-your-subconscious-mind-by-joseph-murphy-phd-dd/"
+    },
+    {
+      "productId": 33,
+      "title": "Hành Trình Về Phương Đông",
+      "author": "Baird T. Spalding",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "văn học tâm linh",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người quan tâm tư tưởng phương Đông và văn học tâm linh."
+          },
+          "sourceUrls": [
+            "https://firstnews.vn/upload/docthu/HanhTrinhVePhuongDong%28biamem%29/index.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "tư tưởng và đời sống tinh thần phương Đông",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bản Nguyên Phong phóng tác kể hành trình tìm hiểu tư tưởng và đời sống tinh thần phương Đông, qua các cuộc gặp đạo sĩ và những trao đổi về khoa học, tâm linh, các hiện tượng huyền bí."
+          },
+          "sourceUrls": [
+            "https://firstnews.vn/upload/docthu/HanhTrinhVePhuongDong%28biamem%29/index.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "cuộc gặp đạo sĩ",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bản Nguyên Phong phóng tác kể hành trình tìm hiểu tư tưởng và đời sống tinh thần phương Đông, qua các cuộc gặp đạo sĩ và những trao đổi về khoa học, tâm linh, các hiện tượng huyền bí."
+          },
+          "sourceUrls": [
+            "https://firstnews.vn/upload/docthu/HanhTrinhVePhuongDong%28biamem%29/index.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "trao đổi về khoa học và tâm linh",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bản Nguyên Phong phóng tác kể hành trình tìm hiểu tư tưởng và đời sống tinh thần phương Đông, qua các cuộc gặp đạo sĩ và những trao đổi về khoa học, tâm linh, các hiện tượng huyền bí."
+          },
+          "sourceUrls": [
+            "https://firstnews.vn/upload/docthu/HanhTrinhVePhuongDong%28biamem%29/index.html"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tìm hiểu quan điểm đời sống tinh thần phương Đông",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tìm hiểu các quan điểm được trình bày về đời sống tinh thần phương Đông."
+          },
+          "sourceUrls": [
+            "https://firstnews.vn/upload/docthu/HanhTrinhVePhuongDong%28biamem%29/index.html"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "kể hành trình khám phá",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Bản Nguyên Phong phóng tác kể hành trình tìm hiểu tư tưởng và đời sống tinh thần phương Đông, qua các cuộc gặp đạo sĩ và những trao đổi về khoa học, tâm linh, các hiện tượng huyền bí."
+          },
+          "sourceUrls": [
+            "https://firstnews.vn/upload/docthu/HanhTrinhVePhuongDong%28biamem%29/index.html"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người quan tâm tư tưởng phương Đông",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người quan tâm tư tưởng phương Đông và văn học tâm linh."
+          },
+          "sourceUrls": [
+            "https://firstnews.vn/upload/docthu/HanhTrinhVePhuongDong%28biamem%29/index.html"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "hành trình và các cuộc trao đổi",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Kể hành trình khám phá và các cuộc trao đổi về tư tưởng, tâm linh."
+          },
+          "sourceUrls": [
+            "https://firstnews.vn/upload/docthu/HanhTrinhVePhuongDong%28biamem%29/index.html"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn đọc thử chính thức ghi Nguyên Phong phóng tác. Các hiện tượng được coi là nội dung sách, không xác nhận là sự kiện khoa học hay lịch sử đã được kiểm chứng.",
+        "Quan điểm và câu chuyện của tác giả không chứng minh tác dụng khoa học hoặc chữa lành."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn đọc thử chính thức ghi Nguyên Phong phóng tác. Các hiện tượng được coi là nội dung sách, không xác nhận là sự kiện khoa học hay lịch sử đã được kiểm chứng. Nguồn: https://firstnews.vn/upload/docthu/HanhTrinhVePhuongDong%28biamem%29/index.html"
+    },
+    {
+      "productId": 34,
+      "title": "Đường Xưa Mây Trắng",
+      "author": "Thích Nhất Hạnh",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "truyện kể Phật giáo",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Thích Nhất Hạnh kể cuộc đời và lời dạy của Đức Phật, dựa trên các nguồn kinh điển. Một phần câu chuyện được nhìn qua Svasti, cậu bé chăn trâu, và một phần qua Đức Phật."
+          },
+          "sourceUrls": [
+            "https://www.parallax.org/product/old-path-white-clouds/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "cuộc đời Đức Phật",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Thích Nhất Hạnh kể cuộc đời và lời dạy của Đức Phật, dựa trên các nguồn kinh điển. Một phần câu chuyện được nhìn qua Svasti, cậu bé chăn trâu, và một phần qua Đức Phật."
+          },
+          "sourceUrls": [
+            "https://www.parallax.org/product/old-path-white-clouds/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "lời dạy Đức Phật",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Thích Nhất Hạnh kể cuộc đời và lời dạy của Đức Phật, dựa trên các nguồn kinh điển. Một phần câu chuyện được nhìn qua Svasti, cậu bé chăn trâu, và một phần qua Đức Phật."
+          },
+          "sourceUrls": [
+            "https://www.parallax.org/product/old-path-white-clouds/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "cậu bé Svasti",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Thích Nhất Hạnh kể cuộc đời và lời dạy của Đức Phật, dựa trên các nguồn kinh điển. Một phần câu chuyện được nhìn qua Svasti, cậu bé chăn trâu, và một phần qua Đức Phật."
+          },
+          "sourceUrls": [
+            "https://www.parallax.org/product/old-path-white-clouds/"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tìm hiểu cuộc đời và tư tưởng Phật giáo",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tìm hiểu cuộc đời và tư tưởng Phật giáo qua câu chuyện."
+          },
+          "sourceUrls": [
+            "https://www.parallax.org/product/old-path-white-clouds/"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "truyện kể",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Thích Nhất Hạnh kể cuộc đời và lời dạy của Đức Phật, dựa trên các nguồn kinh điển. Một phần câu chuyện được nhìn qua Svasti, cậu bé chăn trâu, và một phần qua Đức Phật."
+          },
+          "sourceUrls": [
+            "https://www.parallax.org/product/old-path-white-clouds/"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người muốn tìm hiểu Đức Phật qua câu chuyện",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người muốn tìm hiểu cuộc đời Đức Phật và lời dạy qua hình thức truyện kể."
+          },
+          "sourceUrls": [
+            "https://www.parallax.org/product/old-path-white-clouds/"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "lời kể chậm rãi nhẹ nhàng",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Lời kể chậm rãi, nhẹ nhàng về cuộc đời và lời dạy của Đức Phật."
+          },
+          "sourceUrls": [
+            "https://www.parallax.org/product/old-path-white-clouds/"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Cùng tác phẩm Old Path White Clouds; chỉ dùng nội dung và phong cách được NXB mô tả. Không coi đây là sách bài tập thiền hoặc lấy thông số bản tiếng Anh."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Cùng tác phẩm Old Path White Clouds; chỉ dùng nội dung và phong cách được NXB mô tả. Không coi đây là sách bài tập thiền hoặc lấy thông số bản tiếng Anh. Nguồn: https://www.parallax.org/product/old-path-white-clouds/"
+    },
+    {
+      "productId": 35,
+      "title": "Kho Tàng Truyện Cổ Tích Việt Nam",
+      "author": "Nguyễn Đổng Chi",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "truyện cổ tích Việt Nam",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Công trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/kho-tang-truyen-co-tich-viet-nam-01-146145.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "văn hóa dân gian / folklore",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Công trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/kho-tang-truyen-co-tich-viet-nam-01-146145.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "truyện kể dân gian Việt Nam",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Công trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/kho-tang-truyen-co-tich-viet-nam-01-146145.html"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tìm hiểu kho truyện kể và văn hóa dân gian",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tìm hiểu kho truyện kể và các nét văn hóa dân gian Việt Nam."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/kho-tang-truyen-co-tich-viet-nam-01-146145.html"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "công trình sưu tầm biên soạn",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Công trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/kho-tang-truyen-co-tich-viet-nam-01-146145.html"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người thích cổ tích và văn hóa dân gian",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người thích truyện cổ tích Việt Nam và tìm hiểu văn hóa, truyện kể dân gian."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/kho-tang-truyen-co-tich-viet-nam-01-146145.html"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "sưu tầm và biên soạn truyện dân gian",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Sưu tầm và biên soạn truyện dân gian; chưa xác định đặc điểm minh họa của bản cửa hàng."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/kho-tang-truyen-co-tich-viet-nam-01-146145.html"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ xác nhận tác phẩm/bộ Nguyễn Đổng Chi. Không lấy mục lục tập 1 làm nội dung mọi tập; chưa có căn cứ nhóm tuổi của bản bán.",
+        "Chưa xác định tập/bộ của sản phẩm; không gắn chủ đề riêng hay nhóm tuổi của tập nguồn."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ xác nhận tác phẩm/bộ Nguyễn Đổng Chi. Không lấy mục lục tập 1 làm nội dung mọi tập; chưa có căn cứ nhóm tuổi của bản bán. Nguồn: https://www.nxbtre.com.vn/sach/kho-tang-truyen-co-tich-viet-nam-01-146145.html"
+    },
+    {
+      "productId": 36,
+      "title": "10 Vạn Câu Hỏi Vì Sao",
+      "author": "Nhiều Tác Giả",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "sách khoa học phổ thông",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tên chung cho sách hỏi đáp kiến thức khoa học và đời sống, giúp người đọc khám phá các câu hỏi vì sao. Có nhiều bộ, tập và nhóm tuổi mang tên tương tự; dữ liệu cửa hàng chưa xác định bộ hoặc tập cụ thể. Vì vậy chưa thể cam kết các phần về động vật, vũ trụ, cơ thể hay độ tuổi của một ấn bản cụ thể."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/muoi-van-cau-hoi-vi-sao-the-gioi-dong-thuc-vat"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "hỏi đáp khoa học và đời sống",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tên chung cho sách hỏi đáp kiến thức khoa học và đời sống, giúp người đọc khám phá các câu hỏi vì sao. Có nhiều bộ, tập và nhóm tuổi mang tên tương tự; dữ liệu cửa hàng chưa xác định bộ hoặc tập cụ thể. Vì vậy chưa thể cam kết các phần về động vật, vũ trụ, cơ thể hay độ tuổi của một ấn bản cụ thể."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/muoi-van-cau-hoi-vi-sao-the-gioi-dong-thuc-vat"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "câu hỏi vì sao",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tên chung cho sách hỏi đáp kiến thức khoa học và đời sống, giúp người đọc khám phá các câu hỏi vì sao. Có nhiều bộ, tập và nhóm tuổi mang tên tương tự; dữ liệu cửa hàng chưa xác định bộ hoặc tập cụ thể. Vì vậy chưa thể cam kết các phần về động vật, vũ trụ, cơ thể hay độ tuổi của một ấn bản cụ thể."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/muoi-van-cau-hoi-vi-sao-the-gioi-dong-thuc-vat"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "quan sát đặt câu hỏi và tìm hiểu khoa học",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Khơi gợi việc quan sát, đặt câu hỏi và tìm hiểu kiến thức khoa học."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/muoi-van-cau-hoi-vi-sao-the-gioi-dong-thuc-vat"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "hỏi đáp kiến thức",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tên chung cho sách hỏi đáp kiến thức khoa học và đời sống, giúp người đọc khám phá các câu hỏi vì sao. Có nhiều bộ, tập và nhóm tuổi mang tên tương tự; dữ liệu cửa hàng chưa xác định bộ hoặc tập cụ thể. Vì vậy chưa thể cam kết các phần về động vật, vũ trụ, cơ thể hay độ tuổi của một ấn bản cụ thể."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/muoi-van-cau-hoi-vi-sao-the-gioi-dong-thuc-vat"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người thích khoa học qua câu hỏi và trả lời",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người thích tìm hiểu khoa học qua câu hỏi và câu trả lời; cần xác nhận tập để tư vấn độ tuổi."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/muoi-van-cau-hoi-vi-sao-the-gioi-dong-thuc-vat"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "trình bày bằng hỏi đáp khoa học",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Hỏi đáp kiến thức khoa học; chưa xác định độ dài, minh họa và mức đọc của bản bán."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/muoi-van-cau-hoi-vi-sao-the-gioi-dong-thuc-vat"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn minh họa đặc điểm tên bộ chung, không nhận diện chính xác sản phẩm cửa hàng. Không áp tuổi, tác giả hoặc chủ đề riêng của tập nguồn.",
+        "Chưa xác định tập/bộ của sản phẩm; không gắn chủ đề riêng hay nhóm tuổi của tập nguồn."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn minh họa đặc điểm tên bộ chung, không nhận diện chính xác sản phẩm cửa hàng. Không áp tuổi, tác giả hoặc chủ đề riêng của tập nguồn. Nguồn: https://nxbkimdong.com.vn/muoi-van-cau-hoi-vi-sao-the-gioi-dong-thuc-vat"
+    },
+    {
+      "productId": 39,
+      "title": "Chí Phèo",
+      "author": "Nam Cao",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "truyện ngắn hiện thực",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Truyện ngắn của Nam Cao về bi kịch của người nông dân trong xã hội cũ, đặt ra câu hỏi về con người và cách xã hội đối xử với họ. Có thể đọc để tìm hiểu văn học hiện thực và thảo luận về nội dung, nghệ thuật tác phẩm. Chưa xác định bản dịch, ngôn ngữ và những truyện khác đi kèm trong bản đang bán."
+          },
+          "sourceUrls": [
+            "https://js.vnu.edu.vn/ER/article/view/4080/3807"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "bi kịch người nông dân",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Truyện ngắn của Nam Cao về bi kịch của người nông dân trong xã hội cũ, đặt ra câu hỏi về con người và cách xã hội đối xử với họ. Có thể đọc để tìm hiểu văn học hiện thực và thảo luận về nội dung, nghệ thuật tác phẩm. Chưa xác định bản dịch, ngôn ngữ và những truyện khác đi kèm trong bản đang bán."
+          },
+          "sourceUrls": [
+            "https://js.vnu.edu.vn/ER/article/view/4080/3807"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "con người và cách xã hội đối xử",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Truyện ngắn của Nam Cao về bi kịch của người nông dân trong xã hội cũ, đặt ra câu hỏi về con người và cách xã hội đối xử với họ. Có thể đọc để tìm hiểu văn học hiện thực và thảo luận về nội dung, nghệ thuật tác phẩm. Chưa xác định bản dịch, ngôn ngữ và những truyện khác đi kèm trong bản đang bán."
+          },
+          "sourceUrls": [
+            "https://js.vnu.edu.vn/ER/article/view/4080/3807"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tìm hiểu vấn đề con người xã hội trong văn học",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Suy ngẫm về cuộc sống người nông dân và cách tác phẩm đặt vấn đề về con người, xã hội."
+          },
+          "sourceUrls": [
+            "https://js.vnu.edu.vn/ER/article/view/4080/3807"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "truyện ngắn",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Truyện ngắn của Nam Cao về bi kịch của người nông dân trong xã hội cũ, đặt ra câu hỏi về con người và cách xã hội đối xử với họ. Có thể đọc để tìm hiểu văn học hiện thực và thảo luận về nội dung, nghệ thuật tác phẩm. Chưa xác định bản dịch, ngôn ngữ và những truyện khác đi kèm trong bản đang bán."
+          },
+          "sourceUrls": [
+            "https://js.vnu.edu.vn/ER/article/view/4080/3807"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người học văn và tìm hiểu truyện ngắn Nam Cao",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người tìm hiểu văn học Việt Nam, truyện ngắn Nam Cao và nội dung học văn trong nhà trường."
+          },
+          "sourceUrls": [
+            "https://js.vnu.edu.vn/ER/article/view/4080/3807"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "hiện thực có bi kịch để phân tích thảo luận",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Truyện ngắn hiện thực có nội dung bi kịch để đọc, phân tích và thảo luận."
+          },
+          "sourceUrls": [
+            "https://js.vnu.edu.vn/ER/article/view/4080/3807"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel",
+        "language"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn nghiên cứu giáo dục chỉ dùng cho chủ đề và việc đọc hiểu. Bìa cửa hàng ghi Chí Phèo and Other Stories; không suy ra bản tiếng Việt hoặc mục lục toàn tuyển tập."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn nghiên cứu giáo dục chỉ dùng cho chủ đề và việc đọc hiểu. Bìa cửa hàng ghi Chí Phèo and Other Stories; không suy ra bản tiếng Việt hoặc mục lục toàn tuyển tập. Nguồn: https://js.vnu.edu.vn/ER/article/view/4080/3807"
+    },
+    {
+      "productId": 40,
+      "title": "Tắt Đèn",
+      "author": "Ngô Tất Tố",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "tiểu thuyết hiện thực",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tiểu thuyết hiện thực về chị Dậu và cảnh sống đau khổ của dân quê trong nghèo đói, bị người có thế lực áp bức. Nhân vật vẫn hết lòng vì chồng con giữa hoàn cảnh khắc nghiệt."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/products/tat-den"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "chị Dậu và dân quê",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tiểu thuyết hiện thực về chị Dậu và cảnh sống đau khổ của dân quê trong nghèo đói, bị người có thế lực áp bức. Nhân vật vẫn hết lòng vì chồng con giữa hoàn cảnh khắc nghiệt."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/products/tat-den"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "nghèo đói và áp bức",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tiểu thuyết hiện thực về chị Dậu và cảnh sống đau khổ của dân quê trong nghèo đói, bị người có thế lực áp bức. Nhân vật vẫn hết lòng vì chồng con giữa hoàn cảnh khắc nghiệt."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/products/tat-den"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "tình cảm chồng con",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tiểu thuyết hiện thực về chị Dậu và cảnh sống đau khổ của dân quê trong nghèo đói, bị người có thế lực áp bức. Nhân vật vẫn hết lòng vì chồng con giữa hoàn cảnh khắc nghiệt."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/products/tat-den"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tìm hiểu hình tượng chị Dậu và hiện thực xã hội",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tìm hiểu hình tượng chị Dậu và hiện thực xã hội được phản ánh trong tác phẩm."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/products/tat-den"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "tiểu thuyết",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tiểu thuyết hiện thực về chị Dậu và cảnh sống đau khổ của dân quê trong nghèo đói, bị người có thế lực áp bức. Nhân vật vẫn hết lòng vì chồng con giữa hoàn cảnh khắc nghiệt."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/products/tat-den"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người học văn học hiện thực Việt Nam",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người học văn học và quan tâm văn học hiện thực Việt Nam."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/products/tat-den"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "khắc họa đau khổ và hoàn cảnh khắc nghiệt",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Tiểu thuyết hiện thực khắc họa đau khổ, nghèo đói và áp bức."
+          },
+          "sourceUrls": [
+            "https://nxbkimdong.com.vn/products/tat-den"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không áp dụng tuổi, số trang hoặc tài liệu học tập kèm theo của bản nguồn cho ấn bản cửa hàng."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không áp dụng tuổi, số trang hoặc tài liệu học tập kèm theo của bản nguồn cho ấn bản cửa hàng. Nguồn: https://nxbkimdong.com.vn/products/tat-den"
+    },
+    {
+      "productId": 41,
+      "title": "Những Người Khốn Khổ",
+      "author": "Victor Hugo",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "tiểu thuyết hiện thực",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người quan tâm tiểu thuyết hiện thực, số phận con người và công lý."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/313987/les-miserables-by-victor-hugo/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "Jean Valjean và Javert",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Jean Valjean từng bị tù vì lấy một ổ bánh mì và bị thanh tra Javert truy đuổi. Câu chuyện đặt ra vấn đề tội lỗi, hình phạt, khổ đau và khát vọng đổi đời trong xã hội Pháp."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/313987/les-miserables-by-victor-hugo/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "tội lỗi hình phạt và khổ đau",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Jean Valjean từng bị tù vì lấy một ổ bánh mì và bị thanh tra Javert truy đuổi. Câu chuyện đặt ra vấn đề tội lỗi, hình phạt, khổ đau và khát vọng đổi đời trong xã hội Pháp."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/313987/les-miserables-by-victor-hugo/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "khát vọng đổi đời",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Jean Valjean từng bị tù vì lấy một ổ bánh mì và bị thanh tra Javert truy đuổi. Câu chuyện đặt ra vấn đề tội lỗi, hình phạt, khổ đau và khát vọng đổi đời trong xã hội Pháp."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/313987/les-miserables-by-victor-hugo/"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "suy ngẫm về công lý và lòng nhân ái",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Suy ngẫm về công lý, lòng nhân ái và khát vọng thoát khỏi khổ đau."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/313987/les-miserables-by-victor-hugo/"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "tiểu thuyết phạm vi rộng",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Tiểu thuyết có phạm vi rộng, nhiều xung đột xã hội và số phận đau khổ."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/313987/les-miserables-by-victor-hugo/"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người quan tâm số phận con người và công lý",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người quan tâm tiểu thuyết hiện thực, số phận con người và công lý."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/313987/les-miserables-by-victor-hugo/"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "nhiều xung đột xã hội và số phận đau khổ",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Tiểu thuyết có phạm vi rộng, nhiều xung đột xã hội và số phận đau khổ."
+          },
+          "sourceUrls": [
+            "https://www.penguinrandomhouse.com/books/313987/les-miserables-by-victor-hugo/"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không nhập số trang, thông tin bản đầy đủ hay bản rút gọn vì chưa xác nhận ấn bản tiếng Việt đang bán."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không nhập số trang, thông tin bản đầy đủ hay bản rút gọn vì chưa xác nhận ấn bản tiếng Việt đang bán. Nguồn: https://www.penguinrandomhouse.com/books/313987/les-miserables-by-victor-hugo/"
+    },
+    {
+      "productId": 42,
+      "title": "Từ Tốt Đến Vĩ Đại (Good to Great)",
+      "author": "Jim Collins",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "sách quản trị doanh nghiệp",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Phân tích doanh nghiệp và ví dụ cụ thể để trình bày các ý tưởng quản trị."
+          },
+          "sourceUrls": [
+            "https://www.jimcollins.com/article_topics/articles/good-to-great.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "tư duy kỷ luật",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Jim Collins phân tích các doanh nghiệp chuyển từ kết quả tốt sang vĩ đại. Các ý tưởng được trình bày gồm tư duy kỷ luật, tập trung vào năng lực cốt lõi và xác định điều doanh nghiệp cần dừng làm."
+          },
+          "sourceUrls": [
+            "https://www.jimcollins.com/article_topics/articles/good-to-great.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "năng lực cốt lõi / core competence",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Jim Collins phân tích các doanh nghiệp chuyển từ kết quả tốt sang vĩ đại. Các ý tưởng được trình bày gồm tư duy kỷ luật, tập trung vào năng lực cốt lõi và xác định điều doanh nghiệp cần dừng làm."
+          },
+          "sourceUrls": [
+            "https://www.jimcollins.com/article_topics/articles/good-to-great.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "hoạt động doanh nghiệp cần dừng làm",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Jim Collins phân tích các doanh nghiệp chuyển từ kết quả tốt sang vĩ đại. Các ý tưởng được trình bày gồm tư duy kỷ luật, tập trung vào năng lực cốt lõi và xác định điều doanh nghiệp cần dừng làm."
+          },
+          "sourceUrls": [
+            "https://www.jimcollins.com/article_topics/articles/good-to-great.html"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "xác định định hướng phát triển doanh nghiệp",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tham khảo cách xác định định hướng, năng lực và những hoạt động cần tập trung của doanh nghiệp."
+          },
+          "sourceUrls": [
+            "https://www.jimcollins.com/article_topics/articles/good-to-great.html"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "phân tích doanh nghiệp",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Jim Collins phân tích các doanh nghiệp chuyển từ kết quả tốt sang vĩ đại. Các ý tưởng được trình bày gồm tư duy kỷ luật, tập trung vào năng lực cốt lõi và xác định điều doanh nghiệp cần dừng làm."
+          },
+          "sourceUrls": [
+            "https://www.jimcollins.com/article_topics/articles/good-to-great.html"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người quản lý và tổ chức phát triển doanh nghiệp",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người quản lý và người quan tâm cách tổ chức phát triển doanh nghiệp."
+          },
+          "sourceUrls": [
+            "https://www.jimcollins.com/article_topics/articles/good-to-great.html"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "phân tích và ví dụ cụ thể về quản trị",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Phân tích doanh nghiệp và ví dụ cụ thể để trình bày các ý tưởng quản trị."
+          },
+          "sourceUrls": [
+            "https://www.jimcollins.com/article_topics/articles/good-to-great.html"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn là bài của chính tác giả giới thiệu kết quả trong sách. Không cam kết kết quả kinh doanh cho người đọc."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn là bài của chính tác giả giới thiệu kết quả trong sách. Không cam kết kết quả kinh doanh cho người đọc. Nguồn: https://www.jimcollins.com/article_topics/articles/good-to-great.html"
+    },
+    {
+      "productId": 44,
+      "title": "Giáo Trình Nhập Môn Trí Tuệ Nhân Tạo",
+      "author": "Từ Minh Phương",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "giáo trình trí tuệ nhân tạo",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình do Từ Minh Phương biên soạn, giới thiệu trí tuệ nhân tạo và các hướng giải quyết vấn đề bằng tìm kiếm, biểu diễn tri thức và logic, suy diễn xác suất, học máy. Phù hợp nhu cầu học nền tảng chuyên ngành. Chưa có căn cứ khẳng định sách hướng dẫn các công cụ AI tạo sinh hoặc lập trình ứng dụng ChatGPT."
+          },
+          "sourceUrls": [
+            "https://nxbkhcntt.vn/node/15847"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "tìm kiếm để giải quyết vấn đề",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình do Từ Minh Phương biên soạn, giới thiệu trí tuệ nhân tạo và các hướng giải quyết vấn đề bằng tìm kiếm, biểu diễn tri thức và logic, suy diễn xác suất, học máy. Phù hợp nhu cầu học nền tảng chuyên ngành. Chưa có căn cứ khẳng định sách hướng dẫn các công cụ AI tạo sinh hoặc lập trình ứng dụng ChatGPT."
+          },
+          "sourceUrls": [
+            "https://nxbkhcntt.vn/node/15847"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "biểu diễn tri thức / knowledge representation",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình do Từ Minh Phương biên soạn, giới thiệu trí tuệ nhân tạo và các hướng giải quyết vấn đề bằng tìm kiếm, biểu diễn tri thức và logic, suy diễn xác suất, học máy. Phù hợp nhu cầu học nền tảng chuyên ngành. Chưa có căn cứ khẳng định sách hướng dẫn các công cụ AI tạo sinh hoặc lập trình ứng dụng ChatGPT."
+          },
+          "sourceUrls": [
+            "https://nxbkhcntt.vn/node/15847"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "logic và suy diễn xác suất",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình do Từ Minh Phương biên soạn, giới thiệu trí tuệ nhân tạo và các hướng giải quyết vấn đề bằng tìm kiếm, biểu diễn tri thức và logic, suy diễn xác suất, học máy. Phù hợp nhu cầu học nền tảng chuyên ngành. Chưa có căn cứ khẳng định sách hướng dẫn các công cụ AI tạo sinh hoặc lập trình ứng dụng ChatGPT."
+          },
+          "sourceUrls": [
+            "https://nxbkhcntt.vn/node/15847"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "học máy / machine learning",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình do Từ Minh Phương biên soạn, giới thiệu trí tuệ nhân tạo và các hướng giải quyết vấn đề bằng tìm kiếm, biểu diễn tri thức và logic, suy diễn xác suất, học máy. Phù hợp nhu cầu học nền tảng chuyên ngành. Chưa có căn cứ khẳng định sách hướng dẫn các công cụ AI tạo sinh hoặc lập trình ứng dụng ChatGPT."
+          },
+          "sourceUrls": [
+            "https://nxbkhcntt.vn/node/15847"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "hệ thống kiến thức nền tảng trí tuệ nhân tạo",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Hệ thống kiến thức về tìm kiếm, tri thức, logic, suy diễn xác suất và học máy."
+          },
+          "sourceUrls": [
+            "https://nxbkhcntt.vn/node/15847"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "giáo trình chuyên ngành",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình do Từ Minh Phương biên soạn, giới thiệu trí tuệ nhân tạo và các hướng giải quyết vấn đề bằng tìm kiếm, biểu diễn tri thức và logic, suy diễn xác suất, học máy. Phù hợp nhu cầu học nền tảng chuyên ngành. Chưa có căn cứ khẳng định sách hướng dẫn các công cụ AI tạo sinh hoặc lập trình ứng dụng ChatGPT."
+          },
+          "sourceUrls": [
+            "https://nxbkhcntt.vn/node/15847"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người học môn trí tuệ nhân tạo",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người học môn trí tuệ nhân tạo và muốn tìm hiểu các phương pháp nền tảng chuyên ngành."
+          },
+          "sourceUrls": [
+            "https://nxbkhcntt.vn/node/15847"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "khái niệm và phương pháp nền tảng",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Giáo trình trình bày các khái niệm và phương pháp nền tảng của trí tuệ nhân tạo."
+          },
+          "sourceUrls": [
+            "https://nxbkhcntt.vn/node/15847"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa và NXB xác nhận tác giả Từ Minh Phương và phạm vi nội dung. Không gán cho Đinh Mạnh Tường.",
+        "Không suy ra ngôn ngữ code, framework, chuẩn mới hoặc bài tập/đáp án từ nhãn môn học."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa và NXB xác nhận tác giả Từ Minh Phương và phạm vi nội dung. Không gán cho Đinh Mạnh Tường. Nguồn: https://nxbkhcntt.vn/node/15847"
+    },
+    {
+      "productId": 45,
+      "title": "Giáo Trình Kinh Tế Vĩ Mô",
+      "author": "Lê Thanh Tùng",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "giáo trình kinh tế",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình Kinh tế vĩ mô của Lê Thanh Tùng bàn về nền kinh tế ở cấp tổng thể, như sản lượng, lạm phát, thất nghiệp, tỷ giá và chính sách kinh tế. Phù hợp học về các chỉ tiêu và cơ chế của nền kinh tế. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp."
+          },
+          "sourceUrls": [
+            "https://thuquan.ou.edu.vn/chi-tiet-sach/Kinh-t%C3%A1%C2%BA%C2%BF-MTcwOA/Giao-trinh-Kinh-te-vi-mo-%282025%29%5B1%5D-MUIwODQ2MjY"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "kinh tế vĩ mô / macroeconomics",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình Kinh tế vĩ mô của Lê Thanh Tùng bàn về nền kinh tế ở cấp tổng thể, như sản lượng, lạm phát, thất nghiệp, tỷ giá và chính sách kinh tế. Phù hợp học về các chỉ tiêu và cơ chế của nền kinh tế. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp."
+          },
+          "sourceUrls": [
+            "https://thuquan.ou.edu.vn/chi-tiet-sach/Kinh-t%C3%A1%C2%BA%C2%BF-MTcwOA/Giao-trinh-Kinh-te-vi-mo-%282025%29%5B1%5D-MUIwODQ2MjY"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "sản lượng lạm phát thất nghiệp",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình Kinh tế vĩ mô của Lê Thanh Tùng bàn về nền kinh tế ở cấp tổng thể, như sản lượng, lạm phát, thất nghiệp, tỷ giá và chính sách kinh tế. Phù hợp học về các chỉ tiêu và cơ chế của nền kinh tế. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp."
+          },
+          "sourceUrls": [
+            "https://thuquan.ou.edu.vn/chi-tiet-sach/Kinh-t%C3%A1%C2%BA%C2%BF-MTcwOA/Giao-trinh-Kinh-te-vi-mo-%282025%29%5B1%5D-MUIwODQ2MjY"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "tỷ giá và chính sách kinh tế",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình Kinh tế vĩ mô của Lê Thanh Tùng bàn về nền kinh tế ở cấp tổng thể, như sản lượng, lạm phát, thất nghiệp, tỷ giá và chính sách kinh tế. Phù hợp học về các chỉ tiêu và cơ chế của nền kinh tế. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp."
+          },
+          "sourceUrls": [
+            "https://thuquan.ou.edu.vn/chi-tiet-sach/Kinh-t%C3%A1%C2%BA%C2%BF-MTcwOA/Giao-trinh-Kinh-te-vi-mo-%282025%29%5B1%5D-MUIwODQ2MjY"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tìm hiểu chỉ tiêu vĩ mô và chính sách",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tìm hiểu các chỉ tiêu vĩ mô và chính sách tác động đến nền kinh tế."
+          },
+          "sourceUrls": [
+            "https://thuquan.ou.edu.vn/chi-tiet-sach/Kinh-t%C3%A1%C2%BA%C2%BF-MTcwOA/Giao-trinh-Kinh-te-vi-mo-%282025%29%5B1%5D-MUIwODQ2MjY"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "giáo trình kinh tế vĩ mô",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Giáo trình Kinh tế vĩ mô của Lê Thanh Tùng bàn về nền kinh tế ở cấp tổng thể, như sản lượng, lạm phát, thất nghiệp, tỷ giá và chính sách kinh tế. Phù hợp học về các chỉ tiêu và cơ chế của nền kinh tế. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp."
+          },
+          "sourceUrls": [
+            "https://thuquan.ou.edu.vn/chi-tiet-sach/Kinh-t%C3%A1%C2%BA%C2%BF-MTcwOA/Giao-trinh-Kinh-te-vi-mo-%282025%29%5B1%5D-MUIwODQ2MjY"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người học kinh tế ở cấp tổng thể",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người học kinh tế vĩ mô và muốn tìm hiểu nền kinh tế ở cấp tổng thể."
+          },
+          "sourceUrls": [
+            "https://thuquan.ou.edu.vn/chi-tiet-sach/Kinh-t%C3%A1%C2%BA%C2%BF-MTcwOA/Giao-trinh-Kinh-te-vi-mo-%282025%29%5B1%5D-MUIwODQ2MjY"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "giáo trình kinh tế",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Giáo trình kinh tế; chưa xác nhận cấu trúc bài tập của bản in cửa hàng."
+          },
+          "sourceUrls": [
+            "https://thuquan.ou.edu.vn/chi-tiet-sach/Kinh-t%C3%A1%C2%BA%C2%BF-MTcwOA/Giao-trinh-Kinh-te-vi-mo-%282025%29%5B1%5D-MUIwODQ2MjY"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa xác nhận Vĩ mô của Lê Thanh Tùng, khớp tác phẩm trong thư quán ĐH Mở. Chỉ dùng chủ đề chung, không gán năm 2025 và bài tập bản điện tử cho bản in.",
+        "Không suy ra ngôn ngữ code, framework, chuẩn mới hoặc bài tập/đáp án từ nhãn môn học."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa xác nhận Vĩ mô của Lê Thanh Tùng, khớp tác phẩm trong thư quán ĐH Mở. Chỉ dùng chủ đề chung, không gán năm 2025 và bài tập bản điện tử cho bản in. Nguồn: https://thuquan.ou.edu.vn/chi-tiet-sach/Kinh-t%C3%A1%C2%BA%C2%BF-MTcwOA/Giao-trinh-Kinh-te-vi-mo-%282025%29%5B1%5D-MUIwODQ2MjY"
+    },
+    {
+      "productId": 46,
+      "title": "Homo Deus: Lược Sử Tương Lai",
+      "author": "Yuval Noah Harari",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "lịch sử khoa học và triết học",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Harari xem xét các khả năng về tương lai nhân loại khi trí tuệ nhân tạo và kỹ thuật di truyền thay đổi xã hội. Sách đặt câu hỏi về quyền lực, việc làm và giá trị con người qua cách nhìn kết hợp lịch sử, khoa học và triết học."
+          },
+          "sourceUrls": [
+            "https://www.ynharari.com/book/homo-deus/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "tương lai nhân loại",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Harari xem xét các khả năng về tương lai nhân loại khi trí tuệ nhân tạo và kỹ thuật di truyền thay đổi xã hội. Sách đặt câu hỏi về quyền lực, việc làm và giá trị con người qua cách nhìn kết hợp lịch sử, khoa học và triết học."
+          },
+          "sourceUrls": [
+            "https://www.ynharari.com/book/homo-deus/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "AI và kỹ thuật di truyền",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Harari xem xét các khả năng về tương lai nhân loại khi trí tuệ nhân tạo và kỹ thuật di truyền thay đổi xã hội. Sách đặt câu hỏi về quyền lực, việc làm và giá trị con người qua cách nhìn kết hợp lịch sử, khoa học và triết học."
+          },
+          "sourceUrls": [
+            "https://www.ynharari.com/book/homo-deus/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "quyền lực việc làm và giá trị con người",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Harari xem xét các khả năng về tương lai nhân loại khi trí tuệ nhân tạo và kỹ thuật di truyền thay đổi xã hội. Sách đặt câu hỏi về quyền lực, việc làm và giá trị con người qua cách nhìn kết hợp lịch sử, khoa học và triết học."
+          },
+          "sourceUrls": [
+            "https://www.ynharari.com/book/homo-deus/"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "suy ngẫm tác động công nghệ đến xã hội",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Suy ngẫm về các khả năng thay đổi xã hội do công nghệ theo lập luận của tác giả."
+          },
+          "sourceUrls": [
+            "https://www.ynharari.com/book/homo-deus/"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "lập luận về khả năng tương lai",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Harari xem xét các khả năng về tương lai nhân loại khi trí tuệ nhân tạo và kỹ thuật di truyền thay đổi xã hội. Sách đặt câu hỏi về quyền lực, việc làm và giá trị con người qua cách nhìn kết hợp lịch sử, khoa học và triết học."
+          },
+          "sourceUrls": [
+            "https://www.ynharari.com/book/homo-deus/"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người quan tâm tương lai xã hội và công nghệ",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người quan tâm tương lai xã hội, công nghệ và các câu hỏi về con người."
+          },
+          "sourceUrls": [
+            "https://www.ynharari.com/book/homo-deus/"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "lập luận liên ngành về tương lai",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Lập luận liên ngành và đặt ra những khả năng về tương lai."
+          },
+          "sourceUrls": [
+            "https://www.ynharari.com/book/homo-deus/"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Các dự báo là lập luận của tác giả, không ghi thành sự kiện tương lai chắc chắn."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Các dự báo là lập luận của tác giả, không ghi thành sự kiện tương lai chắc chắn. Nguồn: https://www.ynharari.com/book/homo-deus/"
+    },
+    {
+      "productId": 47,
+      "title": "Kinh Tế Học Hài Hước (Freakonomics)",
+      "author": "Steven D. Levitt & Stephen J. Dubner",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "sách kinh tế học",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Levitt và Dubner đặt những câu hỏi khác thường về gian lận, tội phạm, nuôi dạy con và thể thao để khám phá động cơ hành vi. Kinh tế học được dùng để tìm hiểu cách con người đạt điều họ muốn."
+          },
+          "sourceUrls": [
+            "https://freakonomics.com/books/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "động cơ hành vi",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Levitt và Dubner đặt những câu hỏi khác thường về gian lận, tội phạm, nuôi dạy con và thể thao để khám phá động cơ hành vi. Kinh tế học được dùng để tìm hiểu cách con người đạt điều họ muốn."
+          },
+          "sourceUrls": [
+            "https://freakonomics.com/books/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "gian lận và tội phạm",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Levitt và Dubner đặt những câu hỏi khác thường về gian lận, tội phạm, nuôi dạy con và thể thao để khám phá động cơ hành vi. Kinh tế học được dùng để tìm hiểu cách con người đạt điều họ muốn."
+          },
+          "sourceUrls": [
+            "https://freakonomics.com/books/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "nuôi dạy con và thể thao",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Levitt và Dubner đặt những câu hỏi khác thường về gian lận, tội phạm, nuôi dạy con và thể thao để khám phá động cơ hành vi. Kinh tế học được dùng để tìm hiểu cách con người đạt điều họ muốn."
+          },
+          "sourceUrls": [
+            "https://freakonomics.com/books/"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "phân tích động cơ qua ví dụ đời sống",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tìm hiểu cách phân tích động cơ hành vi qua các ví dụ cụ thể."
+          },
+          "sourceUrls": [
+            "https://freakonomics.com/books/"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "câu hỏi đời sống và phân tích",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Levitt và Dubner đặt những câu hỏi khác thường về gian lận, tội phạm, nuôi dạy con và thể thao để khám phá động cơ hành vi. Kinh tế học được dùng để tìm hiểu cách con người đạt điều họ muốn."
+          },
+          "sourceUrls": [
+            "https://freakonomics.com/books/"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người quan tâm kinh tế học và hành vi",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người quan tâm kinh tế học và động cơ phía sau hành vi đời sống."
+          },
+          "sourceUrls": [
+            "https://freakonomics.com/books/"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "kể chuyện và câu hỏi khác thường",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Kể chuyện và phân tích những câu hỏi khác thường trong đời sống."
+          },
+          "sourceUrls": [
+            "https://freakonomics.com/books/"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ dùng phần Freakonomics trên trang tác giả, không nhập nội dung của các cuốn tiếp theo."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ dùng phần Freakonomics trên trang tác giả, không nhập nội dung của các cuốn tiếp theo. Nguồn: https://freakonomics.com/books/"
+    },
+    {
+      "productId": 49,
+      "title": "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
+      "author": "Nguyễn Nhật Ánh",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "truyện tuổi thơ",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người quan tâm truyện tuổi thơ, tình cảm anh em và cuộc sống làng quê."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/toi-thay-hoa-vang-tren-co-xanh-11418.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "tình cảm anh em và bạn bè",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Thiều, Tường và những đứa trẻ trong một ngôi làng cùng nô đùa, cãi cọ, yêu thương và lớn lên giữa nhiều biến cố. Câu chuyện có tình cảm anh em, bạn bè, cùng những cảnh đói ăn, cháy nhà và lụt lội."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/toi-thay-hoa-vang-tren-co-xanh-11418.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "cuộc sống làng quê",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Thiều, Tường và những đứa trẻ trong một ngôi làng cùng nô đùa, cãi cọ, yêu thương và lớn lên giữa nhiều biến cố. Câu chuyện có tình cảm anh em, bạn bè, cùng những cảnh đói ăn, cháy nhà và lụt lội."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/toi-thay-hoa-vang-tren-co-xanh-11418.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "cảnh đói ăn cháy nhà và lụt lội",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Thiều, Tường và những đứa trẻ trong một ngôi làng cùng nô đùa, cãi cọ, yêu thương và lớn lên giữa nhiều biến cố. Câu chuyện có tình cảm anh em, bạn bè, cùng những cảnh đói ăn, cháy nhà và lụt lội."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/toi-thay-hoa-vang-tren-co-xanh-11418.html"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "suy ngẫm tình cảm và quá trình lớn lên",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Suy ngẫm về tình cảm anh em, bạn bè và quá trình lớn lên."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/toi-thay-hoa-vang-tren-co-xanh-11418.html"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "câu chuyện nhiều chương ngắn",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Nhiều chương ngắn, giọng kể trong sáng và hồn nhiên của trẻ con; có chi tiết cảm động và những biến cố."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/toi-thay-hoa-vang-tren-co-xanh-11418.html"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người quan tâm tuổi thơ và làng quê",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người quan tâm truyện tuổi thơ, tình cảm anh em và cuộc sống làng quê."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/toi-thay-hoa-vang-tren-co-xanh-11418.html"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "giọng kể trong sáng hồn nhiên có biến cố",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Nhiều chương ngắn, giọng kể trong sáng và hồn nhiên của trẻ con; có chi tiết cảm động và những biến cố."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/toi-thay-hoa-vang-tren-co-xanh-11418.html"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không suy ra độ dễ đọc từ chương ngắn; không coi tuổi nhân vật là tuổi độc giả hay khẳng định truyện chỉ có nội dung vui."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không suy ra độ dễ đọc từ chương ngắn; không coi tuổi nhân vật là tuổi độc giả hay khẳng định truyện chỉ có nội dung vui. Nguồn: https://www.nxbtre.com.vn/sach/toi-thay-hoa-vang-tren-co-xanh-11418.html"
+    },
+    {
+      "productId": 53,
+      "title": "Mắt Biếc",
+      "author": "Nguyễn Nhật Ánh",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "truyện tình cảm",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Câu chuyện tình cảm trong sáng nhưng đan xen vui buồn và có kết thúc rất buồn theo giới thiệu của NXB Trẻ."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/mat-biec-146386.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "tình cảm trong sáng",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Câu chuyện tình cảm trong sáng nhưng đan xen vui buồn và có kết thúc rất buồn theo giới thiệu của NXB Trẻ."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/mat-biec-146386.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "vui buồn đan xen",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Câu chuyện tình cảm trong sáng nhưng đan xen vui buồn và có kết thúc rất buồn theo giới thiệu của NXB Trẻ."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/mat-biec-146386.html"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "suy ngẫm về tình cảm",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Suy ngẫm về tình cảm qua một câu chuyện vui buồn đan xen."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/mat-biec-146386.html"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "câu chuyện tình cảm",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Câu chuyện tình cảm trong sáng nhưng đan xen vui buồn và có kết thúc rất buồn theo giới thiệu của NXB Trẻ."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/mat-biec-146386.html"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người muốn đọc tình cảm có sắc thái buồn",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người muốn đọc một câu chuyện tình cảm có sắc thái buồn."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/mat-biec-146386.html"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "kết thúc buồn",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Truyện tình cảm xen lẫn vui buồn, kết thúc buồn."
+          },
+          "sourceUrls": [
+            "https://www.nxbtre.com.vn/sach/mat-biec-146386.html"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không dùng nhãn truyện thư giãn chỉ vui hoặc suy ra sở thích theo giới tính; không nhập thông số của bản khổ nhỏ."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không dùng nhãn truyện thư giãn chỉ vui hoặc suy ra sở thích theo giới tính; không nhập thông số của bản khổ nhỏ. Nguồn: https://www.nxbtre.com.vn/sach/mat-biec-146386.html"
+    },
+    {
+      "productId": 54,
+      "title": "Muôn Kiếp Nhân Sinh",
+      "author": "Nguyên Phong",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "câu chuyện tâm linh",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm của Nguyên Phong kể và suy ngẫm về những kiếp sống, nhân quả và các lựa chọn của con người qua góc nhìn tâm linh. Nên đọc như câu chuyện và quan điểm để chiêm nghiệm; không xem các nội dung luân hồi như kết luận khoa học hoặc bảo đảm chữa lành. Chưa xác định chính xác tập và ấn bản cửa hàng, nên không gán cốt truyện riêng của tập 1, 2 hoặc 3."
+          },
+          "sourceUrls": [
+            "https://firstnews.vn/muon-kiep-nhan-sinh-2-bia-cung-kho-lon-p1271.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "nhân quả và các kiếp sống",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm của Nguyên Phong kể và suy ngẫm về những kiếp sống, nhân quả và các lựa chọn của con người qua góc nhìn tâm linh. Nên đọc như câu chuyện và quan điểm để chiêm nghiệm; không xem các nội dung luân hồi như kết luận khoa học hoặc bảo đảm chữa lành. Chưa xác định chính xác tập và ấn bản cửa hàng, nên không gán cốt truyện riêng của tập 1, 2 hoặc 3."
+          },
+          "sourceUrls": [
+            "https://firstnews.vn/muon-kiep-nhan-sinh-2-bia-cung-kho-lon-p1271.html"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "lựa chọn và cách sống",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm của Nguyên Phong kể và suy ngẫm về những kiếp sống, nhân quả và các lựa chọn của con người qua góc nhìn tâm linh. Nên đọc như câu chuyện và quan điểm để chiêm nghiệm; không xem các nội dung luân hồi như kết luận khoa học hoặc bảo đảm chữa lành. Chưa xác định chính xác tập và ấn bản cửa hàng, nên không gán cốt truyện riêng của tập 1, 2 hoặc 3."
+          },
+          "sourceUrls": [
+            "https://firstnews.vn/muon-kiep-nhan-sinh-2-bia-cung-kho-lon-p1271.html"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "chiêm nghiệm nhân quả và lựa chọn",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Chiêm nghiệm về nhân quả, lựa chọn và cách sống từ góc nhìn tác phẩm."
+          },
+          "sourceUrls": [
+            "https://firstnews.vn/muon-kiep-nhan-sinh-2-bia-cung-kho-lon-p1271.html"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "kể chuyện kết hợp suy ngẫm",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Tác phẩm của Nguyên Phong kể và suy ngẫm về những kiếp sống, nhân quả và các lựa chọn của con người qua góc nhìn tâm linh. Nên đọc như câu chuyện và quan điểm để chiêm nghiệm; không xem các nội dung luân hồi như kết luận khoa học hoặc bảo đảm chữa lành. Chưa xác định chính xác tập và ấn bản cửa hàng, nên không gán cốt truyện riêng của tập 1, 2 hoặc 3."
+          },
+          "sourceUrls": [
+            "https://firstnews.vn/muon-kiep-nhan-sinh-2-bia-cung-kho-lon-p1271.html"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người quan tâm tâm linh và suy ngẫm đời sống",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người quan tâm câu chuyện tâm linh, nhân quả và suy ngẫm về đời sống."
+          },
+          "sourceUrls": [
+            "https://firstnews.vn/muon-kiep-nhan-sinh-2-bia-cung-kho-lon-p1271.html"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "góc nhìn tâm linh của tác giả",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Kể chuyện kết hợp suy ngẫm theo góc nhìn tâm linh của tác giả."
+          },
+          "sourceUrls": [
+            "https://firstnews.vn/muon-kiep-nhan-sinh-2-bia-cung-kho-lon-p1271.html"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ dùng điểm chung của tác phẩm/bộ. Ký hiệu trên bìa chưa đủ xác nhận ISBN, tập và dạng bìa; không dùng nội dung riêng của tập nguồn.",
+        "Quan điểm và câu chuyện của tác giả không chứng minh tác dụng khoa học hoặc chữa lành.",
+        "Chưa xác định tập/bộ của sản phẩm; không gắn chủ đề riêng hay nhóm tuổi của tập nguồn."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ dùng điểm chung của tác phẩm/bộ. Ký hiệu trên bìa chưa đủ xác nhận ISBN, tập và dạng bìa; không dùng nội dung riêng của tập nguồn. Nguồn: https://firstnews.vn/muon-kiep-nhan-sinh-2-bia-cung-kho-lon-p1271.html"
+    },
+    {
+      "productId": 56,
+      "title": "Sapiens: Lược Sử Loài Người",
+      "author": "Yuval Noah Harari",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "lịch sử loài người",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Harari kể lịch sử loài người từ nguồn gốc tiến hóa đến xã hội hiện đại. Sách tập trung vào nông nghiệp, tiền tệ, tôn giáo và nhà nước, kết hợp lịch sử, sinh học, triết học và kinh tế."
+          },
+          "sourceUrls": [
+            "https://www.ynharari.com/book/sapiens/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "nguồn gốc tiến hóa / human evolution",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Harari kể lịch sử loài người từ nguồn gốc tiến hóa đến xã hội hiện đại. Sách tập trung vào nông nghiệp, tiền tệ, tôn giáo và nhà nước, kết hợp lịch sử, sinh học, triết học và kinh tế."
+          },
+          "sourceUrls": [
+            "https://www.ynharari.com/book/sapiens/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "nông nghiệp và tiền tệ",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Harari kể lịch sử loài người từ nguồn gốc tiến hóa đến xã hội hiện đại. Sách tập trung vào nông nghiệp, tiền tệ, tôn giáo và nhà nước, kết hợp lịch sử, sinh học, triết học và kinh tế."
+          },
+          "sourceUrls": [
+            "https://www.ynharari.com/book/sapiens/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "tôn giáo và nhà nước",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Harari kể lịch sử loài người từ nguồn gốc tiến hóa đến xã hội hiện đại. Sách tập trung vào nông nghiệp, tiền tệ, tôn giáo và nhà nước, kết hợp lịch sử, sinh học, triết học và kinh tế."
+          },
+          "sourceUrls": [
+            "https://www.ynharari.com/book/sapiens/"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "tìm hiểu quá trình tạo nên xã hội loài người",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Tìm hiểu các quá trình tạo nên xã hội loài người theo lập luận của tác giả."
+          },
+          "sourceUrls": [
+            "https://www.ynharari.com/book/sapiens/"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "kể và phân tích lịch sử",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Harari kể lịch sử loài người từ nguồn gốc tiến hóa đến xã hội hiện đại. Sách tập trung vào nông nghiệp, tiền tệ, tôn giáo và nhà nước, kết hợp lịch sử, sinh học, triết học và kinh tế."
+          },
+          "sourceUrls": [
+            "https://www.ynharari.com/book/sapiens/"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người tìm hiểu lịch sử loài người liên ngành",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người muốn tìm hiểu lịch sử loài người qua cách tiếp cận liên ngành."
+          },
+          "sourceUrls": [
+            "https://www.ynharari.com/book/sapiens/"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "ngôn ngữ sinh động kết hợp nhiều lĩnh vực",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Kể và phân tích lịch sử với ngôn ngữ sinh động, kết hợp nhiều lĩnh vực."
+          },
+          "sourceUrls": [
+            "https://www.ynharari.com/book/sapiens/"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Tóm lược nội dung tác phẩm; đối tượng theo mối quan tâm là phân loại biên tập từ nội dung nguồn. Không xác nhận tuổi cụ thể, độ khó hay ấn bản."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Tóm lược nội dung tác phẩm; đối tượng theo mối quan tâm là phân loại biên tập từ nội dung nguồn. Không xác nhận tuổi cụ thể, độ khó hay ấn bản. Nguồn: https://www.ynharari.com/book/sapiens/"
+    },
+    {
+      "productId": 58,
+      "title": "Nhà Giả Kim",
+      "author": "Paulo Coelho",
+      "labels": [
+        {
+          "dimension": "genre",
+          "value": "truyện ẩn dụ",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người quan tâm truyện ẩn dụ và hành trình thay đổi bản thân."
+          },
+          "sourceUrls": [
+            "https://paulocoelhoblog.com/2008/10/28/today%E2%80%99s-question-by-the-reader-chesney/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "hành trình Santiago qua Sahara",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Hành trình của Santiago qua sa mạc Sahara đến các kim tự tháp được Paulo Coelho dùng như một ẩn dụ về sự thay đổi của người trải qua hành trình."
+          },
+          "sourceUrls": [
+            "https://paulocoelhoblog.com/2008/10/28/today%E2%80%99s-question-by-the-reader-chesney/"
+          ]
+        },
+        {
+          "dimension": "topic",
+          "value": "sự thay đổi qua hành trình",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Hành trình của Santiago qua sa mạc Sahara đến các kim tự tháp được Paulo Coelho dùng như một ẩn dụ về sự thay đổi của người trải qua hành trình."
+          },
+          "sourceUrls": [
+            "https://paulocoelhoblog.com/2008/10/28/today%E2%80%99s-question-by-the-reader-chesney/"
+          ]
+        },
+        {
+          "dimension": "purpose",
+          "value": "chiêm nghiệm sự thay đổi của nhân vật",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "learningGoal",
+            "quote": "Chiêm nghiệm sự thay đổi của nhân vật qua hành trình trong câu chuyện."
+          },
+          "sourceUrls": [
+            "https://paulocoelhoblog.com/2008/10/28/today%E2%80%99s-question-by-the-reader-chesney/"
+          ]
+        },
+        {
+          "dimension": "format",
+          "value": "câu chuyện theo lối ẩn dụ",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "summary",
+            "quote": "Hành trình của Santiago qua sa mạc Sahara đến các kim tự tháp được Paulo Coelho dùng như một ẩn dụ về sự thay đổi của người trải qua hành trình."
+          },
+          "sourceUrls": [
+            "https://paulocoelhoblog.com/2008/10/28/today%E2%80%99s-question-by-the-reader-chesney/"
+          ]
+        },
+        {
+          "dimension": "audience",
+          "value": "người quan tâm hành trình thay đổi bản thân",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "audience",
+            "quote": "Người quan tâm truyện ẩn dụ và hành trình thay đổi bản thân."
+          },
+          "sourceUrls": [
+            "https://paulocoelhoblog.com/2008/10/28/today%E2%80%99s-question-by-the-reader-chesney/"
+          ]
+        },
+        {
+          "dimension": "style",
+          "value": "ẩn dụ về một hành trình",
+          "status": "reviewed_editorial",
+          "evidence": {
+            "field": "readingStyle",
+            "quote": "Truyện kể theo lối ẩn dụ về một hành trình."
+          },
+          "sourceUrls": [
+            "https://paulocoelhoblog.com/2008/10/28/today%E2%80%99s-question-by-the-reader-chesney/"
+          ]
+        }
+      ],
+      "unknowns": [
+        "exercises",
+        "answerKey",
+        "editionIsbn",
+        "editionPageCount",
+        "editionPublicationYear",
+        "readerAgeRange",
+        "readingLevel"
+      ],
+      "limitations": [
+        "Nhãn biên tập từ hồ sơ đã duyệt ở phạm vi tác phẩm; không xác nhận đúng ấn bản, độ tuổi hoặc hiệu quả cho từng người.",
+        "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn giải thích của chính tác giả; không dùng bài cảm nhận về marketing thành nội dung thực hành của sách, không xác nhận tuổi hoặc độ dễ đọc."
+      ],
+      "approvedSourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn giải thích của chính tác giả; không dùng bài cảm nhận về marketing thành nội dung thực hành của sách, không xác nhận tuổi hoặc độ dễ đọc. Nguồn: https://paulocoelhoblog.com/2008/10/28/today%E2%80%99s-question-by-the-reader-chesney/"
+    }
+  ]
+}

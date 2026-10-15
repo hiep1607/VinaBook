@@ -1,0 +1,2732 @@
+{
+  "books": [
+    {
+      "name": "Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam Năm 2013 (Sửa Đổi, Bổ Sung Năm 2025)",
+      "sold": 28,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320474/products/aifrungfs4soocyvpsnk.webp",
+      "price": 45000.0,
+      "author": "Quốc Hội Việt Nam",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Chính trị – pháp luật",
+          "topicId": 1,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "Hiến pháp",
+          "topicId": 100,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.nxbctqg.org.vn/xuat-ban-hai-tai-lieu-phap-ly-quan-trong-thiet-yeu.html"
+        },
+        {
+          "name": "quyền công dân",
+          "topicId": 101,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.nxbctqg.org.vn/xuat-ban-hai-tai-lieu-phap-ly-quan-trong-thiet-yeu.html"
+        },
+        {
+          "name": "tổ chức Nhà nước",
+          "topicId": 102,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.nxbctqg.org.vn/xuat-ban-hai-tai-lieu-phap-ly-quan-trong-thiet-yeu.html"
+        }
+      ],
+      "profile": {
+        "summary": "Văn bản Hiến pháp về nền tảng tổ chức Nhà nước, chế độ chính trị, quyền con người và quyền, nghĩa vụ cơ bản của công dân. Bìa đang bán ghi Hiến pháp năm 2013, sửa đổi, bổ sung năm 2025; chưa có ISBN và trang xuất bản để xác nhận chính xác bản in hoặc mọi cập nhật sau đó.",
+        "approved": 1,
+        "audience": "Người học, tra cứu Hiến pháp và tìm hiểu tổ chức Nhà nước Việt Nam.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam Năm 2013 (Sửa Đổi, Bổ Sung Năm 2025) Quốc Hội Việt Nam Sách Chính trị – pháp luật Văn bản Hiến pháp về nền tảng tổ chức Nhà nước, chế độ chính trị, quyền con người và quyền, nghĩa vụ cơ bản của công dân. Bìa đang bán ghi Hiến pháp năm 2013, sửa đổi, bổ sung năm 2025; chưa có ISBN và trang xuất bản để xác nhận chính xác bản in hoặc mọi cập nhật sau đó. Văn bản Hiến pháp về nền tảng tổ chức Nhà nước, chế độ chính trị, quyền con người và quyền, nghĩa vụ cơ bản của công dân. Bìa đang bán ghi Hiến pháp năm 2013, sửa đổi, bổ sung năm 2025; chưa có ISBN và trang xuất bản để xác nhận chính xác bản in hoặc mọi cập nhật sau đó. Người học, tra cứu Hiến pháp và tìm hiểu tổ chức Nhà nước Việt Nam.  Văn bản pháp luật để đọc và tra cứu theo điều khoản. Tìm hiểu các nguyên tắc hiến định và quyền, nghĩa vụ cơ bản; cần kiểm tra văn bản hiệu lực khi áp dụng. Sách Chính trị – pháp luật Hiến pháp quyền công dân tổ chức Nhà nước",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Đối chiếu bìa với thông báo NXB về Hiến pháp 2013 sửa đổi 2025. Không xác nhận tính hiện hành tại ngày hỏi. Nguồn: https://www.nxbctqg.org.vn/xuat-ban-hai-tai-lieu-phap-ly-quan-trong-thiet-yeu.html",
+        "learningGoal": "Tìm hiểu các nguyên tắc hiến định và quyền, nghĩa vụ cơ bản; cần kiểm tra văn bản hiệu lực khi áp dụng.",
+        "readingLevel": null,
+        "readingStyle": "Văn bản pháp luật để đọc và tra cứu theo điều khoản."
+      },
+      "category": "Sách Chính trị – pháp luật",
+      "discount": 0,
+      "quantity": 150,
+      "productId": 3,
+      "categoryId": 1,
+      "description": "Văn bản Hiến pháp về nền tảng tổ chức Nhà nước, chế độ chính trị, quyền con người và quyền, nghĩa vụ cơ bản của công dân. Bìa đang bán ghi Hiến pháp năm 2013, sửa đổi, bổ sung năm 2025; chưa có ISBN và trang xuất bản để xác nhận chính xác bản in hoặc mọi cập nhật sau đó."
+    },
+    {
+      "name": "Luật Doanh Nghiệp",
+      "sold": 22,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320139/products/vbad4nshdikvyfrdaq0d.webp",
+      "price": 78000.0,
+      "author": "Quốc Hội Việt Nam",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Chính trị – pháp luật",
+          "topicId": 1,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "pháp luật doanh nghiệp",
+          "topicId": 103,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://vbpl.moj.gov.vn/bolaodong/Pages/vbpq-toanvan.aspx?ItemID=142881&Keyword="
+        },
+        {
+          "name": "loại hình doanh nghiệp",
+          "topicId": 104,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://vbpl.moj.gov.vn/bolaodong/Pages/vbpq-toanvan.aspx?ItemID=142881&Keyword="
+        },
+        {
+          "name": "quản lý doanh nghiệp",
+          "topicId": 105,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://vbpl.moj.gov.vn/bolaodong/Pages/vbpq-toanvan.aspx?ItemID=142881&Keyword="
+        }
+      ],
+      "profile": {
+        "summary": "Văn bản luật về thành lập, tổ chức quản lý, tổ chức lại, giải thể và hoạt động của doanh nghiệp, bao gồm các loại hình công ty và doanh nghiệp tư nhân. Sách phục vụ tra cứu quy định, không phải cẩm nang khởi nghiệp từng bước. Chưa xác định năm in và các sửa đổi đã được tích hợp trong bản cửa hàng.",
+        "approved": 1,
+        "audience": "Người cần tra cứu pháp luật doanh nghiệp, người học và người quản lý doanh nghiệp.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Luật Doanh Nghiệp Quốc Hội Việt Nam Sách Chính trị – pháp luật Văn bản luật về thành lập, tổ chức quản lý, tổ chức lại, giải thể và hoạt động của doanh nghiệp, bao gồm các loại hình công ty và doanh nghiệp tư nhân. Sách phục vụ tra cứu quy định, không phải cẩm nang khởi nghiệp từng bước. Chưa xác định năm in và các sửa đổi đã được tích hợp trong bản cửa hàng. Văn bản luật về thành lập, tổ chức quản lý, tổ chức lại, giải thể và hoạt động của doanh nghiệp, bao gồm các loại hình công ty và doanh nghiệp tư nhân. Sách phục vụ tra cứu quy định, không phải cẩm nang khởi nghiệp từng bước. Chưa xác định năm in và các sửa đổi đã được tích hợp trong bản cửa hàng. Người cần tra cứu pháp luật doanh nghiệp, người học và người quản lý doanh nghiệp.  Văn bản luật được đọc, tra cứu theo các điều khoản. Tham khảo khung pháp luật về doanh nghiệp; kiểm tra hiệu lực và bản sửa đổi trước khi áp dụng vào hồ sơ thực tế. Sách Chính trị – pháp luật pháp luật doanh nghiệp loại hình doanh nghiệp quản lý doanh nghiệp",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn luật cho phạm vi chung, không chứng minh bản in cửa hàng tích hợp sửa đổi mới nhất. Bỏ nhãn hiện hành chưa xác minh. Nguồn: https://vbpl.moj.gov.vn/bolaodong/Pages/vbpq-toanvan.aspx?ItemID=142881&Keyword=",
+        "learningGoal": "Tham khảo khung pháp luật về doanh nghiệp; kiểm tra hiệu lực và bản sửa đổi trước khi áp dụng vào hồ sơ thực tế.",
+        "readingLevel": null,
+        "readingStyle": "Văn bản luật được đọc, tra cứu theo các điều khoản."
+      },
+      "category": "Sách Chính trị – pháp luật",
+      "discount": 5,
+      "quantity": 120,
+      "productId": 4,
+      "categoryId": 1,
+      "description": "Văn bản luật về thành lập, tổ chức quản lý, tổ chức lại, giải thể và hoạt động của doanh nghiệp, bao gồm các loại hình công ty và doanh nghiệp tư nhân. Sách phục vụ tra cứu quy định, không phải cẩm nang khởi nghiệp từng bước. Chưa xác định năm in và các sửa đổi đã được tích hợp trong bản cửa hàng."
+    },
+    {
+      "name": "Bộ Luật Lao Động",
+      "sold": 18,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320128/products/nhzwddy375czep8g5stu.jpg",
+      "price": 92000.0,
+      "author": "Quốc Hội Việt Nam",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Chính trị – pháp luật",
+          "topicId": 1,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "pháp luật lao động",
+          "topicId": 106,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbctqg.org.vn/bo-luat-lao-dong-hien-hanh--54.html"
+        },
+        {
+          "name": "quan hệ lao động",
+          "topicId": 107,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbctqg.org.vn/bo-luat-lao-dong-hien-hanh--54.html"
+        },
+        {
+          "name": "quyền người lao động",
+          "topicId": 108,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbctqg.org.vn/bo-luat-lao-dong-hien-hanh--54.html"
+        }
+      ],
+      "profile": {
+        "summary": "Bộ luật quy định quan hệ lao động, quyền và nghĩa vụ của người lao động và người sử dụng lao động, cùng các nội dung quản lý nhà nước về lao động. Đây là văn bản luật để tra cứu; chưa có căn cứ cho mô tả cũ về một sách thực hành kèm phân tích tình huống. Bản in và các sửa đổi được tích hợp chưa được xác nhận.",
+        "approved": 1,
+        "audience": "Người lao động, người sử dụng lao động và người học cần tham khảo văn bản pháp luật lao động.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Bộ Luật Lao Động Quốc Hội Việt Nam Sách Chính trị – pháp luật Bộ luật quy định quan hệ lao động, quyền và nghĩa vụ của người lao động và người sử dụng lao động, cùng các nội dung quản lý nhà nước về lao động. Đây là văn bản luật để tra cứu; chưa có căn cứ cho mô tả cũ về một sách thực hành kèm phân tích tình huống. Bản in và các sửa đổi được tích hợp chưa được xác nhận. Bộ luật quy định quan hệ lao động, quyền và nghĩa vụ của người lao động và người sử dụng lao động, cùng các nội dung quản lý nhà nước về lao động. Đây là văn bản luật để tra cứu; chưa có căn cứ cho mô tả cũ về một sách thực hành kèm phân tích tình huống. Bản in và các sửa đổi được tích hợp chưa được xác nhận. Người lao động, người sử dụng lao động và người học cần tham khảo văn bản pháp luật lao động.  Văn bản luật để tra cứu theo điều khoản. Tìm hiểu khung quyền và nghĩa vụ trong quan hệ lao động; đối chiếu văn bản hiệu lực khi giải quyết vụ việc. Sách Chính trị – pháp luật pháp luật lao động quan hệ lao động quyền người lao động",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa là Bộ luật Lao động, khớp NXB và cơ quan ban hành Quốc hội. Loại bỏ tác giả và mô tả thực hành gán nhầm. Nguồn: https://nxbctqg.org.vn/bo-luat-lao-dong-hien-hanh--54.html",
+        "learningGoal": "Tìm hiểu khung quyền và nghĩa vụ trong quan hệ lao động; đối chiếu văn bản hiệu lực khi giải quyết vụ việc.",
+        "readingLevel": null,
+        "readingStyle": "Văn bản luật để tra cứu theo điều khoản."
+      },
+      "category": "Sách Chính trị – pháp luật",
+      "discount": 10,
+      "quantity": 100,
+      "productId": 5,
+      "categoryId": 1,
+      "description": "Bộ luật quy định quan hệ lao động, quyền và nghĩa vụ của người lao động và người sử dụng lao động, cùng các nội dung quản lý nhà nước về lao động. Đây là văn bản luật để tra cứu; chưa có căn cứ cho mô tả cũ về một sách thực hành kèm phân tích tình huống. Bản in và các sửa đổi được tích hợp chưa được xác nhận."
+    },
+    {
+      "name": "Cẩm Nang Pháp Luật Dành Cho Doanh Nghiệp",
+      "sold": 41,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320093/products/k3k09hlkujlxxjpvjcto.jpg",
+      "price": 135000.0,
+      "author": "Tăng Bình & Ái Phương (hệ thống)",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Chính trị – pháp luật",
+          "topicId": 1,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "pháp luật doanh nghiệp",
+          "topicId": 103,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://thuvien.donga.edu.vn/sach/thong-tin?id=22321"
+        },
+        {
+          "name": "tiền lương",
+          "topicId": 109,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://thuvien.donga.edu.vn/sach/thong-tin?id=22321"
+        },
+        {
+          "name": "bảo hiểm",
+          "topicId": 110,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://thuvien.donga.edu.vn/sach/thong-tin?id=22321"
+        },
+        {
+          "name": "thuế",
+          "topicId": 111,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://thuvien.donga.edu.vn/sach/thong-tin?id=22321"
+        },
+        {
+          "name": "hóa đơn chứng từ",
+          "topicId": 112,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://thuvien.donga.edu.vn/sach/thong-tin?id=22321"
+        }
+      ],
+      "profile": {
+        "summary": "Cẩm nang hệ thống thông tin pháp luật dành cho doanh nghiệp về tiền lương, bảo hiểm, thuế, chi phí hợp lệ, hóa đơn, chứng từ và thanh tra, kiểm tra. Phù hợp nhu cầu tra cứu các vấn đề vận hành doanh nghiệp. Chưa xác nhận bản in cửa hàng và mức cập nhật quy định của bản đó.",
+        "approved": 1,
+        "audience": "Người làm công việc quản lý, hành chính, kế toán và cần tra cứu pháp luật liên quan doanh nghiệp.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Cẩm Nang Pháp Luật Dành Cho Doanh Nghiệp Tăng Bình & Ái Phương (hệ thống) Sách Chính trị – pháp luật Cẩm nang hệ thống thông tin pháp luật dành cho doanh nghiệp về tiền lương, bảo hiểm, thuế, chi phí hợp lệ, hóa đơn, chứng từ và thanh tra, kiểm tra. Phù hợp nhu cầu tra cứu các vấn đề vận hành doanh nghiệp. Chưa xác nhận bản in cửa hàng và mức cập nhật quy định của bản đó. Cẩm nang hệ thống thông tin pháp luật dành cho doanh nghiệp về tiền lương, bảo hiểm, thuế, chi phí hợp lệ, hóa đơn, chứng từ và thanh tra, kiểm tra. Phù hợp nhu cầu tra cứu các vấn đề vận hành doanh nghiệp. Chưa xác nhận bản in cửa hàng và mức cập nhật quy định của bản đó. Người làm công việc quản lý, hành chính, kế toán và cần tra cứu pháp luật liên quan doanh nghiệp.  Cẩm nang hệ thống nội dung tra cứu theo các vấn đề doanh nghiệp. Định hướng tra cứu pháp luật về lương, bảo hiểm, thuế và chứng từ; không thay việc kiểm tra quy định đang có hiệu lực. Sách Chính trị – pháp luật pháp luật doanh nghiệp tiền lương bảo hiểm thuế hóa đơn chứng từ",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Tên chính và nội dung phụ đề khớp bìa; thư viện ghi Tăng Bình, Ái Phương hệ thống. Không gán cho Trương Thanh Đức. Nguồn: https://thuvien.donga.edu.vn/sach/thong-tin?id=22321",
+        "learningGoal": "Định hướng tra cứu pháp luật về lương, bảo hiểm, thuế và chứng từ; không thay việc kiểm tra quy định đang có hiệu lực.",
+        "readingLevel": null,
+        "readingStyle": "Cẩm nang hệ thống nội dung tra cứu theo các vấn đề doanh nghiệp."
+      },
+      "category": "Sách Chính trị – pháp luật",
+      "discount": 15,
+      "quantity": 90,
+      "productId": 6,
+      "categoryId": 1,
+      "description": "Cẩm nang hệ thống thông tin pháp luật dành cho doanh nghiệp về tiền lương, bảo hiểm, thuế, chi phí hợp lệ, hóa đơn, chứng từ và thanh tra, kiểm tra. Phù hợp nhu cầu tra cứu các vấn đề vận hành doanh nghiệp. Chưa xác nhận bản in cửa hàng và mức cập nhật quy định của bản đó."
+    },
+    {
+      "name": "Luật Đất Đai (Sửa Đổi, Bổ Sung Năm 2024) Và Các Văn Bản Hướng Dẫn Thi Hành",
+      "sold": 12,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320083/products/ex49vpz8y05eonwc7cpj.webp",
+      "price": 110000.0,
+      "author": "Quốc Hội Việt Nam (văn bản luật)",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Chính trị – pháp luật",
+          "topicId": 1,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "pháp luật đất đai",
+          "topicId": 113,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbctqg.org.vn/luat-dat-dai-47.html"
+        },
+        {
+          "name": "quản lý đất đai",
+          "topicId": 114,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbctqg.org.vn/luat-dat-dai-47.html"
+        },
+        {
+          "name": "quyền sử dụng đất",
+          "topicId": 115,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbctqg.org.vn/luat-dat-dai-47.html"
+        }
+      ],
+      "profile": {
+        "summary": "Tài liệu tập hợp Luật Đất đai và các văn bản hướng dẫn, phục vụ tìm hiểu chế độ quản lý đất đai và quyền, nghĩa vụ của người sử dụng đất. Bìa ghi sửa đổi, bổ sung năm 2024. Chưa xác nhận người hệ thống, danh mục văn bản đi kèm hoặc các cập nhật sau năm đó, nên không khẳng định đây là bản đầy đủ mới nhất.",
+        "approved": 1,
+        "audience": "Người học và người cần tra cứu văn bản pháp luật đất đai.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Luật Đất Đai (Sửa Đổi, Bổ Sung Năm 2024) Và Các Văn Bản Hướng Dẫn Thi Hành Quốc Hội Việt Nam (văn bản luật) Sách Chính trị – pháp luật Tài liệu tập hợp Luật Đất đai và các văn bản hướng dẫn, phục vụ tìm hiểu chế độ quản lý đất đai và quyền, nghĩa vụ của người sử dụng đất. Bìa ghi sửa đổi, bổ sung năm 2024. Chưa xác nhận người hệ thống, danh mục văn bản đi kèm hoặc các cập nhật sau năm đó, nên không khẳng định đây là bản đầy đủ mới nhất. Tài liệu tập hợp Luật Đất đai và các văn bản hướng dẫn, phục vụ tìm hiểu chế độ quản lý đất đai và quyền, nghĩa vụ của người sử dụng đất. Bìa ghi sửa đổi, bổ sung năm 2024. Chưa xác nhận người hệ thống, danh mục văn bản đi kèm hoặc các cập nhật sau năm đó, nên không khẳng định đây là bản đầy đủ mới nhất. Người học và người cần tra cứu văn bản pháp luật đất đai.  Tập hợp văn bản luật và văn bản hướng dẫn để tra cứu. Tham khảo khung pháp luật đất đai; cần xác minh hiệu lực và văn bản áp dụng cho từng trường hợp. Sách Chính trị – pháp luật pháp luật đất đai quản lý đất đai quyền sử dụng đất",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn xác nhận cơ quan ban hành và phạm vi luật, bìa ghi năm 2024. Chưa biết người hệ thống và danh mục hướng dẫn trong bản bán. Nguồn: https://nxbctqg.org.vn/luat-dat-dai-47.html",
+        "learningGoal": "Tham khảo khung pháp luật đất đai; cần xác minh hiệu lực và văn bản áp dụng cho từng trường hợp.",
+        "readingLevel": null,
+        "readingStyle": "Tập hợp văn bản luật và văn bản hướng dẫn để tra cứu."
+      },
+      "category": "Sách Chính trị – pháp luật",
+      "discount": 0,
+      "quantity": 79,
+      "productId": 7,
+      "categoryId": 1,
+      "description": "Tài liệu tập hợp Luật Đất đai và các văn bản hướng dẫn, phục vụ tìm hiểu chế độ quản lý đất đai và quyền, nghĩa vụ của người sử dụng đất. Bìa ghi sửa đổi, bổ sung năm 2024. Chưa xác nhận người hệ thống, danh mục văn bản đi kèm hoặc các cập nhật sau năm đó, nên không khẳng định đây là bản đầy đủ mới nhất."
+    },
+    {
+      "name": "Bộ Luật Dân Sự",
+      "sold": 15,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320070/products/qdhv6q3h0cpfrynrzd6p.jpg",
+      "price": 156000.0,
+      "author": "Quốc Hội Việt Nam",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Chính trị – pháp luật",
+          "topicId": 1,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "pháp luật dân sự",
+          "topicId": 116,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbctqg.org.vn/bo-luat-dan-su-hien-hanh--23.html"
+        },
+        {
+          "name": "quan hệ tài sản",
+          "topicId": 117,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbctqg.org.vn/bo-luat-dan-su-hien-hanh--23.html"
+        },
+        {
+          "name": "quyền nhân thân",
+          "topicId": 118,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbctqg.org.vn/bo-luat-dan-su-hien-hanh--23.html"
+        }
+      ],
+      "profile": {
+        "summary": "Bộ luật về địa vị pháp lý, quyền và nghĩa vụ dân sự của cá nhân, pháp nhân cùng các quan hệ tài sản và nhân thân. Đây là văn bản luật để tra cứu, không phải tác phẩm bình luận khoa học của Đỗ Văn Đại. Chưa xác nhận năm in hoặc các sửa đổi được tích hợp trong bản cửa hàng.",
+        "approved": 1,
+        "audience": "Người học và người cần tham khảo văn bản pháp luật dân sự.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Bộ Luật Dân Sự Quốc Hội Việt Nam Sách Chính trị – pháp luật Bộ luật về địa vị pháp lý, quyền và nghĩa vụ dân sự của cá nhân, pháp nhân cùng các quan hệ tài sản và nhân thân. Đây là văn bản luật để tra cứu, không phải tác phẩm bình luận khoa học của Đỗ Văn Đại. Chưa xác nhận năm in hoặc các sửa đổi được tích hợp trong bản cửa hàng. Bộ luật về địa vị pháp lý, quyền và nghĩa vụ dân sự của cá nhân, pháp nhân cùng các quan hệ tài sản và nhân thân. Đây là văn bản luật để tra cứu, không phải tác phẩm bình luận khoa học của Đỗ Văn Đại. Chưa xác nhận năm in hoặc các sửa đổi được tích hợp trong bản cửa hàng. Người học và người cần tham khảo văn bản pháp luật dân sự.  Văn bản luật để tra cứu theo các điều khoản. Tìm hiểu nền tảng các quan hệ dân sự; cần đối chiếu hiệu lực trước khi dùng cho vụ việc cụ thể. Sách Chính trị – pháp luật pháp luật dân sự quan hệ tài sản quyền nhân thân",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa là Bộ luật Dân sự, khớp NXB và cơ quan ban hành Quốc hội. Loại bỏ tên và tác giả sách bình luận gán nhầm. Nguồn: https://nxbctqg.org.vn/bo-luat-dan-su-hien-hanh--23.html",
+        "learningGoal": "Tìm hiểu nền tảng các quan hệ dân sự; cần đối chiếu hiệu lực trước khi dùng cho vụ việc cụ thể.",
+        "readingLevel": null,
+        "readingStyle": "Văn bản luật để tra cứu theo các điều khoản."
+      },
+      "category": "Sách Chính trị – pháp luật",
+      "discount": 8,
+      "quantity": 85,
+      "productId": 8,
+      "categoryId": 1,
+      "description": "Bộ luật về địa vị pháp lý, quyền và nghĩa vụ dân sự của cá nhân, pháp nhân cùng các quan hệ tài sản và nhân thân. Đây là văn bản luật để tra cứu, không phải tác phẩm bình luận khoa học của Đỗ Văn Đại. Chưa xác nhận năm in hoặc các sửa đổi được tích hợp trong bản cửa hàng."
+    },
+    {
+      "name": "Clean Code - Mã Sạch Và Cách Viết",
+      "sold": 86,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320053/products/bargnm2lw0ykyd3gqinf.webp",
+      "price": 168000.0,
+      "author": "Robert C. Martin",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Khoa học công nghệ – Kinh tế",
+          "topicId": 2,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "mã sạch",
+          "topicId": 9,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.informit.com/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884"
+        },
+        {
+          "name": "cải tiến mã nguồn",
+          "topicId": 10,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.informit.com/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884"
+        },
+        {
+          "name": "kiểm thử phần mềm",
+          "topicId": 11,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.informit.com/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884"
+        }
+      ],
+      "profile": {
+        "summary": "Bàn về cách nhận diện và cải thiện chất lượng mã nguồn: đặt tên, hàm, lớp, định dạng, xử lý lỗi và kiểm thử. Các tình huống cải tiến mã được dùng để minh họa nguyên tắc viết mã sạch.",
+        "approved": 1,
+        "audience": "Lập trình viên, kỹ sư phần mềm, trưởng nhóm và người quản lý dự án muốn cải thiện mã nguồn.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Clean Code - Mã Sạch Và Cách Viết Robert C. Martin Sách Khoa học công nghệ – Kinh tế Cẩm nang kinh điển của Uncle Bob về cách viết mã nguồn sạch, dễ đọc, dễ bảo trì. Bắt buộc đọc với mọi lập trình viên muốn nâng tầm tay nghề. Bàn về cách nhận diện và cải thiện chất lượng mã nguồn: đặt tên, hàm, lớp, định dạng, xử lý lỗi và kiểm thử. Các tình huống cải tiến mã được dùng để minh họa nguyên tắc viết mã sạch. Lập trình viên, kỹ sư phần mềm, trưởng nhóm và người quản lý dự án muốn cải thiện mã nguồn. Cần theo dõi và phân tích mã nguồn trong các ví dụ. Nguyên tắc viết mã đi cùng ví dụ cụ thể và tình huống cải tiến mã nguồn. Tham khảo cách đọc, đánh giá, chỉnh sửa mã nguồn và viết kiểm thử đơn vị. Sách Khoa học công nghệ – Kinh tế mã sạch cải tiến mã nguồn kiểm thử phần mềm",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn bản gốc 2008; chỉ dùng các chủ đề nền tảng. Không nhập thay đổi của bản 2026 hoặc thông số bản tiếng Anh. Nguồn: https://www.informit.com/store/clean-code-a-handbook-of-agile-software-craftsmanship-9780132350884",
+        "learningGoal": "Tham khảo cách đọc, đánh giá, chỉnh sửa mã nguồn và viết kiểm thử đơn vị.",
+        "readingLevel": "Cần theo dõi và phân tích mã nguồn trong các ví dụ.",
+        "readingStyle": "Nguyên tắc viết mã đi cùng ví dụ cụ thể và tình huống cải tiến mã nguồn."
+      },
+      "category": "Sách Khoa học công nghệ – Kinh tế",
+      "discount": 10,
+      "quantity": 140,
+      "productId": 9,
+      "categoryId": 2,
+      "description": "Cẩm nang kinh điển của Uncle Bob về cách viết mã nguồn sạch, dễ đọc, dễ bảo trì. Bắt buộc đọc với mọi lập trình viên muốn nâng tầm tay nghề."
+    },
+    {
+      "name": "Truyện Kiều",
+      "sold": 52,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320037/products/tcsofukigsxxa4o1fb2k.webp",
+      "price": 68000.0,
+      "author": "Nguyễn Du",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Văn học nghệ thuật",
+          "topicId": 3,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "văn học Việt Nam",
+          "topicId": 12,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/truyen-kieu"
+        },
+        {
+          "name": "văn học trong nhà trường",
+          "topicId": 13,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/truyen-kieu"
+        }
+      ],
+      "profile": {
+        "summary": "Kiệt tác thi ca của đại thi hào Nguyễn Du — 3254 câu lục bát kể về cuộc đời nàng Kiều. Đỉnh cao của văn học cổ điển Việt Nam, di sản của muôn đời.",
+        "approved": 1,
+        "audience": "Người học và tìm hiểu văn học Việt Nam; tác phẩm được giới thiệu trong tủ sách văn học nhà trường.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Truyện Kiều Nguyễn Du Sách Văn học nghệ thuật Kiệt tác thi ca của đại thi hào Nguyễn Du — 3254 câu lục bát kể về cuộc đời nàng Kiều. Đỉnh cao của văn học cổ điển Việt Nam, di sản của muôn đời. Kiệt tác thi ca của đại thi hào Nguyễn Du — 3254 câu lục bát kể về cuộc đời nàng Kiều. Đỉnh cao của văn học cổ điển Việt Nam, di sản của muôn đời. Người học và tìm hiểu văn học Việt Nam; tác phẩm được giới thiệu trong tủ sách văn học nhà trường.    Sách Văn học nghệ thuật văn học Việt Nam văn học trong nhà trường",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ bổ sung đối tượng và chủ đề có trên nguồn; giữ tóm tắt cửa hàng. Chưa đối chiếu bản chú giải, không áp dụng mốc tuổi của ấn bản nguồn. Nguồn: https://nxbkimdong.com.vn/truyen-kieu",
+        "learningGoal": null,
+        "readingLevel": null,
+        "readingStyle": null
+      },
+      "category": "Sách Văn học nghệ thuật",
+      "discount": 5,
+      "quantity": 130,
+      "productId": 10,
+      "categoryId": 3,
+      "description": "Kiệt tác thi ca của đại thi hào Nguyễn Du — 3254 câu lục bát kể về cuộc đời nàng Kiều. Đỉnh cao của văn học cổ điển Việt Nam, di sản của muôn đời."
+    },
+    {
+      "name": "Số Đỏ",
+      "sold": 33,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320025/products/i6xosoj7gdpgf8fdizfu.webp",
+      "price": 72000.0,
+      "author": "Vũ Trọng Phụng",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Văn học nghệ thuật",
+          "topicId": 3,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "văn học Việt Nam",
+          "topicId": 12,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/so-do-26"
+        },
+        {
+          "name": "trào phúng",
+          "topicId": 119,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/so-do-26"
+        },
+        {
+          "name": "phê phán xã hội",
+          "topicId": 120,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/so-do-26"
+        }
+      ],
+      "profile": {
+        "summary": "Tác phẩm trào phúng của Vũ Trọng Phụng, dựng những chân dung hí họa để phơi bày sự lố bịch trong xã hội. Sự hài hước đi cùng phê phán và châm biếm, phù hợp người muốn đọc văn học Việt Nam có giọng sắc sảo; không nên mặc định là truyện vui nhẹ nhàng cho mọi lứa tuổi.",
+        "approved": 1,
+        "audience": "Người thích văn học Việt Nam, truyện trào phúng và tìm hiểu văn học trong nhà trường.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Số Đỏ Vũ Trọng Phụng Sách Văn học nghệ thuật Tác phẩm trào phúng của Vũ Trọng Phụng, dựng những chân dung hí họa để phơi bày sự lố bịch trong xã hội. Sự hài hước đi cùng phê phán và châm biếm, phù hợp người muốn đọc văn học Việt Nam có giọng sắc sảo; không nên mặc định là truyện vui nhẹ nhàng cho mọi lứa tuổi. Tác phẩm trào phúng của Vũ Trọng Phụng, dựng những chân dung hí họa để phơi bày sự lố bịch trong xã hội. Sự hài hước đi cùng phê phán và châm biếm, phù hợp người muốn đọc văn học Việt Nam có giọng sắc sảo; không nên mặc định là truyện vui nhẹ nhàng cho mọi lứa tuổi. Người thích văn học Việt Nam, truyện trào phúng và tìm hiểu văn học trong nhà trường.  Trào phúng, châm biếm qua những chân dung nhân vật hí họa. Tìm hiểu cách văn học dùng tiếng cười để phê phán xã hội. Sách Văn học nghệ thuật văn học Việt Nam trào phúng phê phán xã hội",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ dùng mô tả chung của tác phẩm, không chuyển tuổi, số trang hoặc đặc điểm bản minh họa từ ấn bản nguồn. Nguồn: https://nxbkimdong.com.vn/so-do-26",
+        "learningGoal": "Tìm hiểu cách văn học dùng tiếng cười để phê phán xã hội.",
+        "readingLevel": null,
+        "readingStyle": "Trào phúng, châm biếm qua những chân dung nhân vật hí họa."
+      },
+      "category": "Sách Văn học nghệ thuật",
+      "discount": 0,
+      "quantity": 100,
+      "productId": 11,
+      "categoryId": 3,
+      "description": "Tác phẩm trào phúng của Vũ Trọng Phụng, dựng những chân dung hí họa để phơi bày sự lố bịch trong xã hội. Sự hài hước đi cùng phê phán và châm biếm, phù hợp người muốn đọc văn học Việt Nam có giọng sắc sảo; không nên mặc định là truyện vui nhẹ nhàng cho mọi lứa tuổi."
+    },
+    {
+      "name": "Vang Bóng Một Thời",
+      "sold": 20,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781320013/products/wrtj0w8hmnfkixfm1nj4.jpg",
+      "price": 78000.0,
+      "author": "Nguyễn Tuân",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Văn học nghệ thuật",
+          "topicId": 3,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "văn học Việt Nam",
+          "topicId": 12,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhanam.vn/review-sach-vang-bong-mot-thoi-nguyen-tuan"
+        },
+        {
+          "name": "văn hóa truyền thống",
+          "topicId": 121,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhanam.vn/review-sach-vang-bong-mot-thoi-nguyen-tuan"
+        },
+        {
+          "name": "hoài cổ",
+          "topicId": 122,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhanam.vn/review-sach-vang-bong-mot-thoi-nguyen-tuan"
+        }
+      ],
+      "profile": {
+        "summary": "Tập truyện và tùy bút của Nguyễn Tuân gợi lại nếp sống, thú chơi và vẻ đẹp văn hóa của một thời đã qua. Cách viết chú trọng ngôn ngữ và những con người tài hoa, với không khí hoài cổ. Đây là lựa chọn để thưởng thức văn chương và văn hóa, không phải sách hướng dẫn kỹ năng thực hành.",
+        "approved": 1,
+        "audience": "Người thích văn chương Nguyễn Tuân, văn hóa truyền thống và không khí hoài cổ.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Vang Bóng Một Thời Nguyễn Tuân Sách Văn học nghệ thuật Tập truyện và tùy bút của Nguyễn Tuân gợi lại nếp sống, thú chơi và vẻ đẹp văn hóa của một thời đã qua. Cách viết chú trọng ngôn ngữ và những con người tài hoa, với không khí hoài cổ. Đây là lựa chọn để thưởng thức văn chương và văn hóa, không phải sách hướng dẫn kỹ năng thực hành. Tập truyện và tùy bút của Nguyễn Tuân gợi lại nếp sống, thú chơi và vẻ đẹp văn hóa của một thời đã qua. Cách viết chú trọng ngôn ngữ và những con người tài hoa, với không khí hoài cổ. Đây là lựa chọn để thưởng thức văn chương và văn hóa, không phải sách hướng dẫn kỹ năng thực hành. Người thích văn chương Nguyễn Tuân, văn hóa truyền thống và không khí hoài cổ.  Truyện, tùy bút giàu ngôn ngữ, chú trọng vẻ đẹp văn hóa và con người tài hoa. Thưởng thức ngôn ngữ và tìm hiểu những nét văn hóa, nếp sống được tái hiện trong tác phẩm. Sách Văn học nghệ thuật văn hóa truyền thống hoài cổ văn học Việt Nam",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn đơn vị phát hành về tác phẩm; không áp số lượng truyện và bài tùy bút của bản nguồn cho mọi ấn bản. Nguồn: https://nhanam.vn/review-sach-vang-bong-mot-thoi-nguyen-tuan",
+        "learningGoal": "Thưởng thức ngôn ngữ và tìm hiểu những nét văn hóa, nếp sống được tái hiện trong tác phẩm.",
+        "readingLevel": null,
+        "readingStyle": "Truyện, tùy bút giàu ngôn ngữ, chú trọng vẻ đẹp văn hóa và con người tài hoa."
+      },
+      "category": "Sách Văn học nghệ thuật",
+      "discount": 0,
+      "quantity": 90,
+      "productId": 12,
+      "categoryId": 3,
+      "description": "Tập truyện và tùy bút của Nguyễn Tuân gợi lại nếp sống, thú chơi và vẻ đẹp văn hóa của một thời đã qua. Cách viết chú trọng ngôn ngữ và những con người tài hoa, với không khí hoài cổ. Đây là lựa chọn để thưởng thức văn chương và văn hóa, không phải sách hướng dẫn kỹ năng thực hành."
+    },
+    {
+      "name": "Dế Mèn Phiêu Lưu Ký",
+      "sold": 64,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319997/products/miinx6gswrn8btdhklff.webp",
+      "price": 56000.0,
+      "author": "Tô Hoài",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Văn học nghệ thuật",
+          "topicId": 3,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "phiêu lưu",
+          "topicId": 14,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/diary-of-a-cricket"
+        },
+        {
+          "name": "tình bạn",
+          "topicId": 15,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/diary-of-a-cricket"
+        },
+        {
+          "name": "hòa bình",
+          "topicId": 16,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/diary-of-a-cricket"
+        }
+      ],
+      "profile": {
+        "summary": "Truyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận.",
+        "approved": 1,
+        "audience": "Độc giả nhỏ tuổi và người quan tâm văn học thiếu nhi Việt Nam.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Dế Mèn Phiêu Lưu Ký Tô Hoài Sách Văn học nghệ thuật Cuộc phiêu lưu của chú Dế Mèn qua thế giới loài vật — bài học về lòng dũng cảm, tình bạn và khát vọng. Tác phẩm gối đầu giường của bao thế hệ thiếu nhi Việt Nam. Truyện dài về hành trình của Dế Mèn cùng bạn bè qua thế giới loài vật. Những khó khăn trên đường đi đặt ra câu chuyện về tình bạn, lòng dũng cảm và mong muốn các loài chung sống hòa thuận. Độc giả nhỏ tuổi và người quan tâm văn học thiếu nhi Việt Nam.  Truyện phiêu lưu qua thế giới loài vật, có khó khăn và nguy hiểm trên hành trình. Suy ngẫm về tình bạn, lòng dũng cảm và sự hòa thuận qua câu chuyện. Sách Văn học nghệ thuật phiêu lưu tình bạn hòa bình",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Trang nguồn là bản dịch tiếng Anh của cùng tác phẩm. Chỉ dùng nội dung chung; không lấy độ tuổi, tranh minh họa, số trang hoặc mức dễ đọc của bản rút gọn. Nguồn: https://nxbkimdong.com.vn/diary-of-a-cricket",
+        "learningGoal": "Suy ngẫm về tình bạn, lòng dũng cảm và sự hòa thuận qua câu chuyện.",
+        "readingLevel": null,
+        "readingStyle": "Truyện phiêu lưu qua thế giới loài vật, có khó khăn và nguy hiểm trên hành trình."
+      },
+      "category": "Sách Văn học nghệ thuật",
+      "discount": 10,
+      "quantity": 160,
+      "productId": 13,
+      "categoryId": 3,
+      "description": "Cuộc phiêu lưu của chú Dế Mèn qua thế giới loài vật — bài học về lòng dũng cảm, tình bạn và khát vọng. Tác phẩm gối đầu giường của bao thế hệ thiếu nhi Việt Nam."
+    },
+    {
+      "name": "Việt Nam Sử Lược",
+      "sold": 47,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319897/products/h3ualgdbw1wvjmb87thi.webp",
+      "price": 125000.0,
+      "author": "Trần Trọng Kim",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Văn hóa xã hội – Lịch sử",
+          "topicId": 4,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "lịch sử Việt Nam",
+          "topicId": 123,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/viet-nam-su-luoc-ban-dac-biet-26"
+        },
+        {
+          "name": "triều đại Việt Nam",
+          "topicId": 124,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/viet-nam-su-luoc-ban-dac-biet-26"
+        },
+        {
+          "name": "lược sử",
+          "topicId": 125,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/viet-nam-su-luoc-ban-dac-biet-26"
+        }
+      ],
+      "profile": {
+        "summary": "Tác phẩm trình bày lịch sử Việt Nam theo trình tự các thời kỳ và triều đại, nhằm giúp người đọc nắm một mạch lịch sử có hệ thống. Phù hợp nhu cầu tìm hiểu lịch sử tổng quát. Đây là cách trình bày lịch sử của Trần Trọng Kim, không nên xem như kết luận cuối cùng cho mọi tranh luận sử học.",
+        "approved": 1,
+        "audience": "Người muốn tìm hiểu lịch sử Việt Nam theo một mạch tổng quan.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Việt Nam Sử Lược Trần Trọng Kim Sách Văn hóa xã hội – Lịch sử Tác phẩm trình bày lịch sử Việt Nam theo trình tự các thời kỳ và triều đại, nhằm giúp người đọc nắm một mạch lịch sử có hệ thống. Phù hợp nhu cầu tìm hiểu lịch sử tổng quát. Đây là cách trình bày lịch sử của Trần Trọng Kim, không nên xem như kết luận cuối cùng cho mọi tranh luận sử học. Tác phẩm trình bày lịch sử Việt Nam theo trình tự các thời kỳ và triều đại, nhằm giúp người đọc nắm một mạch lịch sử có hệ thống. Phù hợp nhu cầu tìm hiểu lịch sử tổng quát. Đây là cách trình bày lịch sử của Trần Trọng Kim, không nên xem như kết luận cuối cùng cho mọi tranh luận sử học. Người muốn tìm hiểu lịch sử Việt Nam theo một mạch tổng quan.  Lược sử trình bày theo trình tự thời kỳ, triều đại. Xây dựng cái nhìn tổng quan và liên hệ các thời kỳ lịch sử Việt Nam. Sách Văn hóa xã hội – Lịch sử lịch sử Việt Nam triều đại Việt Nam lược sử",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Dùng phạm vi tác phẩm và lời giới thiệu; không nhập thông số hoặc phụ lục của bản đặc biệt. Nguồn: https://nxbkimdong.com.vn/viet-nam-su-luoc-ban-dac-biet-26",
+        "learningGoal": "Xây dựng cái nhìn tổng quan và liên hệ các thời kỳ lịch sử Việt Nam.",
+        "readingLevel": null,
+        "readingStyle": "Lược sử trình bày theo trình tự thời kỳ, triều đại."
+      },
+      "category": "Sách Văn hóa xã hội – Lịch sử",
+      "discount": 5,
+      "quantity": 110,
+      "productId": 14,
+      "categoryId": 4,
+      "description": "Tác phẩm trình bày lịch sử Việt Nam theo trình tự các thời kỳ và triều đại, nhằm giúp người đọc nắm một mạch lịch sử có hệ thống. Phù hợp nhu cầu tìm hiểu lịch sử tổng quát. Đây là cách trình bày lịch sử của Trần Trọng Kim, không nên xem như kết luận cuối cùng cho mọi tranh luận sử học."
+    },
+    {
+      "name": "Lịch Sử Thế Giới Hiện Đại",
+      "sold": 24,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319872/products/oscnv2zjikeyzoini0wl.webp",
+      "price": 158000.0,
+      "author": "Nguyễn Anh Thái (chủ biên)",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Văn hóa xã hội – Lịch sử",
+          "topicId": 4,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "lịch sử thế giới",
+          "topicId": 126,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/lich-su-the-gioi-hien-dai/63442"
+        },
+        {
+          "name": "quan hệ quốc tế",
+          "topicId": 127,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/lich-su-the-gioi-hien-dai/63442"
+        },
+        {
+          "name": "giải phóng dân tộc",
+          "topicId": 128,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/lich-su-the-gioi-hien-dai/63442"
+        },
+        {
+          "name": "Chiến tranh thế giới thứ hai",
+          "topicId": 129,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/lich-su-the-gioi-hien-dai/63442"
+        }
+      ],
+      "profile": {
+        "summary": "Giáo trình lịch sử thế giới hiện đại do Nguyễn Anh Thái chủ biên, trình bày các biến chuyển từ năm 1917, gồm cách mạng, phong trào giải phóng dân tộc, chủ nghĩa tư bản và quan hệ quốc tế. Có nội dung về Chiến tranh thế giới thứ hai cùng các chuyển biến khoa học, kỹ thuật sau chiến tranh. Chưa xác định mốc kết thúc của đúng bản cửa hàng, không khẳng định bao quát sự kiện đến hiện nay.",
+        "approved": 1,
+        "audience": "Người học và tìm hiểu lịch sử thế giới hiện đại, quan hệ quốc tế và các phong trào chính trị thế kỷ XX.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Lịch Sử Thế Giới Hiện Đại Nguyễn Anh Thái (chủ biên) Sách Văn hóa xã hội – Lịch sử Giáo trình lịch sử thế giới hiện đại do Nguyễn Anh Thái chủ biên, trình bày các biến chuyển từ năm 1917, gồm cách mạng, phong trào giải phóng dân tộc, chủ nghĩa tư bản và quan hệ quốc tế. Có nội dung về Chiến tranh thế giới thứ hai cùng các chuyển biến khoa học, kỹ thuật sau chiến tranh. Chưa xác định mốc kết thúc của đúng bản cửa hàng, không khẳng định bao quát sự kiện đến hiện nay. Giáo trình lịch sử thế giới hiện đại do Nguyễn Anh Thái chủ biên, trình bày các biến chuyển từ năm 1917, gồm cách mạng, phong trào giải phóng dân tộc, chủ nghĩa tư bản và quan hệ quốc tế. Có nội dung về Chiến tranh thế giới thứ hai cùng các chuyển biến khoa học, kỹ thuật sau chiến tranh. Chưa xác định mốc kết thúc của đúng bản cửa hàng, không khẳng định bao quát sự kiện đến hiện nay. Người học và tìm hiểu lịch sử thế giới hiện đại, quan hệ quốc tế và các phong trào chính trị thế kỷ XX.  Giáo trình lịch sử trình bày theo các giai đoạn và vấn đề. Hệ thống các chuyển biến lịch sử thế giới từ năm 1917 và bối cảnh quan hệ quốc tế. Sách Văn hóa xã hội – Lịch sử lịch sử thế giới quan hệ quốc tế giải phóng dân tộc Chiến tranh thế giới thứ hai",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa và thư viện xác nhận vai trò chủ biên. Không dùng mô tả cũ bao quát cả hai thế chiến hoặc đến hiện nay. Nguồn: https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/lich-su-the-gioi-hien-dai/63442",
+        "learningGoal": "Hệ thống các chuyển biến lịch sử thế giới từ năm 1917 và bối cảnh quan hệ quốc tế.",
+        "readingLevel": null,
+        "readingStyle": "Giáo trình lịch sử trình bày theo các giai đoạn và vấn đề."
+      },
+      "category": "Sách Văn hóa xã hội – Lịch sử",
+      "discount": 8,
+      "quantity": 90,
+      "productId": 15,
+      "categoryId": 4,
+      "description": "Giáo trình lịch sử thế giới hiện đại do Nguyễn Anh Thái chủ biên, trình bày các biến chuyển từ năm 1917, gồm cách mạng, phong trào giải phóng dân tộc, chủ nghĩa tư bản và quan hệ quốc tế. Có nội dung về Chiến tranh thế giới thứ hai cùng các chuyển biến khoa học, kỹ thuật sau chiến tranh. Chưa xác định mốc kết thúc của đúng bản cửa hàng, không khẳng định bao quát sự kiện đến hiện nay."
+    },
+    {
+      "name": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng",
+      "sold": 58,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319839/products/emvvfbsijvpo4ctg0c2t.jpg",
+      "price": 175000.0,
+      "author": "Andrew Hunt & David Thomas",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Khoa học công nghệ – Kinh tế",
+          "topicId": 2,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "kiểm thử phần mềm",
+          "topicId": 11,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/"
+        },
+        {
+          "name": "nghề lập trình",
+          "topicId": 17,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/"
+        },
+        {
+          "name": "bảo trì phần mềm",
+          "topicId": 18,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/"
+        }
+      ],
+      "profile": {
+        "summary": "Bàn về trách nhiệm nghề nghiệp và cách xây dựng phần mềm linh hoạt, dễ bảo trì. Các chủ đề gồm tránh lặp kiến thức, dùng công cụ, hiểu yêu cầu, học liên tục và kiểm thử.",
+        "approved": 1,
+        "audience": "Người học lập trình, lập trình viên có kinh nghiệm và người quản lý dự án phần mềm.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "The Pragmatic Programmer - Lập Trình Viên Thực Dụng Andrew Hunt & David Thomas Sách Khoa học công nghệ – Kinh tế Những bài học thực dụng đưa bạn từ thợ code thành kỹ sư phần mềm bậc thầy: tư duy, công cụ, thói quen nghề nghiệp bền vững. Bàn về trách nhiệm nghề nghiệp và cách xây dựng phần mềm linh hoạt, dễ bảo trì. Các chủ đề gồm tránh lặp kiến thức, dùng công cụ, hiểu yêu cầu, học liên tục và kiểm thử. Người học lập trình, lập trình viên có kinh nghiệm và người quản lý dự án phần mềm.  Các phần chuyên đề về lập trình được trình bày qua giai thoại, ví dụ cụ thể và phép so sánh. Tham khảo thói quen làm việc, cách hiểu yêu cầu và cải thiện chất lượng phần mềm. Sách Khoa học công nghệ – Kinh tế nghề lập trình bảo trì phần mềm kiểm thử phần mềm",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn bản kỷ niệm 2019; chỉ dùng chủ đề chung của tác phẩm. Chưa xác nhận bản dịch hoặc những mục mới riêng của ấn bản này. Nguồn: https://www.pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/",
+        "learningGoal": "Tham khảo thói quen làm việc, cách hiểu yêu cầu và cải thiện chất lượng phần mềm.",
+        "readingLevel": null,
+        "readingStyle": "Các phần chuyên đề về lập trình được trình bày qua giai thoại, ví dụ cụ thể và phép so sánh."
+      },
+      "category": "Sách Khoa học công nghệ – Kinh tế",
+      "discount": 12,
+      "quantity": 110,
+      "productId": 16,
+      "categoryId": 2,
+      "description": "Những bài học thực dụng đưa bạn từ thợ code thành kỹ sư phần mềm bậc thầy: tư duy, công cụ, thói quen nghề nghiệp bền vững."
+    },
+    {
+      "name": "AI - Sức Mạnh Của Trí Tuệ Nhân Tạo",
+      "sold": 45,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319801/products/yrcackuuxv0bxefp3dah.jpg",
+      "price": 132000.0,
+      "author": "Nguyễn Văn Lượng",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Khoa học công nghệ – Kinh tế",
+          "topicId": 2,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "AI nhập môn",
+          "topicId": 130,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhasachbella.com/san-pham/sach-ai-suc-manh-cua-tri-tue-nhan-tao/"
+        },
+        {
+          "name": "học máy",
+          "topicId": 131,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhasachbella.com/san-pham/sach-ai-suc-manh-cua-tri-tue-nhan-tao/"
+        },
+        {
+          "name": "ứng dụng AI",
+          "topicId": 132,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhasachbella.com/san-pham/sach-ai-suc-manh-cua-tri-tue-nhan-tao/"
+        },
+        {
+          "name": "AI trong công việc",
+          "topicId": 133,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhasachbella.com/san-pham/sach-ai-suc-manh-cua-tri-tue-nhan-tao/"
+        }
+      ],
+      "profile": {
+        "summary": "Giới thiệu các khái niệm trí tuệ nhân tạo và học máy, cùng ứng dụng trong công việc, học tập, sáng tạo và kinh doanh. Sách của Nguyễn Văn Lượng hướng đến người mới tìm hiểu, bằng cách trình bày phổ thông. Đây không phải giáo trình lập trình AI chuyên sâu.",
+        "approved": 1,
+        "audience": "Người mới tìm hiểu AI và muốn biết ứng dụng trong học tập, công việc, sáng tạo, kinh doanh.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "AI - Sức Mạnh Của Trí Tuệ Nhân Tạo Nguyễn Văn Lượng Sách Khoa học công nghệ – Kinh tế Giới thiệu các khái niệm trí tuệ nhân tạo và học máy, cùng ứng dụng trong công việc, học tập, sáng tạo và kinh doanh. Sách của Nguyễn Văn Lượng hướng đến người mới tìm hiểu, bằng cách trình bày phổ thông. Đây không phải giáo trình lập trình AI chuyên sâu. Giới thiệu các khái niệm trí tuệ nhân tạo và học máy, cùng ứng dụng trong công việc, học tập, sáng tạo và kinh doanh. Sách của Nguyễn Văn Lượng hướng đến người mới tìm hiểu, bằng cách trình bày phổ thông. Đây không phải giáo trình lập trình AI chuyên sâu. Người mới tìm hiểu AI và muốn biết ứng dụng trong học tập, công việc, sáng tạo, kinh doanh. Nhập môn cho người mới tìm hiểu; không tập trung lập trình chuyên sâu. Giới thiệu phổ thông, giải thích khái niệm gắn với các ứng dụng. Có định hướng ban đầu về AI, học máy và những cách ứng dụng trong đời sống, công việc. Sách Khoa học công nghệ – Kinh tế AI nhập môn học máy ứng dụng AI AI trong công việc",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa khớp sản phẩm do Bella phát hành; tác giả Nguyễn Văn Lượng. Không gán cho Phạm Huy Hoàng. Nguồn: https://nhasachbella.com/san-pham/sach-ai-suc-manh-cua-tri-tue-nhan-tao/",
+        "learningGoal": "Có định hướng ban đầu về AI, học máy và những cách ứng dụng trong đời sống, công việc.",
+        "readingLevel": "Nhập môn cho người mới tìm hiểu; không tập trung lập trình chuyên sâu.",
+        "readingStyle": "Giới thiệu phổ thông, giải thích khái niệm gắn với các ứng dụng."
+      },
+      "category": "Sách Khoa học công nghệ – Kinh tế",
+      "discount": 5,
+      "quantity": 120,
+      "productId": 17,
+      "categoryId": 2,
+      "description": "Giới thiệu các khái niệm trí tuệ nhân tạo và học máy, cùng ứng dụng trong công việc, học tập, sáng tạo và kinh doanh. Sách của Nguyễn Văn Lượng hướng đến người mới tìm hiểu, bằng cách trình bày phổ thông. Đây không phải giáo trình lập trình AI chuyên sâu."
+    },
+    {
+      "name": "Blockchain Cơ Bản",
+      "sold": 31,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319781/products/ptjxp427gba0zja7ivmv.jpg",
+      "price": 145000.0,
+      "author": "Daniel Drescher",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Khoa học công nghệ – Kinh tế",
+          "topicId": 2,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "blockchain",
+          "topicId": 134,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhanam.vn/blockchain-co-ban-nha-nam"
+        },
+        {
+          "name": "chuỗi khối",
+          "topicId": 135,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhanam.vn/blockchain-co-ban-nha-nam"
+        },
+        {
+          "name": "nền tảng công nghệ",
+          "topicId": 136,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhanam.vn/blockchain-co-ban-nha-nam"
+        }
+      ],
+      "profile": {
+        "summary": "Daniel Drescher giải thích blockchain qua 25 bước, dùng hình ảnh, phép so sánh và ví dụ để nối các khái niệm. Người đọc tìm hiểu cơ chế, tiềm năng và giới hạn của công nghệ chuỗi khối mà không cần công thức toán hay lập trình. Sách giúp hiểu nền tảng công nghệ, không bảo đảm lợi nhuận đầu tư tiền mã hóa.",
+        "approved": 1,
+        "audience": "Người muốn hiểu nền tảng blockchain, kể cả người chưa có kiến thức kỹ thuật chuyên môn.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Blockchain Cơ Bản Daniel Drescher Sách Khoa học công nghệ – Kinh tế Daniel Drescher giải thích blockchain qua 25 bước, dùng hình ảnh, phép so sánh và ví dụ để nối các khái niệm. Người đọc tìm hiểu cơ chế, tiềm năng và giới hạn của công nghệ chuỗi khối mà không cần công thức toán hay lập trình. Sách giúp hiểu nền tảng công nghệ, không bảo đảm lợi nhuận đầu tư tiền mã hóa. Daniel Drescher giải thích blockchain qua 25 bước, dùng hình ảnh, phép so sánh và ví dụ để nối các khái niệm. Người đọc tìm hiểu cơ chế, tiềm năng và giới hạn của công nghệ chuỗi khối mà không cần công thức toán hay lập trình. Sách giúp hiểu nền tảng công nghệ, không bảo đảm lợi nhuận đầu tư tiền mã hóa. Người muốn hiểu nền tảng blockchain, kể cả người chưa có kiến thức kỹ thuật chuyên môn. Không đòi hỏi nền tảng kỹ thuật; không dùng công thức toán hay lập trình. Giải thích theo 25 bước với hình ảnh, phép so sánh và ví dụ. Hiểu cách blockchain hoạt động cùng tiềm năng, giới hạn và ý nghĩa ứng dụng. Sách Khoa học công nghệ – Kinh tế blockchain chuỗi khối nền tảng công nghệ",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa và Nha Nam xác nhận Blockchain cơ bản của Daniel Drescher; không phải tác phẩm Don Tapscott. Nguồn: https://nhanam.vn/blockchain-co-ban-nha-nam",
+        "learningGoal": "Hiểu cách blockchain hoạt động cùng tiềm năng, giới hạn và ý nghĩa ứng dụng.",
+        "readingLevel": "Không đòi hỏi nền tảng kỹ thuật; không dùng công thức toán hay lập trình.",
+        "readingStyle": "Giải thích theo 25 bước với hình ảnh, phép so sánh và ví dụ."
+      },
+      "category": "Sách Khoa học công nghệ – Kinh tế",
+      "discount": 8,
+      "quantity": 95,
+      "productId": 18,
+      "categoryId": 2,
+      "description": "Daniel Drescher giải thích blockchain qua 25 bước, dùng hình ảnh, phép so sánh và ví dụ để nối các khái niệm. Người đọc tìm hiểu cơ chế, tiềm năng và giới hạn của công nghệ chuỗi khối mà không cần công thức toán hay lập trình. Sách giúp hiểu nền tảng công nghệ, không bảo đảm lợi nhuận đầu tư tiền mã hóa."
+    },
+    {
+      "name": "Khởi Nghiệp Tinh Gọn (The Lean Startup)",
+      "sold": 72,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319755/products/zmbp1gauuup88piahxdy.webp",
+      "price": 128000.0,
+      "author": "Eric Ries",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Khoa học công nghệ – Kinh tế",
+          "topicId": 2,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "khởi nghiệp",
+          "topicId": 19,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://theleanstartup.com/"
+        },
+        {
+          "name": "kiểm chứng ý tưởng",
+          "topicId": 20,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://theleanstartup.com/"
+        },
+        {
+          "name": "phát triển sản phẩm",
+          "topicId": 21,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://theleanstartup.com/"
+        }
+      ],
+      "profile": {
+        "summary": "Giới thiệu cách phát triển sản phẩm bằng thử nghiệm và học từ kết quả đo lường. Trọng tâm là vòng xây dựng, đo lường, học hỏi và kiểm chứng ý tưởng để giảm công việc lãng phí.",
+        "approved": 1,
+        "audience": "Người khởi nghiệp và đội ngũ phát triển sản phẩm muốn kiểm chứng ý tưởng.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Khởi Nghiệp Tinh Gọn (The Lean Startup) Eric Ries Sách Khoa học công nghệ – Kinh tế Phương pháp xây dựng startup hiện đại: thử nghiệm nhanh, học hỏi từ khách hàng, xoay trục đúng lúc. Kim chỉ nam cho mọi nhà sáng lập. Giới thiệu cách phát triển sản phẩm bằng thử nghiệm và học từ kết quả đo lường. Trọng tâm là vòng xây dựng, đo lường, học hỏi và kiểm chứng ý tưởng để giảm công việc lãng phí. Người khởi nghiệp và đội ngũ phát triển sản phẩm muốn kiểm chứng ý tưởng.  Trình bày nguyên tắc thử nghiệm và cách học từ kết quả trong quá trình xây dựng sản phẩm. Tham khảo hướng dẫn áp dụng vòng xây dựng, đo lường, học hỏi để kiểm chứng ý tưởng kinh doanh. Sách Khoa học công nghệ – Kinh tế khởi nghiệp kiểm chứng ý tưởng phát triển sản phẩm",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Tóm lược nội dung tác phẩm; đối tượng theo mối quan tâm là phân loại biên tập từ nội dung nguồn. Không xác nhận tuổi cụ thể, độ khó hay ấn bản. Nguồn: https://theleanstartup.com/",
+        "learningGoal": "Tham khảo hướng dẫn áp dụng vòng xây dựng, đo lường, học hỏi để kiểm chứng ý tưởng kinh doanh.",
+        "readingLevel": null,
+        "readingStyle": "Trình bày nguyên tắc thử nghiệm và cách học từ kết quả trong quá trình xây dựng sản phẩm."
+      },
+      "category": "Sách Khoa học công nghệ – Kinh tế",
+      "discount": 15,
+      "quantity": 130,
+      "productId": 19,
+      "categoryId": 2,
+      "description": "Phương pháp xây dựng startup hiện đại: thử nghiệm nhanh, học hỏi từ khách hàng, xoay trục đúng lúc. Kim chỉ nam cho mọi nhà sáng lập."
+    },
+    {
+      "name": "Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật",
+      "sold": 38,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319743/products/x6ssqusalnhgpbux28uv.webp",
+      "price": 88000.0,
+      "author": "Đỗ Trung Kiên (chủ biên), Đặng Xuân Thọ, Nguyễn Thị Hồng, Phạm Thị Lan",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Giáo trình",
+          "topicId": 5,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "cấu trúc dữ liệu",
+          "topicId": 137,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://thuvien.hiu.vn/Opac/DmdInfo.aspx?=&collection_id=27&dmd_id=27629&heading_id=5"
+        },
+        {
+          "name": "giải thuật",
+          "topicId": 138,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://thuvien.hiu.vn/Opac/DmdInfo.aspx?=&collection_id=27&dmd_id=27629&heading_id=5"
+        },
+        {
+          "name": "đệ quy",
+          "topicId": 139,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://thuvien.hiu.vn/Opac/DmdInfo.aspx?=&collection_id=27&dmd_id=27629&heading_id=5"
+        },
+        {
+          "name": "tìm kiếm và sắp xếp",
+          "topicId": 140,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://thuvien.hiu.vn/Opac/DmdInfo.aspx?=&collection_id=27&dmd_id=27629&heading_id=5"
+        }
+      ],
+      "profile": {
+        "summary": "Giáo trình do Đỗ Trung Kiên chủ biên, giới thiệu giải thuật, phân tích giải thuật và đệ quy, cùng các cấu trúc như danh sách liên kết, ngăn xếp, hàng đợi và cây. Có nội dung tìm kiếm và sắp xếp. Chưa có căn cứ để xác nhận ngôn ngữ lập trình hoặc mức bao quát đồ thị của đúng bản đang bán.",
+        "approved": 1,
+        "audience": "Người học cấu trúc dữ liệu và giải thuật trong ngành công nghệ thông tin.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Giáo Trình Cấu Trúc Dữ Liệu Và Giải Thuật Đỗ Trung Kiên (chủ biên), Đặng Xuân Thọ, Nguyễn Thị Hồng, Phạm Thị Lan Sách Giáo trình Giáo trình do Đỗ Trung Kiên chủ biên, giới thiệu giải thuật, phân tích giải thuật và đệ quy, cùng các cấu trúc như danh sách liên kết, ngăn xếp, hàng đợi và cây. Có nội dung tìm kiếm và sắp xếp. Chưa có căn cứ để xác nhận ngôn ngữ lập trình hoặc mức bao quát đồ thị của đúng bản đang bán. Giáo trình do Đỗ Trung Kiên chủ biên, giới thiệu giải thuật, phân tích giải thuật và đệ quy, cùng các cấu trúc như danh sách liên kết, ngăn xếp, hàng đợi và cây. Có nội dung tìm kiếm và sắp xếp. Chưa có căn cứ để xác nhận ngôn ngữ lập trình hoặc mức bao quát đồ thị của đúng bản đang bán. Người học cấu trúc dữ liệu và giải thuật trong ngành công nghệ thông tin.  Giáo trình chuyên ngành về các khái niệm, cấu trúc dữ liệu và giải thuật. Hệ thống kiến thức về phân tích giải thuật, cấu trúc dữ liệu, tìm kiếm và sắp xếp. Sách Giáo trình cấu trúc dữ liệu giải thuật đệ quy tìm kiếm và sắp xếp",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa khớp bốn tác giả trong bản ghi thư viện; bỏ tên Đinh Mạnh Tường gán nhầm. Không nhập ngôn ngữ code hoặc số trang. Nguồn: https://thuvien.hiu.vn/Opac/DmdInfo.aspx?=&collection_id=27&dmd_id=27629&heading_id=5",
+        "learningGoal": "Hệ thống kiến thức về phân tích giải thuật, cấu trúc dữ liệu, tìm kiếm và sắp xếp.",
+        "readingLevel": null,
+        "readingStyle": "Giáo trình chuyên ngành về các khái niệm, cấu trúc dữ liệu và giải thuật."
+      },
+      "category": "Sách Giáo trình",
+      "discount": 5,
+      "quantity": 130,
+      "productId": 20,
+      "categoryId": 5,
+      "description": "Giáo trình do Đỗ Trung Kiên chủ biên, giới thiệu giải thuật, phân tích giải thuật và đệ quy, cùng các cấu trúc như danh sách liên kết, ngăn xếp, hàng đợi và cây. Có nội dung tìm kiếm và sắp xếp. Chưa có căn cứ để xác nhận ngôn ngữ lập trình hoặc mức bao quát đồ thị của đúng bản đang bán."
+    },
+    {
+      "name": "Mạng Máy Tính Và Các Hệ Thống Mở",
+      "sold": 26,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319730/products/zdawz28whpsziinrtoou.jpg",
+      "price": 95000.0,
+      "author": "Nguyễn Thúc Hải",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Giáo trình",
+          "topicId": 5,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "mạng máy tính",
+          "topicId": 141,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/mang-may-tinh-va-cac-he-thong-mo/67056"
+        },
+        {
+          "name": "OSI",
+          "topicId": 142,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/mang-may-tinh-va-cac-he-thong-mo/67056"
+        },
+        {
+          "name": "TCP/IP",
+          "topicId": 143,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/mang-may-tinh-va-cac-he-thong-mo/67056"
+        },
+        {
+          "name": "Internet",
+          "topicId": 144,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/mang-may-tinh-va-cac-he-thong-mo/67056"
+        }
+      ],
+      "profile": {
+        "summary": "Tác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN. Đây là tài liệu về nền tảng mạng; nguồn mô tả còn đề cập công nghệ của giai đoạn trước. Chưa xác nhận bản cửa hàng có cập nhật các chuẩn mạng mới.",
+        "approved": 1,
+        "audience": "Người học công nghệ thông tin và người muốn tham khảo kiến thức nền tảng mạng máy tính.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Mạng Máy Tính Và Các Hệ Thống Mở Nguyễn Thúc Hải Sách Giáo trình Tác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN. Đây là tài liệu về nền tảng mạng; nguồn mô tả còn đề cập công nghệ của giai đoạn trước. Chưa xác nhận bản cửa hàng có cập nhật các chuẩn mạng mới. Tác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN. Đây là tài liệu về nền tảng mạng; nguồn mô tả còn đề cập công nghệ của giai đoạn trước. Chưa xác nhận bản cửa hàng có cập nhật các chuẩn mạng mới. Người học công nghệ thông tin và người muốn tham khảo kiến thức nền tảng mạng máy tính.  Giáo trình chuyên ngành trình bày các mô hình, giao thức và hệ thống mạng. Tìm hiểu mô hình mạng, TCP/IP và Internet ở mức nền tảng. Sách Giáo trình mạng máy tính OSI TCP/IP Internet",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa khớp tên tác phẩm cụ thể của Nguyễn Thúc Hải. Không quảng bá Wi-Fi, 5G hoặc bảo mật cập nhật chưa được xác nhận. Nguồn: https://lic.haui.edu.vn/vn/gioi-thieu-sach-moi/mang-may-tinh-va-cac-he-thong-mo/67056",
+        "learningGoal": "Tìm hiểu mô hình mạng, TCP/IP và Internet ở mức nền tảng.",
+        "readingLevel": null,
+        "readingStyle": "Giáo trình chuyên ngành trình bày các mô hình, giao thức và hệ thống mạng."
+      },
+      "category": "Sách Giáo trình",
+      "discount": 0,
+      "quantity": 110,
+      "productId": 21,
+      "categoryId": 5,
+      "description": "Tác phẩm Mạng máy tính và các hệ thống mở của Nguyễn Thúc Hải giới thiệu mạng máy tính, mô hình OSI, mạng cục bộ, TCP/IP và Internet, cùng các vấn đề nền tảng và ISDN. Đây là tài liệu về nền tảng mạng; nguồn mô tả còn đề cập công nghệ của giai đoạn trước. Chưa xác nhận bản cửa hàng có cập nhật các chuẩn mạng mới."
+    },
+    {
+      "name": "Giáo Trình Lập Trình Java",
+      "sold": 44,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319640/products/gz9tp9xsoujfkcglnftj.jpg",
+      "price": 102000.0,
+      "author": "Phạm Xuân Lâm (chủ biên)",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Giáo trình",
+          "topicId": 5,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "Java",
+          "topicId": 145,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nlv.gov.vn/dmdocuments/tmqg-09-2024.pdf"
+        },
+        {
+          "name": "lập trình",
+          "topicId": 146,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nlv.gov.vn/dmdocuments/tmqg-09-2024.pdf"
+        },
+        {
+          "name": "giáo trình công nghệ thông tin",
+          "topicId": 147,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nlv.gov.vn/dmdocuments/tmqg-09-2024.pdf"
+        }
+      ],
+      "profile": {
+        "summary": "Giáo trình Lập trình Java do Phạm Xuân Lâm chủ biên, được xác nhận qua bìa và thư mục quốc gia. Có thể dùng làm tài liệu học lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java, các thư viện, framework hoặc các chủ đề cụ thể; không khẳng định sách dạy Spring Boot hay Java 21.",
+        "approved": 1,
+        "audience": "Người đang học lập trình Java và cần một giáo trình chuyên ngành.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Giáo Trình Lập Trình Java Phạm Xuân Lâm (chủ biên) Sách Giáo trình Giáo trình Lập trình Java do Phạm Xuân Lâm chủ biên, được xác nhận qua bìa và thư mục quốc gia. Có thể dùng làm tài liệu học lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java, các thư viện, framework hoặc các chủ đề cụ thể; không khẳng định sách dạy Spring Boot hay Java 21. Giáo trình Lập trình Java do Phạm Xuân Lâm chủ biên, được xác nhận qua bìa và thư mục quốc gia. Có thể dùng làm tài liệu học lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java, các thư viện, framework hoặc các chủ đề cụ thể; không khẳng định sách dạy Spring Boot hay Java 21. Người đang học lập trình Java và cần một giáo trình chuyên ngành.  Giáo trình chuyên ngành; chưa xác nhận hình thức bài tập và ví dụ của bản đang bán. Tham khảo việc học lập trình Java; cần mục lục để đối chiếu chương trình học cụ thể. Sách Giáo trình Java lập trình giáo trình công nghệ thông tin",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn thư mục xác nhận tên và chủ biên, chưa đủ cho mục lục. Đối tượng/mục tiêu là ánh xạ từ tên giáo trình, không khẳng định các chương. Nguồn: https://nlv.gov.vn/dmdocuments/tmqg-09-2024.pdf",
+        "learningGoal": "Tham khảo việc học lập trình Java; cần mục lục để đối chiếu chương trình học cụ thể.",
+        "readingLevel": null,
+        "readingStyle": "Giáo trình chuyên ngành; chưa xác nhận hình thức bài tập và ví dụ của bản đang bán."
+      },
+      "category": "Sách Giáo trình",
+      "discount": 10,
+      "quantity": 140,
+      "productId": 22,
+      "categoryId": 5,
+      "description": "Giáo trình Lập trình Java do Phạm Xuân Lâm chủ biên, được xác nhận qua bìa và thư mục quốc gia. Có thể dùng làm tài liệu học lập trình Java. Chưa có mục lục đúng bản để xác nhận phiên bản Java, các thư viện, framework hoặc các chủ đề cụ thể; không khẳng định sách dạy Spring Boot hay Java 21."
+    },
+    {
+      "name": "Giáo Trình Cơ Sở Dữ Liệu",
+      "sold": 29,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319627/products/l9kqqextxr409kipn29q.jpg",
+      "price": 98000.0,
+      "author": "Phan Tấn Quốc & Nguyễn Thị Uyên Nhi",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Giáo trình",
+          "topicId": 5,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "giáo trình công nghệ thông tin",
+          "topicId": 147,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://vnuhcmpress.edu.vn/giao-trinh-co-so-du-lieu-b40207.html"
+        },
+        {
+          "name": "cơ sở dữ liệu",
+          "topicId": 148,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://vnuhcmpress.edu.vn/giao-trinh-co-so-du-lieu-b40207.html"
+        },
+        {
+          "name": "hệ thống thông tin",
+          "topicId": 149,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://vnuhcmpress.edu.vn/giao-trinh-co-so-du-lieu-b40207.html"
+        }
+      ],
+      "profile": {
+        "summary": "Giáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học cơ sở dữ liệu. Chưa có mục lục đúng bản để xác nhận chương SQL, hệ quản trị sử dụng hoặc nội dung chi tiết.",
+        "approved": 1,
+        "audience": "Người học máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Giáo Trình Cơ Sở Dữ Liệu Phan Tấn Quốc & Nguyễn Thị Uyên Nhi Sách Giáo trình Giáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học cơ sở dữ liệu. Chưa có mục lục đúng bản để xác nhận chương SQL, hệ quản trị sử dụng hoặc nội dung chi tiết. Giáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học cơ sở dữ liệu. Chưa có mục lục đúng bản để xác nhận chương SQL, hệ quản trị sử dụng hoặc nội dung chi tiết. Người học máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin.  Giáo trình chuyên ngành cơ sở dữ liệu. Tham khảo môn học cơ sở dữ liệu; cần mục lục để kiểm tra nội dung phù hợp chương trình học. Sách Giáo trình cơ sở dữ liệu hệ thống thông tin giáo trình công nghệ thông tin",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa và thư viện xác nhận đồng tác giả; NXB xác nhận ngành học. Không dùng mục lục bản một tác giả năm 2007 cho bản này. Nguồn: https://vnuhcmpress.edu.vn/giao-trinh-co-so-du-lieu-b40207.html | https://thuvien.stu.edu.vn/tracuutailieutruyenthong2xem.aspx?intItemID=9298",
+        "learningGoal": "Tham khảo môn học cơ sở dữ liệu; cần mục lục để kiểm tra nội dung phù hợp chương trình học.",
+        "readingLevel": null,
+        "readingStyle": "Giáo trình chuyên ngành cơ sở dữ liệu."
+      },
+      "category": "Sách Giáo trình",
+      "discount": 8,
+      "quantity": 115,
+      "productId": 23,
+      "categoryId": 5,
+      "description": "Giáo trình Cơ sở dữ liệu của Phan Tấn Quốc và Nguyễn Thị Uyên Nhi, dành cho các ngành liên quan máy tính, công nghệ thông tin, toán ứng dụng và hệ thống thông tin. Nguồn NXB xác nhận phạm vi môn học cơ sở dữ liệu. Chưa có mục lục đúng bản để xác nhận chương SQL, hệ quản trị sử dụng hoặc nội dung chi tiết."
+    },
+    {
+      "name": "Đại Việt Sử Ký Toàn Thư",
+      "sold": 19,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319617/products/w5xkcnbvjrczijgz3btl.jpg",
+      "price": 245000.0,
+      "author": "Ngô Sĩ Liên",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Văn hóa xã hội – Lịch sử",
+          "topicId": 4,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "lịch sử Việt Nam",
+          "topicId": 123,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://hannom.vass.gov.vn/web/tchn/DATA1/9903v.htm"
+        },
+        {
+          "name": "sử liệu",
+          "topicId": 150,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://hannom.vass.gov.vn/web/tchn/DATA1/9903v.htm"
+        },
+        {
+          "name": "sử biên niên",
+          "topicId": 151,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://hannom.vass.gov.vn/web/tchn/DATA1/9903v.htm"
+        }
+      ],
+      "profile": {
+        "summary": "Bộ sử biên niên Việt Nam, gắn với Ngô Sĩ Liên và sự tiếp nối của các sử gia triều Lê. Các sự kiện được ghi theo thời gian, là nguồn để tìm hiểu lịch sử và cách người xưa chép sử. Chưa xác định tập, bản dịch hoặc việc sản phẩm cửa hàng là một tập hay trọn bộ; không khẳng định bao quát toàn bộ các phần.",
+        "approved": 1,
+        "audience": "Người tìm hiểu lịch sử Việt Nam, sử liệu và cách chép sử truyền thống.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Đại Việt Sử Ký Toàn Thư Ngô Sĩ Liên Sách Văn hóa xã hội – Lịch sử Bộ sử biên niên Việt Nam, gắn với Ngô Sĩ Liên và sự tiếp nối của các sử gia triều Lê. Các sự kiện được ghi theo thời gian, là nguồn để tìm hiểu lịch sử và cách người xưa chép sử. Chưa xác định tập, bản dịch hoặc việc sản phẩm cửa hàng là một tập hay trọn bộ; không khẳng định bao quát toàn bộ các phần. Bộ sử biên niên Việt Nam, gắn với Ngô Sĩ Liên và sự tiếp nối của các sử gia triều Lê. Các sự kiện được ghi theo thời gian, là nguồn để tìm hiểu lịch sử và cách người xưa chép sử. Chưa xác định tập, bản dịch hoặc việc sản phẩm cửa hàng là một tập hay trọn bộ; không khẳng định bao quát toàn bộ các phần. Người tìm hiểu lịch sử Việt Nam, sử liệu và cách chép sử truyền thống.  Sử biên niên, ghi chép sự kiện theo trình tự thời gian. Tham khảo sử liệu và đối chiếu cách ghi chép, nhận xét lịch sử của các sử gia. Sách Văn hóa xã hội – Lịch sử lịch sử Việt Nam sử liệu sử biên niên",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn Viện Hán Nôm về lịch sử tác phẩm. Không suy ra tập, bản dịch, ISBN hoặc bộ đầy đủ từ tên chung. Nguồn: https://hannom.vass.gov.vn/web/tchn/DATA1/9903v.htm",
+        "learningGoal": "Tham khảo sử liệu và đối chiếu cách ghi chép, nhận xét lịch sử của các sử gia.",
+        "readingLevel": null,
+        "readingStyle": "Sử biên niên, ghi chép sự kiện theo trình tự thời gian."
+      },
+      "category": "Sách Văn hóa xã hội – Lịch sử",
+      "discount": 12,
+      "quantity": 70,
+      "productId": 24,
+      "categoryId": 4,
+      "description": "Bộ sử biên niên Việt Nam, gắn với Ngô Sĩ Liên và sự tiếp nối của các sử gia triều Lê. Các sự kiện được ghi theo thời gian, là nguồn để tìm hiểu lịch sử và cách người xưa chép sử. Chưa xác định tập, bản dịch hoặc việc sản phẩm cửa hàng là một tập hay trọn bộ; không khẳng định bao quát toàn bộ các phần."
+    },
+    {
+      "name": "Súng, Vi Trùng Và Thép",
+      "sold": 35,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319604/products/unpfjvpmewvipu2lar2f.webp",
+      "price": 189000.0,
+      "author": "Jared Diamond",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Văn hóa xã hội – Lịch sử",
+          "topicId": 4,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "lịch sử xã hội",
+          "topicId": 22,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://jareddiamond.org/Jared_Diamond/Guns%2C_Germs%2C_and_Steel.html"
+        },
+        {
+          "name": "nông nghiệp",
+          "topicId": 23,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://jareddiamond.org/Jared_Diamond/Guns%2C_Germs%2C_and_Steel.html"
+        },
+        {
+          "name": "lịch sử công nghệ",
+          "topicId": 24,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://jareddiamond.org/Jared_Diamond/Guns%2C_Germs%2C_and_Steel.html"
+        }
+      ],
+      "profile": {
+        "summary": "Đặt câu hỏi vì sao các xã hội phát triển sức mạnh và công nghệ khác nhau. Jared Diamond kết hợp lịch sử với thực vật học, động vật học và vi sinh để trình bày lập luận về sản xuất lương thực, xã hội định cư và công nghệ.",
+        "approved": 1,
+        "audience": "Người muốn tìm hiểu lịch sử các xã hội qua lập luận liên ngành.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Súng, Vi Trùng Và Thép Jared Diamond Sách Văn hóa xã hội – Lịch sử Tác phẩm đoạt giải Pulitzer lý giải vì sao các nền văn minh phát triển không đồng đều. Một cái nhìn liên ngành chấn động về số phận của các xã hội loài người. Đặt câu hỏi vì sao các xã hội phát triển sức mạnh và công nghệ khác nhau. Jared Diamond kết hợp lịch sử với thực vật học, động vật học và vi sinh để trình bày lập luận về sản xuất lương thực, xã hội định cư và công nghệ. Người muốn tìm hiểu lịch sử các xã hội qua lập luận liên ngành.  Phân tích lịch sử bằng cách kết hợp nhiều ngành nghiên cứu. Tìm hiểu lập luận của tác giả về các điều kiện ảnh hưởng đến sự phát triển xã hội. Sách Văn hóa xã hội – Lịch sử lịch sử xã hội nông nghiệp lịch sử công nghệ",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Tóm lược nội dung tác phẩm; đối tượng theo mối quan tâm là phân loại biên tập từ nội dung nguồn. Không xác nhận tuổi cụ thể, độ khó hay ấn bản. Nguồn: https://jareddiamond.org/Jared_Diamond/Guns%2C_Germs%2C_and_Steel.html",
+        "learningGoal": "Tìm hiểu lập luận của tác giả về các điều kiện ảnh hưởng đến sự phát triển xã hội.",
+        "readingLevel": null,
+        "readingStyle": "Phân tích lịch sử bằng cách kết hợp nhiều ngành nghiên cứu."
+      },
+      "category": "Sách Văn hóa xã hội – Lịch sử",
+      "discount": 15,
+      "quantity": 95,
+      "productId": 25,
+      "categoryId": 4,
+      "description": "Tác phẩm đoạt giải Pulitzer lý giải vì sao các nền văn minh phát triển không đồng đều. Một cái nhìn liên ngành chấn động về số phận của các xã hội loài người."
+    },
+    {
+      "name": "Sherlock Holmes Toàn Tập - Tập 1",
+      "sold": 51,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319589/products/ptjyfdchzgieobq2kuwg.webp",
+      "price": 215000.0,
+      "author": "Arthur Conan Doyle",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Truyện, tiểu thuyết",
+          "topicId": 6,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "trinh thám",
+          "topicId": 25,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.penguinrandomhouse.com/books/618167/sherlock-holmes-the-complete-novels-and-stories-volume-i-by-sir-arthur-conan-doyle/"
+        },
+        {
+          "name": "Sherlock Holmes",
+          "topicId": 26,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.penguinrandomhouse.com/books/618167/sherlock-holmes-the-complete-novels-and-stories-volume-i-by-sir-arthur-conan-doyle/"
+        },
+        {
+          "name": "suy luận",
+          "topicId": 27,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.penguinrandomhouse.com/books/618167/sherlock-holmes-the-complete-novels-and-stories-volume-i-by-sir-arthur-conan-doyle/"
+        }
+      ],
+      "profile": {
+        "summary": "Các câu chuyện trinh thám về Sherlock Holmes và bác sĩ Watson. Việc điều tra các vụ án gắn với khả năng quan sát và suy luận của Holmes.",
+        "approved": 1,
+        "audience": "Người thích truyện trinh thám và khám phá cách nhân vật giải các vụ án.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Sherlock Holmes Toàn Tập - Tập 1 Arthur Conan Doyle Sách Truyện, tiểu thuyết Những vụ án ly kỳ của thám tử lừng danh phố Baker. Tài suy luận thiên tài của Sherlock Holmes đã làm say mê độc giả khắp thế giới hơn một thế kỷ qua. Các câu chuyện trinh thám về Sherlock Holmes và bác sĩ Watson. Việc điều tra các vụ án gắn với khả năng quan sát và suy luận của Holmes. Người thích truyện trinh thám và khám phá cách nhân vật giải các vụ án.  Truyện trinh thám với những vụ án và suy luận của nhân vật. Theo dõi quá trình điều tra và suy luận trong các câu chuyện. Sách Truyện, tiểu thuyết trinh thám Sherlock Holmes suy luận",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Cùng tác giả và hệ truyện, nhưng cách chia tập của bản Việt chưa xác nhận. Không nhập tên truyện thành phần, mục lục, số trang hoặc tuổi đọc từ tập tiếng Anh. Nguồn: https://www.penguinrandomhouse.com/books/618167/sherlock-holmes-the-complete-novels-and-stories-volume-i-by-sir-arthur-conan-doyle/",
+        "learningGoal": "Theo dõi quá trình điều tra và suy luận trong các câu chuyện.",
+        "readingLevel": null,
+        "readingStyle": "Truyện trinh thám với những vụ án và suy luận của nhân vật."
+      },
+      "category": "Sách Truyện, tiểu thuyết",
+      "discount": 10,
+      "quantity": 110,
+      "productId": 26,
+      "categoryId": 6,
+      "description": "Những vụ án ly kỳ của thám tử lừng danh phố Baker. Tài suy luận thiên tài của Sherlock Holmes đã làm say mê độc giả khắp thế giới hơn một thế kỷ qua."
+    },
+    {
+      "name": "Bố Già (The Godfather)",
+      "sold": 49,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319572/products/xrmf9d1gfvlskbf6fmn3.jpg",
+      "price": 145000.0,
+      "author": "Mario Puzo",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Truyện, tiểu thuyết",
+          "topicId": 6,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "mafia",
+          "topicId": 28,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.penguinrandomhouse.com/books/290370/the-godfather-by-mario-puzo/9780593542590/"
+        },
+        {
+          "name": "tiểu thuyết tội phạm",
+          "topicId": 29,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.penguinrandomhouse.com/books/290370/the-godfather-by-mario-puzo/9780593542590/"
+        },
+        {
+          "name": "quyền lực",
+          "topicId": 30,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.penguinrandomhouse.com/books/290370/the-godfather-by-mario-puzo/9780593542590/"
+        }
+      ],
+      "profile": {
+        "summary": "Tiểu thuyết về gia đình Corleone trong thế giới ngầm mafia Mỹ. Câu chuyện đan xen quyền lực, bạo lực, lòng trung thành, quan hệ gia đình và sự phản kháng.",
+        "approved": 1,
+        "audience": "Người quan tâm tiểu thuyết tội phạm và quan hệ quyền lực trong thế giới ngầm.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Bố Già (The Godfather) Mario Puzo Sách Truyện, tiểu thuyết Kiệt tác về gia đình mafia Corleone — quyền lực, danh dự và máu. Một bức chân dung sắc lạnh về thế giới ngầm và bản chất con người. Tiểu thuyết bất hủ. Tiểu thuyết về gia đình Corleone trong thế giới ngầm mafia Mỹ. Câu chuyện đan xen quyền lực, bạo lực, lòng trung thành, quan hệ gia đình và sự phản kháng. Người quan tâm tiểu thuyết tội phạm và quan hệ quyền lực trong thế giới ngầm.  Tiểu thuyết tội phạm, có bạo lực và xung đột quyền lực. Suy ngẫm về quan hệ gia đình, lòng trung thành và quyền lực qua câu chuyện. Sách Truyện, tiểu thuyết mafia tiểu thuyết tội phạm quyền lực",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Tóm lược nội dung tác phẩm; đối tượng theo mối quan tâm là phân loại biên tập từ nội dung nguồn. Không xác nhận tuổi cụ thể, độ khó hay ấn bản. Nguồn: https://www.penguinrandomhouse.com/books/290370/the-godfather-by-mario-puzo/9780593542590/",
+        "learningGoal": "Suy ngẫm về quan hệ gia đình, lòng trung thành và quyền lực qua câu chuyện.",
+        "readingLevel": null,
+        "readingStyle": "Tiểu thuyết tội phạm, có bạo lực và xung đột quyền lực."
+      },
+      "category": "Sách Truyện, tiểu thuyết",
+      "discount": 8,
+      "quantity": 100,
+      "productId": 27,
+      "categoryId": 6,
+      "description": "Kiệt tác về gia đình mafia Corleone — quyền lực, danh dự và máu. Một bức chân dung sắc lạnh về thế giới ngầm và bản chất con người. Tiểu thuyết bất hủ."
+    },
+    {
+      "name": "Không Gia Đình",
+      "sold": 27,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319541/products/rdyankdh2hrze9o9kisp.webp",
+      "price": 132000.0,
+      "author": "Hector Malot",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Truyện, tiểu thuyết",
+          "topicId": 6,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "phiêu lưu",
+          "topicId": 14,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/khong-gia-dinh-26?view=amp"
+        },
+        {
+          "name": "tình cảm gia đình",
+          "topicId": 31,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/khong-gia-dinh-26?view=amp"
+        },
+        {
+          "name": "lòng dũng cảm",
+          "topicId": 32,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/khong-gia-dinh-26?view=amp"
+        }
+      ],
+      "profile": {
+        "summary": "Rémi lưu lạc khắp nước Pháp cùng gánh hát rong và học cách sống qua gian khổ. Câu chuyện gắn cuộc phiêu lưu với tình cảm gia đình, lao động, tự trọng và lòng biết ơn.",
+        "approved": 1,
+        "audience": "Người thích truyện phiêu lưu và tình cảm gia đình; NXB giới thiệu tác phẩm cho thiếu niên.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Không Gia Đình Hector Malot Sách Truyện, tiểu thuyết Hành trình của cậu bé Rémi lưu lạc khắp nước Pháp đi tìm gia đình. Câu chuyện cảm động về nghị lực, lòng nhân hậu và khát khao yêu thương. Rémi lưu lạc khắp nước Pháp cùng gánh hát rong và học cách sống qua gian khổ. Câu chuyện gắn cuộc phiêu lưu với tình cảm gia đình, lao động, tự trọng và lòng biết ơn. Người thích truyện phiêu lưu và tình cảm gia đình; NXB giới thiệu tác phẩm cho thiếu niên.  Truyện phiêu lưu có gian khổ, mất mát và tình cảm gia đình. Suy ngẫm về lòng dũng cảm, tự trọng và tình cảm gia đình. Sách Truyện, tiểu thuyết phiêu lưu tình cảm gia đình lòng dũng cảm",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không dùng độ tuổi hay thông số của ấn bản nguồn khi chưa xác nhận bản bán tại cửa hàng. Nguồn: https://nxbkimdong.com.vn/khong-gia-dinh-26?view=amp",
+        "learningGoal": "Suy ngẫm về lòng dũng cảm, tự trọng và tình cảm gia đình.",
+        "readingLevel": null,
+        "readingStyle": "Truyện phiêu lưu có gian khổ, mất mát và tình cảm gia đình."
+      },
+      "category": "Sách Truyện, tiểu thuyết",
+      "discount": 5,
+      "quantity": 95,
+      "productId": 28,
+      "categoryId": 6,
+      "description": "Hành trình của cậu bé Rémi lưu lạc khắp nước Pháp đi tìm gia đình. Câu chuyện cảm động về nghị lực, lòng nhân hậu và khát khao yêu thương."
+    },
+    {
+      "name": "Cây Cam Ngọt Của Tôi",
+      "sold": 68,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319503/products/uxuhqd7outfqapixokei.webp",
+      "price": 108000.0,
+      "author": "José Mauro de Vasconcelos",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Truyện, tiểu thuyết",
+          "topicId": 6,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "tuổi thơ",
+          "topicId": 33,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhanam.vn/cay-cam-ngot-cua-toi-nha-nam"
+        },
+        {
+          "name": "tình thương",
+          "topicId": 34,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhanam.vn/cay-cam-ngot-cua-toi-nha-nam"
+        },
+        {
+          "name": "nỗi đau",
+          "topicId": 35,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhanam.vn/cay-cam-ngot-cua-toi-nha-nam"
+        }
+      ],
+      "profile": {
+        "summary": "Zezé là cậu bé giàu trí tưởng tượng sống trong hoàn cảnh nghèo khó và bị hắt hủi, đánh mắng. Cây cam trong vườn và một người bạn trở thành nơi chia sẻ của cậu; câu chuyện có cả tình thương và nỗi đau.",
+        "approved": 1,
+        "audience": "Người quan tâm câu chuyện tuổi thơ, tình thương và sự thấu cảm.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Cây Cam Ngọt Của Tôi José Mauro de Vasconcelos Sách Truyện, tiểu thuyết Câu chuyện trong veo mà đau đáu về cậu bé Zezé nghèo khó và trí tưởng tượng diệu kỳ. Một cuốn sách lay động trái tim hàng triệu độc giả toàn cầu. Zezé là cậu bé giàu trí tưởng tượng sống trong hoàn cảnh nghèo khó và bị hắt hủi, đánh mắng. Cây cam trong vườn và một người bạn trở thành nơi chia sẻ của cậu; câu chuyện có cả tình thương và nỗi đau. Người quan tâm câu chuyện tuổi thơ, tình thương và sự thấu cảm.  Lời kể mở đầu trong sáng, về sau lắng lại với nỗi đau và hoài niệm. Suy ngẫm về tình thương và lòng trắc ẩn qua trải nghiệm của nhân vật. Sách Truyện, tiểu thuyết tuổi thơ tình thương nỗi đau",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không lấy tuổi nhân vật làm tuổi độc giả; không gắn nhãn truyện chỉ vui hoặc đọc để thư giãn hoàn toàn. Nguồn: https://nhanam.vn/cay-cam-ngot-cua-toi-nha-nam",
+        "learningGoal": "Suy ngẫm về tình thương và lòng trắc ẩn qua trải nghiệm của nhân vật.",
+        "readingLevel": null,
+        "readingStyle": "Lời kể mở đầu trong sáng, về sau lắng lại với nỗi đau và hoài niệm."
+      },
+      "category": "Sách Truyện, tiểu thuyết",
+      "discount": 12,
+      "quantity": 130,
+      "productId": 29,
+      "categoryId": 6,
+      "description": "Câu chuyện trong veo mà đau đáu về cậu bé Zezé nghèo khó và trí tưởng tượng diệu kỳ. Một cuốn sách lay động trái tim hàng triệu độc giả toàn cầu."
+    },
+    {
+      "name": "Suối Nguồn (The Fountainhead)",
+      "sold": 33,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319491/products/y7kucofbwvrmdivs1fcs.jpg",
+      "price": 232000.0,
+      "author": "Ayn Rand",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Truyện, tiểu thuyết",
+          "topicId": 6,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "tiểu thuyết tư tưởng",
+          "topicId": 36,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.penguinrandomhouse.com/books/296786/the-fountainhead-by-ayn-rand/"
+        },
+        {
+          "name": "sáng tạo",
+          "topicId": 37,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.penguinrandomhouse.com/books/296786/the-fountainhead-by-ayn-rand/"
+        },
+        {
+          "name": "chủ nghĩa cá nhân",
+          "topicId": 38,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.penguinrandomhouse.com/books/296786/the-fountainhead-by-ayn-rand/"
+        }
+      ],
+      "profile": {
+        "summary": "Câu chuyện về kiến trúc sư Howard Roark và việc giữ nguyên tắc sáng tạo trước sức ép xã hội. Tiểu thuyết trình bày tư tưởng của Ayn Rand về cái tôi và vai trò của cá nhân.",
+        "approved": 1,
+        "audience": "Người quan tâm tiểu thuyết tư tưởng, sáng tạo và quan hệ giữa cá nhân với xã hội.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Suối Nguồn (The Fountainhead) Ayn Rand Sách Truyện, tiểu thuyết Tiểu thuyết tư tưởng về kiến trúc sư Howard Roark và cuộc chiến bảo vệ chính kiến trước đám đông. Bản tuyên ngôn về chủ nghĩa cá nhân và sự sáng tạo. Câu chuyện về kiến trúc sư Howard Roark và việc giữ nguyên tắc sáng tạo trước sức ép xã hội. Tiểu thuyết trình bày tư tưởng của Ayn Rand về cái tôi và vai trò của cá nhân. Người quan tâm tiểu thuyết tư tưởng, sáng tạo và quan hệ giữa cá nhân với xã hội.  Tiểu thuyết tư tưởng với xung đột giữa nhân vật và xã hội. Tìm hiểu quan điểm của tác giả về cá nhân và sáng tạo qua câu chuyện. Sách Truyện, tiểu thuyết tiểu thuyết tư tưởng sáng tạo chủ nghĩa cá nhân",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Tóm lược nội dung tác phẩm; đối tượng theo mối quan tâm là phân loại biên tập từ nội dung nguồn. Không xác nhận tuổi cụ thể, độ khó hay ấn bản. Nguồn: https://www.penguinrandomhouse.com/books/296786/the-fountainhead-by-ayn-rand/",
+        "learningGoal": "Tìm hiểu quan điểm của tác giả về cá nhân và sáng tạo qua câu chuyện.",
+        "readingLevel": null,
+        "readingStyle": "Tiểu thuyết tư tưởng với xung đột giữa nhân vật và xã hội."
+      },
+      "category": "Sách Truyện, tiểu thuyết",
+      "discount": 15,
+      "quantity": 85,
+      "productId": 30,
+      "categoryId": 6,
+      "description": "Tiểu thuyết tư tưởng về kiến trúc sư Howard Roark và cuộc chiến bảo vệ chính kiến trước đám đông. Bản tuyên ngôn về chủ nghĩa cá nhân và sự sáng tạo."
+    },
+    {
+      "name": "Sức Mạnh Tiềm Thức",
+      "sold": 63,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1686548250/products/mn4damiiyjtm4pbeslxu.jpg",
+      "price": 110000.0,
+      "author": "Joseph Murphy",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Tâm lý, tâm linh, tôn giáo",
+          "topicId": 7,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "tiềm thức",
+          "topicId": 39,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.penguinrandomhouse.com/books/549149/the-power-of-your-subconscious-mind-by-joseph-murphy-phd-dd/"
+        },
+        {
+          "name": "suy nghĩ",
+          "topicId": 40,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.penguinrandomhouse.com/books/549149/the-power-of-your-subconscious-mind-by-joseph-murphy-phd-dd/"
+        },
+        {
+          "name": "mục tiêu cá nhân",
+          "topicId": 41,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.penguinrandomhouse.com/books/549149/the-power-of-your-subconscious-mind-by-joseph-murphy-phd-dd/"
+        }
+      ],
+      "profile": {
+        "summary": "Joseph Murphy trình bày quan điểm về tiềm thức và việc thay đổi cách suy nghĩ, cùng các kỹ thuật và tình huống thực tế liên quan đến mục tiêu, công việc và các mối quan hệ.",
+        "approved": 1,
+        "audience": "Người muốn tham khảo sách phát triển bản thân về suy nghĩ và mục tiêu cá nhân.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Sức Mạnh Tiềm Thức Joseph Murphy Sách Tâm lý, tâm linh, tôn giáo Khám phá nguồn sức mạnh vô tận ẩn trong tiềm thức và cách khai mở nó để thay đổi cuộc đời. Một trong những cuốn sách phát triển bản thân có ảnh hưởng nhất. Joseph Murphy trình bày quan điểm về tiềm thức và việc thay đổi cách suy nghĩ, cùng các kỹ thuật và tình huống thực tế liên quan đến mục tiêu, công việc và các mối quan hệ. Người muốn tham khảo sách phát triển bản thân về suy nghĩ và mục tiêu cá nhân.  Trình bày kỹ thuật và tình huống thực tế theo quan điểm của tác giả. Tham khảo cách tác giả đề xuất thay đổi lối suy nghĩ khi hướng tới mục tiêu cá nhân. Sách Tâm lý, tâm linh, tôn giáo tiềm thức suy nghĩ mục tiêu cá nhân",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ mô tả quan điểm và nội dung tác phẩm; không duyệt lời hứa chữa bệnh, thành công hoặc tác dụng khoa học đã được chứng minh. Không nhập tác phẩm tặng kèm của bản nguồn. Nguồn: https://www.penguinrandomhouse.com/books/549149/the-power-of-your-subconscious-mind-by-joseph-murphy-phd-dd/",
+        "learningGoal": "Tham khảo cách tác giả đề xuất thay đổi lối suy nghĩ khi hướng tới mục tiêu cá nhân.",
+        "readingLevel": null,
+        "readingStyle": "Trình bày kỹ thuật và tình huống thực tế theo quan điểm của tác giả."
+      },
+      "category": "Sách Tâm lý, tâm linh, tôn giáo",
+      "discount": 10,
+      "quantity": 140,
+      "productId": 31,
+      "categoryId": 7,
+      "description": "Khám phá nguồn sức mạnh vô tận ẩn trong tiềm thức và cách khai mở nó để thay đổi cuộc đời. Một trong những cuốn sách phát triển bản thân có ảnh hưởng nhất."
+    },
+    {
+      "name": "Quẳng Gánh Lo Đi Và Vui Sống",
+      "sold": 57,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg",
+      "price": 98000.0,
+      "author": "Dale Carnegie",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Tâm lý, tâm linh, tôn giáo",
+          "topicId": 7,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "lo âu",
+          "topicId": 42,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.simonandschuster.com/books/How-to-Stop-Worrying-and-Start-Living/Dale-Carnegie/Dale-Carnegie-Books/9780671035976"
+        },
+        {
+          "name": "đối diện lời chỉ trích",
+          "topicId": 43,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.simonandschuster.com/books/How-to-Stop-Worrying-and-Start-Living/Dale-Carnegie/Dale-Carnegie-Books/9780671035976"
+        },
+        {
+          "name": "phát triển bản thân",
+          "topicId": 44,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.simonandschuster.com/books/How-to-Stop-Worrying-and-Start-Living/Dale-Carnegie/Dale-Carnegie-Books/9780671035976"
+        }
+      ],
+      "profile": {
+        "summary": "Dale Carnegie trình bày những nguyên tắc xử lý lo âu trong đời sống và công việc. Các nội dung được giới thiệu gồm tìm giải pháp có thể thực hiện, đối diện lời chỉ trích và giảm bận tâm về công việc, tiền bạc.",
+        "approved": 1,
+        "audience": "Người muốn tham khảo cách xử lý lo lắng trong cuộc sống và công việc.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Quẳng Gánh Lo Đi Và Vui Sống Dale Carnegie Sách Tâm lý, tâm linh, tôn giáo Những phương pháp thiết thực để vượt qua lo âu, tìm lại bình an và sống trọn vẹn từng ngày. Kim chỉ nam cho một tâm hồn an nhiên giữa cuộc sống bộn bề. Dale Carnegie trình bày những nguyên tắc xử lý lo âu trong đời sống và công việc. Các nội dung được giới thiệu gồm tìm giải pháp có thể thực hiện, đối diện lời chỉ trích và giảm bận tâm về công việc, tiền bạc. Người muốn tham khảo cách xử lý lo lắng trong cuộc sống và công việc.  Sách tư vấn với nguyên tắc và hướng dẫn áp dụng vào các vấn đề đời sống. Tham khảo hướng dẫn áp dụng nguyên tắc tìm giải pháp và ứng xử với lời chỉ trích. Sách Tâm lý, tâm linh, tôn giáo lo âu đối diện lời chỉ trích phát triển bản thân",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn giới thiệu tác phẩm gốc; không cam kết hiệu quả sức khỏe hay điều trị, không lấy thông số hoặc nội dung cập nhật riêng của bản tiếng Anh. Nguồn: https://www.simonandschuster.com/books/How-to-Stop-Worrying-and-Start-Living/Dale-Carnegie/Dale-Carnegie-Books/9780671035976",
+        "learningGoal": "Tham khảo hướng dẫn áp dụng nguyên tắc tìm giải pháp và ứng xử với lời chỉ trích.",
+        "readingLevel": null,
+        "readingStyle": "Sách tư vấn với nguyên tắc và hướng dẫn áp dụng vào các vấn đề đời sống."
+      },
+      "category": "Sách Tâm lý, tâm linh, tôn giáo",
+      "discount": 8,
+      "quantity": 130,
+      "productId": 32,
+      "categoryId": 7,
+      "description": "Những phương pháp thiết thực để vượt qua lo âu, tìm lại bình an và sống trọn vẹn từng ngày. Kim chỉ nam cho một tâm hồn an nhiên giữa cuộc sống bộn bề."
+    },
+    {
+      "name": "Hành Trình Về Phương Đông",
+      "sold": 42,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1686548486/products/upy4yfzgpkfdx8kkzoqw.jpg",
+      "price": 105000.0,
+      "author": "Baird T. Spalding",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Tâm lý, tâm linh, tôn giáo",
+          "topicId": 7,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "tư tưởng phương Đông",
+          "topicId": 45,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://firstnews.vn/upload/docthu/HanhTrinhVePhuongDong%28biamem%29/index.html"
+        },
+        {
+          "name": "tâm linh",
+          "topicId": 46,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://firstnews.vn/upload/docthu/HanhTrinhVePhuongDong%28biamem%29/index.html"
+        },
+        {
+          "name": "hành trình khám phá",
+          "topicId": 47,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://firstnews.vn/upload/docthu/HanhTrinhVePhuongDong%28biamem%29/index.html"
+        }
+      ],
+      "profile": {
+        "summary": "Bản Nguyên Phong phóng tác kể hành trình tìm hiểu tư tưởng và đời sống tinh thần phương Đông, qua các cuộc gặp đạo sĩ và những trao đổi về khoa học, tâm linh, các hiện tượng huyền bí.",
+        "approved": 1,
+        "audience": "Người quan tâm tư tưởng phương Đông và văn học tâm linh.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Hành Trình Về Phương Đông Baird T. Spalding Sách Tâm lý, tâm linh, tôn giáo Ghi chép về cuộc gặp gỡ các bậc hiền triết phương Đông và những huyền bí của tâm linh. Bản dịch của Nguyên Phong đưa người đọc vào thế giới minh triết sâu thẳm. Bản Nguyên Phong phóng tác kể hành trình tìm hiểu tư tưởng và đời sống tinh thần phương Đông, qua các cuộc gặp đạo sĩ và những trao đổi về khoa học, tâm linh, các hiện tượng huyền bí. Người quan tâm tư tưởng phương Đông và văn học tâm linh.  Kể hành trình khám phá và các cuộc trao đổi về tư tưởng, tâm linh. Tìm hiểu các quan điểm được trình bày về đời sống tinh thần phương Đông. Sách Tâm lý, tâm linh, tôn giáo tư tưởng phương Đông tâm linh hành trình khám phá",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn đọc thử chính thức ghi Nguyên Phong phóng tác. Các hiện tượng được coi là nội dung sách, không xác nhận là sự kiện khoa học hay lịch sử đã được kiểm chứng. Nguồn: https://firstnews.vn/upload/docthu/HanhTrinhVePhuongDong%28biamem%29/index.html",
+        "learningGoal": "Tìm hiểu các quan điểm được trình bày về đời sống tinh thần phương Đông.",
+        "readingLevel": null,
+        "readingStyle": "Kể hành trình khám phá và các cuộc trao đổi về tư tưởng, tâm linh."
+      },
+      "category": "Sách Tâm lý, tâm linh, tôn giáo",
+      "discount": 5,
+      "quantity": 110,
+      "productId": 33,
+      "categoryId": 7,
+      "description": "Ghi chép về cuộc gặp gỡ các bậc hiền triết phương Đông và những huyền bí của tâm linh. Bản dịch của Nguyên Phong đưa người đọc vào thế giới minh triết sâu thẳm."
+    },
+    {
+      "name": "Đường Xưa Mây Trắng",
+      "sold": 38,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781254627/products/nofbu66aftcnqjh5mbbo.jpg",
+      "price": 165000.0,
+      "author": "Thích Nhất Hạnh",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Tâm lý, tâm linh, tôn giáo",
+          "topicId": 7,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "Đức Phật",
+          "topicId": 48,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.parallax.org/product/old-path-white-clouds/"
+        },
+        {
+          "name": "Phật giáo",
+          "topicId": 49,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.parallax.org/product/old-path-white-clouds/"
+        },
+        {
+          "name": "truyện kể",
+          "topicId": 50,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.parallax.org/product/old-path-white-clouds/"
+        }
+      ],
+      "profile": {
+        "summary": "Thích Nhất Hạnh kể cuộc đời và lời dạy của Đức Phật, dựa trên các nguồn kinh điển. Một phần câu chuyện được nhìn qua Svasti, cậu bé chăn trâu, và một phần qua Đức Phật.",
+        "approved": 1,
+        "audience": "Người muốn tìm hiểu cuộc đời Đức Phật và lời dạy qua hình thức truyện kể.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Đường Xưa Mây Trắng Thích Nhất Hạnh Sách Tâm lý, tâm linh, tôn giáo Kể lại cuộc đời Đức Phật bằng giọng văn dung dị, thấm đẫm chất thơ và thiền vị. Một tác phẩm chạm đến trái tim của hàng triệu người trên khắp thế giới. Thích Nhất Hạnh kể cuộc đời và lời dạy của Đức Phật, dựa trên các nguồn kinh điển. Một phần câu chuyện được nhìn qua Svasti, cậu bé chăn trâu, và một phần qua Đức Phật. Người muốn tìm hiểu cuộc đời Đức Phật và lời dạy qua hình thức truyện kể.  Lời kể chậm rãi, nhẹ nhàng về cuộc đời và lời dạy của Đức Phật. Tìm hiểu cuộc đời và tư tưởng Phật giáo qua câu chuyện. Sách Tâm lý, tâm linh, tôn giáo Đức Phật Phật giáo truyện kể",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Cùng tác phẩm Old Path White Clouds; chỉ dùng nội dung và phong cách được NXB mô tả. Không coi đây là sách bài tập thiền hoặc lấy thông số bản tiếng Anh. Nguồn: https://www.parallax.org/product/old-path-white-clouds/",
+        "learningGoal": "Tìm hiểu cuộc đời và tư tưởng Phật giáo qua câu chuyện.",
+        "readingLevel": null,
+        "readingStyle": "Lời kể chậm rãi, nhẹ nhàng về cuộc đời và lời dạy của Đức Phật."
+      },
+      "category": "Sách Tâm lý, tâm linh, tôn giáo",
+      "discount": 12,
+      "quantity": 100,
+      "productId": 34,
+      "categoryId": 7,
+      "description": "Kể lại cuộc đời Đức Phật bằng giọng văn dung dị, thấm đẫm chất thơ và thiền vị. Một tác phẩm chạm đến trái tim của hàng triệu người trên khắp thế giới."
+    },
+    {
+      "name": "Kho Tàng Truyện Cổ Tích Việt Nam",
+      "sold": 44,
+      "image": "/assets/book-cover-unverified-35.svg",
+      "price": 135000.0,
+      "author": "Nguyễn Đổng Chi",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách thiếu nhi",
+          "topicId": 8,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "cổ tích Việt Nam",
+          "topicId": 152,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.nxbtre.com.vn/sach/kho-tang-truyen-co-tich-viet-nam-01-146145.html"
+        },
+        {
+          "name": "văn hóa dân gian",
+          "topicId": 153,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.nxbtre.com.vn/sach/kho-tang-truyen-co-tich-viet-nam-01-146145.html"
+        },
+        {
+          "name": "truyện dân gian",
+          "topicId": 154,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.nxbtre.com.vn/sach/kho-tang-truyen-co-tich-viet-nam-01-146145.html"
+        }
+      ],
+      "profile": {
+        "summary": "Công trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ.",
+        "approved": 1,
+        "audience": "Người thích truyện cổ tích Việt Nam và tìm hiểu văn hóa, truyện kể dân gian.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Kho Tàng Truyện Cổ Tích Việt Nam Nguyễn Đổng Chi Sách thiếu nhi Công trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ. Công trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ. Người thích truyện cổ tích Việt Nam và tìm hiểu văn hóa, truyện kể dân gian.  Sưu tầm và biên soạn truyện dân gian; chưa xác định đặc điểm minh họa của bản cửa hàng. Tìm hiểu kho truyện kể và các nét văn hóa dân gian Việt Nam. Sách thiếu nhi cổ tích Việt Nam văn hóa dân gian truyện dân gian",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ xác nhận tác phẩm/bộ Nguyễn Đổng Chi. Không lấy mục lục tập 1 làm nội dung mọi tập; chưa có căn cứ nhóm tuổi của bản bán. Nguồn: https://www.nxbtre.com.vn/sach/kho-tang-truyen-co-tich-viet-nam-01-146145.html",
+        "learningGoal": "Tìm hiểu kho truyện kể và các nét văn hóa dân gian Việt Nam.",
+        "readingLevel": null,
+        "readingStyle": "Sưu tầm và biên soạn truyện dân gian; chưa xác định đặc điểm minh họa của bản cửa hàng."
+      },
+      "category": "Sách thiếu nhi",
+      "discount": 10,
+      "quantity": 150,
+      "productId": 35,
+      "categoryId": 8,
+      "description": "Công trình sưu tầm, biên soạn truyện cổ tích Việt Nam của Nguyễn Đổng Chi, có giá trị tìm hiểu truyện kể và văn hóa dân gian. Tên tại cửa hàng chưa xác định tập cụ thể hoặc trọn bộ, nên chưa thể cam kết một truyện nhất định nằm trong sản phẩm này. Không mặc định đây là bản rút gọn, minh họa dành riêng cho trẻ nhỏ."
+    },
+    {
+      "name": "10 Vạn Câu Hỏi Vì Sao",
+      "sold": 71,
+      "image": "/assets/book-cover-unverified-36.svg",
+      "price": 89000.0,
+      "author": "Nhiều Tác Giả",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách thiếu nhi",
+          "topicId": 8,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "hỏi đáp khoa học",
+          "topicId": 155,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/muoi-van-cau-hoi-vi-sao-the-gioi-dong-thuc-vat"
+        },
+        {
+          "name": "khám phá khoa học",
+          "topicId": 156,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/muoi-van-cau-hoi-vi-sao-the-gioi-dong-thuc-vat"
+        }
+      ],
+      "profile": {
+        "summary": "Tên chung cho sách hỏi đáp kiến thức khoa học và đời sống, giúp người đọc khám phá các câu hỏi vì sao. Có nhiều bộ, tập và nhóm tuổi mang tên tương tự; dữ liệu cửa hàng chưa xác định bộ hoặc tập cụ thể. Vì vậy chưa thể cam kết các phần về động vật, vũ trụ, cơ thể hay độ tuổi của một ấn bản cụ thể.",
+        "approved": 1,
+        "audience": "Người thích tìm hiểu khoa học qua câu hỏi và câu trả lời; cần xác nhận tập để tư vấn độ tuổi.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "10 Vạn Câu Hỏi Vì Sao Nhiều Tác Giả Sách thiếu nhi Tên chung cho sách hỏi đáp kiến thức khoa học và đời sống, giúp người đọc khám phá các câu hỏi vì sao. Có nhiều bộ, tập và nhóm tuổi mang tên tương tự; dữ liệu cửa hàng chưa xác định bộ hoặc tập cụ thể. Vì vậy chưa thể cam kết các phần về động vật, vũ trụ, cơ thể hay độ tuổi của một ấn bản cụ thể. Tên chung cho sách hỏi đáp kiến thức khoa học và đời sống, giúp người đọc khám phá các câu hỏi vì sao. Có nhiều bộ, tập và nhóm tuổi mang tên tương tự; dữ liệu cửa hàng chưa xác định bộ hoặc tập cụ thể. Vì vậy chưa thể cam kết các phần về động vật, vũ trụ, cơ thể hay độ tuổi của một ấn bản cụ thể. Người thích tìm hiểu khoa học qua câu hỏi và câu trả lời; cần xác nhận tập để tư vấn độ tuổi.  Hỏi đáp kiến thức khoa học; chưa xác định độ dài, minh họa và mức đọc của bản bán. Khơi gợi việc quan sát, đặt câu hỏi và tìm hiểu kiến thức khoa học. Sách thiếu nhi hỏi đáp khoa học khám phá khoa học",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn minh họa đặc điểm tên bộ chung, không nhận diện chính xác sản phẩm cửa hàng. Không áp tuổi, tác giả hoặc chủ đề riêng của tập nguồn. Nguồn: https://nxbkimdong.com.vn/muoi-van-cau-hoi-vi-sao-the-gioi-dong-thuc-vat",
+        "learningGoal": "Khơi gợi việc quan sát, đặt câu hỏi và tìm hiểu kiến thức khoa học.",
+        "readingLevel": null,
+        "readingStyle": "Hỏi đáp kiến thức khoa học; chưa xác định độ dài, minh họa và mức đọc của bản bán."
+      },
+      "category": "Sách thiếu nhi",
+      "discount": 15,
+      "quantity": 170,
+      "productId": 36,
+      "categoryId": 8,
+      "description": "Tên chung cho sách hỏi đáp kiến thức khoa học và đời sống, giúp người đọc khám phá các câu hỏi vì sao. Có nhiều bộ, tập và nhóm tuổi mang tên tương tự; dữ liệu cửa hàng chưa xác định bộ hoặc tập cụ thể. Vì vậy chưa thể cam kết các phần về động vật, vũ trụ, cơ thể hay độ tuổi của một ấn bản cụ thể."
+    },
+    {
+      "name": "Hoàng Tử Bé",
+      "sold": 59,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781254663/products/gpdjim8pwjxs1rxfl7rr.jpg",
+      "price": 76000.0,
+      "author": "Antoine de Saint-Exupéry",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách thiếu nhi",
+          "topicId": 8,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "tình bạn",
+          "topicId": 15,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.lepetitprince.com/en/events-around-the-world/le-petit-prince-in-versailles-2/"
+        },
+        {
+          "name": "truyện triết lý",
+          "topicId": 51,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.lepetitprince.com/en/events-around-the-world/le-petit-prince-in-versailles-2/"
+        },
+        {
+          "name": "cách nhìn cuộc sống",
+          "topicId": 52,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.lepetitprince.com/en/events-around-the-world/le-petit-prince-in-versailles-2/"
+        }
+      ],
+      "profile": {
+        "summary": "Truyện về hoàng tử nhỏ và cách cậu nhìn thế giới, gửi gắm suy ngẫm về con người và đời sống. Tác phẩm kết hợp chất thơ với những câu hỏi mang tính triết lý.",
+        "approved": 1,
+        "audience": "Trẻ em và người lớn quan tâm truyện mang chất thơ và suy ngẫm về cuộc sống.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Hoàng Tử Bé Antoine de Saint-Exupéry Sách thiếu nhi Câu chuyện trong trẻo và sâu sắc về cậu hoàng tử nhỏ đến từ tiểu hành tinh B612. Tác phẩm văn học được yêu thích nhất nước Pháp, dành cho mọi lứa tuổi. Truyện về hoàng tử nhỏ và cách cậu nhìn thế giới, gửi gắm suy ngẫm về con người và đời sống. Tác phẩm kết hợp chất thơ với những câu hỏi mang tính triết lý. Trẻ em và người lớn quan tâm truyện mang chất thơ và suy ngẫm về cuộc sống.  Truyện giàu chất thơ, nhẹ nhàng truyền tải suy ngẫm về tình bạn và cách nhìn thế giới. Suy ngẫm về tình bạn, trí tưởng tượng và cách nhìn cuộc sống. Sách thiếu nhi tình bạn truyện triết lý cách nhìn cuộc sống",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn chính thức về nội dung chung. Không xác nhận độ dễ đọc, mốc tuổi cụ thể, bản dịch hoặc thông số ấn bản. Nguồn: https://www.lepetitprince.com/en/events-around-the-world/le-petit-prince-in-versailles-2/ | https://www.lepetitprince.com/en/new-products-from-our-licensees/fleurus-marks-the-80th-anniversary-of-the-little-prince-with-a-special-edition/",
+        "learningGoal": "Suy ngẫm về tình bạn, trí tưởng tượng và cách nhìn cuộc sống.",
+        "readingLevel": null,
+        "readingStyle": "Truyện giàu chất thơ, nhẹ nhàng truyền tải suy ngẫm về tình bạn và cách nhìn thế giới."
+      },
+      "category": "Sách thiếu nhi",
+      "discount": 8,
+      "quantity": 160,
+      "productId": 37,
+      "categoryId": 8,
+      "description": "Câu chuyện trong trẻo và sâu sắc về cậu hoàng tử nhỏ đến từ tiểu hành tinh B612. Tác phẩm văn học được yêu thích nhất nước Pháp, dành cho mọi lứa tuổi."
+    },
+    {
+      "name": "Totto-chan Bên Cửa Sổ",
+      "sold": 46,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781254810/products/zn5psmwy3f8txxdfnet2.jpg",
+      "price": 92000.0,
+      "author": "Kuroyanagi Tetsuko",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách thiếu nhi",
+          "topicId": 8,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "tuổi thơ",
+          "topicId": 33,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhanam.vn/tottochan-ben-cua-so"
+        },
+        {
+          "name": "giáo dục",
+          "topicId": 53,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhanam.vn/tottochan-ben-cua-so"
+        },
+        {
+          "name": "lắng nghe trẻ em",
+          "topicId": 54,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhanam.vn/tottochan-ben-cua-so"
+        }
+      ],
+      "profile": {
+        "summary": "Totto-chan chuyển đến trường Tomoe sau khi bị đuổi học. Ngôi trường có lớp học trong toa xe điện, cách học khác thường và thầy hiệu trưởng chăm chú lắng nghe cô bé; các trải nghiệm ấy gắn với sự lớn lên của nhân vật.",
+        "approved": 1,
+        "audience": "Độc giả trẻ và người quan tâm tuổi thơ, nhà trường, sự lắng nghe trẻ em.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Totto-chan Bên Cửa Sổ Kuroyanagi Tetsuko Sách thiếu nhi Hồi ức cảm động về cô bé Totto-chan và ngôi trường Tomoe đặc biệt. Một quan niệm giáo dục đầy nhân văn khiến cả trẻ em lẫn người lớn yêu thích. Totto-chan chuyển đến trường Tomoe sau khi bị đuổi học. Ngôi trường có lớp học trong toa xe điện, cách học khác thường và thầy hiệu trưởng chăm chú lắng nghe cô bé; các trải nghiệm ấy gắn với sự lớn lên của nhân vật. Độc giả trẻ và người quan tâm tuổi thơ, nhà trường, sự lắng nghe trẻ em.  Kể những trải nghiệm của cô bé ở một ngôi trường có cách giáo dục khác thường. Suy ngẫm về sự tôn trọng, lắng nghe trẻ em và môi trường giáo dục. Sách thiếu nhi tuổi thơ giáo dục lắng nghe trẻ em",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Tuổi vào lớp một của nhân vật không phải tuổi khuyến nghị của độc giả. Không gắn tác dụng giáo dục chắc chắn cho người đọc. Nguồn: https://nhanam.vn/tottochan-ben-cua-so",
+        "learningGoal": "Suy ngẫm về sự tôn trọng, lắng nghe trẻ em và môi trường giáo dục.",
+        "readingLevel": null,
+        "readingStyle": "Kể những trải nghiệm của cô bé ở một ngôi trường có cách giáo dục khác thường."
+      },
+      "category": "Sách thiếu nhi",
+      "discount": 10,
+      "quantity": 140,
+      "productId": 38,
+      "categoryId": 8,
+      "description": "Hồi ức cảm động về cô bé Totto-chan và ngôi trường Tomoe đặc biệt. Một quan niệm giáo dục đầy nhân văn khiến cả trẻ em lẫn người lớn yêu thích."
+    },
+    {
+      "name": "Chí Phèo",
+      "sold": 50,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781254605/products/tjgtuub4otjky9gm7c6q.jpg",
+      "price": 55000.0,
+      "author": "Nam Cao",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Văn học nghệ thuật",
+          "topicId": 3,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "văn học Việt Nam",
+          "topicId": 12,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://js.vnu.edu.vn/ER/article/view/4080/3807"
+        },
+        {
+          "name": "văn học hiện thực",
+          "topicId": 55,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://js.vnu.edu.vn/ER/article/view/4080/3807"
+        },
+        {
+          "name": "người nông dân",
+          "topicId": 56,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://js.vnu.edu.vn/ER/article/view/4080/3807"
+        },
+        {
+          "name": "bi kịch",
+          "topicId": 157,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://js.vnu.edu.vn/ER/article/view/4080/3807"
+        }
+      ],
+      "profile": {
+        "summary": "Truyện ngắn của Nam Cao về bi kịch của người nông dân trong xã hội cũ, đặt ra câu hỏi về con người và cách xã hội đối xử với họ. Có thể đọc để tìm hiểu văn học hiện thực và thảo luận về nội dung, nghệ thuật tác phẩm. Chưa xác định bản dịch, ngôn ngữ và những truyện khác đi kèm trong bản đang bán.",
+        "approved": 1,
+        "audience": "Người tìm hiểu văn học Việt Nam, truyện ngắn Nam Cao và nội dung học văn trong nhà trường.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Chí Phèo Nam Cao Sách Văn học nghệ thuật Truyện ngắn của Nam Cao về bi kịch của người nông dân trong xã hội cũ, đặt ra câu hỏi về con người và cách xã hội đối xử với họ. Có thể đọc để tìm hiểu văn học hiện thực và thảo luận về nội dung, nghệ thuật tác phẩm. Chưa xác định bản dịch, ngôn ngữ và những truyện khác đi kèm trong bản đang bán. Truyện ngắn của Nam Cao về bi kịch của người nông dân trong xã hội cũ, đặt ra câu hỏi về con người và cách xã hội đối xử với họ. Có thể đọc để tìm hiểu văn học hiện thực và thảo luận về nội dung, nghệ thuật tác phẩm. Chưa xác định bản dịch, ngôn ngữ và những truyện khác đi kèm trong bản đang bán. Người tìm hiểu văn học Việt Nam, truyện ngắn Nam Cao và nội dung học văn trong nhà trường.  Truyện ngắn hiện thực có nội dung bi kịch để đọc, phân tích và thảo luận. Suy ngẫm về cuộc sống người nông dân và cách tác phẩm đặt vấn đề về con người, xã hội. Sách Văn học nghệ thuật văn học hiện thực người nông dân bi kịch văn học Việt Nam",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn nghiên cứu giáo dục chỉ dùng cho chủ đề và việc đọc hiểu. Bìa cửa hàng ghi Chí Phèo and Other Stories; không suy ra bản tiếng Việt hoặc mục lục toàn tuyển tập. Nguồn: https://js.vnu.edu.vn/ER/article/view/4080/3807",
+        "learningGoal": "Suy ngẫm về cuộc sống người nông dân và cách tác phẩm đặt vấn đề về con người, xã hội.",
+        "readingLevel": null,
+        "readingStyle": "Truyện ngắn hiện thực có nội dung bi kịch để đọc, phân tích và thảo luận."
+      },
+      "category": "Sách Văn học nghệ thuật",
+      "discount": 10,
+      "quantity": 120,
+      "productId": 39,
+      "categoryId": 3,
+      "description": "Truyện ngắn của Nam Cao về bi kịch của người nông dân trong xã hội cũ, đặt ra câu hỏi về con người và cách xã hội đối xử với họ. Có thể đọc để tìm hiểu văn học hiện thực và thảo luận về nội dung, nghệ thuật tác phẩm. Chưa xác định bản dịch, ngôn ngữ và những truyện khác đi kèm trong bản đang bán."
+    },
+    {
+      "name": "Tắt Đèn",
+      "sold": 30,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255547/products/qlas6inf9k7gnsak8r8d.webp",
+      "price": 60000.0,
+      "author": "Ngô Tất Tố",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Văn học nghệ thuật",
+          "topicId": 3,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "văn học hiện thực",
+          "topicId": 55,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/products/tat-den"
+        },
+        {
+          "name": "người nông dân",
+          "topicId": 56,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/products/tat-den"
+        },
+        {
+          "name": "áp bức",
+          "topicId": 57,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/products/tat-den"
+        }
+      ],
+      "profile": {
+        "summary": "Tiểu thuyết hiện thực về chị Dậu và cảnh sống đau khổ của dân quê trong nghèo đói, bị người có thế lực áp bức. Nhân vật vẫn hết lòng vì chồng con giữa hoàn cảnh khắc nghiệt.",
+        "approved": 1,
+        "audience": "Người học văn học và quan tâm văn học hiện thực Việt Nam.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Tắt Đèn Ngô Tất Tố Sách Văn học nghệ thuật Bức tranh chân thực về số phận người nông dân dưới ách sưu thuế qua hình tượng chị Dậu. Một bản án đanh thép với xã hội thực dân phong kiến. Tiểu thuyết hiện thực về chị Dậu và cảnh sống đau khổ của dân quê trong nghèo đói, bị người có thế lực áp bức. Nhân vật vẫn hết lòng vì chồng con giữa hoàn cảnh khắc nghiệt. Người học văn học và quan tâm văn học hiện thực Việt Nam.  Tiểu thuyết hiện thực khắc họa đau khổ, nghèo đói và áp bức. Tìm hiểu hình tượng chị Dậu và hiện thực xã hội được phản ánh trong tác phẩm. Sách Văn học nghệ thuật văn học hiện thực người nông dân áp bức",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không áp dụng tuổi, số trang hoặc tài liệu học tập kèm theo của bản nguồn cho ấn bản cửa hàng. Nguồn: https://nxbkimdong.com.vn/products/tat-den",
+        "learningGoal": "Tìm hiểu hình tượng chị Dậu và hiện thực xã hội được phản ánh trong tác phẩm.",
+        "readingLevel": null,
+        "readingStyle": "Tiểu thuyết hiện thực khắc họa đau khổ, nghèo đói và áp bức."
+      },
+      "category": "Sách Văn học nghệ thuật",
+      "discount": 8,
+      "quantity": 95,
+      "productId": 40,
+      "categoryId": 3,
+      "description": "Bức tranh chân thực về số phận người nông dân dưới ách sưu thuế qua hình tượng chị Dậu. Một bản án đanh thép với xã hội thực dân phong kiến."
+    },
+    {
+      "name": "Những Người Khốn Khổ",
+      "sold": 41,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255531/products/yusyyulbk20nhvvtdun7.jpg",
+      "price": 218000.0,
+      "author": "Victor Hugo",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Văn học nghệ thuật",
+          "topicId": 3,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "công lý",
+          "topicId": 58,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.penguinrandomhouse.com/books/313987/les-miserables-by-victor-hugo/"
+        },
+        {
+          "name": "số phận con người",
+          "topicId": 59,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.penguinrandomhouse.com/books/313987/les-miserables-by-victor-hugo/"
+        },
+        {
+          "name": "xã hội Pháp",
+          "topicId": 60,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.penguinrandomhouse.com/books/313987/les-miserables-by-victor-hugo/"
+        }
+      ],
+      "profile": {
+        "summary": "Jean Valjean từng bị tù vì lấy một ổ bánh mì và bị thanh tra Javert truy đuổi. Câu chuyện đặt ra vấn đề tội lỗi, hình phạt, khổ đau và khát vọng đổi đời trong xã hội Pháp.",
+        "approved": 1,
+        "audience": "Người quan tâm tiểu thuyết hiện thực, số phận con người và công lý.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Những Người Khốn Khổ Victor Hugo Sách Văn học nghệ thuật Đại tiểu thuyết về Jean Valjean và hành trình cứu rỗi giữa nước Pháp đầy biến động. Bản hùng ca bất hủ về lòng nhân ái, công lý và phẩm giá con người. Jean Valjean từng bị tù vì lấy một ổ bánh mì và bị thanh tra Javert truy đuổi. Câu chuyện đặt ra vấn đề tội lỗi, hình phạt, khổ đau và khát vọng đổi đời trong xã hội Pháp. Người quan tâm tiểu thuyết hiện thực, số phận con người và công lý.  Tiểu thuyết có phạm vi rộng, nhiều xung đột xã hội và số phận đau khổ. Suy ngẫm về công lý, lòng nhân ái và khát vọng thoát khỏi khổ đau. Sách Văn học nghệ thuật công lý số phận con người xã hội Pháp",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không nhập số trang, thông tin bản đầy đủ hay bản rút gọn vì chưa xác nhận ấn bản tiếng Việt đang bán. Nguồn: https://www.penguinrandomhouse.com/books/313987/les-miserables-by-victor-hugo/",
+        "learningGoal": "Suy ngẫm về công lý, lòng nhân ái và khát vọng thoát khỏi khổ đau.",
+        "readingLevel": null,
+        "readingStyle": "Tiểu thuyết có phạm vi rộng, nhiều xung đột xã hội và số phận đau khổ."
+      },
+      "category": "Sách Văn học nghệ thuật",
+      "discount": 15,
+      "quantity": 85,
+      "productId": 41,
+      "categoryId": 3,
+      "description": "Đại tiểu thuyết về Jean Valjean và hành trình cứu rỗi giữa nước Pháp đầy biến động. Bản hùng ca bất hủ về lòng nhân ái, công lý và phẩm giá con người."
+    },
+    {
+      "name": "Từ Tốt Đến Vĩ Đại (Good to Great)",
+      "sold": 74,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255437/products/j3oaptaxefhhvvm4a3vk.webp",
+      "price": 138000.0,
+      "author": "Jim Collins",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Khoa học công nghệ – Kinh tế",
+          "topicId": 2,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "quản trị doanh nghiệp",
+          "topicId": 61,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.jimcollins.com/article_topics/articles/good-to-great.html"
+        },
+        {
+          "name": "tư duy kỷ luật",
+          "topicId": 62,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.jimcollins.com/article_topics/articles/good-to-great.html"
+        },
+        {
+          "name": "năng lực cốt lõi",
+          "topicId": 63,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.jimcollins.com/article_topics/articles/good-to-great.html"
+        }
+      ],
+      "profile": {
+        "summary": "Jim Collins phân tích các doanh nghiệp chuyển từ kết quả tốt sang vĩ đại. Các ý tưởng được trình bày gồm tư duy kỷ luật, tập trung vào năng lực cốt lõi và xác định điều doanh nghiệp cần dừng làm.",
+        "approved": 1,
+        "audience": "Người quản lý và người quan tâm cách tổ chức phát triển doanh nghiệp.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Từ Tốt Đến Vĩ Đại (Good to Great) Jim Collins Sách Khoa học công nghệ – Kinh tế Nghiên cứu vì sao một số công ty bứt phá từ tốt lên vĩ đại trong khi số khác thì không. Những nguyên lý lãnh đạo và quản trị đã được kiểm chứng bằng dữ liệu. Jim Collins phân tích các doanh nghiệp chuyển từ kết quả tốt sang vĩ đại. Các ý tưởng được trình bày gồm tư duy kỷ luật, tập trung vào năng lực cốt lõi và xác định điều doanh nghiệp cần dừng làm. Người quản lý và người quan tâm cách tổ chức phát triển doanh nghiệp.  Phân tích doanh nghiệp và ví dụ cụ thể để trình bày các ý tưởng quản trị. Tham khảo cách xác định định hướng, năng lực và những hoạt động cần tập trung của doanh nghiệp. Sách Khoa học công nghệ – Kinh tế quản trị doanh nghiệp tư duy kỷ luật năng lực cốt lõi",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn là bài của chính tác giả giới thiệu kết quả trong sách. Không cam kết kết quả kinh doanh cho người đọc. Nguồn: https://www.jimcollins.com/article_topics/articles/good-to-great.html",
+        "learningGoal": "Tham khảo cách xác định định hướng, năng lực và những hoạt động cần tập trung của doanh nghiệp.",
+        "readingLevel": null,
+        "readingStyle": "Phân tích doanh nghiệp và ví dụ cụ thể để trình bày các ý tưởng quản trị."
+      },
+      "category": "Sách Khoa học công nghệ – Kinh tế",
+      "discount": 20,
+      "quantity": 125,
+      "productId": 42,
+      "categoryId": 2,
+      "description": "Nghiên cứu vì sao một số công ty bứt phá từ tốt lên vĩ đại trong khi số khác thì không. Những nguyên lý lãnh đạo và quản trị đã được kiểm chứng bằng dữ liệu."
+    },
+    {
+      "name": "Nhà Đầu Tư Thông Minh",
+      "sold": 55,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255428/products/uvnrlqxxeel4r1rf8dw7.webp",
+      "price": 198000.0,
+      "author": "Benjamin Graham",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Khoa học công nghệ – Kinh tế",
+          "topicId": 2,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "đầu tư giá trị",
+          "topicId": 64,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhanam.vn/nha-dau-tu-thong-minh-nha-nam"
+        },
+        {
+          "name": "chứng khoán",
+          "topicId": 65,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhanam.vn/nha-dau-tu-thong-minh-nha-nam"
+        },
+        {
+          "name": "chiến lược đầu tư",
+          "topicId": 66,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nhanam.vn/nha-dau-tu-thong-minh-nha-nam"
+        }
+      ],
+      "profile": {
+        "summary": "Benjamin Graham trình bày triết lý đầu tư giá trị và việc phát triển chiến lược đầu tư dài hạn. Trọng tâm là hạn chế những sai lầm lớn của nhà đầu tư trên thị trường chứng khoán.",
+        "approved": 1,
+        "audience": "Người quan tâm đầu tư giá trị và chiến lược chứng khoán dài hạn.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Nhà Đầu Tư Thông Minh Benjamin Graham Sách Khoa học công nghệ – Kinh tế Kinh thánh của đầu tư giá trị, cuốn sách gối đầu giường của Warren Buffett. Tư duy kỷ luật giúp bạn đầu tư an toàn và sinh lời bền vững. Benjamin Graham trình bày triết lý đầu tư giá trị và việc phát triển chiến lược đầu tư dài hạn. Trọng tâm là hạn chế những sai lầm lớn của nhà đầu tư trên thị trường chứng khoán. Người quan tâm đầu tư giá trị và chiến lược chứng khoán dài hạn.  Trình bày nguyên tắc và chiến lược đầu tư theo giá trị. Tìm hiểu cách tiếp cận đầu tư giá trị và cân nhắc sai lầm trong đầu tư dài hạn. Sách Khoa học công nghệ – Kinh tế đầu tư giá trị chứng khoán chiến lược đầu tư",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không xác nhận bản cửa hàng có bình luận Jason Zweig hay ví dụ doanh nghiệp cập nhật. Không gắn nhãn sách lập ngân sách chi tiêu cá nhân hoặc hứa lợi nhuận. Nguồn: https://nhanam.vn/nha-dau-tu-thong-minh-nha-nam",
+        "learningGoal": "Tìm hiểu cách tiếp cận đầu tư giá trị và cân nhắc sai lầm trong đầu tư dài hạn.",
+        "readingLevel": null,
+        "readingStyle": "Trình bày nguyên tắc và chiến lược đầu tư theo giá trị."
+      },
+      "category": "Sách Khoa học công nghệ – Kinh tế",
+      "discount": 10,
+      "quantity": 100,
+      "productId": 43,
+      "categoryId": 2,
+      "description": "Kinh thánh của đầu tư giá trị, cuốn sách gối đầu giường của Warren Buffett. Tư duy kỷ luật giúp bạn đầu tư an toàn và sinh lời bền vững."
+    },
+    {
+      "name": "Giáo Trình Nhập Môn Trí Tuệ Nhân Tạo",
+      "sold": 22,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255413/products/f77nmz9iq7iq1rundyaf.webp",
+      "price": 112000.0,
+      "author": "Từ Minh Phương",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Giáo trình",
+          "topicId": 5,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "trí tuệ nhân tạo",
+          "topicId": 69,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkhcntt.vn/node/15847"
+        },
+        {
+          "name": "học máy",
+          "topicId": 131,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkhcntt.vn/node/15847"
+        },
+        {
+          "name": "tìm kiếm AI",
+          "topicId": 158,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkhcntt.vn/node/15847"
+        },
+        {
+          "name": "biểu diễn tri thức",
+          "topicId": 159,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkhcntt.vn/node/15847"
+        },
+        {
+          "name": "suy diễn xác suất",
+          "topicId": 160,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkhcntt.vn/node/15847"
+        }
+      ],
+      "profile": {
+        "summary": "Giáo trình do Từ Minh Phương biên soạn, giới thiệu trí tuệ nhân tạo và các hướng giải quyết vấn đề bằng tìm kiếm, biểu diễn tri thức và logic, suy diễn xác suất, học máy. Phù hợp nhu cầu học nền tảng chuyên ngành. Chưa có căn cứ khẳng định sách hướng dẫn các công cụ AI tạo sinh hoặc lập trình ứng dụng ChatGPT.",
+        "approved": 1,
+        "audience": "Người học môn trí tuệ nhân tạo và muốn tìm hiểu các phương pháp nền tảng chuyên ngành.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Giáo Trình Nhập Môn Trí Tuệ Nhân Tạo Từ Minh Phương Sách Giáo trình Giáo trình do Từ Minh Phương biên soạn, giới thiệu trí tuệ nhân tạo và các hướng giải quyết vấn đề bằng tìm kiếm, biểu diễn tri thức và logic, suy diễn xác suất, học máy. Phù hợp nhu cầu học nền tảng chuyên ngành. Chưa có căn cứ khẳng định sách hướng dẫn các công cụ AI tạo sinh hoặc lập trình ứng dụng ChatGPT. Giáo trình do Từ Minh Phương biên soạn, giới thiệu trí tuệ nhân tạo và các hướng giải quyết vấn đề bằng tìm kiếm, biểu diễn tri thức và logic, suy diễn xác suất, học máy. Phù hợp nhu cầu học nền tảng chuyên ngành. Chưa có căn cứ khẳng định sách hướng dẫn các công cụ AI tạo sinh hoặc lập trình ứng dụng ChatGPT. Người học môn trí tuệ nhân tạo và muốn tìm hiểu các phương pháp nền tảng chuyên ngành.  Giáo trình trình bày các khái niệm và phương pháp nền tảng của trí tuệ nhân tạo. Hệ thống kiến thức về tìm kiếm, tri thức, logic, suy diễn xác suất và học máy. Sách Giáo trình trí tuệ nhân tạo tìm kiếm AI biểu diễn tri thức suy diễn xác suất học máy",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa và NXB xác nhận tác giả Từ Minh Phương và phạm vi nội dung. Không gán cho Đinh Mạnh Tường. Nguồn: https://nxbkhcntt.vn/node/15847",
+        "learningGoal": "Hệ thống kiến thức về tìm kiếm, tri thức, logic, suy diễn xác suất và học máy.",
+        "readingLevel": null,
+        "readingStyle": "Giáo trình trình bày các khái niệm và phương pháp nền tảng của trí tuệ nhân tạo."
+      },
+      "category": "Sách Giáo trình",
+      "discount": 8,
+      "quantity": 100,
+      "productId": 44,
+      "categoryId": 5,
+      "description": "Giáo trình do Từ Minh Phương biên soạn, giới thiệu trí tuệ nhân tạo và các hướng giải quyết vấn đề bằng tìm kiếm, biểu diễn tri thức và logic, suy diễn xác suất, học máy. Phù hợp nhu cầu học nền tảng chuyên ngành. Chưa có căn cứ khẳng định sách hướng dẫn các công cụ AI tạo sinh hoặc lập trình ứng dụng ChatGPT."
+    },
+    {
+      "name": "Giáo Trình Kinh Tế Vĩ Mô",
+      "sold": 31,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255403/products/cey5c3ocjrjxm3eecig6.webp",
+      "price": 99000.0,
+      "author": "Lê Thanh Tùng",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Giáo trình",
+          "topicId": 5,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "kinh tế vĩ mô",
+          "topicId": 161,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://thuquan.ou.edu.vn/chi-tiet-sach/Kinh-t%C3%A1%C2%BA%C2%BF-MTcwOA/Giao-trinh-Kinh-te-vi-mo-%282025%29%5B1%5D-MUIwODQ2MjY"
+        },
+        {
+          "name": "lạm phát",
+          "topicId": 162,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://thuquan.ou.edu.vn/chi-tiet-sach/Kinh-t%C3%A1%C2%BA%C2%BF-MTcwOA/Giao-trinh-Kinh-te-vi-mo-%282025%29%5B1%5D-MUIwODQ2MjY"
+        },
+        {
+          "name": "thất nghiệp",
+          "topicId": 163,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://thuquan.ou.edu.vn/chi-tiet-sach/Kinh-t%C3%A1%C2%BA%C2%BF-MTcwOA/Giao-trinh-Kinh-te-vi-mo-%282025%29%5B1%5D-MUIwODQ2MjY"
+        },
+        {
+          "name": "chính sách kinh tế",
+          "topicId": 164,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://thuquan.ou.edu.vn/chi-tiet-sach/Kinh-t%C3%A1%C2%BA%C2%BF-MTcwOA/Giao-trinh-Kinh-te-vi-mo-%282025%29%5B1%5D-MUIwODQ2MjY"
+        }
+      ],
+      "profile": {
+        "summary": "Giáo trình Kinh tế vĩ mô của Lê Thanh Tùng bàn về nền kinh tế ở cấp tổng thể, như sản lượng, lạm phát, thất nghiệp, tỷ giá và chính sách kinh tế. Phù hợp học về các chỉ tiêu và cơ chế của nền kinh tế. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp.",
+        "approved": 1,
+        "audience": "Người học kinh tế vĩ mô và muốn tìm hiểu nền kinh tế ở cấp tổng thể.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Giáo Trình Kinh Tế Vĩ Mô Lê Thanh Tùng Sách Giáo trình Giáo trình Kinh tế vĩ mô của Lê Thanh Tùng bàn về nền kinh tế ở cấp tổng thể, như sản lượng, lạm phát, thất nghiệp, tỷ giá và chính sách kinh tế. Phù hợp học về các chỉ tiêu và cơ chế của nền kinh tế. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp. Giáo trình Kinh tế vĩ mô của Lê Thanh Tùng bàn về nền kinh tế ở cấp tổng thể, như sản lượng, lạm phát, thất nghiệp, tỷ giá và chính sách kinh tế. Phù hợp học về các chỉ tiêu và cơ chế của nền kinh tế. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp. Người học kinh tế vĩ mô và muốn tìm hiểu nền kinh tế ở cấp tổng thể.  Giáo trình kinh tế; chưa xác nhận cấu trúc bài tập của bản in cửa hàng. Tìm hiểu các chỉ tiêu vĩ mô và chính sách tác động đến nền kinh tế. Sách Giáo trình kinh tế vĩ mô lạm phát thất nghiệp chính sách kinh tế",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Bìa xác nhận Vĩ mô của Lê Thanh Tùng, khớp tác phẩm trong thư quán ĐH Mở. Chỉ dùng chủ đề chung, không gán năm 2025 và bài tập bản điện tử cho bản in. Nguồn: https://thuquan.ou.edu.vn/chi-tiet-sach/Kinh-t%C3%A1%C2%BA%C2%BF-MTcwOA/Giao-trinh-Kinh-te-vi-mo-%282025%29%5B1%5D-MUIwODQ2MjY",
+        "learningGoal": "Tìm hiểu các chỉ tiêu vĩ mô và chính sách tác động đến nền kinh tế.",
+        "readingLevel": null,
+        "readingStyle": "Giáo trình kinh tế; chưa xác nhận cấu trúc bài tập của bản in cửa hàng."
+      },
+      "category": "Sách Giáo trình",
+      "discount": 5,
+      "quantity": 120,
+      "productId": 45,
+      "categoryId": 5,
+      "description": "Giáo trình Kinh tế vĩ mô của Lê Thanh Tùng bàn về nền kinh tế ở cấp tổng thể, như sản lượng, lạm phát, thất nghiệp, tỷ giá và chính sách kinh tế. Phù hợp học về các chỉ tiêu và cơ chế của nền kinh tế. Đây là kinh tế vĩ mô, không phải giáo trình kinh tế vi mô về quyết định riêng của người tiêu dùng hay doanh nghiệp."
+    },
+    {
+      "name": "Homo Deus: Lược Sử Tương Lai",
+      "sold": 43,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255184/products/yvfmx6itw0krxyr4yipk.jpg",
+      "price": 195000.0,
+      "author": "Yuval Noah Harari",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Văn hóa xã hội – Lịch sử",
+          "topicId": 4,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "tương lai nhân loại",
+          "topicId": 67,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.ynharari.com/book/homo-deus/"
+        },
+        {
+          "name": "công nghệ và xã hội",
+          "topicId": 68,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.ynharari.com/book/homo-deus/"
+        },
+        {
+          "name": "trí tuệ nhân tạo",
+          "topicId": 69,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.ynharari.com/book/homo-deus/"
+        }
+      ],
+      "profile": {
+        "summary": "Harari xem xét các khả năng về tương lai nhân loại khi trí tuệ nhân tạo và kỹ thuật di truyền thay đổi xã hội. Sách đặt câu hỏi về quyền lực, việc làm và giá trị con người qua cách nhìn kết hợp lịch sử, khoa học và triết học.",
+        "approved": 1,
+        "audience": "Người quan tâm tương lai xã hội, công nghệ và các câu hỏi về con người.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Homo Deus: Lược Sử Tương Lai Yuval Noah Harari Sách Văn hóa xã hội – Lịch sử Phần tiếp nối của Sapiens, khám phá tương lai loài người trong kỷ nguyên công nghệ sinh học và trí tuệ nhân tạo. Những câu hỏi lớn về vận mệnh nhân loại. Harari xem xét các khả năng về tương lai nhân loại khi trí tuệ nhân tạo và kỹ thuật di truyền thay đổi xã hội. Sách đặt câu hỏi về quyền lực, việc làm và giá trị con người qua cách nhìn kết hợp lịch sử, khoa học và triết học. Người quan tâm tương lai xã hội, công nghệ và các câu hỏi về con người.  Lập luận liên ngành và đặt ra những khả năng về tương lai. Suy ngẫm về các khả năng thay đổi xã hội do công nghệ theo lập luận của tác giả. Sách Văn hóa xã hội – Lịch sử tương lai nhân loại công nghệ và xã hội trí tuệ nhân tạo",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Các dự báo là lập luận của tác giả, không ghi thành sự kiện tương lai chắc chắn. Nguồn: https://www.ynharari.com/book/homo-deus/",
+        "learningGoal": "Suy ngẫm về các khả năng thay đổi xã hội do công nghệ theo lập luận của tác giả.",
+        "readingLevel": null,
+        "readingStyle": "Lập luận liên ngành và đặt ra những khả năng về tương lai."
+      },
+      "category": "Sách Văn hóa xã hội – Lịch sử",
+      "discount": 12,
+      "quantity": 100,
+      "productId": 46,
+      "categoryId": 4,
+      "description": "Phần tiếp nối của Sapiens, khám phá tương lai loài người trong kỷ nguyên công nghệ sinh học và trí tuệ nhân tạo. Những câu hỏi lớn về vận mệnh nhân loại."
+    },
+    {
+      "name": "Kinh Tế Học Hài Hước (Freakonomics)",
+      "sold": 39,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255169/products/t4ntwq8lymkoayiropbp.webp",
+      "price": 142000.0,
+      "author": "Steven D. Levitt & Stephen J. Dubner",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Khoa học công nghệ – Kinh tế",
+          "topicId": 2,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "kinh tế học hành vi",
+          "topicId": 70,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://freakonomics.com/books/"
+        },
+        {
+          "name": "động cơ hành vi",
+          "topicId": 71,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://freakonomics.com/books/"
+        },
+        {
+          "name": "đời sống",
+          "topicId": 72,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://freakonomics.com/books/"
+        }
+      ],
+      "profile": {
+        "summary": "Levitt và Dubner đặt những câu hỏi khác thường về gian lận, tội phạm, nuôi dạy con và thể thao để khám phá động cơ hành vi. Kinh tế học được dùng để tìm hiểu cách con người đạt điều họ muốn.",
+        "approved": 1,
+        "audience": "Người quan tâm kinh tế học và động cơ phía sau hành vi đời sống.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Kinh Tế Học Hài Hước (Freakonomics) Steven D. Levitt & Stephen J. Dubner Sách Khoa học công nghệ – Kinh tế Góc nhìn kinh tế học bất ngờ và dí dỏm về những câu hỏi đời thường. Khám phá mặt ẩn giấu của mọi thứ qua dữ liệu và lý lẽ sắc bén. Levitt và Dubner đặt những câu hỏi khác thường về gian lận, tội phạm, nuôi dạy con và thể thao để khám phá động cơ hành vi. Kinh tế học được dùng để tìm hiểu cách con người đạt điều họ muốn. Người quan tâm kinh tế học và động cơ phía sau hành vi đời sống.  Kể chuyện và phân tích những câu hỏi khác thường trong đời sống. Tìm hiểu cách phân tích động cơ hành vi qua các ví dụ cụ thể. Sách Khoa học công nghệ – Kinh tế kinh tế học hành vi động cơ hành vi đời sống",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ dùng phần Freakonomics trên trang tác giả, không nhập nội dung của các cuốn tiếp theo. Nguồn: https://freakonomics.com/books/",
+        "learningGoal": "Tìm hiểu cách phân tích động cơ hành vi qua các ví dụ cụ thể.",
+        "readingLevel": null,
+        "readingStyle": "Kể chuyện và phân tích những câu hỏi khác thường trong đời sống."
+      },
+      "category": "Sách Khoa học công nghệ – Kinh tế",
+      "discount": 12,
+      "quantity": 105,
+      "productId": 47,
+      "categoryId": 2,
+      "description": "Góc nhìn kinh tế học bất ngờ và dí dỏm về những câu hỏi đời thường. Khám phá mặt ẩn giấu của mọi thứ qua dữ liệu và lý lẽ sắc bén."
+    },
+    {
+      "name": "Thám Tử Lừng Danh Conan - Tập 1",
+      "sold": 78,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781255157/products/xdfk43vebh1zqvsl189t.webp",
+      "price": 25000.0,
+      "author": "Gosho Aoyama",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách thiếu nhi",
+          "topicId": 8,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "trinh thám",
+          "topicId": 25,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/tap-le-tham-tu-lung-danh-conan-107"
+        },
+        {
+          "name": "truyện tranh",
+          "topicId": 73,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/tap-le-tham-tu-lung-danh-conan-107"
+        },
+        {
+          "name": "Conan",
+          "topicId": 74,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/tap-le-tham-tu-lung-danh-conan-107"
+        }
+      ],
+      "profile": {
+        "summary": "Thám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại.",
+        "approved": 1,
+        "audience": "Thiếu niên 11–15 tuổi theo phân loại bộ truyện Conan bản thường của NXB Kim Đồng.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Thám Tử Lừng Danh Conan - Tập 1 Gosho Aoyama Sách thiếu nhi Thám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại. Thám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại. Thiếu niên 11–15 tuổi theo phân loại bộ truyện Conan bản thường của NXB Kim Đồng.  Truyện tranh trinh thám về các vụ án và suy luận. Theo dõi các vụ án và cách nhân vật suy luận. Sách thiếu nhi trinh thám truyện tranh Conan",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Độ tuổi là phân loại tham khảo của cùng bộ truyện bản thường, không phải cam kết thích hợp riêng cho từng trẻ. Giữ nội dung trong catalog; không lấy nội dung phim/ngoại truyện hay thông số bản tái bản. Nguồn: https://nxbkimdong.com.vn/tap-le-tham-tu-lung-danh-conan-107",
+        "learningGoal": "Theo dõi các vụ án và cách nhân vật suy luận.",
+        "readingLevel": null,
+        "readingStyle": "Truyện tranh trinh thám về các vụ án và suy luận."
+      },
+      "category": "Sách thiếu nhi",
+      "discount": 5,
+      "quantity": 250,
+      "productId": 48,
+      "categoryId": 8,
+      "description": "Thám tử Shinichi bị teo nhỏ thành cậu bé Conan và bắt đầu phá những vụ án hóc búa. Bộ truyện tranh trinh thám ăn khách bậc nhất mọi thời đại."
+    },
+    {
+      "name": "Tôi Thấy Hoa Vàng Trên Cỏ Xanh",
+      "sold": 67,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781254725/products/tcnifywbraeqs4pm0r10.jpg",
+      "price": 88000.0,
+      "author": "Nguyễn Nhật Ánh",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Văn học nghệ thuật",
+          "topicId": 3,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "tuổi thơ",
+          "topicId": 33,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.nxbtre.com.vn/sach/toi-thay-hoa-vang-tren-co-xanh-11418.html"
+        },
+        {
+          "name": "tình cảm anh em",
+          "topicId": 75,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.nxbtre.com.vn/sach/toi-thay-hoa-vang-tren-co-xanh-11418.html"
+        },
+        {
+          "name": "làng quê",
+          "topicId": 76,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.nxbtre.com.vn/sach/toi-thay-hoa-vang-tren-co-xanh-11418.html"
+        }
+      ],
+      "profile": {
+        "summary": "Thiều, Tường và những đứa trẻ trong một ngôi làng cùng nô đùa, cãi cọ, yêu thương và lớn lên giữa nhiều biến cố. Câu chuyện có tình cảm anh em, bạn bè, cùng những cảnh đói ăn, cháy nhà và lụt lội.",
+        "approved": 1,
+        "audience": "Người quan tâm truyện tuổi thơ, tình cảm anh em và cuộc sống làng quê.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Tôi Thấy Hoa Vàng Trên Cỏ Xanh Nguyễn Nhật Ánh Sách Văn học nghệ thuật Câu chuyện tuổi thơ trong trẻo nơi làng quê nghèo với tình anh em, tình bạn và những rung động đầu đời. Tác phẩm best-seller của Nguyễn Nhật Ánh đã lên màn ảnh. Thiều, Tường và những đứa trẻ trong một ngôi làng cùng nô đùa, cãi cọ, yêu thương và lớn lên giữa nhiều biến cố. Câu chuyện có tình cảm anh em, bạn bè, cùng những cảnh đói ăn, cháy nhà và lụt lội. Người quan tâm truyện tuổi thơ, tình cảm anh em và cuộc sống làng quê.  Nhiều chương ngắn, giọng kể trong sáng và hồn nhiên của trẻ con; có chi tiết cảm động và những biến cố. Suy ngẫm về tình cảm anh em, bạn bè và quá trình lớn lên. Sách Văn học nghệ thuật tuổi thơ tình cảm anh em làng quê",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không suy ra độ dễ đọc từ chương ngắn; không coi tuổi nhân vật là tuổi độc giả hay khẳng định truyện chỉ có nội dung vui. Nguồn: https://www.nxbtre.com.vn/sach/toi-thay-hoa-vang-tren-co-xanh-11418.html",
+        "learningGoal": "Suy ngẫm về tình cảm anh em, bạn bè và quá trình lớn lên.",
+        "readingLevel": null,
+        "readingStyle": "Nhiều chương ngắn, giọng kể trong sáng và hồn nhiên của trẻ con; có chi tiết cảm động và những biến cố."
+      },
+      "category": "Sách Văn học nghệ thuật",
+      "discount": 10,
+      "quantity": 160,
+      "productId": 49,
+      "categoryId": 3,
+      "description": "Câu chuyện tuổi thơ trong trẻo nơi làng quê nghèo với tình anh em, tình bạn và những rung động đầu đời. Tác phẩm best-seller của Nguyễn Nhật Ánh đã lên màn ảnh."
+    },
+    {
+      "name": "Cho Tôi Xin Một Vé Đi Tuổi Thơ",
+      "sold": 58,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319201/products/s2zhgveyy24mbdpofgim.webp",
+      "price": 78000.0,
+      "author": "Nguyễn Nhật Ánh",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Văn học nghệ thuật",
+          "topicId": 3,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "tình bạn",
+          "topicId": 15,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.nxbtre.com.vn/diem-tin/gioi-thieu-sach-cho-toi-xin-mot-ve-di-tuoi-tho-1348.html"
+        },
+        {
+          "name": "ký ức tuổi thơ",
+          "topicId": 77,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.nxbtre.com.vn/diem-tin/gioi-thieu-sach-cho-toi-xin-mot-ve-di-tuoi-tho-1348.html"
+        },
+        {
+          "name": "thấu hiểu trẻ em",
+          "topicId": 78,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.nxbtre.com.vn/diem-tin/gioi-thieu-sach-cho-toi-xin-mot-ve-di-tuoi-tho-1348.html"
+        }
+      ],
+      "profile": {
+        "summary": "Người kể hồi tưởng những trò chơi và cách nhìn thế giới của cu Mùi, Hải cò, Tủn và Tí sún. Từ ký ức tuổi thơ, câu chuyện nối sang suy nghĩ của người lớn về cách thấu hiểu trẻ em.",
+        "approved": 1,
+        "audience": "Người lớn, phụ huynh và người muốn trở lại ký ức tuổi thơ; trẻ em cũng có thể nhận ra mình trong câu chuyện.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Cho Tôi Xin Một Vé Đi Tuổi Thơ Nguyễn Nhật Ánh Sách Văn học nghệ thuật Tấm vé đưa người đọc trở về thế giới hồn nhiên của tuổi thơ với bao trò nghịch ngợm đáng yêu. Cuốn sách gối đầu giường của cả trẻ em và người lớn. Người kể hồi tưởng những trò chơi và cách nhìn thế giới của cu Mùi, Hải cò, Tủn và Tí sún. Từ ký ức tuổi thơ, câu chuyện nối sang suy nghĩ của người lớn về cách thấu hiểu trẻ em. Người lớn, phụ huynh và người muốn trở lại ký ức tuổi thơ; trẻ em cũng có thể nhận ra mình trong câu chuyện. Được bài giới thiệu đăng trên NXB Trẻ nhận xét là dễ đọc. Giọng kể dí dỏm, hóm hỉnh, đan xen hồi ức với suy nghĩ ở hiện tại. Suy ngẫm về tuổi thơ và cách người lớn nhìn nhận, ứng xử với trẻ em. Sách Văn học nghệ thuật ký ức tuổi thơ thấu hiểu trẻ em tình bạn",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn đăng phỏng vấn tác giả, xác nhận hướng tới người lớn và giọng văn dễ đọc. Không lấy tuổi tám của nhân vật làm độ tuổi đọc. Nguồn: https://www.nxbtre.com.vn/diem-tin/gioi-thieu-sach-cho-toi-xin-mot-ve-di-tuoi-tho-1348.html",
+        "learningGoal": "Suy ngẫm về tuổi thơ và cách người lớn nhìn nhận, ứng xử với trẻ em.",
+        "readingLevel": "Được bài giới thiệu đăng trên NXB Trẻ nhận xét là dễ đọc.",
+        "readingStyle": "Giọng kể dí dỏm, hóm hỉnh, đan xen hồi ức với suy nghĩ ở hiện tại."
+      },
+      "category": "Sách Văn học nghệ thuật",
+      "discount": 8,
+      "quantity": 150,
+      "productId": 50,
+      "categoryId": 3,
+      "description": "Tấm vé đưa người đọc trở về thế giới hồn nhiên của tuổi thơ với bao trò nghịch ngợm đáng yêu. Cuốn sách gối đầu giường của cả trẻ em và người lớn."
+    },
+    {
+      "name": "Doraemon - Tập 1",
+      "sold": 105,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319189/products/ci5zzs9wumywealtkjbe.webp",
+      "price": 22000.0,
+      "author": "Fujiko F. Fujio",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách thiếu nhi",
+          "topicId": 8,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "tình bạn",
+          "topicId": 15,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/tap-le-doraemon-truyen-ngan-chu-meo-may-den-tu-tuong-lai"
+        },
+        {
+          "name": "truyện tranh",
+          "topicId": 73,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/tap-le-doraemon-truyen-ngan-chu-meo-may-den-tu-tuong-lai"
+        },
+        {
+          "name": "bảo bối tưởng tượng",
+          "topicId": 79,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://nxbkimdong.com.vn/tap-le-doraemon-truyen-ngan-chu-meo-may-den-tu-tuong-lai"
+        }
+      ],
+      "profile": {
+        "summary": "Truyện tranh về Doraemon, Nobita và nhóm bạn với những bảo bối từ tương lai. Các câu chuyện gắn tiếng cười, thế giới tưởng tượng và tình bạn.",
+        "approved": 1,
+        "audience": "Tham khảo nhóm nhi đồng 6–11 tuổi theo phân loại bộ truyện Doraemon của NXB Kim Đồng.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Doraemon - Tập 1 Fujiko F. Fujio Sách thiếu nhi Chú mèo máy Doraemon từ tương lai cùng những bảo bối thần kỳ và cậu bạn Nobita. Bộ truyện tranh tuổi thơ thân thương của bao thế hệ thiếu nhi. Truyện tranh về Doraemon, Nobita và nhóm bạn với những bảo bối từ tương lai. Các câu chuyện gắn tiếng cười, thế giới tưởng tượng và tình bạn. Tham khảo nhóm nhi đồng 6–11 tuổi theo phân loại bộ truyện Doraemon của NXB Kim Đồng.  Truyện tranh với không khí hồn nhiên, trong sáng và hài hước. Đọc các câu chuyện tưởng tượng về bảo bối và tình bạn. Sách thiếu nhi truyện tranh tình bạn bảo bối tưởng tượng",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chưa xác nhận loại tập Doraemon tại cửa hàng. Tuổi tham khảo được đối chiếu ở cả dòng truyện ngắn và truyện dài, đều 6–11; không nhập cốt truyện riêng, số trang, ISBN hay tranh màu. Nguồn: https://nxbkimdong.com.vn/tap-le-doraemon-truyen-ngan-chu-meo-may-den-tu-tuong-lai | https://nxbkimdong.com.vn/tap-le-doraemon-truyen-dai-24",
+        "learningGoal": "Đọc các câu chuyện tưởng tượng về bảo bối và tình bạn.",
+        "readingLevel": null,
+        "readingStyle": "Truyện tranh với không khí hồn nhiên, trong sáng và hài hước."
+      },
+      "category": "Sách thiếu nhi",
+      "discount": 10,
+      "quantity": 300,
+      "productId": 51,
+      "categoryId": 8,
+      "description": "Chú mèo máy Doraemon từ tương lai cùng những bảo bối thần kỳ và cậu bạn Nobita. Bộ truyện tranh tuổi thơ thân thương của bao thế hệ thiếu nhi."
+    },
+    {
+      "name": "Harry Potter Và Hòn Đá Phù Thủy",
+      "sold": 120,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781254644/products/o7nbnyebfglziwxbhzm4.jpg",
+      "price": 135000.0,
+      "author": "J.K. Rowling",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Truyện, tiểu thuyết",
+          "topicId": 6,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "giả tưởng",
+          "topicId": 80,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.jkrowling.com/book/harry-potter-philosophers-stone/"
+        },
+        {
+          "name": "phù thủy",
+          "topicId": 81,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.jkrowling.com/book/harry-potter-philosophers-stone/"
+        },
+        {
+          "name": "Hogwarts",
+          "topicId": 82,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.jkrowling.com/book/harry-potter-philosophers-stone/"
+        }
+      ],
+      "profile": {
+        "summary": "Harry nhận các lá thư bí ẩn và phát hiện mình là phù thủy, được nhận vào trường Hogwarts. Đây là khởi đầu những cuộc phiêu lưu của Harry trong thế giới phép thuật.",
+        "approved": 1,
+        "audience": "Người muốn đọc truyện giả tưởng về trường học phù thủy và hành trình khám phá thế giới phép thuật.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Harry Potter Và Hòn Đá Phù Thủy J.K. Rowling Sách Truyện, tiểu thuyết Khởi đầu của loạt truyện phù thủy huyền thoại. Cậu bé Harry bước vào trường Hogwarts và khám phá thế giới phép thuật kỳ diệu. Hiện tượng xuất bản toàn cầu. Harry nhận các lá thư bí ẩn và phát hiện mình là phù thủy, được nhận vào trường Hogwarts. Đây là khởi đầu những cuộc phiêu lưu của Harry trong thế giới phép thuật. Người muốn đọc truyện giả tưởng về trường học phù thủy và hành trình khám phá thế giới phép thuật.  Truyện giả tưởng mở đầu cuộc phiêu lưu trong thế giới phù thủy. Khám phá thế giới phép thuật qua cuộc phiêu lưu của nhân vật. Sách Truyện, tiểu thuyết giả tưởng phù thủy Hogwarts",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ dùng tác phẩm đầu tiên trên trang tác giả. Tuổi nhân vật không phải tuổi độc giả; chưa xác nhận mức dễ đọc của bản dịch hay ấn bản minh họa. Nguồn: https://www.jkrowling.com/book/harry-potter-philosophers-stone/",
+        "learningGoal": "Khám phá thế giới phép thuật qua cuộc phiêu lưu của nhân vật.",
+        "readingLevel": null,
+        "readingStyle": "Truyện giả tưởng mở đầu cuộc phiêu lưu trong thế giới phù thủy."
+      },
+      "category": "Sách Truyện, tiểu thuyết",
+      "discount": 12,
+      "quantity": 200,
+      "productId": 52,
+      "categoryId": 6,
+      "description": "Khởi đầu của loạt truyện phù thủy huyền thoại. Cậu bé Harry bước vào trường Hogwarts và khám phá thế giới phép thuật kỳ diệu. Hiện tượng xuất bản toàn cầu."
+    },
+    {
+      "name": "Mắt Biếc",
+      "sold": 98,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781254910/products/ytjtlnudjncbcb776ies.jpg",
+      "price": 95000.0,
+      "author": "Nguyễn Nhật Ánh",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Văn học nghệ thuật",
+          "topicId": 3,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "truyện tình cảm",
+          "topicId": 83,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.nxbtre.com.vn/sach/mat-biec-146386.html"
+        },
+        {
+          "name": "kết thúc buồn",
+          "topicId": 84,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.nxbtre.com.vn/sach/mat-biec-146386.html"
+        }
+      ],
+      "profile": {
+        "summary": "Câu chuyện tình cảm trong sáng nhưng đan xen vui buồn và có kết thúc rất buồn theo giới thiệu của NXB Trẻ.",
+        "approved": 1,
+        "audience": "Người muốn đọc một câu chuyện tình cảm có sắc thái buồn.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Mắt Biếc Nguyễn Nhật Ánh Sách Văn học nghệ thuật Chuyện tình day dứt của Ngạn dành cho Hà Lan từ làng Đo Đo đến phố thị. Một trong những tác phẩm lãng mạn được yêu thích nhất của Nguyễn Nhật Ánh. Câu chuyện tình cảm trong sáng nhưng đan xen vui buồn và có kết thúc rất buồn theo giới thiệu của NXB Trẻ. Người muốn đọc một câu chuyện tình cảm có sắc thái buồn.  Truyện tình cảm xen lẫn vui buồn, kết thúc buồn. Suy ngẫm về tình cảm qua một câu chuyện vui buồn đan xen. Sách Văn học nghệ thuật truyện tình cảm kết thúc buồn",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không dùng nhãn truyện thư giãn chỉ vui hoặc suy ra sở thích theo giới tính; không nhập thông số của bản khổ nhỏ. Nguồn: https://www.nxbtre.com.vn/sach/mat-biec-146386.html",
+        "learningGoal": "Suy ngẫm về tình cảm qua một câu chuyện vui buồn đan xen.",
+        "readingLevel": null,
+        "readingStyle": "Truyện tình cảm xen lẫn vui buồn, kết thúc buồn."
+      },
+      "category": "Sách Văn học nghệ thuật",
+      "discount": 10,
+      "quantity": 180,
+      "productId": 53,
+      "categoryId": 3,
+      "description": "Chuyện tình day dứt của Ngạn dành cho Hà Lan từ làng Đo Đo đến phố thị. Một trong những tác phẩm lãng mạn được yêu thích nhất của Nguyễn Nhật Ánh."
+    },
+    {
+      "name": "Muôn Kiếp Nhân Sinh",
+      "sold": 112,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781319150/products/spxjuedmhj78dovdcwfn.webp",
+      "price": 168000.0,
+      "author": "Nguyên Phong",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Tâm lý, tâm linh, tôn giáo",
+          "topicId": 7,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "tâm linh",
+          "topicId": 46,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://firstnews.vn/muon-kiep-nhan-sinh-2-bia-cung-kho-lon-p1271.html"
+        },
+        {
+          "name": "nhân quả",
+          "topicId": 165,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://firstnews.vn/muon-kiep-nhan-sinh-2-bia-cung-kho-lon-p1271.html"
+        },
+        {
+          "name": "suy ngẫm về đời sống",
+          "topicId": 166,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://firstnews.vn/muon-kiep-nhan-sinh-2-bia-cung-kho-lon-p1271.html"
+        }
+      ],
+      "profile": {
+        "summary": "Tác phẩm của Nguyên Phong kể và suy ngẫm về những kiếp sống, nhân quả và các lựa chọn của con người qua góc nhìn tâm linh. Nên đọc như câu chuyện và quan điểm để chiêm nghiệm; không xem các nội dung luân hồi như kết luận khoa học hoặc bảo đảm chữa lành. Chưa xác định chính xác tập và ấn bản cửa hàng, nên không gán cốt truyện riêng của tập 1, 2 hoặc 3.",
+        "approved": 1,
+        "audience": "Người quan tâm câu chuyện tâm linh, nhân quả và suy ngẫm về đời sống.",
+        "language": null,
+        "updatedAt": "2026-10-05 18:23:31.000000",
+        "searchText": "Muôn Kiếp Nhân Sinh Nguyên Phong Sách Tâm lý, tâm linh, tôn giáo Tác phẩm của Nguyên Phong kể và suy ngẫm về những kiếp sống, nhân quả và các lựa chọn của con người qua góc nhìn tâm linh. Nên đọc như câu chuyện và quan điểm để chiêm nghiệm; không xem các nội dung luân hồi như kết luận khoa học hoặc bảo đảm chữa lành. Chưa xác định chính xác tập và ấn bản cửa hàng, nên không gán cốt truyện riêng của tập 1, 2 hoặc 3. Tác phẩm của Nguyên Phong kể và suy ngẫm về những kiếp sống, nhân quả và các lựa chọn của con người qua góc nhìn tâm linh. Nên đọc như câu chuyện và quan điểm để chiêm nghiệm; không xem các nội dung luân hồi như kết luận khoa học hoặc bảo đảm chữa lành. Chưa xác định chính xác tập và ấn bản cửa hàng, nên không gán cốt truyện riêng của tập 1, 2 hoặc 3. Người quan tâm câu chuyện tâm linh, nhân quả và suy ngẫm về đời sống.  Kể chuyện kết hợp suy ngẫm theo góc nhìn tâm linh của tác giả. Chiêm nghiệm về nhân quả, lựa chọn và cách sống từ góc nhìn tác phẩm. Sách Tâm lý, tâm linh, tôn giáo tâm linh nhân quả suy ngẫm về đời sống",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Chỉ dùng điểm chung của tác phẩm/bộ. Ký hiệu trên bìa chưa đủ xác nhận ISBN, tập và dạng bìa; không dùng nội dung riêng của tập nguồn. Nguồn: https://firstnews.vn/muon-kiep-nhan-sinh-2-bia-cung-kho-lon-p1271.html",
+        "learningGoal": "Chiêm nghiệm về nhân quả, lựa chọn và cách sống từ góc nhìn tác phẩm.",
+        "readingLevel": null,
+        "readingStyle": "Kể chuyện kết hợp suy ngẫm theo góc nhìn tâm linh của tác giả."
+      },
+      "category": "Sách Tâm lý, tâm linh, tôn giáo",
+      "discount": 8,
+      "quantity": 190,
+      "productId": 54,
+      "categoryId": 7,
+      "description": "Tác phẩm của Nguyên Phong kể và suy ngẫm về những kiếp sống, nhân quả và các lựa chọn của con người qua góc nhìn tâm linh. Nên đọc như câu chuyện và quan điểm để chiêm nghiệm; không xem các nội dung luân hồi như kết luận khoa học hoặc bảo đảm chữa lành. Chưa xác định chính xác tập và ấn bản cửa hàng, nên không gán cốt truyện riêng của tập 1, 2 hoặc 3."
+    },
+    {
+      "name": "Tư Duy Nhanh Và Chậm",
+      "sold": 134,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781254927/products/o9xsf2ve0mmsrg2wkgmf.webp",
+      "price": 178000.0,
+      "author": "Daniel Kahneman",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Tâm lý, tâm linh, tôn giáo",
+          "topicId": 7,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "thiên kiến nhận thức",
+          "topicId": 85,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://us.macmillan.com/books/9780374533557/thinkingfastandslow/"
+        },
+        {
+          "name": "tâm lý học nhận thức",
+          "topicId": 86,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://us.macmillan.com/books/9780374533557/thinkingfastandslow/"
+        },
+        {
+          "name": "ra quyết định",
+          "topicId": 87,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://us.macmillan.com/books/9780374533557/thinkingfastandslow/"
+        }
+      ],
+      "profile": {
+        "summary": "Daniel Kahneman trình bày hai hệ thống tư duy: một thiên về trực giác và cảm xúc, một thiên về suy xét. Sách bàn về thiên kiến nhận thức, sự quá tự tin và cách chúng tác động đến phán đoán, quyết định.",
+        "approved": 1,
+        "audience": "Người quan tâm tâm lý học nhận thức và cách con người phán đoán, ra quyết định.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Tư Duy Nhanh Và Chậm Daniel Kahneman Sách Tâm lý, tâm linh, tôn giáo Công trình tâm lý học đoạt giải Nobel về hai hệ thống tư duy chi phối mọi quyết định của con người. Cuốn sách thay đổi cách bạn hiểu về lý trí và sai lầm. Daniel Kahneman trình bày hai hệ thống tư duy: một thiên về trực giác và cảm xúc, một thiên về suy xét. Sách bàn về thiên kiến nhận thức, sự quá tự tin và cách chúng tác động đến phán đoán, quyết định. Người quan tâm tâm lý học nhận thức và cách con người phán đoán, ra quyết định.  Phân tích cơ chế tư duy và thiên kiến qua những tình huống trong đời sống, kinh doanh. Nhận diện cách tác giả lý giải trực giác, sự quá tự tin và các sai lệch trong phán đoán. Sách Tâm lý, tâm linh, tôn giáo thiên kiến nhận thức tâm lý học nhận thức ra quyết định",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Không suy ra độ dễ đọc toàn sách từ lời quảng bá; không cam kết cải thiện sức khỏe tâm thần hoặc chất lượng quyết định của người đọc. Nguồn: https://us.macmillan.com/books/9780374533557/thinkingfastandslow/",
+        "learningGoal": "Nhận diện cách tác giả lý giải trực giác, sự quá tự tin và các sai lệch trong phán đoán.",
+        "readingLevel": null,
+        "readingStyle": "Phân tích cơ chế tư duy và thiên kiến qua những tình huống trong đời sống, kinh doanh."
+      },
+      "category": "Sách Tâm lý, tâm linh, tôn giáo",
+      "discount": 15,
+      "quantity": 200,
+      "productId": 55,
+      "categoryId": 7,
+      "description": "Công trình tâm lý học đoạt giải Nobel về hai hệ thống tư duy chi phối mọi quyết định của con người. Cuốn sách thay đổi cách bạn hiểu về lý trí và sai lầm."
+    },
+    {
+      "name": "Sapiens: Lược Sử Loài Người",
+      "sold": 145,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781252589/products/cdcgqyejh8w71vtetrz0.webp",
+      "price": 189000.0,
+      "author": "Yuval Noah Harari",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Văn hóa xã hội – Lịch sử",
+          "topicId": 4,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "nông nghiệp",
+          "topicId": 23,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.ynharari.com/book/sapiens/"
+        },
+        {
+          "name": "lịch sử loài người",
+          "topicId": 88,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.ynharari.com/book/sapiens/"
+        },
+        {
+          "name": "tiền tệ",
+          "topicId": 89,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.ynharari.com/book/sapiens/"
+        },
+        {
+          "name": "tôn giáo",
+          "topicId": 90,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.ynharari.com/book/sapiens/"
+        }
+      ],
+      "profile": {
+        "summary": "Harari kể lịch sử loài người từ nguồn gốc tiến hóa đến xã hội hiện đại. Sách tập trung vào nông nghiệp, tiền tệ, tôn giáo và nhà nước, kết hợp lịch sử, sinh học, triết học và kinh tế.",
+        "approved": 1,
+        "audience": "Người muốn tìm hiểu lịch sử loài người qua cách tiếp cận liên ngành.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Sapiens: Lược Sử Loài Người Yuval Noah Harari Sách Văn hóa xã hội – Lịch sử Hành trình 70.000 năm của loài người từ vượn người đến chúa tể địa cầu. Cuốn sách bán chạy toàn cầu thay đổi cách ta nhìn nhận về chính mình và lịch sử. Harari kể lịch sử loài người từ nguồn gốc tiến hóa đến xã hội hiện đại. Sách tập trung vào nông nghiệp, tiền tệ, tôn giáo và nhà nước, kết hợp lịch sử, sinh học, triết học và kinh tế. Người muốn tìm hiểu lịch sử loài người qua cách tiếp cận liên ngành.  Kể và phân tích lịch sử với ngôn ngữ sinh động, kết hợp nhiều lĩnh vực. Tìm hiểu các quá trình tạo nên xã hội loài người theo lập luận của tác giả. Sách Văn hóa xã hội – Lịch sử lịch sử loài người nông nghiệp tiền tệ tôn giáo",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Tóm lược nội dung tác phẩm; đối tượng theo mối quan tâm là phân loại biên tập từ nội dung nguồn. Không xác nhận tuổi cụ thể, độ khó hay ấn bản. Nguồn: https://www.ynharari.com/book/sapiens/",
+        "learningGoal": "Tìm hiểu các quá trình tạo nên xã hội loài người theo lập luận của tác giả.",
+        "readingLevel": null,
+        "readingStyle": "Kể và phân tích lịch sử với ngôn ngữ sinh động, kết hợp nhiều lĩnh vực."
+      },
+      "category": "Sách Văn hóa xã hội – Lịch sử",
+      "discount": 15,
+      "quantity": 180,
+      "productId": 56,
+      "categoryId": 4,
+      "description": "Hành trình 70.000 năm của loài người từ vượn người đến chúa tể địa cầu. Cuốn sách bán chạy toàn cầu thay đổi cách ta nhìn nhận về chính mình và lịch sử."
+    },
+    {
+      "name": "Đắc Nhân Tâm",
+      "sold": 156,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781252580/products/lo4gmiaypwfzes99fouo.webp",
+      "price": 86000.0,
+      "author": "Dale Carnegie",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Truyện, tiểu thuyết",
+          "topicId": 6,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "giao tiếp",
+          "topicId": 91,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.dalecarnegie.com/en/resources/how-to-win-friends-and-influence-people-chapter-1"
+        },
+        {
+          "name": "quan hệ giữa người với người",
+          "topicId": 92,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.dalecarnegie.com/en/resources/how-to-win-friends-and-influence-people-chapter-1"
+        },
+        {
+          "name": "xử lý bất đồng",
+          "topicId": 93,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://www.dalecarnegie.com/en/resources/how-to-win-friends-and-influence-people-chapter-1"
+        }
+      ],
+      "profile": {
+        "summary": "Dale Carnegie bàn về giao tiếp và cách ứng xử trong các mối quan hệ cá nhân, công việc. Một nguyên tắc được giới thiệu là tránh chỉ trích, lên án và phàn nàn; nội dung gắn với việc hiểu người khác và xử lý bất đồng.",
+        "approved": 1,
+        "audience": "Người muốn tham khảo cách giao tiếp và ứng xử với gia đình, đồng nghiệp hoặc cộng đồng.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Đắc Nhân Tâm Dale Carnegie Sách Tâm lý, tâm linh, tôn giáo Cuốn sách về nghệ thuật đối nhân xử thế bán chạy nhất mọi thời đại. Những nguyên tắc vàng giúp bạn chinh phục lòng người và thành công trong giao tiếp. Dale Carnegie bàn về giao tiếp và cách ứng xử trong các mối quan hệ cá nhân, công việc. Một nguyên tắc được giới thiệu là tránh chỉ trích, lên án và phàn nàn; nội dung gắn với việc hiểu người khác và xử lý bất đồng. Người muốn tham khảo cách giao tiếp và ứng xử với gia đình, đồng nghiệp hoặc cộng đồng.  Lối viết trò chuyện và kể chuyện để trình bày các nguyên tắc ứng xử. Tham khảo hướng dẫn áp dụng nguyên tắc ứng xử khi giao tiếp và xử lý bất đồng. Sách Truyện, tiểu thuyết giao tiếp quan hệ giữa người với người xử lý bất đồng",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn chính thức giới thiệu nguyên tắc từ chương đầu. Không tự tạo bài tập, lộ trình thuyết trình hay đàm phán; không nhập nội dung chỉ có trong bản cập nhật. Nguồn: https://www.dalecarnegie.com/en/resources/how-to-win-friends-and-influence-people-chapter-1",
+        "learningGoal": "Tham khảo hướng dẫn áp dụng nguyên tắc ứng xử khi giao tiếp và xử lý bất đồng.",
+        "readingLevel": null,
+        "readingStyle": "Lối viết trò chuyện và kể chuyện để trình bày các nguyên tắc ứng xử."
+      },
+      "category": "Sách Tâm lý, tâm linh, tôn giáo",
+      "discount": 18,
+      "quantity": 220,
+      "productId": 57,
+      "categoryId": 7,
+      "description": "Cuốn sách về nghệ thuật đối nhân xử thế bán chạy nhất mọi thời đại. Những nguyên tắc vàng giúp bạn chinh phục lòng người và thành công trong giao tiếp."
+    },
+    {
+      "name": "Nhà Giả Kim",
+      "sold": 168,
+      "image": "https://res.cloudinary.com/martfury/image/upload/v1781252411/products/zdyuok0htjowbzf7lwpx.jpg",
+      "price": 79000.0,
+      "author": "Paulo Coelho",
+      "status": 1,
+      "topics": [
+        {
+          "name": "Sách Truyện, tiểu thuyết",
+          "topicId": 6,
+          "evidence": "Danh mục hiện có trong catalog"
+        },
+        {
+          "name": "truyện ẩn dụ",
+          "topicId": 94,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://paulocoelhoblog.com/2008/10/28/today%E2%80%99s-question-by-the-reader-chesney/"
+        },
+        {
+          "name": "hành trình",
+          "topicId": 95,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://paulocoelhoblog.com/2008/10/28/today%E2%80%99s-question-by-the-reader-chesney/"
+        },
+        {
+          "name": "thay đổi bản thân",
+          "topicId": 96,
+          "evidence": "Nguồn biên tập đã đối chiếu: https://paulocoelhoblog.com/2008/10/28/today%E2%80%99s-question-by-the-reader-chesney/"
+        }
+      ],
+      "profile": {
+        "summary": "Hành trình của Santiago qua sa mạc Sahara đến các kim tự tháp được Paulo Coelho dùng như một ẩn dụ về sự thay đổi của người trải qua hành trình.",
+        "approved": 1,
+        "audience": "Người quan tâm truyện ẩn dụ và hành trình thay đổi bản thân.",
+        "language": null,
+        "updatedAt": "2026-10-05 16:55:35.000000",
+        "searchText": "Nhà Giả Kim Paulo Coelho Sách Truyện, tiểu thuyết Hành trình của cậu chăn cừu Santiago đi tìm kho báu và khám phá vận mệnh đời mình. Câu chuyện truyền cảm hứng được dịch ra hơn 80 thứ tiếng. Hành trình của Santiago qua sa mạc Sahara đến các kim tự tháp được Paulo Coelho dùng như một ẩn dụ về sự thay đổi của người trải qua hành trình. Người quan tâm truyện ẩn dụ và hành trình thay đổi bản thân.  Truyện kể theo lối ẩn dụ về một hành trình. Chiêm nghiệm sự thay đổi của nhân vật qua hành trình trong câu chuyện. Sách Truyện, tiểu thuyết truyện ẩn dụ hành trình thay đổi bản thân",
+        "sourceNote": "Nguồn biên tập 2026-10-05; phạm vi tác phẩm, không xác nhận ấn bản. Nguồn giải thích của chính tác giả; không dùng bài cảm nhận về marketing thành nội dung thực hành của sách, không xác nhận tuổi hoặc độ dễ đọc. Nguồn: https://paulocoelhoblog.com/2008/10/28/today%E2%80%99s-question-by-the-reader-chesney/",
+        "learningGoal": "Chiêm nghiệm sự thay đổi của nhân vật qua hành trình trong câu chuyện.",
+        "readingLevel": null,
+        "readingStyle": "Truyện kể theo lối ẩn dụ về một hành trình."
+      },
+      "category": "Sách Truyện, tiểu thuyết",
+      "discount": 20,
+      "quantity": 230,
+      "productId": 58,
+      "categoryId": 6,
+      "description": "Hành trình của cậu chăn cừu Santiago đi tìm kho báu và khám phá vận mệnh đời mình. Câu chuyện truyền cảm hứng được dịch ra hơn 80 thứ tiếng."
+    }
+  ]
+}

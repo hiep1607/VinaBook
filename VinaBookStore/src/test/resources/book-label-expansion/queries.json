@@ -1,0 +1,343 @@
+{
+  "schemaVersion": 1,
+  "frozenBeforeExpandedLabels": true,
+  "scope": "36 queries covering remaining books + 12 synonym probes; editorial, not blind holdout",
+  "cases": [
+    {
+      "id": "E01",
+      "query": "Văn bản về tổ chức Nhà nước và quyền công dân",
+      "relevantIds": [
+        3
+      ]
+    },
+    {
+      "id": "E02",
+      "query": "Tra cứu luật về thành lập và giải thể doanh nghiệp",
+      "relevantIds": [
+        4
+      ]
+    },
+    {
+      "id": "E03",
+      "query": "Văn bản luật về quyền của người lao động",
+      "relevantIds": [
+        5
+      ]
+    },
+    {
+      "id": "E04",
+      "query": "Cẩm nang pháp luật về hóa đơn chứng từ và thuế",
+      "relevantIds": [
+        6
+      ]
+    },
+    {
+      "id": "E05",
+      "query": "Tra cứu quan hệ tài sản và quyền nhân thân",
+      "relevantIds": [
+        8
+      ]
+    },
+    {
+      "id": "E06",
+      "query": "Thơ lục bát kể cuộc đời nàng Kiều",
+      "relevantIds": [
+        10
+      ]
+    },
+    {
+      "id": "E07",
+      "query": "Văn học trào phúng phê phán xã hội",
+      "relevantIds": [
+        11
+      ]
+    },
+    {
+      "id": "E08",
+      "query": "Truyện tùy bút về nếp sống và thú chơi thời xưa",
+      "relevantIds": [
+        12
+      ]
+    },
+    {
+      "id": "E09",
+      "query": "Lược sử các thời kỳ và triều đại Việt Nam",
+      "relevantIds": [
+        14
+      ]
+    },
+    {
+      "id": "E10",
+      "query": "Lịch sử thế giới từ năm 1917 và quan hệ quốc tế",
+      "relevantIds": [
+        15
+      ]
+    },
+    {
+      "id": "E11",
+      "query": "Hiểu chuỗi khối mà không cần công thức toán",
+      "relevantIds": [
+        18
+      ]
+    },
+    {
+      "id": "E12",
+      "query": "Giáo trình về ngăn xếp hàng đợi cây và đệ quy",
+      "relevantIds": [
+        20
+      ]
+    },
+    {
+      "id": "E13",
+      "query": "Tìm hiểu mô hình OSI và TCP/IP",
+      "relevantIds": [
+        21
+      ]
+    },
+    {
+      "id": "E14",
+      "query": "Giáo trình môn cơ sở dữ liệu cho ngành hệ thống thông tin",
+      "relevantIds": [
+        23
+      ]
+    },
+    {
+      "id": "E15",
+      "query": "Sử liệu biên niên Việt Nam ghi chép theo thời gian",
+      "relevantIds": [
+        24
+      ]
+    },
+    {
+      "id": "E16",
+      "query": "Lịch sử các xã hội qua sản xuất lương thực và công nghệ",
+      "relevantIds": [
+        25
+      ]
+    },
+    {
+      "id": "E17",
+      "query": "Truyện cậu bé Rémi lưu lạc cùng gánh hát rong",
+      "relevantIds": [
+        28
+      ]
+    },
+    {
+      "id": "E18",
+      "query": "Tiểu thuyết về kiến trúc sư và nguyên tắc sáng tạo",
+      "relevantIds": [
+        30
+      ]
+    },
+    {
+      "id": "E19",
+      "query": "Quan điểm về tiềm thức và thay đổi cách suy nghĩ",
+      "relevantIds": [
+        31
+      ]
+    },
+    {
+      "id": "E20",
+      "query": "Hành trình tìm hiểu tư tưởng phương Đông và tâm linh",
+      "relevantIds": [
+        33
+      ]
+    },
+    {
+      "id": "E21",
+      "query": "Truyện kể cuộc đời và lời dạy của Đức Phật",
+      "relevantIds": [
+        34
+      ]
+    },
+    {
+      "id": "E22",
+      "query": "Sưu tầm truyện cổ tích và văn hóa dân gian Việt Nam",
+      "relevantIds": [
+        35
+      ]
+    },
+    {
+      "id": "E23",
+      "query": "Hỏi đáp kiến thức khoa học và đời sống",
+      "relevantIds": [
+        36
+      ]
+    },
+    {
+      "id": "E24",
+      "query": "Truyện ngắn Nam Cao về bi kịch người nông dân",
+      "relevantIds": [
+        39
+      ]
+    },
+    {
+      "id": "E25",
+      "query": "Tiểu thuyết chị Dậu nghèo đói và bị áp bức",
+      "relevantIds": [
+        40
+      ]
+    },
+    {
+      "id": "E26",
+      "query": "Tiểu thuyết Jean Valjean công lý và khát vọng đổi đời",
+      "relevantIds": [
+        41
+      ]
+    },
+    {
+      "id": "E27",
+      "query": "Quản trị doanh nghiệp theo năng lực cốt lõi và tư duy kỷ luật",
+      "relevantIds": [
+        42
+      ]
+    },
+    {
+      "id": "E28",
+      "query": "Giáo trình AI về biểu diễn tri thức và suy diễn xác suất",
+      "relevantIds": [
+        44
+      ]
+    },
+    {
+      "id": "E29",
+      "query": "Kinh tế vĩ mô về lạm phát thất nghiệp và tỷ giá",
+      "relevantIds": [
+        45
+      ]
+    },
+    {
+      "id": "E30",
+      "query": "Tương lai nhân loại với AI và kỹ thuật di truyền",
+      "relevantIds": [
+        46
+      ]
+    },
+    {
+      "id": "E31",
+      "query": "Kinh tế học phân tích động cơ gian lận và hành vi đời sống",
+      "relevantIds": [
+        47
+      ]
+    },
+    {
+      "id": "E32",
+      "query": "Truyện tuổi thơ về tình cảm anh em ở làng quê",
+      "relevantIds": [
+        49
+      ]
+    },
+    {
+      "id": "E33",
+      "query": "Truyện tình cảm kết thúc rất buồn",
+      "relevantIds": [
+        53
+      ]
+    },
+    {
+      "id": "E34",
+      "query": "Chiêm nghiệm nhân quả và các kiếp sống qua góc nhìn tâm linh",
+      "relevantIds": [
+        54
+      ]
+    },
+    {
+      "id": "E35",
+      "query": "Lịch sử loài người về nông nghiệp tiền tệ và tôn giáo",
+      "relevantIds": [
+        56
+      ]
+    },
+    {
+      "id": "E36",
+      "query": "Truyện ẩn dụ hành trình Santiago qua Sahara",
+      "relevantIds": [
+        58
+      ]
+    },
+    {
+      "id": "S01",
+      "query": "sách về constitutional law",
+      "relevantIds": [
+        3
+      ]
+    },
+    {
+      "id": "S02",
+      "query": "sách về labor law",
+      "relevantIds": [
+        5
+      ]
+    },
+    {
+      "id": "S03",
+      "query": "văn học satire",
+      "relevantIds": [
+        11
+      ]
+    },
+    {
+      "id": "S04",
+      "query": "sách blockchain basics",
+      "relevantIds": [
+        18
+      ]
+    },
+    {
+      "id": "S05",
+      "query": "giáo trình data structures và recursion",
+      "relevantIds": [
+        20
+      ]
+    },
+    {
+      "id": "S06",
+      "query": "sách computer networking",
+      "relevantIds": [
+        21
+      ]
+    },
+    {
+      "id": "S07",
+      "query": "giáo trình databases",
+      "relevantIds": [
+        23
+      ]
+    },
+    {
+      "id": "S08",
+      "query": "truyện folklore Việt Nam",
+      "relevantIds": [
+        35
+      ]
+    },
+    {
+      "id": "S09",
+      "query": "sách về core competence của doanh nghiệp",
+      "relevantIds": [
+        42
+      ]
+    },
+    {
+      "id": "S10",
+      "query": "giáo trình về knowledge representation",
+      "relevantIds": [
+        44
+      ]
+    },
+    {
+      "id": "S11",
+      "query": "giáo trình macroeconomics",
+      "relevantIds": [
+        45
+      ]
+    },
+    {
+      "id": "S12",
+      "query": "sách về human evolution",
+      "relevantIds": [
+        56
+      ]
+    }
+  ]
+}

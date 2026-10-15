@@ -1,0 +1,278 @@
+{
+  "schemaVersion": 1,
+  "frozenBeforeRankingChange": true,
+  "scope": "Novel phrasings frozen before ranking edits; author saw editorial labels. Not a blind or statistically representative held-out dataset. Relevance on full catalog may be incomplete.",
+  "cases": [
+    {
+      "id": "H01",
+      "query": "hồi tưởng về tuổi thơ",
+      "relevantIds": [
+        29,
+        38,
+        50
+      ]
+    },
+    {
+      "id": "H02",
+      "query": "truyện về thế giới loài vật",
+      "relevantIds": [
+        13
+      ]
+    },
+    {
+      "id": "H03",
+      "query": "truyện có tình bạn và lòng dũng cảm",
+      "relevantIds": [
+        13
+      ]
+    },
+    {
+      "id": "H04",
+      "query": "tuổi thơ nhìn từ góc nhìn người lớn",
+      "relevantIds": [
+        50
+      ]
+    },
+    {
+      "id": "H05",
+      "query": "truyện về trẻ em và môi trường học",
+      "relevantIds": [
+        38
+      ]
+    },
+    {
+      "id": "H06",
+      "query": "cuộc sống ở trường của cô bé",
+      "relevantIds": [
+        38
+      ]
+    },
+    {
+      "id": "H07",
+      "query": "truyện có tình thương và hoàn cảnh nghèo khó",
+      "relevantIds": [
+        29
+      ]
+    },
+    {
+      "id": "H08",
+      "query": "truyện nhẹ nhàng giàu chất thơ",
+      "relevantIds": [
+        37
+      ]
+    },
+    {
+      "id": "H09",
+      "query": "thế giới phù thủy và trường Hogwarts",
+      "relevantIds": [
+        52
+      ]
+    },
+    {
+      "id": "H10",
+      "query": "truyện tranh có các bảo bối",
+      "relevantIds": [
+        51
+      ]
+    },
+    {
+      "id": "H11",
+      "query": "truyện tranh kể chuyện phá án",
+      "relevantIds": [
+        48
+      ]
+    },
+    {
+      "id": "H12",
+      "query": "truyện chữ quan sát và suy luận",
+      "relevantIds": [
+        26
+      ]
+    },
+    {
+      "id": "H13",
+      "query": "tiểu thuyết về mafia và gia đình",
+      "relevantIds": [
+        27
+      ]
+    },
+    {
+      "id": "H14",
+      "query": "sách về thiên kiến trong phán đoán",
+      "relevantIds": [
+        55
+      ]
+    },
+    {
+      "id": "H15",
+      "query": "trực giác ảnh hưởng quyết định",
+      "relevantIds": [
+        55
+      ]
+    },
+    {
+      "id": "H16",
+      "query": "nguyên tắc ứng xử với đồng nghiệp",
+      "relevantIds": [
+        57
+      ]
+    },
+    {
+      "id": "H17",
+      "query": "học cách xử lý bất đồng",
+      "relevantIds": [
+        57
+      ]
+    },
+    {
+      "id": "H18",
+      "query": "hướng dẫn đối diện lo lắng",
+      "relevantIds": [
+        32
+      ]
+    },
+    {
+      "id": "H19",
+      "query": "đầu tư chứng khoán dài hạn",
+      "relevantIds": [
+        43
+      ]
+    },
+    {
+      "id": "H20",
+      "query": "kiểm chứng ý tưởng kinh doanh",
+      "relevantIds": [
+        19
+      ]
+    },
+    {
+      "id": "H21",
+      "query": "thử nghiệm ý tưởng phát triển sản phẩm",
+      "relevantIds": [
+        19
+      ]
+    },
+    {
+      "id": "H22",
+      "query": "tìm hiểu học máy cho công việc",
+      "relevantIds": [
+        17
+      ]
+    },
+    {
+      "id": "H23",
+      "query": "giới thiệu AI cho học tập",
+      "relevantIds": [
+        17
+      ]
+    },
+    {
+      "id": "H24",
+      "query": "giáo trình ngôn ngữ Java",
+      "relevantIds": [
+        22
+      ]
+    },
+    {
+      "id": "H25",
+      "query": "sách cải thiện chất lượng mã nguồn",
+      "relevantIds": [
+        9
+      ]
+    },
+    {
+      "id": "H26",
+      "query": "nguyên tắc viết kiểm thử đơn vị",
+      "relevantIds": [
+        9
+      ]
+    },
+    {
+      "id": "H27",
+      "query": "bảo trì phần mềm và thói quen nghề nghiệp",
+      "relevantIds": [
+        16
+      ]
+    },
+    {
+      "id": "H28",
+      "query": "tránh lặp lại kiến thức lập trình",
+      "relevantIds": [
+        16
+      ]
+    },
+    {
+      "id": "H29",
+      "query": "tài liệu tra cứu quyền sử dụng đất",
+      "relevantIds": [
+        7
+      ]
+    },
+    {
+      "id": "H30",
+      "query": "tìm hiểu chế độ quản lý đất đai",
+      "relevantIds": [
+        7
+      ]
+    }
+  ],
+  "unlabelledControls": [
+    {
+      "id": "C01",
+      "query": "cấu trúc dữ liệu danh sách liên kết ngăn xếp",
+      "relevantIds": [
+        20
+      ]
+    },
+    {
+      "id": "C02",
+      "query": "mạng máy tính TCP/IP và OSI",
+      "relevantIds": [
+        21
+      ]
+    },
+    {
+      "id": "C03",
+      "query": "blockchain qua 25 bước",
+      "relevantIds": [
+        18
+      ]
+    },
+    {
+      "id": "C04",
+      "query": "lạm phát thất nghiệp tỷ giá",
+      "relevantIds": [
+        45
+      ]
+    },
+    {
+      "id": "C05",
+      "query": "lịch sử Việt Nam theo triều đại",
+      "relevantIds": [
+        14,
+        24
+      ]
+    },
+    {
+      "id": "C06",
+      "query": "truyện trào phúng châm biếm xã hội",
+      "relevantIds": [
+        11
+      ]
+    },
+    {
+      "id": "C07",
+      "query": "kiến trúc sư Howard Roark",
+      "relevantIds": [
+        30
+      ]
+    },
+    {
+      "id": "C08",
+      "query": "giáo trình trí tuệ nhân tạo biểu diễn tri thức logic",
+      "relevantIds": [
+        44
+      ]
+    }
+  ]
+}
