@@ -72,3 +72,61 @@ Khi thêm hoặc sửa sách qua ứng dụng, tiếp tục dùng `BookKnowledge
 | 54 | Muôn Kiếp Nhân Sinh | Chưa xác nhận tập/bản in; chỉ dùng đặc điểm chung của tác phẩm/bộ |
 
 Không còn hồ sơ nào chỉ giữ ghi chú “Mô tả sản phẩm hiện có trong catalog”. Điều đó ghi nhận phạm vi biên tập đã phủ catalog, không thay thế việc xác minh các ấn bản còn thiếu ở trên.
+
+## Thử nghiệm nhãn cho 20 sách — 2026-10-10
+
+Đã thêm 154 nhãn biên tập vào đúng 20 hồ sơ local, dùng `book_topics`/`book_topic_links` hiện có và màn hình admin “Hồ sơ AI”. Tên nhãn giữ nhóm như `Chủ đề:` trong admin; `BookKnowledgeService` chỉ đưa phần giá trị của bảy nhóm vào chỉ mục để tránh các từ chung gây nhiễu. Các chủ đề cũ không có tiền tố vẫn được giữ. Giới hạn 20 chủ đề mỗi sách của màn hình biên tập vẫn áp dụng.
+
+Xem [nhãn chi tiết](labels-20-2026-10-10.md), [manifest có căn cứ](labels-20-2026-10-10.json), [kế hoạch](label-pilot-plan-2026-10-10.md) và [báo cáo chất lượng](../chatbot-evaluation/labels-20-2026-10-10.md). Đợt pilot ban đầu giới hạn 20 cuốn; sau khi người dùng chốt, nhãn đã được mở rộng như mục dưới.
+
+Công cụ `db/book-label-pilot.py` mặc định chỉ nhận đúng bộ 20 ID của thử nghiệm này (`--scope pilot20`). Bộ mở rộng yêu cầu chỉ rõ `--scope remaining36`. Mặc định kiểm tra và báo kế hoạch, không ghi. Đặt `MYSQL_PWD` trong môi trường tiến trình rồi chạy từ gốc repo:
+
+```powershell
+python .\db\book-label-pilot.py .\docs\book-knowledge\labels-20-2026-10-10.json --expected-snapshot .\VinaBookStore\src\test\resources\book-label-pilot\catalog-before.json --mysql '<đường dẫn mysql.exe>' --host 127.0.0.1 --port 3306 --user '<tài khoản>' --database book
+```
+
+Thêm `--apply` để nhập vào database đã xác định. Công cụ kiểm tra tên/tác giả, trạng thái đã duyệt, căn cứ nguyên văn, URL của hồ sơ và giới hạn chủ đề, khóa dữ liệu và ghi trong transaction MySQL 8.0.16+. Chỉ thêm chủ đề, cập nhật `search_text`, xóa embedding cũ để worker hiện có tạo lại và cập nhật thời điểm sửa. Backup trước ghi nằm trong `.run-logs/book-label-pilot/` mặc định; không đưa backup vào Git. Snapshot trong test là dữ liệu đánh giá cố định, không được dùng làm catalog runtime.
+
+Để khôi phục, chạy lại cùng lệnh với `--rollback '<đường dẫn backup.json>'` để xem phạm vi; thêm `--apply` để thực hiện. Khôi phục chỉ được commit khi định danh, nội dung nguồn, chỉ mục và tập chủ đề hiện tại còn khớp trạng thái sau nhập. Chỉ gỡ các liên kết được thêm bởi lần nhập, phục hồi chỉ mục/embedding trước nhập, không xóa hồ sơ hoặc sản phẩm. Các hàng tên chủ đề không còn liên kết có thể vẫn còn trong bảng chủ đề.
+
+Kiểm thử công cụ từ gốc repo:
+
+```powershell
+python -m unittest discover -s db -p test_book_label_pilot.py -v
+```
+
+### Thử xếp hạng theo nhóm nhãn — 2026-10-10
+
+Bản thử tiếp theo giữ nguyên 20 cuốn/154 nhãn, bổ sung điểm theo nhóm chủ đề, mục đích và các trường hồ sơ đã duyệt. Cụm từ và mức đáp ứng toàn yêu cầu được ưu tiên; trong một nhóm chỉ lấy nhãn khớp tốt nhất. Liên kết và tên chủ đề được đọc theo lô cho các ứng viên có hồ sơ đã duyệt. Bộ lọc và cách sắp xếp do khách chỉ định vẫn xử lý trước xếp hạng mặc định.
+
+Đã đo cùng dữ liệu trước/sau trên mẫu 20 sách và toàn catalog 56 sách: 30 câu cũ tăng từ 27 lên 30 đúng vị trí đầu, 30 diễn đạt mới tăng từ 26 lên 28; tám câu kiểm tra sách ngoài mẫu giữ 8/8. Đây là phép đo truy xuất tắt embedding, không phải độ chính xác toàn chatbot. Chưa mở rộng nhãn; xem [báo cáo xếp hạng và hội thoại thật](../chatbot-evaluation/ranking-20-2026-10-10.md).
+
+
+## Mở rộng nhãn ra 56 sách — 2026-10-10
+
+Theo yêu cầu người dùng, đã thêm 284 nhãn có căn cứ vào 36 sách còn lại. Hiện 56/56 sách đang bán có 438 liên kết nhãn chi tiết. Giữ nguyên toàn bộ 20 cuốn pilot, chủ đề cũ, tên/tác giả/mô tả, giá/tồn kho và các trường nội dung đã duyệt. Mỗi cuốn mới có 7–10 nhãn; không vượt giới hạn 20 chủ đề của editor.
+
+Xem [nhãn của 36 sách](labels-remaining-36-2026-10-10.md), [manifest có căn cứ](labels-remaining-36-2026-10-10.json) và [báo cáo mở rộng](../chatbot-evaluation/labels-expanded-2026-10-10.md). Nguồn hồ sơ đã duyệt ngày 05/10 được dùng lại; đây không phải kiểm chứng mới về đúng ấn bản. Các chi tiết chưa biết vẫn được ghi riêng và không trở thành nhãn tìm kiếm.
+
+Nhập bộ 36 cuốn bằng scope riêng, mặc định vẫn chỉ xem kế hoạch:
+
+```powershell
+python .\db\book-label-pilot.py .\docs\book-knowledge\labels-remaining-36-2026-10-10.json --scope remaining36 --expected-snapshot '<snapshot catalog trước nhập>' --mysql '<đường dẫn mysql.exe>' --host 127.0.0.1 --port 3306 --user '<tài khoản>' --database book
+```
+
+Đặt `MYSQL_PWD` trong môi trường tiến trình; thêm `--apply` khi áp dụng vào database đã xác định. Công cụ yêu cầu đúng 36 ID đã chốt và đúng tên/tác giả/hồ sơ/căn cứ, sao lưu trước ghi và dùng transaction có guard. Chạy lại sau nhập trả 0 thay đổi. Khôi phục dùng cùng manifest/scope và `--rollback '<backup.json>'`, kiểm tra kế hoạch trước, thêm `--apply` khi thực hiện. Không dùng bộ fixture đánh giá làm catalog runtime.
+
+Kiểm thử cả hai scope:
+
+```powershell
+python -m unittest discover -s db -p 'test_book_label*.py' -v
+```
+
+Trong A/B tắt embedding trên toàn catalog, 36 câu mô tả thông thường giữ 36/36 đúng đầu, 12 câu đồng nghĩa tăng 2/12 → 12/12; 68 câu kiểm tra cũ giữ kết quả vị trí đầu. Đây là tập câu hỏi có chủ đích từ nội dung hồ sơ, không phải đánh giá mù hoặc tỷ lệ chính xác thực tế của toàn chatbot.
+
+Sách mới về sau tiếp tục dùng màn hình Hồ sơ AI và quy trình biên tập/duyệt có căn cứ. Không tự gán độ tuổi, độ dễ đọc, công dụng hoặc chi tiết ấn bản còn thiếu.
+
+
+## Lọc kết quả và hỏi chi tiết — 2026-10-10
+
+Điều kiện chủ đề hẹp được đối chiếu với nội dung đã duyệt trước khi giới hạn danh sách; gợi ý có thể ít hơn ba cuốn. Câu hỏi chi tiết/nối tiếp được trả theo từng ý có căn cứ, không xem dữ liệu thiếu là không có. Xem [báo cáo sửa và kiểm thử](../chatbot-evaluation/matching-detail-2026-10-10.md) để biết phạm vi hỗ trợ và những điểm còn yếu.

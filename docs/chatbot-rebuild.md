@@ -6,7 +6,7 @@
 - Mỗi lượt được AI phân tích theo một hoặc nhiều tình huống: tìm sách, tư vấn, chi tiết sách, so sánh, chính sách, giỏ, chuẩn bị thanh toán, đơn hàng, trò chuyện chung. Chỉ hỏi một thông tin thật sự còn thiếu; giữ ngữ cảnh và bộ lọc của lượt trước; backend xác thực ID, quyền và điều kiện cứng.
 - Sách dùng Product làm nguồn chuẩn cho giá/tồn kho/doanh số; hồ sơ biên tập được duyệt cho nội dung/độc giả/mức đọc/chủ đề; liên kết có kiểu giữa sách và chủ đề hoặc giữa hai sách. Tìm kiếm kết hợp điều kiện chính xác, văn bản và Gemini embedding khi cấu hình.
 - Chính sách giao hàng và văn bản đổi trả/hủy/hỗ trợ dùng chung giữa backend, storefront và chatbot; văn bản có phiên bản và ngày hiệu lực.
-- Chat giữ thao tác thêm sách vào giỏ sau khi khách xác nhận. Với mua sách, sửa hoặc xóa giỏ, hủy đơn, chatbot xác định đúng sách/đơn rồi dẫn tới trang tương ứng; các thao tác đó chưa được thực hiện ngay trong chat.
+- Chat thực hiện thêm/xóa/đổi số lượng/xóa toàn bộ giỏ sau khi khách xác nhận, qua CartService dùng chung với storefront. Mua một sách hoặc đặt toàn bộ giỏ mở form trong chat, lập báo giá rồi chờ nút Xác nhận đặt hàng. Hủy đơn vẫn dẫn tới trang Đơn hàng.
 
 ## Xuất bản sách
 

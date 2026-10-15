@@ -16,6 +16,10 @@ Chatbot dùng backend làm nguồn nghiệp vụ duy nhất. Angular không bi�
 
 ## Cấu hình
 
+Launcher chung `start-vinabook.cmd` ở gốc dự án nạp các dòng `NAME=VALUE` trong `VinaBookStore/.env.local` làm giá trị literal, không thực thi nội dung file và không in khóa. Biến môi trường đã có trong tiến trình được ưu tiên. Cấu hình AI được truyền cho backend cùng với `JWT_SECRET`.
+
+Sau khi backend sẵn sàng, launcher đối chiếu provider tại `GET /api/chat/status` với `AI_PROVIDER`. Nếu cấu hình yêu cầu AI nhưng backend đang chạy `local` hoặc `aiEnabled=false`, launcher báo lỗi để tránh đánh giá nhầm chatbot. Thay đổi file cần khởi động lại backend. Khi kiểm thử bản có AI, xác nhận `aiEnabled=true` và `architecture=structured-v1`; chế độ nội bộ báo `dialogue-v3-local`.
+
 Mặc định không cần thiết lập gì:
 
 ```powershell
@@ -179,3 +183,21 @@ Giữ ngân sách khi siết chủ đề; đổi nhu cầu rõ ràng bỏ loại
 Khi không có yêu cầu số lượng, chatbot chọn tối đa 3 cuốn. Với nhu cầu thư giãn hoặc nhiều tiêu chí đọc, ưu tiên nhóm có nhiều tiêu chí được xác nhận nhất, không bù bằng sách chỉ trùng chủ đề. Nếu không đủ căn cứ cho mọi tiêu chí, từng sách vẫn ghi rõ phần chưa xác nhận. Lượt hỏi thêm loại sách đã xem trước khi chọn nhóm tiếp theo; số lượng cụ thể, “tất cả”, giá và ngân sách vẫn được giữ.
 
 Lời dẫn nối với nhu cầu đọc; giới hạn giá nhắc một lần. Mỗi sách có nội dung riêng và bằng chứng đúng trường về giọng kể, mức đọc hoặc cách áp dụng. Không lặp câu chọn sách chung chung, không dùng thông tin độ khó làm bằng chứng cho giọng kể. Người nhận và ngân sách vẫn tùy chọn. Xem [kết quả kiểm tra](chatbot-evaluation/shortlist-and-voice-2026-10-09.md).
+
+### Sửa lỗi hội thoại tự nhiên — 09/10/2026
+
+- “Có cuốn nào thú vị không?” là tìm sách, không tự động thành so sánh các cuốn đã chọn. Mục đích đọc giải trí khi buồn chán đủ để bắt đầu; không ép hỏi người nhận/ngân sách, cũng không suy diễn thành yêu cầu nhẹ nhàng hoặc tư vấn sức khỏe tinh thần. Chọn tác phẩm kể chuyện có bằng chứng về dạng truyện/thể loại, không chỉ dựa vào nhãn văn học hoặc cụm “câu chuyện” trong sách chiêm nghiệm.
+- “Phiêu lưu hay trinh thám” dùng OR giữa các chủ đề nhận diện được; “sách hay” vẫn là tính từ. “Vừa… vừa…” giữ phép giao. Chủ đề cụ thể luôn ưu tiên hơn cách diễn đạt về mục đích giải trí.
+- “Tiếp”, “thêm nữa”, “xem tiếp” sau tư vấn/chi tiết/so sánh dùng bộ lọc đang giữ và loại toàn bộ sách đã giới thiệu. Sau câu hỏi chính sách, không tự coi “tiếp” là yêu cầu sách. “?”/“ý là sao” giải thích kết quả hiện có, giữ yêu cầu và danh sách, không khởi động lại phần hỏi nhu cầu.
+- Các quy tắc được dùng ở cả đường local và điều phối AI. Kiểm tra tích hợp dùng intake, bộ nhớ, tool và catalog fixture thực; UI dùng provider local. Không xác nhận Gemini thật chỉ từ mock điều phối.
+
+Chi tiết tái hiện và kiểm tra: [context-repair-2026-10-09.md](chatbot-evaluation/context-repair-2026-10-09.md).
+
+## Luồng hiểu yêu cầu và ghi ngữ cảnh bằng AI — 09/10/2026
+
+Khi đã cấu hình AI, ChatStructuredPipeline thay bước intake/planner cũ bằng một lần đọc hiểu trả intent, patch ngữ cảnh có trích dẫn nguồn và kế hoạch công cụ. Backend kiểm tra phiên bản, kiểu dữ liệu, tiền, số lượng và tham chiếu; ghép vào bản sao của cùng toolSearch trước khi truy xuất catalog. Trường chưa nhắc được bỏ qua hoặc null; chỉ clear mới xóa điều kiện. Người nhận và ngân sách tiếp tục là thông tin bổ sung.
+
+AI viết nhận gói dữ kiện đã xác minh, nhu cầu đã ghép, nguồn nội dung và các điểm chưa biết. Thẻ sách, giá, tồn kho và thao tác do backend giữ; lời giải thích sai căn cứ bị loại. Lỗi đọc hiểu/thực thi không ghi đè ngữ cảnh tốt; ngân sách AI toàn lượt là 45 giây. Local vẫn dùng đường hiện có khi chưa bật provider.
+
+Hợp đồng, kiến trúc và 25 tình huống nghiệm thu: [chatbot-structured-pipeline.md](chatbot-structured-pipeline.md).
+Kết quả triển khai và thử Gemini thật: [structured-pipeline-2026-10-09.md](chatbot-evaluation/structured-pipeline-2026-10-09.md).
