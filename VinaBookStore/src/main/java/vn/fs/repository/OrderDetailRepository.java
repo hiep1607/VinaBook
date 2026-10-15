@@ -16,6 +16,8 @@ import vn.fs.entity.OrderDetail;
 
 @Repository
 public interface OrderDetailRepository extends JpaRepository<OrderDetail, Long> {
+    @org.springframework.data.jpa.repository.Query("select d from OrderDetail d left join fetch d.product where d.order.ordersId in :ids")
+    List<OrderDetail> findCustomerPageItems(@org.springframework.data.repository.query.Param("ids") List<Long> ids);
 
 	List<OrderDetail> findByOrder(Order order);
 

@@ -106,7 +106,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/payments/admin/**", "/api/vouchers/admin/**", "/api/vouchers/admin").hasRole("ADMIN")
                 .antMatchers("/api/vouchers/me/**", "/api/restock/me", "/api/restock/me/**").hasRole("USER")
                 .antMatchers(HttpMethod.GET, "/api/payments/orders/*/refunds").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/api/orders/me/*").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/api/orders/me", "/api/orders/me/*").hasRole("USER")
                 .antMatchers("/api/support/me/**", "/api/support/me").hasRole("USER")
 				.antMatchers(HttpMethod.GET, "/api/orderDetail/**").hasAnyRole("USER", "ADMIN")
 				.antMatchers(HttpMethod.POST, "/api/orders/*").hasRole("USER")

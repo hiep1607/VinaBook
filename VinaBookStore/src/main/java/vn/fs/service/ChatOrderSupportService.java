@@ -88,6 +88,37 @@ public class ChatOrderSupportService {
         return result;
     }
 
+    @Transactional(readOnly=true)
+    public java.util.Map<String,Object> customerPage(int page,int size,int status,String query) {
+        String email=access.currentEmail();
+        if(email==null)throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.UNAUTHORIZED,"Bạn đăng nhập để xem đơn của mình nhé.");
+        User owner=users.findByEmail(email).orElseThrow(()->new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.UNAUTHORIZED));
+        if(page<0 || page>100000 || size<1 || size>50 || status < -1 || status > 3 || query.length()>100)
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_REQUEST,"Bộ lọc đơn hàng không hợp lệ.");
+        String term=java.text.Normalizer.normalize(query.strip().replaceFirst("^#", ""),java.text.Normalizer.Form.NFD).replaceAll("\\p{M}","").toLowerCase(java.util.Locale.ROOT).replace('đ','d');
+        var result=orders.findCustomerPage(owner.getUserId(),status,term,"%"+term+"%",org.springframework.data.domain.PageRequest.of(page,size,org.springframework.data.domain.Sort.by("ordersId").descending()));
+        var ids=result.getContent().stream().map(Order::getOrdersId).toList();
+        var lines=ids.isEmpty()?java.util.List.<vn.fs.entity.OrderDetail>of():details.findCustomerPageItems(ids);
+        var grouped=lines.stream().collect(java.util.stream.Collectors.groupingBy(line->line.getOrder().getOrdersId()));
+        java.util.List<java.util.Map<String,Object>> items=new java.util.ArrayList<>();
+        for(Order order:result) {
+            java.util.Map<String,Object> value=new java.util.LinkedHashMap<>();
+            value.put("id",order.getOrdersId());value.put("date",order.getOrderDate());value.put("total",order.getAmount());value.put("statusCode",order.getStatus());
+            value.put("paymentMethod",order.getPaymentMethod()==null?"COD":order.getPaymentMethod());value.put("paymentStatus",order.getPaymentStatus()==null?"UNPAID":order.getPaymentStatus());
+            java.util.List<java.util.Map<String,Object>> books=new java.util.ArrayList<>();
+            for(var line:grouped.getOrDefault(order.getOrdersId(),java.util.List.of())) {
+                var product=line.getProduct();java.util.Map<String,Object> book=new java.util.LinkedHashMap<>();
+                book.put("productId",product==null?null:product.getProductId());book.put("name",product==null?"Sách không còn thông tin":product.getName());
+                book.put("image",product==null?"":product.getImage());book.put("price",line.getPrice());book.put("quantity",line.getQuantity());books.add(book);
+            }
+            value.put("items",books);items.add(value);
+        }
+        java.util.Map<String,Long> counts=new java.util.LinkedHashMap<>(); long total=0;double totalSpent=0;
+        for(Object[] row:orders.customerCounts(owner.getUserId())) {long count=((Number)row[1]).longValue();counts.put(String.valueOf(row[0]),count);total+=count;totalSpent+=row[2]==null?0:((Number)row[2]).doubleValue();}
+        counts.put("-1",total);
+        return java.util.Map.of("items",items,"total",result.getTotalElements(),"counts",counts,"totalSpent",totalSpent,"page",page,"size",size);
+    }
+
 	@Transactional(readOnly = true)
 	public String latestOrders() {
 		String email = access.currentEmail();

@@ -14,6 +14,8 @@ public class MyOrderActionsApi {
     private final OrderCancellationService service;
     private final vn.fs.service.ChatOrderSupportService history;
     public MyOrderActionsApi(OrderCancellationService service,vn.fs.service.ChatOrderSupportService history){this.service=service;this.history=history;}
+    @GetMapping public Map<String,Object> list(@RequestParam(defaultValue="0") int page,@RequestParam(defaultValue="20") int size,
+        @RequestParam(defaultValue="-1") int status,@RequestParam(defaultValue="") String q){return history.customerPage(page,size,status,q);}
     @GetMapping("/{id}") public Map<String,Object> details(@PathVariable Long id){return history.customerDetails(id);}
     @GetMapping("/{id}/reorder") public Map<String,Object> reorder(@PathVariable Long id){return history.reorderPreview(id);}
     @GetMapping("/{id}/cancellation") public Map<String,Object> preview(@PathVariable Long id){return service.previewDetails(id);}
