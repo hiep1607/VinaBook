@@ -7,6 +7,7 @@ import vn.fs.entity.BookTopicLink;
 
 public interface BookTopicLinkRepository extends JpaRepository<BookTopicLink, Long> {
     List<BookTopicLink> findByProductId(Long productId);
+    List<BookTopicLink> findByProductIdIn(Collection<Long> productIds);
     List<BookTopicLink> findByTopicIdIn(Collection<Long> topicIds);
     void deleteByProductId(Long productId);
 }

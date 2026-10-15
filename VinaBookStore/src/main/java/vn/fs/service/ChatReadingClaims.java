@@ -14,7 +14,25 @@ final class ChatReadingClaims {
             String q=language.normalize(sentence).trim().replace("muc tieu hoc","muc dich hoc");
             // Explicit uncertainty is useful; it is not a positive reading claim.
             if(q.matches("^(?:phan mo ta |mo ta |du lieu |cua hang |minh )?(?:hien )?(?:chua|khong du|khong the|khong co du).*"))continue;
+            // Editorial praise is not evidence of content or reader fit, even
+            // when copied from promotional text. Keep the concrete description.
+            if(ChatBookFacts.has(q,"gia tri cao|rat co gia tri|vo gia|dang doc|rat hay|tuyet voi|xuat sac|ly tuong|toi uu|khong the bo qua|lua chon hoan hao|phu hop nhat"))return true;
+            if(ChatBookFacts.has(q,"(?:co ban|can ban|nen tang|nhap mon)(?: de| cho| khi)? (?:ban )?bat dau|nguon tu lieu co ban|tai lieu nen tang")
+                    && List.of("người mới","mới bắt đầu","nhập môn","cơ bản","căn bản","nền tảng")
+                        .stream().noneMatch(term->new ChatExplicitFilters(language).affirmed(level,language.normalize(term))))return true;
+            if(!q.contains("chua")) {
+                if(ChatCatalogQuery.word(q,"truyen chu") && !new ChatReadingRequest(language).proseStory(source))return true;
+                ChatExplicitFilters formEvidence=new ChatExplicitFilters(language);
+                for(String form:List.of("tieu thuyet","truyen dai","truyen ngan","truyen tranh"))
+                    if(formEvidence.affirmed(q,form) && !formEvidence.affirmed(source,form))return true;
+            }
             if(ChatBookFacts.has(q,"phu nu.*(?:thich|hop)|ban nu.*(?:thich|hop)|nu gioi.*(?:thich|hop)|nam gioi.*(?:thich|hop)|duoc.*ua thich|ban chay"))return true;
+            if(ChatBookFacts.has(q,"(?:hop|phu hop|danh cho|giup|ho tro).*(?:nguoi moi|moi bat dau|bat dau)|de bat dau.*(?:hoc|nghien cuu)")
+                    && List.of("người mới","mới bắt đầu","nhập môn","cơ bản","căn bản")
+                        .stream().noneMatch(term->new ChatExplicitFilters(language).affirmed(level,language.normalize(term))))return true;
+            for(String basic:List.of("khái niệm nền tảng","kiến thức nền tảng","kiến thức cơ bản"))
+                if(ChatCatalogQuery.word(q,language.normalize(basic))
+                        && !new ChatExplicitFilters(language).affirmed(level,language.normalize(basic)))return true;
             if(ChatBookFacts.has(q,"de doc|de hieu|khong.*ap luc khi doc|theo doi.*thuan tien|de dang (?:doc|theo doi|tiep can|lam quen|ap dung|dong cam)|khong.*choang ngop|de tiep can|de hinh dung|de tiep nhan|khong.*nang ne|thay vi.*phuc tap|doc.*khong.*mat.*thoi gian|phu hop.*(?:lam quen|tap doc|it doc|moi doc|bat dau doc)|(?:lam quen|tap doc|bat dau).*thoi quen doc|giup.*(?:lam quen|tap doc)")
                     && !ChatBookFacts.has(level,"de doc|de hieu|ngon ngu don gian|ngon ngu gian di|de tiep can|de dang ap dung"))return true;
             if(ChatBookFacts.has(q,"khong.*(?:giao dieu|huong dan ky nang|giao trinh)|khong mang mau sac")

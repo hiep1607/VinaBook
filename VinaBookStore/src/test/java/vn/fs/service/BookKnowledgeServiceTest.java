@@ -58,6 +58,18 @@ class BookKnowledgeServiceTest {
         verify(embeddings,never()).document(anyString(),anyString());
     }
 
+    @Test void facetHeadingsDoNotPolluteSearchAndLegacyTopicsStayIntact() {
+        var topicIds=new java.util.concurrent.atomic.AtomicLong(100L);
+        when(topics.save(any())).thenAnswer(inv->{BookTopic topic=inv.getArgument(0);topic.setId(topicIds.incrementAndGet());return topic;});
+        BookKnowledgeService.ProfileInput input=new BookKnowledgeService.ProfileInput();
+        input.setSummary("Hành trình qua thế giới loài vật.");
+        input.setTopics(List.of("Thể loại: truyện phiêu lưu","Chủ đề: thế giới loài vật","Mục đích: đọc truyện","Java"));
+        service.publish(42L,input);
+        assertThat(savedProfile.get().getSearchText()).contains("truyện phiêu lưu","thế giới loài vật","Java")
+            .doesNotContain("Thể loại:","Chủ đề:","Mục đích:");
+        assertThat(BookKnowledgeService.topicSearchTerm("Sách Văn học nghệ thuật")).isEqualTo("Sách Văn học nghệ thuật");
+    }
+
     @Test void indexFailureLeavesApprovedBookSearchableAndPendingForRetry() {
         when(embeddings.available()).thenReturn(true);
         when(embeddings.document(anyString(),anyString())).thenThrow(new IllegalStateException("quota"));
@@ -166,4 +178,102 @@ class BookKnowledgeServiceTest {
         source.setApproved(false);
         assertThat(service.relatedEvidence(List.of(42L))).isEmpty();
     }
+    @Test void rankingLoadsOnlyApprovedCandidateTopicsInTwoBatchReads() {
+        Product other=new Product();other.setProductId(43L);other.setName("Gợi ý khác");
+        Product draft=new Product();draft.setProductId(44L);draft.setName("Bản nháp");
+        BookProfile first=new BookProfile();first.setProductId(42L);first.setApproved(true);first.setSearchText("tuổi thơ");
+        BookProfile second=new BookProfile();second.setProductId(43L);second.setApproved(true);second.setSearchText("tuổi thơ");
+        BookProfile unapproved=new BookProfile();unapproved.setProductId(44L);unapproved.setApproved(false);
+        when(profiles.findAllById(any())).thenReturn(List.of(first,second,unapproved));
+        BookTopic topic=new BookTopic();topic.setId(123L);topic.setName("Chủ đề: ký ức tuổi thơ");
+        BookTopicLink link=new BookTopicLink();link.setProductId(42L);link.setTopicId(123L);
+        when(links.findByProductIdIn(anyCollection())).thenReturn(List.of(link));
+        when(topics.findAllById(any())).thenReturn(List.of(topic));
+        assertThat(service.rankByMeaning("ký ức tuổi thơ",List.of(other,book,draft))).first().isEqualTo(book);
+        verify(links).findByProductIdIn(argThat(ids->ids.size()==2 && ids.containsAll(List.of(42L,43L))));
+        verify(topics).findAllById(argThat(ids->{java.util.List<Long> actual=new java.util.ArrayList<>();ids.forEach(actual::add);return actual.equals(List.of(123L));}));
+        verify(links,never()).findByProductId(anyLong());verify(topics,never()).findById(anyLong());
+    }
+    @Test void chatReadsBatchProfilesOnceAndNextTurnSeesFreshApprovedData() {
+        BookProfile old=new BookProfile();old.setProductId(42L);old.setApproved(true);
+        old.setSummary("Nội dung đã duyệt ban đầu");old.setSearchText("Chủ đề đã duyệt ban đầu");
+        when(profiles.findAllById(any())).thenReturn(List.of(old));
+        service.beginChatRead(List.of(book));
+        for(int i=0;i<30;i++) {
+            assertThat(service.approvedReadingFacts(book)).containsEntry("summary","Nội dung đã duyệt ban đầu");
+            assertThat(service.approvedDescription(book)).isEqualTo("Nội dung đã duyệt ban đầu");
+            assertThat(service.searchableText(book)).isEqualTo("Chủ đề đã duyệt ban đầu");
+        }
+        verify(profiles,times(1)).findAllById(any());verify(profiles,never()).findById(anyLong());
+        service.endChatRead();
+        BookProfile updated=new BookProfile();updated.setProductId(42L);updated.setApproved(true);updated.setSummary("Đã cập nhật");
+        savedProfile.set(updated);
+        assertThat(service.approvedReadingFacts(book)).containsEntry("summary","Đã cập nhật");
+        verify(profiles,times(1)).findById(42L);
+    }
+    @Test void missingAndUnapprovedProfilesDoNotLeakDraftFactsFromTheReadScope() {
+        BookProfile draft=new BookProfile();draft.setProductId(42L);draft.setApproved(false);
+        draft.setSummary("Nội dung nháp chưa duyệt");draft.setAudience("Đối tượng chưa duyệt");
+        when(profiles.findAllById(any())).thenReturn(List.of(draft));
+        service.beginChatRead(List.of(book));
+        assertThat(service.approvedReadingFacts(book)).containsOnlyKeys("summary").containsEntry("summary",book.getDescription());
+        assertThat(service.approvedDescription(book)).isEqualTo(book.getDescription());
+        service.endChatRead();
+        when(profiles.findAllById(any())).thenReturn(List.of());service.beginChatRead(List.of(book));
+        assertThat(service.approvedReadingFacts(book)).containsEntry("summary",book.getDescription());
+        verify(profiles,never()).findById(anyLong());service.endChatRead();
+    }
+    @Test void simultaneousTurnsCannotReadEachOthersProfileSnapshot() throws Exception {
+        BookProfile old=new BookProfile();old.setProductId(42L);old.setApproved(true);old.setSummary("Ảnh chụp lượt đầu");
+        BookProfile fresh=new BookProfile();fresh.setProductId(42L);fresh.setApproved(true);fresh.setSummary("Dữ liệu mới");
+        when(profiles.findAllById(any())).thenReturn(List.of(old));savedProfile.set(fresh);
+        service.beginChatRead(List.of(book));
+        try {
+            var other=java.util.concurrent.CompletableFuture.supplyAsync(()->service.approvedReadingFacts(book))
+                .get(2,java.util.concurrent.TimeUnit.SECONDS);
+            assertThat(other).containsEntry("summary","Dữ liệu mới");
+            assertThat(service.approvedReadingFacts(book)).containsEntry("summary","Ảnh chụp lượt đầu");
+        } finally {service.endChatRead();}
+        assertThat(service.approvedReadingFacts(book)).containsEntry("summary","Dữ liệu mới");
+    }
+
+    @Test void topicHintsUseOnlyApprovedInStockBooksAndDeduplicateLinksPerBook() {
+        Product second=new Product();second.setProductId(43L);second.setStatus(true);second.setQuantity(2);
+        Product third=new Product();third.setProductId(44L);third.setStatus(true);third.setQuantity(0);
+        Product draftBook=new Product();draftBook.setProductId(45L);draftBook.setStatus(true);draftBook.setQuantity(2);
+        book.setStatus(true);book.setQuantity(2);
+        BookProfile approved=new BookProfile();approved.setProductId(42L);approved.setApproved(true);
+        BookProfile approved2=new BookProfile();approved2.setProductId(43L);approved2.setApproved(true);
+        BookProfile unavailable=new BookProfile();unavailable.setProductId(44L);unavailable.setApproved(true);
+        BookProfile draft=new BookProfile();draft.setProductId(45L);draft.setApproved(false);
+        when(profiles.findAllById(any())).thenReturn(List.of(approved,approved2,unavailable,draft));
+        BookTopic subject=new BookTopic();subject.setId(1L);subject.setName("Chủ đề: giao tiếp / communication");
+        BookTopic audience=new BookTopic();audience.setId(2L);audience.setName("Độc giả: sinh viên");
+        BookTopic single=new BookTopic();single.setId(3L);single.setName("Chủ đề: tài chính cá nhân");
+        java.util.List<BookTopicLink> all=new java.util.ArrayList<>();
+        for(long id:List.of(42L,43L,44L,45L))for(long topic:List.of(1L,2L)) {
+            BookTopicLink link=new BookTopicLink();link.setProductId(id);link.setTopicId(topic);all.add(link);
+        }
+        BookTopicLink singleLink=new BookTopicLink();singleLink.setProductId(42L);singleLink.setTopicId(3L);
+        all.add(singleLink);all.add(singleLink);
+        when(links.findByProductIdIn(any())).thenAnswer(call->{
+            java.util.Collection<Long> ids=call.getArgument(0);return all.stream().filter(l->ids.contains(l.getProductId())).toList();
+        });
+        when(topics.findAllById(any())).thenReturn(List.of(subject,audience,single));
+        service.beginChatRead(List.of(book,second,third,draftBook));
+        try {
+            assertThat(service.topicSuggestionNames(List.of(book,second,third,draftBook))).containsExactly("giao tiếp");
+            verify(profiles,times(1)).findAllById(any());
+        } finally {service.endChatRead();}
+    }
+    @Test void preparationRankingNeverCallsRemoteEmbedding() {
+        Product second=new Product();second.setProductId(43L);second.setName("Thực hành lập trình");
+        BookProfile first=new BookProfile();first.setProductId(42L);first.setApproved(true);first.setEmbeddingJson("[1.0,0.0]");
+        BookProfile other=new BookProfile();other.setProductId(43L);other.setApproved(true);other.setEmbeddingJson("[0.0,1.0]");
+        when(profiles.findAllById(any())).thenReturn(List.of(first,other));
+        when(embeddings.available()).thenReturn(true);
+        assertThat(service.rankByMeaning("lập trình",List.of(book,second),false)).hasSize(2);
+        verify(embeddings,never()).query(anyString());
+    }
+
 }

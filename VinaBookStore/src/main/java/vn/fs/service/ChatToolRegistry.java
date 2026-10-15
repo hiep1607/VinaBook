@@ -19,6 +19,7 @@ public class ChatToolRegistry {
                 "parameters", t.parameters(), "additionalProperties", false)));
         return result;
     }
+    boolean supports(String name) { return tools.containsKey(name); }
     public ChatTool.Result execute(String name, JsonNode arguments, ChatTool.Context context) {
         validate(name, arguments);
         return tools.get(name).execute(arguments, context);

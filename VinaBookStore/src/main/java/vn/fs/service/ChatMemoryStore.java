@@ -53,8 +53,23 @@ public class ChatMemoryStore {
             }
         });
         // Upgrade old snapshots that only remembered the latest discovery list.
+        List<ChatExchange> legacy=(key!=null && (state.topicMenuHistoryVersion<1 || state.recommendationHistoryVersion<1))
+            ?exchanges.findByConversationIdOrderByIdAsc(key):List.of();
+        if(key!=null && state.topicMenuHistoryVersion<1) {
+            for(ChatExchange exchange:legacy) {
+                ChatResponseDto response=readResponse(exchange.getResponseJson());
+                if(response!=null && response.getChips()!=null && !response.getChips().isEmpty()
+                        && response.getChips().size()<=ChatTopicClarification.MAX_TOPICS
+                        && response.getProducts()!=null && response.getProducts().isEmpty()
+                        && response.getExecution()!=null && "respond".equals(response.getExecution().get("tool"))
+                        && "NEEDS_INPUT".equals(response.getExecution().get("status"))
+                        && ChatBookFacts.has(new ChatIntentService().normalize(response.getAnswer()),"chu de|huong"))
+                    ChatTopicClarification.rememberMenu(state,response.getChips(),state.topicSuggestionContext);
+            }
+            state.topicMenuHistoryVersion=1;
+        }
         if(key!=null && state.recommendationHistoryVersion<1) {
-            for(ChatExchange exchange:exchanges.findByConversationIdOrderByIdAsc(key)) {
+            for(ChatExchange exchange:legacy) {
                 ChatResponseDto response=readResponse(exchange.getResponseJson());
                 if(response!=null && response.getProducts()!=null)
                     response.getProducts().forEach(book->state.shownProductIds.add(book.getId()));

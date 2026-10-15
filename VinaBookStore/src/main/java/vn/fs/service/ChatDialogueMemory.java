@@ -53,6 +53,17 @@ final class ChatDialogueMemory {
         String offered = "", alternativeFor = "";
         String lastTask = "";
         String pendingQuestion = "";
+        List<String> topicSuggestions = new ArrayList<>();
+        String topicSuggestionContext = "";
+        // Rendered menus survive selecting a topic and interruptions. They are
+        // conversation references, never cached catalog facts or preferences.
+        List<List<String>> topicMenus = new ArrayList<>();
+        Map<String,List<Long>> topicMenuPools = new LinkedHashMap<>();
+        String topicMenuContext = "";
+        int topicMenuHistoryVersion;
+        Map<String,ChatPreparedTopics.Selection> preparedTopics = new LinkedHashMap<>();
+        @com.fasterxml.jackson.annotation.JsonIgnore
+        String preparedTopicChoice = "", preparedTopicStatus = "";
         String pendingReviewMode = "";
         Long pendingReviewProductId;
         String returnReason = "";
@@ -65,6 +76,18 @@ final class ChatDialogueMemory {
         @com.fasterxml.jackson.annotation.JsonIgnore
         String lastRequest;
         Map<String, Object> toolSearch = new LinkedHashMap<>();
+        // Constraints stay in toolSearch; provenance and semantic notes are not filters.
+        long contextVersion;
+        Map<String, Map<String, String>> contextSources = new LinkedHashMap<>();
+        List<Map<String, String>> conversationNotes = new ArrayList<>();
+        String searchOutcome = "", contextMode = "current";
+        // The last completed book read survives policy/small-talk interruptions.
+        // It describes a read operation, never an authorization for a mutation.
+        Map<String, String> bookReadContext = new LinkedHashMap<>();
+        @com.fasterxml.jackson.annotation.JsonIgnore
+        boolean excludePreviouslyShown;
+        @com.fasterxml.jackson.annotation.JsonIgnore
+        boolean structuredTurnActive;
         List<Map<String, String>> toolHistory = new ArrayList<>();
         @com.fasterxml.jackson.annotation.JsonIgnore
         vn.fs.dto.chat.ChatResponseDto lastResponse;

@@ -45,6 +45,25 @@ class ChatToolsTest {
     ChatTool.Result run(String tool,String arguments) throws Exception {
         return registry.execute(tool,mapper.readTree(arguments),new ChatTool.Context(request("s","test"),state));
     }
+    @Test void guestPurchaseLoginPreservesResolvedBookAndRequestedQuantity() throws Exception {
+        Product chosen=book(7,70520);chosen.setName("Đắc Nhân Tâm");
+        when(products.findByStatusTrue()).thenReturn(List.of(chosen));
+        builtins.setAccess(access);
+        var result=registry.execute("prepareCheckout",mapper.readTree("{\"title\":\"Đắc Nhân Tâm\",\"quantity\":1}"),
+            new ChatTool.Context(request("guest-purchase","Tôi muốn mua 2 cuốn Đắc Nhân Tâm"),state));
+        assertThat(result.intent()).isEqualTo(ChatIntent.PURCHASE);
+        assertThat(result.status()).isEqualTo("AWAITING_INPUT");
+        assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(7L);
+        assertThat(result.actions()).singleElement().satisfies(action->{
+            assertThat(action.getType()).isEqualTo("LOGIN");
+            assertThat(action.getProductId()).isEqualTo(7L);
+            assertThat(action.getQuantity()).isEqualTo(2);
+            assertThat(action.getRoute()).isEqualTo("/login");
+            assertThat(action.isRequiresConfirmation()).isFalse();
+        });
+        assertThat(result.answer()).contains("2 cuốn", "Đắc Nhân Tâm", "mở lại lựa chọn", "chưa có đơn hàng").doesNotContain("gửi lại yêu cầu");
+        verifyNoInteractions(orders,cancellation);
+    }
     private Rate rate(long id,long userId,double rating,String comment) {
         User user=new User();user.setUserId(userId);user.setName("Khách riêng tư");user.setEmail("private@example.test");
         Rate rate=new Rate();rate.setId(id);rate.setUser(user);rate.setRating(rating);rate.setComment(comment);return rate;
@@ -437,7 +456,7 @@ class ChatToolsTest {
         assertThat(r.actions().get(0).getType()).isEqualTo("BUY_NOW");
         assertThat(r.actions().get(0).getQuantity()).isEqualTo(3);
         assertThat(r.actions().get(0).getRoute()).isNull();
-        assertThat(r.answer()).contains("3 cuốn", "chỉ tạo đơn sau khi bạn xem tổng tiền và xác nhận");
+        assertThat(r.answer()).contains("3 cuốn", "kiểm tra thông tin giao hàng và tổng tiền", "đơn chỉ được tạo khi bạn bấm Xác nhận đặt hàng");
         assertThat(r.answer()).doesNotContain("đặt hàng thành công");
         verifyNoInteractions(orders);
     }

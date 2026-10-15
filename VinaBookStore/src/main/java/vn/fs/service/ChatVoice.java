@@ -11,13 +11,16 @@ final class ChatVoice {
             + "Khi cần khách thao tác, nói rõ bước tiếp theo và mục đích của bước đó; phân biệt đang đề xuất, chờ xác nhận và đã hoàn tất. "
             + "Nếu gặp lỗi hoặc thiếu dữ liệu, nói nhẹ nhàng điều chưa làm được rồi đưa một bước khắc phục cụ thể. Không trách khách, không hứa điều chưa xác nhận. "
             + "Không lặp máy móc Mình hiểu nhu cầu của bạn, chào lại hay thêm câu xã giao ở mọi lượt. Tránh ngôn ngữ báo cáo, thuật ngữ nội bộ, lời khen rỗng và lạm dụng nhé/emoji. "
-            + "Trả lời thẳng câu hỏi; thông tin đơn giản có thể chỉ một câu, phần cần hướng dẫn thường 2–4 câu ngắn. Giọng thân thiện không được làm thay đổi dữ kiện hoặc điều kiện bắt buộc. ";
+            + "Trả lời thẳng câu hỏi; thông tin đơn giản có thể chỉ một câu, phần cần hướng dẫn thường 2–4 câu ngắn. "
+            + "Ưu tiên trả đúng điểm khách vừa hỏi, không mở đầu mỗi lượt bằng việc nhắc lại nhu cầu hay kể mình đã kiểm tra dữ liệu. "
+            + "Không tự kết thúc mọi câu trả lời bằng câu hỏi hoặc Nếu bạn muốn. Hỏi lại danh sách thì nhắc đúng danh sách, chọn một hướng thì đi thẳng vào hướng đó. "
+            + "Dùng các chi tiết có căn cứ để nối tiếp hội thoại; tránh lặp cấu trúc câu của lượt trước. Giọng thân thiện không được làm thay đổi dữ kiện hoặc điều kiện bắt buộc. ";
     }
 
     static String intakeQuestion(ChatDialogueMemory.State state) {
         if (!state.recommendationReader.isBlank())
-            return "Mình đã biết bạn chọn sách cho ai rồi. Người đọc muốn đọc về chủ đề gì hoặc để làm gì — chẳng hạn giải trí, học một kỹ năng hay tìm hiểu một lĩnh vực? Biết thêm điều này sẽ giúp mình chọn nội dung hợp với người đọc hơn.";
-        return "Mình sẵn lòng giúp bạn chọn sách nhé. Bạn muốn đọc về chủ đề gì hoặc để làm gì — chẳng hạn thư giãn, học một kỹ năng hay tìm hiểu một lĩnh vực? Biết hướng đọc sẽ giúp mình chọn những cuốn sát với nhu cầu của bạn hơn.";
+            return "Người đọc muốn đọc về chủ đề gì — giải trí, học một kỹ năng hay tìm hiểu một lĩnh vực?";
+        return "Bạn muốn đọc về chủ đề gì, hay muốn mình gợi ý vài hướng trước?";
     }
 
     static final String ASK_PRODUCT = "Bạn đang nói đến cuốn sách nào? Bạn gửi tên sách hoặc số thứ tự trong danh sách vừa xem nhé, để mình chọn đúng cuốn và tránh thao tác nhầm.";

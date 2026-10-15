@@ -4,6 +4,23 @@ package vn.fs.service;
 final class ChatConversationSupport {
     private ChatConversationSupport() { }
 
+    static boolean moreBooks(String message,ChatDialogueMemory.State state,ChatIntentService language) {
+        if(language.moreInCurrentTopic(message))return true;
+        return bookContext(state)
+            && language.normalize(message).matches("(?:tiep|tiep di|tiep tuc|xem tiep|them|them nua|nua)(?: nhe| nha| di)?[.!?]*");
+    }
+
+    private static boolean bookContext(ChatDialogueMemory.State state) {
+        return !state.toolSearch.isEmpty()
+            && java.util.Set.of("DISCOVER_BOOKS","PRODUCT_INFO","COMPARE_BOOKS").contains(
+                state.lastResponse!=null && state.lastResponse.getIntent()!=vn.fs.dto.chat.ChatIntent.UNKNOWN
+                    ? state.lastResponse.getIntent().name() : state.lastTask);
+    }
+
+    static boolean repairQuestion(String message,ChatDialogueMemory.State state,ChatIntentService language) {
+        return bookContext(state) && language.normalize(message).matches("(?:[?？]+|(?:la sao|y la sao|sao vay|sao the|minh chua hieu|toi chua hieu)[.!?]*)");
+    }
+
     static boolean audienceOnly(String message, ChatIntentService language) {
         String q=language.normalize(message);
         boolean audience=ChatBookFacts.has(q,"ban nu|phu nu|nu gioi|con gai|ban gai|nam gioi|dan ong|ban trai");
@@ -33,13 +50,15 @@ final class ChatConversationSupport {
 
     static boolean explanation(String message, ChatIntentService language) {
         String q=language.normalize(message);
-        return (ChatBookFacts.has(q,"tai sao|vi sao|ly do|giai thich|noi ro hon|noi ky hon|sau hon|chi tiet hon|phan tich them")
+        return (ChatBookFacts.has(q,"tai sao|vi sao|ly do|giai thich|noi ro hon|noi ky hon|sau hon|chi tiet hon|cu the hon|phan tich them")
                 || ChatBookFacts.has(q,"cuon nao.*(?:hop|sat|tot|de doc|do tuoi).*nhat|nen chon cuon nao"))
             && !ChatBookFacts.has(q,"tra hang|doi tra|hoan tien|don hang|gio hang|thanh toan|giao hang");
     }
 
     static boolean pluralReference(String message, ChatIntentService language) {
-        return ChatBookFacts.has(language.normalize(message),"nhung cuon|cac cuon|may cuon|nhung sach|cac sach|danh sach|goi y do|lua chon do|trong so do|ca [0-9]+ cuon");
+        return ChatBookFacts.has(language.normalize(message),"nhung cuon|cac cuon|may cuon|nhung sach|cac sach|danh sach|goi y do|lua chon do|trong so do|ca [0-9]+ cuon"
+            +"|(?:hai|ba|bon|nam|[2-9]) (?:cuon|quyen|sach) (?:do|nay|ay|vua xem|vua gioi thieu)"
+            +"|ca (?:hai|ba|bon|nam|[2-9]) (?:cuon|quyen|sach)");
     }
 
     static String readerQuestion(ChatDialogueMemory.State state, String message) {

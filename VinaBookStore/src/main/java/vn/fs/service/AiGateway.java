@@ -44,6 +44,9 @@ public class AiGateway {
 	private final Map<String, Long> geminiModelCooldowns = new ConcurrentHashMap<>();
 	private final AtomicInteger nextGeminiKey = new AtomicInteger();
 	private final ThreadLocal<String> modelUsed = new ThreadLocal<>();
+	private final ThreadLocal<JsonNode> outputSchema = new ThreadLocal<>();
+	private final ThreadLocal<Long> turnDeadline = new ThreadLocal<>();
+	private final ThreadLocal<Long> stageDeadline = new ThreadLocal<>();
 
 	public AiGateway(AiSettings settings, ObjectMapper mapper) {
 		this.settings = settings;
@@ -81,6 +84,24 @@ public class AiGateway {
 
 	public void resetModelUsed() {
 		modelUsed.remove();
+	}
+
+	/** Schema constrains syntax; the caller still validates meaning and authorization. */
+	public String completeStructured(String systemPrompt, List<ChatTurnDto> history, String message, JsonNode schema) {
+		outputSchema.set(schema);
+		try { return complete(GEMINI.equals(provider())?systemPrompt:systemPrompt+"\nJSON Schema: "+schema, history, message); }
+		finally { outputSchema.remove(); }
+	}
+	public void beginTurnBudget(int seconds) { turnDeadline.set(System.nanoTime()+Duration.ofSeconds(seconds).toNanos()); }
+	public void endTurnBudget() { turnDeadline.remove(); stageDeadline.remove(); }
+	/** Optional stages share the turn deadline but may finish earlier. */
+	public void beginStageBudget(int seconds) { stageDeadline.set(System.nanoTime()+Duration.ofSeconds(seconds).toNanos()); }
+	public void endStageBudget() { stageDeadline.remove(); }
+	private Duration requestTimeout() {
+		long remaining=turnDeadline.get()==null?Long.MAX_VALUE:turnDeadline.get()-System.nanoTime();
+		if(stageDeadline.get()!=null)remaining=Math.min(remaining,stageDeadline.get()-System.nanoTime());
+		if(remaining<=0)throw new IllegalStateException("AI stage/turn deadline exceeded");
+		return Duration.ofNanos(Math.min(Duration.ofSeconds(Math.max(3,settings.getTimeoutSeconds())).toNanos(),remaining));
 	}
 
 	public String complete(String systemPrompt, List<ChatTurnDto> history, String message) {
@@ -151,8 +172,11 @@ public class AiGateway {
 		body.put("contents", contents);
 		// Các nơi gọi gateway đều mong đợi JSON; yêu cầu Gemini trả đúng định dạng
 		// để tránh tiêu thêm một lượt API chỉ vì markdown hoặc JSON sai cú pháp.
-		body.put("generationConfig", Map.of("maxOutputTokens", safeMaxTokens(),
-				"responseMimeType", "application/json"));
+		Map<String,Object> generation = new LinkedHashMap<>();
+		generation.put("maxOutputTokens", safeMaxTokens());
+		generation.put("responseMimeType", "application/json");
+		if (outputSchema.get() != null) generation.put("responseJsonSchema", outputSchema.get());
+		body.put("generationConfig", generation);
 		String primary = model();
 		String backup = value(settings.getFallbackModel(), "").trim();
 		if (backup.isEmpty() || backup.equalsIgnoreCase(primary)) {
@@ -184,12 +208,13 @@ public class AiGateway {
 		List<String> keys = settings.getGeminiApiKeys();
 		int firstKey = Math.floorMod(nextGeminiKey.getAndIncrement(), keys.size());
 		for (int offset = 0; offset < keys.size(); offset++) {
+			requestTimeout();
 			int keyIndex = (firstKey + offset) % keys.size();
 			String key = keys.get(keyIndex);
 			String cooldownKey = targetModel + "\u0000" + key;
 			if (geminiKeyCooldowns.getOrDefault(cooldownKey, 0L) > System.currentTimeMillis()) continue;
 			try {
-				JsonNode json = post(url, body, Map.of("x-goog-api-key", key), 3);
+				JsonNode json = post(url, body, Map.of("x-goog-api-key", key), outputSchema.get()==null?3:1);
 				if (json == null) throw new IllegalStateException("Gemini trả về JSON rỗng");
 				List<String> text = new ArrayList<>();
 				for (JsonNode candidate : json.path("candidates")) {
@@ -220,6 +245,9 @@ public class AiGateway {
 				geminiKeyCooldowns.put(cooldownKey, cooldownUntil);
 				if (stopOn503 && ex.status == 503) break;
 			} catch (IllegalStateException ex) {
+				// Our optional-stage deadline is not a provider/key failure. Do
+				// not cool down a working key or penalize the following turn.
+				requestTimeout();
 				lastFailure = ex;
 				geminiKeyCooldowns.put(cooldownKey, System.currentTimeMillis() + 15_000L);
 				log.warn("gemini_key_failure slot={} reason=invalid_response exceptionType={}",
@@ -266,18 +294,19 @@ public class AiGateway {
 	private JsonNode post(String url, Object body, Map<String, String> headers, int maxAttempts) {
 		try {
 			HttpRequest.Builder request = HttpRequest.newBuilder(URI.create(url))
-					.timeout(Duration.ofSeconds(Math.max(3, settings.getTimeoutSeconds())))
+					.timeout(requestTimeout())
 					.header("Content-Type", "application/json");
 			headers.forEach(request::header);
-			HttpRequest prepared = request.POST(HttpRequest.BodyPublishers.ofString(mapper.writeValueAsString(body))).build();
+			String serializedBody=mapper.writeValueAsString(body);
 			for (int attempt = 0; attempt < maxAttempts; attempt++) {
+				HttpRequest prepared=request.timeout(requestTimeout()).POST(HttpRequest.BodyPublishers.ofString(serializedBody)).build();
 				HttpResponse<String> response = client.send(prepared,
 						HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
 				int status = response.statusCode();
 				if (status >= 200 && status < 300) return mapper.readTree(response.body());
 				if (attempt + 1 < maxAttempts && (status == 408 || status == 500 || status == 502
 						|| status == 503 || status == 504)) {
-					Thread.sleep((500L << attempt) + ThreadLocalRandom.current().nextLong(250L));
+					Thread.sleep(Math.min((500L << attempt) + ThreadLocalRandom.current().nextLong(250L),requestTimeout().toMillis()));
 					continue;
 				}
 				String errorBody = response.body().toLowerCase(Locale.ROOT);

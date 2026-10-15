@@ -1,5 +1,7 @@
 package vn.fs.service;
 
+import java.util.Arrays;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
@@ -24,7 +26,8 @@ final class ChatExplicitFilters {
         // A disclaimer about Java 21 does not invalidate a verified Java title.
         String bookFacts = intents.normalize(product.getName()+". "+rawBookFacts);
         String text = bookFacts + " " + category;
-        if(!matchesReadingPurpose(question,product) || !matchesFormat(question,product))return false;
+        if(!matchesReadingPurpose(question,product) || !matchesFormat(question,product)
+                || !matchesStorySubjects(question,product))return false;
         if(ChatBookFacts.has(q,"quan ly tien ca nhan|tai chinh ca nhan|quan ly chi tieu")
                 && !ChatBookFacts.has(q,"blockchain|bitcoin|tien ma hoa|tien dien tu")
                 && ChatBookFacts.has(bookFacts,"blockchain|bitcoin|chuoi khoi|tien ma hoa"))return false;
@@ -46,11 +49,11 @@ final class ChatExplicitFilters {
         } else if (word(q, "cong nghe") || word(q, "cntt")) {
             if (!Pattern.compile("\\b(lap trinh|cong nghe|tri tue nhan tao|dien tu|robot|ma nguon|phan mem|cau truc du lieu|co so du lieu|may tinh|java|python|javascript|backend|frontend|html|css|web development)\\b").matcher(bookFacts).find()) return false;
         }
-        if (Pattern.compile("\\b(tre em|thieu nhi|cho be)\\b").matcher(q).find()
+        if (!aboutChildren(q) && Pattern.compile("\\b(tre em|thieu nhi|cho be)\\b").matcher(q).find()
                 && !Pattern.compile("\\b(tre em|thieu nhi|cho be|co tich|dong thoai)\\b").matcher(text).find()) return false;
         if (word(q, "tieng anh") && !word(text, "tieng anh") && !word(text, "english")) return false;
         if ((word(q,"truyen") || word(q,"tieu thuyet") || word(q,"van hoc"))
-                && (!Pattern.compile("\\b(truyen|tieu thuyet|van hoc|cau chuyen|dong thoai|co tich)\\b").matcher(text).find()
+                && (!Pattern.compile("\\b(truyen|tieu thuyet|van hoc|cau chuyen|dong thoai|co tich|hoi uc|hoi tuong|nhan vat)\\b").matcher(text).find()
                     || programmingRequest(bookFacts)
                     || ChatBookFacts.has(bookFacts,"doi nhan xu the|ky nang giao tiep|nghe thuat giao tiep")
                        && !ChatBookFacts.has(bookFacts,"tieu thuyet|truyen ngan|truyen dai|tac pham van hoc"))) return false;
@@ -58,6 +61,74 @@ final class ChatExplicitFilters {
                 && Pattern.compile("\\b(nang cao|chuyen sau|advanced)\\b").matcher(text).find()
                 && !Pattern.compile("\\b(can ban|co ban|nhap mon|nguoi moi)\\b").matcher(text).find()) return false;
         return true;
+    }
+
+    /** Explicit subject evidence must describe content, not its shelf, audience or style. */
+    boolean matchesStorySubjects(String question,Product product) {
+        String q=intents.normalize(intents.discoveryQuery(question));
+        String[] alternatives=q.split("\\b(?:hoac|or)\\b");
+        if(alternatives.length>1 && Arrays.stream(alternatives).noneMatch(String::isBlank))
+            return Arrays.stream(alternatives).anyMatch(branch->matchesStorySubjects(
+                ChatBookFacts.has(branch,"ve|chu de|thich|quan tam")?branch:"sách về "+branch,product));
+        // Apply purpose within each OR branch, so a reflective communication
+        // mention cannot borrow eligibility from a different requested subject.
+        if(!matchesCommunicationPurpose(q,product))return false;
+        // These are synonym families, not product IDs. Each expressed subject is
+        // mandatory; a high relevance score cannot make a missing subject true.
+        List<List<String>> subjects=new ArrayList<>(List.of(
+            List.of("loai vat","dong vat","muong thu"),
+            List.of("noi dau","dau don","ton thuong","dau buon","mat mat"),
+            List.of("ngheo","ngheo kho","ngheo doi","thieu thon","kho khan vat chat"),
+            List.of("moi truong hoc","truong hoc","nha truong","o truong","den truong","lop hoc","hoc duong"),
+            List.of("trao phung","cham biem","satire","satirical"),
+            List.of("van hoa dan gian","truyen dan gian","truyen co tich","folklore","folktales"),
+            List.of("mang may tinh","computer networking","network protocols"),
+            List.of("co so du lieu","database","data modeling"),
+            List.of("lam phat","inflation"),
+            List.of("that nghiep","unemployment"),
+            List.of("ty gia","exchange rates"),
+            List.of("quan ly thoi gian","quan tri thoi gian","sap xep thoi gian","su dung thoi gian","time management"),
+            List.of("ky nang hoc tap","phuong phap hoc","cach hoc hieu qua","hoc tap hieu qua","study skills","learning strategies")
+        ));
+        subjects.addAll(ChatCatalogQuery.subjectGroups());
+        // Families overlap for recall. A single expressed concept uses their
+        // union; independently expressed concepts still remain an AND.
+        java.util.Map<String,java.util.Set<String>> required=new java.util.LinkedHashMap<>();
+        for(List<String> subject:subjects)for(String term:subject)if(affirmed(q,term))
+            required.computeIfAbsent(term,key->new java.util.LinkedHashSet<>()).addAll(subject);
+        if(!matchesLiteraryOrigin(q,product))return false;
+        java.util.Map<String,String> approved=retrieval==null?java.util.Map.of():retrieval.approvedReadingFacts(product);
+        String source=product.getName()+". "+(retrieval==null?product.getDescription():
+            approved.getOrDefault("summary","")+". "+approved.getOrDefault("learningGoal",""));
+        String facts=intents.normalize(source);
+        if(!new ChatSubjectEvidence(intents).matches(question,facts,subjects))return false;
+        for(java.util.Set<String> subject:required.values())
+            if(subject.stream().noneMatch(term->affirmed(facts,term)))return false;
+        if(aboutChildren(q) && List.of("tre em","thieu nhi","co be","cau be","tuoi tho","thoi tho au")
+                .stream().noneMatch(term->affirmed(facts,term)))return false;
+        return true;
+    }
+
+    /** Literary origin is a classification, not the language of a translation
+     * or the nationality of the reader. Canonical descriptions/topic text may
+     * confirm it only through an explicit literature + origin phrase. */
+    private boolean matchesLiteraryOrigin(String query,Product product) {
+        String facts=intents.normalize(retrieval==null?product.getDescription():retrieval.searchableText(product));
+        String form="(?:van hoc|van chuong|truyen|tieu thuyet|thi ca|tho)(?: (?:tranh|thieu nhi|hien thuc|co dien|hien dai))? ";
+        for(String origin:List.of("viet nam|viet","nhat ban|nhat","trung quoc","han quoc","nga","phap","my","anh")) {
+            Pattern phrase=Pattern.compile("\\b"+form+"(?:"+origin+")\\b");
+            var requested=phrase.matcher(query);boolean required=false;
+            while(requested.find())if(affirmed(query,requested.group())){required=true;break;}
+            if(!required)continue;
+            var classified=phrase.matcher(facts);boolean confirmed=false;
+            while(classified.find())if(affirmed(facts,classified.group())){confirmed=true;break;}
+            if(!confirmed)return false;
+        }
+        return true;
+    }
+
+    private boolean aboutChildren(String q) {
+        return ChatBookFacts.has(q,"(?:truyen|cau chuyen|sach).*ve (?:tre em|co be|cau be)");
     }
 
     /** A broad literature/children shelf cannot prove the requested literary form. */
@@ -73,7 +144,11 @@ final class ChatExplicitFilters {
     }
 
     boolean matchesReadingPurpose(String question, Product product) {
-        String q=intents.normalize(question);
+        String q=intents.normalize(intents.discoveryQuery(question));
+        String[] alternatives=q.split("\\b(?:hoac|or)\\b");
+        if(alternatives.length>1 && Arrays.stream(alternatives).noneMatch(String::isBlank))
+            return Arrays.stream(alternatives).anyMatch(branch->matchesReadingPurpose(branch,product));
+        if(!matchesCommunicationPurpose(q,product))return false;
         String facts=retrieval==null?product.getName()+" "+product.getDescription():retrieval.searchableText(product);
         boolean coding=programmingRequest(question) || ChatBookFacts.has(q,"java|python|javascript|spring boot|sql");
         if(!coding && ChatBookFacts.has(q,"nghi qua nhieu|lo ca ngay|hay lo ve|lo lang|lo au")
@@ -82,6 +157,19 @@ final class ChatExplicitFilters {
         return coding
             || !ChatBookFacts.has(q,"nghi qua nhieu|lo ca ngay|hay lo|lo ve|lo au|lo lang|giao tiep|tam ly|cam xuc|phat trien ban than|ky nang song|quan ly tien ca nhan|tai chinh ca nhan")
             || !programmingRequest(facts);
+    }
+
+    private boolean matchesCommunicationPurpose(String query,Product product) {
+        if(!affirmed(query,"giao tiep") || List.of("truyen","tieu thuyet","van hoc","suy ngam")
+                .stream().anyMatch(form->affirmed(query,form)))return true;
+        String approved=intents.normalize(product.getName()+" "+(retrieval==null?product.getDescription():
+            retrieval.approvedReadingFacts(product).getOrDefault("summary","")));
+        // Generic communication books need instruction in their core content.
+        // A reflective learning goal or a broad shelf is insufficient evidence.
+        return List.of("giao tiếp","ứng xử","đối nhân xử thế","thuyết phục")
+                .stream().anyMatch(term->affirmed(approved,intents.normalize(term)))
+            && List.of("kỹ năng giao tiếp","nghệ thuật giao tiếp","nguyên tắc","phương pháp","hướng dẫn","luyện tập","thực hành")
+                .stream().anyMatch(term->affirmed(approved,intents.normalize(term)));
     }
 
     List<String> excludedLanguages(String question) {

@@ -93,4 +93,26 @@ class ChatMemoryStoreTest {
         new ChatMemoryStore(conversations,exchanges,new ObjectMapper()).restore(7L,SESSION,new ChatDialogueMemory.State());
         verify(exchanges,times(1)).findByConversationIdOrderByIdAsc(any());
     }
+
+    @Test void oldSnapshotRecoversOnlyServerRenderedTopicMenusAndMigratesOnce() throws Exception {
+        var conversations=mock(ChatConversationRepository.class);
+        var exchanges=mock(ChatExchangeRepository.class);
+        var mapper=new ObjectMapper();
+        var saved=new ChatConversation();saved.setStateJson("{\"initialized\":true,\"recommendationHistoryVersion\":1}");
+        when(conversations.findById(any())).thenReturn(Optional.of(saved));
+        var menu=new ChatResponseDto("Có các hướng này: trinh thám, lịch sử", "gemini", "test",false,
+            List.of(),List.of("Trinh thám","Lịch sử"),"m",ChatIntent.UNKNOWN,ChatSearchCriteriaDto.empty(),List.of());
+        menu.setExecution(Map.of("tool","respond","status","NEEDS_INPUT"));
+        var row=new ChatExchange();row.setResponseJson(mapper.writeValueAsString(menu));
+        var unrelated=new ChatExchange();unrelated.setResponseJson("{\"answer\":\"hướng khác\",\"chips\":[\"Khách tự gửi\"],\"products\":[]}");
+        when(exchanges.findByConversationIdOrderByIdAsc(any())).thenReturn(List.of(row,unrelated));
+        var state=new ChatDialogueMemory.State();var store=new ChatMemoryStore(conversations,exchanges,mapper);
+        store.restore(7L,SESSION,state);
+        assertEquals(List.of(List.of("Trinh thám","Lịch sử")),state.topicMenus);
+        assertEquals(1,state.topicMenuHistoryVersion);
+        state.topicMenus.clear();saved.setStateJson(mapper.writeValueAsString(state));
+        var restored=new ChatDialogueMemory.State();store.restore(7L,SESSION,restored);
+        assertTrue(restored.topicMenus.isEmpty());
+        verify(exchanges,times(1)).findByConversationIdOrderByIdAsc(any());
+    }
 }

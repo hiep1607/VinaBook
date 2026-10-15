@@ -21,6 +21,8 @@ final class ChatRecommendationIntake {
 
     Decision prepare(ChatRequestDto request, ChatDialogueMemory.State state, List<Product> catalog) {
         String message = request.getMessage(), q = language.normalize(message);
+        if ((!state.toolSearch.isEmpty() && ChatConversationSupport.repairQuestion(message,state,language))
+            || !state.toolSearch.isEmpty() && ChatConversationSupport.moreBooks(message,state,language)) return new Decision("",message);
         if (exempt(message, catalog)) {
             if (!search.named(message,catalog).isEmpty() || !search.quoted(message).isBlank())
                 observe(message,state,catalog,false);
@@ -118,7 +120,7 @@ final class ChatRecommendationIntake {
         var criteria = language.criteria(message, catalog);
         boolean subject = criteria.getTopics().stream().anyMatch(t -> !List.of("làm quà", "giáo trình", "thiếu nhi").contains(t))
             || !criteria.getAuthor().isBlank() || !criteria.getCategory().isBlank() && !q.matches(".*\\b(?:thieu nhi|tre em)\\b.*");
-        if (subject || !search.named(message,catalog).isEmpty() || ChatBookFacts.has(q, "truyen|tieu thuyet|tho|hoi hoa|am thuc|nau an|toan|vat ly|sinh hoc|thiet ke|thu gian|giai tri|giam stress|nhe nhang|de hieu|de doc")
+        if (subject || language.entertainmentRequest(message) || !search.named(message,catalog).isEmpty() || ChatBookFacts.has(q, "truyen|tieu thuyet|tho|hoi hoa|am thuc|nau an|toan|vat ly|sinh hoc|thiet ke|thu gian|giai tri|giam stress|nhe nhang|de hieu|de doc")
             || q.matches(".*\\b(?:sach ve|doc ve|doc de|hoc ve|hoc cach|tim hieu ve|quan tam)\\s+\\S+.*"))
             return ChatDialogueInterpreter.clean(message, 500);
         // Accept a free-text answer to our subject question, but never treat a budget or recipient as a subject.

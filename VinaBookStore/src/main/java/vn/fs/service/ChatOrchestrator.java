@@ -64,6 +64,30 @@ public class ChatOrchestrator {
                 result=registry.execute(tool,mapper.createObjectNode().put("mode","recent"),new ChatTool.Context(request,state));
                 status=result.status();
                 result=new ChatTool.Result("Sách đã mua nằm trong mục Đơn hàng; giỏ hiện tại chỉ chứa các sách đang định mua.\n\n"+result.answer(),result.intent(),result.products(),result.actions(),result.status());
+            } else if(ChatBookApplication.requested(request.getMessage(),language)
+                    && (state.focus!=null || !state.shortlist.isEmpty() || request.getActiveProductId()!=null)) {
+                tool="getProducts";
+                result=registry.execute(tool,mapper.createObjectNode().put("field","explanation"),new ChatTool.Context(request,state));
+                status=result.status();
+            } else if(!state.toolSearch.isEmpty() && ChatConversationSupport.repairQuestion(request.getMessage(),state,language)) {
+                tool="getProducts";
+                result=registry.execute(tool,mapper.createObjectNode().put("field","explanation").put("reference","selection"),new ChatTool.Context(request,state));
+                status=result.status();
+            } else if(!analyzeReading && products!=null && language.asksForBookSuggestions(request.getMessage()) && quoted.isBlank()
+                    && new ChatCatalogQuery(language,data).named(request.getMessage(),products.findByStatusTrue()).isEmpty()
+                    && (!stated.getTopics().isEmpty() || new ChatCatalogQuery(language,data).semanticConstraint(request.getMessage()))) {
+                tool="recommendBooks";
+                var arguments=mapper.createObjectNode().put("scope","new").put("query",language.discoveryQuery(request.getMessage()));
+                if(stated.getMinPrice()!=null)arguments.put("minPrice",stated.getMinPrice());
+                if(stated.getMaxPrice()!=null)arguments.put("maxPrice",stated.getMaxPrice());
+                result=registry.execute(tool,arguments,new ChatTool.Context(request,state));status=result.status();
+            } else if(language.entertainmentRequest(request.getMessage()) && quoted.isBlank()
+                    && products!=null && new ChatCatalogQuery(language,data).named(request.getMessage(),products.findByStatusTrue()).isEmpty()) {
+                tool="recommendBooks";
+                var arguments=mapper.createObjectNode().put("scope","new").put("query",language.discoveryQuery(request.getMessage()));
+                if(stated.getMinPrice()!=null)arguments.put("minPrice",stated.getMinPrice());
+                if(stated.getMaxPrice()!=null)arguments.put("maxPrice",stated.getMaxPrice());
+                result=registry.execute(tool,arguments,new ChatTool.Context(request,state));status=result.status();
             } else if(ChatConversationSupport.audienceOnly(request.getMessage(),language)
                     && (products==null || new ChatCatalogQuery(language,data).named(request.getMessage(),products.findByStatusTrue()).isEmpty())) {
                 tool="respond";
@@ -191,7 +215,7 @@ public class ChatOrchestrator {
                 tool="findRelatedBooks";
                 result=registry.execute(tool,mapper.createObjectNode().put("productId",relatedAnchors.get(0).getProductId()),new ChatTool.Context(request,state));
                 status=result.status();
-            } else if (!analyzeReading && language.moreInCurrentTopic(request.getMessage()) && !state.toolSearch.isEmpty()
+            } else if (!analyzeReading && ChatConversationSupport.moreBooks(request.getMessage(),state,language) && !state.toolSearch.isEmpty()
                     && !ChatBookFacts.has(plainMessage,"gio hang|vao gio|trong gio|them gio|mua|dat hang")) {
                 tool = "searchProducts";
                 var arguments=mapper.createObjectNode().put("scope", "more");
@@ -293,7 +317,7 @@ public class ChatOrchestrator {
                 + "Ví dụ tìm 3 sách lập trình, ưu tiên Python, không lấy Java, tổng dưới 300k: recommendBooks query=lập trình, preferredQuery=Python, excludedQuery=Java, limit=3,totalBudget=300000. Tổng ngân sách là tiền cả nhóm, khác giá mỗi cuốn. "
                 + "Nếu một tin nhắn vừa tìm sách vừa hỏi chính sách, phải thực hiện cả hai ý trong calls. Nhiều chủ đề lựa chọn dùng một searchProducts/recommendBooks với query nối hoặc; nhiều thể loại cho cùng một cuốn giữ phép giao. Không chia một số lượng chung hoặc một tổng ngân sách thành nhiều tool tìm sách riêng. "
                 + "Mặc định giới thiệu tối đa 3 cuốn, ưu tiên ít lựa chọn có căn cứ sát nhu cầu đọc; khách yêu cầu số cụ thể thì limit đúng số đó, kể cả lớn hơn 3. Không giảm số khách yêu cầu vì đoán kho thiếu. Backend loại sách đã giới thiệu, tách sách đúng yêu cầu và sách gần chủ đề, báo rõ nếu thiếu. Chỉ muốn đúng thể loại dùng match=exact_only. "
-                + "Giữ nguyên toán tử hoặc/OR giữa chủ đề trong query, ví dụ Java hoặc Python; không đổi thành Java Python. "
+                + "Hiểu “phiêu lưu hay trinh thám” là lựa chọn OR giữa chủ đề, còn “sách hay” là lời đánh giá. “Tiếp”, “thêm nữa” sau gợi ý sách là scope=more; dấu “?” cần giải thích câu trước, không hỏi nhu cầu lại từ đầu. Giữ nguyên toán tử hoặc/OR giữa chủ đề trong query, ví dụ Java hoặc Python; không đổi thành Java Python. "
                 + "Thông tin đã biết Java cơ bản là trình độ người dùng, không phải yêu cầu tìm lại sách Java cơ bản. "
                 + "Tư vấn nên đọc/mua gì, chọn sách phù hợp, trình độ beginner/experienced và ngân sách nhiều cuốn dùng recommendBooks. "
                 + "Ví dụ chọn 2 cuốn trong 300k: recommendBooks query=chủ đề, limit=2, totalBudget=300000; không chia ngân sách thành giá mỗi cuốn. "
@@ -361,7 +385,7 @@ public class ChatOrchestrator {
             tool=String.join(",",executed);
             }
             if(narrator!=null && tool.equals("getProducts")
-                    && (ChatConversationSupport.explanation(request.getMessage(),language)
+                    && (ChatBookApplication.requested(request.getMessage(),language) || ChatConversationSupport.explanation(request.getMessage(),language)
                         || ChatBookFacts.has(plainMessage,"so sanh|khac nhau|khac gi|nhe nhang|de doc|nen chon|hay hon|tot hon|noi dung"))) {
                 ChatTool.Result presented=narrator.explain(result,request.getMessage(),state);
                 if(presented!=null)result=presented;

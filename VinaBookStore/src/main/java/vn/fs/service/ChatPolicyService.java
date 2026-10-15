@@ -23,6 +23,9 @@ public class ChatPolicyService {
     }
 
     String answer(String question, ChatDialogueMemory.State state) {
+        java.util.Set<String> requestedTopics=policyTopics(intents.normalize(question));
+        if(requestedTopics.size()>1 && !(state.returnActive
+                && requestedTopics.stream().allMatch(t->java.util.Set.of("returns","support").contains(t))))return answer(question);
         if(!handlesReturn(question,state))return answer(question);
         String q=intents.normalize(question);
         boolean general=contains(q,"chinh sach","dieu kien","quy dinh")
@@ -107,6 +110,9 @@ public class ChatPolicyService {
 
 	public String answer(String question) {
 		String q = intents.normalize(question);
+		java.util.Set<String> topics=policyTopics(q);
+		if(topics.size()>1)return topics.stream().map(key->policyAnswer(key,q))
+			.collect(java.util.stream.Collectors.joining("\n\n"));
 		if (contains(q, "huy don", "huy dat hang")) {
 			if (store != null) return store.text("cancellation");
 			return "Bạn có thể nhắn “hủy đơn gần nhất” hoặc “hủy đơn #mã đơn”. Mình sẽ kiểm tra tài khoản và trạng thái rồi yêu cầu xác nhận. Đơn COD chưa thanh toán, đang chờ xử lý có thể hủy; đơn đang giao, đã hoàn thành hoặc thanh toán trực tuyến cần liên hệ cửa hàng. Chưa có đơn nào bị hủy chỉ vì bạn hỏi chính sách.";
@@ -117,23 +123,7 @@ public class ChatPolicyService {
 			if (store != null) return store.text("returns");
 			return "VinaBook hỗ trợ đổi trả trong 7 ngày nếu sách lỗi in, rách hoặc giao sai. Bạn giữ hóa đơn và liên hệ trang Hỗ trợ để được xử lý.";
 		}
-		if (contains(q, "phi ship", "phi giao", "van chuyen", "giao hang", "freeship", "bao lau")) {
-			String rule = store != null ? store.text("shipping")
-						: "Phí giao hàng là 20.000đ và được miễn phí cho đơn từ 300.000đ. Thời gian giao dự kiến 2 đến 4 ngày làm việc.";
-
-            // A price cap for each recommendation is not an order subtotal.
-            if(ChatBookFacts.has(q,"moi cuon|gia moi|gia tung") && ChatBookFacts.has(q,"goi y|tim|gioi thieu|tu van"))return rule;
-			java.util.List<Long> subtotals=ChatMoney.parse(q).stream().distinct().limit(4).collect(java.util.stream.Collectors.toList());
-			if(subtotals.isEmpty())return rule;
-			StringBuilder answer=new StringBuilder(rule);
-			for(long subtotal:subtotals) {
-				long fee=store!=null?store.shipping(subtotal):subtotal<300000?20000:0;
-				answer.append("\n• Tiền sách ").append(money(subtotal)).append(": ")
-						.append(fee==0?"miễn phí giao hàng":"phí giao hàng "+money(fee))
-						.append("; tổng thanh toán ").append(money(subtotal+fee)).append(".");
-			}
-			return answer.toString();
-		}
+		if (topics.contains("shipping")) return shippingAnswer(q);
 		if (contains(q, "thanh toan", "cod", "vietqr", "vnpay", "momo", "chuyen khoan")) {
 			if (store != null) return store.text("payment");
 			return "Bạn có thể chọn COD để thanh toán khi nhận hàng. VietQR, VNPay Sandbox và MoMo Test sẽ xuất hiện ở bước thanh toán khi cửa hàng đã cấu hình cổng tương ứng.";
@@ -144,6 +134,45 @@ public class ChatPolicyService {
 		}
 		return "Mình có thể giúp bạn làm rõ chuyện giao hàng, thanh toán, đổi trả hoặc cách đặt hàng. Bạn đang vướng ở bước nào, hay muốn kiểm tra chính sách nào trước khi mua?";
 	}
+
+    private java.util.Set<String> policyTopics(String q) {
+        java.util.Set<String> topics=new java.util.LinkedHashSet<>();
+        if(contains(q,"thanh toan","cod","vietqr","vnpay","momo","chuyen khoan"))topics.add("payment");
+        if(ChatBookFacts.has(q,"ship|phi giao|van chuyen|giao hang|freeship|thoi gian giao|bao lau nhan|nhan duoc")
+                || contains(q,"bao lau") && !ChatBookFacts.has(q,"tra sach|tra hang|doi tra|hoan tien|huy don"))topics.add("shipping");
+        if(contains(q,"doi sach","doi tra","tra hang","tra sach","hoan tien","sach loi","sach rach","giao sai"))topics.add("returns");
+        if(contains(q,"huy don","huy dat hang"))topics.add("cancellation");
+        if(contains(q,"lien he","hotline","email"))topics.add("support");
+        return topics;
+    }
+
+    private String policyAnswer(String key,String q) {
+        if("shipping".equals(key))return shippingAnswer(q);
+        if("returns".equals(key))return returnsPolicy();
+        if(store!=null)return store.text(key);
+        return switch(key) {
+            case "payment" -> "Bạn có thể chọn COD để thanh toán khi nhận hàng. VietQR, VNPay Sandbox và MoMo Test sẽ xuất hiện ở bước thanh toán khi cửa hàng đã cấu hình cổng tương ứng.";
+            case "cancellation" -> "Đơn COD chưa thanh toán, đang chờ xử lý có thể hủy sau khi kiểm tra và xác nhận. Đơn đang giao, đã hoàn thành hoặc thanh toán trực tuyến cần liên hệ cửa hàng.";
+            case "support" -> "Bạn có thể gửi yêu cầu tại trang Liên hệ hoặc email hotro@vinabook.vn. Không gửi mật khẩu, OTP hay thông tin thẻ qua nội dung hỗ trợ.";
+            default -> "Chưa có chính sách được xác nhận cho mục này.";
+        };
+    }
+
+    private String shippingAnswer(String q) {
+        String rule=store!=null?store.text("shipping")
+            :"Phí giao hàng là 20.000đ và được miễn phí cho đơn từ 300.000đ. Thời gian giao dự kiến 2 đến 4 ngày làm việc.";
+        // A price cap for each recommendation is not an order subtotal.
+        if(ChatBookFacts.has(q,"moi cuon|gia moi|gia tung") && ChatBookFacts.has(q,"goi y|tim|gioi thieu|tu van"))return rule;
+        java.util.List<Long> subtotals=ChatMoney.parse(q).stream().distinct().limit(4).toList();
+        StringBuilder answer=new StringBuilder(rule);
+        for(long subtotal:subtotals) {
+            long fee=store!=null?store.shipping(subtotal):subtotal<300000?20000:0;
+            answer.append("\n• Tiền sách ").append(money(subtotal)).append(": ")
+                .append(fee==0?"miễn phí giao hàng":"phí giao hàng "+money(fee))
+                .append("; tổng thanh toán ").append(money(subtotal+fee)).append(".");
+        }
+        return answer.toString();
+    }
 
 	private boolean contains(String q, String... values) {
 		for (String value : values) if (q.contains(value)) return true;

@@ -28,6 +28,8 @@ public class BookKnowledgeService {
     private final AiGateway ai;
     private final ObjectMapper mapper;
     private final ChatIntentService language;
+    private final ThreadLocal<Map<Long,BookProfile>> chatReadProfiles=new ThreadLocal<>();
+    private final ThreadLocal<Map<Long,List<String>>> chatReadTopics=new ThreadLocal<>();
     private final ExecutorService indexWorker=new ThreadPoolExecutor(1,1,0,TimeUnit.MILLISECONDS,
         new ArrayBlockingQueue<>(64),job->{Thread thread=new Thread(job,"book-index");thread.setDaemon(true);return thread;},
         new ThreadPoolExecutor.DiscardPolicy());
@@ -242,24 +244,46 @@ public class BookKnowledgeService {
         return String.join(" ", List.of(safe(product.getName()),safe(product.getAuthor()),
                 product.getCategory()==null?"":safe(product.getCategory().getCategoryName()),
                 safe(product.getDescription()),safe(summary),bounded(audience,160),bounded(level,80),
-                bounded(style,160),bounded(goal,200),String.join(" ",topicNames))).trim();
+                bounded(style,160),bounded(goal,200),topicNames.stream().map(BookKnowledgeService::topicSearchTerm).collect(Collectors.joining(" ")))).trim();
+    }
+
+    /** Editorial facet headings are UI labels, not subject words in retrieval. */
+    static String topicSearchTerm(String topic) {
+        return topic==null?"":topic.replaceFirst("(?iu)^(?:Thể loại|Chủ đề|Mục đích|Dạng nội dung|Độc giả|Cách trình bày|Mức đọc):\\s*", "");
+    }
+
+    /** One ephemeral read scope per chat turn. The database remains the source;
+     * no profile survives the turn or crosses threads/accounts. Price and stock
+     * are never cached here. Missing/draft profiles still use the old fallback. */
+    public void beginChatRead(List<Product> catalog) {
+        chatReadProfiles.remove();chatReadTopics.remove();
+        Map<Long,BookProfile> snapshot=new HashMap<>();
+        catalog.forEach(product->snapshot.put(product.getProductId(),null));
+        profiles.findAllById(snapshot.keySet()).forEach(profile->snapshot.put(profile.getProductId(),profile));
+        chatReadProfiles.set(snapshot);
+    }
+    public void endChatRead() { chatReadProfiles.remove();chatReadTopics.remove(); }
+    private Optional<BookProfile> readingProfile(Long id) {
+        Map<Long,BookProfile> snapshot=chatReadProfiles.get();
+        return (snapshot!=null && snapshot.containsKey(id)?Optional.ofNullable(snapshot.get(id)):profiles.findById(id))
+            .filter(BookProfile::isApproved);
     }
 
     public String searchableText(Product product) {
-        return profiles.findById(product.getProductId()).filter(BookProfile::isApproved)
+        return readingProfile(product.getProductId())
                 .map(BookProfile::getSearchText).filter(s -> s != null && !s.isBlank())
                 .orElseGet(() -> safe(product.getName())+" "+safe(product.getAuthor())+" "+safe(product.getDescription()));
     }
 
     public String approvedDescription(Product product) {
-        return profiles.findById(product.getProductId()).filter(BookProfile::isApproved)
+        return readingProfile(product.getProductId())
                 .map(p -> String.join(" ", safe(p.getSummary()),safe(p.getAudience()),safe(p.getReadingLevel()),
                         safe(p.getReadingStyle()),safe(p.getLearningGoal())).trim())
                 .filter(s -> !s.isBlank()).orElseGet(() -> safe(product.getDescription()));
     }
 
     public Map<String,String> approvedReadingFacts(Product product) {
-        BookProfile profile=profiles.findById(product.getProductId()).filter(BookProfile::isApproved).orElse(null);
+        BookProfile profile=readingProfile(product.getProductId()).orElse(null);
         Map<String,String> facts=new LinkedHashMap<>();
         facts.put("summary",profile==null?safe(product.getDescription()):safe(profile.getSummary()));
         if(profile!=null) {
@@ -289,7 +313,7 @@ public class BookKnowledgeService {
     }
 
     public String approvedBibliography(Product product, Set<String> requested) {
-        BookProfile profile = profiles.findById(product.getProductId()).filter(BookProfile::isApproved).orElse(null);
+        BookProfile profile = readingProfile(product.getProductId()).orElse(null);
         if (profile == null) return ChatBookFacts.missingBibliography(requested);
         List<String> facts = new ArrayList<>();
         Set<String> missing = new LinkedHashSet<>();
@@ -315,19 +339,77 @@ public class BookKnowledgeService {
     }
 
     public List<Product> rankByMeaning(String query, List<Product> candidates) {
+        return rankByMeaning(query,candidates,true);
+    }
+    List<Product> rankByMeaning(String query,List<Product> candidates,boolean useEmbedding) {
         if (query == null || query.isBlank() || candidates.size() < 2) return candidates;
         Map<Long,BookProfile> known = profiles.findAllById(candidates.stream().map(Product::getProductId)
                 .collect(Collectors.toList())).stream().filter(BookProfile::isApproved)
                 .collect(Collectors.toMap(BookProfile::getProductId,p -> p));
+        Map<Long,List<String>> facets=readingTopics(known.keySet());
+        BookRelevanceScorer editorial=new BookRelevanceScorer(language);
         List<Double> vector = null;
-        if (embeddings.available() && known.values().stream().anyMatch(p -> p.getEmbeddingJson()!=null)) {
+        if (useEmbedding && embeddings.available() && known.values().stream().anyMatch(p -> p.getEmbeddingJson()!=null)) {
             try { vector = embeddings.query(query); } catch (Exception ignored) { /* lexical/graph search remains available */ }
         }
         final List<Double> queryVector = vector;
         List<Product> ranked = new ArrayList<>(candidates);
-        ranked.sort(Comparator.comparingDouble((Product p) -> score(query,p,known.get(p.getProductId()),queryVector))
+        ranked.sort(Comparator.comparingDouble((Product p) -> score(query,p,known.get(p.getProductId()),queryVector)
+                +editorial.score(query,p,known.get(p.getProductId()),facets.getOrDefault(p.getProductId(),List.of())))
                 .reversed().thenComparing(Product::getSold,Comparator.reverseOrder()).thenComparing(Product::getProductId));
         return ranked;
+    }
+
+    /** Two batch reads, restricted to approved candidate profiles; no per-book topic queries. */
+    private Map<Long,List<String>> rankingTopics(Set<Long> approvedIds) {
+        if(approvedIds.isEmpty())return Map.of();
+        List<BookTopicLink> matched=links.findByProductIdIn(approvedIds);
+        Set<Long> ids=matched.stream().map(BookTopicLink::getTopicId).collect(Collectors.toSet());
+        if(ids.isEmpty())return Map.of();
+        Map<Long,String> names=topics.findAllById(ids).stream()
+            .collect(Collectors.toMap(BookTopic::getId,BookTopic::getName));
+        Map<Long,List<String>> result=new HashMap<>();
+        for(BookTopicLink link:matched) {
+            String name=names.get(link.getTopicId());
+            if(approvedIds.contains(link.getProductId()) && name!=null)
+                result.computeIfAbsent(link.getProductId(),id->new ArrayList<>()).add(name);
+        }
+        return result;
+    }
+
+    private Map<Long,List<String>> readingTopics(Set<Long> ids) {
+        Map<Long,BookProfile> profiles=chatReadProfiles.get();
+        if(profiles==null)return rankingTopics(ids);
+        Map<Long,List<String>> all=chatReadTopics.get();
+        if(all==null) {
+            Set<Long> approved=profiles.entrySet().stream().filter(e->e.getValue()!=null && e.getValue().isApproved())
+                .map(Map.Entry::getKey).collect(Collectors.toSet());
+            all=rankingTopics(approved);chatReadTopics.set(all);
+        }
+        Map<Long,List<String>> result=new HashMap<>();
+        for(Long id:ids)result.put(id,all.getOrDefault(id,List.of()));
+        return result;
+    }
+    public Map<Long,List<String>> topicLabels(List<Product> catalog) {
+        Set<Long> approved=catalog.stream().filter(p->Boolean.TRUE.equals(p.getStatus()) && p.getQuantity()>0)
+            .filter(p->readingProfile(p.getProductId()).isPresent()).map(Product::getProductId).collect(Collectors.toSet());
+        return readingTopics(approved);
+    }
+
+    /** Planning hints from approved labels, never a promise of a constraint match. */
+    public List<String> topicSuggestionNames(List<Product> catalog) {
+        Set<Long> approved=catalog.stream().filter(p->Boolean.TRUE.equals(p.getStatus()) && p.getQuantity()>0)
+            .filter(p->readingProfile(p.getProductId()).isPresent()).map(Product::getProductId).collect(Collectors.toSet());
+        Map<String,Set<Long>> books=new TreeMap<>();
+        readingTopics(approved).forEach((id,names)->names.forEach(raw->{
+            if(raw.matches("(?iu)^(?:Độc giả|Cách trình bày|Mức đọc|Dạng nội dung|Mục đích):.*"))return;
+            String name=topicSearchTerm(raw).split(" / ",2)[0].strip();
+            if(name.length()>=3 && name.length()<=64 && name.matches("[\\p{L}\\p{N}][\\p{L}\\p{N} ,/–-]*"))
+                books.computeIfAbsent(name,key->new HashSet<>()).add(id);
+        }));
+        return books.entrySet().stream().filter(e->e.getValue().size()>=2)
+            .sorted(Comparator.<Map.Entry<String,Set<Long>>>comparingInt(e->e.getValue().size()).reversed().thenComparing(Map.Entry::getKey))
+            .limit(60).map(Map.Entry::getKey).toList();
     }
 
     /** Vector matches broaden recall only as explicitly labelled nearby choices. */

@@ -60,6 +60,9 @@ public class ChatService {
     private ChatToolRegistry tools;
     @org.springframework.beans.factory.annotation.Autowired(required=false)
     public void setTools(ChatToolRegistry value) { tools=value; }
+    private ChatStructuredPipeline structuredPipeline;
+    @org.springframework.beans.factory.annotation.Autowired(required=false)
+    public void setStructuredPipeline(ChatStructuredPipeline value) { structuredPipeline=value; }
     private CartSyncService syncedCart;
     @org.springframework.beans.factory.annotation.Autowired
     public void setSyncedCart(CartSyncService value){syncedCart=value;}
@@ -96,6 +99,9 @@ public class ChatService {
 			} else if(customerFeatureQuestion(intents.normalize(request.getMessage()))) {
                 response=customerFeatureHelp(request,state);
             } else {
+				if (structuredPipeline != null && ai.isConfigured()) {
+					response = structuredPipeline.reply(request, state);
+				} else {
 				List<Product> catalog = products.findByStatusTrue().stream()
 					.filter(p -> Boolean.TRUE.equals(p.getStatus())).collect(Collectors.toList());
 				ChatRecommendationIntake intake = new ChatRecommendationIntake(intents, retrieval);
@@ -124,6 +130,7 @@ public class ChatService {
 					}
 				}
 			}
+				}
 			state.lastRequest = response.getIntent() == ChatIntent.ORDER_SUPPORT ? null : request.getRequestId();
 			state.lastResponse = response.getIntent() == ChatIntent.ORDER_SUPPORT ? null : response;
 			if (memoryStore != null) memoryStore.save(userId, request.getSessionId(), request.getRequestId(),
@@ -179,7 +186,7 @@ public class ChatService {
 		String question = request.getMessage().trim(), q = intents.normalize(question);
 		String guard = guardedAnswer(question);
 		if (guard != null) return clarification(request, guard, started);
-		if (privateText(question)) return clarification(request, "Bạn điền thông tin giao hàng vào form đặt hàng nhé. Mình cần thông tin ở đúng bước đó để lập đơn cho tài khoản của bạn; bạn không cần gửi địa chỉ hay số điện thoại trong tin nhắn.", started);
+		if (privateText(question)) return clarification(request, privateInputHelp(question), started);
         var purchaseCount=java.util.regex.Pattern.compile("\\b(?:mua|dat mua|chot|lay)\\s+(?:ngay\\s+)?(-?[0-9]+(?:[.,][0-9]+)?)\\s+(?:ban|cuon|quyen)\\b").matcher(q);
         if(!q.matches(".*\\b(?:khong|chua|dung)\\b.*") && purchaseCount.find()) {
             String count=purchaseCount.group(1);
@@ -241,7 +248,11 @@ public class ChatService {
             if(constraints.getMaxPrice()!=null)args.put("maxPrice",constraints.getMaxPrice());
             return localDiscovery(request,s,args,started);
         }
-		if(ChatConversationSupport.audienceOnly(question,intents) && search.named(question,catalog).isEmpty())
+		if(tools!=null && !s.toolSearch.isEmpty() && ChatConversationSupport.repairQuestion(question,s,intents)) {
+            var args=new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("field","explanation").put("reference","selection");
+            return localDiscovery(request,s,"getProducts",args,started);
+        }
+        if(ChatConversationSupport.audienceOnly(question,intents) && search.named(question,catalog).isEmpty())
 			return finish(request,ChatConversationSupport.readerQuestion(s,question),ChatIntent.UNKNOWN,List.of(),false,false,s,started);
         if(tools!=null && ChatConversationSupport.giftDiscovery(question,intents) && search.named(question,catalog).isEmpty()) {
             var args=new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("scope","new")
@@ -326,7 +337,7 @@ public class ChatService {
                 return localDiscovery(request,s,"findRelatedBooks",args,started);
             }
         }
-        if(tools!=null && intents.moreInCurrentTopic(question) && !s.toolSearch.isEmpty()
+        if(tools!=null && ChatConversationSupport.moreBooks(question,s,intents) && !s.toolSearch.isEmpty()
                 && !ChatBookFacts.has(q,"gio hang|vao gio|trong gio|them gio|mua|dat hang")) {
             var args=new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("scope","more");
             ChatSearchCriteriaDto stated=intents.criteria(question,List.of());
@@ -382,7 +393,7 @@ public class ChatService {
 		boolean compare = q.matches(".*\\b(so sanh|giong nhau|khac nhau|cuon nao|thu tu|doc truoc|dang mua hon)\\b.*");
 		boolean within = q.matches(".*\\b(trong so|trong nhung|con lai|hai cuon nay|cuon nao|thu tu|doc truoc)\\b.*");
 		boolean advice = q.matches(".*\\b(nen hoc|hoc .* hay .* truoc|lo trinh)\\b.*") && !compare;
-		boolean fresh = q.matches("^(tim|goi y|toi muon doc|toi muon mua sach de|cho toi sach|co sach|co cuon nao).*") && !similar && !ordinal;
+		boolean fresh = (intents.asksForBookSuggestions(question) || q.matches("^(tim|goi y|toi muon doc|toi muon mua sach de|cho toi sach|co sach|co cuon nao).*")) && !similar && !ordinal;
 		if(fresh) { within=false; if(!q.contains("so sanh")) compare=false; }
 		if(s.awaitingComparison && named.size()>=2) compare=true;
 		if (!title.isEmpty() && named.isEmpty() && !q.matches(".*(?:trong ten|co tu).*")) {
@@ -481,7 +492,7 @@ public class ChatService {
 		updateSearch(question,s,catalog,continuation(q) || within);
         if(tools!=null && !compare && !within && named.isEmpty()
                 && (classified==ChatIntent.DISCOVER_BOOKS || search.semanticConstraint(s.query) || intents.isBudgetOnlyDiscovery(question))) {
-            var args=new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("query",s.query).put("scope",continuation(q)?"continue":"new");
+            var args=new com.fasterxml.jackson.databind.ObjectMapper().createObjectNode().put("query",intents.discoveryQuery(s.query)).put("scope",continuation(q)?"continue":"new");
             if(s.criteria.getMinPrice()!=null)args.put("minPrice",s.criteria.getMinPrice());
             if(s.criteria.getMaxPrice()!=null)args.put("maxPrice",s.criteria.getMaxPrice());
             if(s.criteria.getMinRating()!=null)args.put("minRating",s.criteria.getMinRating());
@@ -573,7 +584,7 @@ public class ChatService {
 				selected=(search.semanticConstraint(s.query) || !s.criteria.getAuthor().isEmpty() || !s.criteria.getCategory().isEmpty()
 						|| intents.normalize(s.query).matches("^(con )?(cuon|sach) khac(?: khong)?[?!]*$")
 						? candidates : retrieval.directMatches(question,s.criteria,candidates)).stream().limit(requestedCount(question)).collect(Collectors.toList());
-				answer=selected.isEmpty()?"Mình cần biết thêm một chút để chọn sách sát nhu cầu hơn. Bạn muốn đọc chủ đề gì, cho bản thân hay làm quà?":renderBooks("Mình tìm được những lựa chọn này để bạn cân nhắc:",selected,null,false);
+				answer=selected.isEmpty()?"Mình cần biết thêm một chút để chọn sách sát nhu cầu hơn. Bạn muốn đọc về chủ đề gì hoặc để làm gì? Biết hướng đọc sẽ giúp mình chọn đúng hơn nhé.":renderBooks("Mình tìm được những lựa chọn này để bạn cân nhắc:",selected,null,false);
 			}
 		}
 		if(intent==ChatIntent.DISCOVER_BOOKS) {
@@ -656,6 +667,7 @@ public class ChatService {
 		return b.toString();
 	}
 	private ChatResponseDto finish(ChatRequestDto r,String answer,ChatIntent intent,List<Product> selected,boolean usedAi,boolean fallback,ChatDialogueMemory.State s,long started) {
+		if(intent!=ChatIntent.UNKNOWN)s.lastTask=intent.name();
 		List<ChatActionDto> actions=actions(intent,selected);
 		String provider=usedAi?ai.provider():"local";
 		return new ChatResponseDto(answer,provider,usedAi?ai.modelUsed():"",fallback,selected.stream().map(this::toDto).collect(Collectors.toList()),
@@ -674,7 +686,12 @@ public class ChatService {
 		x.removeAll(java.util.Set.of("sach","cuon","voi","with","the","and")); y.removeAll(java.util.Set.of("sach","cuon","voi","with","the","and"));
 		return (double)x.stream().filter(y::contains).count()/Math.max(1,Math.min(x.size(),y.size()));
 	}
-	static boolean privateText(String value) { return value!=null && value.matches("(?is).*(?:\\b0[0-9 .-]{9,14}\\b|[\\w.+-]+@[\\w.-]+\\.[a-z]{2,}|mật khẩu|OTP).*"); }
+	static boolean privateText(String value) { return value!=null && value.matches("(?is).*(?:\\b0[0-9 .-]{9,14}\\b|[\\w.+-]+@[\\w.-]+\\.[a-z]{2,}|mật khẩu|mat khau|\\bOTP(?:\\b|(?=[0-9]))|\\bpassword\\b).*"); }
+	private String privateInputHelp(String question) {
+		if (java.util.regex.Pattern.compile("\\botp(?:\\b|(?=[0-9]))|\\b(?:mat khau|password)\\b").matcher(intents.normalize(question)).find())
+			return "Bạn không cần gửi mật khẩu hoặc mã OTP trong chat. Mình không dùng các thông tin này để đăng nhập hay xác minh tài khoản; bạn hãy dùng trang Đăng nhập hoặc Quên mật khẩu trên web. Nếu vừa gửi thông tin thật, hãy đổi mật khẩu và không sử dụng lại mã đã chia sẻ.";
+		return "Bạn điền thông tin giao hàng vào form đặt hàng nhé. Mình cần thông tin ở đúng bước đó để lập đơn cho tài khoản của bạn; bạn không cần gửi địa chỉ hay số điện thoại trong tin nhắn.";
+	}
 	private String adviceFallback(String question) {
 		String q=intents.normalize(question);
 		if(q.contains("python") && q.contains("java")) return "Nếu bạn mới bắt đầu và chưa chọn hướng đi, Python thường dễ làm quen nhờ cú pháp gọn. Nếu mục tiêu là backend Java/Spring Boot hoặc chương trình học dùng Java, bạn có thể bắt đầu thẳng với Java. Bạn muốn học để làm web, phân tích dữ liệu hay theo môn học?";

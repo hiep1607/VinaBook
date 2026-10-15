@@ -197,7 +197,7 @@ class ChatConversationRefinementTest {
         when(products.findByStatusTrue()).thenReturn(List.of(fiction));
         var result=registry.execute("recommendBooks",mapper.readTree("{\"query\":\"văn học\",\"level\":\"beginner\"}"),new ChatTool.Context(request("Gợi ý văn học cho người ít đọc"),state));
         assertThat(result.products()).extracting(ChatProductDto::getId).containsExactly(3L);
-        assertThat(result.answer()).contains("chưa xác nhận mức đọc");
+        assertThat(result.answer()).contains("chưa đủ thông tin để xác nhận độ dễ đọc");
     }
     @Test void worryRecommendationsExcludeProgrammingEvenWhenItMentionsHabits() {
         Product coding=book(3,"Pragmatic Programmer","Thói quen nghề nghiệp của kỹ sư phần mềm và thợ code.");

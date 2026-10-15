@@ -173,6 +173,7 @@ final class ChatCatalogQuery {
         return found;
     }
     static boolean word(String text, String phrase) { return Pattern.compile("\\b" + Pattern.quote(phrase) + "\\b").matcher(text).find(); }
+    static List<List<String>> subjectGroups() { return GROUPS; }
     private String category(Product p) { return p.getCategory() == null ? "" : language.normalize(p.getCategory().getCategoryName()); }
     private String text(Product p) { return language.normalize(p.getName() + " " + p.getDescription()) + " " + category(p); }
     private String content(Product p) {

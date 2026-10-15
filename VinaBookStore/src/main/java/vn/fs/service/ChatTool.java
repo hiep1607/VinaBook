@@ -29,7 +29,11 @@ public interface ChatTool {
     }
     record Context(ChatRequestDto request, ChatDialogueMemory.State state) {}
     record Result(String answer, ChatIntent intent, List<ChatProductDto> products,
-                  List<ChatActionDto> actions, String status) {
+                  List<ChatActionDto> actions, String status, List<String> chips) {
+        public Result(String answer, ChatIntent intent, List<ChatProductDto> products,
+                      List<ChatActionDto> actions, String status) {
+            this(answer, intent, products, actions, status, List.of());
+        }
         static Result text(String answer, ChatIntent intent) {
             return new Result(answer, intent, List.of(), List.of(), "COMPLETED");
         }

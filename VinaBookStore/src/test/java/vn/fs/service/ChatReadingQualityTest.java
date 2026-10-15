@@ -121,7 +121,7 @@ class ChatReadingQualityTest {
         ChatBuiltinTools tools=new ChatBuiltinTools(repo,new ChatRetrievalService(language),language,mock(ChatOrderSupportService.class),new ChatPolicyService(language));
         ChatRequestDto req=new ChatRequestDto();req.setMessage("Gợi ý văn học cho người ít đọc");
         var result=tools.recommendBooks().execute(mapper.readTree("{\"query\":\"văn học\"}"),new ChatTool.Context(req,new ChatDialogueMemory.State()));
-        assertThat(result.answer()).contains("Chưa xác nhận độ dễ đọc","Sách theo nội dung bạn tìm").doesNotContain("Sách đúng yêu cầu");
+        assertThat(result.answer()).contains("chưa đủ thông tin để xác nhận độ dễ đọc","Sách theo nội dung bạn tìm").doesNotContain("Sách đúng yêu cầu");
     }
     @Test void NarratorRejectsAgeFitIntroAndInventedEaseButKeepsVerifiedLimitations() throws Exception {
         Product p=book(1,"Truyện Bé","Truyện thiếu nhi về tình bạn.","Sách thiếu nhi");
@@ -134,7 +134,7 @@ class ChatReadingQualityTest {
         String intro="Mình chọn những cuốn phù hợp với độ tuổi của bé.";
         String reason="Truyện giúp trẻ dễ dàng làm quen và phát triển ngôn ngữ.";
         when(ai.complete(anyString(),anyList(),anyString())).thenReturn(mapper.writeValueAsString(Map.of("intro",intro,"reasons",List.of(Map.of("productId",1,"evidenceField","summary","evidence",p.getDescription(),"reason",reason)))));
-        assertThat(narrator.present(base,req.getMessage(),state).answer()).contains("Chưa xác nhận độ dễ đọc, độ tuổi đọc").doesNotContain(intro,reason);
+        assertThat(narrator.present(base,req.getMessage(),state).answer()).contains("chưa đủ thông tin để xác nhận độ dễ đọc, độ tuổi đọc").doesNotContain(intro,reason);
     }
     @Test void EmptyResultDoesNotInviteAnAlreadyExhaustedNearbySearch() {
         AiGateway ai=mock(AiGateway.class);

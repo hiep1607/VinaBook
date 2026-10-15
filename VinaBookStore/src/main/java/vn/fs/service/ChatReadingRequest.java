@@ -188,6 +188,7 @@ final class ChatReadingRequest {
     boolean preferred(Map<String,Object> filters,Product book,ChatRetrievalService data) {
         String preference=language.normalize(Objects.toString(filters.get("preferredQuery"),""))
             .replaceFirst("^(?:sach ve |sach |ve )","").trim();
+        if(preference.matches("truyen chu(?: hon)?"))return proseStory(book,data);
         ChatReadingFit fit=new ChatReadingFit(language);
         String simplePreference=preference.replaceFirst("^(?:truyen |van hoc |noi dung )","");
         for(String need:fit.needs(filters)) {
@@ -195,6 +196,17 @@ final class ChatReadingRequest {
             if(simplePreference.matches("(?:"+words+")(?: hon)?"))return fit.confirmed(need,data.approvedReadingFacts(book));
         }
         return !preference.isBlank() && ChatCatalogQuery.word(language.normalize(data.searchableText(book)),preference);
+    }
+
+    boolean proseStory(Product book,ChatRetrievalService data) {
+        return proseStory(data.descriptiveText(book));
+    }
+    boolean proseStory(String description) {
+        String facts=language.normalize(description);
+        ChatExplicitFilters evidence=new ChatExplicitFilters(language);
+        return !evidence.affirmed(facts,"truyen tranh")
+            && List.of("tieu thuyet","truyen dai","truyen ngan","dong thoai","co tich")
+                .stream().anyMatch(form->evidence.affirmed(facts,form));
     }
 
     List<Product> prioritize(List<Product> books,Map<String,Object> filters,ChatRetrievalService data) {

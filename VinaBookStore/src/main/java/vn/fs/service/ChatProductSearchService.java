@@ -39,7 +39,8 @@ public class ChatProductSearchService {
 			return named;
 		}
 
-		List<Product> filtered = new ArrayList<>(catalog);
+		ChatExplicitFilters mandatory = new ChatExplicitFilters(intents);
+		List<Product> filtered = catalog.stream().filter(p -> mandatory.matches(question,p)).collect(Collectors.toList());
 		if (!criteria.getCategory().isEmpty()) {
 			filtered = filtered.stream().filter(product -> product.getCategory() != null
 					&& criteria.getCategory().equalsIgnoreCase(product.getCategory().getCategoryName()))

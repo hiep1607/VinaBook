@@ -44,6 +44,14 @@ public class ChatRetrievalService {
 	private BookKnowledgeService knowledge;
 	@org.springframework.beans.factory.annotation.Autowired(required=false)
 	public void setKnowledge(BookKnowledgeService value) { this.knowledge = value; }
+    private final ThreadLocal<Boolean> topicPreparation=new ThreadLocal<>();
+    void beginTopicPreparation(){topicPreparation.set(true);}
+    void endTopicPreparation(){topicPreparation.remove();}
+    java.util.Map<Long,List<String>> topicLabels(List<Product> catalog){return knowledge==null?java.util.Map.of():knowledge.topicLabels(catalog);}
+    List<String> topicSuggestionNames(List<Product> catalog){return knowledge==null?List.of():knowledge.topicSuggestionNames(catalog);}
+    void beginTurnRead(List<Product> catalog) { if(knowledge!=null)knowledge.beginChatRead(catalog); }
+    void endTurnRead() { if(knowledge!=null)knowledge.endChatRead(); }
+
 	@org.springframework.beans.factory.annotation.Autowired
 	public void setRates(vn.fs.repository.RateRepository rates) { this.rates = rates; }
 
@@ -209,10 +217,10 @@ public class ChatRetrievalService {
 		for (String term : terms) {
 			if (term.length() < 2) continue;
 			boolean phrase = term.contains(" ");
-			if (name.contains(term)) score += phrase ? 70 : 28;
-			if (author.contains(term)) score += phrase ? 45 : 20;
-			if (category.contains(term)) score += phrase ? 65 : 25;
-			if (description.contains(term)) score += phrase ? 30 : 8;
+			if (ChatCatalogQuery.word(name,term)) score += phrase ? 70 : 28;
+			if (ChatCatalogQuery.word(author,term)) score += phrase ? 45 : 20;
+			if (ChatCatalogQuery.word(category,term)) score += phrase ? 65 : 25;
+			if (ChatCatalogQuery.word(description,term)) score += phrase ? 30 : 8;
 		}
 		return score;
 	}
@@ -227,11 +235,14 @@ public class ChatRetrievalService {
     }
 
     public java.util.Map<String,String> approvedReadingFacts(Product product) {
-        return knowledge==null?java.util.Map.of("summary",java.util.Objects.toString(product.getDescription(),"")):knowledge.approvedReadingFacts(product);
+        java.util.Map<String,String> facts=knowledge==null?java.util.Map.of():knowledge.approvedReadingFacts(product);
+        return facts==null || facts.isEmpty()
+            ?java.util.Map.of("summary",java.util.Objects.toString(product.getDescription(),"")):facts;
     }
 
 	public List<Product> rankByMeaning(String query, List<Product> candidates) {
-		return knowledge == null ? candidates : knowledge.rankByMeaning(query, candidates);
+		return knowledge == null ? candidates : Boolean.TRUE.equals(topicPreparation.get())
+            ?knowledge.rankByMeaning(query,candidates,false):knowledge.rankByMeaning(query,candidates);
 	}
 
     public java.util.Map<Long,String> relatedEvidence(List<Long> seeds) {

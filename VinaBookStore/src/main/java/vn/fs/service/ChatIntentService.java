@@ -32,6 +32,7 @@ public class ChatIntentService {
 		if (q.matches(".*\\b(tim|cho|muon|goi y).*\\b(tac gia|danh muc|re nhat|thap nhat|doc truyen)\\b.*")) return ChatIntent.DISCOVER_BOOKS;
 		if (isBudgetOnlyDiscovery(question)) return ChatIntent.DISCOVER_BOOKS;
 		if (q.matches(".*\\b(danh gia cao|danh gia tot|rating|[0-5] sao|ban chay|sach moi|nhung sach moi)\\b.*")) return ChatIntent.DISCOVER_BOOKS;
+		if (asksForBookSuggestions(question)) return ChatIntent.DISCOVER_BOOKS;
 		if (q.startsWith("gia ")) return ChatIntent.PRODUCT_INFO;
 		if (containsAny(q, "so sanh", "khac nhau", "nen chon cuon nao", "cuon nao tot hon")) {
 			return ChatIntent.COMPARE_BOOKS;
@@ -145,12 +146,39 @@ public class ChatIntentService {
         return value.matches("[0-9]+")?Integer.parseInt(value):List.of("mot","hai","ba","bon","nam","sau","bay","tam","chin","muoi").indexOf(value)+1;
     }
 
+    public boolean asksForBookSuggestions(String question) {
+        String q=normalize(question);
+        return q.matches("(?s).*\\bco\\s+(?:(?:quyen|cuon|sach|truyen)\\s+nao)\\b.*")
+            && !ChatBookFacts.has(q,"trong so|trong nhung|danh sach|cuon nay|sach nay|cuon do|sach do|so sanh");
+    }
+
+    boolean entertainmentRequest(String question) {
+        String q=normalize(question);
+        return ChatBookFacts.has(q,"buon chan|chan qua|chan lam|giai tri|giet thoi gian")
+            && ChatBookFacts.has(q,"sach|cuon|quyen|truyen|doc gi|doc cai gi")
+            && !ChatBookFacts.has(q,"cuon nay|sach nay|cuon do|sach do|so sanh|gio hang|dat hang");
+    }
+
+    private boolean searchTopic(String text) {
+        return TOPICS.stream().anyMatch(topic->ChatCatalogQuery.word(text,normalize(topic)))
+            || ChatBookFacts.has(text,"java|javascript|tieu thuyet|truyen ngan|truyen tranh");
+    }
+
     /** Separate groups of books are alternatives; one book combining topics still uses AND. */
     public String discoveryQuery(String question) {
         String q=normalize(question);
+        // “hay” is OR only between identifiable subjects, never the adjective in “sách hay”.
+        Matcher connector=Pattern.compile("\\bhay\\b").matcher(q);
+        StringBuffer alternatives=new StringBuffer();
+        while(connector.find())connector.appendReplacement(alternatives,
+            searchTopic(q.substring(0,connector.start())) && searchTopic(q.substring(connector.end())) ? "hoac" : "hay");
+        connector.appendTail(alternatives);q=alternatives.toString();
         if(q.matches("(?s).*\\b(?:vai|mot so|[0-9]+)\\s+(?:cuon|quyen|sach)\\b.*\\bva\\b.*\\b(?:vai|mot so|[0-9]+)\\s+(?:cuon|quyen|sach)\\b.*"))
-            return q.replaceAll("\\bva\\b","hoac");
-        return question;
+            q=q.replaceAll("\\bva\\b","hoac");
+        // Boredom requests entertainment, not gentle reading or mental-health advice.
+        if(entertainmentRequest(question) && !searchTopic(q) && !ChatBookFacts.has(q,"truyen|van hoc")
+            && !q.matches("(?s).*\\b(?:ve|hoc|tim hieu)\\s+\\S+.*"))return "truyện";
+        return q.equals(normalize(question))?question:q;
     }
 
     public boolean alternativeTopics(String question) {
