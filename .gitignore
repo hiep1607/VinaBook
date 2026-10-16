@@ -11,6 +11,7 @@ dist/
 tmp/
 out-tsc/
 **/target/
+**/target-*/
 *.jar
 *.war
 
@@ -34,6 +35,8 @@ yarn-error.log*
 .claude/
 **/.claude/
 .codex/
+/bookstore-ui/audit-tests/
+/AI_WORKLOG.md
 **/.codex/
 .agents/
 **/.agents/

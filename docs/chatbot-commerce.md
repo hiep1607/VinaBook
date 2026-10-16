@@ -158,3 +158,52 @@ Kiểm tra runtime dùng `AI_PROVIDER=local`, chưa đánh giá Gemini trực ti
 ## Tư vấn gọn và tự nhiên — 09/10/2026
 
 Mặc định tối đa 3 cuốn, ưu tiên mức khớp với các mong muốn đọc đã nêu. Số lượng cụ thể và tổng ngân sách vẫn được giữ. Phần tư vấn bỏ lời giải thích và giá giới hạn lặp lại dưới từng cuốn; dùng nội dung đã duyệt và thông tin đúng với nhu cầu, ghi rõ điểm chưa đủ căn cứ. Kiểm tra trực tiếp qua UI local được ghi trong [báo cáo](chatbot-evaluation/shortlist-and-voice-2026-10-09.md).
+
+## Mua ngay và địa chỉ giao hàng trong chat — 12/10/2026
+
+Thẻ sách của phản hồi hiện tại có nút Mua ngay ngay cạnh Thêm giỏ khi số lượng còn hợp lệ. Nút dùng chung luồng BUY_NOW đã có, giữ đúng sách/số lượng và không thêm vào giỏ trước khi đặt. Không tạo nút trùng nếu server đã trả BUY_NOW; không mở thao tác cũ từ lịch sử hoặc tạo lựa chọn mua cho sách hết hàng. Backend tiếp tục kiểm tra giá, tồn kho và yêu cầu xác nhận trước khi tạo đơn.
+
+Phần đặt hàng chỉ có một khối Địa chỉ giao hàng. Địa chỉ mặc định được đưa lên đầu và chọn sẵn; khi không có mặc định thì dùng địa chỉ đầu tiên. Ô chọn chỉ hiện nhãn/người nhận và dấu Mặc định, thông tin người nhận, số điện thoại và địa chỉ đầy đủ hiện ngay bên dưới. Đổi lựa chọn cập nhật cả nội dung hiển thị lẫn thông tin gửi lập báo giá. Nhập địa chỉ khác hoặc Sửa cho đơn này mở các ô nhập ngay trong khối này; chỉnh sửa chỉ áp dụng cho đơn đang chuẩn bị, không ghi đè sổ địa chỉ. Không có địa chỉ đã lưu thì hiện ô nhập ngay. Đóng/đổi tài khoản xóa lựa chọn và dữ liệu form như trước.
+
+Kiểm thử giới hạn ở hai component chatbot/chat-commerce, tập trung vào nút Mua ngay, địa chỉ mặc định, đổi địa chỉ, sửa địa chỉ và các bước xác nhận liên quan; không chạy lại bộ backend.
+
+## Rút gọn bước mua trong chat — 12/10/2026
+
+Mua ngay mở một biểu mẫu có thể sửa liên tục: sách/số lượng, một khối địa chỉ, thanh toán, mã giảm giá và tổng tiền. Bỏ nút Xem báo giá trong luồng bình thường. Thay đổi số lượng cập nhật tiền sách/phí giao/tổng dự kiến ngay trên máy; sau 250 ms hệ thống tự kiểm tra lại giá, tồn kho, phí giao và mã giảm giá. Các request quote được gửi nối tiếp và gộp thay đổi để kết quả cũ không thay thế lựa chọn mới. Nút Xác nhận đặt hàng chỉ bật khi quote khớp thông tin hiện tại và còn hạn. Tổng dự kiến chưa trừ mã đang kiểm tra; mức giảm hiện sau khi server xác nhận.
+
+Địa chỉ mặc định được chọn trước. Đổi số lượng, địa chỉ hoặc thanh toán giữ mã giảm giá để server kiểm tra lại điều kiện. Có thể nhắn lệnh rõ ràng như “đổi thành 2 cuốn”, “giao về địa chỉ công ty”, “thanh toán chuyển khoản”, “mã: READ10”. Câu hỏi hoặc câu phủ định không tự sửa đơn. Nội dung chỉnh đơn, địa chỉ và điện thoại không được đưa vào lịch sử/prompt chat. Xác nhận tạo đơn vẫn là nút riêng.
+
+Thêm giỏ từ thẻ hiện hành và đổi số lượng trực tiếp không cần xác nhận lại; có Hoàn tác cho thay đổi vừa được server xác nhận, chỉ khi cùng chủ giỏ và giỏ chưa thay đổi tiếp. Xóa sách/xóa giỏ vẫn hỏi lại. Mua ngay không phụ thuộc revision giỏ và không thêm sách vào giỏ. Cảnh báo thiếu tồn kho chỉ hiện sau khi đã tải catalog.
+
+Thu nhỏ chat giữ component và bản nháp trong bộ nhớ. Khi khách chọn Đăng nhập và tiếp tục, chỉ ID sách/số lượng hoặc lựa chọn mua giỏ được giữ trong sessionStorage tối đa 15 phút và dùng một lần. Sau đăng nhập tải lại catalog/giỏ/địa chỉ của tài khoản hiện tại trước khi tiếp tục; dữ liệu giao hàng không đi qua cơ chế này. Đóng biểu mẫu hoặc đổi tài khoản xóa dữ liệu riêng tư của bản nháp.
+
+Quote timeout sau 15 giây, xác nhận sau 20 giây. Kết quả xác nhận chưa rõ vẫn khóa chỉnh sửa/lập quote mới và kiểm tra lại bằng cùng token. Không tự tạo đơn hoặc tự xác nhận khi giá đổi. Backend và bảo vệ chủ đơn/idempotency hiện có được giữ nguyên.
+
+Khách gõ yêu cầu mua một sách cũng giữ được lựa chọn qua đăng nhập: prepareCheckout xác định và kiểm số lượng/tồn kho như trước, trả sách công khai cùng productId/quantity trong LOGIN. Widget chỉ chuyển lựa chọn từ action PURCHASE/prepareCheckout hiện hành, chặn bấm lặp và đổi tài khoản giữa các bước; không lưu lại nguyên câu hỏi. LOGIN cho đánh giá/hỗ trợ/đơn hàng giữ nguyên.
+
+Khi nhập địa chỉ mới, khách có thể tích Lưu địa chỉ này khi đặt hàng thành công. Tùy chọn mặc định tắt; chỉ thêm vào sổ sau khi backend xác nhận đã tạo đơn, dùng thông tin từ quote được xác nhận. Không ghi đè địa chỉ cũ, không lưu trước bước xác nhận. Nếu lưu sổ thất bại, vẫn giữ đơn đã tạo và hướng dẫn lưu lại địa chỉ, không đặt thêm đơn.
+
+Xác minh cuối: 65 ca ChromeHeadless của ba phần mua hàng và một ca backend mới giữ lựa chọn guest đều đạt; backend target-runtime và Angular dev build biên dịch thành công. UI thật xác minh tổng đổi ngay 90.520đ → 161.040đ khi chọn 2 cuốn, miễn phí giao ở 5 cuốn (352.600đ), thu nhỏ giữ bản nháp, Thêm giỏ/Hoàn tác trả đúng giỏ ban đầu, cả nút Mua ngay và câu mua 2 cuốn trước đăng nhập đều tự tiếp tục đúng lựa chọn. Không tạo đơn/thanh toán/lưu địa chỉ thật trong lượt UI. Chỉ hiển thị biểu mẫu sau khi dữ liệu sách đã tải đủ để tránh chớp tên/giá chưa có trong lúc khôi phục.
+
+## Thẻ đơn hàng trực quan — cập nhật 13/10/2026
+
+- Tra đơn trong chatbot hiển thị thẻ có ảnh bìa, tên sách, số lượng, đơn giá đã lưu, thành tiền, ngày đặt và trạng thái. Thẻ lấy dữ liệu mới bằng OrderService/getOrder; backend tiếp tục kiểm tra chủ đơn từ JWT. Chỉ hydrate các mã đơn cụ thể trong kết quả getMyOrders/getOrderDetail đã hoàn tất. Nếu tải lỗi, giữ câu trả lời dạng chữ và cho tải lại. Thông tin thẻ không đưa vào prompt hoặc cache hội thoại.
+- Nút trên từng thẻ mở chi tiết, mua lại, xem lại trước khi hủy hoặc đổi trả theo trạng thái hiện tại. Các thao tác thay đổi vẫn đi qua component xác nhận dùng chung, không tự hủy hoặc tự tạo đơn.
+- Xác nhận hủy hiển thị ảnh sách từ chi tiết đơn khi khớp tên/số lượng với preview có thẩm quyền. Lỗi ảnh hoặc lỗi tải phần bổ sung không chặn preview hủy; không thay đổi điều kiện hủy, bảo vệ đổi tài khoản hoặc bước kiểm tra kết quả chưa rõ.
+- Danh sách đơn có bộ lọc Tất cả/Chờ xử lý/Đang giao/Hoàn thành/Đã hủy, số lượng đơn, tìm mã đơn/tên sách không phân biệt dấu. Thẻ gom sách và tổng tiền cạnh nút thao tác; địa chỉ và bảng phí nằm trong chi tiết. Dữ liệu riêng được xóa và response cũ bị bỏ qua khi đổi tài khoản.
+- OrderItemsComponent dùng chung ở danh sách, chi tiết, thẻ chat và preview hủy; ảnh giữ đúng tỷ lệ và có biểu tượng khi thiếu/lỗi. Mua lại có ảnh sách bên cạnh số lượng. Giao diện dùng token màu hiện có; không thêm thư viện hoặc catalog tĩnh.
+- Mobile: thẻ xếp lại tên/giá theo chiều dọc, bộ lọc cuộn ngang trong vùng riêng; nút chat/đổi màu tránh vùng thành tiền và thao tác sau khi danh sách tải hoặc thay đổi bộ lọc.
+- Kiểm chứng: 24 kiểm thử tập trung vào ChatOrders, hủy đơn, bộ lọc danh sách và FabCollision đạt. Build production đạt; còn cảnh báo kích thước bundle/style trang sản phẩm có sẵn. Đã xem dữ liệu thật đơn #48 trên desktop 1366×900 và mobile 390×844, tra đơn trong chat, tìm tên sách, trạng thái không có kết quả và chi tiết đơn. Đơn #48 vốn đã hủy; không gửi yêu cầu hủy, tạo đơn, thêm giỏ hoặc thanh toán thật trong lượt này. Preview hủy đủ điều kiện được kiểm tra bằng fixture trong component tests.
+
+## Hoàn thiện theo rà soát trải nghiệm — 13/10/2026
+
+- Danh mục không dùng hiệu ứng ẩn thẻ khi lọc/sắp xếp. Reveal dùng chuyển động nhẹ, nội dung luôn nhìn thấy; checkout không chuyển động vùng nút cố định.
+- Ý định mua qua đăng nhập dùng chung ChatCheckoutService, tách surface `web`/`chat` để widget không lấy nhầm lựa chọn của website. Chỉ mã sách, lượng, loại thao tác và đường dẫn nội bộ được lưu trong sessionStorage, dùng một lần trong 15 phút. Website đăng nhập xong lấy catalog mới, mở checkout hoặc đồng bộ giỏ đúng lựa chọn; không tự tạo đơn.
+- CartService giữ nháp Mua ngay theo tài khoản trong 30 phút, chỉ mã sách/lượng. Checkout khôi phục giá/tồn từ ProductService; không chuyển sang mua sản phẩm khác trong giỏ nếu sách đã hết hàng. Đi từ giỏ sang checkout xóa lựa chọn Mua ngay cũ để tránh lẫn hai nguồn.
+- Checkout điền sẵn tên/điện thoại hồ sơ, chọn địa chỉ mặc định thành một thẻ, bấm Thay đổi để chọn/nhập địa chỉ khác. Nhãn địa chỉ chỉ hiện khi chọn lưu; không mặc định lưu. Có bộ chỉnh lượng, tiền và ngưỡng miễn phí giao cập nhật ngay. Voucher thu gọn, thay lượng sẽ bỏ voucher cũ và cần kiểm tra lại; chặn gửi khi voucher còn xử lý. Tổng tiền và nút xác nhận cố định ở đáy mobile, FAB tránh cả vùng này.
+- Khi nhận phản hồi prepareCheckout đã hoàn tất, chat tự mở bản xem trước với sách/lượng backend đã xác định. Không mở từ phản hồi đang stream hoặc lịch sử được phục hồi. Nút cuối Xác nhận đặt hàng vẫn bắt buộc.
+- Câu hỏi ví dụ/áp dụng có nhánh riêng, giữ cuốn đang nói tới. AI chỉ dùng nguyên tắc có evidence khớp dữ kiện duyệt, minh họa tách nhãn “tự xây dựng, không phải trích sách”. Khi AI lỗi, chỉ minh họa nguyên tắc giao tiếp đã được nguồn xác nhận hoặc nói rõ thiếu căn cứ. Câu hỏi gợi ý sách mới vẫn đi tìm catalog. Follow-up chỉ hiện trường được hỏi, không tự lặp danh sách mục tiêu/đối tượng/phong cách; UI dùng tham chiếu sách gọn và gợi ý theo ngữ cảnh.
+- Mobile: tên đầy đủ vẫn có aria-label/title, giao diện dùng icon tài khoản; yêu thích/báo có hàng chuyển vào menu. Ẩn nút đổi phong cách trên sản phẩm/giỏ/checkout/chi tiết đơn. Chat đang mở chỉ có nút đóng trong header.
+- Chi tiết đơn có liên kết hỗ trợ mang orderId sang bản xem trước tại Liên hệ; người dùng vẫn phải nhập vấn đề và xác nhận gửi. Mua lại cho chọn những sách còn bán/còn hàng; giữ nguyên bước xác nhận thêm giỏ và bảo vệ kết quả chưa rõ.
+- Danh sách đơn và phần tóm tắt hồ sơ dùng `GET /api/orders/me?page=0&size=20&status=-1&q=...`. API lấy owner từ JWT, ROLE_USER; size 1–50, status -1 hoặc 0–3, query tối đa 100 ký tự. Trả `{items,total,counts,totalSpent,page,size}`. `counts` tính trên mọi đơn của tài khoản, tìm/lọc áp dụng trước phân trang. Sách của các đơn được tải theo lô, không một HTTP request cho mỗi đơn. Địa chỉ, token và entity User không nằm trong response danh sách.
+- Giỏ chặn lượng vượt tồn/99; thêm từ thẻ sách/chi tiết chỉ báo thành công sau `flush()` xác nhận máy chủ. Không tự lặp thêm khi kết quả lưu chưa rõ.

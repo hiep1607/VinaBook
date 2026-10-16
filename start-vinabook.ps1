@@ -4,13 +4,21 @@ $root = $PSScriptRoot
 $logs = Join-Path $root '.run-logs'
 New-Item -ItemType Directory -Force -Path $logs | Out-Null
 
-# Reuse the private signing key without printing it to logs.
-if (-not $env:JWT_SECRET) {
-    $settingsFile = Join-Path $root 'VinaBookStore/.env.local'
-    if (Test-Path -LiteralPath $settingsFile) {
-        foreach ($settingsLine in Get-Content -LiteralPath $settingsFile -Encoding utf8) {
-            if ($settingsLine -match '^\s*JWT_SECRET\s*=\s*(.+)$') {
-                $env:JWT_SECRET = $Matches[1].Trim().Trim('"').Trim("'")
+# Load backend settings as literal values; explicit process overrides take priority.
+# Never print private settings, including signing keys and AI credentials.
+$settingsFile = Join-Path $root 'VinaBookStore/.env.local'
+if (Test-Path -LiteralPath $settingsFile) {
+    foreach ($settingsLine in Get-Content -LiteralPath $settingsFile -Encoding utf8) {
+        if ($settingsLine -match '^\s*([A-Za-z_][A-Za-z0-9_]*)\s*=(.*)$') {
+            $settingName = $Matches[1]
+            $settingValue = $Matches[2].Trim()
+            if ($settingValue.Length -ge 2 -and (
+                ($settingValue.StartsWith('"') -and $settingValue.EndsWith('"')) -or
+                ($settingValue.StartsWith("'") -and $settingValue.EndsWith("'")))) {
+                $settingValue = $settingValue.Substring(1, $settingValue.Length - 2)
+            }
+            if ([string]::IsNullOrEmpty([Environment]::GetEnvironmentVariable($settingName, 'Process'))) {
+                [Environment]::SetEnvironmentVariable($settingName, $settingValue, 'Process')
             }
         }
     }
@@ -81,6 +89,12 @@ try {
         $backend = Start-Logged (Join-Path $root 'VinaBookStore') ('mvnw.cmd "-Dvinabook.build.directory=' + $build + '" clean spring-boot:run') 'backend'
         Wait-Service 'http://localhost:8080/api/products' $backend (Join-Path $logs 'backend.log') -Json
     }
+    $chatStatus = Invoke-RestMethod -Uri 'http://localhost:8080/api/chat/status' -TimeoutSec 10
+    $expectedProvider = if ($env:AI_PROVIDER) { $env:AI_PROVIDER.Trim().ToLowerInvariant() } else { 'local' }
+    if ($chatStatus.provider -ne $expectedProvider -or ($expectedProvider -ne 'local' -and -not $chatStatus.aiEnabled)) {
+        throw "Backend chatbot dang chay sai cau hinh (hien tai: $($chatStatus.provider), yeu cau: $expectedProvider). Khoi dong lai backend voi VinaBookStore/.env.local; script khong tu tat tien trinh dang chay."
+    }
+    Write-Host "Chatbot: $($chatStatus.provider) / $($chatStatus.architecture)"
     $ui = Join-Path $root 'bookstore-ui'
     if (Test-Port 4200) {
         if (!(Test-Http 'http://localhost:4200/main.js')) { throw 'Cong 4200 dang bi chiem hoac Angular chua build thanh cong.' }

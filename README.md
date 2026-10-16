@@ -24,8 +24,9 @@ Bấm đúp **`start-vinabook.cmd`** trong thư mục gốc dự án. Không c�
 - Nếu đã chạy, script dùng lại dịch vụ; nếu cổng bị chiếm hoặc có lỗi, script báo lỗi thay vì tự tắt tiến trình khác.
 - Dịch vụ chạy trong hai cửa sổ thu nhỏ. Đóng cửa sổ dịch vụ để dừng. Log nằm trong `.run-logs/backend.log`, `.run-logs/storefront.log`, `.run-logs/install.log`.
 - MySQL chưa chạy: mở **Services**, Start dịch vụ MySQL rồi chạy lại. Script không tự cài MySQL, tạo/import/xóa database hoặc yêu cầu quyền admin.
-- Có thể đặt `DB_USERNAME`, `DB_PASSWORD` trước khi chạy nếu khác cấu hình local. Script này không tự nạp `.env.local` cho AI; dùng hướng dẫn Gemini bên dưới nếu cần.
-- Đặt `JWT_SECRET` riêng trong `VinaBookStore/.env.local` hoặc biến môi trường. Launcher đọc khóa này mà không ghi vào log.
+- Launcher nạp cấu hình backend từ `VinaBookStore/.env.local`, gồm `JWT_SECRET`, `AI_PROVIDER`, `AI_MODEL` và các khóa AI; không ghi giá trị bí mật vào log. Biến môi trường đã đặt trước khi chạy được ưu tiên hơn file.
+- Có thể đặt `DB_USERNAME`, `DB_PASSWORD` trước khi chạy nếu khác cấu hình local. Đặt `JWT_SECRET` riêng trong file cấu hình hoặc biến môi trường.
+- Launcher kiểm tra `/api/chat/status` và báo lỗi nếu backend đang chạy khác provider đã cấu hình hoặc AI chưa được bật. Khi thay cấu hình, khởi động lại backend; script không tự tắt dịch vụ đang chạy.
 - Chỉ chạy storefront + backend; admin vẫn chạy riêng theo hướng dẫn bên dưới.
 
 **Giới hạn dependency:** Angular 12 đã cũ. Lucide được khóa ở `1.0.0`; `.npmrc` lưu `legacy-peer-deps=true` vì peer range của thư viện yêu cầu Angular mới hơn. Đây là cấu hình tương thích tạm đã kiểm tra build, không phải nâng cấp Angular hay khắc phục toàn bộ cảnh báo dependency. Không dùng `npm audit fix --force`.
