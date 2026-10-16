@@ -14,10 +14,11 @@ import { ChatAction, ChatbotService, ChatMessage, ChatProduct } from 'src/app/se
 import { CartService } from 'src/app/services/cart.service';
 import { FabCollisionService } from 'src/app/services/fab-collision.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { chatCartFingerprint } from 'src/app/services/chat-checkout.service';
+import { ChatCheckoutService, chatCartFingerprint } from 'src/app/services/chat-checkout.service';
 import { ChatCommerceComponent } from '../chat-commerce/chat-commerce.component';
 import { WishlistService } from 'src/app/services/wishlist.service';
 import { SupportRequestComponent } from '../support-request/support-request.component';
+import { chatOrderIds } from 'src/app/shared/order-presentation';
 
 /**
  * Widget trợ lý ảo nổi góc phải dưới. Hỏi đáp về sản phẩm, gợi ý sách và
@@ -51,11 +52,15 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
   supportSummary = '';
   showSupportRequests = false;
   readonly addedProductIds = new Set<number>();
+  orderRefreshKey = 0;
+  orderCardIds = chatOrderIds;
+  readonly visualOrderMessages = new WeakSet<ChatMessage>();
   errorText = '';
   lastFailedInput = '';
 
   private shouldScroll = false;
   private scrollTimer?: ReturnType<typeof setTimeout>;
+  private viewInitTimer?: ReturnType<typeof setTimeout>;
   private userNearBottom = true;
   private accountEmail?: string;
   reviewProduct: ChatProduct | null = null;
@@ -67,6 +72,8 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
   private historySub?: Subscription;
   private historyVersion = 0;
   private actionSnapshots = new WeakMap<ChatMessage, string>();
+  private purchaseLoginActions = new WeakSet<ChatAction>();
+  private openedPurchases = new WeakSet<ChatMessage>();
 
   constructor(
     private chatbot: ChatbotService,
@@ -74,7 +81,8 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     private router: Router,
     private collision: FabCollisionService,
     private auth: AuthService,
-    private wishlist: WishlistService
+    private wishlist: WishlistService,
+    private checkoutService: ChatCheckoutService
   ) {}
 
   ngOnInit(): void {
@@ -90,6 +98,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
 
   ngOnDestroy(): void {
     if (this.scrollTimer) clearTimeout(this.scrollTimer);
+    if (this.viewInitTimer) clearTimeout(this.viewInitTimer);
     this.request?.unsubscribe();
     this.historySub?.unsubscribe();
     this.collisionSub?.unsubscribe();
@@ -106,7 +115,10 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
         }
       });
     // Bố cục đầu tiên có thể chưa ổn định — kiểm tra lại sau khi render xong.
-    setTimeout(() => this.collision.recheck());
+    this.viewInitTimer = setTimeout(() => {
+      this.collision.recheck();
+      this.resumePendingPurchase();
+    });
   }
 
   ngAfterViewChecked(): void {
@@ -147,11 +159,26 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     this.showSupportRequests = false;
     this.commerceBusy = false; this.wishlistBusy = false;
     this.addedProductIds.clear();
+    this.draft = '';
     this.errorText = '';
     this.lastFailedInput = '';
     this.userNearBottom = true;
     this.shouldScroll = true;
     this.loadServerHistory();
+    this.resumePendingPurchase();
+  }
+
+  private resumePendingPurchase(): void {
+    if (!this.commerce || !this.auth.isLoggedIn() || !this.auth.currentUser?.email) return;
+    const intent = this.checkoutService.consumePurchaseIntent();
+    if (!intent) return;
+    this.open = true;
+    this.shouldScroll = true;
+    const owner = this.accountEmail;
+    const version = this.historyVersion;
+    void this.commerce.resumePurchase(intent).catch(() => {
+      if (owner === this.auth.currentUser?.email && version === this.historyVersion) this.errorText = 'Mình chưa khôi phục được lựa chọn mua. Bạn chọn lại sách để tiếp tục nhé.';
+    });
   }
 
   onScroll(): void {
@@ -165,7 +192,10 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     if (!this.open) { this.reviewProduct = null; this.cancellationOrderId = 0; this.reorderOrderId = 0; this.supportKind = undefined; this.supportSummary = ''; this.showSupportRequests = false; }
     if (this.open) {
       this.shouldScroll = true;
-      setTimeout(() => this.chatInput?.nativeElement.focus(), 0);
+      setTimeout(() => { if (this.open) this.chatInput?.nativeElement.focus(); }, 0);
+    } else {
+      this.chatInput?.nativeElement.blur();
+      setTimeout(() => { if (!this.open) this.fabBtn?.nativeElement.focus(); }, 0);
     }
   }
 
@@ -179,8 +209,12 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
       this.supportForm.error = 'Bạn hoàn tất hoặc sửa yêu cầu đang xem lại trước khi gửi câu hỏi khác nhé, để mình không trộn nội dung cần chuyển cho cửa hàng.';
       return;
     }
-    if (this.commerce?.checkout || this.commerce?.uncertainConfirmation) {
-      this.commerce.error = 'Bạn hoàn tất hoặc đóng bước đặt hàng trước khi gửi câu hỏi mới nhé, để mình không trộn yêu cầu mới với đơn đang chuẩn bị.';
+    if (this.commerce?.uncertainConfirmation) {
+      this.commerce.error = 'Mình cần kiểm tra kết quả xác nhận đơn trước khi thay đổi thông tin. Bạn dùng nút kiểm tra lại trong đơn nhé.';
+      return;
+    }
+    if (this.commerce?.checkout) {
+      void this.sendCheckoutMessage(value);
       return;
     }
     this.commerce?.cancelChange();
@@ -235,6 +269,11 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
         if (!message.streaming) {
           this.actionSnapshots.set(message, cartSnapshot);
           this.persistMessages();
+          if (message.intent === 'PURCHASE' && message.execution?.tool.split(',').includes('prepareCheckout')
+              && !this.openedPurchases.has(message) && !this.commerce?.checkout && !this.commerce?.uncertainConfirmation) {
+            const buy = message.actions?.find(action => action.type === 'BUY_NOW' || action.type === 'CHECKOUT_CART');
+            if (buy) { this.openedPurchases.add(message); void this.runAction(buy, message); }
+          }
         }
       },
       error: error => {
@@ -246,9 +285,29 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
       complete: () => {
         this.typing = false;
         this.persistMessages();
-        setTimeout(() => this.chatInput?.nativeElement.focus(), 0);
+        setTimeout(() => { if (this.open) this.chatInput?.nativeElement.focus(); }, 0);
       }
     });
+  }
+
+  private async sendCheckoutMessage(value: string): Promise<void> {
+    const commerce = this.commerce;
+    if (!commerce) return;
+    const owner = this.accountEmail;
+    const version = this.historyVersion;
+    // Checkout text can contain a phone number or address. Keep it out of both
+    // the persisted transcript and the general chatbot request/history.
+    this.draft = '';
+    try {
+      const handled = await commerce.handleCheckoutMessage(value);
+      if (owner !== this.auth.currentUser?.email || version !== this.historyVersion || commerce !== this.commerce) return;
+      if (!handled) commerce.error = 'Bạn có thể đổi số lượng, địa chỉ, phương thức thanh toán hoặc mã giảm giá ngay tại đơn đang chuẩn bị. Nếu muốn hỏi về sách khác, bạn đóng đơn trước nhé.';
+      this.shouldScroll = true;
+    } catch {
+      if (owner === this.auth.currentUser?.email && version === this.historyVersion && commerce === this.commerce) {
+        commerce.error = 'Mình chưa cập nhật được đơn. Bạn thử lại hoặc sửa trực tiếp thông tin trong đơn nhé.';
+      }
+    }
   }
 
   onInputKeydown(event: KeyboardEvent): void {
@@ -315,7 +374,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     return message.actions?.find(action => action.productId === productId && action.type === type);
   }
 
-  async runAction(action: ChatAction, message: ChatMessage): Promise<void> {
+  async runAction(action: ChatAction, message: ChatMessage, direct = false): Promise<void> {
     if (action.type === 'WRITE_REVIEW') {
       this.syncAccount();
       if (!this.messages.includes(message) || !this.actionAvailable(message) || !Number.isSafeInteger(action.productId)
@@ -335,6 +394,34 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     }
     this.syncAccount();
     if (this.commerceBusy || this.wishlistBusy || this.supportForm?.uncertain) return;
+    if (action.type === 'LOGIN' && message.intent === 'PURCHASE' && message.execution?.tool.split(',').includes('prepareCheckout')
+        && action.productId != null) {
+      const commerce = this.commerce;
+      const quantity = action.quantity ?? 1;
+      const product = message.products?.find(item => item.id === action.productId);
+      if (!commerce || !this.actionAvailable(message) || !message.actions?.includes(action)
+          || this.purchaseLoginActions.has(action) || commerce.checkout || commerce.uncertainConfirmation
+          || !Number.isSafeInteger(action.productId) || action.productId < 1 || !product
+          || !Number.isInteger(quantity) || quantity < 1 || quantity > Math.min(99, product.quantity)) return;
+      this.purchaseLoginActions.add(action);
+      this.reviewProduct = null;
+      this.cancellationOrderId = 0; this.reorderOrderId = 0;
+      this.supportKind = undefined; this.supportSummary = ''; this.showSupportRequests = false;
+      const owner = this.auth.currentUser?.email;
+      const version = this.historyVersion;
+      try {
+        await commerce.startCheckout(false, product, quantity);
+        if (owner !== this.auth.currentUser?.email || version !== this.historyVersion || commerce !== this.commerce) return;
+        if (!this.auth.isLoggedIn()) commerce.login();
+        this.shouldScroll = true;
+      } catch {
+        this.purchaseLoginActions.delete(action);
+        if (owner === this.auth.currentUser?.email && version === this.historyVersion) {
+          this.errorText = 'Mình chưa giữ được lựa chọn mua. Bạn bấm Đăng nhập để đặt hàng lại nhé.';
+        }
+      }
+      return;
+    }
     if (action.type === 'CREATE_RETURN_REQUEST' || action.type === 'CREATE_SUPPORT_REQUEST') {
       if (!this.actionAvailable(message) || (action.type === 'CREATE_RETURN_REQUEST' && !action.orderId)
         || (action.orderId != null && (!Number.isSafeInteger(action.orderId) || action.orderId < 1))) return;
@@ -392,7 +479,16 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
       this.supportKind = undefined; this.supportSummary = '';
       this.showSupportRequests = false;
       const product = message.products?.find(item => item.id === action.productId);
-      this.commerce?.runAction(action, product, this.actionSnapshots.get(message));
+      if (direct && action.type === 'ADD_TO_CART') {
+        if (!product || !message.actions?.includes(action) || this.addedProductIds.has(product.id)) return;
+        // This is a fresh click on the current book card. Bind only this
+        // reversible add to the cart as it is now, including after Undo. Keep
+        // the reply's original snapshot for every other proposed cart action.
+        const currentCart = chatCartFingerprint(this.cart.getCartItems(), this.cart.serverRevision);
+        this.commerce?.runAction(action, product, currentCart, true);
+      } else {
+        this.commerce?.runAction(action, product, this.actionSnapshots.get(message));
+      }
       this.shouldScroll = true;
       return;
     }
@@ -408,13 +504,43 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
       && this.messages[this.messages.length - 1] === message;
   }
 
+  trackProductAction(_index: number, action: ChatAction): string {
+    return action.type;
+  }
+
+  compactProducts(message: ChatMessage): boolean {
+    if (message.intent !== 'PRODUCT_INFO' || !message.products?.length || message.execution?.tool !== 'getProducts') return false;
+    const index = this.messages.indexOf(message);
+    const earlier = this.messages.slice(0, index).filter(item => item.from === 'bot');
+    return message.products.every(product => earlier.some(item => item.products?.some(book => book.id === product.id)));
+  }
+
+  contextualChips(message: ChatMessage): string[] {
+    if (this.commerce?.checkout || this.commerce?.uncertainConfirmation) return [];
+    if (message.intent === 'PRODUCT_INFO' && message.products?.length === 1) {
+      return message.text.includes('Ví dụ minh họa') ? ['Mua 1 cuốn này', 'Tìm sách tương tự'] : ['Cho ví dụ áp dụng ý vừa nói', 'Mua 1 cuốn này'];
+    }
+    return message.chips || [];
+  }
+
   productActions(message: ChatMessage, productId: number): ChatAction[] {
-    return this.actionAvailable(message) ? (message.actions || []).filter(action => action.productId === productId && action.type !== 'VIEW_PRODUCT') : [];
+    if (!this.actionAvailable(message)) return [];
+    if (message.intent === 'PURCHASE' && this.commerce?.checkout) return [];
+    const actions = (message.actions || []).filter(action => action.productId === productId && action.type !== 'VIEW_PRODUCT');
+    const product = message.products?.find(item => item.id === productId);
+    const add = actions.find(action => action.type === 'ADD_TO_CART');
+    const quantity = add?.quantity ?? 1;
+    if (!add || actions.some(action => action.type === 'BUY_NOW') || !product
+        || !Number.isInteger(quantity) || quantity < 1 || quantity > Math.min(99, product.quantity)) return actions;
+    const buy: ChatAction = { type: 'BUY_NOW', label: 'Mua ngay', productId, quantity, requiresConfirmation: false };
+    const index = actions.indexOf(add);
+    return [...actions.slice(0, index + 1), buy, ...actions.slice(index + 1)];
   }
 
   commerceUpdated(): void { this.shouldScroll = true; }
 
   orderCancelled(id: number): void {
+    this.orderRefreshKey++;
     this.messages.push({ from: 'bot', text: `Đơn #${id} đã được hủy. Bạn có thể xem trạng thái mới trong mục Đơn hàng nhé.`, intent: 'ORDER_SUPPORT', private: true });
     this.shouldScroll = true;
   }
@@ -437,7 +563,8 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
   }
 
   genericActions(message: ChatMessage): ChatAction[] {
-    return this.actionAvailable(message) ? (message.actions || []).filter(action => !action.productId) : [];
+    return this.actionAvailable(message) && !(message.intent === 'PURCHASE' && this.commerce?.checkout)
+      ? (message.actions || []).filter(action => !action.productId) : [];
   }
 
   get showTypingDots(): boolean {

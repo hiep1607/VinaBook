@@ -6,10 +6,11 @@
 
   <p class="status" *ngIf="busy" role="status">Mình đang xử lý lựa chọn của bạn, bạn chờ một chút nhé…</p>
   <p class="notice" *ngIf="notice" role="status">{{ notice }}</p>
+  <button type="button" *ngIf="canUndo" (click)="undoLastChange()">Hoàn tác thay đổi vừa rồi</button>
   <div class="commerce-error" *ngIf="error" role="alert">
     <p>{{ error }}</p>
     <button type="button" *ngIf="!checkout && !placed" (click)="showCart()" [disabled]="busy">Tải lại giỏ</button>
-    <button type="button" *ngIf="!authenticated" (click)="navigate('/login')" [disabled]="busy">Đăng nhập</button>
+    <button type="button" *ngIf="checkout && authenticated && !busy && !quoteUpdating && !uncertainConfirmation" (click)="requestQuote()">Thử tính lại</button>
   </div>
 
   <div *ngIf="recovery">
@@ -22,12 +23,12 @@
   <button type="button" *ngIf="recoveryUnavailable" (click)="acknowledgeOrders()" [disabled]="busy">Tôi đã kiểm tra đơn, bắt đầu lại</button>
   <ng-container *ngIf="!checkout && !placed && !uncertainConfirmation">
     <p class="empty" *ngIf="!cartItems.length && !busy">Giỏ đang trống. Bạn cho mình biết muốn đọc gì và chọn sách cho ai nhé, mình sẽ giúp tìm sách để bạn cân nhắc.</p>
-    <article class="cart-line" *ngFor="let item of cartItems">
+    <article class="cart-line" *ngFor="let item of cartItems; trackBy: trackByProductId">
       <img [src]="item.image" [alt]="'Bìa ' + item.name" loading="lazy" />
       <div class="line-info">
         <strong>{{ item.name }}</strong>
         <span>{{ item.price | number:'1.0-0' }}đ / cuốn</span>
-        <small class="stock-warning" *ngIf="!item.stock || item.quantity > (item.stock || 0)">Sách không còn đủ số lượng bạn đã chọn. Bạn giảm số lượng hoặc xóa cuốn này để mình tiếp tục chuẩn bị đơn nhé.</small>
+        <small class="stock-warning" *ngIf="item.stock != null && (!item.stock || item.quantity > item.stock)">Sách không còn đủ số lượng bạn đã chọn. Bạn giảm số lượng hoặc xóa cuốn này để mình tiếp tục chuẩn bị đơn nhé.</small>
         <div class="line-controls">
           <label>Số lượng
             <input type="number" [value]="item.quantity" min="1" [max]="item.stock && item.stock < 99 ? item.stock : 99"
@@ -44,7 +45,7 @@
     </dl>
     <p class="hint" *ngIf="cartItems.length">Mình sẽ kiểm tra lại giá, số sách còn bán và phí giao khi lập báo giá, để bạn xem đúng tổng tiền trước khi quyết định.</p>
     <div class="buttons" *ngIf="cartItems.length">
-      <button type="button" class="primary" (click)="startCheckout(true)" [disabled]="busy || !!pending || !canCheckoutCart">Đặt toàn bộ giỏ</button>
+      <button type="button" class="primary" (click)="startCheckout(true)" [disabled]="busy || !!pending || (authenticated && !canCheckoutCart)">Đặt toàn bộ giỏ</button>
       <button type="button" (click)="requestClear()" [disabled]="busy || !!pending">Xóa giỏ</button>
     </div>
   </ng-container>
@@ -57,52 +58,78 @@
     </div>
   </div>
 
-  <form *ngIf="checkout && !quote" (ngSubmit)="requestQuote()" #shippingForm="ngForm">
+  <div *ngIf="checkout && !authenticated" class="login-purchase">
     <p *ngIf="checkout.product">{{ checkout.product.name }} · {{ checkout.quantity }} cuốn</p>
-    <p *ngIf="checkout.fromCart">Đặt toàn bộ {{ cartItems.length }} đầu sách trong giỏ.</p>
-    <label *ngIf="addresses.length">Dùng địa chỉ đã lưu
-      <select name="savedAddress" (change)="useAddress($any($event.target).value)" [disabled]="busy">
-        <option value="">Chọn địa chỉ</option>
-        <option *ngFor="let address of addresses" [value]="address.id">{{ address.name }} · {{ address.street }}</option>
-      </select>
-    </label>
-    <label>Người nhận
-      <input name="recipient" [(ngModel)]="form.recipient" required maxlength="80" autocomplete="name" [disabled]="busy" />
-    </label>
-    <label>Số điện thoại
-      <input name="phone" [(ngModel)]="form.phone" required pattern="0[0-9]{9}" maxlength="10" inputmode="tel" autocomplete="tel-national" [disabled]="busy" />
-    </label>
-    <label>Địa chỉ giao hàng
-      <textarea name="street" [(ngModel)]="form.street" required maxlength="160" rows="2" autocomplete="street-address" [disabled]="busy" placeholder="Số nhà, đường, phường/xã, tỉnh/thành"></textarea>
-    </label>
-    <label>Thanh toán
-      <select name="paymentMethod" [(ngModel)]="form.paymentMethod" required [disabled]="busy">
+    <p *ngIf="checkout.fromCart">Tiếp tục đặt sách trong giỏ của bạn.</p>
+    <p>Đăng nhập để dùng địa chỉ đã lưu và tiếp tục đặt hàng.</p>
+    <button type="button" class="primary" (click)="login()" [disabled]="busy">Đăng nhập và tiếp tục</button>
+  </div>
+
+  <form *ngIf="checkout && authenticated && !placed && settings && (checkout.fromCart || checkout.product?.name)" (ngSubmit)="requestQuote()" #shippingForm="ngForm">
+    <article class="checkout-line" *ngFor="let item of checkoutItems; trackBy: trackByProductId">
+      <div class="checkout-book"><strong>{{ item.name }}</strong><span>{{ item.price | number:'1.0-0' }}đ / cuốn</span></div>
+      <div class="quantity-stepper">
+        <button type="button" (click)="changeCheckoutQuantity(item.id, item.quantity - 1)" [disabled]="busy || uncertainConfirmation || item.quantity <= 1" [attr.aria-label]="'Giảm số lượng ' + item.name">−</button>
+        <input type="number" [name]="'quantity-' + item.id" [ngModel]="item.quantity" (ngModelChange)="changeCheckoutQuantity(item.id, $event)" min="1" [max]="item.stock && item.stock < 99 ? item.stock : 99" [disabled]="busy || uncertainConfirmation" [attr.aria-label]="'Số lượng ' + item.name" />
+        <button type="button" (click)="changeCheckoutQuantity(item.id, item.quantity + 1)" [disabled]="busy || uncertainConfirmation || item.quantity >= (item.stock && item.stock < 99 ? item.stock : 99)" [attr.aria-label]="'Tăng số lượng ' + item.name">+</button>
+      </div>
+    </article>
+    <p *ngIf="quantityError" class="stock-warning" role="alert">{{ quantityError }}</p>
+    <fieldset class="delivery-address">
+      <legend>Địa chỉ giao hàng</legend>
+      <label *ngIf="addresses.length" class="address-picker">Chọn địa chỉ
+        <select name="savedAddress" [ngModel]="selectedAddressId" (ngModelChange)="useAddress($event)" [disabled]="busy || uncertainConfirmation">
+          <option *ngFor="let address of addresses" [value]="address.id.toString()">{{ address.label || address.name }}{{ address.isDefault ? ' · Mặc định' : '' }}</option>
+          <option value="">Nhập địa chỉ khác</option>
+        </select>
+      </label>
+      <div *ngIf="!editingAddress" class="address-details" aria-live="polite">
+        <strong>{{ form.recipient }}</strong>
+        <span>{{ form.phone }}</span>
+        <p>{{ form.street }}</p>
+        <button type="button" (click)="editAddress()" [disabled]="busy || uncertainConfirmation">Sửa cho đơn này</button>
+      </div>
+      <ng-container *ngIf="editingAddress">
+        <label>Người nhận
+          <input name="recipient" [(ngModel)]="form.recipient" (ngModelChange)="deliveryChanged()" required maxlength="80" autocomplete="name" [disabled]="busy || uncertainConfirmation" />
+        </label>
+        <label>Số điện thoại
+          <input name="phone" [(ngModel)]="form.phone" (ngModelChange)="deliveryChanged()" required pattern="0[0-9]{9}" maxlength="10" inputmode="tel" autocomplete="tel-national" [disabled]="busy || uncertainConfirmation" />
+        </label>
+        <label>Địa chỉ
+          <textarea name="street" [(ngModel)]="form.street" (ngModelChange)="deliveryChanged()" required maxlength="160" rows="2" autocomplete="street-address" [disabled]="busy || uncertainConfirmation" placeholder="Số nhà, đường, phường/xã, tỉnh/thành"></textarea>
+        </label>
+        <label class="save-address"><input type="checkbox" name="saveDeliveryAddress" [(ngModel)]="saveDeliveryAddress" [disabled]="busy || uncertainConfirmation" />Lưu địa chỉ này khi đặt hàng thành công</label>
+      </ng-container>
+    </fieldset>
+    <label *ngIf="paymentMethods.length > 1">Thanh toán
+      <select name="paymentMethod" [(ngModel)]="form.paymentMethod" (ngModelChange)="deliveryChanged()" required [disabled]="busy || uncertainConfirmation">
         <option *ngFor="let method of paymentMethods" [value]="method.code">{{ method.label }}</option>
       </select>
     </label>
-    <app-voucher-input [items]="voucherItems" [disabled]="busy" (busyChange)="voucherBusy=$event" (applied)="voucherCode=$event.code;voucherDiscount=$event.discount"></app-voucher-input>
-    <p class="hint">Bạn điền thông tin bên trên để mình chuẩn bị giao sách đúng nơi và tính tổng tiền nhé. Chưa tạo đơn ở bước này; bạn sẽ xem lại trước khi xác nhận.</p>
-    <button type="submit" class="primary" [disabled]="busy || shippingForm.invalid || !paymentMethods.length">Xem báo giá</button>
-  </form>
-
-  <ng-container *ngIf="quote">
-    <h4>Kiểm tra trước khi đặt hàng</h4>
-    <div class="quote-line" *ngFor="let item of quote.items"><span>{{ item.name }} × {{ item.quantity }}</span><strong>{{ item.unitPrice * item.quantity | number:'1.0-0' }}đ</strong></div>
+    <p *ngIf="paymentMethods.length === 1">Thanh toán: {{ paymentMethods[0].label }}</p>
+    <p class="stock-warning" *ngIf="!paymentMethods.length">Hiện chưa có phương thức thanh toán khả dụng.</p>
+    <details class="voucher" [open]="!!voucherCode">
+      <summary>Mã giảm giá</summary>
+      <label>Nhập mã (nếu có)
+        <input name="voucherCode" [(ngModel)]="voucherCode" (ngModelChange)="deliveryChanged()" maxlength="32" autocomplete="off" [disabled]="busy || uncertainConfirmation" placeholder="Mã tự được kiểm tra khi nhập" />
+      </label>
+    </details>
     <dl class="totals">
-      <div><dt>Tiền sách</dt><dd>{{ quote.subtotal | number:'1.0-0' }}đ</dd></div>
-      <div><dt>Phí giao</dt><dd>{{ quote.shipping | number:'1.0-0' }}đ</dd></div>
-      <div *ngIf="quote.discount"><dt>Mã {{quote.voucherCode}}</dt><dd>−{{quote.discount|number}}đ</dd></div>
-      <div class="total"><dt>Tổng thanh toán</dt><dd>{{ quote.total | number:'1.0-0' }}đ</dd></div>
+      <div><dt>Tiền sách</dt><dd>{{ checkoutSubtotal | number:'1.0-0' }}đ</dd></div>
+      <div><dt>Phí giao{{ totalEstimated ? ' dự kiến' : '' }}</dt><dd>{{ (totalEstimated ? checkoutShipping : quote?.shipping) | number:'1.0-0' }}đ</dd></div>
+      <div *ngIf="quote?.discount"><dt>Mã {{ quote?.voucherCode }}</dt><dd>−{{ quote?.discount | number:'1.0-0' }}đ</dd></div>
     </dl>
-    <p class="shipping-summary">{{ quote.recipient }} · {{ quote.phone }}<br />{{ quote.street }}</p>
-    <p>{{ paymentLabel(quote.paymentMethod) }}</p>
-    <p class="hint">Báo giá có hiệu lực đến {{ quote.expiresAt | date:'HH:mm' }}. Bạn kiểm tra sách, địa chỉ và tổng tiền nhé. Mình chỉ tạo đơn khi bạn bấm nút xác nhận.</p>
-    <div class="buttons">
-      <button type="button" class="primary" (click)="confirmOrder()" [disabled]="busy">{{ uncertainConfirmation ? 'Kiểm tra lại kết quả' : 'Xác nhận đặt hàng' }}</button>
-      <button type="button" (click)="editQuote()" [disabled]="busy || uncertainConfirmation">Sửa thông tin</button>
+    <p class="hint" *ngIf="quoteUpdating" role="status">Đang cập nhật giá, tồn kho và ưu đãi…</p>
+    <p class="hint" *ngIf="!quoteUpdating && !inputValid">Bổ sung thông tin giao hàng hợp lệ để tiếp tục.</p>
+    <p class="hint" *ngIf="totalEstimated && voucherCode">Giảm giá sẽ hiện khi kiểm tra mã xong.</p>
+    <p class="hint">Bạn có thể nhắn “đổi thành 2 cuốn” hoặc chọn địa chỉ đã lưu. Đơn chỉ được tạo khi bạn xác nhận bên dưới.</p>
+    <div class="checkout-submit">
+      <div class="live-total" aria-live="polite" aria-atomic="true"><span>{{ totalEstimated ? 'Tổng dự kiến' : 'Tổng thanh toán' }}</span><strong>{{ checkoutTotal | number:'1.0-0' }}đ</strong></div>
+      <button type="button" class="primary" (click)="confirmOrder()" [disabled]="busy || (!uncertainConfirmation && !canConfirmOrder) || recoveryUnavailable">{{ uncertainConfirmation ? 'Kiểm tra lại kết quả' : 'Xác nhận đặt hàng' }}</button>
     </div>
     <button type="button" *ngIf="uncertainConfirmation" (click)="navigate('/orders')" [disabled]="busy">Kiểm tra Đơn hàng</button>
-  </ng-container>
+  </form>
 
   <ng-container *ngIf="placed">
     <p>Đơn <strong>#{{ placed.orderId }}</strong> đã được tạo.</p>

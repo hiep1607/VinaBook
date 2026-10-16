@@ -13,7 +13,7 @@
 <section
   id="vinabook-chat-panel"
   class="chat-panel"
-  *ngIf="open"
+  [hidden]="!open"
   role="dialog"
   aria-modal="false"
   aria-labelledby="chat-title"
@@ -53,15 +53,23 @@
       </div>
 
       <div class="message-content">
-        <div class="bubble" [class.user]="msg.from === 'user'">
+        <div class="bubble" [class.user]="msg.from === 'user'" *ngIf="!visualOrderMessages.has(msg)">
           <p class="bubble-text">{{ msg.text }}<span class="stream-caret" *ngIf="msg.streaming" aria-hidden="true"></span></p>
         </div>
+
+        <app-chat-orders *ngIf="orderCardIds(msg).length" [orderIds]="orderCardIds(msg)" [refreshKey]="orderRefreshKey"
+          [disabled]="!actionAvailable(msg) || !!commerce?.checkout || !!commerce?.uncertainConfirmation || !!supportForm?.uncertain"
+          (loaded)="$event ? visualOrderMessages.add(msg) : visualOrderMessages.delete(msg)"
+          (updated)="commerceUpdated()" (action)="runAction($event, msg)"></app-chat-orders>
 
         <span class="answer-mode" *ngIf="msg.from === 'bot' && msg.fallback">
           Chế độ cơ bản
         </span>
 
-        <div class="bot-products" *ngIf="msg.products?.length">
+        <div class="book-reference" *ngIf="compactProducts(msg)">
+          <button type="button" *ngFor="let p of msg.products" (click)="openProduct(p)"><lucide-icon name="book-open" [size]="14"></lucide-icon>{{ p.name }}</button>
+        </div>
+        <div class="bot-products" *ngIf="msg.products?.length && !compactProducts(msg)">
           <article class="bot-product" *ngFor="let p of msg.products">
             <span class="product-cover">
               <img [src]="p.image" [alt]="'Bìa sách ' + p.name" loading="lazy" />
@@ -79,16 +87,16 @@
               <button
                 type="button"
                 class="primary"
-                *ngFor="let action of productActions(msg, p.id)"
+                *ngFor="let action of productActions(msg, p.id); trackBy: trackProductAction"
                 [disabled]="commerceBusy || (action.type === 'ADD_TO_CART' && addedProductIds.has(p.id))"
-                (click)="runAction(action, msg)"
+                (click)="runAction(action, msg, true)"
               >{{ action.type === 'ADD_TO_CART' && addedProductIds.has(p.id) ? 'Đã thêm' : action.label }}</button>
             </span>
             <app-restock-watch *ngIf="p.quantity===0" [productId]="p.id"></app-restock-watch>
           </article>
         </div>
 
-        <div class="message-actions" *ngIf="genericActions(msg).length">
+        <div class="message-actions" *ngIf="genericActions(msg).length && !visualOrderMessages.has(msg)">
           <button type="button" *ngFor="let action of genericActions(msg)" (click)="runAction(action, msg)">
             {{ action.label }}
           </button>
@@ -100,8 +108,8 @@
           <button type="button" [class.selected]="msg.feedback === 'negative'" [disabled]="!!msg.feedback" (click)="sendFeedback(msg, 'negative')" aria-label="Câu trả lời chưa hữu ích">👎</button>
         </div>
 
-        <div class="bot-chips" *ngIf="msg.chips?.length && isLast && !typing">
-          <button type="button" class="chip" *ngFor="let c of msg.chips" (click)="send(c)">
+        <div class="bot-chips" *ngIf="contextualChips(msg).length && isLast && !typing">
+          <button type="button" class="chip" *ngFor="let c of contextualChips(msg)" (click)="send(c)">
             {{ c }}
           </button>
         </div>
@@ -120,7 +128,7 @@
       <button type="button" (click)="retry()">Thử lại</button>
     </div>
     <app-chat-commerce (busyChange)="commerceBusy = $event" (updated)="commerceUpdated()"
-      (added)="addedProductIds.add($event)" (navigated)="open = false; commerceBusy = false"></app-chat-commerce>
+      (added)="addedProductIds.add($event)" (undone)="addedProductIds.clear()" (navigated)="open = false; commerceBusy = false"></app-chat-commerce>
     <app-order-cancellation *ngIf="cancellationOrderId" [orderId]="cancellationOrderId"
       (completed)="orderCancelled($event)" (closed)="cancellationOrderId = 0; commerceBusy = false"
       (busyChange)="commerceBusy = $event" (updated)="commerceUpdated()"></app-order-cancellation>
@@ -141,13 +149,13 @@
         id="chat-message"
         rows="1"
         maxlength="1000"
-        placeholder="Hỏi về sách, giao hàng, thanh toán..."
+        [placeholder]="commerce?.checkout ? 'Ví dụ: đổi thành 2 cuốn, thanh toán COD...' : 'Hỏi về sách, giao hàng, thanh toán...'"
         [(ngModel)]="draft"
         name="draft"
         autocomplete="off"
         (keydown)="onInputKeydown($event)"
       ></textarea>
-      <button type="submit" [disabled]="!draft.trim() || typing || commerceBusy || !!commerce?.checkout || !!commerce?.uncertainConfirmation" aria-label="Gửi câu hỏi">
+      <button type="submit" [disabled]="!draft.trim() || typing || commerceBusy || !!commerce?.uncertainConfirmation" aria-label="Gửi câu hỏi">
         <lucide-icon name="send" [size]="18"></lucide-icon>
       </button>
     </form>

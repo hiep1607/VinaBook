@@ -1,3 +1,7 @@
+.chat-panel[hidden] {
+  display: none !important;
+}
+
 .chat-fab {
   position: fixed;
   right: 24px;
@@ -513,3 +517,6 @@
   .chat-input button { transition: none; }
   .bubble.typing span { animation: none; opacity: 0.6; }
 }
+ .book-reference button { display:inline-flex; align-items:center; gap:7px; border:0; background:transparent; color:var(--c-primary); padding:8px 0; font:inherit; font-size:13px; cursor:pointer; }
+
+.chat-fab.active { visibility:hidden; pointer-events:none; }
