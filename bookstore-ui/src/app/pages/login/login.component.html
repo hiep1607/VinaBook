@@ -50,9 +50,9 @@
     <button
       type="submit"
       class="auth-btn"
-      [disabled]="loginForm.invalid"
+      [disabled]="loginForm.invalid || loading"
     >
-      Đăng nhập
+      {{ loading ? 'Đang đăng nhập...' : 'Đăng nhập' }}
     </button>
     </form>
 

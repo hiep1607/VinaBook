@@ -489,3 +489,16 @@
   span { display: block; margin-top: 4px; color: var(--c-muted-fg); }
   > strong { white-space: nowrap; }
 }
+
+fieldset.new-address { border: 0; padding: 0; margin: 0; min-width: 0; }
+.selected-address { line-height: 1.6; } .selected-address p { margin: 6px 0; }
+.quantity-edit { display:flex; align-items:center; gap:4px; margin-top:10px; }
+.quantity-edit button { width:32px; height:34px; border:1px solid var(--c-border); border-radius:6px; background:var(--c-bg); color:var(--c-fg); }
+.quantity-edit input { width:48px; height:34px; text-align:center; border:1px solid var(--c-border); border-radius:6px; }
+.voucher-disclosure { margin:16px 0; } .voucher-disclosure summary { cursor:pointer; color:var(--c-muted-fg); }
+@media(max-width:680px) {
+ .checkout-page { padding-bottom:180px; }
+ .checkout-commit { position:fixed; bottom:0; left:0; right:0; z-index:40; background:var(--c-bg); padding:12px 20px calc(12px + env(safe-area-inset-bottom)); border-top:1px solid var(--c-border); box-shadow:0 -4px 18px #00000008; }
+ .checkout-commit .summary-total { padding:0; margin:0 0 8px; border:0; }
+ .checkout-commit .place-order-btn { margin:0; height:46px; }
+}

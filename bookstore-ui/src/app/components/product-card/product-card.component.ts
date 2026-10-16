@@ -7,6 +7,7 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { MotionService } from 'src/app/services/motion.service';
 import { ReviewService } from 'src/app/services/review.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
+import { ChatCheckoutService } from 'src/app/services/chat-checkout.service';
 
 @Component({
   selector: 'app-product-card',
@@ -19,6 +20,7 @@ export class ProductCardComponent implements OnInit, OnDestroy {
 
   displayRating = 0;
   displayCount  = 0;
+  adding = false;
 
   private reviewSub!: Subscription;
 
@@ -29,7 +31,8 @@ export class ProductCardComponent implements OnInit, OnDestroy {
     public authService: AuthService,
     private cartService: CartService,
     private notification: NotificationService,
-    private motion: MotionService
+    private motion: MotionService,
+    private purchaseIntent: ChatCheckoutService = null as any
   ) {}
 
   ngOnInit(): void {
@@ -83,12 +86,14 @@ export class ProductCardComponent implements OnInit, OnDestroy {
     return '★'.repeat(full) + '☆'.repeat(5 - full);
   }
 
-  addToCart(event: MouseEvent): void {
+  async addToCart(event: MouseEvent): Promise<void> {
     event.stopPropagation();
+    if (this.adding) return;
 
     if (!this.authService.isLoggedIn()) {
       this.notification.error('Vui lòng đăng nhập trước');
-      this.router.navigate(['/login']);
+      this.purchaseIntent?.rememberPurchaseIntent({ surface: 'web', action: 'ADD_TO_CART', fromCart: false, productId: this.product.id, quantity: 1 });
+      this.router.navigate(['/login'], { queryParams: { returnUrl: '/cart' } });
       return;
     }
 
@@ -97,9 +102,18 @@ export class ProductCardComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.cartService.addToCart(this.product);
-    this.motion.addToCart(event.currentTarget as HTMLElement);
-    this.notification.success('Đã thêm vào giỏ hàng');
+    const owner = this.authService.currentUser?.email, source = event.currentTarget as HTMLElement;
+    this.adding = true;
+    try {
+      await this.cartService.flush();
+      if (owner !== this.authService.currentUser?.email) return;
+      this.cartService.addToCart(this.product);
+      await this.cartService.flush();
+      if (owner !== this.authService.currentUser?.email) return;
+      this.motion.addToCart(source);
+      this.notification.success('Đã thêm vào giỏ hàng');
+    } catch (error) { if (owner === this.authService.currentUser?.email) this.notification.error((error as any)?.error?.message || (error as any)?.message || 'Chưa xác nhận được thay đổi. Bạn mở giỏ kiểm tra nhé.'); }
+    finally { this.adding = false; }
   }
 
   async toggleWishlist(event: MouseEvent): Promise<void> {

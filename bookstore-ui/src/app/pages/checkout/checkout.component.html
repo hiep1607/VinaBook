@@ -2,12 +2,19 @@
   <div class="container">
     <h1 class="checkout-title display-title" appReveal="up">Thanh toán</h1>
 
+    <p *ngIf="loading" role="status">Đang kiểm tra sách và thông tin giao hàng…</p>
     <form class="checkout-wrapper" (ngSubmit)="placeOrder()" #checkoutForm="ngForm">
-      <div class="checkout-form" appReveal="left">
+      <div class="checkout-form">
         <div class="form-box">
           <h2>Thông tin giao hàng</h2>
 
-          <fieldset *ngIf="!showNewForm && addresses.length > 0" class="address-list">
+          <div *ngIf="!showNewForm && selectedAddress && !choosingAddress" class="selected-address">
+            <strong>{{ selectedAddress.name }} · {{ selectedAddress.phone }}</strong>
+            <span *ngIf="selectedAddress.isDefault" class="badge">Mặc định</span>
+            <p>{{ selectedAddress.street }}</p>
+            <button type="button" class="link-btn" (click)="choosingAddress = true" [disabled]="placing || preparing">Thay đổi</button>
+          </div>
+          <fieldset *ngIf="!showNewForm && addresses.length > 0 && choosingAddress" class="address-list" [disabled]="placing || preparing">
             <legend class="sr-only">Chọn địa chỉ giao hàng</legend>
 
             <label
@@ -38,18 +45,8 @@
             </button>
           </fieldset>
 
-          <div *ngIf="showNewForm" class="new-address" appReveal="scale">
-            <div class="form-group">
-              <label for="shipping-label">Nhãn địa chỉ</label>
-              <input
-                id="shipping-label"
-                name="shippingLabel"
-                type="text"
-                autocomplete="off"
-                placeholder="Nhà riêng, Văn phòng..."
-                [(ngModel)]="shippingForm.label"
-              />
-            </div>
+          <fieldset *ngIf="showNewForm" class="new-address" [disabled]="placing || preparing">
+
 
             <div class="form-group">
               <label for="shipping-name">Họ và tên</label>
@@ -92,6 +89,17 @@
               <input name="saveToProfile" type="checkbox" [(ngModel)]="saveToProfile" />
               Lưu địa chỉ này vào hồ sơ của tôi
             </label>
+            <div class="form-group" *ngIf="saveToProfile">
+              <label for="shipping-label">Nhãn địa chỉ</label>
+              <input
+                id="shipping-label"
+                name="shippingLabel"
+                type="text"
+                autocomplete="off"
+                placeholder="Nhà riêng, Văn phòng..."
+                [(ngModel)]="shippingForm.label"
+              />
+            </div>
 
             <button
               *ngIf="addresses.length > 0"
@@ -101,7 +109,7 @@
             >
               Chọn từ địa chỉ đã lưu
             </button>
-          </div>
+          </fieldset>
 
           <p *ngIf="formError" class="form-error" role="alert">{{ formError }}</p>
         </div>
@@ -147,13 +155,17 @@
         </div>
       </div>
 
-      <aside class="checkout-summary" aria-label="Tóm tắt đơn hàng" appReveal="right">
+      <aside class="checkout-summary" aria-label="Tóm tắt đơn hàng">
         <h2>Đơn hàng</h2>
 
         <div class="summary-items">
           <article class="summary-item" *ngFor="let item of cartItems">
             <img [src]="item.image" [alt]="'Bìa sách ' + item.name" width="44" height="62">
-            <div><strong>{{ item.name }}</strong><span>{{ item.quantity }} × {{ item.price | number }}đ</span></div>
+            <div><strong>{{ item.name }}</strong><span>{{ item.price | number }}đ / cuốn</span>
+              <div class="quantity-edit"><button type="button" (click)="changeQuantity(item, item.quantity - 1)" [disabled]="item.quantity <= 1 || placing || preparing" [attr.aria-label]="'Giảm số lượng ' + item.name">−</button>
+              <input type="number" min="1" [max]="maxQuantity(item)" [ngModel]="item.quantity" (ngModelChange)="changeQuantity(item, $event)" [name]="'quantity-' + item.id" [disabled]="placing || preparing" [attr.aria-label]="'Số lượng ' + item.name" />
+              <button type="button" (click)="changeQuantity(item, item.quantity + 1)" [disabled]="item.quantity >= maxQuantity(item) || placing || preparing" [attr.aria-label]="'Tăng số lượng ' + item.name">+</button></div>
+              <small *ngIf="item.quantity > maxQuantity(item)" role="alert">Chỉ còn {{ maxQuantity(item) }} cuốn</small></div>
             <strong>{{ item.quantity * item.price | number }}đ</strong>
           </article>
         </div>
@@ -183,9 +195,10 @@
           <strong>{{ selectedPaymentLabel() }}</strong>
         </div>
 
-        <app-voucher-input [items]="cartItems" [disabled]="placing" (busyChange)="voucherBusy=$event" (applied)="voucherCode=$event.code;voucherDiscount=$event.discount"></app-voucher-input>
+        <details class="voucher-disclosure"><summary>Mã giảm giá</summary><app-voucher-input [items]="cartItems" [disabled]="placing || preparing" (busyChange)="voucherBusy=$event" (applied)="voucherCode=$event.code;voucherDiscount=$event.discount"></app-voucher-input></details>
         <div class="summary-row" *ngIf="voucherDiscount"><span>Giảm giá {{voucherCode}}</span><strong>−{{voucherDiscount|number}}đ</strong></div>
-        <div class="summary-total">
+        <div class="checkout-commit">
+        <div class="summary-total" aria-live="polite">
           <span>Tổng cộng</span>
           <strong>{{ shippingSettings ? (getTotal() | number) + 'đ' : 'Đang kiểm tra' }}</strong>
         </div>
@@ -195,11 +208,12 @@
           type="submit"
           class="place-order-btn"
           [class.success]="orderPlaced"
-          [disabled]="placing || orderPlaced || cartItems.length === 0 || !shippingSettings"
+          [disabled]="loading || preparing || voucherBusy || placing || orderPlaced || !quantitiesValid || !shippingSettings"
         >
-          {{ orderPlaced ? 'Đặt hàng thành công' : (placing ? 'Đang xử lý...' : (selectedPayment === 'COD' ? 'Đặt hàng' : 'Tiếp tục thanh toán')) }}
+          {{ orderPlaced ? 'Đặt hàng thành công' : (placing || preparing ? 'Đang xử lý...' : (selectedPayment === 'COD' ? 'Đặt hàng' : 'Tiếp tục thanh toán')) }}
         </button>
 
+        </div>
         <p class="summary-safe">Không lưu thông tin thẻ hoặc mật khẩu ví trên VinaBook.</p>
       </aside>
     </form>

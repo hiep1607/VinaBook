@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { ProductService } from 'src/app/services/product.service';
+import { timeout } from 'rxjs/operators';
 
 import { AddressService } from 'src/app/services/address.service';
 import { AuthService } from 'src/app/services/auth.service';
@@ -27,12 +29,15 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   addresses: any[] = [];
   selectedAddress: any = null;
   placing = false;
-  private preparing = false;
+  preparing = false;
+  loading = true;
+  choosingAddress = false;
+  buyNowMode = false;
   private destroyed = false;
   orderPlaced = false;
   mode = 'form';
   showNewForm = false;
-  saveToProfile = true;
+  saveToProfile = false;
   formError = '';
   methodsLoading = true;
   selectedPayment = 'COD';
@@ -59,31 +64,58 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     private router: Router,
     private notification: NotificationService,
     private motion: MotionService,
-    private knowledge: StoreKnowledgeService
+    private knowledge: StoreKnowledgeService,
+    private products: ProductService
   ) {}
 
-  ngOnInit(): void {
-    this.knowledge.get().subscribe(data => this.shippingSettings = data.settings,
-      () => this.shippingUnavailable = true);
-    this.cartService.getCartItems();
-    if (this.cartService.syncing) {
-      this.cartService.flush().then(() => { if (!this.destroyed) this.ngOnInit(); }, () => {
-        this.formError = this.cartService.syncError || 'Chưa tải được giỏ hàng. Vui lòng quay lại giỏ hàng và thử lại.';
-      });
-      return;
-    }
-    this.cartItems = this.cartService.buyNowItem
-      ? [this.cartService.buyNowItem]
-      : this.cartService.getCartItems().filter(item => item.selected);
+  async ngOnInit(): Promise<void> {
+    this.knowledge.get().subscribe(data => this.shippingSettings = data.settings, () => this.shippingUnavailable = true);
+    this.shippingForm.name = this.authService.currentUser?.name || '';
+    this.shippingForm.phone = this.authService.currentUser?.phone || '';
+    try {
+      this.cartService.getCartItems();
+      await this.cartService.flush();
+      const selection = this.cartService.getBuyNowSelection();
+      const catalog = await this.products.refresh().pipe(timeout(20000)).toPromise();
+      if (this.destroyed) return;
+      if (selection) {
+        const product = catalog.find(book => book.id === selection.productId);
+        if (!product || product.quantity < selection.quantity) {
+          this.formError = 'Sách vừa chọn không còn đủ số lượng. Bạn chọn lại số lượng hoặc sách khác nhé.';
+          this.cartService.clearBuyNowItem();
+          this.router.navigate(['/product', selection.productId]); return;
+        }
+        this.cartService.setBuyNowItem(product, selection.quantity);
+        this.buyNowMode = true;
+        this.cartItems = [{ ...this.cartService.buyNowItem }];
+      } else {
+        this.cartItems = this.cartService.getCartItems().filter(item => item.selected).map(item => {
+          const product = catalog.find(book => book.id === item.id);
+          return { ...item, price: product?.price ?? item.price, stock: product?.quantity ?? 0 };
+        });
+      }
+      if (!this.cartItems.length) { this.router.navigate(['/cart']); return; }
+      await this.loadAddresses();
+      if (!this.destroyed) this.loadPaymentMethods();
+    } catch (error) {
+      if (!this.destroyed) this.formError = (error as any)?.error?.message || (error as any)?.message || 'Chưa tải được lựa chọn mua. Bạn thử tải lại trang nhé.';
+    } finally { if (!this.destroyed) this.loading = false; }
+  }
 
-    if (this.cartItems.length === 0) {
-      this.notification.error('Vui lòng chọn ít nhất một sản phẩm trước khi thanh toán');
-      this.router.navigate(['/cart']);
-      return;
+  maxQuantity(item: any): number { return Math.max(0, Math.min(99, item.stock ?? 99)); }
+  get quantitiesValid(): boolean { return !!this.cartItems.length && this.cartItems.every(item => Number.isInteger(item.quantity) && item.quantity >= 1 && item.quantity <= this.maxQuantity(item)); }
+  changeQuantity(item: any, value: any): void {
+    if (this.placing || this.preparing || this.orderPlaced) return;
+    const number = Number(value), max = this.maxQuantity(item);
+    if (!Number.isInteger(number) || max < 1) { this.formError = 'Bạn chọn số lượng nguyên và sách còn hàng nhé.'; return; }
+    const quantity = Math.max(1, Math.min(number, max));
+    this.formError = quantity !== number ? 'Số lượng đã được điều chỉnh theo tồn kho hiện tại.' : '';
+    this.cartItems = this.cartItems.map(line => line.id === item.id ? { ...line, quantity } : line);
+    if (this.buyNowMode) this.cartService.setBuyNowItem({ ...item, quantity: item.stock }, quantity);
+    else {
+      const source = this.cartService.getCartItems().find(line => line.id === item.id);
+      if (source) { source.quantity = quantity; this.cartService.saveCart(); }
     }
-
-    this.loadAddresses();
-    this.loadPaymentMethods();
   }
 
   loadPaymentMethods(): void {
@@ -122,7 +154,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroyed = true;
-    this.cartService.clearBuyNowItem();
   }
 
   private get email(): string {
@@ -144,12 +175,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   selectAddress(address: any): void {
     this.selectedAddress = address;
+    this.choosingAddress = false;
   }
 
   useNewAddress(): void {
     this.showNewForm = true;
     this.formError = '';
-    this.shippingForm = { label: '', name: '', phone: '', street: '' };
+    this.shippingForm = { label: '', name: this.authService.currentUser?.name || '', phone: this.authService.currentUser?.phone || '', street: '' };
   }
 
   cancelNewAddress(): void {
@@ -175,7 +207,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   async placeOrder(): Promise<void> {
     if (!this.shippingSettings) { this.formError = 'Chưa tải được chính sách giao hàng. Vui lòng thử lại.'; return; }
-    if (this.placing || this.preparing || this.orderPlaced || this.voucherBusy) return;
+    if (this.loading || this.placing || this.preparing || this.orderPlaced || this.voucherBusy) return;
+    if (!this.quantitiesValid) { this.formError = 'Bạn kiểm tra lại số lượng và tồn kho trước khi đặt hàng nhé.'; return; }
     this.preparing = true;
     try { await this.cartService.flush(); } catch { this.formError = this.cartService.syncError || 'Chưa đồng bộ được giỏ hàng. Vui lòng kiểm tra lại.'; return; }
     finally { this.preparing = false; }
@@ -215,13 +248,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     this.placing = true;
 
     this.orderService
-      .placeOrder(this.email, addressLine, shippingAddress.phone, this.cartItems, this.selectedPayment, !this.cartService.buyNowItem, this.cartService.serverRevision, this.getTotal(), this.voucherCode, this.voucherDiscount)
+      .placeOrder(this.email, addressLine, shippingAddress.phone, this.cartItems, this.selectedPayment, !this.buyNowMode, this.cartService.serverRevision, this.getTotal(), this.voucherCode, this.voucherDiscount)
       .subscribe(
         (order: any) => {
           if (isNewAddress && this.saveToProfile) {
             void this.addressService.addAddress(this.email, this.shippingForm).catch(()=>this.notification.error('Đơn đã tạo, nhưng chưa lưu được địa chỉ vào tài khoản. Bạn lưu lại trong Hồ sơ nhé.'));
           }
-          if (!this.cartService.buyNowItem) {
+          if (!this.buyNowMode) {
             this.cartService.refresh();
           }
           this.cartService.clearBuyNowItem();

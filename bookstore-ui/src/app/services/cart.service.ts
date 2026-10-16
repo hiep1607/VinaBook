@@ -8,6 +8,7 @@ import { AuthService } from './auth.service';
 export class CartService implements OnDestroy {
 
   buyNowItem: any = null;
+  private readonly buyNowKey = 'vinabook_web_buy_now_v1';
   items: any[] = [];
 
   private loadedKey = '';
@@ -101,12 +102,13 @@ export class CartService implements OnDestroy {
   addToCart(product: any, qty: number = 1): void {
     this.ensureScope();
     const existingItem = this.items.find(item => item.id === product.id);
-
+    const quantity = (existingItem?.quantity || 0) + qty;
+    const max = Math.min(99, product.stock ?? product.quantity ?? 99);
+    if (!Number.isInteger(qty) || qty < 1 || quantity > max) throw new Error(`Bạn có thể mua tối đa ${max} cuốn “${product.name}”.`);
     if (existingItem) {
-      const max = product.quantity > 0 ? product.quantity : 99;
-      existingItem.quantity = Math.min(existingItem.quantity + qty, max);
+      existingItem.quantity = quantity;
     } else {
-      this.items.push({ ...product, quantity: qty, selected: true });
+      this.items.push({ ...product, stock: product.stock ?? product.quantity, quantity: qty, selected: true });
     }
 
     this.saveCart();
@@ -144,11 +146,26 @@ export class CartService implements OnDestroy {
 
   setBuyNowItem(product: any, qty: number = 1): void {
     this.ensureScope();
-    this.buyNowItem = { ...product, quantity: qty, selected: true };
+    if (!Number.isInteger(qty) || qty < 1 || qty > Math.min(99, product.stock ?? product.quantity ?? 99)) throw new Error('Số lượng vượt quá tồn kho hiện tại.');
+    this.buyNowItem = { ...product, stock: product.stock ?? product.quantity, quantity: qty, selected: true };
+    try { sessionStorage.setItem(this.buyNowKey, JSON.stringify({ owner: this.currentKey(), productId: product.id, quantity: qty, expiresAt: Date.now() + 30 * 60 * 1000 })); } catch {}
+  }
+
+  getBuyNowSelection(): { productId: number; quantity: number } | undefined {
+    this.ensureScope();
+    try {
+      const value = JSON.parse(sessionStorage.getItem(this.buyNowKey) || 'null');
+      if (!value) return undefined;
+      if (value.owner !== this.currentKey() || !Number.isSafeInteger(value.productId) || value.productId < 1
+          || !Number.isInteger(value.quantity) || value.quantity < 1 || value.quantity > 99
+          || !Number.isFinite(value.expiresAt) || value.expiresAt <= Date.now()) { this.clearBuyNowItem(); return undefined; }
+      return { productId: value.productId, quantity: value.quantity };
+    } catch { this.clearBuyNowItem(); return undefined; }
   }
 
   clearBuyNowItem(): void {
     this.buyNowItem = null;
+    try { sessionStorage.removeItem(this.buyNowKey); } catch {}
   }
 
   private ensureScope(): void {

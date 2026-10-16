@@ -76,7 +76,7 @@
       <button
         type="button"
         class="add-cart-btn"
-        (click)="addToCart($event)"
+        (click)="addToCart($event)" [disabled]="adding || product.quantity === 0"
         title="Thêm vào giỏ hàng"
         aria-label="Thêm vào giỏ hàng"
       >
