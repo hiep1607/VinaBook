@@ -2,6 +2,7 @@ import { Component, DoCheck, EventEmitter, Input, OnChanges, OnDestroy, Output }
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderCancellationPreview, OrderService } from 'src/app/services/order.service';
+import { OrderItemView } from '../order-items/order-items.component';
 
 /** Shared confirmation for the Orders page and chatbot. Only a button submits cancellation. */
 @Component({
@@ -23,19 +24,28 @@ export class OrderCancellationComponent implements OnChanges, DoCheck, OnDestroy
   private owner = '';
   private version = 0;
   private request?: Subscription;
+  private detailsRequest?: Subscription;
+  private detailItems: OrderItemView[] = [];
+  get displayItems(): OrderItemView[] {
+    return (this.preview?.items || []).map((item, index) => {
+      const detail = this.detailItems[index];
+      return detail?.name === item.name && detail.quantity === item.quantity ? { ...detail, ...item } : item;
+    });
+  }
 
   constructor(private orders: OrderService, private auth: AuthService) {}
   ngOnChanges(): void {
     this.owner = this.auth.currentUser?.email || '';
     this.version++;
     this.request?.unsubscribe();
+    this.detailsRequest?.unsubscribe(); this.detailItems = [];
     this.setBusy(false);
     this.preview = undefined; this.done = false; this.uncertain = false; this.error = '';
     this.load();
   }
   ngDoCheck(): void {
     if (this.owner !== (this.auth.currentUser?.email || '')) {
-      this.version++; this.request?.unsubscribe(); this.preview = undefined;
+      this.version++; this.request?.unsubscribe(); this.detailsRequest?.unsubscribe(); this.detailItems = []; this.preview = undefined;
       this.owner = this.auth.currentUser?.email || '';
       this.setBusy(false); this.closed.emit();
     }
@@ -50,6 +60,11 @@ export class OrderCancellationComponent implements OnChanges, DoCheck, OnDestroy
     if (!Number.isSafeInteger(this.orderId) || this.orderId < 1) { this.error = 'Mã đơn chưa hợp lệ. Bạn chọn lại đơn muốn hủy nhé.'; return; }
     const version = this.version, owner = this.owner;
     this.error = ''; this.setBusy(true);
+    this.detailsRequest?.unsubscribe(); this.detailItems = [];
+    this.detailsRequest = this.orders.getOrder(this.orderId).subscribe({
+      next: order => { if (this.current(version, owner) && order.id === this.orderId) { this.detailItems = order.items; this.updated.emit(); } },
+      error: () => { /* Image enrichment must not block the authoritative cancellation preview. */ }
+    });
     this.request = this.orders.cancellationPreview(this.orderId).subscribe({
       next: preview => {
         if (!this.current(version, owner)) return;
@@ -89,5 +104,5 @@ export class OrderCancellationComponent implements OnChanges, DoCheck, OnDestroy
     this.done = true; this.uncertain = false; this.completed.emit(id);
   }
   dismiss(): void { if (!this.busy) this.closed.emit(); }
-  ngOnDestroy(): void { this.version++; this.request?.unsubscribe(); }
+  ngOnDestroy(): void { this.version++; this.request?.unsubscribe(); this.detailsRequest?.unsubscribe(); }
 }

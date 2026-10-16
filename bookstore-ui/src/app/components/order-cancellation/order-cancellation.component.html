@@ -1,17 +1,17 @@
 <section class="cancel-panel" aria-label="Xác nhận hủy đơn hàng" [attr.aria-busy]="busy">
-  <h3>{{ done ? 'Đơn đã hủy' : 'Kiểm tra đơn muốn hủy' }}</h3>
+  <header class="panel-heading"><span class="heading-icon" [class.done]="done"><lucide-icon [name]="done ? 'shield-check' : 'shopping-cart'" [size]="20"></lucide-icon></span><div><h3>{{ done ? 'Đơn đã hủy' : 'Hủy đơn hàng?' }}</h3><small>{{ done ? 'Trạng thái đã được cập nhật' : 'Xem lại sách trước khi xác nhận' }}</small></div></header>
   <p *ngIf="busy" role="status">{{ preview ? 'Đang xác nhận với VinaBook...' : 'Đang kiểm tra trạng thái đơn...' }}</p>
   <p *ngIf="error" role="alert" class="error">{{ error }}</p>
   <ng-container *ngIf="preview">
-    <p><strong>Đơn #{{ preview.orderId }}</strong> · {{ preview.orderDate | date:'dd/MM/yyyy HH:mm' }}</p>
-    <ul><li *ngFor="let item of preview.items">{{ item.name }} × {{ item.quantity }}</li></ul>
-    <p>Tổng đơn: <strong>{{ preview.total | number }}đ</strong></p>
+    <div class="order-meta"><strong>Đơn #{{ preview.orderId }}</strong><span>{{ preview.orderDate | date:'dd/MM/yyyy HH:mm' }}</span></div>
+    <app-order-items [items]="displayItems" [compact]="true"></app-order-items>
+    <div class="cancel-total"><span>Thành tiền</span><strong>{{ preview.total | number:'1.0-0' }}đ</strong></div>
     <p *ngIf="done" role="status">Mình đã kiểm tra: đơn #{{ preview.orderId }} đã được hủy. Cửa hàng sẽ không tiếp tục giao đơn này.</p>
     <p *ngIf="!done && !preview.canCancel">{{ preview.reason }} Bạn có thể <a routerLink="/contact">liên hệ cửa hàng</a> để được hỗ trợ nhé.</p>
-    <p *ngIf="!done && preview.canCancel && !uncertain">Bạn kiểm tra tên sách và mã đơn rồi xác nhận nhé. Hủy đơn sẽ dừng việc giao toàn bộ sách trong đơn này.</p>
+    <p class="notice" *ngIf="!done && preview.canCancel && !uncertain">Toàn bộ sách trong đơn này sẽ ngừng giao nếu bạn xác nhận hủy.</p>
   </ng-container>
   <div class="actions">
-    <button type="button" class="danger" *ngIf="preview?.canCancel && !done && !uncertain" (click)="confirm()" [disabled]="busy">Xác nhận hủy đơn #{{ orderId }}</button>
+    <button type="button" class="danger" *ngIf="preview?.canCancel && !done && !uncertain" (click)="confirm()" [disabled]="busy" [attr.aria-label]="'Xác nhận hủy đơn #' + orderId">{{ busy ? 'Đang hủy...' : 'Xác nhận hủy đơn' }}</button>
     <button type="button" *ngIf="uncertain || (!preview && error)" (click)="load()" [disabled]="busy">Kiểm tra trạng thái</button>
     <button type="button" (click)="dismiss()" [disabled]="busy">{{ done || uncertain || !preview?.canCancel ? 'Đóng' : 'Giữ đơn hàng' }}</button>
   </div>

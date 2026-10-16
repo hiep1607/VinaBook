@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { OrderItemsComponent } from '../order-items/order-items.component';
 import { of, Subject, throwError } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { OrderService } from 'src/app/services/order.service';
@@ -13,8 +15,9 @@ describe('Shared order cancellation', () => {
   beforeEach(async () => {
     auth = { currentUser: { email: 'buyer@test.invalid' } };
     orders = { cancellationPreview: jasmine.createSpy().and.returnValue(of({ ...preview })),
+      getOrder: jasmine.createSpy().and.returnValue(of({ id: 7, items: [{ name: 'Sách thử hủy', quantity: 1, image: '/cover.jpg', price: 100000 }] })),
       cancelOrder: jasmine.createSpy().and.returnValue(of({ orderId: 7, status: 'CANCELLED' })) };
-    await TestBed.configureTestingModule({ imports: [CommonModule], declarations: [OrderCancellationComponent],
+    await TestBed.configureTestingModule({ imports: [CommonModule], declarations: [OrderCancellationComponent, OrderItemsComponent], schemas: [NO_ERRORS_SCHEMA],
       providers: [{ provide: AuthService, useValue: auth }, { provide: OrderService, useValue: orders }] }).compileComponents();
     fixture = TestBed.createComponent(OrderCancellationComponent); component = fixture.componentInstance;
     component.orderId = 7; component.ngOnChanges(); fixture.detectChanges();
@@ -56,5 +59,17 @@ describe('Shared order cancellation', () => {
     const response = new Subject<any>(); orders.cancellationPreview.and.returnValue(response); component.ngOnChanges();
     orders.cancellationPreview.and.returnValue(of({ ...preview, orderId: 8 })); component.orderId = 8; component.ngOnChanges();
     response.next(preview); expect(component.preview?.orderId).toBe(8); expect(component.busy).toBeFalse();
+  });
+  it('adds matching order covers while preserving the authoritative cancellation items', () => {
+    expect(component.displayItems[0].image).toBe('/cover.jpg');
+    expect(component.displayItems[0].quantity).toBe(1);
+    orders.getOrder.and.returnValue(of({ id: 7, items: [{ name: 'Sách khác', quantity: 2, image: '/wrong.jpg' }] }));
+    component.ngOnChanges(); expect(component.displayItems[0].image).toBeUndefined();
+    expect(component.displayItems[0].name).toBe('Sách thử hủy');
+  });
+  it('keeps cancellation available when optional book images cannot load', () => {
+    orders.getOrder.and.returnValue(throwError({status:503})); component.ngOnChanges();
+    expect(component.preview?.canCancel).toBeTrue(); expect(component.displayItems[0].name).toBe('Sách thử hủy');
+    expect(orders.cancelOrder).not.toHaveBeenCalled();
   });
 });

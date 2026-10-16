@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -14,6 +14,7 @@ export interface CustomerOrder {
   shippingAddress: { name: string; phone: string; street: string };
   items: { productId: number | null; name: string; image: string; quantity: number; price: number }[];
 }
+export interface CustomerOrderPage { items: any[]; total: number; counts: {[status: string]: number}; totalSpent: number; page: number; size: number; }
 
 export interface OrderCancellationPreview {
   orderId: number;
@@ -22,7 +23,7 @@ export interface OrderCancellationPreview {
   statusCode: number;
   canCancel: boolean;
   reason: string;
-  items: { name: string; quantity: number }[];
+  items: { name: string; quantity: number; image?: string; price?: number; productId?: number | null }[];
 }
 
 /** Đơn hàng server-side: quote tính giá/ship, confirm tạo đơn và giữ tồn kho. */
@@ -39,6 +40,11 @@ export class OrderService {
     return this.http.get<CustomerOrder>(this.api + '/api/orders/me/' + orderId).pipe(
       timeout(20000), map(order => ({ ...order, status: this.statusLabel(order.statusCode) }))
     );
+  }
+  getOrderPage(page = 0, size = 20, status = -1, query = ''): Observable<CustomerOrderPage> {
+    const params = new HttpParams().set('page', String(page)).set('size', String(size)).set('status', String(status)).set('q', query);
+    return this.http.get<CustomerOrderPage>(this.api + '/api/orders/me', { params }).pipe(timeout(20000),
+      map(result => ({ ...result, items: result.items.map(order => ({ ...order, status: this.statusLabel(order.statusCode) })) })));
   }
 
   cancellationPreview(orderId: number): Observable<OrderCancellationPreview> {
@@ -133,13 +139,17 @@ export class OrderService {
       paymentStatus: o.paymentStatus || 'UNPAID',
       paymentReference: o.paymentReference || '',
       paidAt: o.paidAt || null,
+      shippingFee: o.shippingFee,
+      discount: o.voucherDiscount,
+      voucherCode: o.voucherCode,
       shippingAddress: {
         label: '',
-        name: o.user ? o.user.name : '',
+        name: (o.address || '').match(/\(Người nhận: (.*?)\)$/)?.[1] || (o.user ? o.user.name : ''),
         phone: o.phone,
-        street: o.address
+        street: (o.address || '').replace(/\s*\(Người nhận: .*?\)$/, '')
       },
       items: (details || []).map(d => ({
+        productId: d.product ? d.product.productId : null,
         image: d.product ? d.product.image : '',
         name: d.product ? d.product.name : '',
         quantity: d.quantity,

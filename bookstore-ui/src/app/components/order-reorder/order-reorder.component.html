@@ -3,12 +3,15 @@
   <p *ngIf="busy" role="status">Đang kiểm tra sách và giỏ hàng...</p>
   <p *ngIf="error" role="alert" class="error">{{ error }}</p>
   <div *ngFor="let line of lines" class="line">
+    <label *ngIf="!done && !uncertain && line.product && line.product.quantity > 0"><input type="checkbox" [(ngModel)]="line.selected" [disabled]="busy" [attr.aria-label]="'Chọn mua lại ' + line.name" /> Chọn mua lại</label>
+    <div class="reorder-book"><span class="cover"><img *ngIf="line.product?.image; else noCover" [src]="line.product.image" [alt]="'Bìa sách ' + line.name" loading="lazy" /><ng-template #noCover><lucide-icon name="book-open" [size]="24"></lucide-icon></ng-template></span><div class="book-info">
     <strong>{{ line.name }}</strong>
     <p *ngIf="line.product">Giá hiện tại: {{ line.product.price | number }}đ · Còn {{ line.product.quantity }} cuốn</p>
-    <p *ngIf="!line.product">Sách này không còn bán. Bạn chưa thể mua lại toàn bộ đơn; hãy chọn sách còn bán trong mục Sách nhé.</p>
-    <label *ngIf="line.product && !done && !uncertain">Số lượng <input type="number" min="1" [max]="line.product.quantity < 99 ? line.product.quantity : 99" [(ngModel)]="line.quantity" [disabled]="busy" /></label>
+    <p *ngIf="!line.product || line.product.quantity === 0">Sách này hiện không còn hàng. Bạn vẫn có thể chọn mua lại các cuốn còn hàng trong đơn.</p>
+    <label *ngIf="line.product && line.product.quantity > 0 && !done && !uncertain">Số lượng <input type="number" min="1" [max]="line.product.quantity < 99 ? line.product.quantity : 99" [(ngModel)]="line.quantity" [disabled]="busy || line.selected === false" /></label>
+    </div></div>
   </div>
-  <p *ngIf="lines.length">Tạm tính sách còn bán: <strong>{{ subtotal | number }}đ</strong>. Phí giao hàng được tính khi đặt hàng.</p>
+  <p *ngIf="lines.length">Tạm tính sách đã chọn: <strong>{{ subtotal | number }}đ</strong>. Phí giao hàng được tính khi đặt hàng.</p>
   <p *ngIf="!done && !uncertain && lines.length">Mình dùng giá và tồn kho hiện tại vì chúng có thể khác lần mua trước. Xác nhận sẽ thêm sách vào giỏ hiện có; bạn vẫn sẽ xem tổng tiền và xác nhận riêng ở bước đặt hàng nhé.</p>
   <p *ngIf="done" role="status">Mình đã thêm sách vào giỏ. Bạn <a routerLink="/cart" (click)="dismiss()">mở giỏ hàng</a> để kiểm tra rồi tiếp tục đặt mua nhé.</p>
   <p *ngIf="uncertain">Bạn <a routerLink="/cart" (click)="dismiss()">mở giỏ hàng</a> để kiểm tra kết quả trước khi thêm lại nhé.</p>

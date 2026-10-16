@@ -12,7 +12,7 @@ export class OrderReorderComponent implements OnChanges, DoCheck, OnDestroy {
   @Output() closed = new EventEmitter<void>();
   @Output() busyChange = new EventEmitter<boolean>(true);
   @Output() updated = new EventEmitter<void>();
-  lines: { product?: any; name: string; quantity: number }[] = [];
+  lines: { product?: any; name: string; quantity: number; selected?: boolean }[] = [];
   busy = false; error = ''; done = false; uncertain = false;
   private owner = ''; private version = 0; private cartKey = '';
   constructor(private orders: OrderService, private products: ProductService, private cart: CartService, private auth: AuthService) {}
@@ -26,8 +26,9 @@ export class OrderReorderComponent implements OnChanges, DoCheck, OnDestroy {
   private current(version: number, owner: string): boolean { return version === this.version && owner === (this.auth.currentUser?.email || ''); }
   private setBusy(value: boolean): void { this.busy = value; this.busyChange.emit(value); this.updated.emit(); }
   private fingerprint(): string { return chatCartFingerprint(this.cart.getCartItems(), this.cart.serverRevision); }
-  get subtotal(): number { return this.lines.reduce((sum, line) => sum + (line.product?.price || 0) * line.quantity, 0); }
-  get canAdd(): boolean { return !!this.lines.length && this.lines.every(line => !!line.product && Number.isInteger(line.quantity) && line.quantity > 0 && line.quantity <= Math.min(99, line.product.quantity)); }
+  get selectedLines() { return this.lines.filter(line => line.selected !== false && !!line.product && line.product.quantity > 0); }
+  get subtotal(): number { return this.selectedLines.reduce((sum, line) => sum + line.product.price * line.quantity, 0); }
+  get canAdd(): boolean { return !!this.selectedLines.length && this.selectedLines.every(line => Number.isInteger(line.quantity) && line.quantity > 0 && line.quantity <= Math.min(99, line.product.quantity)); }
   async load(): Promise<void> {
     if (this.busy) return;
     if (!this.owner) { this.error = 'Bạn đăng nhập để mình mở đúng đơn đã mua của bạn nhé.'; return; }
@@ -36,7 +37,10 @@ export class OrderReorderComponent implements OnChanges, DoCheck, OnDestroy {
       await this.cart.flush();
       const [source, catalog] = await Promise.all([this.orders.reorderPreview(this.orderId).toPromise(), this.products.refresh().pipe(timeout(20000)).toPromise()]);
       if (!this.current(version, owner)) return;
-      this.lines = source.items.map(item => ({ name: item.name, quantity: item.quantity, product: catalog.find(book => book.id === item.productId) }));
+      this.lines = source.items.map(item => {
+        const product = catalog.find(book => book.id === item.productId);
+        return { name: item.name, quantity: item.quantity, product, selected: !!product && product.quantity > 0 };
+      });
       this.cartKey = this.fingerprint();
     } catch (error) { if (this.current(version, owner)) this.error = (error as any)?.error?.message || (error as any)?.message || 'Mình chưa tải được đơn cũ và giá hiện tại. Bạn thử lại nhé.'; }
     finally { if (this.current(version, owner)) this.setBusy(false); }
@@ -49,7 +53,7 @@ export class OrderReorderComponent implements OnChanges, DoCheck, OnDestroy {
       await this.cart.flush();
       if (!this.current(version, owner)) return;
       if (this.cartKey !== this.fingerprint()) throw new Error('Giỏ đã thay đổi. Bạn tải lại trước khi thêm sách từ đơn cũ nhé.');
-      this.cart.addBooks(this.lines.map(line => ({ product: line.product, quantity: line.quantity })));
+      this.cart.addBooks(this.selectedLines.map(line => ({ product: line.product, quantity: line.quantity })));
       submitted = true; await this.cart.flush();
       if (!this.current(version, owner)) return;
       this.done = true;

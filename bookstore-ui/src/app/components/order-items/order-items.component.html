@@ -1,0 +1,15 @@
+<div class="order-items" [class.compact]="compact">
+  <article class="order-item" *ngFor="let item of items">
+    <span class="cover">
+      <img *ngIf="item.image && !failedImages.has(item.image); else missingCover" [src]="item.image"
+        [alt]="'Bìa sách ' + item.name" loading="lazy" decoding="async" (error)="failedImages.add(item.image!)" />
+      <ng-template #missingCover><lucide-icon name="book-open" [size]="24" aria-label="Chưa có ảnh bìa"></lucide-icon></ng-template>
+    </span>
+    <div class="item-info">
+      <a *ngIf="item.productId; else bookName" [routerLink]="['/product', item.productId]">{{ item.name }}</a>
+      <ng-template #bookName><strong>{{ item.name }}</strong></ng-template>
+      <span class="item-meta">Số lượng: {{ item.quantity }}<ng-container *ngIf="hasPrice(item)"> · {{ item.price | number:'1.0-0' }}đ/cuốn</ng-container></span>
+    </div>
+    <strong class="line-total" *ngIf="hasPrice(item)">{{ item.price! * item.quantity | number:'1.0-0' }}đ</strong>
+  </article>
+</div>

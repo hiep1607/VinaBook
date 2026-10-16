@@ -42,6 +42,11 @@ describe('Mua lại đơn cũ trên website', () => {
     cart.serverRevision++; await component.confirm(); expect(cart.addBooks).not.toHaveBeenCalled();
     component.lines[0].product = undefined; expect(component.canAdd).toBeFalse();
   });
+  it('allows selecting available books when another old book is no longer sold', async () => {
+    component.lines.push({name:'Sách ngừng bán',quantity:1,selected:false});
+    expect(component.canAdd).toBeTrue();expect(component.subtotal).toBe(240000);
+    await component.confirm();expect(cart.addBooks).toHaveBeenCalledOnceWith([{product:book,quantity:2}]);
+  });
   it('locks after an uncertain save so quantities cannot be added twice', async () => {
     let calls = 0;
     cart.flush.and.callFake(() => ++calls === 2 ? Promise.reject(new Error('Mất kết nối')) : Promise.resolve());

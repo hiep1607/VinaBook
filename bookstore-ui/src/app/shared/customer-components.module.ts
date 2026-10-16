@@ -1,4 +1,6 @@
 import {CountUpDirective} from '../shared/directives/count-up.directive';
+import {OrderItemsComponent} from '../components/order-items/order-items.component';
+import {ChatOrdersComponent} from '../components/chat-orders/chat-orders.component';
 import {SupportRequestsComponent} from '../components/support-requests/support-requests.component';
 import {LucideAngularModule} from 'lucide-angular';
 import {ProductCardComponent} from '../components/product-card/product-card.component';
@@ -13,5 +15,5 @@ import {SupportRequestComponent} from '../components/support-request/support-req
 import {SupportChatComponent} from '../components/support-chat/support-chat.component';
 import {VoucherInputComponent} from '../components/voucher-input/voucher-input.component';
 import {RevealDirective} from '../shared/directives/reveal.directive';
-@NgModule({imports:[LucideAngularModule,CommonModule,FormsModule,RouterModule],declarations:[CountUpDirective,SupportRequestsComponent,ProductCardComponent,RestockWatchComponent,OrderCancellationComponent,OrderReorderComponent,SupportRequestComponent,SupportChatComponent,VoucherInputComponent,RevealDirective],exports:[CountUpDirective,SupportRequestsComponent,ProductCardComponent,RestockWatchComponent,OrderCancellationComponent,OrderReorderComponent,SupportRequestComponent,SupportChatComponent,VoucherInputComponent,RevealDirective]})
+@NgModule({imports:[LucideAngularModule,CommonModule,FormsModule,RouterModule],declarations:[OrderItemsComponent,ChatOrdersComponent,CountUpDirective,SupportRequestsComponent,ProductCardComponent,RestockWatchComponent,OrderCancellationComponent,OrderReorderComponent,SupportRequestComponent,SupportChatComponent,VoucherInputComponent,RevealDirective],exports:[OrderItemsComponent,ChatOrdersComponent,CountUpDirective,SupportRequestsComponent,ProductCardComponent,RestockWatchComponent,OrderCancellationComponent,OrderReorderComponent,SupportRequestComponent,SupportChatComponent,VoucherInputComponent,RevealDirective]})
 export class CustomerComponentsModule {}

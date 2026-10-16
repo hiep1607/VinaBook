@@ -1,0 +1,21 @@
+<section class="chat-orders" aria-label="Thông tin đơn hàng" [attr.aria-busy]="loading">
+  <div *ngIf="loading" class="loading" role="status"><span class="skeleton-line"></span>Đang tải ảnh sách và trạng thái đơn…</div>
+  <article class="order-card" *ngFor="let order of orders">
+    <header>
+      <div><strong>Đơn #{{ order.id }}</strong><small>{{ order.date | date:'dd/MM/yyyy HH:mm' }}</small></div>
+      <span class="status" [ngClass]="statusClass(order.statusCode)">{{ order.status }}</span>
+    </header>
+    <app-order-items [items]="order.items" [compact]="true"></app-order-items>
+    <div class="order-total"><span>Thành tiền</span><strong>{{ order.total | number:'1.0-0' }}đ</strong></div>
+    <p class="payment">{{ paymentLabel(order) }}</p>
+    <p class="refund" *ngIf="order.refunds?.refunds?.length">Đã hoàn {{ order.refunds?.refunded | number:'1.0-0' }}đ · Xem chi tiết để theo dõi hoàn tiền</p>
+    <div class="actions">
+      <button type="button" class="primary" (click)="run('VIEW_ORDER', order)" [disabled]="disabled">Xem chi tiết</button>
+      <button type="button" (click)="run('REORDER_ORDER', order)" [disabled]="disabled">Mua lại</button>
+      <button type="button" *ngIf="service.canCancel(order)" (click)="run('CANCEL_ORDER', order)" [disabled]="disabled">Hủy đơn</button>
+      <button type="button" *ngIf="order.statusCode === 2" (click)="run('CREATE_RETURN_REQUEST', order)" [disabled]="disabled">Đổi trả</button>
+    </div>
+  </article>
+  <div class="error" *ngIf="error" role="alert">{{ error }} <button type="button" (click)="load()" [disabled]="loading">Tải lại</button></div>
+  <a *ngIf="orders.length" class="all-orders" routerLink="/orders">Xem tất cả đơn hàng <lucide-icon name="chevron-right" [size]="14"></lucide-icon></a>
+</section>
