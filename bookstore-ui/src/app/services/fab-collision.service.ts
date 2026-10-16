@@ -14,8 +14,12 @@ export const FAB_CTA_SELECTOR = [
   '.add-cart-btn',
   '.checkout-btn',
   '.place-order-btn',
+  '.checkout-commit',
   '.page-btn',
   '.sticky-buy-bar',
+  '.order-bottom',
+  '.detail-actions',
+  '.cancel-panel .actions',
   'button[type="submit"]'
 ].join(', ');
 

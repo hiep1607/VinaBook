@@ -56,6 +56,9 @@ export class ProfileComponent implements OnInit, DoCheck {
 
   // --- Order summary ---
   recentOrders: any[] = [];
+  ordersLoading = false;
+  ordersError = '';
+  private ordersRequest = 0;
 
   constructor(
     public authService: AuthService,
@@ -301,15 +304,9 @@ export class ProfileComponent implements OnInit, DoCheck {
     this.stats.totalReviews = this.countReviews();
     this.stats.cartCount = this.cartService.getCartCount();
 
-    this.orderService.getOrders(this.email).subscribe(orders => {
-
-      this.stats.totalOrders = orders.length;
-
-      this.stats.totalSpent = orders.reduce(
-        (total: number, order: any) => total + (order.total || 0),
-        0
-      );
-
+    this.orderService.getOrderPage(0, 1).subscribe(page => {
+      this.stats.totalOrders = page.counts['-1'] || 0;
+      this.stats.totalSpent = page.totalSpent;
     });
 
   }
@@ -322,10 +319,28 @@ export class ProfileComponent implements OnInit, DoCheck {
   // ===== ORDER SUMMARY =====
 
   loadRecentOrders(): void {
-    this.orderService.getOrders(this.email).subscribe(orders => {
-      this.recentOrders = orders.slice(0, 5);
+    const owner = this.authService.currentUser?.token || this.authService.currentUser?.email || '';
+    const request = ++this.ordersRequest;
+    this.ordersLoading = true;
+    this.ordersError = '';
+    const isCurrent = () => request === this.ordersRequest && owner ===
+      (this.authService.currentUser?.token || this.authService.currentUser?.email || '');
+    this.orderService.getOrderPage(0, 5).subscribe(page => {
+      if (!isCurrent()) return;
+      this.recentOrders = page.items;
+      this.ordersLoading = false;
+    }, () => {
+      if (!isCurrent()) return;
+      this.ordersLoading = false;
+      this.ordersError = 'Chưa tải được đơn hàng. Bạn thử lại nhé.';
     });
   }
+
+  orderBookCount(order: any): number {
+    return (order.items || []).reduce((total: number, item: any) => total + Number(item.quantity || 0), 0);
+  }
+
+  trackOrder(_index: number, order: any): number { return order.id; }
 
   // ===== LOGOUT =====
 

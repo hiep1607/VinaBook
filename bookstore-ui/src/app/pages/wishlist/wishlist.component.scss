@@ -15,18 +15,41 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 40px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
 }
+
+.heading-group { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; }
+.refresh-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 8px 14px;
+  border: 1px solid var(--c-border);
+  border-radius: 8px;
+  background: var(--c-surface);
+  color: var(--c-fg);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.refresh-btn:hover:not(:disabled) { color: var(--c-primary); border-color: var(--c-primary); }
+.refresh-btn:disabled { opacity: .6; cursor: wait; }
+.sync-error { color: var(--c-danger); margin-bottom: 20px; font-size: 14px; }
 
 .page-header h1 {
   font-size: 36px;
   font-weight: 800;
-  color: #111827;
+  color: var(--c-fg);
 }
 
 .count {
-  background: #dcfce7;
-  color: #1c1917;
+  background: var(--c-muted);
+  color: var(--c-muted-fg);
   font-size: 14px;
   font-weight: 700;
   padding: 6px 14px;
@@ -37,23 +60,22 @@
 
 .wishlist-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 28px;
 }
 
 /* CARD */
 
 .wishlist-card {
-  background: white;
+  background: var(--c-surface);
   border-radius: 18px;
   overflow: hidden;
-  border: 1px solid #f1f5f9;
-  transition: 0.3s;
+  border: 1px solid var(--c-border);
+  transition: border-color var(--duration-fast) var(--ease);
 }
 
 .wishlist-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  border-color: var(--c-primary);
 }
 
 /* IMAGE */
@@ -61,6 +83,8 @@
 .card-image {
   position: relative;
   height: 260px;
+  padding: 18px;
+  background: var(--c-muted);
   overflow: hidden;
   cursor: pointer;
 }
@@ -68,12 +92,7 @@
 .card-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transition: 0.4s;
-}
-
-.wishlist-card:hover .card-image img {
-  transform: scale(1.05);
+  object-fit: contain;
 }
 
 .discount-badge {
@@ -98,19 +117,19 @@
 .card-title {
   font-size: 16px;
   font-weight: 700;
-  color: #111827;
+  color: var(--c-fg);
   line-height: 1.4;
   min-height: 44px;
   cursor: pointer;
 }
 
 .card-title:hover {
-  color: #1c1917;
+  color: var(--c-primary);
 }
 
 .card-author {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--c-muted-fg);
   margin-top: 4px;
 }
 
@@ -148,7 +167,7 @@
 .new-price {
   font-size: 18px;
   font-weight: 700;
-  color: #1c1917;
+  color: var(--c-primary);
 }
 
 .old-price {
@@ -171,7 +190,7 @@
   height: 42px;
   border: none;
   border-radius: 10px;
-  background: #1c1917;
+  background: var(--c-primary);
   color: white;
   font-size: 14px;
   font-weight: 700;
@@ -180,15 +199,16 @@
 }
 
 .btn-detail:hover {
-  background: #292524;
+  background: var(--c-accent);
 }
 
 .btn-remove {
   width: 42px;
   height: 42px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--c-border);
   border-radius: 10px;
-  background: white;
+  background: var(--c-surface);
+  color: var(--c-muted-fg);
   font-size: 18px;
   cursor: pointer;
   transition: 0.2s;
@@ -301,3 +321,6 @@
     height: 240px;
   }
 }
+
+button:focus-visible, [role="link"]:focus-visible { outline: 2px solid var(--c-primary); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) { .wishlist-card, button { transition: none; } }

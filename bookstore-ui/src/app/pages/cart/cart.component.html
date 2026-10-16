@@ -6,9 +6,12 @@
       Giỏ hàng
     </h1>
 
-    <div class="cart-wrapper">
-      <p *ngIf="cartService.syncing" role="status">Đang đồng bộ giỏ hàng…</p>
+    <div class="cart-sync" [class.has-error]="cartService.syncError">
+      <p role="status" aria-live="polite">{{ cartService.syncing ? 'Đang lưu thay đổi…' : '' }}</p>
       <p *ngIf="cartService.syncError" role="alert">{{ cartService.syncError }} <button type="button" (click)="cartService.refresh()">Tải lại giỏ từ tài khoản</button></p>
+    </div>
+
+    <div class="cart-wrapper">
 
       <!-- LEFT -->
 
@@ -16,9 +19,7 @@
 
 <div
   class="cart-item"
-  *ngFor="let item of cartItems; let i = index"
-  appReveal="left"
-  [revealDelay]="(i % 5) * 55"
+  *ngFor="let item of cartItems; trackBy: trackCartItem"
 >
 
   <input
@@ -63,6 +64,7 @@
     <button
       type="button"
       (click)="decrease(item, $event)"
+      [disabled]="item.quantity <= 1 || !!cartService.syncError"
       [attr.aria-label]="'Giảm số lượng ' + item.name"
     >
       -
@@ -75,6 +77,7 @@
     <button
       type="button"
       (click)="increase(item, $event)"
+      [disabled]="item.quantity >= maxQuantity(item) || !!cartService.syncError"
       [attr.aria-label]="'Tăng số lượng ' + item.name"
     >
       +
@@ -99,7 +102,7 @@
       </div>
       <!-- RIGHT -->
 
-      <div class="summary-box" *ngIf="cartItems.length > 0" appReveal="right">
+      <div class="summary-box" *ngIf="cartItems.length > 0">
 
         <h3>
           Tóm tắt đơn hàng

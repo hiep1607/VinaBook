@@ -48,6 +48,8 @@ export class WishlistComponent implements OnInit {
       .filter(p => !!p);
   }
 
+  trackProduct(_index: number, product: any): number { return product.id; }
+
   getAvgRating(productId: number): number {
     return this.reviewService.getAverageRating(productId);
   }

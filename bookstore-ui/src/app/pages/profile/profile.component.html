@@ -444,7 +444,7 @@
 
         <!-- ===== ORDER SUMMARY ===== -->
 
-        <div *ngIf="activeTab === 'orders'" class="panel" role="tabpanel">
+        <div *ngIf="activeTab === 'orders'" class="panel orders-panel" role="tabpanel">
 
           <div class="panel-head">
             <h2>Đơn hàng gần đây</h2>
@@ -453,33 +453,28 @@
             </a>
           </div>
 
-          <p *ngIf="recentOrders.length === 0" class="empty">
-            Bạn chưa có đơn hàng nào.
-          </p>
+          <p *ngIf="ordersLoading" class="recent-state" role="status">Đang tải đơn hàng…</p>
+          <div *ngIf="ordersError" class="recent-state error" role="alert">
+            <p>{{ ordersError }}</p><button type="button" (click)="loadRecentOrders()">Thử lại</button>
+          </div>
+          <div *ngIf="!ordersLoading && !ordersError && recentOrders.length === 0" class="recent-state">
+            <p>Bạn chưa có đơn hàng nào.</p><a routerLink="/books">Khám phá sách</a>
+          </div>
 
-          <div
-            class="summary-order"
-            *ngFor="let order of recentOrders"
-          >
-
-            <div class="summary-left">
-              <a [routerLink]="['/orders', order.id]">Đơn #{{ order.id }} · Xem chi tiết</a>
-              <span class="summary-date">
-                {{ order.date | date:'dd/MM/yyyy' }}
-              </span>
-            </div>
-
-            <div class="summary-mid">
-              <span class="status">{{ order.status }}</span>
-              <span class="summary-count">
-                {{ order.items.length }} sản phẩm
-              </span>
-            </div>
-
-            <div class="summary-right">
-              {{ order.total | number }}đ
-            </div>
-
+          <div class="recent-orders" *ngIf="!ordersLoading && !ordersError">
+            <article class="recent-order" *ngFor="let order of recentOrders; trackBy: trackOrder" [attr.aria-label]="'Đơn hàng #' + order.id">
+              <header class="recent-order-head">
+                <div><strong>Đơn #{{ order.id }}</strong><span>{{ order.date | date:'dd/MM/yyyy' }}</span></div>
+                <span class="order-status" [ngClass]="'status-' + order.statusCode">{{ order.status }}</span>
+              </header>
+              <app-order-items [items]="order.items.slice(0, 2)"></app-order-items>
+              <p class="more-books" *ngIf="order.items.length > 2">Và {{ order.items.length - 2 }} tựa sách khác trong đơn</p>
+              <footer class="recent-order-footer">
+                <span class="book-count">{{ orderBookCount(order) }} cuốn · {{ order.items.length }} tựa sách</span>
+                <div class="order-amount"><span>Thành tiền</span><strong>{{ order.total | number:'1.0-0' }}đ</strong></div>
+                <a class="order-detail-link" [routerLink]="['/orders', order.id]" [attr.aria-label]="'Xem chi tiết đơn #' + order.id">Xem chi tiết <lucide-icon name="chevron-right" [size]="15"></lucide-icon></a>
+              </footer>
+            </article>
           </div>
 
         </div>

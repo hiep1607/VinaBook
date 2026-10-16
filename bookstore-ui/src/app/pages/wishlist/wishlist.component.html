@@ -4,21 +4,24 @@
 
     <div class="page-header">
 
-      <h1 class="display-title" appReveal="up">Danh sách yêu thích</h1>
+      <div class="heading-group"><h1 class="display-title">Danh sách yêu thích</h1>
 
-      <span class="count" *ngIf="wishlistProducts.length > 0" appReveal="up" [revealDelay]="100">
-        {{ wishlistProducts.length }} sản phẩm
+      <span class="count" *ngIf="wishlistProducts.length > 0">
+        {{ wishlistProducts.length }} cuốn sách
       </span>
+      </div>
+      <button type="button" class="refresh-btn" (click)="refresh()" [disabled]="syncing" [attr.aria-busy]="syncing">
+        <lucide-icon name="refresh-ccw" [size]="16"></lucide-icon>{{ syncing ? 'Đang cập nhật…' : 'Cập nhật' }}
+      </button>
 
     </div>
 
-    <button type="button" (click)="refresh()" [disabled]="syncing">{{syncing?'Đang đồng bộ...':'Đồng bộ dữ liệu mới'}}</button>
-    <p *ngIf="wishlistService.syncError" role="alert">{{wishlistService.syncError}}</p>
+    <p *ngIf="wishlistService.syncError" class="sync-error" role="alert">{{wishlistService.syncError}}</p>
     <!-- PRODUCT GRID -->
 
     <div class="wishlist-grid" *ngIf="wishlistProducts.length > 0">
 
-      <div class="wishlist-card" *ngFor="let product of wishlistProducts; let i = index" appReveal="up" [revealDelay]="(i % 3) * 90">
+      <div class="wishlist-card" *ngFor="let product of wishlistProducts; trackBy: trackProduct">
 
         <!-- IMAGE -->
 
@@ -69,12 +72,12 @@
 
           <div class="card-actions">
 
-            <button class="btn-detail" (click)="goToDetail(product.id)">
+            <button type="button" class="btn-detail" (click)="goToDetail(product.id)">
               Xem chi tiết
             </button>
 
-            <button class="btn-remove" (click)="remove(product.id)" title="Xóa khỏi danh sách yêu thích">
-              🗑
+            <button type="button" class="btn-remove" (click)="remove(product.id)" [attr.aria-label]="'Xóa ' + product.name + ' khỏi danh sách yêu thích'" title="Xóa khỏi danh sách yêu thích">
+              <lucide-icon name="trash-2" [size]="18"></lucide-icon>
             </button>
 
           </div>
@@ -89,11 +92,11 @@
 
     <div class="empty-state" *ngIf="wishlistProducts.length === 0" appReveal="scale">
 
-      <div class="empty-icon">♡</div>
+      <div class="empty-icon"><lucide-icon name="heart" [size]="48"></lucide-icon></div>
 
       <h2>Chưa có sản phẩm yêu thích</h2>
 
-      <p>Nhấn vào biểu tượng ♡ trên sản phẩm để thêm vào danh sách</p>
+      <p>Nhấn vào biểu tượng trái tim trên sách để lưu vào danh sách.</p>
 
       <button type="button" class="explore-btn" (click)="exploreBooks()">
         Khám phá sách ngay →

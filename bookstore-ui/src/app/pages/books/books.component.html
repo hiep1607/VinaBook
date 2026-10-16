@@ -103,7 +103,7 @@
 
     <div class="products-grid" *ngIf="!loading && !error && filtered.length > 0">
 
-      <div class="card-wrap" *ngFor="let product of pageItems; let i = index" appReveal="up" [revealDelay]="(i % 4) * 70">
+      <div class="card-wrap" *ngFor="let product of pageItems; let i = index">
 
         <span class="badge badge-new" *ngIf="isNew(product)">
           MỚI

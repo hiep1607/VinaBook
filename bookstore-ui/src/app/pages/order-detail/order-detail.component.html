@@ -38,6 +38,7 @@
 
       <nav class="detail-breadcrumb" aria-label="Điều hướng quay lại">
         <a routerLink="/orders">← Đơn hàng của tôi</a>
+        <a routerLink="/contact" [queryParams]="{orderId: order.id}">Cần hỗ trợ đơn này</a>
       </nav>
 
       <!-- HEADER -->
@@ -45,7 +46,7 @@
       <header class="detail-head">
 
         <div>
-          <h1 class="display-title">Đơn #{{ order.id }}</h1>
+          <h1>Đơn hàng #{{ order.id }}</h1>
           <p class="detail-date">{{ order.date | date:'dd/MM/yyyy HH:mm' }}</p>
         </div>
 
@@ -86,6 +87,7 @@
             *ngFor="let step of timelineSteps; let i = index"
             [class.done]="i <= currentStep"
             [class.current]="i === currentStep"
+            [attr.aria-current]="i === currentStep ? 'step' : null"
           >
             <span class="step-dot" aria-hidden="true">
               <span class="step-check" *ngIf="i < currentStep || (i === currentStep && currentStep === timelineSteps.length - 1)">✓</span>
@@ -106,29 +108,8 @@
 
         <section class="items-card" aria-label="Sản phẩm trong đơn">
 
-          <h2>Sản phẩm</h2>
-
-          <div class="detail-item" *ngFor="let item of order.items">
-
-            <img
-              [src]="item.image"
-              [alt]="'Bìa sách ' + item.name"
-              loading="lazy"
-              decoding="async"
-            />
-
-            <div class="item-info">
-              <h3>{{ item.name }}</h3>
-              <p class="item-meta">
-                {{ item.price | number }}đ × {{ item.quantity }}
-              </p>
-            </div>
-
-            <strong class="item-total">
-              {{ item.price * item.quantity | number }}đ
-            </strong>
-
-          </div>
+          <h2><lucide-icon name="book-open" [size]="19"></lucide-icon>Sách trong đơn hàng</h2>
+          <app-order-items [items]="order.items"></app-order-items>
 
         </section>
 
@@ -137,7 +118,7 @@
         <aside class="summary-col">
 
           <section class="summary-card" *ngIf="order.shippingAddress">
-            <h2>Giao tới</h2>
+            <h2><lucide-icon name="truck" [size]="18"></lucide-icon>Địa chỉ nhận hàng</h2>
             <p class="summary-strong">
               {{ order.shippingAddress.name }} — {{ order.shippingAddress.phone }}
             </p>
@@ -147,7 +128,7 @@
           <section class="summary-card">
             <h2>Thanh toán</h2>
             <p><span>Phương thức</span><strong>{{ paymentMethodLabel(order.paymentMethod) }}</strong></p>
-            <p><span>Trạng thái</span><strong>{{ paymentStatusLabel(order) }}</strong></p>
+            <p><span>Trạng thái</span><strong>{{ order.paymentMethod === 'COD' && order.paymentStatus === 'UNPAID' ? 'Chưa ghi nhận thanh toán' : paymentStatusLabel(order) }}</strong></p>
             <p *ngIf="order.paidAt"><span>Thanh toán lúc</span><strong>{{ order.paidAt | date:'dd/MM/yyyy HH:mm' }}</strong></p>
 
             <button

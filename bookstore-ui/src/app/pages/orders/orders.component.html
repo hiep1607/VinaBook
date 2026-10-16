@@ -1,150 +1,50 @@
 <section class="orders-page">
-
-  <div class="container">
-
-    <h1 class="orders-title display-title" appReveal="up">
-      Đơn hàng của tôi
-    </h1>
-
-    <p *ngIf="loading" class="orders-message" role="status">Đang tải đơn hàng...</p>
-
-    <div *ngIf="loadError" class="orders-message error" role="alert">
-      <p>Không tải được đơn hàng. Vui lòng kiểm tra kết nối rồi thử lại.</p>
-      <button type="button" (click)="ngOnInit()">Thử lại</button>
-    </div>
-
-    <p *ngIf="!loading && !loadError && orders.length === 0" class="orders-message">
-      Bạn chưa có đơn hàng nào.
-    </p>
-
-    <div
-      class="order-card"
-      *ngFor="let order of orders; let i = index"
-      appReveal="up"
-      [revealDelay]="(i % 4) * 80"
-    >
-
-      <!-- TOP -->
-
-      <div class="order-top">
-
-        <div>
-
-          <h3>
-
-            Đơn #{{ order.id }}
-
-          </h3>
-
-          <p>
-
-            {{ order.date | date:'dd/MM/yyyy HH:mm' }}
-
-          </p>
-
-        </div>
-
-        <div class="order-statuses">
-          <span class="payment-status" [class.paid]="order.paymentStatus === 'PAID'" [class.failed]="order.paymentStatus === 'FAILED'">
-            {{ paymentStatusLabel(order) }}
-          </span>
-          <span class="status" [ngClass]="statusClass(order.status)">{{ order.status }}</span>
-        </div>
-
-      </div>
-
-      <!-- PRODUCTS -->
-
-      <div
-        class="order-product"
-        *ngFor="let item of order.items"
-      >
-
-        <img
-          [src]="item.image"
-          [alt]="'Bìa sách ' + item.name"
-          loading="lazy"
-          decoding="async"
-        />
-
-        <div>
-
-          <h4>
-            {{ item.name }}
-          </h4>
-
-          <p>
-            x{{ item.quantity }}
-          </p>
-
-        </div>
-
-      </div>
-
-      <!-- SHIPPING -->
-
-      <div class="order-shipping" *ngIf="order.shippingAddress">
-
-        <span class="shipping-label">Giao tới:</span>
-
-        <div class="shipping-info">
-
-          <strong>
-            {{ order.shippingAddress.name }} - {{ order.shippingAddress.phone }}
-          </strong>
-
-          <p>{{ order.shippingAddress.street }}</p>
-
-        </div>
-
-      </div>
-
-      <div class="order-payment">
-        <div>
-          <span>Phương thức thanh toán</span>
-          <strong>{{ paymentMethodLabel(order.paymentMethod) }}</strong>
-        </div>
-        <button
-          *ngIf="canPay(order)"
-          type="button"
-          (click)="continuePayment(order)"
-          [disabled]="payingOrderId === order.id"
-        >
-          {{ payingOrderId === order.id ? 'Đang mở...' : (order.paymentMethod === 'BANK_QR' ? 'Xem mã QR' : 'Thanh toán lại') }}
+  <div class="orders-container">
+    <nav class="breadcrumb" aria-label="Điều hướng"><a routerLink="/profile">Tài khoản</a><lucide-icon name="chevron-right" [size]="14"></lucide-icon><span>Đơn hàng</span></nav>
+    <header class="page-heading">
+      <div><h1>Đơn hàng của tôi</h1><p>Theo dõi sách đã đặt và quản lý đơn hàng của bạn.</p></div>
+      <a class="browse-link" routerLink="/books">Khám phá thêm sách <lucide-icon name="chevron-right" [size]="16"></lucide-icon></a>
+    </header>
+    <div class="order-filters" *ngIf="!loadError">
+      <nav class="status-tabs" aria-label="Lọc trạng thái đơn hàng">
+        <button type="button" *ngFor="let tab of statusTabs" [class.active]="activeStatus === tab.code" [attr.aria-pressed]="activeStatus === tab.code" [disabled]="cancellationBusy || !!payingOrderId" (click)="activeStatus = tab.code; filterChanged()">
+          {{ tab.label }} <span *ngIf="!loading">{{ countStatus(tab.code) }}</span>
         </button>
-      </div>
-
-      <!-- TOTAL -->
-      <div class="order-actions">
-        <a [routerLink]="['/orders', order.id]">Xem chi tiết đơn #{{ order.id }}</a>
-        <button type="button" (click)="reorderOrderId = order.id; cancellingOrderId = 0; returnOrderId = 0" [disabled]="cancellationBusy || !!payingOrderId">Mua lại đơn #{{ order.id }}</button>
-        <button type="button" *ngIf="order.statusCode === 2" (click)="returnOrderId = order.id; reorderOrderId = 0; cancellingOrderId = 0" [disabled]="cancellationBusy || !!payingOrderId">Yêu cầu đổi trả đơn #{{ order.id }}</button>
-        <button type="button" *ngIf="orderService.canCancel(order) && cancellingOrderId !== order.id"
-          (click)="requestCancellation(order)" [disabled]="cancellationBusy || !!payingOrderId">Hủy đơn #{{ order.id }}</button>
-        <p *ngIf="order.statusCode === 0 && !orderService.canCancel(order)">Đơn thanh toán trực tuyến hoặc đã thanh toán cần cửa hàng kiểm tra trước khi hủy. Bạn <a routerLink="/contact">liên hệ cửa hàng</a> nhé.</p>
-      </div>
-      <app-order-cancellation *ngIf="cancellingOrderId === order.id" [orderId]="order.id"
-        (completed)="orderCancelled($event)" (closed)="cancellingOrderId = 0"
-        (busyChange)="cancellationBusy = $event"></app-order-cancellation>
-      <app-order-reorder *ngIf="reorderOrderId === order.id" [orderId]="order.id"
-        (closed)="reorderOrderId = 0" (busyChange)="cancellationBusy = $event"></app-order-reorder>
-      <app-support-request *ngIf="returnOrderId === order.id" kind="RETURN" [orderId]="order.id"
-        (closed)="returnOrderId = 0" (busyChange)="cancellationBusy = $event"></app-support-request>
-
-      <div class="order-total">
-
-        Tổng cộng:
-
-        <strong>
-
-          {{ order.total | number }}đ
-
-        </strong>
-
-      </div>
-
+      </nav>
+      <label class="order-search"><lucide-icon name="search" [size]="18"></lucide-icon><span class="sr-only">Tìm đơn hàng</span><input type="search" [(ngModel)]="query" (ngModelChange)="filterChanged()" maxlength="100" placeholder="Tìm theo mã đơn hoặc tên sách" [disabled]="cancellationBusy || !!payingOrderId" /></label>
     </div>
-
+    <div *ngIf="loading" class="orders-state" role="status"><lucide-icon name="clock" [size]="28"></lucide-icon><h2>Đang tải đơn hàng</h2><p>Mình đang lấy thông tin mới nhất cho bạn.</p></div>
+    <div *ngIf="loadError" class="orders-state" role="alert"><lucide-icon name="refresh-ccw" [size]="28"></lucide-icon><h2>Chưa tải được đơn hàng</h2><p>Bạn kiểm tra kết nối rồi thử lại nhé.</p><button type="button" (click)="ngOnInit()">Thử lại</button></div>
+    <div *ngIf="!loading && !loadError && !filteredOrders.length" class="orders-state">
+      <lucide-icon name="shopping-cart" [size]="34"></lucide-icon>
+      <h2>{{ countStatus(-1) ? 'Chưa tìm thấy đơn phù hợp' : 'Những cuốn sách mới đang chờ bạn' }}</h2>
+      <p>{{ countStatus(-1) ? 'Bạn thử tên sách khác hoặc xem tất cả trạng thái nhé.' : 'Khi đặt sách, bạn có thể theo dõi đơn hàng tại đây.' }}</p>
+      <button *ngIf="countStatus(-1)" type="button" (click)="clearFilters()">Xem tất cả đơn</button><a *ngIf="!countStatus(-1)" routerLink="/books">Chọn sách ngay</a>
+    </div>
+    <article class="order-card" *ngFor="let order of filteredOrders" [attr.aria-label]="'Đơn hàng #' + order.id">
+      <header class="order-top">
+        <div class="order-identification"><span class="store-mark"><lucide-icon name="book-open" [size]="18"></lucide-icon>VinaBook</span><span class="order-code">Đơn #{{ order.id }}</span><time>{{ order.date | date:'dd/MM/yyyy HH:mm' }}</time></div>
+        <span class="status" [ngClass]="orderStatusClass(order.statusCode)"><lucide-icon [name]="order.statusCode === 1 ? 'truck' : order.statusCode === 3 ? 'x' : order.statusCode === 2 ? 'shield-check' : 'clock'" [size]="15"></lucide-icon>{{ order.status }}</span>
+      </header>
+      <div class="order-content"><app-order-items [items]="order.items"></app-order-items></div>
+      <footer class="order-bottom">
+        <div class="order-summary"><span>{{ itemCount(order) }} cuốn sách <span class="separator">·</span> {{ paymentStatusLabel(order) }}</span><div class="order-total"><span>Thành tiền</span><strong>{{ order.total | number:'1.0-0' }}đ</strong></div></div>
+        <div class="order-actions">
+          <button type="button" class="primary" *ngIf="canPay(order)" (click)="continuePayment(order)" [disabled]="!!payingOrderId || cancellationBusy">{{ payingOrderId === order.id ? 'Đang mở...' : (order.paymentMethod === 'BANK_QR' ? 'Xem mã QR' : 'Thanh toán ngay') }}</button>
+          <button type="button" class="primary" *ngIf="order.statusCode === 2 || order.statusCode === 3" (click)="reorderOrderId = order.id; cancellingOrderId = 0; returnOrderId = 0" [disabled]="cancellationBusy || !!payingOrderId" [attr.aria-label]="'Mua lại đơn #' + order.id">Mua lại</button>
+          <a [routerLink]="['/orders', order.id]" [attr.aria-label]="'Xem chi tiết đơn #' + order.id">Xem chi tiết</a>
+          <button type="button" *ngIf="order.statusCode === 0 || order.statusCode === 1" (click)="reorderOrderId = order.id; cancellingOrderId = 0; returnOrderId = 0" [disabled]="cancellationBusy || !!payingOrderId" [attr.aria-label]="'Mua lại đơn #' + order.id">Mua lại</button>
+          <button type="button" *ngIf="order.statusCode === 2" (click)="returnOrderId = order.id; reorderOrderId = 0; cancellingOrderId = 0" [disabled]="cancellationBusy || !!payingOrderId" [attr.aria-label]="'Yêu cầu đổi trả đơn #' + order.id">Yêu cầu đổi trả</button>
+          <button type="button" class="cancel-action" *ngIf="orderService.canCancel(order) && cancellingOrderId !== order.id" (click)="requestCancellation(order)" [disabled]="cancellationBusy || !!payingOrderId" [attr.aria-label]="'Hủy đơn #' + order.id">Hủy đơn</button>
+        </div>
+        <p class="cancellation-note" *ngIf="order.statusCode === 0 && !orderService.canCancel(order)">Để hủy đơn đã thanh toán hoặc thanh toán trực tuyến, bạn <a routerLink="/contact">liên hệ cửa hàng</a> nhé.</p>
+      </footer>
+      <div class="inline-action" *ngIf="cancellingOrderId === order.id || reorderOrderId === order.id || returnOrderId === order.id">
+        <app-order-cancellation *ngIf="cancellingOrderId === order.id" [orderId]="order.id" (completed)="orderCancelled($event)" (closed)="cancellingOrderId = 0" (busyChange)="cancellationBusy = $event"></app-order-cancellation>
+        <app-order-reorder *ngIf="reorderOrderId === order.id" [orderId]="order.id" (closed)="reorderOrderId = 0" (busyChange)="cancellationBusy = $event"></app-order-reorder>
+        <app-support-request *ngIf="returnOrderId === order.id" kind="RETURN" [orderId]="order.id" (closed)="returnOrderId = 0" (busyChange)="cancellationBusy = $event"></app-support-request>
+      </div>
+    </article>
+    <nav class="orders-pagination" *ngIf="!loadError && totalPages > 1" aria-label="Phân trang đơn hàng"><button type="button" (click)="changePage(page - 1)" [disabled]="page === 0 || loading || cancellationBusy || !!payingOrderId">Trang trước</button><span>Trang {{ page + 1 }} / {{ totalPages }}</span><button type="button" (click)="changePage(page + 1)" [disabled]="page + 1 >= totalPages || loading || cancellationBusy || !!payingOrderId">Trang sau</button></nav>
   </div>
-
 </section>

@@ -39,7 +39,7 @@
       <div class="form-panel" appReveal="right">
         <ng-container *ngIf="auth.isLoggedIn()">
           <h2>Gửi yêu cầu cho nhân viên</h2>
-          <app-support-request kind="SUPPORT" [dismissable]="false"></app-support-request>
+          <app-support-request kind="SUPPORT" [orderId]="supportOrderId" [dismissable]="false"></app-support-request>
         </ng-container>
         <ng-container *ngIf="!auth.isLoggedIn()">
         <h2>Soạn lời nhắn</h2>

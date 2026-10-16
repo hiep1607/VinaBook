@@ -725,3 +725,15 @@ header {
     font-size: 16px;
   }
 }
+.mobile-account-links { display:none; }
+@media(max-width:768px) {
+  .header-wrapper { flex-wrap:wrap; gap:8px; }
+  .logo-text h2 { font-size:20px; }
+  .logo img { width:30px; height:30px; }
+  .top-header { padding:8px 0; }
+  .header-actions { flex:none; gap:4px; }
+  .header-actions .wishlist-icon, .header-actions .user-name { display:none; }
+  .user-box { padding:0; width:40px; height:40px; justify-content:center; border:0; }
+  .mobile-account-links { display:flex; flex-wrap:wrap; gap:4px; padding:8px 0; border-bottom:1px solid var(--c-border); }
+  .mobile-account-links a { padding:10px; color:var(--c-fg); font-size:13px; }
+}

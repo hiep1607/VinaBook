@@ -156,9 +156,11 @@
             class="user-box"
             routerLink="/profile"
             *ngIf="authService.isLoggedIn()"
+            [attr.aria-label]="authService.currentUser.name"
+            [title]="authService.currentUser.name"
           >
             <lucide-icon name="user"></lucide-icon>
-            {{ authService.currentUser.name }}
+            <span class="user-name">{{ authService.currentUser.name }}</span>
           </a>
 
           <a *ngIf="authService.isLoggedIn()" routerLink="/notifications" aria-label="Thông báo có hàng" title="Thông báo có hàng" class="wishlist-icon"><lucide-icon name="bell"></lucide-icon></a>
@@ -216,6 +218,12 @@
   <div id="primary-navigation" class="navbar" [class.mobile-open]="showMobileNav">
 
     <div class="container">
+      <nav class="mobile-account-links" *ngIf="authService.isLoggedIn()" aria-label="Tiện ích tài khoản">
+        <a routerLink="/orders" (click)="closeMobileNav()">Đơn hàng</a>
+        <a routerLink="/wishlist" (click)="closeMobileNav()">Yêu thích</a>
+        <a routerLink="/notifications" (click)="closeMobileNav()">Báo có hàng</a>
+        <a routerLink="/profile" (click)="closeMobileNav()">Tài khoản</a>
+      </nav>
 
       <div class="navbar-wrapper">
 

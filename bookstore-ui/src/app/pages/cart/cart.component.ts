@@ -34,29 +34,30 @@ constructor(
 
 increase(item: any, event: MouseEvent) {
 
+  const max = this.maxQuantity(item);
+  if (item.quantity >= max || this.cartService.syncError) return;
   item.quantity++;
 
   this.cartService.saveCart();
-  this.motion.bump(
-    (event.currentTarget as HTMLElement).closest('.quantity-box') as HTMLElement | null
-  );
 
 }
 
 decrease(item: any, event: MouseEvent) {
 
-  if (item.quantity > 1) {
+  if (item.quantity > 1 && !this.cartService.syncError) {
 
     item.quantity--;
 
     this.cartService.saveCart();
-    this.motion.bump(
-      (event.currentTarget as HTMLElement).closest('.quantity-box') as HTMLElement | null
-    );
 
   }
 
 }
+
+maxQuantity(item: any): number { return Math.max(0, Math.min(99, item.stock ?? 99)); }
+
+// Server acknowledgements replace item objects; retain the row, cover and focus.
+trackCartItem(_index: number, item: any): number { return item.id; }
 
 getSubtotal() {
 
@@ -113,6 +114,7 @@ async goToCheckout(): Promise<void> {
     this.notification.error('Vui lòng chọn ít nhất một sản phẩm để thanh toán');
     return;
   }
+  this.cartService.clearBuyNowItem();
   this.router.navigate(['/checkout']);
 }
 }

@@ -61,7 +61,9 @@ export class RevealDirective implements AfterViewInit, OnDestroy {
     this.context = gsap.context(() => {
       gsap.fromTo(
         host,
-        { autoAlpha: 0, ...start },
+        // Content remains usable even when a filtered/reordered item moves past
+        // a cached scroll trigger. Entrance motion must never hide store data.
+        { autoAlpha: 1, ...start },
         {
           autoAlpha: 1,
           x: 0,

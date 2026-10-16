@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { NotificationService } from 'src/app/services/notification.service';
 import { StoreKnowledgeService } from 'src/app/services/store-knowledge.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-contact',
@@ -13,6 +14,7 @@ export class ContactComponent {
 
   form = { name: '', email: '', subject: '', message: '' };
   submitted = false;
+  supportOrderId = 0;
 
   faqs = [
     {
@@ -42,7 +44,9 @@ export class ContactComponent {
     }
   ];
 
-  constructor(private notification: NotificationService, private knowledge: StoreKnowledgeService, public auth: AuthService) {
+  constructor(private notification: NotificationService, private knowledge: StoreKnowledgeService, public auth: AuthService, route: ActivatedRoute) {
+    const orderId = Number(route.snapshot.queryParamMap.get('orderId'));
+    this.supportOrderId = Number.isSafeInteger(orderId) && orderId > 0 ? orderId : 0;
     this.knowledge.get().subscribe(data => {
       const shipping = StoreKnowledgeService.shippingText(data.settings);
       this.faqs[0].a = `Thời gian giao dự kiến ${data.settings.deliveryMinDays}–${data.settings.deliveryMaxDays} ngày làm việc. Bạn có thể theo dõi trong mục Đơn hàng của tôi.`;
