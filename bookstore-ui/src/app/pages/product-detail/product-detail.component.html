@@ -46,9 +46,6 @@
           [description]="product.description"
           [productId]="product.id"
           [category]="product.category"
-          [previewEnabled]="previewAvailable"
-          [paused]="previewOpen"
-          (previewRequested)="onPreviewRequested()"
         ></app-book-3d-viewer>
 
       </div>
@@ -104,7 +101,7 @@
         </p>
 
         <app-restock-watch *ngIf="maxQty===0" [productId]="product.id"></app-restock-watch>
-        <div class="purchase-box">
+          <div class="purchase-box">
           <!-- QUANTITY -->
 
           <div class="qty-row">
@@ -154,7 +151,7 @@
               Mua ngay
             </button>
 
-            <button type="button" class="cart-btn" (click)="addToCart()" [disabled]="maxQty === 0">
+            <button type="button" class="cart-btn" (click)="addToCart()" [attr.aria-busy]="adding" [disabled]="maxQty === 0">
               Thêm giỏ hàng
             </button>
 
@@ -300,12 +297,6 @@
 
 </section>
 
-<app-book-preview-reader
-  *ngIf="previewOpen"
-  [product]="product"
-  (closed)="closePreview()"
-></app-book-preview-reader>
-
 <!-- STICKY BUY BAR — chỉ mobile/tablet nhỏ (≤768px), hiện khi cụm CTA gốc rời viewport.
      Nút tái dùng đúng handler buyNow()/addToCart() và ràng buộc disabled của CTA gốc;
      class .buy-btn/.cart-btn giúp FabCollisionService nhận diện và nâng FAB lên trên bar. -->
@@ -318,7 +309,7 @@
     <button type="button" class="buy-btn" (click)="buyNow()" [disabled]="maxQty === 0">
       Mua ngay
     </button>
-    <button type="button" class="cart-btn" (click)="addToCart()" [disabled]="maxQty === 0">
+    <button type="button" class="cart-btn" (click)="addToCart()" [attr.aria-busy]="adding" [disabled]="maxQty === 0">
       Thêm giỏ hàng
     </button>
   </div>

@@ -27,6 +27,7 @@ import { WishlistService } from 'src/app/services/wishlist.service';
 import { RecentlyViewedService } from 'src/app/services/recently-viewed.service';
 import { MotionService } from 'src/app/services/motion.service';
 import { ChatbotService } from 'src/app/services/chatbot.service';
+import { ChatCheckoutService } from 'src/app/services/chat-checkout.service';
 import { Book3dViewerComponent } from 'src/app/components/book-3d-viewer/book-3d-viewer.component';
 
 const STICKY_BAR_MAX_WIDTH = 768;
@@ -45,11 +46,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
 
   product: any;
 
-  previewOpen = false;
-  previewAvailable = false;
-  private previewSubscription?: Subscription;
-  private productSubscription?: Subscription;
-
   reviews: any[] = [];
 
   relatedBooks: any[] = [];
@@ -60,6 +56,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
 
   // Số lượng mua (stepper)
   qty = 1;
+  adding = false;
   private requestedQty = 1;
 
   stickyBarVisible = false;
@@ -92,10 +89,12 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
     private recentlyViewed: RecentlyViewedService,
     private chatbot: ChatbotService,
     private motion: MotionService,
-    @Inject(DOCUMENT) private doc: Document
+    @Inject(DOCUMENT) private doc: Document,
+    private purchaseIntent: ChatCheckoutService = null as any
   ) {}
 
   ngOnInit(): void {
+
     this.subscriptions.add(this.route.queryParamMap.subscribe(params => {
       const quantity = Number(params.get('quantity'));
       this.requestedQty = Number.isInteger(quantity) && quantity >= 1 && quantity <= 99 ? quantity : 1;
@@ -112,8 +111,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
       this.loading = true;
       this.loadError = false;
 
-      this.productSubscription?.unsubscribe();
-      this.productSubscription = this.productService.getProduct(id).subscribe(product => {
+      this.subscriptions.add(this.productService.getProduct(id).subscribe(product => {
 
         this.product = product;
         this.loading = false;
@@ -124,17 +122,10 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
         }
 
         this.qty = Math.min(this.requestedQty, Math.max(1, this.maxQty));
+
         this.loadReviews();
-        this.previewSubscription = this.productService.getPreview(id).subscribe({
-          next: preview => {
-            this.previewAvailable = preview.enabled && preview.pageCount > 0 && preview.pages.some(page =>
-              page.enabled !== false && (page.contentType === 'text' ? !!page.textContent?.trim() : !!page.imageUrl));
-          },
-          error: () => { this.previewAvailable = false; }
-        });
         this.loadUserReview();
         this.loadRelatedBooks();
-
 
         this.recentlyViewed.add(id);
         if (this.authService.currentUser?.token) this.chatbot.recordProductView(id);
@@ -143,7 +134,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
       }, () => {
         this.loading = false;
         this.loadError = true;
-      });
+      }));
 
     }));
 
@@ -162,9 +153,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
     this.teardownStickyBar();
-    this.doc.body.classList.remove('preview-reader-open');
-    this.productSubscription?.unsubscribe();
-    this.previewSubscription?.unsubscribe();
   }
 
   @HostListener('window:resize')
@@ -218,8 +206,6 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
 
   /** Trạng thái theo từng sản phẩm - phải xóa khi đổi sang sản phẩm khác */
   private resetState(): void {
-    this.previewSubscription?.unsubscribe();
-    this.previewAvailable = false;
     this.qty = 1;
     this.visibleReviewCount = 5;
     this.reviewContent = '';
@@ -227,20 +213,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
     this.hoverRating = 0;
     this.isEditing = false;
     this.relatedBooks = [];
-    this.previewOpen = false;
-    this.doc.body.classList.remove('preview-reader-open');
     window.scrollTo({ top: 0 });
-  }
-
-  onPreviewRequested(): void {
-    if (!this.product || this.previewOpen || !this.previewAvailable) { return; }
-    this.previewOpen = true;
-    this.doc.body.classList.add('preview-reader-open');
-  }
-
-  closePreview(): void {
-    this.previewOpen = false;
-    this.doc.body.classList.remove('preview-reader-open');
   }
 
   private loadRelatedBooks(): void {
@@ -453,11 +426,14 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
 
   }
 
-  addToCart(): void {
+  async addToCart(): Promise<void> {
+
+    if (this.adding) return;
 
     if (!this.authService.isLoggedIn()) {
       this.notification.error('Vui lòng đăng nhập trước');
-      this.router.navigate(['/login']);
+      this.purchaseIntent?.rememberPurchaseIntent({ surface: 'web', action: 'ADD_TO_CART', fromCart: false, productId: this.product.id, quantity: this.qty });
+      this.router.navigate(['/login'], { queryParams: { returnUrl: '/cart' } });
       return;
     }
 
@@ -466,17 +442,26 @@ export class ProductDetailComponent implements OnInit, OnDestroy, AfterViewCheck
       return;
     }
 
-    this.cartService.addToCart(this.product, this.qty);
-    this.motion.addToCart(this.bookViewer?.getMotionSource());
-    this.notification.success('Đã thêm vào giỏ hàng');
+    const owner = this.authService.currentUser?.email;
+    this.adding = true;
+    try {
+      await this.cartService.flush();
+      if (owner !== this.authService.currentUser?.email) return;
+      this.cartService.addToCart(this.product, this.qty);
+      await this.cartService.flush();
+      if (owner !== this.authService.currentUser?.email) return;
+      this.motion.addToCart(this.bookViewer?.getMotionSource());
+      this.notification.success('Đã thêm vào giỏ hàng');
+    } catch (error) { if (owner === this.authService.currentUser?.email) this.notification.error((error as any)?.error?.message || (error as any)?.message || 'Chưa xác nhận được thay đổi. Bạn mở giỏ kiểm tra nhé.'); }
+    finally { this.adding = false; }
 
   }
-
   buyNow(): void {
 
     if (!this.authService.isLoggedIn()) {
       this.notification.error('Vui lòng đăng nhập trước');
-      this.router.navigate(['/login']);
+      this.purchaseIntent?.rememberPurchaseIntent({ surface: 'web', action: 'BUY_NOW', fromCart: false, productId: this.product.id, quantity: this.qty });
+      this.router.navigate(['/login'], { queryParams: { returnUrl: '/checkout' } });
       return;
     }
 

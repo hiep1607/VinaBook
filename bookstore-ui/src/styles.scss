@@ -1,10 +1,3 @@
-@font-face {
-  font-family: 'Vina Reader';
-  src: url('/assets/fonts/noto-serif-regular.ttf') format('truetype');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
 /* Fonts loaded via <link> in index.html (Be Vietnam Pro + Playfair Display) */
 
 /* =========================
@@ -420,12 +413,6 @@ button:focus-visible {
   body.has-sticky-buy-bar {
     padding-bottom: calc(78px + env(safe-area-inset-bottom, 0px));
   }
-}
-
-/* Reader là một không gian tập trung: không để bất kỳ nút nổi nào che lên trang sách. */
-body.preview-reader-open app-chatbot,
-body.preview-reader-open app-theme-switcher {
-  display: none !important;
 }
 
 @import 'styles/vinabook-night';

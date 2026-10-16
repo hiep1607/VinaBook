@@ -7,6 +7,7 @@ import { BehaviorSubject, of, throwError } from 'rxjs';
 
 import { RecentlyViewedService } from 'src/app/services/recently-viewed.service';
 import { CartService } from 'src/app/services/cart.service';
+import { FlyToCartService } from 'src/app/services/fly-to-cart.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { ProductService } from 'src/app/services/product.service';
 import { ReviewService } from 'src/app/services/review.service';
@@ -48,7 +49,7 @@ describe('ProductDetailComponent — sticky buy bar (P1)', () => {
   let component: ProductDetailComponent;
   let routerSpy: jasmine.SpyObj<Router>;
   let cartSvc: { addToCart: jasmine.Spy; setBuyNowItem: jasmine.Spy };
-  let productSvc: { getProduct: jasmine.Spy; getProductsByCategory: jasmine.Spy; getPreview: jasmine.Spy };
+  let productSvc: { getProduct: jasmine.Spy; getProductsByCategory: jasmine.Spy };
   let originalIntersectionObserver: unknown;
 
   function boot(product: any): void {
@@ -79,7 +80,6 @@ describe('ProductDetailComponent — sticky buy bar (P1)', () => {
       setBuyNowItem: jasmine.createSpy('setBuyNowItem')
     };
     productSvc = {
-      getPreview: jasmine.createSpy('getPreview').and.returnValue(of({ enabled: false, pageCount: 0, pages: [] })),
       getProduct: jasmine.createSpy('getProduct'),
       getProductsByCategory: jasmine.createSpy('getProductsByCategory').and.returnValue(of([]))
     };
@@ -121,7 +121,8 @@ describe('ProductDetailComponent — sticky buy bar (P1)', () => {
         {
           provide: WishlistService,
           useValue: { isInWishlist: () => false, getCount: () => 0, toggleWishlist: () => true }
-        }
+        },
+        { provide: FlyToCartService, useValue: { fly: () => undefined } }
       ]
     });
   });
@@ -269,25 +270,6 @@ describe('ProductDetailComponent — sticky buy bar (P1)', () => {
     expect(component.loadError).toBe(true);
     expect(component.product).toBeUndefined();
     expect(TestBed.inject(RecentlyViewedService).getIds()).toEqual([]);
-  });
-
-  it('không mở đọc thử khi sách chưa có nội dung được cấp phép', () => {
-    boot({ ...BASE_PRODUCT });
-    expect(component.previewAvailable).toBeFalse();
-  });
-
-  it('bật đọc thử khi có trang văn bản được cấp phép', () => {
-    productSvc.getPreview.and.returnValue(of({ enabled: true, pageCount: 1,
-      pages: [{ enabled: true, contentType: 'text', textContent: 'Nội dung đọc thử' }] }));
-    boot({ ...BASE_PRODUCT });
-    expect(component.previewAvailable).toBeTrue();
-  });
-
-  it('không bật đọc thử với các trang trống', () => {
-    productSvc.getPreview.and.returnValue(of({ enabled: true, pageCount: 1,
-      pages: [{ enabled: true, contentType: 'text', textContent: '   ' }] }));
-    boot({ ...BASE_PRODUCT });
-    expect(component.previewAvailable).toBeFalse();
   });
 
   it('P2: breadcrumb render khi có product, có aria-current="page" và link Sách', () => {
