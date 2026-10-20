@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import {
   LucideAngularModule,
   Bell,
+  LocateFixed,
   Truck,
   ShieldCheck,
   RefreshCcw,
@@ -80,6 +81,7 @@ import { PaymentResultComponent } from './pages/payment-result/payment-result.co
     CustomerComponentsModule,
     LucideAngularModule.pick({
       Bell,
+      LocateFixed,
     Truck,
       ShieldCheck,
       RefreshCcw,

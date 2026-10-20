@@ -1,235 +1,80 @@
 <section class="profile-page">
-
   <div class="container">
-
-    <!-- HEADER -->
-
-    <div class="user-header" appReveal="up">
-
-      <div class="user-avatar">
-
-        <img
-          *ngIf="previewAvatar"
-          [src]="previewAvatar"
-          [alt]="'Ảnh đại diện của ' + authService.currentUser.name"
-        />
-
-        <span *ngIf="!previewAvatar">
-          {{ authService.currentUser.name[0] }}
-        </span>
-
-      </div>
-
-      <div class="user-meta">
-
-        <h1 class="display-title">
-          {{ authService.currentUser.name }}
-        </h1>
-
-        <p>
-          Thành viên VinaBook 😄
-        </p>
-
-      </div>
-
-    </div>
-
-    <!-- BODY -->
-
     <div class="user-center">
-
-      <!-- SIDEBAR -->
-
-      <aside class="user-sidebar" role="tablist" aria-label="Quản lý tài khoản">
-
-        <button
-          type="button"
-          role="tab"
-          [attr.aria-selected]="activeTab === 'info'"
-          class="tab-btn"
-          [class.active]="activeTab === 'info'"
-          (click)="setTab('info')"
-        >
-          Thông tin cá nhân
-        </button>
-
-        <button
-          type="button"
-          role="tab"
-          [attr.aria-selected]="activeTab === 'avatar'"
-          class="tab-btn"
-          [class.active]="activeTab === 'avatar'"
-          (click)="setTab('avatar')"
-        >
-          Ảnh đại diện
-        </button>
-
-        <button
-          type="button"
-          role="tab"
-          [attr.aria-selected]="activeTab === 'address'"
-          class="tab-btn"
-          [class.active]="activeTab === 'address'"
-          (click)="setTab('address')"
-        >
-          Địa chỉ giao hàng
-        </button>
-
-        <button
-          type="button"
-          role="tab"
-          [attr.aria-selected]="activeTab === 'password'"
-          class="tab-btn"
-          [class.active]="activeTab === 'password'"
-          (click)="setTab('password')"
-        >
-          Đổi mật khẩu
-        </button>
-
-        <button
-          type="button"
-          role="tab"
-          [attr.aria-selected]="activeTab === 'stats'"
-          class="tab-btn"
-          [class.active]="activeTab === 'stats'"
-          (click)="setTab('stats')"
-        >
-          Thống kê tài khoản
-        </button>
-
-        <button
-          type="button"
-          role="tab"
-          [attr.aria-selected]="activeTab === 'orders'"
-          class="tab-btn"
-          [class.active]="activeTab === 'orders'"
-          (click)="setTab('orders')"
-        >
-          Đơn hàng gần đây
-        </button>
-
-        <div class="sidebar-divider"></div>
-
-        <button
-          type="button"
-          class="tab-btn logout"
-          (click)="logout()"
-        >
-          Đăng xuất
-        </button>
-
-      </aside>
-
-      <!-- CONTENT -->
-
-      <div class="user-content">
-
-        <!-- ===== PERSONAL INFO ===== -->
-
-        <div *ngIf="activeTab === 'info'" class="panel" role="tabpanel">
-
-          <h2>Thông tin cá nhân</h2>
-
-          <div class="field">
-            <label for="profile-name">Họ và tên</label>
-            <input
-              id="profile-name"
-              type="text"
-              [(ngModel)]="editName"
-              placeholder="Họ và tên"
-            />
-          </div>
-
-          <div class="field">
-            <label for="profile-email">Email</label>
-            <input
-              id="profile-email"
-              type="text"
-              [value]="authService.currentUser.email"
-              disabled
-            />
-            <small>Email dùng để đăng nhập và không thể thay đổi.</small>
-          </div>
-
-          <div class="field">
-            <label for="profile-phone">Số điện thoại</label>
-            <input
-              id="profile-phone"
-              type="tel"
-              autocomplete="tel"
-              [(ngModel)]="editPhone"
-              placeholder="Số điện thoại"
-            />
-          </div>
-
-          <p *ngIf="infoError" class="form-error">
-            {{ infoError }}
-          </p>
-
-          <button type="button" class="primary-btn" (click)="saveInfo()">
-            Lưu thay đổi
+      <aside class="user-sidebar" aria-label="Quản lý tài khoản">
+        <div class="account-identity">
+          <button type="button" class="user-avatar" (click)="setTab('info')" aria-label="Mở hồ sơ của tôi">
+            <img *ngIf="previewAvatar" [src]="previewAvatar" [alt]="'Ảnh đại diện của ' + authService.currentUser.name" />
+            <span *ngIf="!previewAvatar">{{ authService.currentUser.name?.charAt(0) || 'V' }}</span>
           </button>
-
-        </div>
-
-        <!-- ===== AVATAR ===== -->
-
-        <div *ngIf="activeTab === 'avatar'" class="panel" role="tabpanel">
-
-          <h2>Ảnh đại diện</h2>
-
-          <div class="avatar-edit">
-
-            <div class="avatar-preview">
-
-              <img
-                *ngIf="previewAvatar"
-                [src]="previewAvatar"
-                [alt]="'Ảnh đại diện của ' + authService.currentUser.name"
-              />
-
-              <span *ngIf="!previewAvatar">
-                {{ authService.currentUser.name[0] }}
-              </span>
-
-            </div>
-
-            <div class="avatar-actions">
-
-              <label class="upload-btn">
-                Chọn ảnh
-                <input
-                  type="file"
-                  accept="image/*"
-                  (change)="onAvatarSelected($event)"
-                  hidden
-                />
-              </label>
-
-          <button type="button" class="primary-btn" (click)="saveAvatar()">
-                Lưu ảnh
-              </button>
-
-              <button
-                type="button"
-                *ngIf="previewAvatar"
-                class="ghost-btn"
-                (click)="removeAvatar()"
-              >
-                Xoá ảnh
-              </button>
-
-            </div>
-
+          <div class="user-meta">
+            <strong>{{ authService.currentUser.name }}</strong>
+            <button type="button" class="edit-profile-link" (click)="setTab('info')">Sửa hồ sơ</button>
           </div>
-
-          <small>Ảnh được lưu trên trình duyệt của bạn (định dạng base64).</small>
-
         </div>
+        <nav class="account-nav" aria-label="Các mục tài khoản">
+          <p class="nav-group-title"><lucide-icon name="user" [size]="19" aria-hidden="true"></lucide-icon>Tài khoản của tôi</p>
+          <div class="account-subnav">
+            <button type="button" class="tab-btn" [class.active]="activeTab === 'info'" [attr.aria-current]="activeTab === 'info' ? 'true' : null" aria-controls="account-panel" (click)="setTab('info')">Hồ sơ</button>
+            <button type="button" class="tab-btn" [class.active]="activeTab === 'address'" [attr.aria-current]="activeTab === 'address' ? 'true' : null" aria-controls="account-panel" (click)="setTab('address')">Địa chỉ</button>
+            <button type="button" class="tab-btn" [class.active]="activeTab === 'password'" [attr.aria-current]="activeTab === 'password' ? 'true' : null" aria-controls="account-panel" (click)="setTab('password')">Đổi mật khẩu</button>
+          </div>
+          <button type="button" class="nav-main tab-btn" [class.active]="activeTab === 'orders'" [attr.aria-current]="activeTab === 'orders' ? 'true' : null" aria-controls="account-panel" (click)="setTab('orders')"><lucide-icon name="shopping-cart" [size]="19" aria-hidden="true"></lucide-icon>Đơn mua</button>
+          <a class="nav-main" routerLink="/notifications"><lucide-icon name="bell" [size]="19" aria-hidden="true"></lucide-icon>Thông báo</a>
+          <a class="nav-main" routerLink="/wishlist"><lucide-icon name="heart" [size]="19" aria-hidden="true"></lucide-icon>Sách yêu thích</a>
+          <button type="button" class="nav-main tab-btn" [class.active]="activeTab === 'stats'" [attr.aria-current]="activeTab === 'stats' ? 'true' : null" aria-controls="account-panel" (click)="setTab('stats')"><lucide-icon name="book-open" [size]="19" aria-hidden="true"></lucide-icon>Thống kê tài khoản</button>
+          <div class="sidebar-divider"></div>
+          <button type="button" class="tab-btn logout" (click)="logout()">Đăng xuất</button>
+        </nav>
+      </aside>
+      <div class="user-content" id="account-panel">
+        <section *ngIf="activeTab === 'info'" class="panel profile-panel" aria-labelledby="profile-heading">
+          <div class="panel-heading">
+            <h1 id="profile-heading">Hồ sơ của tôi</h1>
+            <p>Quản lý thông tin hồ sơ để bảo mật tài khoản.</p>
+          </div>
+          <div class="profile-details">
+            <form class="profile-form" (ngSubmit)="saveInfo()" #profileForm="ngForm">
+              <div class="profile-row">
+                <label for="profile-name">Họ và tên</label>
+                <div class="profile-control"><input id="profile-name" name="profileName" type="text" [(ngModel)]="editName" autocomplete="name" maxlength="80" required [disabled]="savingInfo" placeholder="Họ và tên" /></div>
+              </div>
+              <div class="profile-row">
+                <label for="profile-email">Email</label>
+                <div class="profile-control"><input id="profile-email" class="readonly-value" type="email" [value]="authService.currentUser.email" readonly aria-describedby="profile-email-hint" /><small id="profile-email-hint">Email đăng nhập của bạn không thể thay đổi.</small></div>
+              </div>
+              <div class="profile-row">
+                <label for="profile-phone">Số điện thoại</label>
+                <div class="profile-control"><input id="profile-phone" name="profilePhone" type="tel" autocomplete="tel" [(ngModel)]="editPhone" required maxlength="20" [disabled]="savingInfo" placeholder="Số điện thoại" /></div>
+              </div>
+              <div class="profile-row" *ngIf="authService.currentUser.registerDate">
+                <span class="row-label">Ngày tham gia</span>
+                <div class="profile-control readonly-copy">{{ authService.currentUser.registerDate | date:'dd/MM/yyyy' }}</div>
+              </div>
+              <div class="profile-row form-feedback" *ngIf="infoError"><span></span><p class="form-error" role="alert">{{ infoError }}</p></div>
+              <div class="profile-row"><span></span><div class="profile-control"><button type="submit" class="primary-btn" [disabled]="savingInfo || profileForm.invalid">{{ savingInfo ? 'Đang lưu…' : 'Lưu thay đổi' }}</button></div></div>
+            </form>
+            <div class="profile-avatar-panel" aria-label="Ảnh đại diện">
+              <div class="avatar-preview">
+                <img *ngIf="previewAvatar" [src]="previewAvatar" [alt]="'Ảnh đại diện của ' + authService.currentUser.name" />
+                <span *ngIf="!previewAvatar">{{ authService.currentUser.name?.charAt(0) || 'V' }}</span>
+              </div>
+              <input #avatarFile id="profile-avatar-file" class="visually-hidden" type="file" accept="image/png,image/jpeg,image/gif,image/webp" (change)="onAvatarSelected($event)" [disabled]="savingAvatar" tabindex="-1" aria-label="Chọn ảnh đại diện" />
+              <button type="button" class="ghost-btn choose-avatar" (click)="avatarFile.click()" [disabled]="savingAvatar">Chọn ảnh</button>
+              <div class="avatar-file-hint"><p>Dung lượng tối đa 256 KB.</p><p>Định dạng: JPEG, PNG, GIF, WebP.</p></div>
+              <div class="avatar-actions" *ngIf="avatarDirty || savingAvatar">
+                <button type="button" class="primary-btn small" (click)="saveAvatar()" [disabled]="savingAvatar || !previewAvatar">{{ savingAvatar ? 'Đang lưu…' : 'Lưu ảnh' }}</button>
+                <button type="button" class="link-btn" (click)="cancelAvatar()" [disabled]="savingAvatar">Huỷ thay đổi</button>
+              </div>
+              <button type="button" class="link-btn remove-avatar" *ngIf="authService.currentUser.avatar" (click)="removeAvatar()" [disabled]="savingAvatar">Xoá ảnh hiện tại</button>
+              <p *ngIf="avatarError" class="form-error" role="alert">{{ avatarError }}</p>
+            </div>
+          </div>
+        </section>
 
-        <!-- ===== ADDRESSES ===== -->
+<!-- ===== ADDRESSES ===== -->
 
-        <div *ngIf="activeTab === 'address'" class="panel" role="tabpanel">
+        <div *ngIf="activeTab === 'address'" class="panel">
 
           <div class="panel-head">
             <h2>Địa chỉ giao hàng</h2>
@@ -300,13 +145,12 @@
             </h3>
 
             <div class="field">
-              <label for="address-label">Nhãn (Nhà riêng, Văn phòng...)</label>
-              <input
-                id="address-label"
-                type="text"
-                [(ngModel)]="addressForm.label"
-                placeholder="Nhà riêng"
-              />
+              <label for="address-label">Nhãn địa chỉ</label>
+              <select id="address-label" [(ngModel)]="addressForm.label">
+                <option value="">Chọn nhãn địa chỉ</option>
+                <option *ngFor="let label of addressLabels" [value]="label">{{ label }}</option>
+                <option *ngIf="addressForm.label && !addressLabels.includes(addressForm.label)" [value]="addressForm.label">{{ addressForm.label }}</option>
+              </select>
             </div>
 
             <div class="field">
@@ -331,16 +175,8 @@
               />
             </div>
 
-            <div class="field">
-              <label for="address-street">Địa chỉ</label>
-              <input
-                id="address-street"
-                autocomplete="street-address"
-                type="text"
-                [(ngModel)]="addressForm.street"
-                placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành"
-              />
-            </div>
+            <app-delivery-address inputId="address-street"
+              [(ngModel)]="addressForm.street" minlength="5" maxlength="255"></app-delivery-address>
 
             <p *ngIf="addressError" class="form-error">
               {{ addressError }}
@@ -361,7 +197,7 @@
 
         <!-- ===== CHANGE PASSWORD ===== -->
 
-        <div *ngIf="activeTab === 'password'" class="panel" role="tabpanel">
+        <div *ngIf="activeTab === 'password'" class="panel">
 
           <h2>Đổi mật khẩu</h2>
 
@@ -410,7 +246,7 @@
 
         <!-- ===== STATISTICS ===== -->
 
-        <div *ngIf="activeTab === 'stats'" class="panel" role="tabpanel">
+        <div *ngIf="activeTab === 'stats'" class="panel">
 
           <h2>Thống kê tài khoản</h2>
 
@@ -444,7 +280,7 @@
 
         <!-- ===== ORDER SUMMARY ===== -->
 
-        <div *ngIf="activeTab === 'orders'" class="panel orders-panel" role="tabpanel">
+        <div *ngIf="activeTab === 'orders'" class="panel orders-panel">
 
           <div class="panel-head">
             <h2>Đơn hàng gần đây</h2>

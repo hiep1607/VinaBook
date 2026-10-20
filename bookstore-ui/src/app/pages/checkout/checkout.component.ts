@@ -1,3 +1,4 @@
+import { ADDRESS_LABELS } from 'src/app/shared/address-labels';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
@@ -18,6 +19,7 @@ import { StoreKnowledgeService, StoreSettings } from 'src/app/services/store-kno
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit, OnDestroy {
+  readonly addressLabels = ADDRESS_LABELS;
 
   @ViewChild('placeOrderButton') placeOrderButton?: ElementRef<HTMLButtonElement>;
 

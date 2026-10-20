@@ -6,7 +6,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/services/auth.service';
@@ -34,11 +34,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   showMobileNav = false;
 
   @ViewChild('searchBoxRef') searchBoxRef!: ElementRef;
+  @ViewChild('searchInput') searchInput?: ElementRef<HTMLInputElement>;
   @ViewChild('categoryMenuRef') categoryMenuRef!: ElementRef;
 
   private debounceTimer: any;
   private dropdownCloseTimer: any;
   private subscriptions = new Subscription();
+  private previousUrl = '';
 
   constructor(
     public cartService: CartService,
@@ -70,6 +72,23 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.previousUrl = this.router.url;
+    this.subscriptions.add(this.router.events.subscribe(event => {
+      if (!(event instanceof NavigationEnd)) return;
+      const path = (url: string) => url.split(/[?#]/)[0];
+      const isAuth = (url: string) => ['/login', '/register'].includes(path(url));
+      if (isAuth(this.previousUrl) && !isAuth(event.urlAfterRedirects)) {
+        const query = path(event.urlAfterRedirects) === '/search'
+          ? this.router.parseUrl(event.urlAfterRedirects).queryParams['q'] : '';
+        this.keyword = typeof query === 'string' ? query : '';
+        // Autofill can change the DOM without emitting an Angular model update.
+        if (this.searchInput) this.searchInput.nativeElement.value = this.keyword;
+        clearTimeout(this.debounceTimer);
+        this.suggestions = [];
+        this.showSuggestions = false;
+      }
+      this.previousUrl = event.urlAfterRedirects;
+    }));
     this.subscriptions.add(this.categoryService.getAll().subscribe(cats => {
       this.categories = cats;
     }));
@@ -121,10 +140,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         : [];
       this.showSuggestions = true;
     }, 300);
-  }
-
-  onKeydownEnter(): void {
-    this.search();
   }
 
   onKeydownEscape(): void {

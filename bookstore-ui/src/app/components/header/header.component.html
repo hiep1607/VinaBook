@@ -27,11 +27,13 @@
 
         <div class="search-wrapper" #searchBoxRef>
 
-          <div class="search-box">
+          <form class="search-box" role="search" name="book-search" autocomplete="off" (ngSubmit)="search()">
 
             <input
               id="site-search"
-              type="text"
+              #searchInput
+              name="bookQuery"
+              type="search"
               role="combobox"
               aria-label="Tìm kiếm sách, tác giả hoặc thể loại"
               aria-autocomplete="list"
@@ -41,16 +43,15 @@
               [(ngModel)]="keyword"
               (input)="onInput()"
               (focus)="onFocus()"
-              (keydown.enter)="onKeydownEnter()"
               (keydown.escape)="onKeydownEscape()"
               autocomplete="off"
             />
 
-            <button type="button" (click)="search()" aria-label="Tìm kiếm">
+            <button type="submit" aria-label="Tìm kiếm">
               <lucide-icon name="search"></lucide-icon>
             </button>
 
-          </div>
+          </form>
 
           <!-- SUGGESTIONS DROPDOWN -->
 

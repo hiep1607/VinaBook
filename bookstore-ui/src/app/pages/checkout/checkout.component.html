@@ -73,17 +73,9 @@
               />
             </div>
 
-            <div class="form-group">
-              <label for="shipping-street">Địa chỉ giao hàng</label>
-              <input
-                id="shipping-street"
-                name="shippingStreet"
-                type="text"
-                autocomplete="street-address"
-                [(ngModel)]="shippingForm.street"
-                required
-              />
-            </div>
+            <app-delivery-address inputId="shipping-street" name="shippingStreet"
+              [(ngModel)]="shippingForm.street" [disabled]="placing || preparing || orderPlaced"
+              required minlength="5" maxlength="255"></app-delivery-address>
 
             <label class="save-toggle">
               <input name="saveToProfile" type="checkbox" [(ngModel)]="saveToProfile" />
@@ -91,14 +83,11 @@
             </label>
             <div class="form-group" *ngIf="saveToProfile">
               <label for="shipping-label">Nhãn địa chỉ</label>
-              <input
-                id="shipping-label"
-                name="shippingLabel"
-                type="text"
-                autocomplete="off"
-                placeholder="Nhà riêng, Văn phòng..."
-                [(ngModel)]="shippingForm.label"
-              />
+              <select id="shipping-label" name="shippingLabel" [(ngModel)]="shippingForm.label">
+                <option value="">Chọn nhãn địa chỉ</option>
+                <option *ngFor="let label of addressLabels" [value]="label">{{ label }}</option>
+                <option *ngIf="shippingForm.label && !addressLabels.includes(shippingForm.label)" [value]="shippingForm.label">{{ shippingForm.label }}</option>
+              </select>
             </div>
 
             <button

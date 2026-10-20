@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { LucideAngularModule, BookOpen, ChevronRight } from 'lucide-angular';
+import { LucideAngularModule, BookOpen, ChevronRight, User, ShoppingCart, Bell, Heart } from 'lucide-angular';
 import { of, Subject } from 'rxjs';
 import { ProfileComponent } from './profile.component';
 import { OrderItemsComponent } from '../../components/order-items/order-items.component';
@@ -28,7 +28,7 @@ describe('Profile recent order cards', () => {
     auth = { currentUser: { name: 'Khách thử', email: 'profile-ui@example.com', token: 'test-owner' }, isLoggedIn: () => true };
     service = { getOrderPage: jasmine.createSpy().and.returnValue(of({items: [order], counts: {'-1': 1}, totalSpent: order.total})) };
     await TestBed.configureTestingModule({
-      imports: [CommonModule, FormsModule, RouterModule.forRoot([]), LucideAngularModule.pick({BookOpen, ChevronRight})],
+      imports: [CommonModule, FormsModule, RouterModule.forRoot([]), LucideAngularModule.pick({BookOpen, ChevronRight, User, ShoppingCart, Bell, Heart})],
       declarations: [ProfileComponent, OrderItemsComponent],
       providers: [
         {provide: AuthService, useValue: auth}, {provide: OrderService, useValue: service},
