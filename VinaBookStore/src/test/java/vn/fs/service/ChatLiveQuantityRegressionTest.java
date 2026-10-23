@@ -37,6 +37,7 @@ class ChatLiveQuantityRegressionTest {
         when(access.currentEmail()).thenReturn("quantity-test@example.test");
         when(access.currentUserId()).thenReturn(22L);
         when(ai.provider()).thenReturn("gemini");when(ai.modelUsed()).thenReturn("test");when(ai.isConfigured()).thenReturn(true);
+        when(ai.completeStructured(anyString(),anyList(),anyString(),any())).thenThrow(new IllegalStateException("provider unavailable"));
         when(analytics.record(any(),any(),anyString(),anyBoolean(),anyInt(),anyLong())).thenReturn("message");
         ChatBuiltinTools builtins=new ChatBuiltinTools(products,data,language,orders,new ChatPolicyService(language));
         builtins.setAccess(access);
@@ -72,17 +73,17 @@ class ChatLiveQuantityRegressionTest {
         assertThat(result.answer()).contains("chưa được thay đổi");verifyNoInteractions(orders);
     }
     @ParameterizedTest @ValueSource(ints={0,2})
-    void refusingRemovalAcknowledgesWithoutAssumingCartContentsOrCallingProvider(int copies) {
+    void refusingRemovalDuringProviderFailureDoesNotAssumeCartContents(int copies) {
         ChatRequestDto request=request("Đừng xóa cuốn Đắc Nhân Tâm khỏi giỏ nhé.");
         if(copies>0)request.setCartItems(List.of(cart(copies)));
         var response=pipeline.reply(request,state);
-        assertThat(response.isFallback()).isFalse();
+        assertThat(response.isFallback()).isTrue();assertThat(response.getExecution()).containsEntry("recovery","basic");
         assertThat(response.getExecution()).containsEntry("tool","respond");
         assertThat(response.getAnswer()).isEqualTo("Mình hiểu rồi, mình không xóa sách hay thay đổi giỏ hàng của bạn.");
         assertThat(response.getActions()).isEmpty();assertThat(response.getProducts()).isEmpty();
         if(copies==0)assertThat(request.getCartItems()).isEmpty();
         else assertThat(request.getCartItems().get(0).getQuantity()).isEqualTo(copies);
-        verify(ai,never()).completeStructured(anyString(),anyList(),anyString(),any());verifyNoInteractions(orders);
+        verify(ai,atLeastOnce()).completeStructured(anyString(),anyList(),anyString(),any());verifyNoInteractions(orders);
     }
     @Test void greetingPlanForExplicitCartRefusalStillAcknowledgesTheActualMessage() {
         var result=registry.execute("respond",mapper.valueToTree(Map.of("kind","greeting")),
@@ -94,11 +95,11 @@ class ChatLiveQuantityRegressionTest {
     @Test void affirmativeCartAdditionStillPreparesConfirmationWithoutChangingSnapshot() {
         ChatRequestDto request=request("Thêm 2 cuốn Đắc Nhân Tâm vào giỏ nhé.");request.setCartItems(List.of(cart(1)));
         var response=pipeline.reply(request,state);
-        assertThat(response.isFallback()).isFalse();assertThat(response.getActions()).hasSize(1);
+        assertThat(response.isFallback()).isTrue();assertThat(response.getExecution()).containsEntry("recovery","basic");assertThat(response.getActions()).hasSize(1);
         var action=response.getActions().get(0);
         assertThat(action.getType()).isEqualTo("ADD_TO_CART");assertThat(action.getQuantity()).isEqualTo(2);
         assertThat(action.isRequiresConfirmation()).isTrue();assertThat(request.getCartItems().get(0).getQuantity()).isEqualTo(1);
-        verify(ai,never()).completeStructured(anyString(),anyList(),anyString(),any());verifyNoInteractions(orders);
+        verify(ai,atLeastOnce()).completeStructured(anyString(),anyList(),anyString(),any());verifyNoInteractions(orders);
     }
     @ParameterizedTest @ValueSource(strings={
         "Đừng xóa cuốn Đắc Nhân Tâm khỏi giỏ, thêm 2 cuốn khác vào nhé.",
@@ -113,7 +114,7 @@ class ChatLiveQuantityRegressionTest {
         plan.set("set",mapper.createObjectNode());plan.set("clear",mapper.createArrayNode());
         plan.put("evidence","current_message");plan.putNull("memoryNote");
         plan.set("calls",mapper.valueToTree(List.of(Map.of("tool","getCart","arguments",Map.of()))));
-        when(ai.completeStructured(anyString(),anyList(),anyString(),any())).thenReturn(mapper.writeValueAsString(plan));
+        doReturn(mapper.writeValueAsString(plan)).when(ai).completeStructured(anyString(),anyList(),anyString(),any());
         var actual=understanding.understand(request(message),state,List.of());
         assertThat(actual.path("calls").get(0).path("tool").asText()).isEqualTo("getCart");
         verify(ai).completeStructured(anyString(),anyList(),anyString(),any());verifyNoInteractions(orders);
@@ -192,27 +193,27 @@ class ChatLiveQuantityRegressionTest {
     @Test void guestBuyNowGetsLoginEvenWhenProviderIsUnavailable() {
         when(access.currentEmail()).thenReturn(null);when(access.currentUserId()).thenReturn(null);
         var response=pipeline.reply(request("Mua ngay 1 cuốn Đắc Nhân Tâm giúp mình."),state);
-        assertThat(response.isFallback()).isFalse();assertThat(response.getAnswer()).contains("đăng nhập","chưa có đơn hàng");
+        assertThat(response.isFallback()).isTrue();assertThat(response.getExecution()).containsEntry("recovery","basic");assertThat(response.getAnswer()).contains("đăng nhập","chưa có đơn hàng");
         assertThat(response.getActions()).extracting(ChatActionDto::getType).containsExactly("LOGIN");
-        verify(ai,never()).completeStructured(anyString(),anyList(),anyString(),any());verifyNoInteractions(orders);
+        verify(ai,atLeastOnce()).completeStructured(anyString(),anyList(),anyString(),any());verifyNoInteractions(orders);
     }
     @Test void authenticatedBuyNowKeepsCustomerCountAndConfirmation() {
         var response=pipeline.reply(request("Mua ngay 2 cuốn Đắc Nhân Tâm giúp mình."),state);
-        assertThat(response.isFallback()).isFalse();assertThat(response.getActions()).extracting(ChatActionDto::getType).containsExactly("BUY_NOW");
+        assertThat(response.isFallback()).isTrue();assertThat(response.getExecution()).containsEntry("recovery","basic");assertThat(response.getActions()).extracting(ChatActionDto::getType).containsExactly("BUY_NOW");
         assertThat(response.getActions().get(0).getQuantity()).isEqualTo(2);assertThat(response.getAnswer()).contains("Xác nhận đặt hàng");verifyNoInteractions(orders);
     }
-    @Test void guestOrderStatusDoesNotCallOrderDatabaseOrProvider() {
+    @Test void guestOrderStatusDuringProviderFailureDoesNotReadOrderDatabase() {
         when(access.currentEmail()).thenReturn(null);when(access.currentUserId()).thenReturn(null);
         var response=pipeline.reply(request("Đơn hàng của tôi đến đâu rồi?"),state);
-        assertThat(response.isFallback()).isFalse();assertThat(response.getActions()).extracting(ChatActionDto::getType).containsExactly("LOGIN");
-        assertThat(response.getAnswer()).contains("đăng nhập");verifyNoInteractions(orders);verify(ai,never()).completeStructured(anyString(),anyList(),anyString(),any());
+        assertThat(response.isFallback()).isTrue();assertThat(response.getExecution()).containsEntry("recovery","basic");assertThat(response.getActions()).extracting(ChatActionDto::getType).containsExactly("LOGIN");
+        assertThat(response.getAnswer()).contains("đăng nhập");verifyNoInteractions(orders);verify(ai,atLeastOnce()).completeStructured(anyString(),anyList(),anyString(),any());
     }
-    @Test void directPolicyReadKeepsBookConstraintsAndDoesNotNeedProvider() {
+    @Test void policyRecoveryKeepsBookConstraintsWhenProviderFails() {
         state.toolSearch.put("query","trinh thám");state.toolSearch.put("maxPrice",100000);
         var response=pipeline.reply(request("Phí ship bao nhiêu và có COD không?"),state);
-        assertThat(response.isFallback()).isFalse();assertThat(response.getExecution()).containsEntry("tool","getPolicy");
+        assertThat(response.isFallback()).isTrue();assertThat(response.getExecution()).containsEntry("recovery","basic");assertThat(response.getExecution()).containsEntry("tool","getPolicy");
         assertThat(state.toolSearch).containsEntry("query","trinh thám").containsEntry("maxPrice",100000);
-        verify(ai,never()).completeStructured(anyString(),anyList(),anyString(),any());
+        verify(ai,atLeastOnce()).completeStructured(anyString(),anyList(),anyString(),any());
     }
     @Test void shoppingAdviceAndReturnOrderCommandsDoNotUseQuickPolicyOrPurchaseRoute() {
         assertThat(ChatCustomerActions.coreTool(language.normalize("Tìm sách làm quà cho bạn thích trinh thám."))).isEmpty();

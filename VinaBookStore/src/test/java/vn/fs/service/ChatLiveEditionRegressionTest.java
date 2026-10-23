@@ -66,7 +66,8 @@ class ChatLiveEditionRegressionTest {
         assertThat(state.shortlist).containsExactly(26L);
         failProvider=true;
         var edition=send("Bản bìa cứng ấy.");
-        assertThat(edition.isFallback()).isFalse();
+        assertThat(edition.isFallback()).isEqualTo(failProvider);
+        if(failProvider)assertThat(edition.getExecution()).containsEntry("recovery","basic");
         assertThat(edition.getExecution()).containsEntry("tool","getProducts");
         assertThat(edition.getProducts()).extracting(ChatProductDto::getId).containsExactly(26L);
         assertThat(state.focus).isEqualTo(26L);
@@ -93,7 +94,8 @@ class ChatLiveEditionRegressionTest {
         assertThat(first.getProducts()).extracting(ChatProductDto::getId).containsExactly(26L,27L);
         failProvider=true;
         var edition=send("Bản bìa cứng ấy.");
-        assertThat(edition.isFallback()).isFalse();
+        assertThat(edition.isFallback()).isEqualTo(failProvider);
+        if(failProvider)assertThat(edition.getExecution()).containsEntry("recovery","basic");
         assertThat(edition.getProducts()).isEmpty();
         assertThat(edition.getAnswer()).doesNotContain("là bìa cứng");
         assertThat(state.focus).isNull();
@@ -103,7 +105,8 @@ class ChatLiveEditionRegressionTest {
         nextTool="getProducts";nextMode="current";nextSet=Map.of();
         nextArgs=Map.of("title","Sherlock Holmes","field","detail");
         var edition=send("Sherlock Holmes là bìa mềm hay bìa cứng?");
-        assertThat(edition.isFallback()).isFalse();
+        assertThat(edition.isFallback()).isEqualTo(failProvider);
+        if(failProvider)assertThat(edition.getExecution()).containsEntry("recovery","basic");
         assertThat(edition.getProducts()).extracting(ChatProductDto::getId).containsExactly(26L);
         assertThat(edition.getAnswer()).contains("chưa có thông tin","bìa cứng","bìa mềm");
     }
@@ -113,7 +116,8 @@ class ChatLiveEditionRegressionTest {
         state.initialized=true;state.focus=57L;state.displayed.add(57L);state.shortlist.add(57L);
         failProvider=true;
         var edition=send("Sherlock Holmes bìa cứng không?");
-        assertThat(edition.isFallback()).isFalse();
+        assertThat(edition.isFallback()).isEqualTo(failProvider);
+        if(failProvider)assertThat(edition.getExecution()).containsEntry("recovery","basic");
         assertThat(edition.getProducts()).extracting(ChatProductDto::getId).containsExactly(26L);
         assertThat(state.focus).isEqualTo(26L);
         assertThat(edition.getAnswer()).contains("Sherlock Holmes","chưa có thông tin").doesNotContain("Đắc Nhân Tâm");
