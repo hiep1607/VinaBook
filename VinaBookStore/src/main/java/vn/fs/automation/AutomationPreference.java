@@ -10,7 +10,8 @@ public class AutomationPreference {
     @Id @Column(name="owner_id") private Long ownerId;
     @Column(nullable=false) private boolean restock=true;
     @Column(name="price_drops",nullable=false) private boolean priceDrops=true;
-    @Column(name="cart_price_changes",nullable=false,columnDefinition="boolean default false") private boolean cartPriceChanges;
+    @org.hibernate.annotations.ColumnDefault("false")
+    @Column(name="cart_price_changes",nullable=false) private boolean cartPriceChanges;
     @Column(nullable=false) private boolean orders=true;
     @Column(name="cart_reminders",nullable=false) private boolean cartReminders=true;
     @Column(name="review_reminders",nullable=false) private boolean reviewReminders=true;

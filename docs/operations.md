@@ -60,3 +60,5 @@ Nháp checkout và chống xác nhận lặp đã được bảo vệ bằng DB.
 Không dùng tài khoản hoặc mật khẩu seed local trên web public. Tạo database riêng, khởi tạo schema hiện tại trên database trống đã xác minh, chỉ nhập catalog và trang xem thử đã công khai/xác nhận quyền; sau đó chạy profile production với ddl-auto=validate. Không chuyển tài khoản, đơn hàng hoặc lịch sử chat local.
 
 Mapping `products.description` dùng TEXT để giữ mô tả HTML dài hơn 255 ký tự. Database đã có cột VARCHAR cần áp dụng `db/19-product-description-text.sql` vào đúng database trước khi validate. Migration mở rộng kiểu cột và giữ dữ liệu hiện có.
+
+Boolean có default dùng kiểu do dialect chọn và `@ColumnDefault`, thay vì nhúng `boolean default false` trong columnDefinition. Cách này giữ default false và tương thích validate với metadata BIT của MySQL cho `automation_preferences.cart_price_changes` và `orders.stock_reserved`; không thay đổi dữ liệu hiện có.

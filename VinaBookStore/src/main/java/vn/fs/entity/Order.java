@@ -28,7 +28,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "orders")
 public class Order implements Serializable {
-	@javax.persistence.Column(nullable = false, columnDefinition = "boolean default false")
+	@org.hibernate.annotations.ColumnDefault("false")
+	@javax.persistence.Column(nullable = false)
 	private boolean stockReserved;
 
 	@Id
