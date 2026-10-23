@@ -73,11 +73,10 @@ export class HeaderComponent implements OnInit {
   }
 
   readAll() {
-    for (const i of this.notifications) {
-      this.notificationService.readed(i.id).subscribe(data => {
-      })
-    }
-    this.getAllNotification();
+    this.notificationService.readAll().subscribe(
+      () => this.getAllNotification(),
+      () => this.toastr.error('Không thể đánh dấu thông báo đã đọc. Vui lòng thử lại.', 'Thông báo')
+    );
   }
   ngOnDestroy(): void { this.closeWebSocket(); }
 

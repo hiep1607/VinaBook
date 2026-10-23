@@ -21,6 +21,8 @@ Tài liệu này chỉ giữ vấn đề còn hiệu lực. Các mô tả protot
 
 ## Đã xử lý gần đây
 
+- 23/10/2026: API admin đánh dấu thông báo đã đọc giữ transaction đến khi cập nhật xong, tránh lazy proxy hết session khi production tắt open-in-view. Đánh dấu tất cả dùng một transaction và giao diện chỉ tải lại số chưa đọc sau khi máy chủ hoàn tất.
+
 - 23/10/2026: Nút chuông và menu tài khoản của admin không mở do runtime Bootstrap thiếu Popper. Cấu hình build đã chuyển sang bootstrap.bundle.min.js chứa Popper cùng phiên bản; giữ jQuery nạp trước và không thay đổi API/dữ liệu thông báo.
 
 - 22/10/2026: kiểm thử trực tiếp phát hiện thay đổi giá ngay sau thêm giỏ/yêu thích có thể xảy ra trước baseline của scanner. Giỏ đồng bộ và API yêu thích nay ghi mốc giá trong cùng giao dịch thêm sách; bật lại loại tin bắt đầu từ giá hiện tại. Kiểm tra hồi quy bao phủ đổi giá trước lần quét đầu, giữ sự kiện khi sửa giỏ và không gửi bù lúc bật lại.

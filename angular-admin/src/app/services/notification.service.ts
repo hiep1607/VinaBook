@@ -15,6 +15,10 @@ export class NotificationService {
     return this.http.get(this.url);
   }
 
+  readAll() {
+    return this.http.get(this.url+'/read-all');
+  }
+
   readed(id: number) {
     return this.http.get(this.url+'/readed/'+id);
   }

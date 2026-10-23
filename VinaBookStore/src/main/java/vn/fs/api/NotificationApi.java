@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,6 +49,7 @@ public class NotificationApi {
 		return ResponseEntity.ok(notificationRepository.save(notification));
 	}
 
+	@Transactional
 	@GetMapping("/readed/{id}")
 	public ResponseEntity<Notification> put(@PathVariable("id") Long id) {
 		if (!notificationRepository.existsById(id)) {
@@ -58,6 +60,7 @@ public class NotificationApi {
 		return ResponseEntity.ok(notificationRepository.save(no));
 	}
 
+	@Transactional
 	@GetMapping("/read-all")
 	public ResponseEntity<Void> readAll() {
 		notificationRepository.readAll();
