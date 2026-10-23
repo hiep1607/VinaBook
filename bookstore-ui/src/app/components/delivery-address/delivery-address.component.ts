@@ -13,6 +13,7 @@ let nextAddressId = 0;
   ]
 })
 export class DeliveryAddressComponent implements ControlValueAccessor, Validator, OnInit, OnDestroy {
+  @Input() maxLength = 255;
   @Input() inputId = 'delivery-address-' + ++nextAddressId;
   fullAddress = '';
   mode: 'areas' | 'full' = 'areas';

@@ -46,12 +46,12 @@
       <textarea [id]="inputId" [ngModel]="detail" (ngModelChange)="detailChanged($event)" [ngModelOptions]="{standalone: true}" [disabled]="disabled" rows="2" maxlength="200" autocomplete="address-line1" placeholder="Số nhà, đường, toà nhà, tầng/căn hộ" (blur)="touched()"></textarea>
     </div>
     <p *ngIf="preview" class="address-preview"><strong>Giao đến:</strong> {{ preview }}</p>
-    <p *ngIf="preview.length > 255" class="error" role="alert">Địa chỉ tối đa 255 ký tự. Bạn rút gọn phần số nhà, tên đường nhé.</p>
+    <p *ngIf="preview.length > maxLength" class="error" role="alert">Địa chỉ tối đa {{ maxLength }} ký tự. Bạn rút gọn phần số nhà, tên đường nhé.</p>
     <p class="hint">Danh mục tỉnh/thành và phường/xã sau sáp nhập 2025. Bạn vẫn có thể nhập đầy đủ theo địa chỉ đang sử dụng.</p>
   </div>
   <div *ngIf="mode === 'full'" class="address-field">
     <label [for]="inputId">Địa chỉ giao hàng đầy đủ</label>
-    <textarea [id]="inputId" [ngModel]="fullAddress" (ngModelChange)="fullChanged($event)" [ngModelOptions]="{standalone: true}" [disabled]="disabled" rows="3" minlength="5" maxlength="255" autocomplete="street-address" placeholder="Số nhà, đường, phường/xã, tỉnh/thành phố" (blur)="touched()"></textarea>
+    <textarea [id]="inputId" [ngModel]="fullAddress" (ngModelChange)="fullChanged($event)" [ngModelOptions]="{standalone: true}" [disabled]="disabled" rows="3" minlength="5" [maxlength]="maxLength" autocomplete="street-address" placeholder="Số nhà, đường, phường/xã, tỉnh/thành phố" (blur)="touched()"></textarea>
     <p class="hint">Kiểm tra số nhà, tên đường và khu vực trước khi lưu hoặc đặt hàng.</p>
   </div>
 </div>
