@@ -63,3 +63,7 @@ Chạy theo thứ tự sau khi có bảng users/orders/products/support_requests
 ### 15 — Outbox email
 
 `15-mail-outbox.sql` tạo hàng đợi email bền vững có payload mã hóa, claim và retry. Chạy sau migration 14 trước khi dùng profile production. Cấu hình khóa và giới hạn giao thư tại [operations](../docs/operations.md).
+
+### 19 — Mô tả sách đầy đủ
+
+`19-product-description-text.sql` mở rộng `products.description` thành TEXT để nhập/lưu mô tả dài hơn 255 ký tự. Áp dụng vào đúng database được kiểm tra trước khi khởi động profile production của bản này. Database demo Azure mới ngày 23/10/2026 đã phát hiện giới hạn VARCHAR(255) khi nhập catalog; không chạy lại dump seed trên database có người dùng.

@@ -58,6 +58,7 @@ public class Product implements Serializable {
 	private Double price;
 	private int discount;
 	private String image;
+	@Column(columnDefinition = "TEXT")
 	private String description;
 	private LocalDate enteredDate;
 	private Boolean status;

@@ -54,3 +54,9 @@ Outbox email lưu trong DB, giới hạn 1.000 thư đang chờ và thử tối 
 ## Phạm vi triển khai
 
 Nháp checkout và chống xác nhận lặp đã được bảo vệ bằng DB. Khóa hội thoại/CAS hiện vẫn theo tiến trình backend; trước khi chạy nhiều instance cần khóa/version hội thoại ở DB hoặc kho dùng chung. Không đặt cân bằng tải nhiều instance cho chat mà chưa bổ sung bước này.
+
+## Khởi tạo database cho bản demo public
+
+Không dùng tài khoản hoặc mật khẩu seed local trên web public. Tạo database riêng, khởi tạo schema hiện tại trên database trống đã xác minh, chỉ nhập catalog và trang xem thử đã công khai/xác nhận quyền; sau đó chạy profile production với ddl-auto=validate. Không chuyển tài khoản, đơn hàng hoặc lịch sử chat local.
+
+Mapping `products.description` dùng TEXT để giữ mô tả HTML dài hơn 255 ký tự. Database đã có cột VARCHAR cần áp dụng `db/19-product-description-text.sql` vào đúng database trước khi validate. Migration mở rộng kiểu cột và giữ dữ liệu hiện có.
