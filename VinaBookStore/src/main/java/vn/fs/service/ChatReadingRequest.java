@@ -12,7 +12,7 @@ final class ChatReadingRequest {
     private static final Pattern TOPIC_SWITCH=Pattern.compile("(?iu)\\b(?:chuyển sang|chuyen sang|đổi sang|doi sang|đổi chủ đề sang|doi chu de sang|đổi nhu cầu[:：]?|doi nhu cau[:：]?)\\s+");
     private static final Pattern EXCLUSION=Pattern.compile("\\b(?:khong lay|khong chon|loai tru|tranh sach|bo qua|dung gioi thieu|khong thich|khong muon)\\s+([^,;.!?]+)");
     private static final Pattern RAW_EXCLUSION=Pattern.compile("(?iu)\\b(?:không lấy|khong lay|không chọn|khong chon|loại trừ|loai tru|tránh sách|tranh sach|bỏ qua|bo qua|đừng giới thiệu|dung gioi thieu|không thích|khong thich|không muốn|khong muon)\\s+([^,;.!?]+)");
-    private static final Pattern TOTAL=Pattern.compile("\\b(?:tong(?: ngan sach| cong| tien| chi)?|ngan sach cho ca(?: [0-9]+ cuon)?|ca [0-9]+ cuon|cho tat ca)\\s*(?:(?:la|duoi|toi da|khong qua|khoang|tam|cho [0-9]+ cuon)\\s+)*([0-9]+(?:[.,][0-9]+)*\\s*(?:trieu|nghin|ngan|dong|vnd|lit|tr|k|d)?\\b)(?!\\s*(?:cuon|quyen))");
+    private static final Pattern TOTAL=Pattern.compile("\\b(?:tong(?: ngan sach| cong| tien| chi)?(?: sach)?|ngan sach cho ca(?: [0-9]+ cuon)?|ca [0-9]+ cuon|cho tat ca)\\s*(?:(?:la|duoi|toi da|khong qua|khoang|tam|cho [0-9]+ cuon)\\s+)*([0-9]+(?:[.,][0-9]+)*\\s*(?:trieu|nghin|ngan|dong|vnd|lit|tr|k|d)?\\b)(?!\\s*(?:cuon|quyen))");
     private final ChatIntentService language;
     ChatReadingRequest(ChatIntentService language) { this.language=language; }
 

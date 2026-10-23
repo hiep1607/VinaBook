@@ -2,6 +2,13 @@ package vn.fs.service;
 
 /** Explicit customer commands, distinct from a reading preference such as “mình thích trinh thám”. */
 final class ChatCustomerActions {
+    static boolean checkoutQuantityChange(String q,ChatDialogueMemory.State state) {
+        boolean pendingPurchase="PURCHASE".equals(state.lastTask)
+            || !state.toolHistory.isEmpty() && "prepareCheckout".equals(state.toolHistory.get(state.toolHistory.size()-1).get("tool"));
+        if(!pendingPurchase || state.focus==null || !quantity(q).explicit())return false;
+        if(ChatBookFacts.has(q,"\\b(?:neu|gia su|khong|chua|dung|khoan|gio hang|don hang|chu de|gia|ngan sach|va|roi|nhung|hay)\\b|[?;,]"))return false;
+        return q.matches("(?:(?:minh|toi|em) )?(?:doi|sua|cap nhat)(?: so luong)?(?: thanh| con| la)? .{1,80}[.!]*");
+    }
     /** A single explicit refusal is safe to acknowledge without assuming any cart contents. */
     static boolean keepCartUnchanged(String q) {
         if(ChatBookFacts.has(q,"[?;,\\n]|\\b(?:neu|gia su|khi|va|nhung|roi|hay|them|mua|dat|sua|doi|cap nhat|thanh toan|xem|kiem tra|luu|chuyen|tai sao|vi sao)\\b"))return false;

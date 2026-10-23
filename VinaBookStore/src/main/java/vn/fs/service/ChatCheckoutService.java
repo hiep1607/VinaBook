@@ -25,7 +25,11 @@ public class ChatCheckoutService {
     private final ChatRetrievalService pricing;
     private final EntityManager em;
     private final TransactionTemplate tx;
-    private final Map<String, Draft> drafts = new HashMap<>();
+    private final Map<String, Draft> drafts = new java.util.concurrent.ConcurrentHashMap<>();
+    private final Object[] ownerLocks=java.util.stream.IntStream.range(0,256).mapToObj(i->new Object()).toArray();
+    private Object ownerLock(String email){return ownerLocks[Math.floorMod(email.hashCode(),ownerLocks.length)];}
+    private CheckoutDraftStore draftStore;
+    @org.springframework.beans.factory.annotation.Autowired public void setDraftStore(CheckoutDraftStore value){draftStore=value;}
     private VoucherService vouchers;
     @org.springframework.beans.factory.annotation.Autowired public void setVouchers(VoucherService value){vouchers=value;}
     private CartSyncService carts;
@@ -34,6 +38,8 @@ public class ChatCheckoutService {
     @org.springframework.beans.factory.annotation.Autowired(required=false)
     public void setStore(StoreKnowledgeService value){store=value;}
     private PaymentGatewayService payments;
+    private OrderNotifications notifications;
+    @org.springframework.beans.factory.annotation.Autowired public void setNotifications(OrderNotifications value){notifications=value;}
     @org.springframework.beans.factory.annotation.Autowired
     public void setPayments(PaymentGatewayService value){payments=value;}
     public ChatCheckoutService(CurrentUserAccess access, ProductRepository products, UserRepository users,
@@ -47,8 +53,12 @@ public class ChatCheckoutService {
         if(email==null) throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Vui lòng đăng nhập");
         return email;
     }
-    public synchronized Draft quote(Input input) {
-        String email=owner();
+    public Draft quote(Input input) {
+        String email=owner();synchronized(ownerLock(email)){return quoteOwned(input,email);}
+    }
+    private Draft quoteOwned(Input input,String email) {
+        var delivery=ShippingDetails.require(input.recipient,input.phone,input.street);
+        input.recipient=delivery.recipient();input.phone=delivery.phone();input.street=delivery.street();
         checkPayment(input.paymentMethod);
         drafts.values().removeIf(d -> d.expiresAt < System.currentTimeMillis());
         if(drafts.size()>=2000) throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "Vui lòng thử lại sau");
@@ -86,18 +96,32 @@ public class ChatCheckoutService {
         d.discount=d.voucherCode.isEmpty()?0:vouchers.preview(d.voucherCode,d.subtotal);
         d.total=d.subtotal+d.shipping-d.discount;
         d.expiresAt=System.currentTimeMillis()+15*60*1000;
+        if(draftStore!=null)draftStore.replace(d);
         drafts.put(d.token,d); return d;
     }
-    public synchronized Map<String,Long> confirm(String token) {
-        String email=owner();
+    public Map<String,Long> confirm(String token) {
+        String email=owner();synchronized(ownerLock(email)){return confirmOwned(token,email);}
+    }
+    private Map<String,Long> confirmOwned(String token,String email) {
         Order existing=orders.findByPaymentReference("CHAT-"+token).orElse(null);
         if(existing!=null && existing.getUser()!=null && email.equals(existing.getUser().getEmail()))
             return Map.of("orderId",existing.getOrdersId());
-        Draft d=drafts.get(token);
+        Draft d=draftStore==null?drafts.get(token):draftStore.get(token,email);
         if(d==null || !d.owner.equals(email) || d.expiresAt<System.currentTimeMillis())
             throw new ResponseStatusException(HttpStatus.GONE,"Bản nháp đã hết hạn. Vui lòng lập lại.");
         if(d.orderId!=null) return Map.of("orderId",d.orderId);
         Long id=tx.execute(status -> {
+            Draft current=draftStore==null?d:draftStore.locked(token,email);
+            if(current.orderId!=null)return current.orderId;
+            if(current.expiresAt<System.currentTimeMillis())throw new ResponseStatusException(HttpStatus.GONE,"Bản nháp đã hết hạn.");
+            return createOrder(current,email);
+        });
+        d.orderId=id;
+        if(notifications!=null)notifications.changed(id,"Đơn #"+id+" vừa được tạo.");
+        return Map.of("orderId",id);
+    }
+    private Long createOrder(Draft d,String email) {
+
             checkPayment(d.paymentMethod);
             long currentShipping=store==null?(d.subtotal>0 && d.subtotal<300000 ? 20000 : 0):store.shipping(d.subtotal);
             if(currentShipping!=d.shipping)throw new ResponseStatusException(HttpStatus.CONFLICT,"Phí giao hàng đã thay đổi. Vui lòng xem lại báo giá.");
@@ -115,7 +139,7 @@ public class ChatCheckoutService {
             Order order=new Order(); order.setUser(user); order.setOrderDate(new Date());
             order.setAmount((double)d.total); order.setAddress(d.street+" (Người nhận: "+d.recipient+")");
             order.setPhone(d.phone); order.setStatus(0); order.setPaymentMethod(d.paymentMethod); order.setPaymentStatus("COD".equals(d.paymentMethod)?"UNPAID":"PENDING");
-            order.setPaymentReference("CHAT-"+token);
+            order.setPaymentReference("CHAT-"+d.token);
             order.setVoucherCode(d.voucherCode);order.setVoucherDiscount(d.discount);order.setShippingFee(d.shipping);
             order.setStockReserved(true);
             Order saved=orders.save(order);
@@ -124,12 +148,15 @@ public class ChatCheckoutService {
                 Product p=locked.get(line.productId());p.setQuantity(p.getQuantity()-line.quantity());
                 details.save(new OrderDetail(0L,line.quantity(),(double)(line.unitPrice()*line.quantity()),p,saved));
             }
+            if(draftStore!=null)draftStore.confirmed(d.token,saved.getOrdersId());
             return saved.getOrdersId();
-        });
-        d.orderId=id; return Map.of("orderId",id);
     }
-    public synchronized void cancelDraft(String token) {
-        String email=owner();Draft draft=drafts.get(token);
+    public void cancelDraft(String token) {
+        String email=owner();synchronized(ownerLock(email)){cancelOwned(token,email);}
+    }
+    private void cancelOwned(String token,String email) {
+        if(draftStore!=null){draftStore.cancel(token,email);drafts.remove(token);return;}
+        Draft draft=drafts.get(token);
         if(draft==null)return;
         if(!draft.owner.equals(email))throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         if(draft.orderId!=null)throw new ResponseStatusException(HttpStatus.CONFLICT,"Đơn đã được tạo. Hãy dùng thao tác hủy đơn hàng.");
@@ -156,8 +183,8 @@ public class ChatCheckoutService {
         @Min(0) private long cartRevision;
         @Min(1) @Max(99) private int quantity=1;
         @NotBlank @Size(max=80) private String recipient;
-        @NotBlank @Pattern(regexp="0[0-9]{9}") private String phone;
-        @NotBlank @Size(max=160) private String street;
+        @NotBlank @Pattern(regexp=ShippingDetails.INPUT_PHONE) private String phone;
+        @NotBlank @Size(min=5,max=255) private String street;
     }
     @Data public static class Draft {
         @com.fasterxml.jackson.annotation.JsonIgnore private String owner;

@@ -25,7 +25,7 @@ class ChatToolsTest {
     ChatRetrievalService data=new ChatRetrievalService(language);
     ChatDialogueMemory.State state=new ChatDialogueMemory.State();
     ChatToolRegistry registry;
-    ChatOrchestrator orchestrator;
+    LegacyChatOrchestrator orchestrator;
     ChatBuiltinTools builtins;
     @BeforeEach void setup() {
         data.setRates(rates);
@@ -39,7 +39,7 @@ class ChatToolsTest {
             builtins.bookReviews(),builtins.prepareCartChange(),builtins.prepareClearCart(),builtins.prepareCheckout(),builtins.prepareCancelOrder(),builtins.prepareReorder(),builtins.getWishlist(),builtins.prepareWishlistChange(),builtins.getCart(),builtins.getMyOrders(),builtins.getOrderDetail(),builtins.getPolicy(),builtins.respond(),builtins.findRelatedBooks()));
         when(ai.provider()).thenReturn("gemini");when(ai.modelUsed()).thenReturn("fixture");when(ai.isConfigured()).thenReturn(true);
         when(analytics.record(any(),any(),anyString(),anyBoolean(),anyInt(),anyLong())).thenReturn("event");
-        orchestrator=new ChatOrchestrator(ai,mapper,registry,analytics);
+        orchestrator=new LegacyChatOrchestrator(ai,mapper,registry,analytics);
         orchestrator.setCatalog(products,data);
     }
     ChatTool.Result run(String tool,String arguments) throws Exception {
@@ -273,7 +273,7 @@ class ChatToolsTest {
     @Test void returnRequestOpensReviewFormButNeverSubmitsATicket() {
         var support=mock(CustomerSupportService.class);builtins.setSupport(support);when(support.returnOptions(7L)).thenReturn(Map.of("orderId",7L));
         var registry=new ChatToolRegistry(List.of(builtins.prepareReturnRequest()));
-        var orchestrator=new ChatOrchestrator(ai,mapper,registry,analytics);
+        var orchestrator=new LegacyChatOrchestrator(ai,mapper,registry,analytics);
         var result=orchestrator.reply(request("s","đổi trả đơn #7"),state);
         assertThat(result.getActions().get(0).getType()).isEqualTo("CREATE_RETURN_REQUEST");assertThat(result.getActions().get(0).getOrderId()).isEqualTo(7L);
         assertThat(result.isFallback()).isFalse();verify(support,never()).create(any());
@@ -281,7 +281,7 @@ class ChatToolsTest {
     @Test void humanSupportOpensAnEditableDraftAndPrivateHistoryIsReadOnlyInTheUi() {
         builtins.setAccess(access);when(access.currentEmail()).thenReturn("buyer@test.invalid");
         var registry=new ChatToolRegistry(List.of(builtins.prepareHumanSupport(),builtins.getSupportRequests()));
-        var orchestrator=new ChatOrchestrator(ai,mapper,registry,analytics);
+        var orchestrator=new LegacyChatOrchestrator(ai,mapper,registry,analytics);
         var result=orchestrator.reply(request("s","Tôi muốn gặp nhân viên hỗ trợ"),state);
         assertThat(result.getActions().get(0).getType()).isEqualTo("CREATE_SUPPORT_REQUEST");assertThat(result.getActions().get(0).getOrderId()).isNull();
         var history=orchestrator.reply(request("s","Xem yêu cầu đã gửi"),state);
@@ -475,7 +475,7 @@ class ChatToolsTest {
         assertThat(result.getActions()).extracting(ChatActionDto::getType).containsExactly("CLEAR_CART");
         assertThat(result.getActions().get(0).isRequiresConfirmation()).isTrue();
         assertThat(result.getExecution()).containsEntry("status","AWAITING_CONFIRMATION");
-        assertThat(ChatOrchestrator.cartTool("khong xoa toan bo gio hang")).isEmpty();verifyNoInteractions(orders);
+        assertThat(LegacyChatOrchestrator.cartTool("khong xoa toan bo gio hang")).isEmpty();verifyNoInteractions(orders);
     }
     @Test void localModeCanReadAndCheckoutTheCartWithoutCallingAi() {
         ChatService chat=new ChatService(products,ai,language,data,new ChatPolicyService(language),orders,analytics,access);

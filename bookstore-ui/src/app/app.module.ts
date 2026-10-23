@@ -1,8 +1,10 @@
+import { ChatLauncherComponent } from './components/chatbot/chat-launcher.component';
 import {CustomerComponentsModule} from './shared/customer-components.module';
 import { NgModule } from '@angular/core';
 import {
   LucideAngularModule,
   Bell,
+  LocateFixed,
   Truck,
   ShieldCheck,
   RefreshCcw,
@@ -41,9 +43,6 @@ import { SearchComponent } from './pages/search/search.component';
 import { ToastComponent } from './shared/toast/toast.component';
 import { CategoryComponent } from './pages/category/category.component';
 import { BooksComponent } from './pages/books/books.component';
-import { ChatbotComponent } from './components/chatbot/chatbot.component';
-import { ChatCommerceComponent } from './components/chat-commerce/chat-commerce.component';
-import { BookReviewComponent } from './components/book-review/book-review.component';
 import { NgrokSkipInterceptor } from './core/ngrok-skip.interceptor';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { FooterComponent } from './components/footer/footer.component';
@@ -52,7 +51,7 @@ import { ThemeSwitcherComponent } from './components/theme-switcher/theme-switch
 import { PaymentResultComponent } from './pages/payment-result/payment-result.component';
 
 @NgModule({
-  declarations: [AppComponent,
+  declarations: [AppComponent, ChatLauncherComponent,
     HomeComponent,
     LoginComponent,
     RegisterComponent,
@@ -61,9 +60,6 @@ import { PaymentResultComponent } from './pages/payment-result/payment-result.co
     ToastComponent,
     CategoryComponent,
     BooksComponent,
-    ChatbotComponent,
-    ChatCommerceComponent,
-    BookReviewComponent,
     FooterComponent,
     NotFoundComponent,
     ThemeSwitcherComponent,
@@ -80,6 +76,7 @@ import { PaymentResultComponent } from './pages/payment-result/payment-result.co
     CustomerComponentsModule,
     LucideAngularModule.pick({
       Bell,
+      LocateFixed,
     Truck,
       ShieldCheck,
       RefreshCcw,

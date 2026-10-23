@@ -22,12 +22,12 @@ import vn.fs.config.AiSettings;
 
 class AiGatewayRetryTest {
     @Test
-    void bindsThreeNamedKeySlotsFromSpringProperties() {
+    void bindsFourNamedKeySlotsFromSpringProperties() {
         AiSettings settings = new Binder(new MapConfigurationPropertySource(Map.of(
                 "ai.gemini-api-key1", "first", "ai.gemini-api-key2", "second",
-                "ai.gemini-api-key3", "third")))
+                "ai.gemini-api-key3", "third", "ai.gemini-api-key4", "fourth")))
                 .bind("ai", Bindable.of(AiSettings.class)).get();
-        assertThat(settings.getGeminiApiKeys()).containsExactly("first", "second", "third");
+        assertThat(settings.getGeminiApiKeys()).containsExactly("first", "second", "third", "fourth");
     }
 
     @Test
@@ -138,13 +138,13 @@ class AiGatewayRetryTest {
     }
 
     @Test
-    void rotatesAcrossThreeNumberedKeysOnDailyQuota() throws Exception {
+    void rotatesAcrossFourNumberedKeysOnDailyQuotaWithoutChangingModel() throws Exception {
         List<String> seen = new CopyOnWriteArrayList<>();
         HttpServer server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
         server.createContext("/models/test-model:generateContent", exchange -> {
             String key = exchange.getRequestHeaders().getFirst("x-goog-api-key");
             seen.add(key);
-            int status = "third".equals(key) ? 200 : 429;
+            int status = "fourth".equals(key) ? 200 : 429;
             byte[] body = (status == 200 ? "{\"candidates\":[{\"content\":{\"parts\":[{\"text\":\"backup works\"}]}}]}"
                     : "{\"error\":{\"message\":\"quota\",\"details\":[{\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\"}]}}")
                     .getBytes(StandardCharsets.UTF_8);
@@ -158,10 +158,12 @@ class AiGatewayRetryTest {
             settings.setGeminiApiKey1("primary");
             settings.setGeminiApiKey2("secondary");
             settings.setGeminiApiKey3("third");
+            settings.setGeminiApiKey4("fourth");
             AiGateway gateway = new AiGateway(settings, new ObjectMapper());
             assertThat(gateway.complete("system", List.of(), "first")).isEqualTo("backup works");
             assertThat(gateway.complete("system", List.of(), "second")).isEqualTo("backup works");
-            assertThat(seen).containsExactly("primary", "secondary", "third", "third");
+            assertThat(seen).containsExactly("primary", "secondary", "third", "fourth", "fourth");
+            assertThat(gateway.modelUsed()).isEqualTo("test-model");
         } finally {
             server.stop(0);
         }
@@ -298,6 +300,21 @@ class AiGatewayRetryTest {
         } finally {
             server.stop(0);
         }
+    }
+
+    @Test
+    void acceptsOnlyFourthKeySlotAndIgnoresEmptyOrPlaceholderSlots() {
+        AiSettings settings = new AiSettings();
+        settings.setProvider("gemini");
+        settings.setModel("test-model");
+        settings.setGeminiApiKey1("PASTE_GEMINI_API_KEY_HERE");
+        settings.setGeminiApiKey2(" ");
+        settings.setGeminiApiKey4(" fourth ");
+        AiGateway gateway = new AiGateway(settings, new ObjectMapper());
+        assertThat(gateway.isConfigured()).isTrue();
+        assertThat(settings.getGeminiApiKeys()).containsExactly("fourth");
+        settings.setGeminiApiKey3("fourth");
+        assertThat(settings.getGeminiApiKeys()).containsExactly("fourth");
     }
 
     private AiSettings settings(int port) {

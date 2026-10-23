@@ -16,17 +16,17 @@ flowchart LR
 
 ## Storefront
 
-Storefront là một `AppModule` eager-loaded. Routes ánh xạ tới `pages/`; header, footer, product card và chatbot nằm trong `components/`; guard/interceptor nằm trong `core/`; toast/directive nằm trong `shared/`.
+Storefront dùng `AppModule` và NgModule truyền thống; trang chi tiết sách, nhóm trang khách hàng và widget chatbot tải theo nhu cầu. Chatbot chỉ được tải khi mở hoặc cần khôi phục lựa chọn mua sau đăng nhập. Routes ánh xạ tới `pages/`; header, footer, product card và chatbot nằm trong `components/`; guard/interceptor nằm trong `core/`; toast/directive nằm trong `shared/`.
 
-`ProductService.getProducts()` tải `GET /api/products` một lần và cache bằng `shareReplay(1)`. `SearchService` lọc trên catalog cache. Category được lọc bằng `categoryId`, không dựa vào tên hiển thị.
+`ProductService.getProducts()` tải `GET /api/products`, cache bằng `shareReplay(1)` với thời hạn 60 giây và có `refresh()`. `SearchService` lọc trên catalog cache. Category được lọc bằng `categoryId`, không dựa vào tên hiển thị.
 
 `HomepageService` tải cấu hình trình bày từ `GET /api/homepage`. Backend lưu một bản JSON có version mềm trong bảng `homepage_config` (bản ghi id `1`), nhờ đó thêm thuộc tính trình bày không phải đổi nhiều cột. Storefront ghép cấu hình này với catalog/category thật; admin cập nhật cùng nguồn bằng `PUT /api/homepage`.
 
-Các service state trình duyệt tự hydrate từ `localStorage`. Cart đổi scope khi user hiện tại thay đổi; order service chỉ sync các dòng được chọn sang backend lúc checkout.
+Địa chỉ, avatar, wishlist và giỏ đồng bộ theo tài khoản; localStorage giữ cache/migration. Cart đổi scope khi tài khoản thay đổi, có revision chống ghi đè. Checkout gửi những dòng được chọn, xác minh lại giá/tồn và giữ nháp riêng trên server qua restart.
 
-`ChatbotService` là client mỏng: ưu tiên `POST /api/chat/stream` (SSE), tự hạ xuống `POST /api/chat` khi kết nối không hỗ trợ stream. Toàn bộ phân loại ý định, lọc giá/thể loại/tác giả, xếp hạng catalog, chính sách và fallback nằm ở backend để không có hai nguồn logic lệch nhau. `AiGateway` chuyển contract sang OpenAI Responses, OpenAI-compatible Chat Completions, Gemini hoặc Anthropic. Response có thẻ sách, quick replies và action có kiểu; thao tác thêm giỏ vẫn chạy qua `CartService` và cần xác nhận người dùng.
+`ChatbotService` là client mỏng: ưu tiên `POST /api/chat/stream` (SSE), tự hạ xuống `POST /api/chat` khi kết nối không hỗ trợ stream. Toàn bộ phân loại ý định, lọc giá/thể loại/tác giả, xếp hạng catalog, chính sách và fallback nằm ở backend để không có hai nguồn logic lệch nhau. `AiGateway` chuyển contract sang OpenAI Responses, OpenAI-compatible Chat Completions, Gemini hoặc Anthropic. Response có thẻ sách, quick replies và action có kiểu; thao tác thêm giỏ vẫn chạy qua `CartService`. SSE gửi tiến độ theo giai đoạn và câu trả lời đã kiểm chứng; lỗi Gemini có tư vấn cơ bản bảo thủ dùng cùng công cụ. Client có một deadline chung, worker có giới hạn và hỗ trợ hủy.
 
-Backend chỉ lưu telemetry tối thiểu trong `chat_events`: mã ngẫu nhiên của câu trả lời, mã phiên, intent, provider, fallback, số sản phẩm, độ trễ và feedback. Nội dung câu hỏi/câu trả lời không được lưu. Dashboard admin đọc số liệu tổng hợp qua endpoint chỉ dành cho `ROLE_ADMIN`.
+`chat_events` lưu telemetry không có nội dung hội thoại. `chat_conversations/chat_exchanges` lưu snapshot và transcript để khôi phục ngữ cảnh, tách scope tài khoản/guest; input nhạy cảm và nội dung hỗ trợ đơn hàng bị loại khỏi transcript chung. Lịch sử phân trang 25 lượt; metrics admin tổng hợp SQL trong khoảng thời gian, mặc định 30 ngày. Retention guest/telemetry cấu hình được và mặc định tắt. Xem [vận hành](operations.md).
 
 ## Backend và bảo mật
 
@@ -35,6 +35,8 @@ Spring Security xác thực JWT stateless. Public gồm đăng nhập/đăng ký
 Đối với user/cart/order/review, backend đối chiếu principal trong JWT bằng `CurrentUserAccess`. ID/email từ request không tự tạo quyền truy cập. Giá dòng hàng được tính lại từ product trong database và order kiểm tra tồn kho trước khi ghi.
 
 `User.password` và reset token là write-only trong JSON. Response đăng nhập không chứa bcrypt hash.
+
+Nháp checkout lưu trong DB theo owner và token. Email dùng outbox mã hóa trong cùng transaction nghiệp vụ; worker gửi SMTP riêng, có retry và phục hồi qua restart. ChatBuiltinTools chỉ đăng ký một bộ tool; thao tác khách hàng và phần giải thích sách được tách sang ChatCustomerTools/ChatBookPresenter, dùng chung các guard catalog/tham chiếu.
 
 ## Production
 
@@ -45,7 +47,7 @@ HTTPS origin
 └── /notification     -> Spring Boot WebSocket
 ```
 
-JWT secret, database và SMTP phải được inject qua biến môi trường. CORS không thay thế authorization.
+JWT secret, database và SMTP phải được inject qua biến môi trường. CORS không thay thế authorization. Profile production tắt SQL log/open-in-view, kiểm tra schema bằng validate. Admin socket dùng vé ngắn hạn từ API đã xác thực, chỉ nhận thông báo do server phát sau commit. Tài khoản khóa không được dùng JWT cũ; reset mật khẩu dùng token hash có hạn và tiêu thụ một lần.
 
 ## Thiết kế giao diện
 

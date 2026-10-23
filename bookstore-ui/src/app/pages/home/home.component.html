@@ -1,3 +1,4 @@
+<p role="status" class="container" *ngIf="configurationError">Một phần trang chưa tải được. <button type="button" class="btn-outline" (click)="retry()">Thử lại</button></p>
 <!-- Nội dung trang chủ được quản lý tại /admin/homepage. -->
 <section class="hero" *ngIf="homeConfig.hero.visible">
   <div class="hero-glow" aria-hidden="true"></div>
@@ -148,6 +149,7 @@
 <section class="section" *ngIf="homeConfig.categories.visible">
   <div class="container">
     <div class="section-head" appReveal="up"><h2 class="section-title display-title">{{ homeConfig.categories.title }}</h2></div>
+    <p role="status" *ngIf="categoryError">Chưa tải được danh mục. <button type="button" class="btn-outline" (click)="retry()">Thử lại</button></p>
     <div class="category-wrapper">
       <button *ngFor="let cat of categories; let i = index" appReveal="up" [revealDelay]="i * 60" (click)="navigateToCategory(cat.categoryId)">{{ cat.categoryName }}</button>
     </div>

@@ -1,14 +1,17 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { shippingError, normalizePhone } from 'src/app/shared/shipping-validation';
+import { ADDRESS_LABELS } from 'src/app/shared/address-labels';
+import { Component, DoCheck, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from 'src/app/services/product.service';
-import { timeout } from 'rxjs/operators';
+import { takeUntil, timeout } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { AddressService } from 'src/app/services/address.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { OrderService } from 'src/app/services/order.service';
-import { PaymentService } from 'src/app/services/payment.service';
+import { PaymentMethodCode, PaymentMethodInfo, PaymentService } from 'src/app/services/payment.service';
 import { MotionService } from 'src/app/services/motion.service';
 import { StoreKnowledgeService, StoreSettings } from 'src/app/services/store-knowledge.service';
 
@@ -17,7 +20,8 @@ import { StoreKnowledgeService, StoreSettings } from 'src/app/services/store-kno
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
-export class CheckoutComponent implements OnInit, OnDestroy {
+export class CheckoutComponent implements OnInit, DoCheck, OnDestroy {
+  readonly addressLabels = ADDRESS_LABELS;
 
   @ViewChild('placeOrderButton') placeOrderButton?: ElementRef<HTMLButtonElement>;
 
@@ -34,14 +38,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   choosingAddress = false;
   buyNowMode = false;
   private destroyed = false;
+  private owner = '';
   orderPlaced = false;
   mode = 'form';
   showNewForm = false;
   saveToProfile = false;
   formError = '';
   methodsLoading = true;
+  methodsError = '';
+  private stop$ = new Subject<void>();
   selectedPayment = 'COD';
-  paymentMethods: any[] = [
+  paymentMethods: (PaymentMethodInfo & { code: PaymentMethodCode; short: string })[] = [
     { code: 'COD', short: 'COD', label: 'Thanh toán khi nhận hàng', description: 'Thanh toán sau khi nhận và kiểm tra kiện sách.', available: true },
     { code: 'BANK_QR', short: 'QR', label: 'Chuyển khoản QR', description: 'Quét mã VietQR, đơn được xử lý sau khi cửa hàng xác nhận.', available: false },
     { code: 'VNPAY', short: 'VN', label: 'VNPay', description: 'Thẻ ngân hàng, tài khoản hoặc VNPAY-QR.', available: false },
@@ -69,6 +76,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    this.owner = this.email;
     this.knowledge.get().subscribe(data => this.shippingSettings = data.settings, () => this.shippingUnavailable = true);
     this.shippingForm.name = this.authService.currentUser?.name || '';
     this.shippingForm.phone = this.authService.currentUser?.phone || '';
@@ -77,7 +85,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       await this.cartService.flush();
       const selection = this.cartService.getBuyNowSelection();
       const catalog = await this.products.refresh().pipe(timeout(20000)).toPromise();
-      if (this.destroyed) return;
+      if (this.destroyed || this.owner !== this.email) return;
       if (selection) {
         const product = catalog.find(book => book.id === selection.productId);
         if (!product || product.quantity < selection.quantity) {
@@ -119,25 +127,31 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   loadPaymentMethods(): void {
-    this.paymentService.getMethods().subscribe(
+    if (this.destroyed || this.placing || this.orderPlaced) return;
+    this.methodsLoading = true;
+    this.methodsError = '';
+    this.paymentService.getMethods().pipe(timeout(12000), takeUntil(this.stop$)).subscribe(
       methods => {
         this.paymentMethods = this.paymentMethods.map(method => ({
           ...method,
-          available: method.code === 'COD' || !!(methods[method.code] && methods[method.code].available),
-          label: methods[method.code] ? methods[method.code].label : method.label,
-          description: methods[method.code] ? methods[method.code].description : method.description
+          available: method.code === 'COD' || methods[method.code]?.available === true,
+          label: methods[method.code]?.label || method.label,
+          description: methods[method.code]?.description || method.description
         }));
+        if (!this.paymentMethods.some(method => method.code === this.selectedPayment && method.available)) this.selectedPayment = 'COD';
         this.methodsLoading = false;
       },
       () => {
         this.methodsLoading = false;
+        this.methodsError = 'Chưa tải được các phương thức trực tuyến. Bạn có thể chọn trả tiền khi nhận hàng hoặc thử tải lại.';
+        this.paymentMethods = this.paymentMethods.map(method => ({ ...method, available: method.code === 'COD' }));
         this.selectedPayment = 'COD';
       }
     );
   }
 
   selectPayment(method: any, event?: MouseEvent): void {
-    if (method.available && !this.placing) {
+    if (method.available && !this.methodsLoading && !this.placing && !this.preparing && !this.orderPlaced) {
       this.selectedPayment = method.code;
       this.motion.bump(event?.currentTarget as HTMLElement | undefined);
     }
@@ -148,12 +162,20 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     return selected ? selected.label : 'Thanh toán khi nhận hàng';
   }
 
-  get availablePaymentMethods(): any[] {
-    return this.paymentMethods.filter(method => method.available);
-  }
-
   ngOnDestroy(): void {
     this.destroyed = true;
+    this.stop$.next();
+    this.stop$.complete();
+  }
+
+  ngDoCheck(): void {
+    if (this.owner && this.owner !== this.email) {
+      this.ngOnDestroy();
+      this.owner = '';
+      this.cartItems = []; this.addresses = []; this.selectedAddress = null;
+      this.shippingForm = { label: '', name: '', phone: '', street: '' };
+      this.router.navigate(['/login'], { queryParams: { returnUrl: '/checkout' } });
+    }
   }
 
   private get email(): string {
@@ -161,7 +183,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   async loadAddresses(): Promise<void> {
-    try { await this.addressService.refresh(this.email); if(this.destroyed)return; this.addresses = this.addressService.getAddresses(this.email); } catch { this.addresses=[]; this.formError='Chưa tải được địa chỉ đã lưu. Bạn có thể nhập địa chỉ giao hàng bên dưới nhé.'; }
+    const email = this.email;
+    try { await this.addressService.refresh(email); if(this.destroyed || email !== this.email)return; this.addresses = this.addressService.getAddresses(email); } catch { if(this.destroyed || email !== this.email)return; this.addresses=[]; this.formError='Chưa tải được địa chỉ đã lưu. Bạn có thể nhập địa chỉ giao hàng bên dưới nhé.'; }
 
     if (this.addresses.length === 0) {
       this.mode = 'form';
@@ -208,18 +231,22 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   async placeOrder(): Promise<void> {
     if (!this.shippingSettings) { this.formError = 'Chưa tải được chính sách giao hàng. Vui lòng thử lại.'; return; }
     if (this.loading || this.placing || this.preparing || this.orderPlaced || this.voucherBusy) return;
+    if (this.methodsLoading || !this.paymentMethods.some(method => method.code === this.selectedPayment && method.available)) {
+      this.formError = 'Bạn chọn phương thức thanh toán đang khả dụng nhé.'; return;
+    }
     if (!this.quantitiesValid) { this.formError = 'Bạn kiểm tra lại số lượng và tồn kho trước khi đặt hàng nhé.'; return; }
     this.preparing = true;
     try { await this.cartService.flush(); } catch { this.formError = this.cartService.syncError || 'Chưa đồng bộ được giỏ hàng. Vui lòng kiểm tra lại.'; return; }
     finally { this.preparing = false; }
-    if (this.destroyed) return;
+    if (this.destroyed || this.owner !== this.email) return;
     this.formError = '';
 
     let shippingAddress: any;
     let isNewAddress = false;
 
     if (this.mode === 'form' || this.showNewForm) {
-      const phone = this.shippingForm.phone.trim();
+      const phone = normalizePhone(this.shippingForm.phone);
+      this.formError=shippingError(this.shippingForm.name,phone,this.shippingForm.street);if(this.formError)return;
       if (!this.shippingForm.name.trim() || !phone || !this.shippingForm.street.trim()) {
         this.formError = 'Vui lòng nhập đầy đủ thông tin giao hàng';
         return;
@@ -244,13 +271,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       shippingAddress = { ...this.selectedAddress };
     }
 
+    this.formError=shippingError(shippingAddress.name,shippingAddress.phone,shippingAddress.street);if(this.formError)return;
+    shippingAddress.phone=normalizePhone(shippingAddress.phone);
     const addressLine = `${shippingAddress.street} (Người nhận: ${shippingAddress.name})`;
     this.placing = true;
 
     this.orderService
-      .placeOrder(this.email, addressLine, shippingAddress.phone, this.cartItems, this.selectedPayment, !this.buyNowMode, this.cartService.serverRevision, this.getTotal(), this.voucherCode, this.voucherDiscount)
+      .placeOrder(this.email, addressLine, shippingAddress.phone, this.cartItems, this.selectedPayment, !this.buyNowMode, this.cartService.serverRevision, this.getTotal(), this.voucherCode, this.voucherDiscount).pipe(takeUntil(this.stop$))
       .subscribe(
         (order: any) => {
+          if (this.destroyed || this.owner !== this.email) return;
+          this.orderPlaced = true;
           if (isNewAddress && this.saveToProfile) {
             void this.addressService.addAddress(this.email, this.shippingForm).catch(()=>this.notification.error('Đơn đã tạo, nhưng chưa lưu được địa chỉ vào tài khoản. Bạn lưu lại trong Hồ sơ nhé.'));
           }
@@ -260,14 +291,13 @@ export class CheckoutComponent implements OnInit, OnDestroy {
           this.cartService.clearBuyNowItem();
           if (this.selectedPayment === 'COD') {
             this.placing = false;
-            this.orderPlaced = true;
             this.notification.success('Đặt hàng thành công');
             this.motion.orderSuccess(this.placeOrderButton?.nativeElement)
-              .then(() => this.router.navigate(['/orders']));
+              .then(() => { if (!this.destroyed) this.router.navigate(['/orders', order.ordersId]); });
             return;
           }
 
-          this.paymentService.start(order.ordersId).subscribe(
+          this.paymentService.start(order.ordersId).pipe(timeout(25000), takeUntil(this.stop$)).subscribe(
             payment => {
               if (payment.redirectUrl) {
                 window.location.assign(payment.redirectUrl);
@@ -282,7 +312,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
                 ? error.error.message
                 : 'Không mở được cổng thanh toán';
               this.notification.error('Đơn đã được tạo. ' + message);
-              this.router.navigate(['/orders']);
+              this.router.navigate(['/payment/result'], { queryParams: { orderId: order.ordersId } });
             }
           );
         },

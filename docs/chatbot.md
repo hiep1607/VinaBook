@@ -2,6 +2,24 @@
 
 Chatbot dùng backend làm nguồn nghiệp vụ duy nhất. Angular không biết API key và không phụ thuộc trực tiếp vào cấu trúc response của hãng AI. Luồng phân tích tình huống, hồ sơ sách, xuất bản và chính sách dùng chung được mô tả trong [thiết kế chatbot hiện tại](chatbot-rebuild.md).
 
+## Hội thoại và khôi phục ngữ cảnh (19/10/2026)
+
+Luồng có AI hiện đọc **ý nghĩa câu hỏi trước khi truy xuất catalog/giỏ hàng**. AI có thể trả lời trực tiếp bằng `reply` cho chào hỏi, hỏi khả năng hỗ trợ, giải nghĩa/dịch phần chữ khách cung cấp hoặc gợi mở ý tưởng đọc chung. Nhánh này có `calls=[]`, không hiện thẻ sách/menu ngành hàng ngoài ý khách và không đổi lựa chọn đang giữ. Khi câu hỏi cần dữ liệu cửa hàng (giá, tồn kho, sách có bán, chính sách, đơn...) AI mới đề xuất công cụ; backend xác minh tham số/quyền và lấy dữ liệu thật. Ví dụ “hi bạn có thể giúp gì cho tôi” không được coi là nhu cầu đọc sách để dựng menu thể loại.
+
+Các hướng gợi mở trong hội thoại chưa phải cam kết cửa hàng có sách; AI có thể nhắc lại hoặc hiểu lựa chọn từ lịch sử. Menu đã được kiểm tra có sách vẫn dùng trạng thái riêng và phải lấy dữ liệu cửa hàng. Không coi lời chatbot là sở thích đã xác nhận.
+
+Nhánh luật tham chiếu/lệnh cụ thể được chuyển sang dự phòng khi nhà cung cấp không đọc được yêu cầu, thay vì chạy trước AI. Bước đọc ý có ngân sách15 giây trong ngân sách chung45 giây; lỗi vẫn giữ ngữ cảnh. Các phép kiểm tra giá, tồn kho, quyền tài khoản và bước khách xác nhận thao tác giữ nguyên. Giỏ tài khoản được đọc từ server khi công cụ thực sự cần giỏ, không dùng snapshot client làm nguồn cho giỏ tài khoản. Xem [hợp đồng luồng AI](chatbot-structured-pipeline.md).
+
+- Câu hỏi chung như “Đắc Nhân Tâm nói về những nội dung gì?” dùng phần nội dung đã được duyệt. Tên sách khách nêu rõ được ưu tiên kể cả sau một lượt tìm không có kết quả. Hỏi sâu hoặc tạm dừng mua để hỏi nội dung không mở một đợt gợi ý sách khác.
+- Lựa chọn mua của khách chưa đăng nhập vẫn giữ mã sách. “Đổi thành 3 cuốn” cập nhật lựa chọn chờ đăng nhập; lượng bằng 0 bị từ chối và khách có thể sửa lại ngay. Tồn kho và giới hạn lượng vẫn do backend kiểm tra; chưa tạo đơn ở bước này.
+- Khi khách đã nêu nhu cầu cụ thể, các hướng đọc phải liên quan đến nhu cầu đó. Có một hướng phù hợp thì hiển thị một hướng, không bù bằng chủ đề xa. Chọn số thứ tự cùng số cuốn/ngân sách tổng giữ cả những điều kiện đó. Nếu chỉ tìm được một phần số cuốn yêu cầu, câu trả lời nói rõ.
+- Khi nhà cung cấp lỗi, các yêu cầu cơ bản dùng công cụ đã xác thực: tên sách, tìm sách với giá/số lượng và loại trừ rõ ràng. Câu quá phức tạp hoặc chưa đủ căn cứ giữ nguyên ngữ cảnh và cho thử lại; không chuyển sang menu chung. Tra cứu rõ dạng “Có sách [tên] không?” có nhánh dự phòng nội bộ; khi AI hoạt động, ý định vẫn được AI đọc trước.
+- Chưa có trường mục lục được duyệt theo ấn bản: khi khách yêu cầu, chatbot nói rõ dữ liệu chưa có và đề nghị kiểm tra với cửa hàng, không tự tạo tên chương.
+- Email/điện thoại trong câu tra đơn nhận hướng dẫn đăng nhập và phạm vi đơn thuộc tài khoản hiện tại. Guard mật khẩu/OTP vẫn được ưu tiên và không đưa dữ liệu riêng tư sang AI.
+- Khôi phục lịch sử giữ nút `SHOW_CART` (“Xem và sửa giỏ”). Các hành động xóa giỏ/hủy đơn vẫn không được tự khôi phục để thực thi.
+
+Các nhánh này có kiểm tra hồi quy cho parser, pipeline/công cụ và restore action. Chúng không thay thế kiểm thử checkout/thanh toán sau đăng nhập hoặc đánh giá toàn bộ 50 kịch bản.
+
 ## Chế độ hoạt động
 
 | `AI_PROVIDER` | API backend sử dụng | `AI_BASE_URL` |
@@ -54,16 +72,17 @@ $env:AI_API_KEY = "sk-or-v1-..."
 
 `openrouter/free` tự chọn một model miễn phí đang khả dụng. Nếu cần cố định model, thay bằng model ID có hậu tố `:free` trên OpenRouter. Free model phù hợp cho demo và phát triển; hạn mức, tốc độ và khả năng sẵn sàng phụ thuộc từng model/provider. Không đưa API key vào frontend hoặc commit vào Git.
 
-Ví dụ Anthropic chỉ cần đổi `AI_PROVIDER`, `AI_MODEL` và `AI_API_KEY`. Gemini có ba ô khóa riêng như dưới đây. Khởi động lại backend sau khi đổi biến môi trường.
+Ví dụ Anthropic chỉ cần đổi `AI_PROVIDER`, `AI_MODEL` và `AI_API_KEY`. Gemini có bốn ô khóa riêng như dưới đây. Khởi động lại backend sau khi đổi biến môi trường.
 
 ### Thiết lập nhanh Gemini trên Windows
 
-Workspace đã có sẵn `VinaBookStore/.env.local` bị Git ignore. Mở file đó và điền tối đa ba khóa Google AI Studio; ô 2 và 3 có thể để trống:
+Workspace đã có sẵn `VinaBookStore/.env.local` bị Git ignore. Mở file đó và điền tối đa bốn khóa Google AI Studio; ô 2, 3 và 4 có thể để trống:
 
 ```text
 GEMINI_API_KEY_1=khoa-chinh
 GEMINI_API_KEY_2=khoa-du-phong-1
 GEMINI_API_KEY_3=khoa-du-phong-2
+GEMINI_API_KEY_4=khoa-du-phong-3
 ```
 
 Sau đó chạy:
@@ -73,7 +92,7 @@ cd VinaBookStore
 .\run-gemini.cmd
 ```
 
-Script tự nạp `AI_PROVIDER=gemini`, model `gemini-3.1-flash-lite` và tối đa ba khóa vào backend. Chạy `run-gemini.ps1 -Check` khi cần xác thực model; lúc khởi động thường script không gọi thử Gemini. Ô khóa trống hoặc trùng được bỏ qua. Backend luân phiên khóa còn dùng được; với 429, nó thử khóa khác và tạm nghỉ khóa đã chạm hạn mức theo phút hoặc ngày. Với 503, backend thử lại tối đa hai lần rồi thử khóa kế tiếp. Mặc định `AI_FALLBACK_MODEL` để trống nên không gọi 3.5/3.6 Flash. Nếu cần, có thể điền một model dự phòng; giới hạn được theo dõi riêng theo model và project. Các yêu cầu AI dùng JSON mode để giảm lỗi cú pháp và số lượt gọi sửa định dạng. Nếu các khóa đều không dùng được hoặc kế hoạch AI vẫn không hợp lệ, chatbot trả lời từ dữ liệu cửa hàng và hiển thị chế độ cơ bản. Cấu hình cũ `AI_API_KEY` vẫn hoạt động khi cả ba ô khóa đều trống. File `.env.local` được Git ignore; không chia sẻ nội dung của nó.
+Script tự nạp `AI_PROVIDER=gemini`, model `gemini-3.1-flash-lite` và tối đa bốn khóa vào backend. `GEMINI_API_KEY_4` là ô khóa bổ sung, có thể để trống. Chạy `run-gemini.ps1 -Check` khi cần xác thực model; lúc khởi động thường script không gọi thử Gemini. Ô khóa trống, placeholder hoặc trùng được bỏ qua. Backend luân phiên khóa còn dùng được; khi một khóa hết hạn mức hoặc lỗi tạm thời, nó thử khóa khác với cùng model. Thời gian xử lý dùng chung ngân sách của lượt chat. Cấu hình local và file mẫu để `AI_FALLBACK_MODEL` trống theo lựa chọn chỉ dùng model cũ; không tự đổi sang model khác. Nếu sau này chủ động cấu hình model dự phòng, gateway vẫn hỗ trợ chuyển model khi cần. Nếu bước đọc hiểu thất bại, pipeline giữ nguyên ngữ cảnh và báo khách thử lại; nếu chỉ bước diễn đạt thất bại, backend vẫn trả nội dung sách đã xác thực. Cấu hình cũ `AI_API_KEY` vẫn hoạt động khi cả bốn ô khóa đều trống. File `.env.local` được Git ignore; không chia sẻ nội dung của nó. Sau khi điền hoặc đổi khóa, khởi động lại backend để nạp cấu hình.
 
 Google áp [hạn mức Gemini theo dự án](https://ai.google.dev/gemini-api/docs/rate-limits), không theo API key. Các khóa cùng dự án không làm tăng số lượt được cấp.
 
@@ -81,7 +100,7 @@ Các biến tinh chỉnh:
 
 | Biến | Mặc định | Ý nghĩa |
 |---|---:|---|
-| `AI_FALLBACK_MODEL` | trống | Model Gemini dự phòng khi model chính gặp lỗi tạm thời hoặc hết hạn mức; để trống để chỉ dùng Flash-Lite |
+| `AI_FALLBACK_MODEL` | trống | Model Gemini dự phòng tùy chọn; để trống để chuyển API key nhưng giữ nguyên model chính |
 | `AI_TIMEOUT_SECONDS` | `25` | Timeout cho một request AI |
 | `AI_MAX_OUTPUT_TOKENS` | `4096` | Giới hạn output, backend chặn trong khoảng 100 đến 8192; cần đủ chỗ cho phần suy luận và JSON của Gemini |
 | `AI_TEMPERATURE` | `0.35` | Độ ngẫu nhiên, backend chặn trong khoảng 0 đến 1 |
@@ -150,7 +169,7 @@ Action mua mang `quantity` trong đường dẫn trang sách. Trang sách điề
 - Bỏ giới hạn giá và giữ chủ đề là bổ sung bộ lọc: xóa giá nhưng giữ số cuốn đã yêu cầu, ngay cả khi bộ phân tích điền nhầm `scope=new`.
 - Phần diễn đạt bỏ lời chào lại sau lượt đầu và các nhận định thêm về ngôn ngữ áp dụng, nhịp kể hoặc quá trình trưởng thành của nhân vật khi mô tả chưa xác nhận. Lời dẫn không được tự kết luận catalog còn/thiếu sách; phần thông báo kết quả do backend giữ.
 
-Xem kết quả kiểm tra và phản hồi nguyên văn trong [báo cáo 03/10/2026](chatbot-evaluation/review-context-2026-10-03.md).
+Xem kết quả kiểm tra và phản hồi nguyên văn trong [báo cáo 03/10/2026](chatbot-evaluation/archive/2026-09-10/review-context-2026-10-03.md).
 
 ## Yêu cầu đọc có cấu trúc và tìm theo ngữ nghĩa — 03/10/2026
 
@@ -163,7 +182,7 @@ Xem kết quả kiểm tra và phản hồi nguyên văn trong [báo cáo 03/10/
 - Phần diễn đạt nhận thêm ba trao đổi gần nhất, yêu cầu đọc và trạng thái kết quả. Mỗi lời giải thích nêu trường nguồn cùng đoạn trích trong hồ sơ đã duyệt; backend kiểm tra lại trước khi dùng. Khi hết sách, giữ thông báo đã kiểm chứng và chỉ gợi ý nới điều kiện đang có. Không tự thêm điều kiện độ dài, hứa còn sách, hoặc chào lại mỗi lượt.
 - Sau khi xuất bản hoặc sửa hồ sơ, chỉ mục chạy sau khi lưu thành công. Worker thử lại theo lô 10 hồ sơ mỗi phút, mỗi lô dùng một request embedding. Việc ghi chỉ mục có điều kiện theo văn bản hiện hành và trạng thái duyệt để không ghi vector cũ sau khi hồ sơ thay đổi.
 
-Chi tiết kiểm thử và câu trả lời được ghi trong [báo cáo hoàn thiện yêu cầu đọc](chatbot-evaluation/review-reading-2026-10-03.md).
+Chi tiết kiểm thử và câu trả lời được ghi trong [báo cáo hoàn thiện yêu cầu đọc](chatbot-evaluation/archive/2026-09-10/review-reading-2026-10-03.md).
 
 ## Hai lớp ngữ cảnh
 
@@ -176,13 +195,13 @@ Production dùng `ddl-auto=validate`: chạy [chat-memory.sql](../VinaBookStore/
 
 ## Siết chất lượng tư vấn — 08/10/2026
 
-Giữ ngân sách khi siết chủ đề; đổi nhu cầu rõ ràng bỏ loại trừ/mức đọc cũ, xử lý câu bỏ loại trừ và nhận loại trừ mới trong cùng lượt. Dạng tiểu thuyết/truyện ngắn/truyện tranh được xác nhận từ nội dung, không suy từ danh mục chung. Câu phủ định không chứng minh chủ đề hay độ dễ đọc. Chatbot giải thích lý do chọn, giá và các dữ kiện còn thiếu, không tự bù đủ số cuốn bằng nhóm gần chủ đề. 259 test backend và 12 ca UI local đạt theo tiêu chí quan sát; xem [báo cáo](chatbot-evaluation/recommendation-improvements-2026-10-08.md).
+Giữ ngân sách khi siết chủ đề; đổi nhu cầu rõ ràng bỏ loại trừ/mức đọc cũ, xử lý câu bỏ loại trừ và nhận loại trừ mới trong cùng lượt. Dạng tiểu thuyết/truyện ngắn/truyện tranh được xác nhận từ nội dung, không suy từ danh mục chung. Câu phủ định không chứng minh chủ đề hay độ dễ đọc. Chatbot giải thích lý do chọn, giá và các dữ kiện còn thiếu, không tự bù đủ số cuốn bằng nhóm gần chủ đề. 259 test backend và 12 ca UI local đạt theo tiêu chí quan sát; xem [báo cáo](chatbot-evaluation/archive/2026-09-10/recommendation-improvements-2026-10-08.md).
 
 ## Danh sách gọn và lời tư vấn — 09/10/2026
 
 Khi không có yêu cầu số lượng, chatbot chọn tối đa 3 cuốn. Với nhu cầu thư giãn hoặc nhiều tiêu chí đọc, ưu tiên nhóm có nhiều tiêu chí được xác nhận nhất, không bù bằng sách chỉ trùng chủ đề. Nếu không đủ căn cứ cho mọi tiêu chí, từng sách vẫn ghi rõ phần chưa xác nhận. Lượt hỏi thêm loại sách đã xem trước khi chọn nhóm tiếp theo; số lượng cụ thể, “tất cả”, giá và ngân sách vẫn được giữ.
 
-Lời dẫn nối với nhu cầu đọc; giới hạn giá nhắc một lần. Mỗi sách có nội dung riêng và bằng chứng đúng trường về giọng kể, mức đọc hoặc cách áp dụng. Không lặp câu chọn sách chung chung, không dùng thông tin độ khó làm bằng chứng cho giọng kể. Người nhận và ngân sách vẫn tùy chọn. Xem [kết quả kiểm tra](chatbot-evaluation/shortlist-and-voice-2026-10-09.md).
+Lời dẫn nối với nhu cầu đọc; giới hạn giá nhắc một lần. Mỗi sách có nội dung riêng và bằng chứng đúng trường về giọng kể, mức đọc hoặc cách áp dụng. Không lặp câu chọn sách chung chung, không dùng thông tin độ khó làm bằng chứng cho giọng kể. Người nhận và ngân sách vẫn tùy chọn. Xem [kết quả kiểm tra](chatbot-evaluation/archive/2026-09-10/shortlist-and-voice-2026-10-09.md).
 
 ### Sửa lỗi hội thoại tự nhiên — 09/10/2026
 
@@ -191,7 +210,7 @@ Lời dẫn nối với nhu cầu đọc; giới hạn giá nhắc một lần. 
 - “Tiếp”, “thêm nữa”, “xem tiếp” sau tư vấn/chi tiết/so sánh dùng bộ lọc đang giữ và loại toàn bộ sách đã giới thiệu. Sau câu hỏi chính sách, không tự coi “tiếp” là yêu cầu sách. “?”/“ý là sao” giải thích kết quả hiện có, giữ yêu cầu và danh sách, không khởi động lại phần hỏi nhu cầu.
 - Các quy tắc được dùng ở cả đường local và điều phối AI. Kiểm tra tích hợp dùng intake, bộ nhớ, tool và catalog fixture thực; UI dùng provider local. Không xác nhận Gemini thật chỉ từ mock điều phối.
 
-Chi tiết tái hiện và kiểm tra: [context-repair-2026-10-09.md](chatbot-evaluation/context-repair-2026-10-09.md).
+Chi tiết tái hiện và kiểm tra: [context-repair-2026-10-09.md](chatbot-evaluation/archive/2026-09-10/context-repair-2026-10-09.md).
 
 ## Luồng hiểu yêu cầu và ghi ngữ cảnh bằng AI — 09/10/2026
 
@@ -200,4 +219,16 @@ Khi đã cấu hình AI, ChatStructuredPipeline thay bước intake/planner cũ 
 AI viết nhận gói dữ kiện đã xác minh, nhu cầu đã ghép, nguồn nội dung và các điểm chưa biết. Thẻ sách, giá, tồn kho và thao tác do backend giữ; lời giải thích sai căn cứ bị loại. Lỗi đọc hiểu/thực thi không ghi đè ngữ cảnh tốt; ngân sách AI toàn lượt là 45 giây. Local vẫn dùng đường hiện có khi chưa bật provider.
 
 Hợp đồng, kiến trúc và 25 tình huống nghiệm thu: [chatbot-structured-pipeline.md](chatbot-structured-pipeline.md).
-Kết quả triển khai và thử Gemini thật: [structured-pipeline-2026-10-09.md](chatbot-evaluation/structured-pipeline-2026-10-09.md).
+Kết quả triển khai và thử Gemini thật: [structured-pipeline-2026-10-09.md](chatbot-evaluation/archive/2026-09-10/structured-pipeline-2026-10-09.md).
+
+## Củng cố ngày 17/10/2026
+
+- Giữ Gemini 3.1 Flash-Lite và bốn slot key. Khi dịch vụ lỗi, yêu cầu đơn giản đi qua cùng công cụ truy xuất đã kiểm tra; yêu cầu phức tạp được làm rõ, không âm thầm bỏ điều kiện. Health tách khỏi trạng thái cấu hình.
+- Lưu snapshot/transcript trong một giao dịch public, chỉ cập nhật RAM sau thành công; phối hợp xóa với commit của lượt đang chạy.
+- Vector truy vấn có thời gian tối đa 2,5 giây, gộp truy vấn giống nhau và không khóa HTTP toàn cục. Catalog được tái dùng trong một lượt.
+- SSE gửi tiến độ, bỏ các frame từng từ dư thừa; câu trả lời đã kiểm tra hiển thị ngay. Stream/JSON dự phòng dùng một deadline, worker có giới hạn và hỗ trợ hủy.
+- Lịch sử tải 25 lượt mỗi trang; các nút mua/đăng nhập được khôi phục với giá/tồn mới. Hủy đơn, viết đánh giá và yêu cầu hỗ trợ cũ cần được mở lại từ yêu cầu mới.
+- Widget tải khi mở; phần văn bản tư vấn bỏ thông tin giá/tác giả lặp với thẻ sách. Nháp checkout riêng có thể khôi phục sau restart, không chứa trong transcript.
+- Planner/RAG cũ không còn nằm trong runtime; các ca tương thích được giữ ở fixture test, guard nội dung dùng narrator hiện hành.
+
+Chi tiết cấu hình, retention và giới hạn triển khai: [operations.md](operations.md).

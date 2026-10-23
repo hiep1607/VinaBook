@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -24,10 +25,10 @@ export class HeaderComponent implements OnInit {
   notifications: Notification[] = [];
   readonly storefrontUrl = environment.storefrontUrl;
 
-  webSocket!: WebSocket;
+  private socketSubscription?: Subscription;
   chatMessages: ChatMessage[] = [];
 
-  constructor(private sessionService: SessionService, private router: Router, private customerService: CustomerService,
+  constructor(private socketEvents: WebSocketService, private sessionService: SessionService, private router: Router, private customerService: CustomerService,
     private toastr: ToastrService, private notificationService: NotificationService) { }
 
   ngOnInit(): void {
@@ -78,7 +79,10 @@ export class HeaderComponent implements OnInit {
     }
     this.getAllNotification();
   }
+  ngOnDestroy(): void { this.closeWebSocket(); }
+
   logOut() {
+    this.closeWebSocket();
     this.sessionService.signOut();
     this.router.navigate(['/login']);
   }
@@ -87,29 +91,13 @@ export class HeaderComponent implements OnInit {
     this.ngOnInit();
   }
 
-  openWebSocket() {
-    this.webSocket = new WebSocket(environment.wsUrl);
-
-    this.webSocket.onopen = (event) => {
-      // console.log('Open: ', event);
-    };
-
-    this.webSocket.onmessage = (event) => {
-      const chatMessageDto = JSON.parse(event.data);
-      let mess: ChatMessage = chatMessageDto as ChatMessage;
-      this.toastr.info('Khách hàng ' + mess.user + ' ' + mess.message, 'Hệ thống');
+  openWebSocket(): void {
+    this.socketSubscription?.unsubscribe();
+    this.socketSubscription = this.socketEvents.watch().subscribe(message => {
+      this.toastr.info(message.message, 'Đơn hàng');
       this.getAllNotification();
-      this.getNotificationFalse();
-      this.chatMessages.push(chatMessageDto);
-    };
-
-    this.webSocket.onclose = (event) => {
-      // console.log('Close: ', event);
-    };
+    });
   }
-
-  closeWebSocket() {
-    this.webSocket.close();
-  }
+  closeWebSocket(): void { this.socketSubscription?.unsubscribe(); this.socketSubscription = undefined; }
 
 }

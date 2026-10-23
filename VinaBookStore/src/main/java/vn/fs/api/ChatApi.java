@@ -39,8 +39,10 @@ public class ChatApi {
 	private final ChatService chat;
 	private final ChatRateLimiter rateLimiter;
 	private final ChatAnalyticsService analytics;
+    private final vn.fs.service.ChatTaskExecutor executor;
 
-	public ChatApi(ChatService chat, ChatRateLimiter rateLimiter, ChatAnalyticsService analytics) {
+	public ChatApi(ChatService chat, ChatRateLimiter rateLimiter, ChatAnalyticsService analytics, vn.fs.service.ChatTaskExecutor executor) {
+        this.executor=executor;
 		this.chat = chat;
 		this.rateLimiter = rateLimiter;
 		this.analytics = analytics;
@@ -68,6 +70,11 @@ public class ChatApi {
 		return ResponseEntity.ok(chat.history(sessionId));
 	}
 
+    @GetMapping("conversation/page")
+    public ResponseEntity<?> historyPage(@RequestParam String sessionId,@RequestParam(required=false) Long before,@RequestParam(defaultValue="25") int limit) {
+        if(!validSession(sessionId) || before!=null && before<1)return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok(chat.historyPage(sessionId,before,limit));
+    }
 	@DeleteMapping("conversation")
 	public ResponseEntity<?> clearConversation(@RequestParam String sessionId) {
 		if (!validSession(sessionId)) return ResponseEntity.badRequest().body(Map.of("message", "Mã cuộc trò chuyện không hợp lệ."));
@@ -94,7 +101,7 @@ public class ChatApi {
 
 	@PostMapping(value = "stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
 	public SseEmitter stream(@Valid @RequestBody ChatRequestDto request, HttpServletRequest servletRequest) {
-		SseEmitter emitter = new SseEmitter(90_000L);
+		SseEmitter emitter = new SseEmitter(60_000L);
 		String clientId = clientIp(servletRequest);
 		if (!rateLimiter.allow(clientId)) {
 			try {
@@ -107,19 +114,20 @@ public class ChatApi {
 			return emitter;
 		}
 		SecurityContext callerContext = SecurityContextHolder.getContext();
-		// The common pool uses the base loader, while devtools loads entities in
-		// the restart loader. JPA must resolve query parameter types with the caller's loader.
+		// Devtools loads entities in the restart loader. The dedicated worker must
+		// resolve JPA parameter types with the caller's loader.
 		ClassLoader callerLoader = Thread.currentThread().getContextClassLoader();
-		CompletableFuture.runAsync(() -> {
+		java.util.concurrent.FutureTask<Void> task=new java.util.concurrent.FutureTask<>(() -> {
 			ClassLoader workerLoader = Thread.currentThread().getContextClassLoader();
 			Thread.currentThread().setContextClassLoader(callerLoader);
 			SecurityContextHolder.setContext(callerContext);
+            vn.fs.service.ChatTurnProgress.listen(stage -> {
+                try {emitter.send(SseEmitter.event().name("progress").data(Map.of("stage",stage)));}
+                catch(Exception disconnected){Thread.currentThread().interrupt();throw new java.util.concurrent.CancellationException();}
+            });
 			try {
 				emitter.send(SseEmitter.event().name("ready").data(Map.of("status", "thinking")));
 				ChatResponseDto response = chat.reply(request);
-				for (String chunk : response.getAnswer().split("(?<=\\s)")) {
-					emitter.send(SseEmitter.event().name("chunk").data(Map.of("text", chunk)));
-				}
 				emitter.send(SseEmitter.event().name("done").data(response));
 				emitter.complete();
 			} catch (Exception ex) {
@@ -133,10 +141,19 @@ public class ChatApi {
 					emitter.complete();
 				}
 			} finally {
+				vn.fs.service.ChatTurnProgress.clear();
 				SecurityContextHolder.clearContext();
 				Thread.currentThread().setContextClassLoader(workerLoader);
 			}
-		});
+            return null;
+        });
+        emitter.onTimeout(() -> { task.cancel(true);emitter.complete(); });
+        emitter.onError(error -> task.cancel(true));
+        emitter.onCompletion(() -> task.cancel(true));
+        try {executor.execute(task);}catch(java.util.concurrent.RejectedExecutionException busy) {
+            try {emitter.send(SseEmitter.event().name("error").data(Map.of("message","Mình đang xử lý nhiều yêu cầu. Bạn thử lại sau một chút nhé.")));emitter.complete();}
+            catch(Exception disconnected){emitter.complete();}
+        }
 		return emitter;
 	}
 
@@ -146,8 +163,8 @@ public class ChatApi {
 	}
 
 	@GetMapping("admin/metrics")
-	public ResponseEntity<ChatMetricsDto> metrics() {
-		return ResponseEntity.ok(analytics.metrics());
+	public ResponseEntity<ChatMetricsDto> metrics(@RequestParam(defaultValue="30") int days) {
+		return ResponseEntity.ok(analytics.metrics(days));
 	}
 
 	private String clientIp(HttpServletRequest request) {

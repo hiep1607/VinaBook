@@ -69,6 +69,7 @@ public class OrderApi {
 
 	@Autowired
 	CurrentUserAccess access;
+    @Autowired vn.fs.service.OrderNotifications notifications;
 
 	@GetMapping
 	public ResponseEntity<List<Order>> findAll() {
@@ -148,6 +149,7 @@ public class OrderApi {
 		order.setStatus(1);
 		orderRepository.save(order);
 		senMail.sendMailOrderDeliver(order);
+        notifications.changed(id,"Đơn #"+id+" đang giao.");
 		return ResponseEntity.ok().build();
 	}
 
@@ -170,6 +172,7 @@ public class OrderApi {
 		}
 		orderRepository.save(order);
 		senMail.sendMailOrderSuccess(order);
+        notifications.changed(id,"Đơn #"+id+" đã hoàn thành.");
 		updateProduct(order);
 		return ResponseEntity.ok().build();
 	}

@@ -5,6 +5,9 @@ public class ChatStatusDto {
 	private final String provider;
 	private final String model;
 	private final boolean aiEnabled;
+    private String health="unknown";
+    public String getHealth(){return health;}
+    public ChatStatusDto health(String value){health=value;return this;}
 
 	public ChatStatusDto(String provider, String model, boolean aiEnabled) {
 		this.provider = provider;

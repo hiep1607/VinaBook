@@ -33,7 +33,8 @@ public class CustomerPreferencesService {
         Set<Long> ids=new HashSet<>();int defaults=0;
         for(var a:rows){if(a==null || a.id==null || a.id<1 || a.id>9007199254740991L || !ids.add(a.id)
             || a.name==null || a.name.trim().isBlank() || a.name.length()>80 || a.label==null || a.label.length()>80
-            || a.street==null || a.street.trim().length()<5 || a.street.length()>255 || a.phone==null || !a.phone.matches("[+]?[0-9][0-9 .-]{6,18}"))throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Tên, điện thoại hoặc địa chỉ chưa hợp lệ.");
+            || a.street==null || a.phone==null)throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Tên, điện thoại hoặc địa chỉ chưa hợp lệ.");
+            var delivery=ShippingDetails.require(a.name,a.phone,a.street);a.name=delivery.recipient();a.phone=delivery.phone();a.street=delivery.street();
             if(a.defaultAddress)defaults++;
         }
         if(!rows.isEmpty() && defaults!=1)throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Danh sách cần có đúng một địa chỉ mặc định.");

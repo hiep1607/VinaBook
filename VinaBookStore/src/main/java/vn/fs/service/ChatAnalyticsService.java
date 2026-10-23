@@ -51,19 +51,18 @@ public class ChatAnalyticsService {
 		}).orElse(false);
 	}
 
-	@Transactional(readOnly = true)
-	public ChatMetricsDto metrics() {
-		List<ChatEvent> all = events.findAllByOrderByCreatedAtDesc();
-		long total = all.size();
-		long fallback = all.stream().filter(ChatEvent::isFallback).count();
-		long positive = all.stream().filter(event -> "positive".equals(event.getFeedback())).count();
-		long negative = all.stream().filter(event -> "negative".equals(event.getFeedback())).count();
-		double latency = all.stream().mapToLong(ChatEvent::getLatencyMs).average().orElse(0);
-		Map<String, Long> intents = all.stream().collect(Collectors.groupingBy(
-				ChatEvent::getIntent, LinkedHashMap::new, Collectors.counting()));
-		return new ChatMetricsDto(total, fallback, total == 0 ? 0 : fallback * 100D / total,
-				positive, negative, latency, intents);
-	}
+    @Transactional(readOnly=true)
+    public ChatMetricsDto metrics(){return metrics(30);}
+    @Transactional(readOnly=true)
+    public ChatMetricsDto metrics(int days) {
+        LocalDateTime since=LocalDateTime.now().minusDays(Math.max(1,Math.min(365,days)));
+        ChatEventRepository.Summary summary=events.summarize(since);
+        long total=summary==null?0:summary.getTotal(),fallback=summary==null?0:summary.getFallback();
+        Map<String,Long> intents=new LinkedHashMap<>();
+        for(Object[] row:events.countIntents(since))intents.put(String.valueOf(row[0]),((Number)row[1]).longValue());
+        return new ChatMetricsDto(total,fallback,total==0?0:fallback*100D/total,
+            summary==null?0:summary.getPositive(),summary==null?0:summary.getNegative(),summary==null?0:summary.getLatency(),intents);
+    }
 
 	private String safe(String value, int max) {
 		if (value == null) return "";

@@ -19,6 +19,7 @@ public class AiSettings {
 	private String geminiApiKey1 = "";
 	private String geminiApiKey2 = "";
 	private String geminiApiKey3 = "";
+	private String geminiApiKey4 = "";
 	private String baseUrl = "";
 	private int timeoutSeconds = 25;
 	private int maxOutputTokens = 4096;
@@ -42,11 +43,14 @@ public class AiSettings {
 	public void setGeminiApiKey2(String geminiApiKey2) { this.geminiApiKey2 = geminiApiKey2; }
 	public String getGeminiApiKey3() { return geminiApiKey3; }
 	public void setGeminiApiKey3(String geminiApiKey3) { this.geminiApiKey3 = geminiApiKey3; }
+	public String getGeminiApiKey4() { return geminiApiKey4; }
+	public void setGeminiApiKey4(String geminiApiKey4) { this.geminiApiKey4 = geminiApiKey4; }
 	public List<String> getGeminiApiKeys() {
 		LinkedHashSet<String> keys = new LinkedHashSet<>();
 		addGeminiKey(keys, geminiApiKey1);
 		addGeminiKey(keys, geminiApiKey2);
 		addGeminiKey(keys, geminiApiKey3);
+		addGeminiKey(keys, geminiApiKey4);
 		if (keys.isEmpty()) addGeminiKey(keys, apiKey);
 		return new ArrayList<>(keys);
 	}

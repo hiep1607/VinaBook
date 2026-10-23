@@ -153,11 +153,11 @@ Kiểm tra runtime dùng `AI_PROVIDER=local`, chưa đánh giá Gemini trực ti
 
 Đã hoàn thiện lần lượt năm phần: giữ/cập nhật đúng điều kiện qua nhiều lượt; kiểm tra dạng tác phẩm; cưỡng chế điều kiện bắt buộc từ lời khách; mở rộng chủ đề chỉ sau khi khách cho phép; giải thích lựa chọn và thiếu dữ liệu theo hồ sơ đã duyệt. Không dùng phủ định làm bằng chứng tích cực hoặc mất số cuốn vì câu giới hạn tiền. Người nhận và ngân sách vẫn tùy chọn; có nhu cầu cụ thể thì tư vấn ngay.
 
-259 kiểm thử trong ChatToolsTest, ChatServiceTest và ChatRecommendationIntakeTest đạt. 12 tình huống cuối được thử trực tiếp qua chatbot local; xem [kết quả và ảnh](chatbot-evaluation/recommendation-improvements-2026-10-08.md). Chưa kiểm tra Gemini thật trong lượt này.
+259 kiểm thử trong ChatToolsTest, ChatServiceTest và ChatRecommendationIntakeTest đạt. 12 tình huống cuối được thử trực tiếp qua chatbot local; xem [kết quả và ảnh](chatbot-evaluation/archive/2026-09-10/recommendation-improvements-2026-10-08.md). Chưa kiểm tra Gemini thật trong lượt này.
 
 ## Tư vấn gọn và tự nhiên — 09/10/2026
 
-Mặc định tối đa 3 cuốn, ưu tiên mức khớp với các mong muốn đọc đã nêu. Số lượng cụ thể và tổng ngân sách vẫn được giữ. Phần tư vấn bỏ lời giải thích và giá giới hạn lặp lại dưới từng cuốn; dùng nội dung đã duyệt và thông tin đúng với nhu cầu, ghi rõ điểm chưa đủ căn cứ. Kiểm tra trực tiếp qua UI local được ghi trong [báo cáo](chatbot-evaluation/shortlist-and-voice-2026-10-09.md).
+Mặc định tối đa 3 cuốn, ưu tiên mức khớp với các mong muốn đọc đã nêu. Số lượng cụ thể và tổng ngân sách vẫn được giữ. Phần tư vấn bỏ lời giải thích và giá giới hạn lặp lại dưới từng cuốn; dùng nội dung đã duyệt và thông tin đúng với nhu cầu, ghi rõ điểm chưa đủ căn cứ. Kiểm tra trực tiếp qua UI local được ghi trong [báo cáo](chatbot-evaluation/archive/2026-09-10/shortlist-and-voice-2026-10-09.md).
 
 ## Mua ngay và địa chỉ giao hàng trong chat — 12/10/2026
 

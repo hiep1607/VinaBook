@@ -31,6 +31,7 @@ import vn.fs.repository.UserRepository;
 @RequestMapping("api/favorites")
 public class FavoritesApi {
     @Autowired vn.fs.config.CurrentUserAccess access;
+    @Autowired vn.fs.automation.AutomationService automation;
     @javax.persistence.PersistenceContext javax.persistence.EntityManager em;
 
 	@Autowired
@@ -84,7 +85,9 @@ public class FavoritesApi {
         Favorite existing=favoriteRepository.findByProductAndUser(product,user);
         if(existing!=null)return ResponseEntity.ok(existing);
         favorite.setFavoriteId(null);favorite.setUser(user);favorite.setProduct(product);
-        return ResponseEntity.ok(favoriteRepository.save(favorite));
+        Favorite saved=favoriteRepository.saveAndFlush(favorite);
+        automation.trackFavorite(saved);
+        return ResponseEntity.ok(saved);
 	}
 
 	@DeleteMapping("{id}")

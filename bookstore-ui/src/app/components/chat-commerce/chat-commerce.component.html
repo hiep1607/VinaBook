@@ -96,9 +96,8 @@
         <label>Số điện thoại
           <input name="phone" [(ngModel)]="form.phone" (ngModelChange)="deliveryChanged()" required pattern="0[0-9]{9}" maxlength="10" inputmode="tel" autocomplete="tel-national" [disabled]="busy || uncertainConfirmation" />
         </label>
-        <label>Địa chỉ
-          <textarea name="street" [(ngModel)]="form.street" (ngModelChange)="deliveryChanged()" required maxlength="160" rows="2" autocomplete="street-address" [disabled]="busy || uncertainConfirmation" placeholder="Số nhà, đường, phường/xã, tỉnh/thành"></textarea>
-        </label>
+        <app-delivery-address name="street" [(ngModel)]="form.street" (ngModelChange)="deliveryChanged()"
+          required minlength="5" maxlength="255" [disabled]="busy || uncertainConfirmation"></app-delivery-address>
         <label class="save-address"><input type="checkbox" name="saveDeliveryAddress" [(ngModel)]="saveDeliveryAddress" [disabled]="busy || uncertainConfirmation" />Lưu địa chỉ này khi đặt hàng thành công</label>
       </ng-container>
     </fieldset>

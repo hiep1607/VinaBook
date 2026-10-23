@@ -18,7 +18,7 @@ Bấm đúp **`start-vinabook.cmd`** trong thư mục gốc dự án. Không c�
 
 - Cần MySQL chạy trên cổng `3306`, database `book` đã có dữ liệu, JDK 17 và Node/npm (đã kiểm tra với Node 16.20.2, npm 8.19.4).
 - Script tìm JDK từ `JAVA_HOME` hoặc Java trên `PATH`; không cần đặt lại mỗi terminal.
-- Backend được clean/build trong `.run-logs/backend-build`, tách khỏi `target` của IDE để tránh controller `.class` cũ. Không dùng `maven.test.skip`.
+- Backend được clean/build trong `VinaBookStore/target-runtime`, tách khỏi `target` của IDE để tránh controller `.class` cũ. Không dùng `maven.test.skip`.
 - Frontend dùng `npm ci` với lockfile khi dependency thiếu hoặc thay đổi; các lần sau không cài lại nếu dependency hợp lệ.
 - Chờ backend, bundle Angular và API proxy trả lời thành công rồi mới mở `http://localhost:4200`.
 - Nếu đã chạy, script dùng lại dịch vụ; nếu cổng bị chiếm hoặc có lỗi, script báo lỗi thay vì tự tắt tiến trình khác.
@@ -97,7 +97,7 @@ Thanh toán hỗ trợ COD, chuyển khoản VietQR, VNPay Sandbox và MoMo Test
 
 Chatbot mặc định chạy nội bộ, không cần API key. Có thể đổi qua OpenAI, API tương thích OpenAI, Gemini hoặc Anthropic chỉ bằng biến môi trường backend. Xem [hướng dẫn chatbot](docs/chatbot.md).
 
-Với Google AI Studio, điền tối đa ba khóa vào `GEMINI_API_KEY_1`, `_2`, `_3` trong `VinaBookStore/.env.local`, rồi chạy `VinaBookStore/run-gemini.cmd`. Script dùng `gemini-3.1-flash-lite`; file chứa khóa thật đã được Git ignore. Backend tự chuyển khóa khi gặp giới hạn của từng project và trả lời bằng dữ liệu cửa hàng nếu AI không khả dụng.
+Với Google AI Studio, điền tối đa bốn khóa vào `GEMINI_API_KEY_1`, `_2`, `_3`, `_4` trong `VinaBookStore/.env.local`, rồi chạy `VinaBookStore/run-gemini.cmd`. Script dùng `gemini-3.1-flash-lite`; file chứa khóa thật đã được Git ignore. Backend tự chuyển khóa khi gặp giới hạn của từng project và trả lời bằng dữ liệu cửa hàng nếu AI không khả dụng.
 
 ## Tài liệu
 
@@ -114,3 +114,7 @@ Với Google AI Studio, điền tối đa ba khóa vào `GEMINI_API_KEY_1`, `_2`
 - [Roadmap](docs/roadmap.md)
 
 Bộ seed chia sẻ nằm trong `db/` và đã thay dữ liệu cá nhân bằng dữ liệu mẫu. `database.sql` là dump local, không đưa lên Git. `node_modules/`, `dist/`, `target/`, cache IDE và cấu hình trợ lý local đều được ignore.
+
+## Vận hành và bảo trì
+
+Các thay đổi bảo mật, nháp checkout, trạng thái AI, lịch sử phân trang và profile production được mô tả trong [docs/operations.md](docs/operations.md). Migration mới nằm ở db/12–14; không chạy lại seed trên database đang có dữ liệu. Kế hoạch nâng framework riêng nằm ở [docs/dependency-upgrade-plan.md](docs/dependency-upgrade-plan.md).

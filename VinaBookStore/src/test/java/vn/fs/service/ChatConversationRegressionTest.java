@@ -22,7 +22,7 @@ class ChatConversationRegressionTest {
     ChatOrderSupportService orders=mock(ChatOrderSupportService.class);
     CurrentUserAccess access=mock(CurrentUserAccess.class);
     ChatService service;
-    ChatOrchestrator orchestrator;
+    LegacyChatOrchestrator orchestrator;
     ChatToolRegistry registry;
 
     @BeforeEach void setup() {
@@ -36,7 +36,7 @@ class ChatConversationRegressionTest {
         registry=new ChatToolRegistry(List.of(tools.searchProducts(),tools.recommendBooks(),tools.getProducts(),tools.getPolicy(),tools.respond()));
         service=new ChatService(products,ai,language,data,policies,orders,analytics,access);
         service.setTools(registry);
-        orchestrator=new ChatOrchestrator(ai,new ObjectMapper(),registry,analytics);
+        orchestrator=new LegacyChatOrchestrator(ai,new ObjectMapper(),registry,analytics);
         orchestrator.setCatalog(products,data);
         when(ai.provider()).thenReturn("local");when(ai.modelUsed()).thenReturn("");
         when(analytics.record(any(),any(),anyString(),anyBoolean(),anyInt(),anyLong())).thenReturn("test");

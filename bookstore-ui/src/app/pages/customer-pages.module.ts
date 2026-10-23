@@ -20,6 +20,6 @@ import {NotificationsComponent} from './notifications/notifications.component';
 {path:'orders/:id',component:OrderDetailComponent,canActivate:[AuthGuard],data:{pageTitle:'Chi tiết đơn hàng'}},
 {path:'orders',component:OrdersComponent,canActivate:[AuthGuard],data:{pageTitle:'Đơn hàng'}},
 {path:'wishlist',component:WishlistComponent,canActivate:[AuthGuard],data:{pageTitle:'Yêu thích'}},
-{path:'notifications',component:NotificationsComponent,canActivate:[AuthGuard],data:{pageTitle:'Thông báo có hàng'}},
+{path:'notifications',component:NotificationsComponent,canActivate:[AuthGuard],data:{pageTitle:'Thông báo'}},
 ])],declarations:[AboutComponent,ContactComponent,CartComponent,ProfileComponent,CheckoutComponent,OrdersComponent,OrderDetailComponent,WishlistComponent,NotificationsComponent]})
 export class CustomerPagesModule {}

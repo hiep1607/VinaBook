@@ -101,13 +101,14 @@ final class ChatLiveContext {
         String q=originalQuestion;
         // Inspect the request outside catalog titles, whose words are not commands.
         for(Map<String,Object> book:named)q=q.replace(LANGUAGE.normalize(Objects.toString(book.get("title"),""))," ");
+        q=q.replaceAll("\\b(?:chua|khong)(?: can| muon)? mua\\b"," ");
         if(ChatBookFacts.has(q,"tim|goi y|de xuat|liet ke|sach khac|cuon khac|quyen khac|them sach|them cuon|doi sang"
                 +"|gia|ngan sach|duoi [0-9]|toi da [0-9]|mua|gio hang|don hang|thanh toan|giao hang|van chuyen|phi ship|doi tra"
                 +"|danh gia|nhan xet|review|(?:dung|khong|chua)(?: can| muon)? (?:noi|giai thich|phan tich|di sau|cu the|chi tiet)"))return null;
         boolean elaboration=ChatBookFacts.has(q,"cu the hon|chi tiet hon|noi ky hon|noi ro hon|giai thich them|phan tich them|sau hon");
         boolean explicitBook=!named.isEmpty() || ChatConversationSupport.pluralReference(q,LANGUAGE)
             || ChatBookFacts.has(q,"(?:cuon|quyen|sach|tac pham) (?:nay|do|ay|kia|luc nay|vua|thu|dau|so|cuoi)|noi dung sach");
-        boolean contentQuestion=ChatBookFacts.has(q,"noi dung|tom tat|cot truyen|nhan vat|thong diep|noi ve|ke ve|co chuong|co phan");
+        boolean contentQuestion=ChatBookFacts.has(q,"noi dung|tom tat|cot truyen|nhan vat|thong diep|noi ve|ke ve|co chuong|co phan|muc luc");
         if(!elaboration && !(explicitBook && contentQuestion))return null;
         // A bare follow-up belongs to the most recent task. Do not turn a policy
         // explanation or a topic menu into a read of an older book selection.
@@ -117,10 +118,10 @@ final class ChatLiveContext {
                 +"(?:cu the hon|chi tiet hon|noi ky hon|noi ro hon|giai thich them|phan tich them|(?:di |noi )?sau hon)"
                 +"(?: (?:ve )?noi dung)?(?: (?:di|nhe|nhi|duoc khong|giup minh|giup toi))*[.!?]*"))return null;
         String reference=ordinal(q);
-        if(reference.isBlank())reference=ChatConversationSupport.pluralReference(q,LANGUAGE)?"selection"
+        if(reference.isBlank())reference=!named.isEmpty()?"focus":ChatConversationSupport.pluralReference(q,LANGUAGE)?"selection"
             :state.focus!=null || state.shortlist.size()==1 || request.getActiveProductId()!=null?"focus":"selection";
         Map<String,Object> arguments=new LinkedHashMap<>();
-        arguments.put("reference",reference);arguments.put("field","explanation");
+        arguments.put("reference",reference);arguments.put("field",ChatBookFacts.has(q,"muc luc")?"detail":"explanation");
         if(named.size()==1)arguments.put("title",named.get(0).get("title"));
         return current(mapper,state,"PRODUCT_INFO","getProducts",arguments);
     }

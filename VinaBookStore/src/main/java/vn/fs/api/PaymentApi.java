@@ -82,12 +82,13 @@ public class PaymentApi {
 
 	@PutMapping("orders/{orderId}/mark-paid")
 	public ResponseEntity<?> markPaid(@PathVariable Long orderId) {
+		if (!access.isAdmin()) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		Optional<Order> found = orderRepository.findById(orderId);
 		if (!found.isPresent()) {
 			return ResponseEntity.notFound().build();
 		}
 		try {
-			return ResponseEntity.ok(payments.markBankTransferPaid(found.get()));
+			return ResponseEntity.ok(payments.orderStatus(payments.markBankTransferPaid(found.get())));
 		} catch (IllegalArgumentException ex) {
 			return error(HttpStatus.BAD_REQUEST, ex.getMessage());
 		}

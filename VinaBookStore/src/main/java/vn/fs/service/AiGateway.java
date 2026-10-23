@@ -43,6 +43,7 @@ public class AiGateway {
 	private final Map<String, Long> geminiKeyCooldowns = new ConcurrentHashMap<>();
 	private final Map<String, Long> geminiModelCooldowns = new ConcurrentHashMap<>();
 	private final AtomicInteger nextGeminiKey = new AtomicInteger();
+    private volatile long lastFailureAt, lastSuccessAt;
 	private final ThreadLocal<String> modelUsed = new ThreadLocal<>();
 	private final ThreadLocal<JsonNode> outputSchema = new ThreadLocal<>();
 	private final ThreadLocal<Long> turnDeadline = new ThreadLocal<>();
@@ -82,6 +83,15 @@ public class AiGateway {
 		return used == null ? model() : used;
 	}
 
+    public String operationalState() {
+        if(!isConfigured())return "local";
+        return lastFailureAt>lastSuccessAt?"degraded":lastSuccessAt==0?"unknown":"ready";
+    }
+    public long remainingTurnMillis() {
+        long deadline=turnDeadline.get()==null?Long.MAX_VALUE:turnDeadline.get();
+        return deadline==Long.MAX_VALUE?Long.MAX_VALUE:Math.max(0,(deadline-System.nanoTime())/1000000L);
+    }
+
 	public void resetModelUsed() {
 		modelUsed.remove();
 	}
@@ -109,19 +119,20 @@ public class AiGateway {
 		if (!isConfigured()) {
 			throw new IllegalStateException("Nhà cung cấp AI chưa được cấu hình đầy đủ");
 		}
-		switch (provider()) {
-		case OPENAI:
-			return callOpenAi(systemPrompt, history, message);
-		case OPENAI_COMPATIBLE:
-			return callOpenAiCompatible(systemPrompt, history, message);
-		case GEMINI:
-			return callGemini(systemPrompt, history, message);
-		case ANTHROPIC:
-			return callAnthropic(systemPrompt, history, message);
-		default:
-			throw new IllegalStateException("Nhà cung cấp AI không được hỗ trợ");
-		}
-	}
+        try {
+            String answer=switch(provider()) {
+                case OPENAI -> callOpenAi(systemPrompt,history,message);
+                case OPENAI_COMPATIBLE -> callOpenAiCompatible(systemPrompt,history,message);
+                case GEMINI -> callGemini(systemPrompt,history,message);
+                case ANTHROPIC -> callAnthropic(systemPrompt,history,message);
+                default -> throw new IllegalStateException("Nhà cung cấp AI không được hỗ trợ");
+            };
+            lastSuccessAt=System.currentTimeMillis();return answer;
+        } catch(RuntimeException failure) {
+            if(!Thread.currentThread().isInterrupted() && !String.valueOf(failure.getMessage()).contains("deadline"))lastFailureAt=System.currentTimeMillis();
+            throw failure;
+        }
+    }
 
 	private String callOpenAi(String systemPrompt, List<ChatTurnDto> history, String message) {
 		Map<String, Object> body = new LinkedHashMap<>();
@@ -180,7 +191,13 @@ public class AiGateway {
 		String primary = model();
 		String backup = value(settings.getFallbackModel(), "").trim();
 		if (backup.isEmpty() || backup.equalsIgnoreCase(primary)) {
-			return callGeminiModel(primary, body, false);
+            if(geminiModelCooldowns.getOrDefault(primary,0L)>System.currentTimeMillis())
+                throw new IllegalStateException("Dịch vụ AI đang chờ phục hồi");
+            try {return callGeminiModel(primary, body, false);}
+            catch(AiHttpException failure) {
+                if(failure.status==503)geminiModelCooldowns.put(primary,System.currentTimeMillis()+15000L);
+                throw failure;
+            }
 		}
 		if (geminiModelCooldowns.getOrDefault(primary, 0L) <= System.currentTimeMillis()) {
 			try {

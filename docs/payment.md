@@ -2,6 +2,17 @@
 
 VinaBook hỗ trợ bốn phương thức: COD, chuyển khoản VietQR, VNPay Sandbox và MoMo Test. COD luôn khả dụng. Storefront tự khóa phương thức online chưa có cấu hình backend.
 
+## Hoàn thiện luồng ngày 21/10/2026
+
+- Checkout hiển thị đủ bốn phương thức, đánh dấu phương thức chưa khả dụng; chỉ chọn được phương thức backend xác nhận đang hoạt động. Lỗi tải có nút thử lại và đưa lựa chọn về COD.
+- Khi đơn đã tạo, checkout khóa gửi lại; lỗi mở cổng dẫn tới kết quả của đúng đơn để tiếp tục, không tạo đơn khác. COD dẫn tới chi tiết đơn vừa đặt.
+- Trang kết quả phân biệt COD, chờ xác nhận, thất bại, đã trả tiền, hoàn thành và hủy. Không đọc trạng thái thành công từ query trên URL. Khi ảnh VietQR lỗi vẫn có thông tin chuyển khoản; nút kiểm tra không tự xác nhận nhận tiền.
+- Đổi URL hoặc tài khoản hủy request cũ và xóa dữ liệu riêng tư. Các lần đọc trạng thái không chạy chồng nhau, tự dừng sau khoảng 5 phút, lỗi mạng hoặc trạng thái kết thúc; khách có thể kiểm tra thủ công.
+- VNPay/MoMo lưu URL phiên thanh toán trên đơn và khóa dòng khi mở/xác nhận. Mở lại đơn PENDING dùng phiên cũ. Nếu kết quả tạo giao dịch chưa rõ và không có URL, giữ PENDING, yêu cầu đối soát thay vì tự tạo giao dịch thứ hai. Phiên cũ hết hạn vẫn cần kết quả gateway/đối soát trước khi thử lại; chưa tự truy vấn trạng thái gateway.
+- Callback kiểm tra đúng phương thức và tham chiếu trước khi cập nhật. Xác nhận VietQR thủ công yêu cầu admin, không xác nhận đơn đã kết thúc và chỉ trả dữ liệu thanh toán, không serialize entity tài khoản.
+- Migration production: áp dụng `db/16-payment-resume.sql` một lần trước khi chạy backend mới với schema validation. Local dùng Hibernate update sẽ thêm cột nullable; không thay dữ liệu đơn cũ.
+- Cấu hình mẫu ngân hàng và merchant nằm trong `.env.local.example`; thông tin thật chỉ điền trong `.env.local` hoặc biến môi trường. Chưa có cấu hình thì không thể thực hiện giao dịch online.
+
 ## Trạng thái
 
 Mỗi order lưu riêng `paymentMethod`, `paymentStatus`, `paymentReference`, `paymentTransactionId` và `paidAt`.

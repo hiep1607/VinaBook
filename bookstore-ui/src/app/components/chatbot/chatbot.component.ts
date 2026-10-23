@@ -42,6 +42,10 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
   draft = '';
   typing = false;
   clearing = false;
+  historyHasMore = false;
+  loadingOlder = false;
+  private historyBefore?: number;
+  private olderSub?: Subscription;
   messages: ChatMessage[] = [];
   commerceBusy = false;
   wishlistBusy = false;
@@ -70,6 +74,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
   private request?: Subscription;
   private collisionSub?: Subscription;
   private historySub?: Subscription;
+  private restoreActionSub?: Subscription;
   private historyVersion = 0;
   private actionSnapshots = new WeakMap<ChatMessage, string>();
   private purchaseLoginActions = new WeakSet<ChatAction>();
@@ -101,6 +106,8 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     if (this.viewInitTimer) clearTimeout(this.viewInitTimer);
     this.request?.unsubscribe();
     this.historySub?.unsubscribe();
+    this.restoreActionSub?.unsubscribe();
+    this.olderSub?.unsubscribe();
     this.collisionSub?.unsubscribe();
   }
 
@@ -145,6 +152,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     this.request?.unsubscribe();
     this.historySub?.unsubscribe();
     this.historyVersion++;
+    this.olderSub?.unsubscribe();this.loadingOlder=false;this.historyHasMore=false;this.historyBefore=undefined;
     this.accountEmail = email;
     this.reviewProduct = null;
     this.chatbot.useAccount(email);
@@ -268,6 +276,10 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
         this.shouldScroll = this.userNearBottom;
         if (!message.streaming) {
           this.actionSnapshots.set(message, cartSnapshot);
+          if (message.execution?.status === 'FAILED') {
+            this.lastFailedInput = value;
+            this.errorText = 'Mình chưa hoàn tất yêu cầu này. Bạn có thể thử lại bên dưới.';
+          }
           this.persistMessages();
           if (message.intent === 'PURCHASE' && message.execution?.tool.split(',').includes('prepareCheckout')
               && !this.openedPurchases.has(message) && !this.commerce?.checkout && !this.commerce?.uncertainConfirmation) {
@@ -337,6 +349,7 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
         this.supportKind = undefined; this.supportSummary = '';
         this.showSupportRequests = false;
         this.messages = [this.chatbot.greeting()];
+        this.historyHasMore = false; this.loadingOlder = false; this.historyBefore = undefined;
         try { localStorage.removeItem(key); } catch {}
         try { sessionStorage.removeItem(key); } catch {}
         this.typing = false;
@@ -576,6 +589,15 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
     return index;
   }
 
+  answerText(message: ChatMessage): string {
+    if (message.intent !== 'DISCOVER_BOOKS' || !message.products?.length) return message.text;
+    const names = new Set(message.products.map(book => book.name));
+    return message.text.split('\n').map(line => {
+      const title=line.match(/^•\s*“([^”]+)”\s*—/);
+      return title && names.has(title[1]) ? `• “${title[1]}”` : line;
+    }).join('\n').replace(/^\*\*(.+)\*\*$/gm, '$1');
+  }
+
   private restoreMessages(): ChatMessage[] {
     try {
       const parsed = JSON.parse(localStorage.getItem(this.storageKey) || sessionStorage.getItem(this.storageKey) || '[]');
@@ -600,11 +622,36 @@ export class ChatbotComponent implements OnInit, OnDestroy, AfterViewChecked, Af
       next: messages => {
         if (version !== this.historyVersion || this.typing || !messages.length) return;
         this.messages = messages;
+        this.historyBefore = messages[0]?.historyId;
+        this.historyHasMore = messages.length >= 50 && !!this.historyBefore;
+        this.restoreLatestActions(version);
         this.persistMessages();
         this.shouldScroll = true;
       },
       error: () => { /* The small local cache remains available while offline. */ }
     });
+  }
+
+  loadOlderMessages(): void {
+    if (!this.historyBefore || this.loadingOlder) return;
+    const version = this.historyVersion;this.loadingOlder = true;
+    this.olderSub = this.chatbot.historyPage(this.historyBefore).subscribe({ next: page => {
+      if (version !== this.historyVersion) return;
+      this.messages = [...page.messages, ...this.messages];
+      this.historyBefore = page.nextBefore;this.historyHasMore = page.hasMore;this.loadingOlder = false;
+    }, error: () => { if(version===this.historyVersion){this.loadingOlder=false;this.errorText='Chưa tải được tin nhắn cũ. Bạn thử lại nhé.';} } });
+  }
+
+  private restoreLatestActions(version: number): void {
+    this.restoreActionSub?.unsubscribe();
+    const message = this.messages[this.messages.length - 1];
+    if (!message || message.from !== 'bot' || !message.actions?.length) return;
+    this.restoreActionSub = this.chatbot.restoreActions(message).subscribe({ next: restored => {
+      if (version !== this.historyVersion || this.typing || this.messages[this.messages.length - 1] !== message) return;
+      this.messages[this.messages.length - 1] = restored;
+      this.actionSnapshots.set(restored, chatCartFingerprint(this.cart.getCartItems(), this.cart.serverRevision));
+      this.persistMessages();
+    }, error: () => { /* Keep history readable; retry the action after connectivity recovers. */ } });
   }
 
   private scrollToBottom(): void {

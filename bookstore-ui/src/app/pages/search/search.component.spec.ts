@@ -1,3 +1,4 @@
+import { AutomationService } from 'src/app/services/automation.service';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -58,6 +59,7 @@ describe('SearchComponent — chuẩn hóa query canonical `q`', () => {
             snapshot: { queryParams: {} }
           }
         },
+        { provide: AutomationService, useValue: {unreadCount:0,connect:()=>()=>{},syncSession:()=>{}} },
         { provide: Router, useValue: routerSpy },
         { provide: SearchService, useValue: searchSvc },
         { provide: SearchHistoryService, useValue: historySvc },
@@ -137,6 +139,7 @@ describe('HeaderComponent — điều hướng tìm kiếm bằng query `q`', ()
       // Template dùng <lucide-icon> từ thư viện; với test này chỉ cần logic TS.
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
+        { provide: AutomationService, useValue: {unreadCount:0,connect:()=>()=>{},syncSession:()=>{}} },
         { provide: Router, useValue: routerSpy },
         {
           provide: CartService,

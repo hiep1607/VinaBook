@@ -24,6 +24,19 @@ import vn.fs.repository.ChatExchangeRepository;
 class ChatMemoryStoreTest {
     private static final String SESSION = "chat-0123456789abcdef0123456789abcdef0123456789abcdef";
 
+    @Test void historyPageUsesBoundedCursorAndReturnsChronologicalMessages() {
+        var conversations=mock(ChatConversationRepository.class);var exchanges=mock(ChatExchangeRepository.class);
+        var newest=new ChatExchange();org.springframework.test.util.ReflectionTestUtils.setField(newest,"id",9L);newest.setUserText("Chín");newest.setResponseJson("{\"answer\":\"Trả lời chín\"}");
+        var older=new ChatExchange();org.springframework.test.util.ReflectionTestUtils.setField(older,"id",8L);older.setUserText("Tám");older.setResponseJson("{\"answer\":\"Trả lời tám\"}");
+        var lookahead=new ChatExchange();org.springframework.test.util.ReflectionTestUtils.setField(lookahead,"id",7L);
+        when(exchanges.recent(eq(ChatMemoryStore.key(7L,SESSION)),eq(10L),any())).thenReturn(List.of(newest,older,lookahead));
+        var page=new ChatMemoryStore(conversations,exchanges,new ObjectMapper()).historyPage(7L,SESSION,10L,2);
+        assertTrue(page.hasMore());assertEquals(8L,page.nextBefore());
+        assertEquals(List.of("Tám","Trả lời tám","Chín","Trả lời chín"),page.messages().stream().map(m->m.get("text")).collect(java.util.stream.Collectors.toList()));
+        verify(exchanges).recent(eq(ChatMemoryStore.key(7L,SESSION)),eq(10L),eq(org.springframework.data.domain.PageRequest.of(0,3)));
+        verify(exchanges,never()).findByConversationIdOrderByIdAsc(any());
+    }
+
     @Test void stateAndTranscriptSurviveCacheRecreationAndRequestRetry() {
         ChatConversationRepository conversations = mock(ChatConversationRepository.class);
         ChatExchangeRepository exchanges = mock(ChatExchangeRepository.class);
@@ -33,7 +46,7 @@ class ChatMemoryStoreTest {
         when(conversations.save(any())).thenAnswer(call -> { savedConversation.set(call.getArgument(0)); return call.getArgument(0); });
         when(exchanges.findByConversationIdAndRequestId(any(), any())).thenAnswer(call -> Optional.ofNullable(savedExchange.get()));
         when(exchanges.save(any())).thenAnswer(call -> { savedExchange.set(call.getArgument(0)); return call.getArgument(0); });
-        when(exchanges.findTop500ByConversationIdOrderByIdDesc(any())).thenAnswer(call ->
+        when(exchanges.findTop25ByConversationIdOrderByIdDesc(any())).thenAnswer(call ->
                 savedExchange.get() == null ? new ArrayList<>() : new ArrayList<>(List.of(savedExchange.get())));
         ChatMemoryStore store = new ChatMemoryStore(conversations, exchanges, new ObjectMapper());
         ChatDialogueMemory.State first = new ChatDialogueMemory.State();

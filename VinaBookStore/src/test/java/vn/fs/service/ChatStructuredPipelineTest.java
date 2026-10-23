@@ -73,18 +73,33 @@ class ChatStructuredPipelineTest {
                     """;
             }
             reads.incrementAndGet();lastUnderstandingInput=input;
+            String plannedMode=nextMode,plannedIntent=nextIntent,plannedTool=nextTool;
+            ObjectNode plannedSet=nextSet,plannedArgs=nextArgs;List<String> plannedClear=nextClear;
+            // These fixtures test backend pools/guards. Supply the semantic
+            // selection explicitly now that production no longer bypasses AI.
+            String fixtureMessage=input.path("message").asText();
+            String menu=ChatTopicClarification.menuCommand(fixtureMessage,state);
+            String chosen=ChatTopicClarification.choice(fixtureMessage,state);
+            if(!menu.isBlank() && (!"browse".equals(menu) || !plannedArgs.hasNonNull("suggestedTopics"))) {
+                plannedMode="current";plannedIntent="DISCOVER_BOOKS";plannedSet=mapper.createObjectNode();plannedClear=List.of();plannedTool="respond";
+                plannedArgs=mapper.createObjectNode().put("kind","clarify").put("topic","preferences").put("menu",menu);
+            } else if(!chosen.isBlank() && ("respond".equals(plannedTool) || plannedSet.isEmpty())) {
+                plannedMode="refine";plannedIntent="DISCOVER_BOOKS";plannedSet=mapper.createObjectNode();plannedClear=List.of();plannedTool="recommendBooks";
+                plannedSet.set("topics",mapper.valueToTree(List.of(chosen)));plannedArgs=mapper.createObjectNode();
+            }
+
             ObjectNode plan=mapper.createObjectNode();
-            plan.put("contextVersion",input.path("contextVersion").asLong());plan.put("intent",nextIntent);plan.put("contextMode",nextMode);
-            plan.set("set",nextSet);plan.set("clear",mapper.valueToTree(nextClear));
+            plan.put("contextVersion",input.path("contextVersion").asLong());plan.put("intent",plannedIntent);plan.put("contextMode",plannedMode);
+            plan.set("set",plannedSet);plan.set("clear",mapper.valueToTree(plannedClear));
             ObjectNode evidence=mapper.createObjectNode();
             String message=input.path("message").asText();
             String source=referencedEvidence?ChatTurnContext.CURRENT_MESSAGE:message;
-            nextSet.fieldNames().forEachRemaining(key->evidence.put(key,badEvidence?"lời chatbot tự nói":source));
-            nextClear.forEach(key->evidence.put(key,source));
+            for(var fields=plannedSet.fieldNames();fields.hasNext();)evidence.put(fields.next(),badEvidence?"lời chatbot tự nói":source);
+            for(String key:plannedClear)evidence.put(key,source);
             if(referencedEvidence && !badEvidence)plan.put("evidence",ChatTurnContext.CURRENT_MESSAGE);
             else plan.set("evidence",evidence);
             plan.set("memoryNote",mapper.valueToTree(Map.of("text","Ghi chú: "+message,"evidence",badNoteOnly?"khách chưa từng nói thế này":source)));
-            plan.set("calls",mapper.valueToTree(List.of(Map.of("tool",nextTool,"arguments",nextArgs))));
+            plan.set("calls",mapper.valueToTree(List.of(Map.of("tool",plannedTool,"arguments",plannedArgs))));
             return mapper.writeValueAsString(plan);
         });
     }
@@ -176,7 +191,7 @@ class ChatStructuredPipelineTest {
         topics("trinh thám");send("Trinh thám");var before=new LinkedHashMap<>(state.toolSearch);
         var displayed=new ArrayList<>(state.displayed);long version=state.contextVersion;
         nextMode="refine";nextSet=mapper.createObjectNode().put("preferredQuery","truyện chữ");
-        when(products.findByStatusTrue()).thenReturn(catalog).thenThrow(new IllegalStateException("DB offline"));
+        when(products.findByStatusTrue()).thenThrow(new IllegalStateException("DB offline"));
         var response=send("T thích truyện chữ hơn");
         assertThat(response.isFallback()).isTrue();assertThat(state.toolSearch).isEqualTo(before);
         assertThat(state.displayed).isEqualTo(displayed);assertThat(state.contextVersion).isEqualTo(version);
@@ -314,7 +329,8 @@ class ChatStructuredPipelineTest {
         assertThat(state.displayed).isEmpty();assertThat(state.shortlist).isEqualTo(previous);
         current("getProducts",Map.of("reference","second","field","price"));
         assertThat(ids(send("Giá cuốn thứ hai"))).containsExactly(previous.get(1));
-        assertThat(lastUnderstandingInput.path("productFacts").size()).isGreaterThanOrEqualTo(previous.size());
+        assertThat(lastUnderstandingInput.path("productFacts")).isEmpty();
+        assertThat(mapper.convertValue(lastUnderstandingInput.path("lastSelectionProductIds"),Long[].class)).containsExactlyElementsOf(previous);
         nextMode="new";nextIntent="DISCOVER_BOOKS";nextTool="recommendBooks";nextArgs=mapper.createObjectNode();
         nextSet=mapper.createObjectNode();topics("thiên văn");send("Đổi sang thiên văn");
         assertThat(state.shortlist).isEmpty();assertThat(state.focus).isNull();
@@ -361,14 +377,14 @@ class ChatStructuredPipelineTest {
         assertThat(state.toolSearch.get("query").toString()).contains("giao tiếp công sở");
         assertThat(state.toolSearch.get("query").toString()).doesNotContain("thời gian","tài chính");
     }
-    @Test void ordinalTopicSelectionConfirmsExactlyRenderedChoiceWithoutAskingAiAgain() {
+    @Test void ordinalTopicSelectionConfirmsExactlyRenderedChoiceAfterInterpretation() {
         state.topicSuggestions.addAll(List.of("Giao tiếp công sở","Quản lý thời gian","Tài chính cá nhân"));
         state.toolSearch.put("maxPrice",100000L);
         catalog.add(book(7,"Quản lý thời gian hiệu quả","Sách hướng dẫn quản lý thời gian và lập kế hoạch công việc.",50000));
         catalog.add(book(8,"Thói quen làm việc","Phương pháp quản lý công việc. Các ví dụ đi theo thời gian.",40000));
         nextSet=mapper.createObjectNode(); // A broad mock AI plan must not decide the selected topic.
         var response=send("Hướng thứ hai nhé");
-        assertThat(response.isFallback()).isFalse();assertThat(reads.get()).isZero();
+        assertThat(response.isFallback()).isFalse();assertThat(reads.get()).isEqualTo(1);
         assertThat(ids(response)).containsExactly(7L);
         assertThat(state.toolSearch.get("query")).isEqualTo("Quản lý thời gian");
         assertThat(((Number)state.toolSearch.get("maxPrice")).longValue()).isEqualTo(100000L);
@@ -682,19 +698,37 @@ class ChatStructuredPipelineTest {
         assertThat(state.contextVersion).isEqualTo(8);assertThat(state.toolSearch).containsOnlyKeys("query");
         verify(ai).endTurnBudget();
     }
-    @Test void providerOutageUsesARetryMessageWithoutPretendingTheUserWasUnclear() {
+    @Test void providerOutageRecoversExistingTopicThroughValidatedCatalogTools() {
         state.toolSearch.put("query","trinh thám");
         when(ai.completeStructured(anyString(),anyList(),anyString(),any())).thenThrow(new IllegalStateException("provider unavailable"));
         var response=send("Giữ hướng trinh thám nhé");
-        assertThat(response.getAnswer()).contains("trục trặc khi đọc yêu cầu").doesNotContain("nói rõ hơn");
-        assertThat(response.getExecution()).containsEntry("failureStage","understanding");
-        assertThat(state.toolSearch).containsEntry("query","trinh thám");assertThat(state.contextVersion).isZero();
+        assertThat(response.isFallback()).isTrue();
+        assertThat(response.getProducts()).isNotEmpty();
+        assertThat(response.getExecution()).containsEntry("recovery","basic").containsEntry("status","COMPLETED");
+        assertThat(state.toolSearch).containsEntry("query","trinh thám");assertThat(state.contextVersion).isEqualTo(1);
+    }
+    @Test void providerOutageKeepsPriceAndCountAndContentFollowupDoesNotDiscoverNewBooks() {
+        when(ai.completeStructured(anyString(),anyList(),anyString(),any())).thenThrow(new IllegalStateException("HTTP 503"));
+        var first=send("Gợi ý 2 cuốn trinh thám dưới 90k mỗi cuốn");
+        assertThat(first.getProducts()).hasSize(2).allMatch(book->book.getPrice()<90000);
+        assertThat(first.getExecution()).containsEntry("recovery","basic");
+        var expected=first.getProducts().get(1).getId();var shown=new LinkedHashSet<>(state.shownProductIds);
+        var detail=send("Nội dung cuốn thứ hai cụ thể hơn, đừng gợi ý sách mới");
+        assertThat(detail.getExecution()).containsEntry("tool","getProducts").containsEntry("recovery","basic");
+        assertThat(ids(detail)).containsExactly(expected);assertThat(state.shownProductIds).isEqualTo(shown);
+    }
+    @Test void providerOutageDoesNotSilentlyDiscardComplexConstraints() {
+        when(ai.completeStructured(anyString(),anyList(),anyString(),any())).thenThrow(new IllegalStateException("HTTP 503"));
+        var response=send("Tìm sách trinh thám cho trẻ 8 tuổi, không có bạo lực");
+        assertThat(response.getProducts()).isEmpty();
+        assertThat(response.getExecution()).containsEntry("status","FAILED").containsEntry("failureStage","understanding");
+        assertThat(response.getAnswer()).contains("trục trặc","vẫn được giữ");
     }
     @Test void databaseFailureReportsExecutionStageAndPreservesTheLastSelection() {
         topics("trinh thám");send("Trinh thám");
         var before=mapper.valueToTree(state);var selected=new ArrayList<>(state.shortlist);
         nextMode="refine";nextSet=mapper.createObjectNode().put("preferredQuery","truyện chữ");
-        when(products.findByStatusTrue()).thenReturn(catalog).thenThrow(new IllegalStateException("DB unavailable"));
+        when(products.findByStatusTrue()).thenThrow(new IllegalStateException("DB unavailable"));
         var response=send("Mình thích truyện chữ hơn");
         assertThat(response.getExecution()).containsEntry("failureStage","execution").containsEntry("status","FAILED");
         assertThat(response.getAnswer()).contains("chưa lấy được đầy đủ thông tin");
@@ -710,7 +744,7 @@ class ChatStructuredPipelineTest {
         assertThat(response.getExecution()).doesNotContainKey("failureStage");
         for(String name:List.of("understandingMs","executionMs","narrationMs"))
             assertThat(Long.parseLong(response.getExecution().get(name))).isGreaterThanOrEqualTo(0);
-        verify(ai).beginStageBudget(8);verify(ai).endStageBudget();
+        verify(ai).beginStageBudget(8);verify(ai,times(2)).endStageBudget(); // Both understanding and optional narration close their stage budget.
     }
     @Test void malformedWriterJsonAlsoKeepsTheSuccessfulCatalogResult() {
         topics("trinh thám");writerOverride="{bad JSON";
@@ -767,14 +801,14 @@ class ChatStructuredPipelineTest {
         assertThat(state.shownProductIds).isEmpty();assertThat(state.discoverySeeds).isEmpty();
         assertThat(state.toolSearch).doesNotContainKeys("query","topics");assertThat(writes.get()).isZero();
     }
-    @Test void cachedChoiceSkipsBothAiCallsAndRetrievalRankingAndUsesSelectedTopicOnly() {
+    @Test void interpretedChoiceSkipsNarrationAndRetrievalRankingAndUsesSelectedTopicOnly() {
         topicCatalog();nextSet.put("maxPrice",100000);
         offer("Truyện trinh thám|Truyện phiêu lưu|Khoa học");
         int beforeReads=reads.get();clearInvocations(data);
         var response=send("Hướng thứ hai nhé");
         assertThat(response.isFallback()).isFalse();assertThat(ids(response)).containsExactly(5L,7L);
         assertThat(response.getExecution()).containsEntry("preparedTopic","hit");
-        assertThat(reads.get()).isEqualTo(beforeReads);assertThat(writes.get()).isZero();
+        assertThat(reads.get()).isEqualTo(beforeReads+1);assertThat(writes.get()).isZero();
         verify(data,never()).rankByMeaning(anyString(),anyList());
         assertThat(state.toolSearch).containsEntry("query","Truyện phiêu lưu");
         assertThat(state.preparedTopics).isEmpty();assertThat(state.topicSuggestions).isEmpty();
@@ -959,7 +993,7 @@ class ChatStructuredPipelineTest {
         when(ai.completeStructured(anyString(),anyList(),anyString(),any())).thenThrow(new IllegalStateException("AI offline"));
         int before=reads.get();
         var recalled=send("Bạn nhắc lại các chủ đề lúc nãy được không?");
-        assertThat(recalled.isFallback()).isFalse();assertThat(recalled.getChips()).containsExactlyElementsOf(menu);
+        assertThat(recalled.isFallback()).isTrue();assertThat(recalled.getChips()).containsExactlyElementsOf(menu);
         assertThat(recalled.getProducts()).isEmpty();assertThat(recalled.getActions()).isEmpty();
         assertThat(state.toolSearch).containsEntry("query","Truyện phiêu lưu");
         assertThat(recalled.getAnswer()).doesNotContain("Bạn có nhắc","ít nhất 2","Bạn chọn");
@@ -981,7 +1015,7 @@ class ChatStructuredPipelineTest {
         assertThat(offered.isFallback()).isFalse();assertThat(offered.getChips()).hasSize(6);
         assertThat(offered.getAnswer()).doesNotContain("Bạn có nhắc","công sở");
         assertThat(offered.getProducts()).isEmpty();assertThat(state.toolSearch).doesNotContainKeys("topics","query");
-        assertThat(reads.get()).isZero();
+        assertThat(reads.get()).isEqualTo(1);
     }
 
     @Test void moreTopicsNeverReplaysNamesAndExhaustionStillAllowsRecall() {
@@ -1013,4 +1047,22 @@ class ChatStructuredPipelineTest {
         assertThat(recalled.getProducts()).isEmpty();
     }
 
-}
+
+    @Test void explicitMissingTitleFeedsAnonymousDemandAfterSuccessfulLookup() {
+        CatalogDemandService demand=mock(CatalogDemandService.class);pipeline.setCatalogDemand(demand);
+        String title="Đường đến hòn đảo bí ẩn";
+        current("getProducts",Map.of("title",title,"field","detail"));nextIntent="PRODUCT_INFO";
+        var result=send("Có sách “"+title+"” không?");
+        assertThat(result.getProducts()).isEmpty();assertThat(result.isFallback()).isFalse();
+        verify(demand).observe(eq("structured-test"),eq("Có sách “"+title+"” không?"),eq(title),eq(catalog));
+    }
+
+    @Test void demandAggregateFailureDoesNotBreakSuccessfulCustomerReply() {
+        CatalogDemandService demand=mock(CatalogDemandService.class);pipeline.setCatalogDemand(demand);
+        doThrow(new IllegalStateException("aggregate offline")).when(demand).observe(any(),any(),any(),any());
+        String title="Đường đến hòn đảo bí ẩn";
+        current("getProducts",Map.of("title",title,"field","detail"));nextIntent="PRODUCT_INFO";
+        var result=send("Có sách “"+title+"” không?");
+        assertThat(result.isFallback()).isFalse();assertThat(result.getAnswer()).contains("chưa tìm thấy");
+        assertThat(result.getExecution()).containsEntry("status","COMPLETED");
+    }}

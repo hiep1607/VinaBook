@@ -113,7 +113,7 @@ class ChatRecommendationIntakeTest {
     }
     @Test void configuredAiIsCalledAsSoonAsNeedIsKnownWithoutRecipient() {
         var ai=mock(AiGateway.class); when(ai.isConfigured()).thenReturn(true);
-        var planner=mock(ChatOrchestrator.class);
+        var planner=mock(LegacyChatOrchestrator.class);
         when(planner.reply(any(),any())).thenReturn(new ChatResponseDto("Đã tìm sách.","gemini","model",false,List.of(),List.of()));
         var service=service(ai,mock(CurrentUserAccess.class)); service.setOrchestrator(planner);
         assertThat(service.reply(request("Gợi ý sách dưới 150k","intake-ai")).getProducts()).isEmpty();

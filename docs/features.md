@@ -13,6 +13,7 @@
 - Trang kết quả thanh toán có QR, trạng thái tự làm mới, copy thông tin chuyển khoản và thanh toán lại khi giao dịch online thất bại.
 - Lịch sử đơn hàng hiển thị riêng trạng thái vận chuyển và thanh toán, hỗ trợ mở lại QR hoặc cổng thanh toán.
 - Wishlist theo tài khoản.
+- Trung tâm thông báo `/notifications`: lọc loại/chưa đọc, phân trang, đọc tất cả, xóa có xác nhận và số chưa đọc trên chuông desktop/mobile. Có tùy chọn theo tài khoản cho có hàng, giảm giá wishlist, đơn hàng, nhắc giỏ, mời đánh giá và sách mới của tác giả; quản lý tác giả theo dõi và email tùy chọn. Đăng ký chờ có hàng cũ tiếp tục nằm trong tab Sách theo dõi.
 - Profile: thông tin cá nhân, avatar local, địa chỉ, đổi mật khẩu, thống kê và đơn gần đây.
 - Tìm kiếm realtime, lịch sử tối đa 8 truy vấn.
 - Toast toàn cục; chatbot V2 có SSE, phân loại ý định, lọc theo ngân sách/chủ đề/tác giả, so sánh và hỏi tiếp theo ngữ cảnh, chính sách từ backend, tra tối đa 3 đơn gần nhất theo JWT, thêm giỏ có xác nhận và feedback hữu ích/chưa hữu ích.
@@ -21,6 +22,8 @@
 - Giao diện storefront dùng hệ token modern editorial bám màu xanh logo, container 1280px thống nhất, chuyển cảnh route ngắn và scroll reveal bằng IntersectionObserver. Bìa sách dùng `object-fit: contain` để không cắt nội dung.
 
 ## Admin
+
+- Tự động hóa → `/admin/automations`: bật/tắt 7 quy tắc, chỉnh giờ nhắc/ngưỡng tồn, kiểm tra ngay, xem lịch sử và nhu cầu nhập sách. Báo cáo tên sách được hỏi rõ trong chatbot nhưng chưa có chỉ hiển thị số lượt tổng hợp trong 30 ngày, không đưa hội thoại hay danh tính khách lên admin. Chi tiết: [Tự động hóa](automations.md).
 
 - Màn **Giao diện → Trang chủ** tại `/admin/homepage` quản lý toàn bộ nội dung đang hiển thị trên homepage.
 - Có thể bật/tắt từng khối, chọn tối đa 5 sách cho hero và 8 category ưu tiên; để trống sẽ dùng dữ liệu bán chạy/category đang hoạt động.

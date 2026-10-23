@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { AutomationsComponent } from './automations/automations.component';
 import { CommonModule } from '@angular/common';
 import { AdminComponent } from './admin.component';
 import { RouterModule, Routes } from '@angular/router';
@@ -52,6 +53,7 @@ const routes: Routes = [
     children : [
       { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
       { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+      { path: 'automations', component: AutomationsComponent, canActivate: [AuthGuard] },
       { path: 'homepage', component: HomepageComponent, canActivate: [AuthGuard] },
       { path: 'category', component: CategoryComponent, canActivate: [AuthGuard] },
       { path: 'product', component: ProductComponent, canActivate: [AuthGuard] },
@@ -71,7 +73,7 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  declarations: [VouchersComponent, PaymentRefundsComponent,
+  declarations: [AutomationsComponent, VouchersComponent, PaymentRefundsComponent,
     AdminComponent,
     HeaderComponent,
     FooterComponent,

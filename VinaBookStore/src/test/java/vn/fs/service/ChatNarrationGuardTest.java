@@ -83,6 +83,14 @@ class ChatNarrationGuardTest {
         when(ai.completeStructured(anyString(),anyList(),anyString(),any())).thenThrow(new IllegalStateException("timeout"));
         assertThat(narrator.present(base,"Tìm văn hóa dân gian",state)).isSameAs(base);
     }
+    @Test void writerCannotInventProductIdsOrChangeDatabasePrice() {
+        state.structuredTurnActive=true;
+        when(ai.completeStructured(anyString(),anyList(),anyString(),any())).thenReturn("{\"reasons\":[{\"productId\":999,\"evidenceField\":\"summary\",\"evidence\":\"Tập hợp truyện cổ tích và văn hóa dân gian Việt Nam.\",\"reason\":\"Sách được model tự tạo.\"}]}");
+        var result=narrator.present(base,"Tìm văn hóa dân gian",state);
+        assertThat(result.products()).extracting(vn.fs.dto.chat.ChatProductDto::getId).containsExactly(35L);
+        assertThat(result.products().get(0).getPrice()).isEqualTo(120000);
+        assertThat(result.answer()).doesNotContain("model tự tạo","999");
+    }
     @Test void repeatedReasonAndClosingDoNotReappearOnTheNextTurn() throws Exception {
         String reason="Nội dung tập hợp truyện cổ tích Việt Nam, nối với hướng văn hóa dân gian bạn muốn tìm.";
         String closing="Bạn muốn đọc truyện hay tìm hiểu phong tục nhiều hơn?";

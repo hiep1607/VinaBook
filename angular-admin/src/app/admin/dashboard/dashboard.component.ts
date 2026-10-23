@@ -1,3 +1,5 @@
+import { WebSocketService } from '../../services/web-socket.service';
+import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { ToastrService } from 'ngx-toastr';
@@ -33,10 +35,10 @@ export class DashboardComponent implements OnInit {
   revenueYearNow = 0;
   revenueMonthNow = 0;
 
-  webSocket!: WebSocket;
+  private socketSubscription?: Subscription;
   chatMessages: ChatMessage[] = [];
 
-  constructor(private pageService: PageService, private toastr: ToastrService, private orderService: OrderService, private customerService: CustomerService, private statisticalService: StatisticalService) { }
+  constructor(private socketEvents: WebSocketService, private pageService: PageService, private toastr: ToastrService, private orderService: OrderService, private customerService: CustomerService, private statisticalService: StatisticalService) { }
 
   ngOnInit(): void {
     this.openWebSocket();
@@ -191,24 +193,12 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  openWebSocket() {
-    this.webSocket = new WebSocket(environment.wsUrl);
-
-    this.webSocket.onopen = (event) => {
-      // console.log('Open: ', event);
-    };
-
-    this.webSocket.onmessage = (event) => {
+  openWebSocket(): void {
+    this.socketSubscription?.unsubscribe();
+    this.socketSubscription = this.socketEvents.watch().subscribe(message => {
       this.getAllOrder();
-    };
-
-    this.webSocket.onclose = (event) => {
-      // console.log('Close: ', event);
-    };
+    });
   }
-
-  closeWebSocket() {
-    this.webSocket.close();
-  }
+  closeWebSocket(): void { this.socketSubscription?.unsubscribe(); this.socketSubscription = undefined; }
 
 }

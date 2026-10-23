@@ -98,7 +98,7 @@ class ChatServiceTest {
 	@Test
 	void providerFailureFallsBackToVerifiedStorePolicy() {
 		when(ai.isConfigured()).thenReturn(true);
-		ChatOrchestrator orchestrator = org.mockito.Mockito.mock(ChatOrchestrator.class);
+		LegacyChatOrchestrator orchestrator = org.mockito.Mockito.mock(LegacyChatOrchestrator.class);
 		when(orchestrator.reply(any(), any())).thenReturn(new ChatResponseDto(
 				"Mình đang gặp lỗi xử lý yêu cầu.", "gemini", "model", true, List.of(), List.of()));
 		service.setOrchestrator(orchestrator);
@@ -114,7 +114,7 @@ class ChatServiceTest {
 	@Test
 	void orderPolicyQuestionsStayOnTopicWhenProviderFails() {
 		when(ai.isConfigured()).thenReturn(true);
-		ChatOrchestrator orchestrator = org.mockito.Mockito.mock(ChatOrchestrator.class);
+		LegacyChatOrchestrator orchestrator = org.mockito.Mockito.mock(LegacyChatOrchestrator.class);
 		when(orchestrator.reply(any(), any())).thenReturn(new ChatResponseDto(
 				"Mình đang gặp lỗi xử lý yêu cầu.", "gemini", "model", true, List.of(), List.of()));
 		service.setOrchestrator(orchestrator);
@@ -131,7 +131,7 @@ class ChatServiceTest {
 	@Test
 	void unclearQuestionAsksForContextInsteadOfShowingRandomBooksWhenProviderFails() {
 		when(ai.isConfigured()).thenReturn(true);
-		ChatOrchestrator orchestrator = org.mockito.Mockito.mock(ChatOrchestrator.class);
+		LegacyChatOrchestrator orchestrator = org.mockito.Mockito.mock(LegacyChatOrchestrator.class);
 		when(orchestrator.reply(any(), any())).thenReturn(new ChatResponseDto(
 				"Mình đang gặp lỗi xử lý yêu cầu.", "gemini", "model", true, List.of(), List.of()));
 		service.setOrchestrator(orchestrator);
@@ -146,7 +146,7 @@ class ChatServiceTest {
 		when(ai.isConfigured()).thenReturn(true);
 		when(products.findByStatusTrue()).thenReturn(List.of(
 				product(81L, "Sherlock Holmes Toàn Tập - Tập 1", "Arthur Conan Doyle", "Trinh thám", 193500D, 0, 20)));
-		ChatOrchestrator orchestrator = org.mockito.Mockito.mock(ChatOrchestrator.class);
+		LegacyChatOrchestrator orchestrator = org.mockito.Mockito.mock(LegacyChatOrchestrator.class);
 		when(orchestrator.reply(any(), any())).thenReturn(new ChatResponseDto(
 				"Mình đang gặp lỗi xử lý yêu cầu.", "gemini", "model", true, List.of(), List.of()));
 		service.setOrchestrator(orchestrator);
@@ -161,7 +161,7 @@ class ChatServiceTest {
 	@Test
 	void capabilityQuestionDoesNotTurnIntoRandomRecommendationsDuringProviderFailure() {
 		when(ai.isConfigured()).thenReturn(true);
-		ChatOrchestrator orchestrator = org.mockito.Mockito.mock(ChatOrchestrator.class);
+		LegacyChatOrchestrator orchestrator = org.mockito.Mockito.mock(LegacyChatOrchestrator.class);
 		when(orchestrator.reply(any(), any())).thenReturn(new ChatResponseDto(
 				"Mình đang gặp lỗi xử lý yêu cầu.", "gemini", "model", true, List.of(), List.of()));
 		service.setOrchestrator(orchestrator);
@@ -310,7 +310,7 @@ class ChatServiceTest {
 	@Test
 	void specificBookRequestWithPhraseMotCuonSachHayReachesPlanner() {
 		when(ai.isConfigured()).thenReturn(true);
-		ChatOrchestrator orchestrator = org.mockito.Mockito.mock(ChatOrchestrator.class);
+		LegacyChatOrchestrator orchestrator = org.mockito.Mockito.mock(LegacyChatOrchestrator.class);
 		when(orchestrator.reply(any(), any())).thenReturn(new ChatResponseDto(
 				"Đã dùng chủ đề và ngân sách.", "gemini", "gemini-3.1-flash-lite", false, List.of(), List.of()));
 		service.setOrchestrator(orchestrator);

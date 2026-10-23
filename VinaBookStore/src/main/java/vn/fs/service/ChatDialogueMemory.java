@@ -19,11 +19,32 @@ final class ChatDialogueMemory {
         state.touched = now;
         return state;
     }
+    static State copy(State state) {
+        try {
+            var mapper=new com.fasterxml.jackson.databind.ObjectMapper();
+            State copy=mapper.readValue(mapper.writeValueAsBytes(state),State.class);
+            copy.recentDialogue=new ArrayList<>(state.recentDialogue);
+            copy.accountMemory=new LinkedHashMap<>(state.accountMemory);
+            copy.recommendationIntakeRequired=state.recommendationIntakeRequired;
+            copy.loaded=state.loaded;return copy;
+        } catch(java.io.IOException ex){throw new IllegalStateException("Cannot copy conversation",ex);}
+    }
+    static void commit(State live,State working) {
+        try {
+            var mapper=new com.fasterxml.jackson.databind.ObjectMapper();
+            mapper.readerForUpdating(live).readValue(mapper.writeValueAsBytes(working));
+            live.lastRequest=working.lastRequest;live.lastResponse=working.lastResponse;
+            live.recentDialogue=working.recentDialogue;live.loaded=working.loaded;
+        } catch(java.io.IOException ex){throw new IllegalStateException("Cannot commit conversation",ex);}
+    }
     synchronized void clear(String owner, String session) {
         if (session != null) sessions.remove((owner == null ? "guest" : "user:" + owner) + ":" + session);
     }
     @com.fasterxml.jackson.annotation.JsonAutoDetect(fieldVisibility = com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY)
     static final class State {
+        @com.fasterxml.jackson.annotation.JsonIgnore final Object commitLock = new Object();
+        @com.fasterxml.jackson.annotation.JsonIgnore volatile boolean cleared;
+
         @com.fasterxml.jackson.annotation.JsonIgnore
         boolean loaded;
         @com.fasterxml.jackson.annotation.JsonIgnore

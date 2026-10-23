@@ -12,6 +12,8 @@ import { PaymentService } from 'src/app/services/payment.service';
 import { ProductService } from 'src/app/services/product.service';
 import { StoreKnowledgeService } from 'src/app/services/store-knowledge.service';
 import { ChatCommerceComponent } from './chat-commerce.component';
+import { DeliveryAddressComponent } from '../delivery-address/delivery-address.component';
+import { DeliveryLocationService } from 'src/app/services/delivery-location.service';
 
 describe('Chat commerce confirmation and recovery', () => {
   let fixture: ComponentFixture<ChatCommerceComponent>;
@@ -41,8 +43,9 @@ describe('Chat commerce confirmation and recovery', () => {
       addAddress: jasmine.createSpy().and.returnValue(Promise.resolve()),
       getAddresses: jasmine.createSpy().and.returnValue([]) };
     await TestBed.configureTestingModule({
-      declarations: [ChatCommerceComponent], imports: [CommonModule, FormsModule], schemas: [NO_ERRORS_SCHEMA],
+      declarations: [ChatCommerceComponent, DeliveryAddressComponent], imports: [CommonModule, FormsModule], schemas: [NO_ERRORS_SCHEMA],
       providers: [
+        { provide: DeliveryLocationService, useValue: { provinces: () => Promise.resolve([{code: 1, name: 'Hà Nội'}]) } },
         { provide: CartService, useValue: cart }, { provide: AuthService, useValue: auth },
         { provide: ChatCheckoutService, useValue: checkout }, { provide: PaymentService, useValue: payment },
         { provide: AddressService, useValue: addresses },
@@ -102,7 +105,7 @@ describe('Chat commerce confirmation and recovery', () => {
     savedAddresses(); await component.startCheckout(false, book as any, 1); fixture.detectChanges();
     fixture.nativeElement.querySelector('.address-details button').click(); fixture.detectChanges();
     expect(component.selectedAddressId).toBe('');
-    expect(fixture.nativeElement.querySelector('textarea[name="street"]')).not.toBeNull();
+    expect(fixture.nativeElement.querySelector('app-delivery-address textarea')).not.toBeNull();
     expect(component.form.street).toBe('Địa chỉ mặc định');
     component.form.street = 'Địa chỉ chỉ dùng cho đơn này';
     expect(component.addresses[0].street).toBe('Địa chỉ mặc định');

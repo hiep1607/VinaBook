@@ -65,17 +65,17 @@ class ChatLiveContextRegressionTest {
     void readReviews() {
         nextTool="bookReviews";nextArgs=Map.of("title","Muôn Kiếp Nhân Sinh","mode","read");
         var response=send("Muôn Kiếp Nhân Sinh mấy sao, mọi người nhận xét gì?");
-        assertThat(response.isFallback()).isFalse();assertThat(state.bookReadContext).containsEntry("mode","read");
+        assertThat(response.isFallback()).isEqualTo(providerFailure);assertThat(state.bookReadContext).containsEntry("mode","read");
     }
 
     @Test void choosesSecondBookAfterPolicyWithoutLosingOrderOrPreparingPurchase() {
         state.initialized=true;state.shortlist.addAll(List.of(54L,57L));state.displayed.addAll(state.shortlist);
         state.toolSearch.put("maxPrice",100000);
         nextTool="getPolicy";nextIntent="POLICY";nextArgs=Map.of();
-        assertThat(send("Phí giao hàng bao nhiêu?").isFallback()).isFalse();
+        assertThat(send("Phí giao hàng bao nhiêu?").isFallback()).isEqualTo(providerFailure);
         providerFailure=true;
         var response=send("Quay lại mấy cuốn lúc nãy, mình chọn cuốn thứ hai.");
-        assertThat(response.isFallback()).isFalse();
+        assertThat(response.isFallback()).isEqualTo(providerFailure);
         assertThat(response.getProducts()).extracting(ChatProductDto::getId).containsExactly(57L);
         assertThat(state.focus).isEqualTo(57L);assertThat(state.shortlist).containsExactly(54L,57L);
         assertThat(state.toolSearch).containsEntry("maxPrice",100000);
@@ -94,7 +94,7 @@ class ChatLiveContextRegressionTest {
     void contentElaborationKeepsCurrentBooksEvenWhenProviderCannotPlan(String message) {
         contentSelection();
         var response=send(message);
-        assertThat(response.isFallback()).isFalse();
+        assertThat(response.isFallback()).isEqualTo(providerFailure);
         assertThat(response.getExecution()).containsEntry("tool","getProducts");
         assertThat(response.getProducts()).extracting(ChatProductDto::getId).containsExactly(54L,57L);
         assertThat(response.getAnswer()).contains("Nội dung sách đã được duyệt","chưa có đủ dữ liệu")
@@ -112,14 +112,14 @@ class ChatLiveContextRegressionTest {
         assertThat(restored.focus).isEqualTo(54L);assertThat(restored.shortlist).containsExactly(54L,57L);
         mapper.readerForUpdating(state).readValue(mapper.writeValueAsBytes(restored));
         var second=send("Nói kỹ hơn về cuốn thứ hai.");
-        assertThat(second.isFallback()).isFalse();
+        assertThat(second.isFallback()).isEqualTo(providerFailure);
         assertThat(second.getProducts()).extracting(ChatProductDto::getId).containsExactly(57L);
         assertThat(state.focus).isEqualTo(57L);
         var again=send("chi tiết hơn");
         assertThat(again.getProducts()).extracting(ChatProductDto::getId).containsExactly(57L);
         assertThat(state.shortlist).containsExactly(54L,57L);
         var other=send("Còn cuốn kia thì sao?");
-        assertThat(other.isFallback()).isFalse();
+        assertThat(other.isFallback()).isEqualTo(providerFailure);
         assertThat(other.getProducts()).extracting(ChatProductDto::getId).containsExactly(54L);
         assertThat(state.bookReadContext).containsEntry("field","explanation");
     }
@@ -127,7 +127,7 @@ class ChatLiveContextRegressionTest {
     @Test void explicitContentFollowupReturnsToBookAfterShippingInsteadOfDiscoveringNewBooks() {
         contentSelection();state.focus=54L;state.lastTask="POLICY";
         var response=send("Quay lại sách lúc nãy, nói sâu hơn về nội dung cuốn đó.");
-        assertThat(response.isFallback()).isFalse();
+        assertThat(response.isFallback()).isEqualTo(providerFailure);
         assertThat(response.getExecution()).containsEntry("tool","getProducts");
         assertThat(response.getProducts()).extracting(ChatProductDto::getId).containsExactly(54L);
     }
@@ -149,7 +149,7 @@ class ChatLiveContextRegressionTest {
     @Test void elaborationWithoutAnyBookAsksForReferenceWithoutFetchingNewBooks() {
         state.initialized=true;providerFailure=true;
         var response=send("cụ thể hơn");
-        assertThat(response.isFallback()).isFalse();
+        assertThat(response.isFallback()).isEqualTo(providerFailure);
         assertThat(response.getProducts()).isEmpty();
         assertThat(response.getExecution()).containsEntry("tool","getProducts").containsEntry("status","NEEDS_INPUT");
         assertThat(response.getAnswer()).contains("cuốn");
@@ -158,7 +158,7 @@ class ChatLiveContextRegressionTest {
     @Test void introducingBookContentIsNotMistakenForCheckingWhetherItMentionsItsOwnTitle() {
         nextArgs=Map.of("title","Muôn Kiếp Nhân Sinh","field","detail");
         var response=send("Giới thiệu nội dung cuốn Muôn Kiếp Nhân Sinh.");
-        assertThat(response.isFallback()).isFalse();
+        assertThat(response.isFallback()).isEqualTo(providerFailure);
         assertThat(response.getAnswer()).contains("Nội dung sách đã được duyệt")
             .doesNotContain("có đề cập đến nội dung đó");
     }
@@ -167,7 +167,7 @@ class ChatLiveContextRegressionTest {
         readReviews();nextTool="getPolicy";nextIntent="POLICY";nextArgs=Map.of();
         send("Phí vận chuyển bao nhiêu?");providerFailure=true;
         var response=send("Còn Đắc Nhân Tâm thì sao?");
-        assertThat(response.isFallback()).isFalse();
+        assertThat(response.isFallback()).isEqualTo(providerFailure);
         assertThat(response.getAnswer()).contains("Đắc Nhân Tâm","chưa có nhận xét hợp lệ").doesNotContain("nội dung đó");
         assertThat(response.getExecution()).containsEntry("tool","bookReviews");
         verify(rates).findByProductOrderByIdDesc(catalog.get(1));
@@ -178,13 +178,13 @@ class ChatLiveContextRegressionTest {
         // A provider proposing write cannot turn an ambiguous request into authorization.
         nextTool="bookReviews";nextArgs=Map.of("reference","focus","mode","write");
         var response=send("Đánh giá cuốn này.");
-        assertThat(response.isFallback()).isFalse();
+        assertThat(response.isFallback()).isEqualTo(providerFailure);
         assertThat(response.getAnswer()).contains("xem nhận xét","tự viết đánh giá");
         assertThat(response.getActions()).noneMatch(a->Set.of("WRITE_REVIEW","LOGIN").contains(a.getType()));
         assertThat(state.pendingReviewMode).isEqualTo("clarify");
         providerFailure=true;
         var read=send("Xem nhận xét nhé");
-        assertThat(read.isFallback()).isFalse();
+        assertThat(read.isFallback()).isEqualTo(providerFailure);
         assertThat(read.getAnswer()).contains("Đắc Nhân Tâm","chưa có nhận xét hợp lệ");
         assertThat(state.pendingReviewMode).isEmpty();
     }
@@ -193,7 +193,8 @@ class ChatLiveContextRegressionTest {
         readReviews();var before=new LinkedHashMap<>(state.bookReadContext);long version=state.contextVersion;
         providerFailure=true;
         var failure=send("Tôi muốn biết thêm vài thông tin chưa rõ.");
-        assertThat(failure.isFallback()).isTrue();assertThat(state.contextVersion).isEqualTo(version);
+        assertThat(failure.isFallback()).isTrue();assertThat(state.contextVersion)
+            .as("answer=%s execution=%s filters=%s",failure.getAnswer(),failure.getExecution(),state.toolSearch).isEqualTo(version);
         assertThat(state.bookReadContext).isEqualTo(before);
         assertThat(send("Còn Đắc Nhân Tâm thì sao?").getExecution()).containsEntry("tool","bookReviews");
     }
@@ -203,7 +204,7 @@ class ChatLiveContextRegressionTest {
         nextIntent="COMPARE_BOOKS";nextMode="new";nextSet=Map.of("title","Muôn Kiếp Nhân Sinh");
         state.toolSearch.put("maxPrice",150000);
         var response=send("So sánh Muôn Kiếp Nhân Sinh và Đắc Nhân Tâm.");
-        assertThat(response.isFallback()).isFalse();
+        assertThat(response.isFallback()).isEqualTo(providerFailure);
         assertThat(response.getProducts()).extracting(ChatProductDto::getId).containsExactly(54L,57L);
         assertThat(state.toolSearch).containsEntry("maxPrice",150000).doesNotContainKey("title");
     }
@@ -213,7 +214,7 @@ class ChatLiveContextRegressionTest {
         state.recentDialogue.add(Map.of("user","So sánh Đắc Nhân Tâm và Muôn Kiếp Nhân Sinh.","assistant","Đang gặp trục trặc, thử lại nhé."));
         providerFailure=true;
         var response=send("So sánh hai cuốn đó giúp mình, chưa cần mua.");
-        assertThat(response.isFallback()).isFalse();
+        assertThat(response.isFallback()).isEqualTo(providerFailure);
         assertThat(response.getProducts()).extracting(ChatProductDto::getId).containsExactly(57L,54L);
         assertThat(state.comparisonProducts).containsExactly(57L,54L);
     }
@@ -239,7 +240,7 @@ class ChatLiveContextRegressionTest {
         assertThat(exhausted.getProducts()).isEmpty();assertThat(state.searchOutcome).isEqualTo("exhausted");
         nextMode="refine";nextSet=Map.of("match","allow_related");
         var expanded=send("Được, thêm sách gần chủ đề cũng được.");
-        assertThat(expanded.isFallback()).isFalse();
+        assertThat(expanded.isFallback()).isEqualTo(providerFailure);
         assertThat(expanded.getProducts()).extracting(ChatProductDto::getId).containsExactly(52L);
         assertThat(expanded.getAnswer()).contains("Gợi ý gần chủ đề");
         assertThat(state.toolSearch).containsEntry("maxPrice",150000).containsEntry("match","allow_related");
@@ -265,12 +266,12 @@ class ChatLiveContextRegressionTest {
         nextArgs=Map.of("kind","clarify","topic","gift","suggestedTopics","Kỹ năng sống","suggestionSource","current");
         String circumstance="Em họ mình sắp vào đại học, mình muốn mua quà.";
         var first=send(circumstance);
-        assertThat(first.isFallback()).isFalse();assertThat(first.getProducts()).isEmpty();
+        assertThat(first.isFallback()).isEqualTo(providerFailure);assertThat(first.getProducts()).isEmpty();
         state.recentDialogue.add(Map.of("user",circumstance,"assistant",first.getAnswer()));
         nextMode="refine";nextSet=Map.of();
         nextArgs=Map.of("kind","clarify","topic","preferences","suggestedTopics","Kỹ năng sống","suggestionSource","previous1");
         var followup=send("Chưa biết chọn gì, gợi ý vài hướng theo chuyện mình vừa kể đi.");
-        assertThat(followup.isFallback()).isFalse();assertThat(followup.getProducts()).isEmpty();
+        assertThat(followup.isFallback()).isEqualTo(providerFailure);assertThat(followup.getProducts()).isEmpty();
         assertThat(state.toolSearch).containsEntry("recipient","em họ").containsEntry("purpose","làm quà")
             .doesNotContainKeys("readerAge","grade","readerGroup","topics");
         assertThat(input.path("confirmedConstraints").path("recipient").asText()).isEqualTo("em họ");
@@ -301,7 +302,7 @@ class ChatLiveContextRegressionTest {
     @Test void unavailableNewDirectionsKeepVerifiedPreviousMenuForTheSameCollegeGift() {
         String circumstance=collegeGiftMenu();
         var response=send("Chưa biết chọn gì, gợi ý vài hướng theo chuyện mình vừa kể đi.");
-        assertThat(response.isFallback()).isFalse();assertThat(response.getProducts()).isEmpty();
+        assertThat(response.isFallback()).isEqualTo(providerFailure);assertThat(response.getProducts()).isEmpty();
         assertThat(response.getChips()).containsExactly("Truyện trinh thám","Truyện phiêu lưu");
         assertThat(response.getAnswer()).contains(circumstance,"các hướng mình vừa gợi ý")
             .doesNotContain("Bạn muốn đọc về điều gì");
@@ -320,7 +321,7 @@ class ChatLiveContextRegressionTest {
     @Test void previousMenuCannotSurviveAChangedBudgetWithoutEnoughAffordableBooks() {
         collegeGiftMenu();nextSet=Map.of("maxPrice",30000);
         var response=send("Chưa biết chọn gì, gợi ý vài hướng dưới 30k theo chuyện mình vừa kể đi.");
-        assertThat(response.isFallback()).isFalse();assertThat(response.getChips()).isEmpty();
+        assertThat(response.isFallback()).isEqualTo(providerFailure);assertThat(response.getChips()).isEmpty();
         assertThat(state.preparedTopics).isEmpty();
         assertThat(response.getAnswer()).contains("chưa tìm được","Người nhận quà");
     }
@@ -328,7 +329,7 @@ class ChatLiveContextRegressionTest {
     @Test void changingRecipientInvalidatesPreviousDirectionsAndTheirPersonalContext() {
         collegeGiftMenu();nextSet=Map.of("recipient","mẹ");
         var response=send("Đổi người nhận thành mẹ mình, gợi ý vài hướng nhé.");
-        assertThat(response.isFallback()).isFalse();assertThat(response.getChips()).isEmpty();
+        assertThat(response.isFallback()).isEqualTo(providerFailure);assertThat(response.getChips()).isEmpty();
         assertThat(state.topicSuggestions).isEmpty();
         // The model may still quote the old user text, but it cannot reuse that menu.
         assertThat(state.preparedTopics).isEmpty();

@@ -65,7 +65,7 @@ describe('Chatbot purchase actions', () => {
     reviews = { changes$: new BehaviorSubject(undefined), getUserReview: () => null,
       upsertReview: jasmine.createSpy('upsertReview').and.returnValue(of({})), refresh: () => {} };
     checkout = { consumePurchaseIntent: jasmine.createSpy('consumePurchaseIntent').and.returnValue(undefined) };
-    chatbot = { useAccount: () => {}, history: () => of([]),
+    chatbot = { useAccount: () => {}, history: () => of([]), restoreActions: (message: ChatMessage) => of(message),
       greeting: () => ({ from: 'bot', text: 'Chào bạn' }), ask: jasmine.createSpy('ask').and.returnValue(replies) };
     await TestBed.configureTestingModule({
       imports: [CommonModule, FormsModule], declarations: [ChatbotComponent, BookReviewComponent, ChatCommerceFixture], schemas: [NO_ERRORS_SCHEMA],
@@ -88,6 +88,16 @@ describe('Chatbot purchase actions', () => {
     fixture.destroy();
     if (originalCache === null) localStorage.removeItem(cache); else localStorage.setItem(cache, originalCache);
     if (originalReviewCache === null) localStorage.removeItem(reviewCache); else localStorage.setItem(reviewCache, originalReviewCache);
+  });
+
+  it('restores the login-to-buy button after loading saved server history', () => {
+    const restored: ChatMessage = {...purchase, execution:{tool:'prepareCheckout',status:'NEEDS_INPUT'},
+      actions:[{type:'LOGIN',label:'Đăng nhập để đặt hàng',productId:7,quantity:1,requiresConfirmation:false}]};
+    chatbot.history = () => of([{from:'user',text:'Mua cuốn này'},restored]);
+    fixture.destroy();fixture=TestBed.createComponent(ChatbotComponent);fixture.detectChanges();
+    const button=fixture.nativeElement.querySelector('.bot-product button.primary') as HTMLButtonElement;
+    expect(button?.textContent).toContain('Đăng nhập để đặt hàng');
+    expect(button.disabled).toBeFalse();
   });
 
   it('renders the current BUY_NOW action and opens commerce with the selected book', () => {

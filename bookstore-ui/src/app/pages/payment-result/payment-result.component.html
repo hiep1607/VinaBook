@@ -1,92 +1,61 @@
 <section class="result-page">
   <div class="result-shell">
-    <div *ngIf="loading" class="state-card loading-state" role="status">
-      <span class="skeleton icon"></span>
-      <span class="skeleton line wide"></span>
-      <span class="skeleton line"></span>
+    <div *ngIf="loading" class="state-card loading-state" role="status" aria-label="Đang kiểm tra thanh toán">
+      <span class="skeleton icon"></span><span class="skeleton line wide"></span><span class="skeleton line"></span>
     </div>
-
-    <div *ngIf="!loading && loadError" class="state-card error-state" role="alert">
-      <span class="state-mark">!</span>
-      <h1>Chưa kiểm tra được thanh toán</h1>
-      <p>{{ loadError }}</p>
-      <div class="actions">
-        <button type="button" class="primary-btn" (click)="loadStatus()">Thử lại</button>
-        <button type="button" class="secondary-btn" (click)="goToOrders()">Xem đơn hàng</button>
-      </div>
+    <div *ngIf="!loading && !payment && loadError" class="state-card error-state" role="alert">
+      <span class="state-mark">!</span><h1>Chưa kiểm tra được thanh toán</h1><p>{{ loadError }}</p>
+      <div class="actions"><button *ngIf="orderId > 0" type="button" class="primary-btn" (click)="loadStatus()" [disabled]="checking">{{ checking ? 'Đang kiểm tra...' : 'Thử lại' }}</button><button type="button" class="secondary-btn" (click)="goToOrders()">Xem đơn hàng</button></div>
     </div>
-
     <ng-container *ngIf="!loading && payment">
-      <div class="state-card paid-state" *ngIf="payment.paymentStatus === 'PAID'">
-        <span class="state-mark">✓</span>
-        <p class="state-label">Thanh toán thành công</p>
-        <h1>Đơn #{{ payment.orderId }} đã được ghi nhận</h1>
-        <p>VinaBook sẽ cập nhật quá trình xử lý và giao sách trong mục đơn hàng.</p>
-        <div class="amount">{{ payment.amount | number }}đ</div>
-        <button type="button" class="primary-btn" (click)="goToOrders()">Theo dõi đơn hàng</button>
+      <div class="status-bar" role="status" aria-live="polite">
+        <span>{{ loadError || (pollingPaused ? 'Đã tạm dừng tự cập nhật. Bạn có thể kiểm tra lại bất cứ lúc nào.' : (lastChecked ? 'Cập nhật lúc ' + (lastChecked | date:'HH:mm:ss') : 'Đang kiểm tra')) }}</span>
+        <button type="button" class="secondary-btn" (click)="loadStatus()" [disabled]="checking || retrying">{{ checking ? 'Đang kiểm tra...' : 'Kiểm tra lại' }}</button>
       </div>
-
-      <div class="payment-layout" *ngIf="payment.paymentMethod === 'BANK_QR' && payment.paymentStatus !== 'PAID'">
-        <div class="qr-panel">
-          <div class="panel-heading">
-            <div>
-              <p class="state-label">Chuyển khoản QR</p>
-              <h1>Quét mã để thanh toán</h1>
-            </div>
-            <span class="pending-badge">Chờ xác nhận</span>
-          </div>
-
-          <div class="qr-frame">
-            <img [src]="payment.qrUrl" [alt]="'Mã QR thanh toán đơn ' + payment.orderId" />
-          </div>
-
-          <p class="qr-note">Dùng ứng dụng ngân hàng để quét mã. Không sửa số tiền và nội dung chuyển khoản.</p>
+      <div class="state-card" *ngIf="payment.orderStatus === 3">
+        <span class="state-mark">—</span><p class="state-label">Đơn #{{ payment.orderId }}</p><h1>Đơn hàng đã hủy</h1>
+        <p *ngIf="payment.paymentStatus !== 'PAID'">Bạn không cần thanh toán cho đơn này. Nếu đã chuyển tiền, hãy liên hệ cửa hàng kèm mã đơn để được kiểm tra.</p>
+        <p *ngIf="payment.paymentStatus === 'PAID'">Hệ thống đã ghi nhận thanh toán. Bạn xem chi tiết đơn hoặc liên hệ cửa hàng để kiểm tra việc hoàn tiền.</p>
+        <div class="actions"><button type="button" class="primary-btn" (click)="goToOrder()">Xem chi tiết đơn</button><a class="secondary-btn" routerLink="/contact" [queryParams]="{orderId: orderId}">Liên hệ cửa hàng</a></div>
+      </div>
+      <div class="state-card paid-state" *ngIf="payment.orderStatus !== 3 && payment.paymentStatus === 'PAID'">
+        <span class="state-mark">✓</span><p class="state-label">Thanh toán thành công</p><h1>Đơn #{{ payment.orderId }} đã được ghi nhận</h1>
+        <p>Bạn có thể theo dõi quá trình xử lý, giao sách và trạng thái hoàn tiền trong chi tiết đơn.</p><div class="amount">{{ payment.amount | number }}đ</div><p *ngIf="payment.paymentTransactionId">Mã giao dịch: {{ payment.paymentTransactionId }}</p>
+        <div class="actions"><button type="button" class="primary-btn" (click)="goToOrder()">Theo dõi đơn hàng</button><a class="secondary-btn" routerLink="/books">Tiếp tục chọn sách</a></div>
+      </div>
+      <div class="state-card" *ngIf="payment.orderStatus !== 3 && payment.paymentStatus !== 'PAID' && (payment.paymentMethod === 'COD' || payment.orderStatus === 2)">
+        <span class="state-mark">✓</span><p class="state-label">Đơn #{{ payment.orderId }}</p><h1>{{ payment.orderStatus === 2 ? 'Đơn hàng đã hoàn thành' : 'Đặt hàng thành công' }}</h1>
+        <p>{{ payment.orderStatus === 2 ? 'Bạn xem thông tin thanh toán và giao nhận trong chi tiết đơn hàng.' : 'Bạn thanh toán cho nhân viên giao hàng khi nhận sách.' }}</p>
+        <div class="amount">{{ payment.amount | number }}đ</div><button type="button" class="primary-btn" (click)="goToOrder()">Xem chi tiết đơn</button>
+      </div>
+      <ng-container *ngIf="!terminal">
+        <div class="state-card" *ngIf="payment.methodAvailable === false">
+          <span class="state-mark">!</span><h1>{{ methodLabel() }} tạm thời chưa khả dụng</h1><p>Đơn #{{ payment.orderId }} đã được lưu. Bạn có thể kiểm tra lại sau hoặc liên hệ cửa hàng để được hỗ trợ thanh toán.</p>
+          <div class="actions"><button type="button" class="primary-btn" (click)="goToOrder()">Xem chi tiết đơn</button><a class="secondary-btn" routerLink="/contact" [queryParams]="{orderId: orderId}">Liên hệ cửa hàng</a></div>
         </div>
-
-        <aside class="transfer-panel">
-          <h2>Thông tin chuyển khoản</h2>
-          <div class="transfer-row">
-            <span>Ngân hàng</span>
-            <strong>{{ payment.bankId }}</strong>
+        <div class="payment-layout" *ngIf="payment.paymentMethod === 'BANK_QR' && payment.methodAvailable !== false">
+          <div class="qr-panel">
+            <div class="panel-heading"><div><p class="state-label">Chuyển khoản VietQR</p><h1>Quét mã để thanh toán</h1></div><span class="pending-badge">Chờ đối soát</span></div>
+            <div class="qr-frame" *ngIf="payment.qrUrl && !qrFailed; else qrFallback"><img [src]="payment.qrUrl" [alt]="'Mã QR thanh toán đơn ' + payment.orderId" (error)="qrFailed = true" /></div>
+            <ng-template #qrFallback><p class="reconcile-note" role="status">Chưa tải được mã QR. Bạn có thể chuyển khoản theo thông tin bên cạnh.</p></ng-template>
+            <p class="qr-note">Quét bằng ứng dụng ngân hàng. Giữ nguyên số tiền và nội dung để cửa hàng đối soát đúng đơn.</p>
           </div>
-          <div class="transfer-row">
-            <span>Số tài khoản</span>
-            <button type="button" (click)="copy(payment.bankAccountNo, 'số tài khoản')">{{ payment.bankAccountNo }}</button>
-          </div>
-          <div class="transfer-row">
-            <span>Chủ tài khoản</span>
-            <strong>{{ payment.bankAccountName }}</strong>
-          </div>
-          <div class="transfer-row">
-            <span>Số tiền</span>
-            <button type="button" (click)="copy(payment.amount.toString(), 'số tiền')">{{ payment.amount | number }}đ</button>
-          </div>
-          <div class="transfer-row content-row">
-            <span>Nội dung</span>
-            <button type="button" (click)="copy(payment.transferContent, 'nội dung')">{{ payment.transferContent }}</button>
-          </div>
-          <p class="reconcile-note">Trạng thái tự làm mới. Admin xác nhận sau khi tiền vào tài khoản cửa hàng.</p>
-          <button type="button" class="secondary-btn full" (click)="goToOrders()">Xem đơn hàng</button>
-        </aside>
-      </div>
-
-      <div
-        class="state-card"
-        *ngIf="payment.paymentMethod !== 'BANK_QR' && payment.paymentStatus !== 'PAID'"
-        [class.error-state]="payment.paymentStatus === 'FAILED'"
-      >
-        <span class="state-mark">{{ payment.paymentStatus === 'FAILED' ? '!' : '…' }}</span>
-        <p class="state-label">{{ methodLabel() }}</p>
-        <h1>{{ payment.paymentStatus === 'FAILED' ? 'Giao dịch chưa hoàn tất' : 'Đang chờ kết quả thanh toán' }}</h1>
-        <p *ngIf="payment.paymentStatus === 'FAILED'">Bạn có thể tạo một phiên thanh toán mới. Đơn hàng cũ không bị nhân đôi.</p>
-        <p *ngIf="payment.paymentStatus !== 'FAILED'">Hệ thống đang chờ xác nhận từ cổng thanh toán. Trang sẽ tự cập nhật.</p>
-        <div class="actions">
-          <button *ngIf="payment.paymentStatus === 'FAILED'" type="button" class="primary-btn" (click)="retryPayment()" [disabled]="retrying">
-            {{ retrying ? 'Đang mở cổng...' : 'Thanh toán lại' }}
-          </button>
-          <button type="button" class="secondary-btn" (click)="goToOrders()">Xem đơn hàng</button>
+          <aside class="transfer-panel">
+            <h2>Thông tin chuyển khoản</h2>
+            <div class="transfer-row"><span>Ngân hàng</span><strong>{{ payment.bankId }}</strong></div>
+            <div class="transfer-row"><span>Số tài khoản</span><button type="button" (click)="copy(payment.bankAccountNo, 'số tài khoản')">{{ payment.bankAccountNo }}</button></div>
+            <div class="transfer-row"><span>Chủ tài khoản</span><strong>{{ payment.bankAccountName }}</strong></div>
+            <div class="transfer-row"><span>Số tiền</span><button type="button" (click)="copy(payment.amount, 'số tiền')">{{ payment.amount | number }}đ</button></div>
+            <div class="transfer-row content-row"><span>Nội dung</span><button type="button" (click)="copy(payment.transferContent, 'nội dung')">{{ payment.transferContent }}</button></div>
+            <p class="reconcile-note">Sau khi chuyển tiền, bạn chờ cửa hàng xác nhận. Nút kiểm tra chỉ tải lại trạng thái.</p><button type="button" class="secondary-btn full" (click)="goToOrder()">Xem chi tiết đơn</button>
+          </aside>
         </div>
-      </div>
+        <div class="state-card" *ngIf="payment.paymentMethod !== 'BANK_QR' && payment.methodAvailable !== false" [class.error-state]="payment.paymentStatus === 'FAILED'">
+          <span class="state-mark">{{ payment.paymentStatus === 'FAILED' ? '!' : '…' }}</span><p class="state-label">{{ methodLabel() }}</p><h1>{{ payment.paymentStatus === 'FAILED' ? 'Giao dịch chưa hoàn tất' : 'Đang chờ thanh toán' }}</h1>
+          <p *ngIf="payment.paymentStatus === 'FAILED'">Bạn có thể thử lại trên cùng đơn #{{ payment.orderId }}.</p><p *ngIf="payment.paymentStatus !== 'FAILED' && canPay">Nếu bạn đã thanh toán, hãy chờ xác nhận. Nếu chưa hoàn tất, bạn có thể mở lại phiên thanh toán bên dưới.</p><p *ngIf="payment.paymentStatus !== 'FAILED' && !canPay">Giao dịch đang chờ xác nhận. Nếu đã trừ tiền hoặc cần mở lại cổng thanh toán, bạn liên hệ cửa hàng kèm mã đơn nhé.</p><div class="amount">{{ payment.amount | number }}đ</div>
+          <div class="actions"><button *ngIf="canPay" type="button" class="primary-btn" (click)="retryPayment()" [disabled]="retrying || checking">{{ retrying ? 'Đang mở cổng...' : (payment.paymentStatus === 'FAILED' ? 'Thanh toán lại' : 'Tiếp tục thanh toán') }}</button><button type="button" class="secondary-btn" (click)="goToOrder()">Xem chi tiết đơn</button></div>
+        </div>
+      </ng-container>
     </ng-container>
   </div>
 </section>

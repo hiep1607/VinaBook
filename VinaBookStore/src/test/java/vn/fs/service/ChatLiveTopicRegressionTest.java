@@ -132,12 +132,10 @@ class ChatLiveTopicRegressionTest {
         assertThat(filters.matchesStorySubjects("Tìm sách về tâm lý.",psychology)).isTrue();
         assertThat(filters.matchesStorySubjects("Tìm sách về tâm lý và làm vườn.",psychology)).isFalse();
     }
-    @Test void legacyRetrievalDoesNotUseSubstringFragmentsAsSubjectEvidence() {
+    @Test void catalogSearchDoesNotUseSubstringFragmentsAsSubjectEvidence() {
         Product wrong=book(1,"Khởi đầu","Câu chuyện của Khôi và tên Minh.","Văn học");
         var criteria=ChatSearchCriteriaDto.empty();
-        var plan=new ChatQueryPlan(ChatIntent.DISCOVER_BOOKS,criteria,List.of("khoa hoc"),3,true);
-        assertThat(data.retrieve("Tìm sách chuyên về thiết kế động cơ tên lửa.",plan,List.of(wrong),List.of(),false)).isEmpty();
-        assertThat(new ChatProductSearchService(language).search("Tìm sách chuyên về thiết kế động cơ tên lửa.",ChatIntent.DISCOVER_BOOKS,criteria,List.of(wrong))).isEmpty();
+        assertThat(new ChatCatalogQuery(language,data).search("Tìm sách chuyên về thiết kế động cơ tên lửa.",criteria,List.of(wrong))).isEmpty();
     }
     @Test void genericCommunicationNeedsInstructionInTheRealCatalog() {
         var fixture=new BookLabelPilotEvaluationTest();

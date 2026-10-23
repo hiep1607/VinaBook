@@ -24,7 +24,7 @@ class CartSyncServiceTest {
         doAnswer(i->{stored.clear();return null;}).when(details).deleteAll(anyIterable());
         doAnswer(i->{stored.remove(i.getArgument(0));return null;}).when(details).delete(any());
         when(details.save(any())).thenAnswer(i->{stored.add(i.getArgument(0));return i.getArgument(0);});
-        service=new CartSyncService(access,users,carts,details,products,new ChatRetrievalService(new ChatIntentService()),em);
+        service=new CartSyncService(access,users,carts,details,products,new ChatRetrievalService(new ChatIntentService()),em,mock(vn.fs.automation.AutomationService.class));
     }
     CartSyncService.Line line(int n){var l=new CartSyncService.Line();l.setProductId(5L);l.setQuantity(n);return l;}
     CartSyncService.Update update(long revision,int count){var u=new CartSyncService.Update();u.setRevision(revision);u.setRequestId(UUID.randomUUID().toString());u.setItems(count==0?List.of():List.of(line(count)));return u;}

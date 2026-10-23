@@ -68,6 +68,17 @@ final class ChatCatalogQuery {
         Matcher m = Pattern.compile("[\"“]([^\"”]{1,180})[\"”]").matcher(question);
         return m.find() ? m.group(1) : "";
     }
+    String explicitTitleLookup(String question) {
+        Matcher title=Pattern.compile("(?iu)^(?:shop |bạn |ban )?(?:có|co) (?:sách|sach|cuốn|cuon) (.{4,150}?) (?:không|khong|ko)[?!.]*$").matcher(question.trim());
+        if(!title.matches())return "";
+        String value=title.group(1),q=language.normalize(value);
+        var criteria=language.criteria(value,List.of());
+        if(q.matches("^(?:nao|ve|giup|de|hay)\\b.*") || !criteria.getTopics().isEmpty()
+                || !criteria.getCategory().isBlank() || !criteria.getAuthor().isBlank()
+                || criteria.getMinPrice()!=null || criteria.getMaxPrice()!=null)return "";
+        String quotedTitle=quoted(value);
+        return quotedTitle.isBlank()?value:quotedTitle;
+    }
     List<Product> byIds(List<Long> ids, List<Product> catalog) {
         return ids.stream().distinct().flatMap(id -> catalog.stream().filter(p -> id.equals(p.getProductId())))
                 .collect(Collectors.toList());

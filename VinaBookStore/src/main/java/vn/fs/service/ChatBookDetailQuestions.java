@@ -47,6 +47,7 @@ final class ChatBookDetailQuestions {
         }
         if(topic.isBlank() || topic.length()>160)return List.of();
         String normalized=language.normalize(topic);
+        if(normalized.matches("(?:(?:nhung|cac) )?(?:noi dung|chu de|van de)(?: chinh| co ban)?(?: (?:gi|nao))?"))return List.of();
         String introducedTitle=normalized.replaceFirst("^(?:noi dung |tom tat )?(?:cua )?(?:cuon|sach|quyen|tac pham)\\s+","").trim();
         if(Set.of("noi dung","noi dung sach","noi dung cuon nay","noi dung cuon do","chi tiet hon","cu the hon").contains(normalized))return List.of();
         for(String title:bookTitles) {

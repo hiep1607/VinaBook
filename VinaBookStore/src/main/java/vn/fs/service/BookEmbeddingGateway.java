@@ -24,6 +24,10 @@ public class BookEmbeddingGateway {
     private final HttpClient client = HttpClient.newHttpClient();
     private final Map<String,CachedQuery> queryCache=new LinkedHashMap<>(32,0.75f,true);
     private volatile long retryAfter;
+    private AiGateway ai;
+    @org.springframework.beans.factory.annotation.Autowired public void setAi(AiGateway value){ai=value;}
+    private final ThreadLocal<Long> queryDeadline=new ThreadLocal<>();
+    private final java.util.concurrent.ConcurrentHashMap<String,java.util.concurrent.CompletableFuture<List<Double>>> pending=new java.util.concurrent.ConcurrentHashMap<>();
     private record CachedQuery(List<Double> vector,long expiresAt) {}
 
     public BookEmbeddingGateway(AiSettings settings, ObjectMapper mapper) {
@@ -47,16 +51,33 @@ public class BookEmbeddingGateway {
         List<List<Double>> result=new ArrayList<>();
         embeddings.forEach(embedding->result.add(vector(embedding.path("values"))));return result;
     }
-    public synchronized List<Double> query(String text) {
+    public List<Double> query(String text) {
         String normalized=text.trim().toLowerCase(Locale.ROOT).replaceAll("\\s+"," ");
         String key=settings.getEmbeddingModel()+":"+normalized;
-        long now=System.currentTimeMillis();
-        CachedQuery cached=queryCache.get(key);
-        if(cached!=null && cached.expiresAt()>now)return cached.vector();
-        List<Double> vector=List.copyOf(embed(normalized,"RETRIEVAL_QUERY",null));
-        queryCache.put(key,new CachedQuery(vector,now+900000));
-        while(queryCache.size()>256)queryCache.remove(queryCache.keySet().iterator().next());
-        return vector;
+        synchronized(queryCache){CachedQuery cached=queryCache.get(key);if(cached!=null && cached.expiresAt()>System.currentTimeMillis())return cached.vector();}
+        long budget=Math.min(2500,ai==null?2500:ai.remainingTurnMillis());
+        if(budget<=0)throw new IllegalStateException("Embedding deadline exceeded");
+        var mine=new java.util.concurrent.CompletableFuture<List<Double>>();
+        var existing=pending.putIfAbsent(key,mine);
+        if(existing!=null) {
+            try{return existing.get(budget,java.util.concurrent.TimeUnit.MILLISECONDS);}
+            catch(InterruptedException interrupted){Thread.currentThread().interrupt();throw new IllegalStateException("Embedding interrupted",interrupted);}
+            catch(Exception unavailable){throw new IllegalStateException("Embedding unavailable",unavailable);}
+        }
+        queryDeadline.set(System.nanoTime()+budget*1000000L);
+        try {
+            List<Double> vector=List.copyOf(embed(normalized,"RETRIEVAL_QUERY",null));
+            synchronized(queryCache){queryCache.put(key,new CachedQuery(vector,System.currentTimeMillis()+900000));
+                while(queryCache.size()>256)queryCache.remove(queryCache.keySet().iterator().next());}
+            mine.complete(vector);return vector;
+        } catch(RuntimeException failed){mine.completeExceptionally(failed);throw failed;}
+        finally {queryDeadline.remove();pending.remove(key,mine);}
+    }
+    private Duration requestTimeout() {
+        long millis=Duration.ofSeconds(Math.max(3,settings.getTimeoutSeconds())).toMillis();
+        if(queryDeadline.get()!=null)millis=Math.min(millis,(queryDeadline.get()-System.nanoTime())/1000000L);
+        if(Thread.currentThread().isInterrupted() || millis<=0)throw new IllegalStateException("Embedding deadline exceeded");
+        return Duration.ofMillis(millis);
     }
 
     protected List<Double> embed(String text, String taskType, String title) {
@@ -82,7 +103,7 @@ public class BookEmbeddingGateway {
                         "https://generativelanguage.googleapis.com/v1beta/models/" + model + ":"+operation))
                         .header("Content-Type", "application/json")
                         .header("x-goog-api-key", key)
-                        .timeout(Duration.ofSeconds(Math.max(3, settings.getTimeoutSeconds())))
+                        .timeout(requestTimeout())
                         .POST(HttpRequest.BodyPublishers.ofString(payload)).build();
                 response = client.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
                 lastStatus = response.statusCode();

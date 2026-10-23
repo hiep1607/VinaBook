@@ -7,19 +7,21 @@ Không thay API giỏ hàng, checkout, đơn, hỗ trợ hoặc đánh giá hi�
 flowchart LR
     U[Tin nhắn và ngữ cảnh] --> A[AI đọc hiểu và đề xuất patch]
     A --> V[Backend kiểm tra cấu trúc, nguồn và tham chiếu]
-    V --> M[Ghép vào bản sao ngữ cảnh]
+    V -- reply không cần dữ liệu --> R[Trả lời hội thoại trực tiếp]
+    V -- calls cần dữ liệu --> M[Ghép vào bản sao ngữ cảnh]
     M --> T[Công cụ lấy dữ liệu thật hoặc chuẩn bị thao tác]
     T --> P[Gói dữ kiện, căn cứ và giới hạn]
     P --> W[AI viết lời giải thích]
     W --> C[Backend kiểm tra và ghép thẻ sách]
     C --> S[Lưu ngữ cảnh và trả lời]
+    R --> S
 ~~~
 
 ## 1. Đầu vào đọc hiểu
 
 ChatTurnUnderstanding nhận tin nhắn nguyên văn, phiên bản context, bộ lọc đã xác nhận,
 nguồn của từng trường, ghi chú ngữ nghĩa, vài lượt hội thoại gần đây, câu đang chờ,
-thứ tự sách đã hiển thị, sách đang tập trung, danh sách đã giới thiệu và dữ kiện sách đã xác minh.
+thứ tự sách đã hiển thị, sách đang tập trung và danh sách đã giới thiệu. Không truy xuất catalog hay giỏ để phân loại một lời chào. Công cụ lấy dữ liệu sau quyết định đọc ý; các ID ngữ cảnh chỉ là tham chiếu, không phải xác nhận giá/tồn kho.
 Phần lịch sử đọc hiểu chỉ giữ bốn cặp, gắn nhãn previousUser/previousAssistant và giới hạn độ dài;
 message hiện tại nằm cuối gói và là nguồn duy nhất cho patch mới. Lần sửa JSON bỏ lịch sử dài để tránh nhầm nguồn.
 Không đưa JWT, thông tin đăng nhập hay entity tài khoản vào prompt.
@@ -36,7 +38,12 @@ JSON gồm đúng các trường:
 - clear: trường khách muốn bỏ; chỉ clear mới xóa điều kiện đã lưu.
 - evidence: chuỗi `current_message` là con trỏ nguồn chung cho patch; backend tự gắn nguyên văn tin nhắn hiện tại cho từng trường set/clear trước khi kiểm tra và lưu nguồn.
 - memoryNote: ghi chú ngữ nghĩa gồm text/evidence từ lời khách hoặc null; evidence dùng cùng con trỏ `current_message`. Thiếu căn cứ thì bỏ ghi chú, không làm hỏng kế hoạch hợp lệ.
-- calls: tối đa ba công cụ đã đăng ký, chỉ một bước tìm sách cho số lượng/ngân sách chung.
+- reply: lời trả lời trực tiếp hoặc null. Không cần dữ liệu cửa hàng thì dùng reply với calls rỗng. Intent mô tả ý câu, không tự bắt buộc gọi công cụ (ví dụ ý tưởng đọc chung vẫn có thể là DISCOVER_BOOKS). Backend bỏ patch/ghi chú và giữ mode current của nhánh này; không trộn reply với công cụ hoặc đổi ngữ cảnh mua/đọc.
+- calls: tối đa ba công cụ đã đăng ký, chỉ một bước tìm sách cho số lượng/ngân sách chung; khi có calls thì reply=null.
+
+Chào hỏi, hỏi khả năng hỗ trợ, giải nghĩa/dịch phần chữ đã có hoặc gợi mở hướng đọc chung có thể trả lời bằng reply. Giá, tồn kho, nội dung/nhận xét sách cần nguồn, sách có bán, chính sách, giỏ và đơn phải dùng công cụ. Không áp dụng bộ định tuyến từ khóa trước AI; các nhánh tham chiếu/lệnh cũ là dự phòng khi provider lỗi. Bước đọc ý dùng tối đa15 giây trong ngân sách chung45 giây. `execution.tool=conversation` và `dataAccess=none` cho biết nhánh trả lời không đọc catalog/giỏ; lịch sử, xác thực và lưu hội thoại vẫn do backend quản lý để giữ kín API key.
+
+Reply trực tiếp không xóa focus, shortlist, bộ lọc, menu hoặc câu hỏi nghiệp vụ đang chờ. Việc nhận diện loại câu của AI vẫn cần đánh giá bằng hội thoại thực tế; schema không thể tự bảo đảm mọi câu đã được hiểu đúng.
 
 Trường ngữ cảnh gồm topics/topicMatch, query (thay cho topics khi mục đích phức tạp), purpose,
 recipient, preferredQuery, excludedQuery, format, giá tối thiểu/tối đa và tính bao gồm biên,
@@ -134,7 +141,7 @@ Mua/hủy đơn/thay đổi giỏ vẫn qua bước xem lại/xác nhận tươn
 
 Kiểm thử tự động: ChatStructuredPipelineTest, AiGatewayStructuredTest và các bộ Chat* hiện có.
 Biên bản thử Gemini trực tiếp nằm trong docs/chatbot-evaluation.
-Đợt kiểm tra bổ sung ngày 10/10: [lỗi thực tế, sửa đổi và hồi quy](chatbot-evaluation/quality-followup-2026-10-10.md).
+Đợt kiểm tra bổ sung ngày 10/10: [lỗi thực tế, sửa đổi và hồi quy](chatbot-evaluation/archive/2026-09-10/quality-followup-2026-10-10.md).
 
 Tham khảo hợp đồng provider:
 [Gemini structured outputs](https://ai.google.dev/gemini-api/docs/structured-output),
@@ -149,20 +156,20 @@ AI viết có ngân sách riêng 8 giây, dùng chung deadline AI của lượt.
 
 Hồ sơ đọc được batch trong phạm vi một lượt có công cụ catalog và dọn trong finally. Không cache giá/tồn kho hay duy trì hồ sơ qua lượt. Từ bản chuẩn bị chủ đề, phạm vi đọc hồ sơ được mở trước bước đọc hiểu để cấp nhãn catalog cho AI, và dọn trong finally.
 
-Chi tiết kiểm thử, lỗi thực tế, giới hạn còn lại và số đo: [biên bản 11/10](chatbot-evaluation/quality-hardening-2026-10-11.md).
+Chi tiết kiểm thử, lỗi thực tế, giới hạn còn lại và số đo: [biên bản 11/10](chatbot-evaluation/archive/2026-09-10/quality-hardening-2026-10-11.md).
 
 
 ## Gợi ý chủ đề khi chưa rõ hướng đọc
 
 `respond(kind=clarify, topic=preferences/gift)` có thể trả `suggestedTopics` (1–6 nhãn ngăn bằng `|`), `suggestionSource` (ID nguồn do backend cấp trong `topicContextSources`) và `suggestionContext` (trích ngắn tùy chọn). Nguồn gồm lời khách hiện tại/4 lượt gần nhất còn thông tin cụ thể; loại câu hỏi mua sách chung chung và tin riêng tư. Backend kiểm tra nguồn, bỏ câu mua sách chung chung và hiển thị các hướng dưới dạng lựa chọn mềm cùng chip có sẵn. Không ghép các hướng đề xuất vào `set`. Backend chuẩn bị sách trên bản sao riêng; chỉ hiển thị sách và xác nhận chủ đề khi khách chọn. Nếu nhu cầu đọc đã đủ rõ, tiếp tục tìm sách như trước; không bắt cung cấp người nhận/ngân sách.
 
-Chi tiết hành vi và kiểm thử: [gợi ý chủ đề 11/10](chatbot-evaluation/topic-suggestions-2026-10-11.md).
+Chi tiết hành vi và kiểm thử: [gợi ý chủ đề 11/10](chatbot-evaluation/archive/2026-09-10/topic-suggestions-2026-10-11.md).
 
 ## Chủ đề có sách sẵn và chuẩn bị kết quả
 
 Trước khi hiện chip, backend xác minh mỗi hướng có ít nhất hai sách phù hợp với bộ lọc và nhãn nội dung đã duyệt. Tìm trước trên bản sao ngữ cảnh, lưu pool ID đã xếp hạng riêng theo cuộc hội thoại trong 5 phút; không đánh dấu sách đã xem. `catalogTopicHints` giúp AI chọn các hướng thực có sách. Chọn nguyên nhãn/số thứ tự đơn giản có thể dùng pool này, bỏ AI đọc/viết, nhưng vẫn kiểm tra dữ liệu mới và dựng giá/tồn kho/thẻ từ catalog hiện tại. Điều kiện mới, TTL hoặc dữ liệu thay đổi thì tìm lại. Metadata `preparedTopic=hit/miss` cùng thời gian từng giai đoạn cho phép kiểm tra tốc độ.
 
-Hành vi, lỗi tìm được, 154 kiểm thử và bằng chứng UI: [chuẩn bị chủ đề 11/10](chatbot-evaluation/catalog-topics-2026-10-11.md).
+Hành vi, lỗi tìm được, 154 kiểm thử và bằng chứng UI: [chuẩn bị chủ đề 11/10](chatbot-evaluation/archive/2026-09-10/catalog-topics-2026-10-11.md).
 
 ## Hồi quy từ bộ 50 tình huống thực tế ngày 11/10/2026
 
@@ -194,3 +201,9 @@ Lời dẫn gợi ý được rút gọn, không nhắc quy trình chuẩn bị 
 Sau khi giới thiệu sách, các câu ngắn “cụ thể hơn”, “nói kỹ hơn”, “chi tiết hơn”, “đi sâu hơn” được neo trực tiếp vào cuốn đang chọn hoặc danh sách đang xem qua `getProducts(field=explanation, contextMode=current)`. Không tìm sách mới, không sửa bộ lọc và không phụ thuộc AI chọn lại tác vụ. Tham chiếu tên/cuốn thứ hai/cả danh sách được giữ; khi chưa có sách thì hỏi xác định. Câu hỏi sách rõ ràng có thể trở lại sau câu hỏi chính sách; câu ngắn sau chính sách hoặc menu chủ đề không tự lấy sách cũ ra giải thích.
 
 Yêu cầu tìm sách khác, thay điều kiện, câu phủ định hoặc câu hỏi phí giao hàng vẫn theo luồng riêng. Giải thích chỉ dùng mô tả và dữ kiện đã duyệt; thiếu mục lục/tình tiết thì nêu thiếu thông tin. “Giới thiệu nội dung cuốn [tên sách]” không được hiểu thành hỏi sách có đề cập đến chính tên của nó hay không. Kiểm thử tập trung vào `ChatLiveContextRegressionTest` và các ca thông tin nội dung liên quan trong `ChatStructuredPipelineTest`, `ChatLiveFactsPolicyRegressionTest`.
+
+## Củng cố vận hành 17/10
+
+Lỗi nhà cung cấp ở bước hiểu yêu cầu có thể dùng kế hoạch cơ bản bảo thủ, vẫn qua validation và registry hiện hành; các yêu cầu phủ định/điều kiện phức tạp được hỏi rõ thay vì bỏ điều kiện. Không tự đổi model. Snapshot, transcript và commit RAM được phối hợp; xóa trong khi AI chạy không được làm sống lại lịch sử.
+
+Truy vấn vector có budget 2,5 giây nằm trong thời gian còn lại và không giữ khóa cache khi gọi HTTP. SSE gửi trạng thái tiến độ, chỉ trả nội dung đã kiểm chứng ở done. Một deadline client bao trùm cả transport dự phòng. Lịch sử có cursor và metrics được tổng hợp SQL. Xem [vận hành](operations.md).

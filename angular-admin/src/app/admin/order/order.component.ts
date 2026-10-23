@@ -1,3 +1,5 @@
+import { WebSocketService } from '../../services/web-socket.service';
+import { Subscription } from 'rxjs';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -23,13 +25,13 @@ export class OrderComponent implements OnInit {
   columns: string[] = ['id', 'user', 'address', 'phone', 'amount', 'payment', 'orderDate', 'status', 'view'];
 
 
-  webSocket!: WebSocket;
+  private socketSubscription?: Subscription;
   chatMessages: ChatMessage[] = [];
 
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private pageService: PageService, private toastr: ToastrService, private orderService: OrderService, private route: ActivatedRoute) {
+  constructor(private socketEvents: WebSocketService, private pageService: PageService, private toastr: ToastrService, private orderService: OrderService, private route: ActivatedRoute) {
     route.params.subscribe(val => {
       this.ngOnInit();
     })
@@ -96,24 +98,12 @@ export class OrderComponent implements OnInit {
     return 'pending';
   }
 
-  openWebSocket() {
-    this.webSocket = new WebSocket(environment.wsUrl);
-
-    this.webSocket.onopen = (event) => {
-      // console.log('Open: ', event);
-    };
-
-    this.webSocket.onmessage = (event) => {
+  openWebSocket(): void {
+    this.socketSubscription?.unsubscribe();
+    this.socketSubscription = this.socketEvents.watch().subscribe(message => {
       this.getAllOrder();
-    };
-
-    this.webSocket.onclose = (event) => {
-      // console.log('Close: ', event);
-    };
+    });
   }
-
-  closeWebSocket() {
-    this.webSocket.close();
-  }
+  closeWebSocket(): void { this.socketSubscription?.unsubscribe(); this.socketSubscription = undefined; }
 
 }

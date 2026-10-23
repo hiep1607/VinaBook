@@ -8,9 +8,9 @@ import vn.fs.dto.chat.*;
 import vn.fs.entity.Product;
 import vn.fs.repository.ProductRepository;
 
-/** Understand -> validate/merge -> execute backend capabilities -> grounded narration. */
+/** Interpret first; read store data only for validated capabilities, or reply without a tool. */
 @Service
-public class ChatStructuredPipeline {
+public class ChatStructuredPipeline implements ChatPlanner {
     private static final Logger log=LoggerFactory.getLogger(ChatStructuredPipeline.class);
     private static final Set<String> READS=Set.of("searchProducts","recommendBooks","getProducts",
         "findRelatedBooks","listCategories","getPolicy");
@@ -22,6 +22,15 @@ public class ChatStructuredPipeline {
     private final ChatAnalyticsService analytics;
     private final ProductRepository products;
     private final ChatRetrievalService data;
+    private CatalogDemandService catalogDemand;
+    @org.springframework.beans.factory.annotation.Autowired(required=false)
+    public void setCatalogDemand(CatalogDemandService value){catalogDemand=value;}
+    private CartSyncService syncedCart;
+    private vn.fs.config.CurrentUserAccess access;
+    @org.springframework.beans.factory.annotation.Autowired(required=false)
+    public void setSyncedCart(CartSyncService value){syncedCart=value;}
+    @org.springframework.beans.factory.annotation.Autowired(required=false)
+    public void setAccess(vn.fs.config.CurrentUserAccess value){access=value;}
     public ChatStructuredPipeline(AiGateway ai,ObjectMapper mapper,ChatTurnUnderstanding understanding,
             ChatToolRegistry registry,ChatBookNarrator narrator,ChatAnalyticsService analytics,
             ProductRepository products,ChatRetrievalService data) {
@@ -29,13 +38,14 @@ public class ChatStructuredPipeline {
         this.narrator=narrator;this.analytics=analytics;this.products=products;this.data=data;
     }
 
-    ChatResponseDto reply(ChatRequestDto request,ChatDialogueMemory.State state) {
+    public ChatResponseDto reply(ChatRequestDto request,ChatDialogueMemory.State state) {
         long started=System.currentTimeMillis();ai.resetModelUsed();
         ai.beginTurnBudget(45);
         String stage="execution",tool="unresolved",status="FAILED";
         Map<String,Long> timings=new LinkedHashMap<>();long stageStarted=System.nanoTime();
         String failureStage="",preparedTopicStatus="";
         ChatTool.Result result;boolean fallback=false;
+        boolean storeDataRead=false;
         try {
             // All work happens on a copy. Provider/DB failures cannot replace good memory.
             long baseVersion=state.contextVersion;
@@ -49,21 +59,65 @@ public class ChatStructuredPipeline {
                         working.recentDialogue.add(Map.of("user",ChatDialogueInterpreter.clean(history.get(i).getContent(),1200),
                             "assistant",ChatDialogueInterpreter.clean(history.get(i+1).getContent(),1200)));
             }
-            List<Product> catalog=products.findByStatusTrue();
-            if(!working.initialized) {
-                Set<Long> active=new HashSet<>();catalog.forEach(p->active.add(p.getProductId()));
-                working.displayed=new ArrayList<>(request.getContextProductIds().stream().filter(active::contains).distinct().toList());
-                working.shortlist=new ArrayList<>(working.displayed);working.initialized=true;
-            }
+            List<Product> catalog=null;
             timings.merge(stage,(System.nanoTime()-stageStarted)/1_000_000L,Long::sum);
             stage="understanding";stageStarted=System.nanoTime();
-            data.beginTurnRead(catalog);
-            JsonNode plan=understanding.understand(request,working,facts(request,working,catalog),
-                ChatTopicClarification.choice(request.getMessage(),working).isBlank()
-                    ?data.topicSuggestionNames(catalog):List.of());
+            JsonNode plan;
+            ChatTurnProgress.report("understanding");
+            try {
+                ai.beginStageBudget(15);
+                try {plan=understanding.understand(request,working,List.of(),List.of());}
+                finally {ai.endStageBudget();}
+            } catch(IllegalStateException providerFailure) {
+                if(Thread.currentThread().isInterrupted())throw providerFailure;
+                if(new ChatIntentService().classify(request.getMessage())==ChatIntent.SMALL_TALK)
+                    plan=understanding.basic(request,working,List.of());
+                else {
+                    catalog=products.findByStatusTrue();
+                    storeDataRead=true;
+                    initialize(request,working,catalog);
+                    data.beginTurnRead(catalog);
+                    plan=understanding.basic(request,working,catalog);
+                }
+                fallback=true;failureStage="understanding";
+                log.info("chat_basic_recovery provider={}",ai.provider());
+            }
             timings.merge(stage,(System.nanoTime()-stageStarted)/1_000_000L,Long::sum);
             stage="execution";stageStarted=System.nanoTime();
-            new ChatTurnContext(mapper).apply(plan,request,working);
+            ChatTurnProgress.report("execution");
+            boolean conversational=plan.hasNonNull("reply");
+            if(!conversational) {
+                boolean pureResponse=true;
+                for(JsonNode call:plan.path("calls"))pureResponse&="respond".equals(call.path("tool").asText())
+                    && (Set.of("greeting","unsupported","missing_product").contains(call.path("arguments").path("kind").asText())
+                        || "recall".equals(call.path("arguments").path("menu").asText()));
+                // AI selected discovery; this only resolves its confirmed label
+                // to a server-owned preview, without choosing the task for AI.
+                boolean discovery=false;
+                for(JsonNode call:plan.path("calls"))discovery|=Set.of("recommendBooks","searchProducts").contains(call.path("tool").asText());
+                if(discovery) {
+                    String choice=ChatTopicClarification.choice(request.getMessage(),working);
+                    String normalized=new ChatIntentService().normalize(choice);
+                    JsonNode topics=plan.path("set").path("topics");
+                    ChatIntentService language=new ChatIntentService();
+                    boolean selectedTopic=topics.isArray() && topics.size()==1 && normalized.equals(language.normalize(topics.get(0).asText()));
+                    boolean selectedQuery=normalized.equals(language.normalize(plan.path("set").path("query").asText()));
+                    if(!choice.isBlank() && (selectedTopic || selectedQuery))
+                        working.preparedTopicChoice=choice;
+                }
+                boolean usesCart=false;
+                for(JsonNode call:plan.path("calls"))usesCart|=Set.of("getCart","prepareCartChange","prepareClearCart").contains(call.path("tool").asText())
+                    || "cart".equals(call.path("arguments").path("source").asText());
+                if(usesCart && syncedCart!=null && access!=null && access.currentEmail()!=null)
+                    request.setCartItems(syncedCart.chatItems());
+                if(catalog==null && !pureResponse) {
+                    catalog=products.findByStatusTrue();
+                    storeDataRead=true;
+                    initialize(request,working,catalog);
+                    data.beginTurnRead(catalog);
+                }
+                new ChatTurnContext(mapper).apply(plan,request,working);
+            }
             working.structuredTurnActive=true;
             working.recommendationIntakeRequired=false;
             List<ChatTool.Result> results=new ArrayList<>();List<String> executed=new ArrayList<>();
@@ -76,13 +130,14 @@ public class ChatStructuredPipeline {
                 if("FAILED".equals(status))throw new IllegalStateException("Capability failed");
                 if(!readBundle && (!"COMPLETED".equals(status) || result.products().isEmpty()))break;
             }
-            result=combine(results);tool=String.join(",",executed);status=result.status();
+            result=conversational?ChatTool.Result.text(plan.path("reply").asText().strip(),ChatIntent.valueOf(plan.path("intent").asText())):combine(results);
+            tool=conversational?"conversation":String.join(",",executed);status=result.status();
             preparedTopicStatus=working.preparedTopicStatus;
             timings.merge(stage,(System.nanoTime()-stageStarted)/1_000_000L,Long::sum);
             stage="narration";stageStarted=System.nanoTime();
-            if(result.intent()==ChatIntent.DISCOVER_BOOKS && !"hit".equals(working.preparedTopicStatus))
+            if(!fallback && result.intent()==ChatIntent.DISCOVER_BOOKS && !"hit".equals(working.preparedTopicStatus))
                 result=narrator.present(result,request.getMessage(),working);
-            else if(Set.of(ChatIntent.PRODUCT_INFO,ChatIntent.COMPARE_BOOKS).contains(result.intent())
+            else if(!fallback && Set.of(ChatIntent.PRODUCT_INFO,ChatIntent.COMPARE_BOOKS).contains(result.intent())
                 && executed.contains("getProducts") && !result.products().isEmpty()
                 && !ChatBookFacts.asksDirectFacts(request.getMessage(),new ChatIntentService())
                 && !ChatBookEditionQuestions.active(request.getMessage())
@@ -93,13 +148,25 @@ public class ChatStructuredPipeline {
             timings.merge(stage,(System.nanoTime()-stageStarted)/1_000_000L,Long::sum);
             stage="commit";stageStarted=System.nanoTime();
             if(state.contextVersion!=baseVersion)throw new IllegalStateException("Context changed during turn");
-            working.contextVersion=baseVersion+1;working.lastTask=result.intent().name();
-            ChatLiveContext.remember(plan,result,working);
-            working.pendingQuestion="NEEDS_INPUT".equals(status)?result.answer():"";
+            working.contextVersion=baseVersion+1;
+            if(!conversational) {
+                working.lastTask=result.intent().name();
+                ChatLiveContext.remember(plan,result,working);
+                working.pendingQuestion="NEEDS_INPUT".equals(status)?result.answer():"";
+            }
             result.products().forEach(p->working.shownProductIds.add(p.getId()));
             working.toolHistory.add(Map.of("user",request.getMessage(),"tool",tool,"status",status));
             while(working.toolHistory.size()>6)working.toolHistory.remove(0);
             mapper.readerForUpdating(state).readValue(mapper.writeValueAsBytes(working));
+            if(catalogDemand!=null && catalog!=null && result.products().isEmpty()
+                    && Set.of(ChatIntent.PRODUCT_INFO,ChatIntent.DISCOVER_BOOKS).contains(result.intent())
+                    && "COMPLETED".equals(status) && !working.missingTitle.isBlank()) {
+                try {catalogDemand.observe(request.getSessionId(),request.getMessage(),working.missingTitle,catalog);}
+                catch(RuntimeException unavailable) {
+                    // Optional aggregate must never affect a successful customer reply.
+                    log.debug("catalog_demand_unavailable type={}",unavailable.getClass().getSimpleName());
+                }
+            }
         } catch(Exception ex) {
             fallback=true;status="FAILED";failureStage=stage;
             log.warn("chat_structured_failure stage={} exceptionType={}",stage,ex.getClass().getSimpleName());
@@ -123,7 +190,11 @@ public class ChatStructuredPipeline {
         for(String measured:List.of("understanding","execution","narration"))
             execution.put(measured+"Ms",Long.toString(timings.getOrDefault(measured,0L)));
         if(!preparedTopicStatus.isBlank())execution.put("preparedTopic",preparedTopicStatus);
-        if(fallback)execution.put("failureStage",failureStage);
+        if(fallback && "FAILED".equals(status))execution.put("failureStage",failureStage);
+        else if(fallback)execution.put("recovery","basic");
+        execution.put("dataAccess",storeDataRead?"tools":"none");
+        if(Arrays.stream(tool.split(",")).anyMatch(name->Set.of("searchProducts","recommendBooks").contains(name)))
+            execution.put("readingTopic",Objects.toString(state.toolSearch.get("query"),Objects.toString(state.toolSearch.get("purpose"),"")));
         response.setExecution(execution);
         log.info("chat_structured_timing understandingMs={} executionMs={} narrationMs={} failureStage={}",
             timings.getOrDefault("understanding",0L),timings.getOrDefault("execution",0L),timings.getOrDefault("narration",0L),failureStage);
@@ -132,35 +203,11 @@ public class ChatStructuredPipeline {
         return response;
     }
 
-    private List<Map<String,Object>> facts(ChatRequestDto request,ChatDialogueMemory.State state,List<Product> catalog) {
-        Set<Long> ids=new LinkedHashSet<>(state.displayed);ids.addAll(state.shortlist);ids.addAll(state.comparisonProducts);
-        if(state.focus!=null)ids.add(state.focus);
-        if(request.getActiveProductId()!=null)ids.add(request.getActiveProductId());
-        if(request.getCartItems()!=null)request.getCartItems().forEach(item->ids.add(item.getProductId()));
-        // A named book is grounded even before it has been displayed. Include
-        // current names and recent USER mentions so a failed comparison does
-        // not make its explicitly named pair invisible to the next turn.
-        ChatIntentService language=new ChatIntentService();
-        List<String> mentions=new ArrayList<>();mentions.add(request.getMessage());
-        state.recentDialogue.stream().skip(Math.max(0,state.recentDialogue.size()-2))
-            .forEach(turn->mentions.add(turn.getOrDefault("user","")));
-        Set<Long> namedIds=new LinkedHashSet<>();
-        for(String mention:mentions) {
-            String normalized=language.normalize(mention);
-            catalog.stream().filter(p->p.getName()!=null && language.normalize(p.getName()).length()>=4
-                && ChatLiveContext.containsTitle(normalized,language.normalize(p.getName())))
-                .forEach(p->namedIds.add(p.getProductId()));
-        }
-        namedIds.addAll(ids);ids.clear();ids.addAll(namedIds);
-        List<Map<String,Object>> facts=new ArrayList<>();
-        for(Long id:ids)catalog.stream().filter(p->id.equals(p.getProductId()) && Boolean.TRUE.equals(p.getStatus())).findFirst().ifPresent(p->{
-            if(facts.size()>=16)return;
-            Map<String,Object> fact=new LinkedHashMap<>();
-            fact.put("id",p.getProductId());fact.put("title",p.getName());fact.put("author",p.getAuthor());
-            fact.put("salePriceVnd",data.effectivePrice(p));fact.put("stockStatus",p.getQuantity()>0?"in_stock":"out_of_stock");
-            facts.add(fact);
-        });
-        return facts;
+    private void initialize(ChatRequestDto request,ChatDialogueMemory.State state,List<Product> catalog) {
+        if(state.initialized)return;
+        Set<Long> active=new HashSet<>();catalog.forEach(p->active.add(p.getProductId()));
+        state.displayed=new ArrayList<>(request.getContextProductIds().stream().filter(active::contains).distinct().toList());
+        state.shortlist=new ArrayList<>(state.displayed);state.initialized=true;
     }
 
     private ChatTool.Result combine(List<ChatTool.Result> results) {

@@ -25,9 +25,11 @@ public class CartSyncService {
     private final ProductRepository products;
     private final ChatRetrievalService pricing;
     private final EntityManager em;
+    private final vn.fs.automation.AutomationService automation;
     public CartSyncService(CurrentUserAccess access, UserRepository users, CartRepository carts,
-            CartDetailRepository details, ProductRepository products, ChatRetrievalService pricing, EntityManager em) {
+            CartDetailRepository details, ProductRepository products, ChatRetrievalService pricing, EntityManager em, vn.fs.automation.AutomationService automation) {
         this.access=access;this.users=users;this.carts=carts;this.details=details;this.products=products;this.pricing=pricing;this.em=em;
+        this.automation=automation;
     }
     private Cart owned() {
         String email=access.currentEmail();
@@ -83,6 +85,7 @@ public class CartSyncService {
             details.delete(item);
         }
         details.flush();cart.setSyncRevision(cart.getSyncRevision()+1);carts.saveAndFlush(cart);
+        automation.trackCart(details.findByCart(cart).stream().map(CartDetail::getProduct).collect(Collectors.toList()));
     }
     private void write(Cart cart,Map<Long,Integer> wanted) {
         details.deleteAll(details.findByCart(cart));details.flush();
@@ -91,6 +94,7 @@ public class CartSyncService {
             details.save(new CartDetail(null,entry.getValue(),(double)(pricing.effectivePrice(p)*entry.getValue()),p,cart));
         }
         details.flush();cart.setSyncRevision(cart.getSyncRevision()+1);carts.saveAndFlush(cart);
+        automation.trackCart(details.findByCart(cart).stream().map(CartDetail::getProduct).collect(Collectors.toList()));
     }
     private Snapshot snapshot(Cart cart) {
         List<Item> items=new ArrayList<>();long subtotal=0;

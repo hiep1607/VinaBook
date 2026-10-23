@@ -23,6 +23,8 @@ export class CategoryService {
     return this.categoriesCache$;
   }
 
+  refresh(): Observable<any[]> { this.categoriesCache$=null;return this.getAll(); }
+
   getOne(id: number): Observable<any> {
     return this.http.get<any>(this.url + '/' + id);
   }

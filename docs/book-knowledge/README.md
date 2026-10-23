@@ -20,7 +20,7 @@ Chatbot đọc catalog và hồ sơ đã duyệt trong MySQL `book`; tệp JSON 
 
 Đợt đầu cập nhật 31 tóm tắt; đợt sau cập nhật 23 tóm tắt và đồng bộ với mô tả catalog. Truyện Kiều chỉ bổ sung đối tượng và chủ đề; Conan giữ tóm tắt cũ, bổ sung thông tin đọc. Bốn hồ sơ có `readingLevel` là Clean Code, Cho Tôi Xin Một Vé Đi Tuổi Thơ, AI - Sức Mạnh Của Trí Tuệ Nhân Tạo và Blockchain Cơ Bản. Trường trống ở các cuốn khác vẫn thể hiện thiếu căn cứ; không đồng nghĩa sách khó đọc.
 
-Đợt 23 cuốn sửa tên hoặc tác giả của 15 sản phẩm (10 tên, 12 tác giả; có sản phẩm đổi cả hai). Hai ảnh đang là bìa của tác phẩm khác được thay bằng SVG có nhãn “Ảnh minh họa”, được phục vụ ở storefront và admin. Giá, tồn kho, số đã bán, giảm giá, danh mục, ID và thông tin ấn bản giữ nguyên qua kiểm tra trước/sau nhập. Xem [báo cáo đợt 23 cuốn](../chatbot-evaluation/book-profiles-remaining-2026-10-05.md).
+Đợt 23 cuốn sửa tên hoặc tác giả của 15 sản phẩm (10 tên, 12 tác giả; có sản phẩm đổi cả hai). Hai ảnh đang là bìa của tác phẩm khác được thay bằng SVG có nhãn “Ảnh minh họa”, được phục vụ ở storefront và admin. Giá, tồn kho, số đã bán, giảm giá, danh mục, ID và thông tin ấn bản giữ nguyên qua kiểm tra trước/sau nhập. Xem [báo cáo đợt 23 cuốn](../chatbot-evaluation/archive/2026-09-10/book-profiles-remaining-2026-10-05.md).
 
 ## Quy tắc biên tập
 
@@ -77,7 +77,7 @@ Không còn hồ sơ nào chỉ giữ ghi chú “Mô tả sản phẩm hiện c
 
 Đã thêm 154 nhãn biên tập vào đúng 20 hồ sơ local, dùng `book_topics`/`book_topic_links` hiện có và màn hình admin “Hồ sơ AI”. Tên nhãn giữ nhóm như `Chủ đề:` trong admin; `BookKnowledgeService` chỉ đưa phần giá trị của bảy nhóm vào chỉ mục để tránh các từ chung gây nhiễu. Các chủ đề cũ không có tiền tố vẫn được giữ. Giới hạn 20 chủ đề mỗi sách của màn hình biên tập vẫn áp dụng.
 
-Xem [nhãn chi tiết](labels-20-2026-10-10.md), [manifest có căn cứ](labels-20-2026-10-10.json), [kế hoạch](label-pilot-plan-2026-10-10.md) và [báo cáo chất lượng](../chatbot-evaluation/labels-20-2026-10-10.md). Đợt pilot ban đầu giới hạn 20 cuốn; sau khi người dùng chốt, nhãn đã được mở rộng như mục dưới.
+Xem [nhãn chi tiết](labels-20-2026-10-10.md), [manifest có căn cứ](labels-20-2026-10-10.json), [kế hoạch](label-pilot-plan-2026-10-10.md) và [báo cáo chất lượng](../chatbot-evaluation/archive/2026-09-10/labels-20-2026-10-10.md). Đợt pilot ban đầu giới hạn 20 cuốn; sau khi người dùng chốt, nhãn đã được mở rộng như mục dưới.
 
 Công cụ `db/book-label-pilot.py` mặc định chỉ nhận đúng bộ 20 ID của thử nghiệm này (`--scope pilot20`). Bộ mở rộng yêu cầu chỉ rõ `--scope remaining36`. Mặc định kiểm tra và báo kế hoạch, không ghi. Đặt `MYSQL_PWD` trong môi trường tiến trình rồi chạy từ gốc repo:
 
@@ -99,14 +99,14 @@ python -m unittest discover -s db -p test_book_label_pilot.py -v
 
 Bản thử tiếp theo giữ nguyên 20 cuốn/154 nhãn, bổ sung điểm theo nhóm chủ đề, mục đích và các trường hồ sơ đã duyệt. Cụm từ và mức đáp ứng toàn yêu cầu được ưu tiên; trong một nhóm chỉ lấy nhãn khớp tốt nhất. Liên kết và tên chủ đề được đọc theo lô cho các ứng viên có hồ sơ đã duyệt. Bộ lọc và cách sắp xếp do khách chỉ định vẫn xử lý trước xếp hạng mặc định.
 
-Đã đo cùng dữ liệu trước/sau trên mẫu 20 sách và toàn catalog 56 sách: 30 câu cũ tăng từ 27 lên 30 đúng vị trí đầu, 30 diễn đạt mới tăng từ 26 lên 28; tám câu kiểm tra sách ngoài mẫu giữ 8/8. Đây là phép đo truy xuất tắt embedding, không phải độ chính xác toàn chatbot. Chưa mở rộng nhãn; xem [báo cáo xếp hạng và hội thoại thật](../chatbot-evaluation/ranking-20-2026-10-10.md).
+Đã đo cùng dữ liệu trước/sau trên mẫu 20 sách và toàn catalog 56 sách: 30 câu cũ tăng từ 27 lên 30 đúng vị trí đầu, 30 diễn đạt mới tăng từ 26 lên 28; tám câu kiểm tra sách ngoài mẫu giữ 8/8. Đây là phép đo truy xuất tắt embedding, không phải độ chính xác toàn chatbot. Chưa mở rộng nhãn; xem [báo cáo xếp hạng và hội thoại thật](../chatbot-evaluation/archive/2026-09-10/ranking-20-2026-10-10.md).
 
 
 ## Mở rộng nhãn ra 56 sách — 2026-10-10
 
 Theo yêu cầu người dùng, đã thêm 284 nhãn có căn cứ vào 36 sách còn lại. Hiện 56/56 sách đang bán có 438 liên kết nhãn chi tiết. Giữ nguyên toàn bộ 20 cuốn pilot, chủ đề cũ, tên/tác giả/mô tả, giá/tồn kho và các trường nội dung đã duyệt. Mỗi cuốn mới có 7–10 nhãn; không vượt giới hạn 20 chủ đề của editor.
 
-Xem [nhãn của 36 sách](labels-remaining-36-2026-10-10.md), [manifest có căn cứ](labels-remaining-36-2026-10-10.json) và [báo cáo mở rộng](../chatbot-evaluation/labels-expanded-2026-10-10.md). Nguồn hồ sơ đã duyệt ngày 05/10 được dùng lại; đây không phải kiểm chứng mới về đúng ấn bản. Các chi tiết chưa biết vẫn được ghi riêng và không trở thành nhãn tìm kiếm.
+Xem [nhãn của 36 sách](labels-remaining-36-2026-10-10.md), [manifest có căn cứ](labels-remaining-36-2026-10-10.json) và [báo cáo mở rộng](../chatbot-evaluation/archive/2026-09-10/labels-expanded-2026-10-10.md). Nguồn hồ sơ đã duyệt ngày 05/10 được dùng lại; đây không phải kiểm chứng mới về đúng ấn bản. Các chi tiết chưa biết vẫn được ghi riêng và không trở thành nhãn tìm kiếm.
 
 Nhập bộ 36 cuốn bằng scope riêng, mặc định vẫn chỉ xem kế hoạch:
 
@@ -129,4 +129,4 @@ Sách mới về sau tiếp tục dùng màn hình Hồ sơ AI và quy trình bi
 
 ## Lọc kết quả và hỏi chi tiết — 2026-10-10
 
-Điều kiện chủ đề hẹp được đối chiếu với nội dung đã duyệt trước khi giới hạn danh sách; gợi ý có thể ít hơn ba cuốn. Câu hỏi chi tiết/nối tiếp được trả theo từng ý có căn cứ, không xem dữ liệu thiếu là không có. Xem [báo cáo sửa và kiểm thử](../chatbot-evaluation/matching-detail-2026-10-10.md) để biết phạm vi hỗ trợ và những điểm còn yếu.
+Điều kiện chủ đề hẹp được đối chiếu với nội dung đã duyệt trước khi giới hạn danh sách; gợi ý có thể ít hơn ba cuốn. Câu hỏi chi tiết/nối tiếp được trả theo từng ý có căn cứ, không xem dữ liệu thiếu là không có. Xem [báo cáo sửa và kiểm thử](../chatbot-evaluation/archive/2026-09-10/matching-detail-2026-10-10.md) để biết phạm vi hỗ trợ và những điểm còn yếu.

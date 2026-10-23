@@ -7,7 +7,6 @@ import { BehaviorSubject, of, throwError } from 'rxjs';
 
 import { RecentlyViewedService } from 'src/app/services/recently-viewed.service';
 import { CartService } from 'src/app/services/cart.service';
-import { FlyToCartService } from 'src/app/services/fly-to-cart.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { ProductService } from 'src/app/services/product.service';
 import { ReviewService } from 'src/app/services/review.service';
@@ -122,7 +121,7 @@ describe('ProductDetailComponent — sticky buy bar (P1)', () => {
           provide: WishlistService,
           useValue: { isInWishlist: () => false, getCount: () => 0, toggleWishlist: () => true }
         },
-        { provide: FlyToCartService, useValue: { fly: () => undefined } }
+
       ]
     });
   });

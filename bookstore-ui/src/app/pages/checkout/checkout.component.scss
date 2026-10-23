@@ -61,7 +61,8 @@
   margin-bottom: 8px;
 }
 
-.form-group input {
+.form-group input,
+.form-group select {
   background: var(--c-surface);
   border: 1px solid var(--c-border);
   border-radius: 12px;
@@ -74,9 +75,15 @@
   width: 100%;
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group select:focus {
   border-color: var(--c-primary);
   box-shadow: 0 0 0 3px rgba(13, 90, 69, 0.12);
+}
+
+.form-group select:focus-visible {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
 }
 
 .address-list {
@@ -267,7 +274,7 @@
 .payment-option.unavailable {
   background: var(--c-muted);
   cursor: not-allowed;
-  opacity: 0.62;
+  opacity: 1;
 }
 
 .payment-mark {
@@ -473,6 +480,7 @@
 @media (prefers-reduced-motion: reduce) {
   .address-option,
   .form-group input,
+  .form-group select,
   .ghost-btn,
   .payment-option,
   .place-order-btn {

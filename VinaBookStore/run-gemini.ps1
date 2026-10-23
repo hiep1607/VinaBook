@@ -10,7 +10,7 @@ $exampleFile = Join-Path $backendDir '.env.local.example'
 if (-not (Test-Path -LiteralPath $envFile)) {
 	Copy-Item -LiteralPath $exampleFile -Destination $envFile
 	Write-Host "Da tao $envFile"
-	Write-Host 'Hay dan khoa Gemini vao GEMINI_API_KEY_1, _2, _3 roi chay lai run-gemini.cmd.'
+	Write-Host 'Hay dan khoa Gemini vao GEMINI_API_KEY_1, _2, _3, _4 roi chay lai run-gemini.cmd.'
 	exit 1
 }
 
@@ -33,7 +33,7 @@ foreach ($rawLine in Get-Content -LiteralPath $envFile -Encoding utf8) {
 }
 
 $geminiKeys = @()
-foreach ($candidate in @($env:GEMINI_API_KEY_1, $env:GEMINI_API_KEY_2, $env:GEMINI_API_KEY_3)) {
+foreach ($candidate in @($env:GEMINI_API_KEY_1, $env:GEMINI_API_KEY_2, $env:GEMINI_API_KEY_3, $env:GEMINI_API_KEY_4)) {
 	if ($null -eq $candidate) { continue }
 	$key = $candidate.Trim()
 	if ($key -and $key -ne 'PASTE_GEMINI_API_KEY_HERE' -and $geminiKeys -cnotcontains $key) {
@@ -46,7 +46,7 @@ if ($geminiKeys.Count -eq 0) {
 }
 if ($geminiKeys.Count -eq 0) {
 	Write-Host "Chua co khoa Gemini trong $envFile" -ForegroundColor Yellow
-	Write-Host 'Mo file, dien it nhat mot trong ba dong GEMINI_API_KEY_1, _2, _3 roi chay lai.'
+	Write-Host 'Mo file, dien it nhat mot trong bon dong GEMINI_API_KEY_1, _2, _3, _4 roi chay lai.'
 	exit 1
 }
 
@@ -142,8 +142,8 @@ Set-Location -LiteralPath $backendDir
 $installedMaven = Get-Command mvn.cmd -ErrorAction SilentlyContinue
 if ($installedMaven -and $env:USERPROFILE) {
 	$repository = Join-Path $env:USERPROFILE '.m2\repository'
-	& $installedMaven.Source "-Dmaven.repo.local=$repository" "-Dvinabook.build.directory=$backendDir\target-runtime" spring-boot:run
+	& $installedMaven.Source "-Dmaven.repo.local=$repository" "-Dvinabook.build.directory=$backendDir\target-runtime" clean spring-boot:run
 } else {
-	& .\mvnw.cmd spring-boot:run
+	& .\mvnw.cmd "-Dvinabook.build.directory=$backendDir\target-runtime" clean spring-boot:run
 }
 exit $LASTEXITCODE

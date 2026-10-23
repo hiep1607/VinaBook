@@ -69,6 +69,8 @@ public class UserApi {
 
 	@Autowired
 	SendMailService sendMailService;
+    @Autowired vn.fs.service.PasswordResetService passwordReset;
+    @Autowired vn.fs.service.PasswordResetRequestLimiter resetLimiter;
 
 	@GetMapping
 	public ResponseEntity<List<User>> getAll() {
@@ -109,7 +111,7 @@ public class UserApi {
 		user.setRoles(roles);
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
-		user.setToken(jwtUtils.doGenerateToken(user.getEmail()));
+		user.setToken(null);
 		User u = userRepository.save(user);
 		Cart c = new Cart(0L, 0.0, u.getAddress(), u.getPhone(), u);
 		cartRepository.save(c);
@@ -232,24 +234,13 @@ public class UserApi {
 		return ResponseEntity.ok().build();
 	}
 
-	@PostMapping("send-mail-forgot-password-token")
-	public ResponseEntity<String> sendToken(@RequestBody String email) {
-
-		if (!userRepository.existsByEmail(email)) {
-			return ResponseEntity.notFound().build();
-		}
-		User user = userRepository.findByEmail(email).get();
-		String token = user.getToken();
-		sendMaiToken(email, token, "Reset mật khẩu");
-		return ResponseEntity.ok().build();
-
-	}
-
-	public void sendMaiToken(String email, String token, String title) {
-		String body = "\r\n" + "    <h2>Hãy nhấp vào link để thay đổi mật khẩu của bạn</h2>\r\n"
-				+ "    <a href=\"http://localhost:8080/forgot-password/" + token + "\">Đổi mật khẩu</a>";
-		sendMailService.queue(email, title, body);
-	}
+    @PostMapping("send-mail-forgot-password-token")
+    public ResponseEntity<?> sendToken(@RequestBody String email, javax.servlet.http.HttpServletRequest request) {
+        if(!resetLimiter.allow(request.getRemoteAddr()==null?"unknown":request.getRemoteAddr()))
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).body(new MessageResponse("Bạn đã gửi nhiều yêu cầu. Hãy chờ một chút rồi thử lại nhé."));
+        passwordReset.request(email);
+        return ResponseEntity.ok(new MessageResponse("Nếu email đang có tài khoản hoạt động, liên kết đặt lại mật khẩu sẽ được gửi. Bạn có thể kiểm tra hộp thư và thư rác."));
+    }
 
 	private boolean canAccessUser(String email) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

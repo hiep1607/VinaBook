@@ -1,0 +1,57 @@
+<div class="delivery-editor">
+  <div class="location-action">
+    <button type="button" class="location-button" (click)="locate()" [disabled]="disabled || locating" [attr.aria-describedby]="inputId + '-privacy'">
+      <lucide-icon name="locate-fixed" [size]="18" aria-hidden="true"></lucide-icon>
+      {{ locating ? 'Đang xác định vị trí…' : 'Dùng vị trí hiện tại' }}
+    </button>
+    <button *ngIf="locating" type="button" class="text-button" (click)="cancelLocation()">Huỷ định vị</button>
+  </div>
+  <p class="hint" [id]="inputId + '-privacy'">Chỉ khi bạn bấm nút và cho phép, vị trí mới được gửi tới Photon để gợi ý địa chỉ.</p>
+  <p *ngIf="locating" class="status" role="status">{{ locationStatus }}</p>
+  <p *ngIf="locationError" class="error" role="alert">{{ locationError }}</p>
+  <div *ngIf="suggestion" class="location-suggestion" role="region" [attr.aria-label]="'Địa chỉ gợi ý'">
+    <strong>Địa chỉ gần vị trí của bạn</strong>
+    <p>{{ suggestion.street }}</p>
+    <p class="hint">Độ chính xác thiết bị khoảng {{ suggestion.accuracy }} m{{ suggestion.accuracy > 200 ? '; vị trí có thể lệch nhiều' : '' }}. Hãy kiểm tra và bổ sung số nhà, tầng hoặc căn hộ.</p>
+    <div class="suggestion-actions">
+      <button type="button" class="apply-button" (click)="applySuggestion()" [disabled]="disabled">Dùng địa chỉ này</button>
+      <button type="button" class="text-button" (click)="cancelLocation()">Bỏ qua</button>
+    </div>
+    <small>Dữ liệu: <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors</a> · Photon</small>
+  </div>
+  <div class="entry-modes" role="group" aria-label="Cách nhập địa chỉ">
+    <button type="button" (click)="switchMode('areas')" [attr.aria-pressed]="mode === 'areas'" [disabled]="disabled">Chọn khu vực</button>
+    <button type="button" (click)="switchMode('full')" [attr.aria-pressed]="mode === 'full'" [disabled]="disabled">Nhập địa chỉ đầy đủ</button>
+  </div>
+  <div *ngIf="mode === 'areas'" class="area-entry">
+    <div class="area-grid">
+      <div class="address-field">
+        <label [for]="inputId + '-province'">Tỉnh/Thành phố</label>
+        <select [id]="inputId + '-province'" [ngModel]="provinceCode" (ngModelChange)="selectProvince($event)" [ngModelOptions]="{standalone: true}" [disabled]="disabled || provincesLoading" (blur)="touched()">
+          <option value="">{{ provincesLoading ? 'Đang tải tỉnh/thành…' : 'Chọn tỉnh/thành phố' }}</option>
+          <option *ngFor="let province of provinces" [value]="province.code.toString()">{{ province.name }}</option>
+        </select>
+      </div>
+      <div class="address-field">
+        <label [for]="inputId + '-ward'">Phường/Xã</label>
+        <select [id]="inputId + '-ward'" [ngModel]="wardCode" (ngModelChange)="selectWard($event)" [ngModelOptions]="{standalone: true}" [disabled]="disabled || !provinceCode || wardsLoading || !wards.length" (blur)="touched()">
+          <option value="">{{ wardsLoading ? 'Đang tải phường/xã…' : 'Chọn phường/xã' }}</option>
+          <option *ngFor="let ward of wards" [value]="ward.code.toString()">{{ ward.name }}</option>
+        </select>
+      </div>
+    </div>
+    <p *ngIf="areaError" class="error" role="alert">{{ areaError }} <button type="button" class="text-button" *ngIf="!provinces.length" (click)="loadProvinces()" [disabled]="disabled || provincesLoading">Thử lại</button></p>
+    <div class="address-field">
+      <label [for]="inputId">Số nhà, tên đường</label>
+      <textarea [id]="inputId" [ngModel]="detail" (ngModelChange)="detailChanged($event)" [ngModelOptions]="{standalone: true}" [disabled]="disabled" rows="2" maxlength="200" autocomplete="address-line1" placeholder="Số nhà, đường, toà nhà, tầng/căn hộ" (blur)="touched()"></textarea>
+    </div>
+    <p *ngIf="preview" class="address-preview"><strong>Giao đến:</strong> {{ preview }}</p>
+    <p *ngIf="preview.length > 255" class="error" role="alert">Địa chỉ tối đa 255 ký tự. Bạn rút gọn phần số nhà, tên đường nhé.</p>
+    <p class="hint">Danh mục tỉnh/thành và phường/xã sau sáp nhập 2025. Bạn vẫn có thể nhập đầy đủ theo địa chỉ đang sử dụng.</p>
+  </div>
+  <div *ngIf="mode === 'full'" class="address-field">
+    <label [for]="inputId">Địa chỉ giao hàng đầy đủ</label>
+    <textarea [id]="inputId" [ngModel]="fullAddress" (ngModelChange)="fullChanged($event)" [ngModelOptions]="{standalone: true}" [disabled]="disabled" rows="3" minlength="5" maxlength="255" autocomplete="street-address" placeholder="Số nhà, đường, phường/xã, tỉnh/thành phố" (blur)="touched()"></textarea>
+    <p class="hint">Kiểm tra số nhà, tên đường và khu vực trước khi lưu hoặc đặt hàng.</p>
+  </div>
+</div>

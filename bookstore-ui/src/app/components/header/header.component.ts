@@ -1,12 +1,13 @@
 import {
   Component,
+  DoCheck,
   ElementRef,
   HostListener,
   OnDestroy,
   OnInit,
   ViewChild
 } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from 'src/app/services/auth.service';
@@ -15,13 +16,14 @@ import { CategoryService } from 'src/app/services/category.service';
 import { SearchHistoryService } from 'src/app/services/search-history.service';
 import { SearchService, SuggestionItem } from 'src/app/services/search.service';
 import { WishlistService } from 'src/app/services/wishlist.service';
+import { AutomationService } from 'src/app/services/automation.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit, OnDestroy, DoCheck {
 
   keyword = '';
   showSuggestions = false;
@@ -34,11 +36,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   showMobileNav = false;
 
   @ViewChild('searchBoxRef') searchBoxRef!: ElementRef;
+  @ViewChild('searchInput') searchInput?: ElementRef<HTMLInputElement>;
   @ViewChild('categoryMenuRef') categoryMenuRef!: ElementRef;
 
   private debounceTimer: any;
   private dropdownCloseTimer: any;
   private subscriptions = new Subscription();
+  private previousUrl = '';
+  private releaseNotifications?: () => void;
 
   constructor(
     public cartService: CartService,
@@ -48,7 +53,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private searchHistory: SearchHistoryService,
     private categoryService: CategoryService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    public automation: AutomationService
   ) {
     this.isMobile = window.innerWidth < 768;
   }
@@ -69,7 +75,27 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.showMobileNav = false;
   }
 
+  ngDoCheck(): void { this.automation.syncSession(); }
+
   ngOnInit(): void {
+    this.releaseNotifications = this.automation.connect();
+    this.previousUrl = this.router.url;
+    this.subscriptions.add(this.router.events.subscribe(event => {
+      if (!(event instanceof NavigationEnd)) return;
+      const path = (url: string) => url.split(/[?#]/)[0];
+      const isAuth = (url: string) => ['/login', '/register'].includes(path(url));
+      if (isAuth(this.previousUrl) && !isAuth(event.urlAfterRedirects)) {
+        const query = path(event.urlAfterRedirects) === '/search'
+          ? this.router.parseUrl(event.urlAfterRedirects).queryParams['q'] : '';
+        this.keyword = typeof query === 'string' ? query : '';
+        // Autofill can change the DOM without emitting an Angular model update.
+        if (this.searchInput) this.searchInput.nativeElement.value = this.keyword;
+        clearTimeout(this.debounceTimer);
+        this.suggestions = [];
+        this.showSuggestions = false;
+      }
+      this.previousUrl = event.urlAfterRedirects;
+    }));
     this.subscriptions.add(this.categoryService.getAll().subscribe(cats => {
       this.categories = cats;
     }));
@@ -82,6 +108,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     clearTimeout(this.debounceTimer);
     clearTimeout(this.dropdownCloseTimer);
     this.subscriptions.unsubscribe();
+    this.releaseNotifications?.();
   }
 
   // Close dropdowns when user clicks outside
@@ -121,10 +148,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
         : [];
       this.showSuggestions = true;
     }, 300);
-  }
-
-  onKeydownEnter(): void {
-    this.search();
   }
 
   onKeydownEscape(): void {

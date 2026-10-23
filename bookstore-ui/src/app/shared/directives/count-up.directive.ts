@@ -3,7 +3,7 @@ import {
   Directive,
   ElementRef,
   Input,
-  OnDestroy
+  OnDestroy, OnChanges
 } from '@angular/core';
 
 /**
@@ -19,7 +19,7 @@ import {
 @Directive({
   selector: '[appCountUp]'
 })
-export class CountUpDirective implements AfterViewInit, OnDestroy {
+export class CountUpDirective implements AfterViewInit, OnDestroy, OnChanges {
 
   /** Giá trị đích. */
   @Input('appCountUp') target = 0;
@@ -44,7 +44,7 @@ export class CountUpDirective implements AfterViewInit, OnDestroy {
     host.textContent = this.format(0);
 
     if (typeof IntersectionObserver === 'undefined') {
-      this.run();
+      this.started=true;this.run();
       return;
     }
 
@@ -64,10 +64,13 @@ export class CountUpDirective implements AfterViewInit, OnDestroy {
     this.observer.observe(host);
   }
 
+  ngOnChanges(): void { if(this.started){if(this.rafId)cancelAnimationFrame(this.rafId);this.run();} }
+
   private run(): void {
     const host = this.el.nativeElement;
     const start = performance.now();
     const target = this.target;
+    if(window.matchMedia?.('(prefers-reduced-motion: reduce)').matches){host.textContent=this.format(target);return;}
 
     const tick = (now: number) => {
       const t = Math.min((now - start) / this.duration, 1);

@@ -27,15 +27,17 @@ class ChatApiStreamTest {
     private ChatService chat;
     private ChatRateLimiter limiter;
     private MockMvc mvc;
+    private vn.fs.service.ChatTaskExecutor executor;
 
     @BeforeEach void setup() {
         chat = mock(ChatService.class);
         limiter = mock(ChatRateLimiter.class);
         when(limiter.allow(anyString())).thenReturn(true);
-        mvc = MockMvcBuilders.standaloneSetup(new ChatApi(chat, limiter, mock(ChatAnalyticsService.class))).build();
+        executor=new vn.fs.service.ChatTaskExecutor();
+        mvc = MockMvcBuilders.standaloneSetup(new ChatApi(chat, limiter, mock(ChatAnalyticsService.class), executor)).build();
     }
 
-    @AfterEach void cleanup() { SecurityContextHolder.clearContext(); }
+    @AfterEach void cleanup() { executor.shutdownNow();SecurityContextHolder.clearContext(); }
 
     private MvcResult start() throws Exception {
         return mvc.perform(post("/api/chat/stream").contentType("application/json")

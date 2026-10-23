@@ -32,4 +32,4 @@ npm test
 
 Production build dùng API cùng origin; hosting phải proxy `/api` tới Spring Boot và fallback route Angular về `index.html`.
 
-Tài liệu đầy đủ nằm ở [`../docs/`](../docs/).
+Tài liệu đầy đủ nằm ở [`../docs/`](../docs).

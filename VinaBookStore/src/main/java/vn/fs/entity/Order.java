@@ -36,6 +36,7 @@ public class Order implements Serializable {
 	private Long ordersId;
 	private Date orderDate;
 	private Double amount;
+	@javax.persistence.Column(length=400)
 	private String address;
 	private String phone;
 	private int status;
@@ -45,6 +46,8 @@ public class Order implements Serializable {
 	private String paymentTransactionId;
 	private Date paidAt;
 	private String paymentGatewayDate;
+	@javax.persistence.Column(length = 2048)
+	private String paymentCheckoutUrl;
     private String voucherCode;
     private Long voucherDiscount;
     private Long shippingFee;

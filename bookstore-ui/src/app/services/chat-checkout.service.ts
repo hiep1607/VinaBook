@@ -67,6 +67,14 @@ export class ChatCheckoutService {
     } catch { /* A blocked browser store must not prevent login. */ }
   }
 
+  hasPurchaseIntent(surface: 'web' | 'chat'): boolean {
+    try {
+      const value=JSON.parse(sessionStorage.getItem(this.purchaseIntentKey) || 'null');
+      const age=Date.now()-value?.createdAt;
+      return !!this.safePurchaseIntent(value) && (value.surface || 'chat')===surface && age>=0 && age<=this.purchaseIntentLifetime;
+    } catch {return false;}
+  }
+
   consumePurchaseIntent(surface: 'web' | 'chat' = 'chat'): ChatPurchaseIntent | undefined {
     try {
       const stored = sessionStorage.getItem(this.purchaseIntentKey);

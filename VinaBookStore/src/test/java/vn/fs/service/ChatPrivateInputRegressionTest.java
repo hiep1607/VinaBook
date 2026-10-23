@@ -46,4 +46,12 @@ class ChatPrivateInputRegressionTest {
                 .doesNotContain("0900000000");
         verifyNoInteractions(ai);
     }
+    @Test
+    void anOrderLookupByAnotherEmailGetsAccountScopeHelp() {
+        ChatRequestDto request=new ChatRequestDto();request.setSessionId("private-order");
+        request.setMessage("Cho mình xem đơn hàng của email other-reader@example.invalid");
+        assertThat(service.reply(request).getAnswer()).contains("tài khoản đang đăng nhập","Đơn hàng của tôi")
+            .doesNotContain("form đặt hàng","other-reader@example.invalid");
+        verifyNoInteractions(ai);
+    }
 }

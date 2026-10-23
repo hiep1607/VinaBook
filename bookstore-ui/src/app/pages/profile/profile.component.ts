@@ -1,4 +1,6 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { shippingError } from 'src/app/shared/shipping-validation';
+import { ADDRESS_LABELS } from 'src/app/shared/address-labels';
+import { Component, OnInit, DoCheck, OnDestroy } from '@angular/core';
 
 import { Router } from '@angular/router';
 
@@ -14,7 +16,8 @@ import { ReviewService } from 'src/app/services/review.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit, DoCheck {
+export class ProfileComponent implements OnInit, DoCheck, OnDestroy {
+  readonly addressLabels = ADDRESS_LABELS;
   private owner='';
   ngDoCheck():void {if(this.owner && this.owner!==(this.authService.currentUser?.token||this.authService.currentUser?.email||'')){this.owner='';this.previewAvatar='';this.addresses=[];this.recentOrders=[];this.editName='';this.editPhone='';this.currentPwd='';this.newPwd='';this.confirmPwd='';this.addressForm={label:'',name:'',phone:'',street:''};this.router.navigate(['/login']);}}
 
@@ -24,9 +27,17 @@ export class ProfileComponent implements OnInit, DoCheck {
   editName = '';
   editPhone = '';
   infoError = '';
+  savingInfo = false;
 
   // --- Avatar ---
   previewAvatar = '';
+  avatarError = '';
+  savingAvatar = false;
+  private avatarTouched = false;
+  private avatarReadId = 0;
+  private destroyed = false;
+  get avatarDirty(): boolean { return this.avatarTouched && this.previewAvatar !== (this.authService.currentUser?.avatar || ''); }
+  ngOnDestroy(): void { this.destroyed = true; this.avatarReadId++; }
 
   // --- Addresses ---
   addresses: any[] = [];
@@ -91,12 +102,13 @@ export class ProfileComponent implements OnInit, DoCheck {
   }
 
   setTab(tab: string): void {
-    this.activeTab = tab;
+    this.activeTab = tab === 'avatar' ? 'info' : tab;
   }
 
   // ===== PERSONAL INFO =====
 
   async saveInfo(): Promise<void> {
+    if (this.savingInfo) return;
     try {
 
     this.infoError = '';
@@ -111,6 +123,7 @@ export class ProfileComponent implements OnInit, DoCheck {
       return;
     }
 
+    this.savingInfo = true;
     await this.authService.updateUser({
       name: this.editName.trim(),
       phone: this.editPhone.trim()
@@ -118,53 +131,67 @@ export class ProfileComponent implements OnInit, DoCheck {
 
     this.notification.success('Cập nhật thông tin thành công');
 
-    } catch(error) { this.infoError=(error as any)?.error?.message || 'Chưa lưu được thay đổi. Bạn thử lại nhé.'; this.notification.error(this.infoError); }
+    } catch(error) { this.infoError=(error as any)?.error?.message || (error as any)?.message || 'Chưa lưu được thay đổi. Bạn thử lại nhé.'; this.notification.error(this.infoError); }
+    finally { this.savingInfo = false; }
   }
 
   // ===== AVATAR =====
 
   onAvatarSelected(event: any): void {
 
+    if (this.savingAvatar) return;
     const file: File = event.target.files && event.target.files[0];
 
     if (!file) {
       return;
     }
 
-    if(!['image/png','image/jpeg','image/gif','image/webp'].includes(file.type) || file.size>262144){this.notification.error('Bạn chọn ảnh PNG/JPEG/GIF/WebP tối đa 256 KB nhé.');return;}
+    this.avatarError = '';
+    if(!['image/png','image/jpeg','image/gif','image/webp'].includes(file.type) || file.size>262144){this.avatarError='Bạn chọn ảnh PNG/JPEG/GIF/WebP tối đa 256 KB nhé.';this.notification.error(this.avatarError);return;}
     const reader = new FileReader();
+    const readId = ++this.avatarReadId;
+    const owner = this.authService.currentUser?.token || this.authService.currentUser?.email;
 
     reader.onload = () => {
+      if (this.destroyed || readId !== this.avatarReadId || owner !== (this.authService.currentUser?.token || this.authService.currentUser?.email)) return;
       this.previewAvatar = reader.result as string;
+      this.avatarTouched = true;
     };
 
+    reader.onerror = () => { if (!this.destroyed && readId === this.avatarReadId) this.avatarError = 'Chưa đọc được ảnh. Bạn chọn ảnh khác nhé.'; };
+
     reader.readAsDataURL(file);
+    event.target.value = '';
 
   }
 
   async saveAvatar(): Promise<void> {
+    if (this.savingAvatar || !this.avatarDirty || !this.previewAvatar) return;
     try {
-
-    if (!this.previewAvatar) {
-      return;
-    }
-
+    this.savingAvatar = true;
+    this.avatarError = '';
     await this.authService.updateUser({ avatar: this.previewAvatar });
-
+    this.avatarTouched = false;
     this.notification.success('Cập nhật ảnh đại diện thành công');
+    } catch(error) { this.avatarError=(error as any)?.error?.message || (error as any)?.message || 'Chưa lưu được ảnh. Bạn thử lại nhé.'; }
+    finally { this.savingAvatar = false; }
+  }
 
-    } catch(error) { this.infoError=(error as any)?.error?.message || 'Chưa lưu được thay đổi. Bạn thử lại nhé.'; this.notification.error(this.infoError); }
+  cancelAvatar(): void {
+    if (this.savingAvatar) return;
+    this.avatarReadId++; this.avatarTouched = false; this.avatarError = '';
+    this.previewAvatar = this.authService.currentUser?.avatar || '';
   }
 
   async removeAvatar(): Promise<void> {
+    if (this.savingAvatar) return;
     try {
-
-    this.previewAvatar = '';
+    this.savingAvatar = true; this.avatarError = '';
     await this.authService.updateUser({ avatar: '' });
-
+    this.avatarReadId++; this.previewAvatar = ''; this.avatarTouched = false;
     this.notification.success('Đã xoá ảnh đại diện');
-
-    } catch(error) { this.infoError=(error as any)?.error?.message || 'Chưa lưu được thay đổi. Bạn thử lại nhé.'; this.notification.error(this.infoError); }
+    } catch(error) { this.avatarError=(error as any)?.error?.message || (error as any)?.message || 'Chưa xoá được ảnh. Bạn thử lại nhé.'; }
+    finally { this.savingAvatar = false; }
   }
 
   // ===== ADDRESSES =====
@@ -174,7 +201,7 @@ export class ProfileComponent implements OnInit, DoCheck {
   }
 
   async loadAddresses(): Promise<void> {
-    try { await this.addressService.refresh(this.email); this.addresses = this.addressService.getAddresses(this.email); this.previewAvatar=this.authService.currentUser?.avatar || '';const notice=localStorage.getItem('vinabook_preferences_import:'+encodeURIComponent(this.email)+':notice');if(notice)this.addressError=notice; }
+    try { await this.addressService.refresh(this.email); this.addresses = this.addressService.getAddresses(this.email); if(!this.avatarTouched)this.previewAvatar=this.authService.currentUser?.avatar || '';const notice=localStorage.getItem('vinabook_preferences_import:'+encodeURIComponent(this.email)+':notice');if(notice)this.addressError=notice; }
     catch(error) { this.addressError=(error as any)?.error?.message || 'Chưa tải được dữ liệu đồng bộ. Bạn thử lại nhé.'; }
   }
 
@@ -209,7 +236,8 @@ export class ProfileComponent implements OnInit, DoCheck {
   async saveAddress(): Promise<void> {
     try {
 
-    this.addressError = '';
+    this.addressError = shippingError(this.addressForm.name,this.addressForm.phone,this.addressForm.street);
+    if(this.addressError)return;
 
     if (
       !this.addressForm.name.trim() ||
@@ -235,7 +263,7 @@ export class ProfileComponent implements OnInit, DoCheck {
     this.editingAddressId = null;
     this.notification.success('Lưu địa chỉ thành công');
 
-    } catch(error) { this.addressError=(error as any)?.error?.message || 'Chưa lưu được thay đổi. Bạn thử lại nhé.'; this.notification.error(this.addressError); }
+    } catch(error) { this.addressError=(error as any)?.error?.message || (error as any)?.message || 'Chưa lưu được thay đổi. Bạn thử lại nhé.'; this.notification.error(this.addressError); }
   }
 
   async deleteAddress(address: any): Promise<void> {
@@ -245,7 +273,7 @@ export class ProfileComponent implements OnInit, DoCheck {
     this.loadAddresses();
     this.notification.success('Đã xoá địa chỉ');
 
-    } catch(error) { this.addressError=(error as any)?.error?.message || 'Chưa lưu được thay đổi. Bạn thử lại nhé.'; this.notification.error(this.addressError); }
+    } catch(error) { this.addressError=(error as any)?.error?.message || (error as any)?.message || 'Chưa lưu được thay đổi. Bạn thử lại nhé.'; this.notification.error(this.addressError); }
   }
 
   async setDefaultAddress(address: any): Promise<void> {
@@ -254,7 +282,7 @@ export class ProfileComponent implements OnInit, DoCheck {
     await this.addressService.setDefault(this.email, address.id);
     this.loadAddresses();
 
-    } catch(error) { this.addressError=(error as any)?.error?.message || 'Chưa lưu được thay đổi. Bạn thử lại nhé.'; this.notification.error(this.addressError); }
+    } catch(error) { this.addressError=(error as any)?.error?.message || (error as any)?.message || 'Chưa lưu được thay đổi. Bạn thử lại nhé.'; this.notification.error(this.addressError); }
   }
 
   // ===== CHANGE PASSWORD =====

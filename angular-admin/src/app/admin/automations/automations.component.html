@@ -1,0 +1,74 @@
+<section class="container-fluid automation-page">
+  <header class="automation-heading">
+    <div><p class="page-kicker">Vận hành cửa hàng</p><h1>Tự động hóa</h1><p>Theo dõi nhu cầu bạn đọc và chăm sóc khách hàng đúng thời điểm.</p></div>
+    <div class="heading-actions">
+      <button type="button" class="btn btn-outline-secondary" (click)="load()" [disabled]="busy || hasUnsavedChanges"><i class="fas fa-sync-alt" [class.fa-spin]="loading" aria-hidden="true"></i> {{ loading ? 'Đang tải...' : 'Cập nhật' }}</button>
+      <button type="button" class="btn btn-primary" (click)="run()" [disabled]="busy || !data || hasUnsavedChanges"><i class="fas fa-play" aria-hidden="true"></i> {{ running ? 'Đang kiểm tra...' : 'Kiểm tra ngay' }}</button>
+    </div>
+  </header>
+
+  <p class="scan-note">Lượt kiểm tra thủ công cập nhật thông báo trong web. Khách hàng tự chọn các loại thông báo và kênh email muốn nhận.</p>
+  <div class="page-feedback error-feedback" *ngIf="error" role="alert"><i class="fas fa-exclamation-circle" aria-hidden="true"></i><p>{{ error }}</p><button type="button" class="feedback-retry" *ngIf="!hasUnsavedChanges" (click)="load()" [disabled]="busy">Thử lại</button></div>
+  <p class="page-feedback success-feedback" *ngIf="success" role="status"><i class="fas fa-check-circle" aria-hidden="true"></i>{{ success }}</p>
+  <p class="unsaved-note" *ngIf="hasUnsavedChanges"><i class="fas fa-pen" aria-hidden="true"></i> Bạn có thay đổi chưa lưu. Lưu hoặc hoàn tác từng quy tắc trước khi cập nhật hay kiểm tra.</p>
+
+  <div class="initial-loading" *ngIf="loading && !data" role="status"><i class="fas fa-circle-notch fa-spin" aria-hidden="true"></i><h2>Đang tải tự động hóa</h2><p>Mình đang lấy cấu hình và tình trạng cửa hàng.</p></div>
+
+  <ng-container *ngIf="data as dashboard">
+    <div class="automation-stats">
+      <article><span class="stat-icon"><i class="fas fa-box-open" aria-hidden="true"></i></span><div><p>Sách cần chú ý tồn kho</p><strong>{{ dashboard.stats.unreadLowStock | number }}</strong></div></article>
+      <article><span class="stat-icon"><i class="fas fa-user-clock" aria-hidden="true"></i></span><div><p>Lượt đăng ký chờ sách</p><strong>{{ dashboard.stats.waitingReaders | number }}</strong></div></article>
+      <article><span class="stat-icon"><i class="fas fa-bell" aria-hidden="true"></i></span><div><p>Thông báo tạo hôm nay</p><strong>{{ dashboard.stats.notificationsToday | number }}</strong></div></article>
+      <article [class.needs-attention]="dashboard.stats.failedDeliveries > 0"><span class="stat-icon"><i class="fas fa-envelope" aria-hidden="true"></i></span><div><p>Lượt gửi email lỗi</p><strong>{{ dashboard.stats.failedDeliveries | number }}</strong></div></article>
+    </div>
+
+    <section class="automation-panel rules-panel" aria-labelledby="automation-rules-heading">
+      <header class="panel-heading"><div><h2 id="automation-rules-heading">Quy tắc tự động</h2><p>Bật các luồng phù hợp với cửa hàng. Thay đổi chỉ có hiệu lực sau khi lưu.</p></div><span class="updated-at" *ngIf="updatedAt">Cập nhật {{ updatedAt | date:'HH:mm, dd/MM/yyyy' }}</span></header>
+      <p class="panel-empty" *ngIf="!rules.length">Chưa có quy tắc được cấu hình.</p>
+      <article class="rule-row" *ngFor="let rule of rules; trackBy: trackRule" [class.rule-disabled]="!rule.enabled">
+        <span class="rule-icon"><i class="fas" [ngClass]="icon(rule.key)" aria-hidden="true"></i></span>
+        <div class="rule-main">
+          <div class="rule-title"><h3>{{ rule.label }}</h3><span class="rule-state" [class.enabled]="rule.enabled">{{ rule.enabled ? 'Đang bật' : 'Đã tắt' }}</span><span class="draft-label" *ngIf="dirty(rule)">Chưa lưu</span></div>
+          <p>{{ rule.description }}</p>
+          <div class="rule-options" *ngIf="hasDelay(rule) || rule.key === 'LOW_STOCK'">
+            <label *ngIf="hasDelay(rule)" [attr.for]="'delay-' + rule.key">{{ rule.key === 'CART_REMINDER' ? 'Nhắc sau khi giỏ không thay đổi' : 'Nhắc sau khi giao thành công' }}<span class="number-field"><input [id]="'delay-' + rule.key" type="number" min="1" max="720" step="1" [(ngModel)]="rule.delayHours" [disabled]="busy" /><span>giờ</span></span></label>
+            <label *ngIf="rule.key === 'LOW_STOCK'" [attr.for]="'threshold-' + rule.key">Cảnh báo khi tồn kho từ<span class="number-field"><input [id]="'threshold-' + rule.key" type="number" min="0" max="10000" step="1" [(ngModel)]="rule.threshold" [disabled]="busy" /><span>cuốn trở xuống</span></span></label>
+          </div>
+          <p class="rule-error" *ngIf="ruleErrors[rule.key]" role="alert">{{ ruleErrors[rule.key] }}</p>
+        </div>
+        <div class="rule-controls">
+          <label class="switch-control"><input type="checkbox" [(ngModel)]="rule.enabled" [disabled]="busy" [attr.aria-label]="'Bật quy tắc ' + rule.label" /><span class="switch-track" aria-hidden="true"></span></label>
+          <div class="rule-save-actions"><button type="button" class="btn btn-sm btn-outline-secondary" *ngIf="dirty(rule)" (click)="restore(rule)" [disabled]="busy">Hoàn tác</button><button type="button" class="btn btn-sm btn-primary" (click)="save(rule)" [disabled]="busy || !dirty(rule)" [attr.aria-label]="'Lưu quy tắc ' + rule.label">{{ savingKey === rule.key ? 'Đang lưu...' : 'Lưu' }}</button></div>
+        </div>
+      </article>
+    </section>
+
+    <div class="inventory-grid">
+      <section class="automation-panel" aria-labelledby="low-stock-heading">
+        <header class="panel-heading"><div><h2 id="low-stock-heading">Tồn kho cần chú ý</h2><p>Sách đang bán có số lượng bằng hoặc dưới ngưỡng cảnh báo.</p></div><a routerLink="/admin/inventory">Quản lý kho <i class="fas fa-arrow-right" aria-hidden="true"></i></a></header>
+        <div class="panel-empty" *ngIf="!dashboard.lowStock.length"><i class="fas fa-check-circle" aria-hidden="true"></i><h3>Chưa có sách dưới ngưỡng</h3><p>Các cuốn cần bổ sung sẽ xuất hiện ở đây.</p></div>
+        <div class="table-wrap" *ngIf="dashboard.lowStock.length"><table><caption class="sr-only">Sách dưới ngưỡng tồn kho</caption><thead><tr><th scope="col">Sách</th><th scope="col" class="number-cell">Tồn kho</th><th scope="col" class="number-cell">Người chờ</th></tr></thead><tbody><tr *ngFor="let row of dashboard.lowStock; trackBy: trackProduct"><td><strong>{{ row.name }}</strong><small>Mã sách #{{ row.productId }} · Ngưỡng {{ row.threshold }}</small></td><td class="number-cell"><span class="stock-quantity" [class.sold-out]="row.quantity === 0">{{ row.quantity | number }}</span></td><td class="number-cell">{{ row.waitingReaders | number }}</td></tr></tbody></table></div>
+      </section>
+
+      <section class="automation-panel" aria-labelledby="demand-heading">
+        <header class="panel-heading"><div><h2 id="demand-heading">Bạn đọc đang chờ</h2><p>Ưu tiên nhập thêm những cuốn có nhiều lượt đăng ký báo có hàng.</p></div></header>
+        <div class="panel-empty" *ngIf="!dashboard.demand.length"><i class="fas fa-book-reader" aria-hidden="true"></i><h3>Chưa có yêu cầu chờ sách</h3><p>Nhu cầu được tổng hợp từ đăng ký báo có hàng của khách.</p></div>
+        <div class="table-wrap" *ngIf="dashboard.demand.length"><table><caption class="sr-only">Nhu cầu chờ sách</caption><thead><tr><th scope="col">Sách</th><th scope="col" class="number-cell">Người chờ</th><th scope="col" class="number-cell">Tồn kho</th></tr></thead><tbody><tr *ngFor="let row of dashboard.demand; trackBy: trackProduct"><td><strong>{{ row.name }}</strong><small>Mã sách #{{ row.productId }}</small></td><td class="number-cell"><span class="demand-count">{{ row.waitingReaders | number }}</span></td><td class="number-cell">{{ row.quantity | number }}</td></tr></tbody></table></div>
+      </section>
+    </div>
+
+    <section class="automation-panel" aria-labelledby="catalog-demand-heading">
+      <header class="panel-heading"><div><h2 id="catalog-demand-heading">Sách được tìm nhưng chưa có</h2><p>Tên sách được khách yêu cầu rõ ràng nhưng chưa tìm thấy trong danh mục{{ catalogDemand ? ' trong ' + catalogDemand.days + ' ngày gần nhất' : '' }}.</p></div><button type="button" class="feedback-retry" (click)="loadCatalogDemand()" [disabled]="demandLoading">{{ demandLoading ? 'Đang tải...' : 'Cập nhật' }}</button></header>
+      <p class="page-feedback error-feedback demand-feedback" *ngIf="demandError" role="alert">{{ demandError }}<button type="button" class="feedback-retry" (click)="loadCatalogDemand()" [disabled]="demandLoading">Thử lại</button></p>
+      <p class="panel-empty" *ngIf="demandLoading && !catalogDemand" role="status">Đang tổng hợp nhu cầu tìm sách...</p>
+      <p class="panel-empty" *ngIf="catalogDemand && !catalogDemand.items.length && !demandError">Chưa ghi nhận tên sách chưa có trong danh mục.</p>
+      <div class="table-wrap" *ngIf="catalogDemand && catalogDemand.items.length"><table><caption class="sr-only">Sách được tìm nhưng chưa có trong danh mục</caption><thead><tr><th scope="col">Tên sách khách tìm</th><th scope="col" class="number-cell">Lượt tìm</th><th scope="col">Lần gần nhất</th></tr></thead><tbody><tr *ngFor="let row of catalogDemand.items; trackBy: trackTitle"><td><strong>{{ row.title }}</strong></td><td class="number-cell">{{ row.requestCount | number }}</td><td class="run-time">{{ row.lastRequestedAt | date:'HH:mm, dd/MM/yyyy' }}</td></tr></tbody></table></div>
+    </section>
+
+    <section class="automation-panel history-panel" aria-labelledby="automation-history-heading">
+      <header class="panel-heading"><div><h2 id="automation-history-heading">Lịch sử kiểm tra</h2><p>Kết quả các lượt chạy gần nhất để bạn kiểm tra hoạt động của hệ thống.</p></div></header>
+      <p class="panel-empty" *ngIf="!dashboard.recentRuns.length">Chưa có lượt kiểm tra nào được ghi nhận.</p>
+      <div class="table-wrap" *ngIf="dashboard.recentRuns.length"><table><caption class="sr-only">Lịch sử chạy tự động hóa</caption><thead><tr><th scope="col">Thời gian</th><th scope="col">Kết quả</th><th scope="col" class="number-cell">Thông báo mới</th><th scope="col">Chi tiết</th></tr></thead><tbody><tr *ngFor="let run of dashboard.recentRuns; trackBy: trackRun"><td class="run-time">{{ run.startedAt | date:'HH:mm:ss, dd/MM/yyyy' }}</td><td><span class="run-status" [class.run-failed]="run.status === 'FAILED' || run.status === 'ERROR'">{{ runStatus(run) }}</span></td><td class="number-cell">{{ run.createdCount | number }}</td><td class="run-detail">{{ run.error || 'Đã xử lý các quy tắc đang bật.' }}</td></tr></tbody></table></div>
+    </section>
+  </ng-container>
+</section>

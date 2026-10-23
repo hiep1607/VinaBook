@@ -73,7 +73,7 @@ final class ChatRecommendationIntake {
         if(!ChatCustomerActions.supportTool(q).isEmpty())return true;
         boolean suggestion = ChatBookFacts.has(q, "goi y|tu van|nen doc|nen mua|doc gi|tuong tu|cuon khac|sach khac");
         if (!suggestion && (!search.named(message, catalog).isEmpty() || !search.quoted(message).isBlank())) return true;
-        if (ChatService.isPurchaseRequest(q) || !ChatOrchestrator.cartTool(q).isEmpty()) return true;
+        if (ChatService.isPurchaseRequest(q) || !ChatCartCommands.cartTool(q).isEmpty()) return true;
         if (!suggestion && q.contains("gio hang") && ChatService.isCartChangeRequest(q)) return true;
         return intent == ChatIntent.ORDER_SUPPORT || intent == ChatIntent.SMALL_TALK
             || intent == ChatIntent.COMPARE_BOOKS || intent == ChatIntent.PRODUCT_INFO && !suggestion
@@ -115,7 +115,7 @@ final class ChatRecommendationIntake {
         return "";
     }
 
-    private String need(String message, List<Product> catalog, boolean pending) {
+    String need(String message, List<Product> catalog, boolean pending) {
         String q = language.normalize(message);
         var criteria = language.criteria(message, catalog);
         boolean subject = criteria.getTopics().stream().anyMatch(t -> !List.of("làm quà", "giáo trình", "thiếu nhi").contains(t))

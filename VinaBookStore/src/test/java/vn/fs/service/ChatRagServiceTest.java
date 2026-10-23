@@ -18,13 +18,13 @@ import vn.fs.entity.Product;
 
 class ChatRagServiceTest {
 	private ChatRetrievalService retrieval;
-	private ChatGroundingService grounding;
+	private ChatCatalogQuery search;
 	private List<Product> catalog;
 
 	@BeforeEach
 	void setUp() {
 		retrieval = new ChatRetrievalService(new ChatIntentService());
-		grounding = new ChatGroundingService(new ObjectMapper(), retrieval);
+		search = new ChatCatalogQuery(new ChatIntentService(),retrieval);
 		Category law = new Category(1L, "Sách Chính trị – pháp luật");
 		Category psychology = new Category(7L, "Sách Tâm lý");
 		Category technology = new Category(2L, "Sách Khoa học công nghệ – Kinh tế");
@@ -45,11 +45,7 @@ class ChatRagServiceTest {
 	void retrievesRealLegalBooksInsteadOfGenericBestsellers() {
 		ChatSearchCriteriaDto criteria = new ChatSearchCriteriaDto(null, null, "", "", "",
 				List.of("pháp luật"));
-		ChatQueryPlan plan = new ChatQueryPlan(ChatIntent.DISCOVER_BOOKS, criteria,
-				List.of("pháp luật"), 5, false);
-
-		List<Product> result = retrieval.retrieve("Có sách nào về pháp luật không?", plan, catalog,
-				Collections.emptyList(), false);
+        List<Product> result = search.search("pháp luật",criteria,catalog);
 
 		assertThat(result).extracting(Product::getName)
 				.contains("Hiến Pháp Nước Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam",
@@ -63,28 +59,20 @@ class ChatRagServiceTest {
 		retrieval.setRates(rates);
 		ChatSearchCriteriaDto criteria = new ChatSearchCriteriaDto(null, null, "", "", "rating", List.of());
 		criteria.setMinRating(4D);
-		assertThat(retrieval.retrieve("Tìm sách đánh giá cao", new ChatQueryPlan(ChatIntent.DISCOVER_BOOKS, criteria, List.of(), 3, false), catalog, List.of(), false))
+        assertThat(retrieval.rated(catalog,criteria))
 				.extracting(Product::getProductId).containsExactly(5L, 6L);
 	}
 
 	@Test
 	void rejectsBroadScienceMatchesWhenCatalogHasNoQuantumBook() {
-		ChatQueryPlan plan = new ChatQueryPlan(ChatIntent.DISCOVER_BOOKS,
-				ChatSearchCriteriaDto.empty(), List.of("lượng tử", "vật lý", "khoa học"), 5, true);
-
-		List<Product> result = retrieval.retrieve("Sách lượng tử cho người mới bắt đầu", plan, catalog,
-				Collections.emptyList(), false);
+        List<Product> result = search.search("Sách lượng tử cho người mới bắt đầu",ChatSearchCriteriaDto.empty(),catalog);
 
 		assertThat(result).isEmpty();
 	}
 
 	@Test
 	void prioritizesCommunicationBookWithoutTrustingAnInferredCategoryFilter() {
-		ChatQueryPlan plan = new ChatQueryPlan(ChatIntent.DISCOVER_BOOKS,
-				ChatSearchCriteriaDto.empty(), List.of("giao tiếp", "tự tin", "người mới đi làm"), 3, true);
-
-		List<Product> result = retrieval.retrieve("Tôi ngại giao tiếp và muốn tự tin hơn", plan, catalog,
-				Collections.emptyList(), false);
+        List<Product> result = search.search("Tôi ngại giao tiếp và muốn tự tin hơn",ChatSearchCriteriaDto.empty(),catalog);
 
 		assertThat(result).extracting(Product::getName).first().isEqualTo("Đắc Nhân Tâm");
 	}
@@ -97,55 +85,8 @@ class ChatRagServiceTest {
 		assertThat(result).isEmpty();
 	}
 
-	@Test
-	void rendersOnlyVerifiedDatabaseProductsAndFacts() {
-		String raw = "{\"intro\":\"Mình đã đối chiếu kho.\",\"recommendations\":["
-				+ "{\"productId\":5,\"reason\":\"Phù hợp để hiểu quyền lợi khi đi làm.\"},"
-				+ "{\"productId\":999,\"reason\":\"ID bịa.\"}],\"closing\":\"Bạn muốn đọc theo tình huống nào?\"}";
-
-		ChatGroundingService.GroundedResult result = grounding.parse(raw, catalog, ChatIntent.DISCOVER_BOOKS);
-
-		assertThat(result.isValid()).isTrue();
-		assertThat(result.getProducts()).extracting(Product::getProductId).containsExactly(5L);
-		assertThat(result.getAnswer()).contains("Luật Lao Động Thực Hành").contains("92.000đ")
-				.doesNotContain("999").doesNotContain("ID bịa");
-	}
-
-	@Test
-	void rejectsAiAnswerWithoutAnyVerifiedProductId() {
-		String raw = "{\"intro\":\"Có sách phù hợp.\",\"recommendations\":["
-				+ "{\"productId\":999,\"reason\":\"Không tồn tại.\"}],\"closing\":\"\"}";
-
-		ChatGroundingService.GroundedResult result = grounding.parse(raw, catalog, ChatIntent.DISCOVER_BOOKS);
-
-		assertThat(result.isValid()).isFalse();
-		assertThat(result.getProducts()).isEmpty();
-	}
-
-	@Test
-	void acceptsAnEmptyGroundedRecommendationWhenCandidatesAreOnlyNearMatches() {
-		String raw = "{\"intro\":\"Mình chưa tìm thấy sách khớp trực tiếp trong lần tra cứu này.\","
-				+ "\"recommendations\":[],\"closing\":\"Bạn có muốn đổi chủ đề không?\"}";
-
-		ChatGroundingService.GroundedResult result = grounding.parse(raw, catalog, ChatIntent.DISCOVER_BOOKS);
-
-		assertThat(result.isValid()).isTrue();
-		assertThat(result.getProducts()).isEmpty();
-		assertThat(result.getAnswer()).contains("chưa tìm thấy");
-	}
-
-	@Test
-	void suppressesAlternativesWhenModelAdmitsThereIsNoDirectMatch() {
-		String raw = "{\"intro\":\"Chưa tìm thấy sách lượng tử, tuy nhiên có sách gần chủ đề.\","
-				+ "\"recommendations\":[{\"productId\":9,\"reason\":\"Sách công nghệ.\"}],"
-				+ "\"closing\":\"Bạn có muốn đổi chủ đề không?\"}";
-
-		ChatGroundingService.GroundedResult result = grounding.parse(raw, catalog, ChatIntent.DISCOVER_BOOKS);
-
-		assertThat(result.isValid()).isTrue();
-		assertThat(result.getProducts()).isEmpty();
-		assertThat(result.getAnswer()).doesNotContain("Clean Code").contains("chưa tìm thấy");
-	}
+    // Writer identity/fact guards are exercised against ChatBookNarrator in
+    // ChatNarrationGuardTest, rather than the retired JSON response parser.
 
 	private Product product(Long id, String name, String author, Double price, String description,
 			Category category) {

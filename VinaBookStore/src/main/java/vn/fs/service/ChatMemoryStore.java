@@ -41,7 +41,7 @@ public class ChatMemoryStore {
     }
 
     @Transactional(readOnly = true)
-    void restore(Long userId, String sessionId, ChatDialogueMemory.State state) {
+    public void restore(Long userId, String sessionId, ChatDialogueMemory.State state) {
         String key = key(userId, sessionId);
         if (key != null) conversations.findById(key).ifPresent(saved -> {
             if (saved.getStateJson() == null || saved.getStateJson().isBlank()) return;
@@ -81,7 +81,7 @@ public class ChatMemoryStore {
     }
 
     @Transactional(readOnly = true)
-    ChatResponseDto duplicate(Long userId, String sessionId, String requestId) {
+    public ChatResponseDto duplicate(Long userId, String sessionId, String requestId) {
         String key = key(userId, sessionId);
         if (key == null || requestId == null || requestId.isBlank()) return null;
         return exchanges.findByConversationIdAndRequestId(key, requestId)
@@ -89,7 +89,7 @@ public class ChatMemoryStore {
     }
 
     @Transactional
-    void save(Long userId, String sessionId, String requestId, String question,
+    public void save(Long userId, String sessionId, String requestId, String question,
             ChatResponseDto response, ChatDialogueMemory.State state, boolean saveTranscript) {
         String key = key(userId, sessionId);
         if (key == null) return;
@@ -123,15 +123,32 @@ public class ChatMemoryStore {
     public List<Map<String, Object>> history(Long userId, String sessionId) {
         String key = key(userId, sessionId);
         if (key == null) return List.of();
-        List<ChatExchange> rows = exchanges.findTop500ByConversationIdOrderByIdDesc(key);
+        List<ChatExchange> rows = exchanges.findTop25ByConversationIdOrderByIdDesc(key);
+        return messages(rows);
+    }
+    @Transactional(readOnly=true)
+    public vn.fs.dto.chat.ChatHistoryPage historyPage(Long userId,String sessionId,Long before,int limit) {
+        String key=key(userId,sessionId);
+        if(key==null)return new vn.fs.dto.chat.ChatHistoryPage(List.of(),null,false);
+        int size=Math.max(1,Math.min(50,limit));
+        List<ChatExchange> fetched=exchanges.recent(key,before,org.springframework.data.domain.PageRequest.of(0,size+1));
+        boolean more=fetched.size()>size;
+        List<ChatExchange> rows=new ArrayList<>(fetched.subList(0,Math.min(size,fetched.size())));
+        Long next=more?rows.get(rows.size()-1).getId():null;
+        return new vn.fs.dto.chat.ChatHistoryPage(messages(rows),next,more);
+    }
+    private List<Map<String,Object>> messages(List<ChatExchange> rows) {
+        rows=new ArrayList<>(rows);
         Collections.reverse(rows);
         List<Map<String, Object>> result = new ArrayList<>();
         for (ChatExchange row : rows) {
             ChatResponseDto response = readResponse(row.getResponseJson());
             if (response == null) continue;
-            result.add(Map.of("from", "user", "text", row.getUserText()));
+            Map<String,Object> user=new LinkedHashMap<>(Map.of("from","user","text",row.getUserText()));
+            if(row.getId()!=null)user.put("historyId",row.getId());result.add(user);
             Map<String, Object> assistant = new LinkedHashMap<>();
             assistant.put("from", "bot");
+            if(row.getId()!=null)assistant.put("historyId",row.getId());
             assistant.put("text", response.getAnswer());
             assistant.put("products", response.getProducts());
             assistant.put("chips", response.getChips());
@@ -148,18 +165,16 @@ public class ChatMemoryStore {
     }
 
     @Transactional(readOnly = true)
-    List<Map<String, String>> relevantTurns(Long userId, String sessionId, String question) {
+    public List<Map<String, String>> relevantTurns(Long userId, String sessionId, String question) {
         String key = key(userId, sessionId);
         if (key == null) return List.of();
-        List<ChatExchange> recent = exchanges.findTop500ByConversationIdOrderByIdDesc(key);
+        List<ChatExchange> recent = exchanges.findTop8ByConversationIdOrderByIdDesc(key);
         if (recent.isEmpty()) return List.of();
         List<ChatExchange> chosen = new ArrayList<>(recent.subList(0, Math.min(4, recent.size())));
-        Set<String> words = new HashSet<>(Arrays.asList(new ChatIntentService().normalize(question).split("\\W+")));
-        recent.stream().skip(4)
-                .filter(row -> {
-                    Set<String> old = new HashSet<>(Arrays.asList(new ChatIntentService().normalize(row.getUserText()).split("\\W+")));
-                    return words.stream().anyMatch(word -> word.length() >= 4 && old.contains(word));
-                }).limit(2).forEach(chosen::add);
+        String term=Arrays.stream(new ChatIntentService().normalize(question).split("\\W+"))
+            .filter(word->word.matches("[a-z0-9]{4,}")).max(java.util.Comparator.comparingInt(String::length)).orElse("");
+        Long oldest=recent.get(recent.size()-1).getId();
+        if(!term.isBlank() && oldest!=null)chosen.addAll(exchanges.relevant(key,oldest,"%"+term+"%",org.springframework.data.domain.PageRequest.of(0,2)));
         Collections.reverse(chosen);
         return chosen.stream().map(row -> {
             Map<String, String> turn = new LinkedHashMap<>();

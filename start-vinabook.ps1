@@ -54,7 +54,7 @@ function Wait-Service([string]$Url, [System.Diagnostics.Process]$Process, [strin
 
 function Start-Logged([string]$Directory, [string]$Command, [string]$Name) {
     $log = Join-Path $logs "$Name.log"
-    $process = Start-Process $env:ComSpec -WorkingDirectory $Directory -WindowStyle Minimized -PassThru `
+    $process = Start-Process $env:ComSpec -WorkingDirectory $Directory -WindowStyle Hidden -PassThru `
         -ArgumentList ('/d /s /c "' + $Command + ' > "' + $log + '" 2>&1"')
     return $process
 }
@@ -74,7 +74,8 @@ try {
             if (Test-Path $known) { $java = Get-Item $known } else { throw 'Can cai JDK 17 va them java vao PATH hoac dat JAVA_HOME.' }
         }
         $javaLog = Join-Path $logs 'java-check.log'
-        $check = Start-Process $java.Source -ArgumentList '-XshowSettings:properties -version' -NoNewWindow -Wait -PassThru -RedirectStandardError $javaLog
+        $javaPath = if ($java -is [System.IO.FileInfo]) { $java.FullName } else { $java.Source }
+        $check = Start-Process $javaPath -ArgumentList '-XshowSettings:properties -version' -WindowStyle Hidden -Wait -PassThru -RedirectStandardError $javaLog
         $settings = Get-Content $javaLog -Raw
         if ($settings -match 'java.home\s*=\s*([^\r\n]+)') { $env:JAVA_HOME = $Matches[1].Trim() }
         if (!(Test-Path "$env:JAVA_HOME\bin\javac.exe")) { throw 'Khong tim thay JDK. Hay dat JAVA_HOME den JDK 17.' }
@@ -85,7 +86,7 @@ try {
     } else {
         if (-not $env:JWT_SECRET) { throw 'Hay dat JWT_SECRET trong VinaBookStore/.env.local hoac bien moi truong truoc khi chay backend.' }
         Write-Host 'Dang build sach va khoi dong backend (khong bo qua bien dich test)...'
-        $build = (Join-Path $logs 'backend-build').Replace('\', '/')
+        $build = (Join-Path $root 'VinaBookStore/target-runtime').Replace('\', '/')
         $backend = Start-Logged (Join-Path $root 'VinaBookStore') ('mvnw.cmd "-Dvinabook.build.directory=' + $build + '" clean spring-boot:run') 'backend'
         Wait-Service 'http://localhost:8080/api/products' $backend (Join-Path $logs 'backend.log') -Json
     }
@@ -110,8 +111,8 @@ try {
             if (!(Test-Path $stamp) -or ((Get-Content $stamp -Raw).Trim() -ne $hash)) {
                 Write-Host 'Dang dong bo dependency tu package.json...'
                 $instLog = Join-Path $logs 'install.log'
-                $cmd = 'npm install --no-audit --no-fund'
-                $inst = Start-Process $env:ComSpec -WorkingDirectory $ui -WindowStyle Minimized -PassThru `
+                $cmd = if ($hasLock) { 'npm ci --no-audit --no-fund' } else { 'npm install --no-audit --no-fund' }
+                $inst = Start-Process $env:ComSpec -WorkingDirectory $ui -WindowStyle Hidden -PassThru `
                     -ArgumentList ('/d /s /c "' + $cmd + ' > "' + $instLog + '" 2>&1"')
                 $inst.WaitForExit()
                 if ($inst.ExitCode -ne 0) { throw "Cai dependency loi (exit $($inst.ExitCode)). Xem: $instLog" }
@@ -125,7 +126,7 @@ try {
     if (!(Test-Http 'http://localhost:4200/api/products' -Json)) { throw "Frontend khong ket noi duoc API. Xem log trong $logs" }
     Write-Host 'Web san sang: http://localhost:4200/' -ForegroundColor Green
     Write-Host "Log: $logs"
-    Write-Host 'Cac dich vu dang chay trong cua so thu nho. Dong cua so dich vu de dung.'
+    Write-Host 'Cac dich vu dang chay nen. Xem log de kiem tra trang thai.'
     if (!$NoBrowser) { Start-Process 'http://localhost:4200/' }
     exit 0
 } catch {

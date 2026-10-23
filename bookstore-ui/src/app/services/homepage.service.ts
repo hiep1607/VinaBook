@@ -9,6 +9,8 @@ import { environment } from '../../environments/environment';
 export class HomepageService {
   private readonly url = environment.apiUrl + '/api/homepage';
   private config$?: Observable<HomepageConfig>;
+  fallbackUsed = false;
+  refresh(): Observable<HomepageConfig> {this.config$=undefined;this.fallbackUsed=false;return this.getConfig();}
 
   constructor(private http: HttpClient) { }
 
@@ -16,7 +18,7 @@ export class HomepageService {
     if (!this.config$) {
       this.config$ = this.http.get<HomepageConfig>(this.url).pipe(
         map(config => normalizeHomepageConfig(config)),
-        catchError(() => of(normalizeHomepageConfig(DEFAULT_HOMEPAGE_CONFIG))),
+        catchError(() => {this.fallbackUsed=true;return of(normalizeHomepageConfig(DEFAULT_HOMEPAGE_CONFIG));}),
         shareReplay(1)
       );
     }

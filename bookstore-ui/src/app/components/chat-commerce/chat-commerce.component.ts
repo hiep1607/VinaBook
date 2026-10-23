@@ -1,3 +1,4 @@
+import { shippingError, normalizePhone } from 'src/app/shared/shipping-validation';
 import { Component, DoCheck, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { AddressService } from 'src/app/services/address.service';
@@ -116,8 +117,7 @@ export class ChatCommerceComponent implements OnDestroy, OnInit, DoCheck {
   get checkoutTotal(): number { return this.totalEstimated ? this.checkoutSubtotal + this.checkoutShipping : this.quote!.total; }
   get inputValid(): boolean {
     return !!this.checkout && this.authenticated && !!this.settings && !this.quantityError
-      && !!this.form.recipient.trim() && this.form.recipient.trim().length <= 80
-      && /^0\d{9}$/.test(this.form.phone.trim()) && !!this.form.street.trim() && this.form.street.trim().length <= 160
+      && !shippingError(this.form.recipient,this.form.phone,this.form.street)
       && this.paymentMethods.some(method => method.code === this.form.paymentMethod)
       && (!this.voucherCode.trim() || /^[A-Z0-9_-]{3,32}$/.test(this.voucherCode.trim().toUpperCase()))
       && this.checkoutItems.length > 0 && this.checkoutItems.every(item => Number.isInteger(item.quantity)
@@ -398,7 +398,7 @@ export class ChatCommerceComponent implements OnDestroy, OnInit, DoCheck {
     if (!this.checkout || this.busy || this.uncertainConfirmation) return;
     if (this.quoteTask) { this.quoteQueued = true; return this.quoteTask; }
     if (this.quote && this.quoteInputKey === this.inputKey() && this.quote.expiresAt > Date.now()) return;
-    const form = { recipient: this.form.recipient.trim(), phone: this.form.phone.trim(), street: this.form.street.trim(), paymentMethod: this.form.paymentMethod };
+    const form = { recipient: this.form.recipient.trim(), phone: normalizePhone(this.form.phone), street: this.form.street.trim(), paymentMethod: this.form.paymentMethod };
     if (!this.inputValid) {
       this.quote = undefined; this.quoteUpdating = false;
       this.error = this.quantityError || 'Bạn bổ sung người nhận, số điện thoại 10 chữ số bắt đầu bằng 0 và địa chỉ để xác nhận đơn nhé.'; return;

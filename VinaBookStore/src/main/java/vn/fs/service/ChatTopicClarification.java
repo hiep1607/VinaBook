@@ -30,12 +30,23 @@ final class ChatTopicClarification {
         }
         List<String> topics=topics(args.path("suggestedTopics").asText(""));
         boolean grounded=!topics.isEmpty() && grounded(quote,context);
+        List<String> focused=focusedTopics(context.request().getMessage());
+        if(focused.isEmpty() && grounded)focused=focusedTopics(quote);
+        if(!focused.isEmpty()) {
+            List<String> matching=new ArrayList<>(focused);
+            for(String topic:topics)if(relevantTopic(topic,focused) && !matching.contains(topic))matching.add(topic);
+            topics=matching;
+            if(!grounded) {
+                quote=ChatDialogueInterpreter.clean(context.request().getMessage(),180);
+                grounded=grounded(quote,context);
+            }
+        }
         log.info("chat_topic_clarification contextual={} choices={} quoteChars={}",grounded,topics.size(),quote.length());
         boolean gift="gift".equals(args.path("topic").asText())
             || new ChatIntentService().normalize(context.request().getMessage()).matches("(?s).*\\b(?:lam qua|qua tang|tang|mua qua)\\b.*")
             || new ChatIntentService().normalize(Objects.toString(context.state().toolSearch.get("purpose"),""))
                 .matches("(?s).*\\b(?:lam qua|qua tang|tang|mua qua)\\b.*");
-        if(!grounded)topics=gift
+        if(!grounded && focused.isEmpty())topics=gift
             ?List.of("Truyện để thư giãn","Kỹ năng sống","Khám phá khoa học")
             :List.of("Truyện để thư giãn","Kỹ năng giao tiếp","Khám phá khoa học");
         // Only verified topics become visible choices. Preparation runs on
@@ -47,7 +58,7 @@ final class ChatTopicClarification {
         for(String topic:topics)if(!offered.contains(new ChatIntentService().normalize(topic)) && prepare.test(topic))verified.add(topic);
         List<String> additional=new ArrayList<>(catalogTopics);
         additional.addAll(List.of("Truyện phiêu lưu","Kỹ năng sống","Khoa học","Truyện trinh thám","Tâm lý","Lập trình","Lịch sử","Kinh tế"));
-        if(!grounded && verified.size()<MAX_TOPICS)for(String topic:additional) {
+        if(!grounded && focused.isEmpty() && verified.size()<MAX_TOPICS)for(String topic:additional) {
             if(verified.size()>=MAX_TOPICS)break;
             if(!topics.contains(topic) && !offered.contains(new ChatIntentService().normalize(topic)) && prepare.test(topic))verified.add(topic);
         }
@@ -80,7 +91,7 @@ final class ChatTopicClarification {
         else {
             if(topics.size()==1)opening=opening.replace("vài chủ đề liên quan","một chủ đề liên quan")
                 .replace("vài hướng để bạn tham khảo","một hướng để bạn tham khảo")
-                .replace("vài hướng:","hướng này:");
+                .replace("vài hướng:","hướng này:").replace("Có những hướng này","Có một hướng này");
             answer=(more?"Có thêm những hướng này:":opening)+numbered(topics)
                 +(more?"\nBạn muốn xem sách ở hướng nào?":"\nBạn chọn tên hoặc số thứ tự nhé; cũng có thể hỏi thêm chủ đề khác.");
         }
@@ -89,6 +100,23 @@ final class ChatTopicClarification {
 
     static List<String> lastMenu(ChatDialogueMemory.State state) {
         return state.topicMenus.isEmpty()?state.topicSuggestions:state.topicMenus.get(state.topicMenus.size()-1);
+    }
+
+    static List<String> focusedTopics(String message) {
+        ChatIntentService language=new ChatIntentService();String q=language.normalize(message);
+        ChatExplicitFilters evidence=new ChatExplicitFilters(language);
+        return language.criteria(message,List.of()).getTopics().stream()
+            .filter(topic->!Set.of("lam qua","thieu nhi","giao trinh").contains(language.normalize(topic)))
+            .filter(topic->evidence.affirmed(q,language.normalize(topic))).toList();
+    }
+    static boolean relevantTopic(String topic,List<String> focused) {
+        ChatIntentService language=new ChatIntentService();String q=language.normalize(topic);
+        return focused.stream().anyMatch(value->{
+            String need=language.normalize(value);
+            return ChatCatalogQuery.word(q,need) || ChatCatalogQuery.subjectGroups().stream()
+                .anyMatch(group->group.stream().anyMatch(term->ChatCatalogQuery.word(need,term))
+                    && group.stream().anyMatch(term->ChatCatalogQuery.word(q,term)));
+        });
     }
 
     static String choice(String message,ChatDialogueMemory.State state) {
@@ -176,6 +204,10 @@ final class ChatTopicClarification {
         if(options==null || options.isEmpty() || options.size()>MAX_TOPICS)return "";
         ChatIntentService language=new ChatIntentService();
         String q=language.normalize(message).replaceAll("[.!?]","").strip();
+        String[] clauses=q.split("[,;]",2);
+        if(clauses.length==2 && (!ChatMoney.parse(clauses[1]).isEmpty() || language.bookCount(clauses[1])!=null)
+                && !ChatBookFacts.has(clauses[1],"neu|gia su|thay vao|hay|doi chu de"))q=clauses[0].strip();
+        q=q.replaceAll("\\bdau tien\\b","1").replaceAll("\\bthu nhat\\b","1");
         for(String option:options)if(q.equals(language.normalize(option))
             || q.matches("(?:(?:minh|toi|em) )?(?:chon|xem|lay)(?: chu de| huong)? "+java.util.regex.Pattern.quote(language.normalize(option))+"(?: nhe| di| a)?"))return option;
         var match=java.util.regex.Pattern.compile(

@@ -34,6 +34,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   loading = true;
   loadError = false;
+  categoryError = false;
+  configurationError = false;
 
   readonly skeletonItems = [1, 2, 3, 4, 5];
 
@@ -51,20 +53,25 @@ export class HomeComponent implements OnInit, OnDestroy {
     private motion: MotionService
   ) {}
 
-  ngOnInit(): void {
-    this.homepageService.getConfig().subscribe(config => {
+  ngOnInit(): void { this.loadHomeConfiguration();this.loadCatalog();this.loadCategories(); }
+
+  private loadHomeConfiguration(refresh=false): void {
+    (refresh?this.homepageService.refresh():this.homepageService.getConfig()).subscribe(config => {
       this.homeConfig = config;
+      this.configurationError = !!this.homepageService.fallbackUsed;
       this.applyHeroBooks();
       this.applyCategories();
     });
 
-    this.loadCatalog();
+  }
 
-    this.categoryService.getAll().subscribe(cats => {
+  private loadCategories(refresh=false): void {
+    this.categoryError=false;
+    (refresh?this.categoryService.refresh():this.categoryService.getAll()).subscribe(cats => {
       this.allCategories = cats;
       this.applyCategories();
       this.stats.categories = cats.length;
-    });
+    }, () => this.categoryError=true);
   }
 
   ngOnDestroy(): void {
@@ -178,6 +185,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   retry(): void {
     this.productService.refresh();
     this.loadCatalog();
+    this.loadCategories(true);
+    this.loadHomeConfiguration(true);
   }
 
   navigateToCategory(categoryId: number): void {

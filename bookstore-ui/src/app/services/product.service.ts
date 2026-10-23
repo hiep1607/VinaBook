@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { map, shareReplay, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { CoverImageService } from './cover-image.service';
 
@@ -14,6 +14,8 @@ export class ProductService {
 
   /** Catalog từ backend, map về shape storefront, cache 1 lần cho cả app */
   private products$!: Observable<any[]>;
+  private loadedAt = 0;
+  private readonly cacheLifetime = 60000;
 
   constructor(
     private httpClient: HttpClient,
@@ -48,9 +50,11 @@ export class ProductService {
 
   /** Toàn bộ catalog (đã map + cache). Mọi nơi trong app dùng hàm này. */
   getProducts(): Observable<any[]> {
+    if (this.products$ && this.loadedAt && Date.now()-this.loadedAt>=this.cacheLifetime)this.products$=undefined as any;
     if (!this.products$) {
       this.products$ = this.httpClient.get<any[]>(this.url).pipe(
         map(list => list.map(p => this.mapProduct(p))),
+        tap(() => this.loadedAt=Date.now()),
         shareReplay(1)
       );
     }
@@ -63,6 +67,7 @@ export class ProductService {
    */
   refresh(): Observable<any[]> {
     this.products$ = undefined as any;
+    this.loadedAt=0;
     return this.getProducts();
   }
 

@@ -51,3 +51,15 @@ Công cụ `apply-reviewed-book-profiles.py` nhập manifest đã biên tập v�
 - `10-vouchers.sql`: mã giảm giá, lượt sử dụng và discount/ship lưu trên đơn.
 - `11-restock-watches.sql`: theo dõi và thông báo có hàng theo tài khoản.
 Chạy theo thứ tự sau khi có bảng users/orders/products/support_requests. Các câu ALTER ở 09/10 chỉ chạy một lần; kiểm tra schema trước nếu local đã dùng Hibernate ddl-auto=update. Không chạy lại dump seed trên database đang có đơn hàng.
+
+## Gia cố ngày 17/10/2026
+
+- `12-password-reset-tokens.sql`: reset token được hash, hết hạn và dùng một lần.
+- `13-order-shipping-address.sql`: địa chỉ đơn chứa 255 ký tự đường/phường/tỉnh và tên người nhận.
+- `14-checkout-drafts.sql`: nháp đặt hàng riêng theo tài khoản, giữ qua restart và chống xác nhận lặp.
+
+Áp dụng các migration còn thiếu trước khi dùng profile `production`; profile này chỉ kiểm tra schema. Local dùng `dev` có thể đã được Hibernate cập nhật, cần kiểm tra trước khi chạy ALTER. Xem [vận hành](../docs/operations.md).
+
+### 15 — Outbox email
+
+`15-mail-outbox.sql` tạo hàng đợi email bền vững có payload mã hóa, claim và retry. Chạy sau migration 14 trước khi dùng profile production. Cấu hình khóa và giới hạn giao thư tại [operations](../docs/operations.md).

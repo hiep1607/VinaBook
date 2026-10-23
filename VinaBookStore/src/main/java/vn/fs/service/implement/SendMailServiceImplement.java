@@ -30,7 +30,9 @@ public class SendMailServiceImplement implements SendMailService {
 	@Autowired
 	JavaMailSender sender;
 
-	List<MailInfo> list = new ArrayList<>();
+    @Autowired private vn.fs.service.MailOutboxStore outbox;
+    @Autowired(required=false) private vn.fs.automation.AutomationDeliveryGuard automationGuard;
+    private static final org.slf4j.Logger log=org.slf4j.LoggerFactory.getLogger(SendMailServiceImplement.class);
 
 	@Override
 	public void send(MailInfo mail) throws MessagingException, IOException {
@@ -56,7 +58,7 @@ public class SendMailServiceImplement implements SendMailService {
 
 	@Override
 	public void queue(MailInfo mail) {
-		list.add(mail);
+        outbox.enqueue(mail);
 	}
 
 	@Override
@@ -67,14 +69,14 @@ public class SendMailServiceImplement implements SendMailService {
 	@Override
 	@Scheduled(fixedDelay = 5000)
 	public void run() {
-		while (!list.isEmpty()) {
-			MailInfo mail = list.remove(0);
-			try {
-				this.send(mail);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+        for(int i=0;i<5;i++) {
+            var pending=outbox.claim();if(pending.isEmpty())break;
+            var job=pending.get();boolean sent=false;
+            if(automationGuard!=null && !automationGuard.allow(job.id())){outbox.discard(job);continue;}
+            try {this.send(job.mail());sent=true;}
+            catch(Exception failed){log.warn("mail_delivery_retry job={} exceptionType={}",job.id(),failed.getClass().getSimpleName());}
+            outbox.finish(job,sent);
+        }
 	}
 
 }

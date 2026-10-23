@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subscriber, Subscription } from 'rxjs';
-import { tap, timeout } from 'rxjs/operators';
+import { map, tap, timeout } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 export type ChatIntent =
@@ -43,6 +43,8 @@ export interface ChatMessage {
   messageId?: string;
   intent?: ChatIntent;
   streaming?: boolean;
+  progress?: string;
+  historyId?: number;
   feedback?: 'positive' | 'negative';
   private?: boolean;
 }
@@ -87,6 +89,7 @@ export class ChatbotService {
       const controller = new AbortController();
       let fallbackSub: Subscription | undefined;
       let streamTimedOut = false;
+      const deadlineAt = Date.now() + 60000;
       const deadline = setTimeout(() => {
         streamTimedOut = true;
         controller.abort();
@@ -137,6 +140,9 @@ export class ChatbotService {
                 await this.reveal(event.data as ChatApiResponse, observer, controller.signal);
                 observer.complete();
                 return;
+              } else if (event.name === 'progress' || event.name === 'ready') {
+                const labels: Record<string,string> = { understanding: 'Mình đang đọc yêu cầu của bạn…', execution: 'Mình đang kiểm tra sách và thông tin liên quan…' };
+                observer.next({ from: 'bot', text: '', streaming: true, progress: labels[event.data.stage] || 'Mình đang kiểm tra yêu cầu…' });
               } else if (event.name === 'error') {
                 observer.error(new Error(event.data.message || 'Mình chưa hoàn tất câu trả lời. Bạn thử gửi lại câu hỏi nhé để mình kiểm tra tiếp.'));
                 return;
@@ -145,10 +151,10 @@ export class ChatbotService {
           }
           throw new Error('stream-ended');
         } catch (error) {
-          clearTimeout(deadline);
           if (streamTimedOut || controller.signal.aborted || observer.closed) return;
-          fallbackSub = this.http.post<ChatApiResponse>(this.api, body).pipe(timeout(60000)).subscribe({
+          fallbackSub = this.http.post<ChatApiResponse>(this.api, body).pipe(timeout(Math.max(1, deadlineAt - Date.now()))).subscribe({
             next: response => {
+              clearTimeout(deadline);
               this.reveal(response, observer, controller.signal).then(() => observer.complete());
             },
             error: error => observer.error(this.transportError(error.name === 'TimeoutError' ? 504 : error.status))
@@ -173,6 +179,11 @@ export class ChatbotService {
     return this.http.get<ChatMessage[]>(this.api + '/conversation', { params: { sessionId: this.sessionId() } });
   }
 
+  historyPage(before: number): Observable<{messages: ChatMessage[]; nextBefore?: number; hasMore: boolean}> {
+    return this.http.get<{messages: ChatMessage[]; nextBefore?: number; hasMore: boolean}>(this.api + '/conversation/page',
+      {params: {sessionId: this.sessionId(), before: String(before), limit: '25'}});
+  }
+
   newConversation(): Observable<void> {
     const oldId = this.sessionId();
     const key = this.sessionKey;
@@ -191,14 +202,21 @@ export class ChatbotService {
   }
 
   private async reveal(response: ChatApiResponse, observer: Subscriber<ChatMessage>, signal: AbortSignal): Promise<void> {
-    const words = response.answer.match(/\S+\s*/g) || [];
-    let shown = '';
-    for (let index = 0; index < words.length && !signal.aborted && !observer.closed; index += 3) {
-      shown += words.slice(index, index + 3).join('');
-      observer.next({ from: 'bot', text: shown, streaming: true });
-      await this.pause(28);
-    }
     if (!signal.aborted && !observer.closed) observer.next(this.fromResponse(response));
+  }
+
+  restoreActions(message: ChatMessage): Observable<ChatMessage> {
+    const safe = new Set(['LOGIN','BUY_NOW','ADD_TO_CART','CHECKOUT_CART','SHOW_CART','VIEW_PRODUCT','VIEW_CART','VIEW_ORDERS','VIEW_ORDER','VIEW_NOTIFICATIONS']);
+    return this.http.get<any[]>(environment.apiUrl + '/api/products').pipe(timeout(10000), map(catalog => {
+      const products = (message.products || []).map(old => {
+        const fresh = catalog.find(book => book.productId === old.id);
+        return fresh ? { ...old, name: fresh.name, author: fresh.author, quantity: fresh.quantity,
+          oldPrice: fresh.price, discount: fresh.discount, price: Math.round(fresh.price * (100 - fresh.discount) / 100) } : { ...old, quantity: 0 };
+      });
+      return { ...message, products, actions: (message.actions || []).filter(action => safe.has(action.type)
+        && (!action.productId || products.some(book => book.id === action.productId
+          && (action.type === 'VIEW_PRODUCT' || book.quantity >= Math.max(1, action.quantity || 1))))) };
+    }));
   }
 
   private prepareHistory(history: ChatMessage[]): {role: string; content: string}[] {

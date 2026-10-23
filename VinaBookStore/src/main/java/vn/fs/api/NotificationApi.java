@@ -29,6 +29,9 @@ public class NotificationApi {
 
 	@Autowired
 	NotificationRepository notificationRepository;
+    @Autowired vn.fs.service.NotificationSocketTickets socketTickets;
+    @PostMapping("/socket-ticket")
+    public java.util.Map<String,String> socketTicket(){return socketTickets.issue();}
 
 	@GetMapping
 	public ResponseEntity<List<Notification>> getAll() {

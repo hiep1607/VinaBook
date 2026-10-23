@@ -22,6 +22,10 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+import javax.persistence.PersistenceContext;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -42,6 +46,7 @@ public class PaymentGatewayService {
 
 	private final OrderRepository orderRepository;
 	private final ObjectMapper objectMapper;
+	@PersistenceContext private EntityManager entityManager;
 	private final HttpClient httpClient = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(10)).build();
 
 	@Value("${payment.frontend-url:http://localhost:4200}")
@@ -154,17 +159,19 @@ public class PaymentGatewayService {
 		result.put(COD, method(true, "Thanh toán khi nhận hàng", "Thanh toán cho nhân viên giao hàng."));
 		result.put(BANK_QR, method(bankConfigured(), "Chuyển khoản QR", bankConfigured()
 				? "Quét mã VietQR và chờ cửa hàng xác nhận."
-				: "Cửa hàng chưa cấu hình tài khoản nhận tiền."));
+				: "Chuyển khoản ngân hàng tạm thời chưa khả dụng."));
 		result.put(VNPAY, method(vnpayConfigured(), "VNPay", vnpayConfigured()
 				? "Thanh toán trên cổng VNPay Sandbox."
-				: "Cần cấu hình tài khoản VNPay Sandbox."));
+				: "VNPay Sandbox tạm thời chưa khả dụng."));
 		result.put(MOMO, method(momoConfigured(), "MoMo", momoConfigured()
 				? "Thanh toán trên cổng MoMo Test."
-				: "Cần cấu hình tài khoản MoMo Test."));
+				: "MoMo Test tạm thời chưa khả dụng."));
 		return result;
 	}
 
+	@Transactional(noRollbackFor = {IllegalArgumentException.class, IllegalStateException.class})
 	public Map<String, Object> start(Order order, String clientIp) {
+		order = locked(order);
 		String method = paymentMethod(order);
 		if (COD.equals(method)) {
 			throw new IllegalArgumentException("Đơn COD không cần tạo giao dịch trực tuyến");
@@ -174,6 +181,17 @@ public class PaymentGatewayService {
 		}
 		if (order.getStatus() == 2 || order.getStatus() == 3) {
 			throw new IllegalStateException("Đơn hàng đã kết thúc, không thể thanh toán lại");
+		}
+		if (gatewayInFlight(order)) {
+			if (VNPAY.equals(method) && !vnpayConfigured() || MOMO.equals(method) && !momoConfigured()) {
+				throw new IllegalStateException("Phương thức thanh toán này tạm thời chưa khả dụng.");
+			}
+			if (!notBlank(order.getPaymentCheckoutUrl())) {
+				throw new IllegalStateException("Giao dịch đang chờ xác nhận. Vui lòng kiểm tra trạng thái hoặc liên hệ cửa hàng trước khi thanh toán lại.");
+			}
+			Map<String,Object> response = orderStatus(order);
+			response.put("redirectUrl", order.getPaymentCheckoutUrl());
+			return response;
 		}
 
 		if (BANK_QR.equals(method)) {
@@ -204,7 +222,14 @@ public class PaymentGatewayService {
 		result.put("paymentTransactionId", order.getPaymentTransactionId());
 		result.put("paidAt", order.getPaidAt());
 		result.put("orderStatus", order.getStatus());
-		if (BANK_QR.equals(paymentMethod(order)) && bankConfigured()) {
+		boolean methodAvailable = COD.equals(paymentMethod(order)) || BANK_QR.equals(paymentMethod(order)) && bankConfigured()
+				|| VNPAY.equals(paymentMethod(order)) && vnpayConfigured() || MOMO.equals(paymentMethod(order)) && momoConfigured();
+		boolean active = order.getStatus() == 0 || order.getStatus() == 1;
+		result.put("methodAvailable", methodAvailable);
+		result.put("canStart", active && methodAvailable && !COD.equals(paymentMethod(order)) && !PAID.equals(paymentStatus(order))
+				&& (!gatewayInFlight(order) || notBlank(order.getPaymentCheckoutUrl())));
+		result.put("canPoll", active && !COD.equals(paymentMethod(order)) && PENDING.equals(paymentStatus(order)));
+		if (BANK_QR.equals(paymentMethod(order)) && bankConfigured() && active && !PAID.equals(paymentStatus(order))) {
 			String content = order.getPaymentReference() == null ? "VB" + order.getOrdersId() : order.getPaymentReference();
 			result.put("qrUrl", buildBankQrUrl(order, content));
 			result.put("bankId", bankId);
@@ -215,14 +240,20 @@ public class PaymentGatewayService {
 		return result;
 	}
 
+	@Transactional
 	public Order markBankTransferPaid(Order order) {
+		order = locked(order);
 		if (!BANK_QR.equals(paymentMethod(order))) {
 			throw new IllegalArgumentException("Chỉ đơn chuyển khoản QR mới cần xác nhận thủ công");
+		}
+		if (!PAID.equals(paymentStatus(order)) && order.getStatus() != 0 && order.getStatus() != 1) {
+			throw new IllegalArgumentException("Đơn hàng đã kết thúc. Vui lòng đối soát trước khi xác nhận thanh toán.");
 		}
 		markPaid(order, order.getPaymentReference());
 		return order;
 	}
 
+	@Transactional
 	public CallbackResult handleVnpay(Map<String, String> params) {
 		String reference = params.get("vnp_TxnRef");
 		if (!verifyVnpay(params)) {
@@ -235,7 +266,10 @@ public class PaymentGatewayService {
 		if (!found.isPresent()) {
 			return new CallbackResult(null, false, "01", "Order not found");
 		}
-		Order order = found.get();
+		Order order = locked(found.get());
+		if (!VNPAY.equals(paymentMethod(order)) || !reference.equals(order.getPaymentReference())) {
+			return new CallbackResult(null, false, "01", "Invalid payment method");
+		}
 		long callbackAmount = parseLong(params.get("vnp_Amount"), -1L);
 		if (callbackAmount != Math.round(order.getAmount() * 100)) {
 			return new CallbackResult(order, false, "04", "Invalid amount");
@@ -251,6 +285,7 @@ public class PaymentGatewayService {
 		return new CallbackResult(order, success, "00", "Confirm Success");
 	}
 
+	@Transactional
 	public CallbackResult handleMomo(Map<String, ?> params) {
 		String reference = string(params, "orderId");
 		if (!verifyMomo(params)) {
@@ -263,7 +298,10 @@ public class PaymentGatewayService {
 		if (!found.isPresent()) {
 			return new CallbackResult(null, false, "01", "Order not found");
 		}
-		Order order = found.get();
+		Order order = locked(found.get());
+		if (!MOMO.equals(paymentMethod(order)) || !reference.equals(order.getPaymentReference()) || !reference.equals(string(params, "requestId"))) {
+			return new CallbackResult(null, false, "01", "Invalid payment reference");
+		}
 		long callbackAmount = parseLong(string(params, "amount"), -1L);
 		if (callbackAmount != Math.round(order.getAmount())) {
 			return new CallbackResult(order, false, "04", "Invalid amount");
@@ -314,9 +352,11 @@ public class PaymentGatewayService {
 		String secureHash = hmac("HmacSHA512", vnpayHashSecret, signData);
 		order.setPaymentReference(reference);
 		order.setPaymentStatus(PENDING);
+		String redirectUrl = vnpayPayUrl + "?" + signData + "&vnp_SecureHash=" + secureHash;
+		order.setPaymentCheckoutUrl(redirectUrl);
 		orderRepository.save(order);
 		Map<String, Object> response = orderStatus(order);
-		response.put("redirectUrl", vnpayPayUrl + "?" + signData + "&vnp_SecureHash=" + secureHash);
+		response.put("redirectUrl", redirectUrl);
 		return response;
 	}
 
@@ -356,6 +396,7 @@ public class PaymentGatewayService {
 
 		order.setPaymentReference(reference);
 		order.setPaymentStatus(PENDING);
+		order.setPaymentCheckoutUrl(null);
 		orderRepository.save(order);
 		try {
 			HttpRequest request = HttpRequest.newBuilder(URI.create(momoCreateUrl))
@@ -370,12 +411,16 @@ public class PaymentGatewayService {
 				throw new IllegalStateException(string(body, "message").isEmpty()
 						? "MoMo không tạo được giao dịch" : string(body, "message"));
 			}
+			order.setPaymentCheckoutUrl(string(body, "payUrl"));
+			orderRepository.save(order);
 			Map<String, Object> response = orderStatus(order);
 			response.put("redirectUrl", string(body, "payUrl"));
 			return response;
 		} catch (Exception ex) {
-			order.setPaymentStatus(FAILED);
+			// A lost create response does not prove that the gateway rejected the payment.
+			order.setPaymentStatus(PENDING);
 			orderRepository.save(order);
+			if (ex instanceof InterruptedException) Thread.currentThread().interrupt();
 			if (ex instanceof IllegalStateException) {
 				throw (IllegalStateException) ex;
 			}
@@ -424,11 +469,25 @@ public class PaymentGatewayService {
 		if (!PAID.equals(paymentStatus(order))) {
 			order.setPaymentStatus(PAID);
 			order.setPaidAt(new Date());
+			order.setPaymentCheckoutUrl(null);
 			if (gatewayTransactionId != null && !gatewayTransactionId.trim().isEmpty()) {
 				order.setPaymentTransactionId(gatewayTransactionId.trim());
 			}
 			orderRepository.save(order);
 		}
+	}
+
+	private boolean gatewayInFlight(Order order) {
+		return (VNPAY.equals(paymentMethod(order)) || MOMO.equals(paymentMethod(order))) && PENDING.equals(paymentStatus(order))
+				&& notBlank(order.getPaymentReference()) && !order.getPaymentReference().startsWith("CHAT-");
+	}
+
+	private Order locked(Order order) {
+		if (entityManager == null) return order; // Unit tests use detached fixtures.
+		Order current = entityManager.find(Order.class, order.getOrdersId(), LockModeType.PESSIMISTIC_WRITE);
+		if (current == null) throw new IllegalArgumentException("Không tìm thấy đơn hàng.");
+		entityManager.refresh(current, LockModeType.PESSIMISTIC_WRITE);
+		return current;
 	}
 
 	private Map<String, Object> method(boolean available, String label, String description) {

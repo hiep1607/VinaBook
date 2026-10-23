@@ -27,11 +27,13 @@
 
         <div class="search-wrapper" #searchBoxRef>
 
-          <div class="search-box">
+          <form class="search-box" role="search" name="book-search" autocomplete="off" (ngSubmit)="search()">
 
             <input
               id="site-search"
-              type="text"
+              #searchInput
+              name="bookQuery"
+              type="search"
               role="combobox"
               aria-label="Tìm kiếm sách, tác giả hoặc thể loại"
               aria-autocomplete="list"
@@ -41,16 +43,15 @@
               [(ngModel)]="keyword"
               (input)="onInput()"
               (focus)="onFocus()"
-              (keydown.enter)="onKeydownEnter()"
               (keydown.escape)="onKeydownEscape()"
               autocomplete="off"
             />
 
-            <button type="button" (click)="search()" aria-label="Tìm kiếm">
+            <button type="submit" aria-label="Tìm kiếm">
               <lucide-icon name="search"></lucide-icon>
             </button>
 
-          </div>
+          </form>
 
           <!-- SUGGESTIONS DROPDOWN -->
 
@@ -163,7 +164,7 @@
             <span class="user-name">{{ authService.currentUser.name }}</span>
           </a>
 
-          <a *ngIf="authService.isLoggedIn()" routerLink="/notifications" aria-label="Thông báo có hàng" title="Thông báo có hàng" class="wishlist-icon"><lucide-icon name="bell"></lucide-icon></a>
+          <a *ngIf="authService.isLoggedIn()" routerLink="/notifications" [attr.aria-label]="automation.unreadCount ? 'Thông báo, ' + automation.unreadCount + ' chưa đọc' : 'Thông báo'" title="Thông báo" class="wishlist-icon notification-icon"><lucide-icon name="bell"></lucide-icon><span class="wishlist-badge" *ngIf="automation.unreadCount > 0">{{ automation.unreadCount > 99 ? '99+' : automation.unreadCount }}</span></a>
           <!-- WISHLIST -->
 
           <a
@@ -221,7 +222,7 @@
       <nav class="mobile-account-links" *ngIf="authService.isLoggedIn()" aria-label="Tiện ích tài khoản">
         <a routerLink="/orders" (click)="closeMobileNav()">Đơn hàng</a>
         <a routerLink="/wishlist" (click)="closeMobileNav()">Yêu thích</a>
-        <a routerLink="/notifications" (click)="closeMobileNav()">Báo có hàng</a>
+        <a routerLink="/notifications" (click)="closeMobileNav()">Thông báo <span class="mobile-notice-count" *ngIf="automation.unreadCount">{{ automation.unreadCount > 99 ? '99+' : automation.unreadCount }}</span></a>
         <a routerLink="/profile" (click)="closeMobileNav()">Tài khoản</a>
       </nav>
 

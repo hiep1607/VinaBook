@@ -73,17 +73,9 @@
               />
             </div>
 
-            <div class="form-group">
-              <label for="shipping-street">Địa chỉ giao hàng</label>
-              <input
-                id="shipping-street"
-                name="shippingStreet"
-                type="text"
-                autocomplete="street-address"
-                [(ngModel)]="shippingForm.street"
-                required
-              />
-            </div>
+            <app-delivery-address inputId="shipping-street" name="shippingStreet"
+              [(ngModel)]="shippingForm.street" [disabled]="placing || preparing || orderPlaced"
+              required minlength="5" maxlength="255"></app-delivery-address>
 
             <label class="save-toggle">
               <input name="saveToProfile" type="checkbox" [(ngModel)]="saveToProfile" />
@@ -91,14 +83,11 @@
             </label>
             <div class="form-group" *ngIf="saveToProfile">
               <label for="shipping-label">Nhãn địa chỉ</label>
-              <input
-                id="shipping-label"
-                name="shippingLabel"
-                type="text"
-                autocomplete="off"
-                placeholder="Nhà riêng, Văn phòng..."
-                [(ngModel)]="shippingForm.label"
-              />
+              <select id="shipping-label" name="shippingLabel" [(ngModel)]="shippingForm.label">
+                <option value="">Chọn nhãn địa chỉ</option>
+                <option *ngFor="let label of addressLabels" [value]="label">{{ label }}</option>
+                <option *ngIf="shippingForm.label && !addressLabels.includes(shippingForm.label)" [value]="shippingForm.label">{{ shippingForm.label }}</option>
+              </select>
             </div>
 
             <button
@@ -118,19 +107,19 @@
           <div class="box-heading">
             <div>
               <h2>Hình thức thanh toán</h2>
-              <p>Thông tin giao dịch được xử lý an toàn tại máy chủ VinaBook.</p>
+              <p>Chọn cách thanh toán thuận tiện cho bạn.</p>
             </div>
             <span class="secure-label">Bảo mật</span>
           </div>
 
           <div class="payment-list" [class.loading]="methodsLoading">
             <button
-              *ngFor="let method of availablePaymentMethods"
+              *ngFor="let method of paymentMethods"
               type="button"
               class="payment-option"
               [class.selected]="selectedPayment === method.code"
               [class.unavailable]="!method.available"
-              [disabled]="!method.available || placing"
+              [disabled]="!method.available || methodsLoading || placing || preparing || orderPlaced"
               (click)="selectPayment(method, $event)"
               [attr.aria-pressed]="selectedPayment === method.code"
             >
@@ -138,7 +127,8 @@
               <span class="payment-body">
                 <span class="payment-title">
                   <strong>{{ method.label }}</strong>
-                  <span *ngIf="!method.available" class="method-state">Chưa cấu hình</span>
+                  <span *ngIf="!method.available" class="method-state">Chưa khả dụng</span>
+                  <span *ngIf="method.available && (method.code === 'VNPAY' || method.code === 'MOMO')" class="method-state">Thử nghiệm</span>
                 </span>
                 <span>{{ method.description }}</span>
               </span>
@@ -146,6 +136,10 @@
             </button>
           </div>
 
+          <p *ngIf="methodsLoading" class="payment-note" role="status">Đang kiểm tra phương thức thanh toán...</p>
+          <div *ngIf="methodsError" class="payment-note" role="status">
+            {{ methodsError }} <button type="button" class="link-btn" (click)="loadPaymentMethods()" [disabled]="placing || orderPlaced">Tải lại</button>
+          </div>
           <p class="payment-note" *ngIf="selectedPayment === 'BANK_QR'">
             Đơn chỉ chuyển sang đã thanh toán sau khi cửa hàng đối soát giao dịch.
           </p>
@@ -208,9 +202,9 @@
           type="submit"
           class="place-order-btn"
           [class.success]="orderPlaced"
-          [disabled]="loading || preparing || voucherBusy || placing || orderPlaced || !quantitiesValid || !shippingSettings"
+          [disabled]="loading || preparing || methodsLoading || voucherBusy || placing || orderPlaced || !quantitiesValid || !shippingSettings"
         >
-          {{ orderPlaced ? 'Đặt hàng thành công' : (placing || preparing ? 'Đang xử lý...' : (selectedPayment === 'COD' ? 'Đặt hàng' : 'Tiếp tục thanh toán')) }}
+          {{ placing || preparing ? 'Đang xử lý...' : (orderPlaced ? 'Đơn hàng đã được tạo' : (selectedPayment === 'COD' ? 'Đặt hàng' : 'Tiếp tục thanh toán')) }}
         </button>
 
         </div>

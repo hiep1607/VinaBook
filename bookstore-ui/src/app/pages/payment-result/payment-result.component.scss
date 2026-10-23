@@ -10,6 +10,13 @@
   width: 92%;
 }
 
+.status-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; color: var(--c-muted-fg); font-size: 13px; line-height: 1.6; }
+.status-bar .secondary-btn { flex-shrink: 0; }
+.actions a { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+.transfer-row strong, .transfer-row button, .state-card p { overflow-wrap: anywhere; }
+.secondary-btn:disabled { cursor: not-allowed; opacity: .58; }
+button:focus-visible, a:focus-visible { outline: 3px solid var(--c-primary); outline-offset: 3px; }
+
 .state-card,
 .qr-panel,
 .transfer-panel {
@@ -270,6 +277,7 @@ h1 {
 }
 
 @media (max-width: 520px) {
+  .status-bar { align-items: flex-start; flex-direction: column; }
   .result-page {
     padding: 32px 0 52px;
   }

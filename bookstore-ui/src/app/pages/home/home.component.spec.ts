@@ -2,14 +2,13 @@ import { By } from '@angular/platform-browser';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { HomeComponent } from './home.component';
 import { ProductCardComponent } from 'src/app/components/product-card/product-card.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { CartService } from 'src/app/services/cart.service';
 import { CategoryService } from 'src/app/services/category.service';
-import { FlyToCartService } from 'src/app/services/fly-to-cart.service';
 import { HomepageService } from 'src/app/services/homepage.service';
 import { NotificationService } from 'src/app/services/notification.service';
 import { ProductService } from 'src/app/services/product.service';
@@ -53,9 +52,9 @@ describe('HomeComponent — sách đã xem gần đây (P2)', () => {
       declarations: [HomeComponent, ProductCardComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
       providers: [
-        { provide: ProductService, useValue: { getProducts: () => of(CATALOG.slice()) } },
-        { provide: CategoryService, useValue: { getAll: () => of([]) } },
-        { provide: HomepageService, useValue: { getConfig: () => of(DEFAULT_HOMEPAGE_CONFIG) } },
+        { provide: ProductService, useValue: { getProducts: () => of(CATALOG.slice()), refresh: () => undefined } },
+        { provide: CategoryService, useValue: { getAll: () => of([]), refresh: () => of([]) } },
+        { provide: HomepageService, useValue: { getConfig: () => of(DEFAULT_HOMEPAGE_CONFIG), refresh: () => of(DEFAULT_HOMEPAGE_CONFIG) } },
         { provide: NotificationService, useValue: notificationSpy },
         {
           provide: ReviewService,
@@ -71,7 +70,7 @@ describe('HomeComponent — sách đã xem gần đây (P2)', () => {
         },
         { provide: WishlistService, useValue: { isInWishlist: () => false, getCount: () => 0 } },
         { provide: CartService, useValue: { addToCart: () => undefined } },
-        { provide: FlyToCartService, useValue: { fly: () => undefined } }
+
       ]
     });
   });
@@ -120,5 +119,19 @@ describe('HomeComponent — sách đã xem gần đây (P2)', () => {
 
     expect(component.recentBooks.length).toBe(0);
     expect(fixture.debugElement.query(By.css('.recent-section'))).toBeNull();
+  });
+
+  it('Thử lại phục hồi cả danh mục, cấu hình và số liệu sau lỗi mạng', () => {
+    const categories = TestBed.inject(CategoryService);
+    spyOn(categories, 'getAll').and.returnValue(throwError(new Error('offline')));
+    const categoryRetry = spyOn(categories, 'refresh').and.returnValue(of([{categoryId: 1, categoryName: 'Văn học'}]));
+    const configRetry = spyOn(TestBed.inject(HomepageService), 'refresh').and.returnValue(of(DEFAULT_HOMEPAGE_CONFIG));
+    const catalogRetry = spyOn(TestBed.inject(ProductService), 'refresh');
+    boot([]);
+    expect(component.categoryError).toBeTrue();
+    component.retry();fixture.detectChanges();
+    expect(categoryRetry).toHaveBeenCalled();expect(configRetry).toHaveBeenCalled();expect(catalogRetry).toHaveBeenCalled();
+    expect(component.categoryError).toBeFalse();expect(component.categories.length).toBe(1);
+    expect(component.stats.categories).toBe(1);expect(component.stats.books).toBe(CATALOG.length);
   });
 });

@@ -1,85 +1,30 @@
-/*
- * (C) Copyright 2022. All Rights Reserved.
- *
- * @author DongTHD
- * @date Mar 10, 2022
-*/
 package vn.fs.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import vn.fs.entity.User;
-import vn.fs.repository.UserRepository;
+import org.springframework.web.bind.annotation.*;
+import vn.fs.service.PasswordResetService;
 
 @Controller
 @RequestMapping("/forgot-password")
 public class ResetPasswordController {
-
-	@Autowired
-	UserRepository userRepository;
-
-	@Autowired
-	PasswordEncoder passwordEncoder;
-
-	@GetMapping("{token}")
-	public String resetPassword(Model map, @PathVariable("token") String token) {
-		User user = userRepository.findByToken(token);
-		if (user == null) {
-			return "redirect:/forgot-password/error";
-		}
-		map.addAttribute("name", user.getName());
-		map.addAttribute("email", user.getEmail());
-		map.addAttribute("token", token);
-		map.addAttribute("password", "");
-		map.addAttribute("confirm", "");
-		return "/reset-password";
-	}
-
-	@PostMapping
-	public String reset(@RequestParam("password") String password, @RequestParam("confirm") String confirm,
-			@RequestParam("email") String email, @RequestParam("name") String name, @RequestParam("token") String token,
-			Model map) {
-		if (password.length() < 6) {
-			map.addAttribute("password", password);
-			map.addAttribute("confirm", confirm);
-			map.addAttribute("errorPassword", "error");
-			map.addAttribute("name", name);
-			map.addAttribute("email", email);
-			map.addAttribute("token", token);
-			return "/reset-password";
-		}
-		if (!password.equals(confirm)) {
-			map.addAttribute("errorConfirm", "error");
-			map.addAttribute("name", name);
-			map.addAttribute("email", email);
-			map.addAttribute("password", password);
-			map.addAttribute("confirm", confirm);
-			map.addAttribute("token", token);
-			return "/reset-password";
-		}
-		User user = userRepository.findByToken(token);
-		user.setPassword(passwordEncoder.encode(password));
-		user.setStatus(true);
-		userRepository.save(user);
-		return "redirect:/forgot-password/done";
-	}
-
-	@GetMapping("/done")
-	public String done() {
-		return "/done";
-	}
-
-	@GetMapping("/error")
-	public String error() {
-		return "/error";
-	}
-
+    private final PasswordResetService reset;
+    public ResetPasswordController(PasswordResetService reset){this.reset=reset;}
+    @GetMapping("/{token}")
+    public String form(Model model,@PathVariable String token) {
+        var user=reset.validUser(token);
+        if(user.isEmpty())return "redirect:/forgot-password/error";
+        model.addAttribute("name",user.get().getName());model.addAttribute("email",user.get().getEmail());
+        model.addAttribute("token",token);return "reset-password";
+    }
+    @PostMapping
+    public String consume(@RequestParam String password,@RequestParam String confirm,@RequestParam String token,Model model) {
+        if(password.length()<6 || password.length()>128 || !password.equals(confirm)) {
+            String view=form(model,token);
+            model.addAttribute(password.equals(confirm)?"errorPassword":"errorConfirm","error");return view;
+        }
+        return reset.consume(token,password)?"redirect:/forgot-password/done":"redirect:/forgot-password/error";
+    }
+    @GetMapping("/done") public String done(){return "done";}
+    @GetMapping("/error") public String error(){return "error";}
 }

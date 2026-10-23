@@ -22,7 +22,7 @@ class ChatConversationRefinementTest {
     ChatDialogueMemory.State state=new ChatDialogueMemory.State();
     ChatBuiltinTools builtins;
     ChatToolRegistry registry;
-    ChatOrchestrator chat;
+    LegacyChatOrchestrator chat;
     List<Product> catalog;
 
     @BeforeEach void setup() {
@@ -35,7 +35,7 @@ class ChatConversationRefinementTest {
         registry=new ChatToolRegistry(List.of(builtins.searchProducts(),builtins.recommendBooks(),builtins.getProducts(),builtins.getPolicy(),builtins.respond(),builtins.getMyOrders(),builtins.getOrderDetail(),builtins.getCart()));
         when(ai.provider()).thenReturn("gemini");when(ai.modelUsed()).thenReturn("fixture");
         when(analytics.record(any(),any(),anyString(),anyBoolean(),anyInt(),anyLong())).thenReturn("test");
-        chat=new ChatOrchestrator(ai,mapper,registry,analytics);chat.setCatalog(products,data);
+        chat=new LegacyChatOrchestrator(ai,mapper,registry,analytics);chat.setCatalog(products,data);
     }
     @Test void genderWithoutReadingPreferencesDoesNotRecommendAnArbitraryCatalog() {
         var response=turn("Có cuốn sách nào các bạn nữ đặc biệt ưa thích không?");

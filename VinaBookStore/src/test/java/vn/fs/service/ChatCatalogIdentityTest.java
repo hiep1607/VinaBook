@@ -19,7 +19,7 @@ class ChatCatalogIdentityTest {
     AiGateway ai=mock(AiGateway.class);
     ChatAnalyticsService analytics=mock(ChatAnalyticsService.class);
     ChatDialogueMemory.State state=new ChatDialogueMemory.State();
-    ChatOrchestrator chat;
+    LegacyChatOrchestrator chat;
     ChatToolRegistry registry;
     List<Product> catalog;
 
@@ -40,7 +40,7 @@ class ChatCatalogIdentityTest {
         registry=new ChatToolRegistry(List.of(builtins.searchProducts(),builtins.recommendBooks(),builtins.getProducts(),builtins.getPolicy(),builtins.respond()));
         when(ai.provider()).thenReturn("gemini");when(ai.modelUsed()).thenReturn("fixture");
         when(analytics.record(any(),any(),anyString(),anyBoolean(),anyInt(),anyLong())).thenReturn("test");
-        chat=new ChatOrchestrator(ai,new ObjectMapper(),registry,analytics);chat.setCatalog(products,data);
+        chat=new LegacyChatOrchestrator(ai,new ObjectMapper(),registry,analytics);chat.setCatalog(products,data);
     }
 
     @Test void exactTitleDoesNotIncludeAnotherBookSharingTwoWords() {

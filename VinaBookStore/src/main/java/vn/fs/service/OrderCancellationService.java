@@ -12,6 +12,8 @@ import vn.fs.repository.*;
 
 @Service
 public class OrderCancellationService {
+    private OrderNotifications notifications;
+    @org.springframework.beans.factory.annotation.Autowired public void setNotifications(OrderNotifications value){notifications=value;}
     private final CurrentUserAccess access;
     private final UserRepository users;
     private final OrderRepository orders;
@@ -80,6 +82,7 @@ public class OrderCancellationService {
             order.setStockReserved(false);
         }
         order.setStatus(3);orders.save(order);
+        if(notifications!=null)notifications.changed(order.getOrdersId(),"Đơn #"+order.getOrdersId()+" đã được hủy.");
         return Map.of("orderId",order.getOrdersId(),"status","CANCELLED");
     }
 }
