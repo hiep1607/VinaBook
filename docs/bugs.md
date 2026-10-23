@@ -21,6 +21,8 @@ Tài liệu này chỉ giữ vấn đề còn hiệu lực. Các mô tả protot
 
 ## Đã xử lý gần đây
 
+- 23/10/2026: Nút chuông và menu tài khoản của admin không mở do runtime Bootstrap thiếu Popper. Cấu hình build đã chuyển sang bootstrap.bundle.min.js chứa Popper cùng phiên bản; giữ jQuery nạp trước và không thay đổi API/dữ liệu thông báo.
+
 - 22/10/2026: kiểm thử trực tiếp phát hiện thay đổi giá ngay sau thêm giỏ/yêu thích có thể xảy ra trước baseline của scanner. Giỏ đồng bộ và API yêu thích nay ghi mốc giá trong cùng giao dịch thêm sách; bật lại loại tin bắt đầu từ giá hiện tại. Kiểm tra hồi quy bao phủ đổi giá trước lần quét đầu, giữ sự kiện khi sửa giỏ và không gửi bù lúc bật lại.
 
 - 21/10/2026: checkout hiện đủ COD/VietQR/VNPay/MoMo và trạng thái khả dụng; khóa gửi lại sau khi tạo đơn; khôi phục thanh toán đúng đơn sau lỗi mở cổng. Kết quả thanh toán xử lý riêng COD, đơn đã hủy/hoàn tất, QR lỗi, chờ đối soát và phiên tài khoản thay đổi. Request/polling được hủy, giới hạn và có kiểm tra thủ công. Lưu phiên gateway trên đơn để tránh tạo lại giao dịch đang PENDING; khóa dòng khi cập nhật, không đánh dấu FAILED chỉ vì mất phản hồi tạo MoMo. Xem payment.md và migration 16-payment-resume.sql.
