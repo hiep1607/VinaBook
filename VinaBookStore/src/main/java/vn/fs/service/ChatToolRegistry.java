@@ -20,6 +20,12 @@ public class ChatToolRegistry {
         return result;
     }
     boolean supports(String name) { return tools.containsKey(name); }
+    boolean irrelevantPlaceholder(String name,String key,JsonNode value) {
+        ChatTool selected=tools.get(name);
+        return selected!=null && !selected.parameters().containsKey(key)
+            && (value.isTextual() && value.asText().isBlank() || value.isNumber() && value.asDouble()==0)
+            && tools.values().stream().anyMatch(tool->tool.parameters().containsKey(key));
+    }
     public ChatTool.Result execute(String name, JsonNode arguments, ChatTool.Context context) {
         validate(name, arguments);
         return tools.get(name).execute(arguments, context);

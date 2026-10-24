@@ -257,6 +257,10 @@ public class ChatTurnUnderstanding {
             if(count!=null && count>=2)args.put("count",Math.min(count,8));
             comparison.set("calls",mapper.valueToTree(List.of(Map.of("tool","getProducts","arguments",args))));
         }
+        if(registry.supports("getProducts")) {
+            JsonNode directFact=ChatLiveContext.directFactRead(request,state,mapper);
+            if(directFact!=null)root=directFact;
+        }
         // Inspecting a book, policy or account never replaces reading constraints.
         // Some providers otherwise emit mode=new or echo an old filter into set.
         Set<String> contextualReads=Set.of("getProducts","bookReviews","getPolicy","listCategories","getCart","getMyOrders","getOrderDetail");
@@ -308,7 +312,7 @@ public class ChatTurnUnderstanding {
             String tool=call.path("tool").asText();JsonNode args=call.path("arguments");
             if(args.isObject()) {
                 List<String> absent=new ArrayList<>();
-                args.fields().forEachRemaining(entry->{if(entry.getValue().isNull())absent.add(entry.getKey());});
+                args.fields().forEachRemaining(entry->{if(entry.getValue().isNull() || registry.irrelevantPlaceholder(tool,entry.getKey(),entry.getValue()))absent.add(entry.getKey());});
                 ((ObjectNode)args).remove(absent);
             }
             registry.validate(tool,args);

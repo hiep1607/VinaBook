@@ -254,3 +254,5 @@ Chi tiết cấu hình, retention và giới hạn triển khai: [operations.md]
 - Chọn số/tên của một chủ đề đã hiển thị được chuẩn hóa về đúng nhãn ở backend sau bước AI, tránh AI diễn đạt lại thành bộ lọc khác. Lựa chọn kèm giá hoặc số cuốn vẫn giữ đầy đủ bước hiểu điều kiện bổ sung.
 
 - Khi preview hết hạn hoặc dữ liệu thay đổi, lần tra lại chủ đề vẫn dùng cùng tiêu chí bằng chứng nội dung/nhãn đã duyệt như menu ban đầu. Các từ rời như “bạn đọc” và “tinh thần” không chứng minh chủ đề “tình bạn”.
+
+- Các câu hỏi dữ kiện rõ theo số thứ tự (giá, tác giả, tồn kho, rating) dùng đúng thứ tự của cặp so sánh/danh sách sau bước AI. Các ô rỗng/0 thuộc công cụ khác trong schema hợp nhất được bỏ qua; tham số lạ có nội dung hoặc tham số thật của công cụ vẫn kiểm tra nghiêm ngặt.

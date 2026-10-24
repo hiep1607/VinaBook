@@ -89,6 +89,31 @@ class ChatSemanticRoutingTest {
             .containsEntry("field","table").containsEntry("count",2);
         verify(ai).completeStructured(anyString(),anyList(),anyString(),any());verifyNoInteractions(products,cart);
     }
+    @Test void ordinalFactReadKeepsTheComparisonOrderAfterAiInterpretation() throws Exception {
+        state.shortlist=new ArrayList<>(List.of(57L,58L));state.comparisonProducts=new ArrayList<>(List.of(58L,57L));
+        next.put("intent","PRODUCT_INFO").putNull("reply");
+        next.set("calls",mapper.valueToTree(List.of(Map.of("tool","getProducts","arguments",
+            Map.of("reference","focus","field","price","kind","clarify")))));
+        var request=new ChatRequestDto();request.setMessage("Giá cuốn đầu tiên bao nhiêu?");
+        var plan=understanding.understand(request,state,List.of());
+        assertThat(plan.path("calls").get(0).path("arguments").path("reference").asText()).isEqualTo("first");
+        assertThat(plan.path("calls").get(0).path("arguments").path("field").asText()).isEqualTo("price");
+        assertThat(ChatLiveContext.directFactRead(request,new ChatDialogueMemory.State(),mapper)).isNull();
+        request.setMessage("Dịch câu Giá cuốn đầu tiên bao nhiêu?");
+        assertThat(ChatLiveContext.directFactRead(request,state,mapper)).isNull();
+        verify(ai).completeStructured(anyString(),anyList(),anyString(),any());verifyNoInteractions(products,cart);
+    }
+    @Test void emptyUnionPlaceholdersCannotBreakAReadButMeaningfulUnknownArgumentsStayRejected() throws Exception {
+        next.put("intent","PRODUCT_INFO").putNull("reply");
+        next.set("calls",mapper.valueToTree(List.of(Map.of("tool","getProducts","arguments",
+            Map.of("title","Đắc Nhân Tâm","field","price","kind","","topic","")))));
+        var request=new ChatRequestDto();request.setMessage("Mình muốn biết giá bán cuốn Đắc Nhân Tâm");
+        var plan=understanding.understand(request,state,List.of());
+        assertThat(plan.path("calls").get(0).path("arguments").size()).isEqualTo(2);
+        ((ObjectNode)next.path("calls").get(0).path("arguments")).put("kind","cancel");
+        assertThatThrownBy(()->understanding.understand(request,state,List.of())).hasMessageContaining("Unknown argument");
+        verifyNoInteractions(products,cart);
+    }
     @Test void translationOfProvidedTextDoesNotBecomeABookSearch() {
         next.put("intent","UNKNOWN").put("reply","Câu này nghĩa là: Bạn muốn tìm hiểu thêm điều gì về cuốn sách?");
         assertThat(send("Dịch câu 'What would you like to know about the book?' giúp mình").getAnswer()).contains("Bạn muốn tìm hiểu thêm");

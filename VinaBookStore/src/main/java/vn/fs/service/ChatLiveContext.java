@@ -126,6 +126,19 @@ final class ChatLiveContext {
         return current(mapper,state,"PRODUCT_INFO","getProducts",arguments);
     }
 
+    static JsonNode directFactRead(ChatRequestDto request,ChatDialogueMemory.State state,ObjectMapper mapper) {
+        String q=LANGUAGE.normalize(request.getMessage());
+        if(!q.matches("(?:gia|tac gia|ton kho|rating) (?:cuon|quyen|sach)(?: sach)? "
+                +"(?:dau tien|thu nhat|thu hai|thu ba|cuoi cung|cuoi)"
+                +"(?: (?:bao nhieu|la ai|la bao nhieu|the nao|con bao nhieu))?(?: (?:nhe|giup minh|giup toi))?[.!?]*"))return null;
+        String reference=ordinal(q);
+        List<Long> ordered=state.comparisonProducts.isEmpty()?state.shortlist:state.comparisonProducts;
+        int index=switch(reference){case "first"->0;case "second"->1;case "third"->2;case "last"->ordered.size()-1;default->-1;};
+        if(index<0 || index>=ordered.size())return null;
+        String field=q.startsWith("gia ")?"price":q.startsWith("tac gia ")?"author":q.startsWith("ton kho ")?"inventory":"rating";
+        return current(mapper,state,"PRODUCT_INFO","getProducts",Map.of("reference",reference,"field",field));
+    }
+
     private static String ordinal(String q) {
         if(ChatBookFacts.has(q,"(?:cuon|quyen|sach) (?:dau tien|dau|thu nhat|so 1)"))return "first";
         if(ChatBookFacts.has(q,"(?:cuon|quyen|sach) (?:thu hai|so 2)"))return "second";
