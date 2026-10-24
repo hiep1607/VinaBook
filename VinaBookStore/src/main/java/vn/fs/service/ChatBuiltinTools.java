@@ -423,7 +423,10 @@ public class ChatBuiltinTools {
             filters.put("requiredTopicQuery",state.preparedTopicChoice.isBlank()
                 ?ChatDialogueInterpreter.clean(reading.hardMessage(c.request().getMessage()),1200):state.preparedTopicChoice);
         String sourceTopic=str(filters,"requiredTopicQuery");
-        if(!sourceTopic.isBlank())matched.removeIf(b->!mandatory.matchesStorySubjects(sourceTopic,b));
+        if(!sourceTopic.isBlank()) {
+            boolean alternatives=language.alternativeTopics(query);
+            matched.removeIf(b->!mandatory.matchesStorySubjects(sourceTopic,b,alternatives));
+        }
         // A conjunction must satisfy each branch; generic retrieval scores cannot
         // turn explicit AND into a union of loosely related subjects.
         if(!prepared && !generalEntertainment && filters.get("topics") instanceof List<?> && !"any".equals(filters.get("topicMatch")))

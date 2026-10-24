@@ -790,6 +790,24 @@ class ChatStructuredPipelineTest {
         return send("Mình chuẩn bị nghỉ hè, muốn mua sách mà chưa biết chọn chủ đề nào"
             +(nextSet.has("maxPrice")?", không quá "+nextSet.path("maxPrice").asLong()+" đồng":""));
     }
+    @Test void vagueReadingRequestOffersDistinctVerifiedDirectionsInsteadOfASingleInventedPreference() {
+        topicCatalog();
+        nextTool="respond";nextArgs=mapper.createObjectNode().put("kind","clarify").put("topic","preferences")
+            .put("suggestedTopics","Sách thiếu nhi")
+            .put("suggestionContext","Mình muốn đọc sách nhưng chưa biết nên chọn chủ đề gì.");
+        var response=send("Mình muốn đọc sách nhưng chưa biết nên chọn chủ đề gì.");
+        assertThat(response.isFallback()).isFalse();assertThat(response.getProducts()).isEmpty();
+        assertThat(response.getChips()).hasSizeGreaterThanOrEqualTo(3).doesNotContain("Sách thiếu nhi");
+        assertThat(response.getAnswer()).doesNotContain("Bạn có nhắc");
+        assertThat(state.toolSearch).doesNotContainKeys("topics","query","purpose");
+        assertThat(state.preparedTopics).hasSize(response.getChips().size());
+        assertThat(state.preparedTopics.values()).allMatch(p->p.rankedIds().size()>=2);
+        assertThat(state.preparedTopics.values().stream().map(p->new HashSet<>(p.rankedIds())).distinct().count())
+            .isEqualTo(response.getChips().size());
+        var selected=send("2");
+        assertThat(selected.getExecution()).containsEntry("preparedTopic","hit");
+        assertThat(selected.getProducts()).isNotEmpty();
+    }
     @Test void threeShownDirectionsEachHavePreparedBooksWithoutPollutingDiscoveryMemory() {
         topicCatalog();nextSet.put("maxPrice",100000);
         var response=offer("Truyện trinh thám|Truyện phiêu lưu|Khoa học");

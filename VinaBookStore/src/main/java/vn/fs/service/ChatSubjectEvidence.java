@@ -22,6 +22,7 @@ final class ChatSubjectEvidence {
                 .replaceAll(AUDIENCE," ")
                 .replaceAll("\\d[\\d.,]*\\s*(?:k|nghin|ngan|dong|vnd)?\\b", " ").trim()
                 .replaceFirst("^(?:(?:sach|cuon|quyen|noi dung|chu de|the loai)(?: ve)? )+","");
+            phrase=phrase.replaceFirst("\\b(?:gi do|nao do|gi cung duoc|cung duoc)(?: nhe| a| thoi)?$","").strip();
             if(phrase.isBlank())continue;
             if(phrase.matches("(?:nay|do|ay|khac|cu|truoc)(?: nhe| nha| thoi)?"))continue;
             // Remove only concepts covered by the existing synonym/reading rules.

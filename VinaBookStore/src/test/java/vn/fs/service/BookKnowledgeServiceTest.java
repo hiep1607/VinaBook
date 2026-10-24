@@ -250,8 +250,10 @@ class BookKnowledgeServiceTest {
         BookTopic subject=new BookTopic();subject.setId(1L);subject.setName("Chủ đề: giao tiếp / communication");
         BookTopic audience=new BookTopic();audience.setId(2L);audience.setName("Độc giả: sinh viên");
         BookTopic single=new BookTopic();single.setId(3L);single.setName("Chủ đề: tài chính cá nhân");
+        BookTopic shelf=new BookTopic();shelf.setId(4L);shelf.setName("Sách tổng hợp");
+        book.setCategory(new Category(1L,"Sách tổng hợp"));second.setCategory(book.getCategory());
         java.util.List<BookTopicLink> all=new java.util.ArrayList<>();
-        for(long id:List.of(42L,43L,44L,45L))for(long topic:List.of(1L,2L)) {
+        for(long id:List.of(42L,43L,44L,45L))for(long topic:List.of(1L,2L,4L)) {
             BookTopicLink link=new BookTopicLink();link.setProductId(id);link.setTopicId(topic);all.add(link);
         }
         BookTopicLink singleLink=new BookTopicLink();singleLink.setProductId(42L);singleLink.setTopicId(3L);
@@ -259,10 +261,10 @@ class BookKnowledgeServiceTest {
         when(links.findByProductIdIn(any())).thenAnswer(call->{
             java.util.Collection<Long> ids=call.getArgument(0);return all.stream().filter(l->ids.contains(l.getProductId())).toList();
         });
-        when(topics.findAllById(any())).thenReturn(List.of(subject,audience,single));
+        when(topics.findAllById(any())).thenReturn(List.of(subject,audience,single,shelf));
         service.beginChatRead(List.of(book,second,third,draftBook));
         try {
-            assertThat(service.topicSuggestionNames(List.of(book,second,third,draftBook))).containsExactly("giao tiếp");
+            assertThat(service.topicSuggestionNames(List.of(book,second,third,draftBook))).containsExactly("giao tiếp","Sách tổng hợp");
             verify(profiles,times(1)).findAllById(any());
         } finally {service.endChatRead();}
     }

@@ -400,6 +400,8 @@ public class BookKnowledgeService {
     public List<String> topicSuggestionNames(List<Product> catalog) {
         Set<Long> approved=catalog.stream().filter(p->Boolean.TRUE.equals(p.getStatus()) && p.getQuantity()>0)
             .filter(p->readingProfile(p.getProductId()).isPresent()).map(Product::getProductId).collect(Collectors.toSet());
+        Set<String> shelves=catalog.stream().filter(p->p.getCategory()!=null)
+            .map(p->language.normalize(p.getCategory().getCategoryName())).collect(Collectors.toSet());
         Map<String,Set<Long>> books=new TreeMap<>();
         readingTopics(approved).forEach((id,names)->names.forEach(raw->{
             if(raw.matches("(?iu)^(?:Độc giả|Cách trình bày|Mức đọc|Dạng nội dung|Mục đích):.*"))return;
@@ -408,7 +410,8 @@ public class BookKnowledgeService {
                 books.computeIfAbsent(name,key->new HashSet<>()).add(id);
         }));
         return books.entrySet().stream().filter(e->e.getValue().size()>=2)
-            .sorted(Comparator.<Map.Entry<String,Set<Long>>>comparingInt(e->e.getValue().size()).reversed().thenComparing(Map.Entry::getKey))
+            .sorted(Comparator.<Map.Entry<String,Set<Long>>>comparingInt(e->shelves.contains(language.normalize(e.getKey()))?1:0)
+                .thenComparing(Comparator.<Map.Entry<String,Set<Long>>>comparingInt(e->e.getValue().size()).reversed()).thenComparing(Map.Entry::getKey))
             .limit(60).map(Map.Entry::getKey).toList();
     }
 

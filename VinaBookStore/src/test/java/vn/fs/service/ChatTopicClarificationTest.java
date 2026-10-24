@@ -81,6 +81,36 @@ class ChatTopicClarificationTest {
             assertThat(ask(generic).answer()).doesNotContain("Bạn có nhắc","công sở");
         }
     }
+    @Test void unspecifiedReadingNeedDoesNotAcceptAnArbitrarySingleGenreAsPersonalized() {
+        for(String message:List.of("Mình muốn đọc sách nhưng chưa biết nên chọn chủ đề gì.",
+                "Tôi nên đọc thể loại nào?", "Bạn tư vấn giúp mình nên đọc sách gì với.")) {
+            args.put("suggestionContext",message).put("suggestedTopics","Sách thiếu nhi");
+            var result=ask(message);
+            assertThat(result.answer()).as(message).contains("Nếu chưa có ý tưởng").doesNotContain("Bạn có nhắc");
+            assertThat(result.chips()).hasSizeGreaterThanOrEqualTo(3).doesNotContain("Sách thiếu nhi");
+            var request=new ChatRequestDto();request.setMessage(message);
+            assertThat(ChatTopicClarification.sources(request,new ChatDialogueMemory.State())).isEmpty();
+        }
+    }
+    @Test void shouldInASpecificReadingNeedStillKeepsTheActualSubject() {
+        String message="Mình nên đọc gì để học kỹ năng giao tiếp?";
+        args.put("suggestionContext",message).put("suggestedTopics","Kỹ năng giao tiếp");
+        assertThat(ask(message).chips()).contains("Kỹ năng giao tiếp");
+        var request=new ChatRequestDto();request.setMessage(message);
+        assertThat(ChatTopicClarification.sources(request,state)).containsExactly(Map.of("id","current","text",message));
+    }
+    @Test void recipientAloneDoesNotJustifyGuessingOneFavoriteGenre() {
+        for(String message:List.of("t muốn tìm sách cho bạn gái tôi", "Mình muốn mua sách tặng bạn trai",
+                "Tôi tìm sách cho vợ", "Tặng sách cho mẹ mình")) {
+            args.put("suggestionContext",message).put("suggestedTopics","Truyện trinh thám");
+            var result=ask(message);
+            assertThat(result.answer()).as(message).doesNotContain("Bạn có nhắc");
+            assertThat(result.chips()).hasSizeGreaterThanOrEqualTo(3);
+        }
+        String specific="Mình muốn tặng sách cho bạn gái đang học lập trình";
+        var request=new ChatRequestDto();request.setMessage(specific);
+        assertThat(ChatTopicClarification.sources(request,state)).isNotEmpty();
+    }
     @Test void staleContextOutsideLastFourTurnsIsNotUsed() {
         prior("Mình sắp đi làm lần đầu","Ừ");
         for(int i=0;i<4;i++)prior("Câu khác "+i,"Trả lời");

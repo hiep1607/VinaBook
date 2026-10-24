@@ -234,10 +234,11 @@ final class ChatTopicClarification {
         String detail=new ChatIntentService().normalize(quote)
             .replaceAll("\\b(?:gioi thieu|nhac lai|liet ke|ke lai|quay lai|xem lai|danh sach|y tuong|goi y)\\b"," ")
             .replaceAll("\\b(?:nhieu|cac|dang|nhi|roi)\\b"," ")
+            .replaceAll("\\b(?:cho|tang) (?:ban gai|ban trai|nguoi yeu|vo|chong|bo|me|ong|ba|anh|chi|em|con|chau|ban)(?: (?:cua )?(?:toi|minh|ay))?\\b"," ")
             .replaceAll("\\b(?:theo (?:chuyen|dieu|hoan canh)|chuyen|dieu|hoan canh)(?: (?:minh|toi|em))? (?:vua|da) (?:ke|noi|nhac)(?: (?:o tren|luc nay|truoc do))?\\b"," ")
             .replaceAll("\\b[0-9]+(?:[.,][0-9]+)*\\s*(?:trieu|nghin|ngan|dong|vnd|tr|k|d)?\\b"," ")
             .replaceAll("\\b(?:bay gio|hien tai|luc nay|cu the|gioi han|chinh xac|chu de|muc dich|huong doc|y tuong|nhu cau|yeu cau|ngu canh|bat ky|gi cung|the loai|ngan sach|dua tren|hoan canh|o tren|nhu the|vua tim)\\b"," ")
-            .replaceAll("\\b(?:toi|minh|ban|em|t|muon|can|tim|mua|chon|sach|cuon|quyen|doc|de|ve|cho|mot|vai|nhung|chua|khong|ko|biet|ro|co|nao|gi|ca|hay|hoac|va|la|thi|ma|duoc|phu|hop|thu|goi|y|tu|van|giup|nhe|di|ra|den|dau|bat|bo|toan|bo|cu|truoc|them|lam|qua|tang|nguoi|nhan|duoi|tren|khoang|tam|toi da|toi thieu|gia|van|ay|khac|huong|ke|noi|thich|doi|sang|chuyen|vua|da|thieu|moi)\\b"," ")
+            .replaceAll("\\b(?:toi|minh|ban|em|t|muon|can|tim|mua|chon|sach|cuon|quyen|doc|de|ve|cho|mot|vai|nhung|chua|khong|ko|biet|ro|co|nao|gi|ca|hay|hoac|va|la|thi|ma|nen|voi|duoc|phu|hop|thu|goi|y|tu|van|giup|nhe|di|ra|den|dau|bat|bo|toan|bo|cu|truoc|them|lam|qua|tang|nguoi|nhan|duoi|tren|khoang|tam|toi da|toi thieu|gia|van|ay|khac|huong|ke|noi|thich|doi|sang|chuyen|vua|da|thieu|moi)\\b"," ")
             .replaceAll("[^\\p{L}\\p{N}]","");
         return !detail.isBlank();
     }

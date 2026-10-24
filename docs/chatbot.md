@@ -232,3 +232,14 @@ Kết quả triển khai và thử Gemini thật: [structured-pipeline-2026-10-0
 - Planner/RAG cũ không còn nằm trong runtime; các ca tương thích được giữ ở fixture test, guard nội dung dùng narrator hiện hành.
 
 Chi tiết cấu hình, retention và giới hạn triển khai: [operations.md](operations.md).
+
+
+### 24/10/2026 — Gợi mở hướng đọc khi chưa rõ chủ đề
+
+- Khi khách muốn chọn sách nhưng chưa có chủ đề, bước hiểu hội thoại gọi menu gợi ý đã kiểm chứng theo catalog và ngân sách hiện tại. Lời chào/hỏi khả năng vẫn là hội thoại tự nhiên.
+- Các từ nối như “nên”, “với” trong câu chung không được coi là hoàn cảnh cá nhân để chấp nhận một thể loại do AI đoán. Chủ đề cụ thể như kỹ năng giao tiếp vẫn được giữ.
+- Mỗi hướng hiển thị có nhóm sách đủ điều kiện riêng; chỉ khi khách chọn mới xác nhận chủ đề. Kiểm thử bao gồm câu thực tế, nhiều hướng, chọn số và giữ điều kiện tìm kiếm.
+
+- Biết người nhận (ví dụ “tìm sách cho bạn gái”) chưa đủ để đoán một thể loại yêu thích. Chatbot gợi mở nhiều hướng; vẫn giữ hoàn cảnh cụ thể nếu khách thực sự đã nêu.
+- Gợi ý chủ đề ưu tiên nhãn nội dung đã duyệt trước các nhóm danh mục rộng, vẫn kiểm tra đủ sách và loại nhóm trùng nhau.
+- “Tình cảm hay phiêu lưu gì đó” là lựa chọn hoặc. Bộ hiểu và bộ lọc dùng chung họ từ đồng nghĩa; khi AI đã xác nhận nghĩa hoặc, nhánh gõ sai không được biến thành điều kiện bắt buộc cho nhánh đúng. “Sách hay” vẫn là tính từ, “vừa A vừa B” vẫn cần đủ hai chủ đề. Không tự khẳng định nhánh gõ sai có sách phù hợp.

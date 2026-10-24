@@ -65,7 +65,10 @@ final class ChatExplicitFilters {
 
     /** Explicit subject evidence must describe content, not its shelf, audience or style. */
     boolean matchesStorySubjects(String question,Product product) {
-        String q=intents.normalize(intents.discoveryQuery(question));
+        return matchesStorySubjects(question,product,false);
+    }
+    boolean matchesStorySubjects(String question,Product product,boolean interpretedAlternatives) {
+        String q=intents.normalize(intents.discoveryQuery(question,interpretedAlternatives));
         String[] alternatives=q.split("\\b(?:hoac|or)\\b");
         if(alternatives.length>1 && Arrays.stream(alternatives).noneMatch(String::isBlank))
             return Arrays.stream(alternatives).anyMatch(branch->matchesStorySubjects(

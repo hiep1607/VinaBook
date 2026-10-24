@@ -27,6 +27,23 @@ class ChatLiveTopicRegressionTest {
         ChatRequestDto request=new ChatRequestDto();request.setMessage(message);request.setRequestId("topic-regression");
         return tools.searchProducts().execute(mapper.createObjectNode(),new ChatTool.Context(request,state));
     }
+    @Test void interpretedOrKeepsAKnownGenreWhenTheOtherAlternativeIsMisspelled() {
+        Product romance=book(1,"Chuyện tình","Truyện tình cảm kể về tình yêu của hai người trẻ.","Văn học");
+        Product adventure=book(2,"Hành trình","Truyện phiêu lưu khám phá một vùng đất mới.","Truyện");
+        Product law=book(3,"Luật","Các văn bản pháp luật.","Kiến thức");
+        var result=discover("bạn gái tôi thích truyện tình cảm hay ohieeu lưu gì đó",
+            "Truyện tình cảm hoặc Truyện phiêu lưu",List.of(romance,adventure,law),new ChatDialogueMemory.State());
+        assertThat(result.products()).extracting(ChatProductDto::getId).contains(1L).doesNotContain(3L);
+    }
+    @Test void vagueQualifierDoesNotBecomeAnExtraRequiredSubject() {
+        Product romance=book(1,"Chuyện tình","Truyện tình cảm về tình yêu.","Văn học");
+        Product adventure=book(2,"Hành trình","Truyện phiêu lưu khám phá một vùng đất mới.","Truyện");
+        var filters=new ChatExplicitFilters(language,data);
+        for(Product book:List.of(romance,adventure))
+            assertThat(filters.matchesStorySubjects("Tôi thích truyện tình cảm hay phiêu lưu gì đó",book)).isTrue();
+        assertThat(filters.matchesStorySubjects("Tôi thích truyện tình cảm và phiêu lưu",romance)).isFalse();
+        assertThat(language.discoveryQuery("Gợi ý sách hay")).isEqualTo("Gợi ý sách hay");
+    }
     @Test void specialtyCannotBeReplacedWithFairytalesByThePlanner() {
         Product fairytale=book(1,"Kho Tàng Truyện Cổ Tích","Truyện cổ tích dân gian, kể chuyện thế giới thần tiên.","Văn học");
         var state=new ChatDialogueMemory.State();

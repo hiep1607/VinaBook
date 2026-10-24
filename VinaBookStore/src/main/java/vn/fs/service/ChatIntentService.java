@@ -161,17 +161,23 @@ public class ChatIntentService {
 
     private boolean searchTopic(String text) {
         return TOPICS.stream().anyMatch(topic->ChatCatalogQuery.word(text,normalize(topic)))
+            || ChatCatalogQuery.subjectGroups().stream().flatMap(List::stream).anyMatch(topic->ChatCatalogQuery.word(text,topic))
             || ChatBookFacts.has(text,"java|javascript|tieu thuyet|truyen ngan|truyen tranh");
     }
 
     /** Separate groups of books are alternatives; one book combining topics still uses AND. */
     public String discoveryQuery(String question) {
+        return discoveryQuery(question,false);
+    }
+    String discoveryQuery(String question,boolean interpretedAlternatives) {
         String q=normalize(question);
-        // “hay” is OR only between identifiable subjects, never the adjective in “sách hay”.
+        // A semantic OR plan may tolerate an unknown/misspelled right branch.
+        // The left branch must still name a subject, so “sách hay” stays an adjective.
         Matcher connector=Pattern.compile("\\bhay\\b").matcher(q);
         StringBuffer alternatives=new StringBuffer();
         while(connector.find())connector.appendReplacement(alternatives,
-            searchTopic(q.substring(0,connector.start())) && searchTopic(q.substring(connector.end())) ? "hoac" : "hay");
+            searchTopic(q.substring(0,connector.start()))
+                && (searchTopic(q.substring(connector.end())) || interpretedAlternatives && !q.substring(connector.end()).isBlank()) ? "hoac" : "hay");
         connector.appendTail(alternatives);q=alternatives.toString();
         if(q.matches("(?s).*\\b(?:vai|mot so|[0-9]+)\\s+(?:cuon|quyen|sach)\\b.*\\bva\\b.*\\b(?:vai|mot so|[0-9]+)\\s+(?:cuon|quyen|sach)\\b.*"))
             q=q.replaceAll("\\bva\\b","hoac");

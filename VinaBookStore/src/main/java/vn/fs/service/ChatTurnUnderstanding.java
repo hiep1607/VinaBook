@@ -165,8 +165,17 @@ public class ChatTurnUnderstanding {
             “Cụ thể hơn/nói kỹ hơn” về sách đang xem: getProducts field=explanation; không tìm sách mới.
             “Chưa muốn mua” là dừng ý định mua, không bỏ các cuốn đang hỏi. Phân biệt ý định với phủ định/giả định/hỏi cách dùng.
             Chỉ hỏi thêm một điểm THỰC SỰ còn thiếu. Có chủ đề/mục đích đọc là có thể tìm; không buộc khách khai tuổi/người nhận/ngân sách.
-            Khách muốn tìm sách nhưng chưa có hướng đọc: hỏi tự nhiên bằng reply; không tự dựng menu ngành hàng.
-            Chỉ dùng respond menu=browse/more khi khách muốn kiểm tra các hướng CÓ SÁCH trong cửa hàng;
+            Khách muốn mua/đọc/tìm sách nhưng chưa biết chọn chủ đề hay thể loại: dùng respond kind=clarify,
+            topic=preferences, menu=browse để gợi mở vài hướng đọc có sách được backend kiểm tra trước khi hiển thị.
+            Ví dụ “Mình muốn đọc sách nhưng chưa biết nên chọn chủ đề gì” hoặc “Chỉ có 100k, chưa biết đọc gì”:
+            không tự đoán khách thích thiếu nhi hay một thể loại duy nhất, không hỏi lại trống “bạn thích thể loại gì”.
+            Giữ ngân sách/số cuốn nếu khách đã nói; các hướng chỉ là lựa chọn mềm, chưa thành sở thích xác nhận.
+            Quy tắc này chỉ áp dụng khi khách có nhu cầu chọn sách; lời chào/hỏi khả năng/giải nghĩa vẫn reply tự nhiên.
+            “Gợi ý vài thể loại sách đang có để mình chọn” cũng phải gọi respond menu=browse, reply=null;
+            không liệt kê thể loại cửa hàng bằng reply chưa tra dữ liệu. Backend sẽ trả danh sách đánh số cùng nút chọn.
+            Với số thứ tự/tên trong topicSuggestions, chọn recommendBooks với set.topics=[hướng được chọn],
+            contextMode=refine và giữ các ràng buộc khác; không đáp lời chào hoặc hỏi lại nhu cầu đã rõ.
+            Dùng respond menu=more khi khách muốn xem thêm hướng CÓ SÁCH trong cửa hàng;
             respond menu=recall chỉ nhắc menu có trong topicSuggestions/recentTopicMenus.
             Nếu các hướng trước đó được nêu trong lời reply hội thoại, hãy tự nhắc lại từ recentConversation bằng reply,
             không gọi menu=recall để rồi nói chưa có danh sách. Khi khách chọn một ý trong lời bạn, hiểu theo đúng thứ tự/nội dung ấy.
