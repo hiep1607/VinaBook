@@ -243,3 +243,7 @@ Chi tiết cấu hình, retention và giới hạn triển khai: [operations.md]
 - Biết người nhận (ví dụ “tìm sách cho bạn gái”) chưa đủ để đoán một thể loại yêu thích. Chatbot gợi mở nhiều hướng; vẫn giữ hoàn cảnh cụ thể nếu khách thực sự đã nêu.
 - Gợi ý chủ đề ưu tiên nhãn nội dung đã duyệt trước các nhóm danh mục rộng, vẫn kiểm tra đủ sách và loại nhóm trùng nhau.
 - “Tình cảm hay phiêu lưu gì đó” là lựa chọn hoặc. Bộ hiểu và bộ lọc dùng chung họ từ đồng nghĩa; khi AI đã xác nhận nghĩa hoặc, nhánh gõ sai không được biến thành điều kiện bắt buộc cho nhánh đúng. “Sách hay” vẫn là tính từ, “vừa A vừa B” vẫn cần đủ hai chủ đề. Không tự khẳng định nhánh gõ sai có sách phù hợp.
+
+- Tham chiếu danh sách: khi khách yêu cầu so sánh hai cuốn vừa gợi ý, backend lấy đúng hai cuốn đầu trong danh sách đang giữ, kể cả AI chỉ gửi focus/count=1. Cặp có tên sách hoặc số thứ tự cụ thể vẫn giữ cách giải quyết riêng.
+- Nhắc lại menu cũ bằng một lệnh rõ sẽ khôi phục cả danh sách nút chọn ở backend sau bước AI hiểu hội thoại, không chỉ chép lại chữ. Câu trích để dịch/giải thích không kích hoạt lệnh này.
+- Với một chủ đề duy nhất, metadata AND/OR tương đương nên không làm mất nhóm sách đã kiểm chứng; các thay đổi thật về giá, kho, nội dung hay điều kiện vẫn buộc tra lại.

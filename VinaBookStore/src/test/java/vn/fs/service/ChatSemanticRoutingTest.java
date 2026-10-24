@@ -56,6 +56,27 @@ class ChatSemanticRoutingTest {
         verifyNoInteractions(products,cart);
         verify(ai).completeStructured(anyString(),anyList(),anyString(),any());
     }
+    @Test void explicitRecallRestoresTheServerOwnedFirstMenuAfterAiInterpretation() {
+        state.topicMenus.add(new ArrayList<>(List.of("Trinh thám","Lịch sử")));
+        state.topicMenus.add(new ArrayList<>(List.of("Khoa học","Lập trình")));
+        state.topicSuggestions=new ArrayList<>(List.of("Khoa học","Lập trình"));
+        state.toolSearch.put("maxPrice",100000);
+        var response=send("Nhắc lại các chủ đề đầu tiên.");
+        assertThat(response.getChips()).containsExactly("Trinh thám","Lịch sử");
+        assertThat(state.topicSuggestions).containsExactly("Trinh thám","Lịch sử");
+        assertThat(state.toolSearch).containsEntry("maxPrice",100000);
+        assertThat(response.getExecution()).containsEntry("tool","respond").containsEntry("dataAccess","none");
+        verify(ai).completeStructured(anyString(),anyList(),anyString(),any());verifyNoInteractions(products,cart);
+    }
+    @Test void quotedRecallTextForTranslationDoesNotOperateOnTheTopicMenus() {
+        state.topicSuggestions=List.of("Khoa học","Lập trình");
+        state.topicMenus.add(new ArrayList<>(state.topicSuggestions));
+        next.put("intent","UNKNOWN").put("reply","Repeat the initial topics.");
+        var response=send("Dịch câu 'Nhắc lại các chủ đề đầu tiên' sang tiếng Anh.");
+        assertThat(response.getAnswer()).isEqualTo("Repeat the initial topics.");
+        assertThat(response.getChips()).isEmpty();assertThat(state.topicSuggestions).containsExactly("Khoa học","Lập trình");
+        verifyNoInteractions(products,cart);
+    }
     @Test void translationOfProvidedTextDoesNotBecomeABookSearch() {
         next.put("intent","UNKNOWN").put("reply","Câu này nghĩa là: Bạn muốn tìm hiểu thêm điều gì về cuốn sách?");
         assertThat(send("Dịch câu 'What would you like to know about the book?' giúp mình").getAnswer()).contains("Bạn muốn tìm hiểu thêm");

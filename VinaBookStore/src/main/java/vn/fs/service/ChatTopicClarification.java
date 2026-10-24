@@ -148,6 +148,15 @@ final class ChatTopicClarification {
         return "";
     }
 
+    static boolean confirmedRecall(String message,ChatDialogueMemory.State state) {
+        if(state.topicMenus.isEmpty() && state.topicSuggestions.isEmpty())return false;
+        String q=new ChatIntentService().normalize(message);
+        return "recall".equals(menuCommand(message,state)) && q.matches(
+            "(?:(?:ban|shop|minh|toi) )?(?:nhac lai|ke lai|xem lai|quay lai) (?:cac |nhung )?(?:chu de|huong|the loai)(?: sach)?"
+            +"(?: (?:dau tien|ban dau|luc nay|truoc do|vua goi y|da goi y|da gioi thieu))?"
+            +"(?: (?:giup minh|giup toi|nhe|di|voi))*[.!?]*");
+    }
+
     static ChatTool.Result recall(ChatTool.Context context) {
         var state=context.state();
         List<String> menu=lastMenu(state);

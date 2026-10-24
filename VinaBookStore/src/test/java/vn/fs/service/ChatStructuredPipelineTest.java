@@ -819,6 +819,27 @@ class ChatStructuredPipelineTest {
         assertThat(state.shownProductIds).isEmpty();assertThat(state.discoverySeeds).isEmpty();
         assertThat(state.toolSearch).doesNotContainKeys("query","topics");assertThat(writes.get()).isZero();
     }
+    @Test void singleTopicMatchMetadataDoesNotInvalidateAnEquivalentPreparedSelection() {
+        topicCatalog();offer("Truyện trinh thám|Truyện phiêu lưu|Khoa học");
+        nextMode="refine";nextTool="recommendBooks";nextArgs=mapper.createObjectNode();
+        nextSet=mapper.createObjectNode();nextSet.set("topics",mapper.valueToTree(List.of("Truyện phiêu lưu")));
+        nextSet.put("topicMatch","all");
+        var response=send("2");
+        assertThat(response.getExecution()).containsEntry("preparedTopic","hit");
+        assertThat(ids(response)).containsExactly(5L,7L);
+        assertThat(ChatPreparedTopics.constraints(Map.of("topics",List.of("a","b"),"topicMatch","all")))
+            .isNotEqualTo(ChatPreparedTopics.constraints(Map.of("topics",List.of("a","b"),"topicMatch","any")));
+    }
+    @Test void comparingTwoJustSuggestedBooksUsesTheVisibleListEvenWhenPlannerSendsFocus() {
+        topics("trinh thám");var shown=ids(send("Gợi ý truyện trinh thám"));
+        current("getProducts",Map.of("reference","focus","field","table","count",1));nextIntent="COMPARE_BOOKS";
+        var response=send("So sánh hai cuốn vừa gợi ý giúp mình.");
+        assertThat(ids(response)).containsExactlyElementsOf(shown.subList(0,2));
+        assertThat(response.getAnswer()).doesNotContain("với cuốn nào nữa");
+        assertThat(state.comparisonProducts).containsExactlyElementsOf(shown.subList(0,2));
+        current("getProducts",Map.of("reference","first","field","price"));nextIntent="PRODUCT_INFO";
+        assertThat(ids(send("Giá cuốn đầu tiên bao nhiêu?"))).containsExactly(shown.get(0));
+    }
     @Test void interpretedChoiceSkipsNarrationAndRetrievalRankingAndUsesSelectedTopicOnly() {
         topicCatalog();nextSet.put("maxPrice",100000);
         offer("Truyện trinh thám|Truyện phiêu lưu|Khoa học");

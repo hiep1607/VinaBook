@@ -544,6 +544,15 @@ public class ChatBuiltinTools {
             boolean explicitComparisonPair=false;
             if("table".equals(field)) {
                 List<Product> mentioned=new ChatCatalogQuery(language,data).named(c.request().getMessage(),catalog());
+                if(mentioned.isEmpty() && ChatConversationSupport.pluralReference(c.request().getMessage(),language)
+                        && !ChatBookFacts.has(language.normalize(c.request().getMessage()),"\\bthu (?:nhat|hai|ba|tu|[1-9])\\b|\\b(?:cuon|quyen|sach) so [1-9]\\b")) {
+                    List<Product> shown=byIds(c.state().shortlist);
+                    if(shown.size()>=2) {
+                        Integer requested=language.bookCount(c.request().getMessage());
+                        int count=requested!=null && requested>=2?Math.min(requested,shown.size()):Math.min(shown.size(),8);
+                        selected=new ArrayList<>(shown.subList(0,count));explicitComparisonPair=true;
+                    }
+                }
                 if(mentioned.size()>=2){selected=mentioned;explicitComparisonPair=true;}
                 else if(mentioned.size()==1 && previousFocus!=null
                         && !previousFocus.equals(mentioned.get(0).getProductId())

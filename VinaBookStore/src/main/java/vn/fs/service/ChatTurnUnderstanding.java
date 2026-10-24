@@ -226,6 +226,17 @@ public class ChatTurnUnderstanding {
         for(String key:ROOT)if(!root.has(key))throw new IllegalArgumentException("Missing understanding field");
         try {ChatIntent.valueOf(root.path("intent").asText());}
         catch(RuntimeException ex) {throw new IllegalArgumentException("Invalid intent");}
+        // The model still interprets first. An explicit recall of a rendered
+        // menu must restore that server-owned reference rather than paraphrase
+        // it without updating the selectable options.
+        if(registry.supports("respond") && ChatTopicClarification.confirmedRecall(request.getMessage(),state)) {
+            ObjectNode recall=(ObjectNode)root;
+            recall.putNull("reply");recall.put("intent","DISCOVER_BOOKS").put("contextMode","current");
+            recall.set("set",mapper.createObjectNode());recall.set("clear",mapper.createArrayNode());
+            recall.put("evidence",ChatTurnContext.CURRENT_MESSAGE);recall.putNull("memoryNote");
+            recall.set("calls",mapper.valueToTree(List.of(Map.of("tool","respond","arguments",
+                Map.of("kind","clarify","topic","preferences","menu","recall")))));
+        }
         // Inspecting a book, policy or account never replaces reading constraints.
         // Some providers otherwise emit mode=new or echo an old filter into set.
         Set<String> contextualReads=Set.of("getProducts","bookReviews","getPolicy","listCategories","getCart","getMyOrders","getOrderDetail");

@@ -57,7 +57,7 @@ final class ChatConversationSupport {
 
     static boolean pluralReference(String message, ChatIntentService language) {
         return ChatBookFacts.has(language.normalize(message),"nhung cuon|cac cuon|may cuon|nhung sach|cac sach|danh sach|goi y do|lua chon do|trong so do|ca [0-9]+ cuon"
-            +"|(?:hai|ba|bon|nam|[2-9]) (?:cuon|quyen|sach) (?:do|nay|ay|vua xem|vua gioi thieu)"
+            +"|(?:hai|ba|bon|nam|[2-9]) (?:cuon|quyen|sach) (?:do|nay|ay|vua xem|vua gioi thieu|vua goi y)"
             +"|ca (?:hai|ba|bon|nam|[2-9]) (?:cuon|quyen|sach)");
     }
 

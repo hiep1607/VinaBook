@@ -16,6 +16,9 @@ final class ChatPreparedTopics {
     static String constraints(Map<String,Object> filters) {
         Map<String,Object> confirmed=new TreeMap<>();
         for(String key:ChatTurnContext.FIELDS)if(filters.containsKey(key))confirmed.put(key,filters.get(key));
+        // AND/OR are equivalent for one confirmed topic. Provider metadata
+        // must not discard its already verified book pool.
+        if(confirmed.get("topics") instanceof Collection<?> topics && topics.size()==1)confirmed.remove("topicMatch");
         try {return mapper.writeValueAsString(confirmed);}
         catch(Exception ex){throw new IllegalStateException("Cannot encode prepared constraints",ex);}
     }
