@@ -113,7 +113,7 @@ Không commit API key vào `application.properties`, file Angular, GitHub hoặc
 
 - `GET /api/chat/status`: trả provider, model và trạng thái AI; không bao giờ trả key hoặc base URL.
 - `POST /api/chat`: contract JSON thông thường; nhận `message` tối đa 1000 ký tự, tối đa 10 lượt `history`, `sessionId` và tối đa 8 `contextProductIds`.
-- `POST /api/chat/stream`: cùng request, trả SSE theo thứ tự `ready`, nhiều `chunk`, rồi `done`. Storefront tự fallback về JSON nếu stream không khả dụng.
+- `POST /api/chat/stream`: cùng request, trả SSE `ready`, các trạng thái `progress`, rồi `done` chứa câu trả lời đã kiểm tra với dữ liệu cửa hàng. Storefront hiện chữ dần trong tối đa khoảng 4 giây sau khi nhận `done`, kể cả khi fallback về JSON; chỉ hiện thẻ sách, gợi ý và nút thao tác khi hoàn tất. Tôn trọng tùy chọn giảm chuyển động của thiết bị; dừng hiệu ứng khi hủy yêu cầu hoặc đổi tài khoản. Hiệu ứng không tạo thêm lượt gọi AI.
 - `POST /api/chat/feedback`: nhận `messageId`, `positive|negative` và comment tùy chọn tối đa 500 ký tự.
 - `GET /api/chat/admin/metrics`: tổng hợp intent, fallback, latency và feedback; bắt buộc `ROLE_ADMIN`.
 - Response chuẩn hóa gồm `answer`, `provider`, `model`, `fallback`, `products`, `chips`, `messageId`, `intent`, `criteria` và `actions`.

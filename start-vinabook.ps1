@@ -34,7 +34,8 @@ function Test-Port([int]$Port) {
 
 function Test-Http([string]$Url, [switch]$Json) {
     try {
-        $r = Invoke-WebRequest $Url -UseBasicParsing -TimeoutSec 5
+        $accept = if ($Json) { 'application/json' } else { 'text/html, */*' }
+        $r = Invoke-WebRequest $Url -UseBasicParsing -TimeoutSec 5 -Headers @{ Accept = $accept }
         if ($r.StatusCode -ne 200) { return $false }
         if ($Json) { return ($r.Headers['Content-Type'] -match 'application/json') }
         return $true
@@ -50,6 +51,24 @@ function Wait-Service([string]$Url, [System.Diagnostics.Process]$Process, [strin
         Start-Sleep -Seconds 2
     }
     throw "Qua 5 phut van chua san sang: $Url. Xem log: $Log"
+}
+
+function Sync-Dependencies([string]$Directory, [string]$Name, [switch]$LegacyPeerDeps) {
+    $lock = Join-Path $Directory 'package-lock.json'
+    $hasLock = (Test-Path -LiteralPath $lock) -and ((Get-Item -LiteralPath $lock).Length -gt 2)
+    $hash = if ($hasLock) { (Get-FileHash -LiteralPath $lock).Hash } else { 'no-lockfile' }
+    $hash = $hash + '|' + (Get-FileHash -LiteralPath (Join-Path $Directory 'package.json')).Hash + '|legacy=' + $LegacyPeerDeps.IsPresent
+    $stamp = Join-Path $Directory 'node_modules/.vinabook-dependencies'
+    $cli = Join-Path $Directory 'node_modules/.bin/ng.cmd'
+    if (!(Test-Path -LiteralPath $cli) -or !(Test-Path -LiteralPath $stamp) -or ((Get-Content -LiteralPath $stamp -Raw).Trim() -ne $hash)) {
+        Write-Host "Dang dong bo dependency $Name..."
+        $command = if ($hasLock) { 'npm ci --no-audit --no-fund' } else { 'npm install --no-audit --no-fund' }
+        if ($LegacyPeerDeps) { $command += ' --legacy-peer-deps' }
+        $install = Start-Logged $Directory $command ($Name + '-install')
+        $install.WaitForExit()
+        if ($install.ExitCode -ne 0) { throw "Cai dependency $Name loi (exit $($install.ExitCode)). Xem: $(Join-Path $logs ($Name + '-install.log'))" }
+        Set-Content -LiteralPath $stamp -Value $hash -Encoding ASCII
+    }
 }
 
 function Start-Logged([string]$Directory, [string]$Command, [string]$Name) {
@@ -96,38 +115,34 @@ try {
         throw "Backend chatbot dang chay sai cau hinh (hien tai: $($chatStatus.provider), yeu cau: $expectedProvider). Khoi dong lai backend voi VinaBookStore/.env.local; script khong tu tat tien trinh dang chay."
     }
     Write-Host "Chatbot: $($chatStatus.provider) / $($chatStatus.architecture)"
-    $ui = Join-Path $root 'bookstore-ui'
-    if (Test-Port 4200) {
-        if (!(Test-Http 'http://localhost:4200/main.js')) { throw 'Cong 4200 dang bi chiem hoac Angular chua build thanh cong.' }
-        Write-Host 'Frontend da chay.'
-    } else {
-        Push-Location $ui
-        try {
-            $lock = 'package-lock.json'
-            $hasLock = (Test-Path $lock) -and ((Get-Item $lock).Length -gt 2)
-            $hash = if ($hasLock) { (Get-FileHash $lock).Hash } else { 'no-lockfile' }
-            $hash = $hash + '|' + (Get-FileHash 'package.json').Hash
-            $stamp = Join-Path $ui 'node_modules/.vinabook-dependencies'
-            if (!(Test-Path $stamp) -or ((Get-Content $stamp -Raw).Trim() -ne $hash)) {
-                Write-Host 'Dang dong bo dependency tu package.json...'
-                $instLog = Join-Path $logs 'install.log'
-                $cmd = if ($hasLock) { 'npm ci --no-audit --no-fund' } else { 'npm install --no-audit --no-fund' }
-                $inst = Start-Process $env:ComSpec -WorkingDirectory $ui -WindowStyle Hidden -PassThru `
-                    -ArgumentList ('/d /s /c "' + $cmd + ' > "' + $instLog + '" 2>&1"')
-                $inst.WaitForExit()
-                if ($inst.ExitCode -ne 0) { throw "Cai dependency loi (exit $($inst.ExitCode)). Xem: $instLog" }
-                Set-Content $stamp $hash -Encoding ASCII
-            }
-        } finally { Pop-Location }
-        Write-Host 'Dang khoi dong Angular...'
-        $frontend = Start-Logged $ui 'npm start -- --host 127.0.0.1 --port 4200' 'storefront'
-        Wait-Service 'http://localhost:4200/main.js' $frontend (Join-Path $logs 'storefront.log')
+    $apps = @(
+        @{ Name = 'storefront'; Folder = 'bookstore-ui'; Port = 4200; LegacyPeerDeps = $false; Route = '/' },
+        @{ Name = 'admin'; Folder = 'angular-admin'; Port = 4300; LegacyPeerDeps = $true; Route = '/login' }
+    )
+    $started = @()
+    foreach ($app in $apps) {
+        $bundle = "http://localhost:$($app.Port)/main.js"
+        if (Test-Port $app.Port) {
+            if (!(Test-Http $bundle)) { throw "Cong $($app.Port) dang bi chiem hoac Angular $($app.Name) chua build thanh cong." }
+            Write-Host "$($app.Name) da chay."
+        } else {
+            $directory = Join-Path $root $app.Folder
+            Sync-Dependencies $directory $app.Name -LegacyPeerDeps:$app.LegacyPeerDeps
+            Write-Host "Dang khoi dong $($app.Name) tren cong $($app.Port)..."
+            $process = Start-Logged $directory ("npm start -- --host 127.0.0.1 --port " + $app.Port) $app.Name
+            $started += @{ Url = $bundle; Process = $process; Log = (Join-Path $logs ($app.Name + '.log')) }
+        }
     }
-    if (!(Test-Http 'http://localhost:4200/api/products' -Json)) { throw "Frontend khong ket noi duoc API. Xem log trong $logs" }
-    Write-Host 'Web san sang: http://localhost:4200/' -ForegroundColor Green
+    foreach ($app in $started) { Wait-Service $app.Url $app.Process $app.Log }
+    if (!(Test-Http 'http://localhost:4200/api/products' -Json)) { throw "Storefront khong ket noi duoc API. Xem log trong $logs" }
+    if (!(Test-Http 'http://localhost:4300/login')) { throw "Trang dang nhap admin chua san sang. Xem log trong $logs" }
+    Write-Host 'Cua hang san sang: http://localhost:4200/' -ForegroundColor Green
+    Write-Host 'Quan tri san sang: http://localhost:4300/login' -ForegroundColor Green
     Write-Host "Log: $logs"
-    Write-Host 'Cac dich vu dang chay nen. Xem log de kiem tra trang thai.'
-    if (!$NoBrowser) { Start-Process 'http://localhost:4200/' }
+    Write-Host 'Backend, cua hang va quan tri dang chay nen. Chay lai lenh nay se dung lai cac dich vu da san sang.'
+    if (!$NoBrowser) {
+        foreach ($app in $apps) { Start-Process ("http://localhost:" + $app.Port + $app.Route) }
+    }
     exit 0
 } catch {
     Write-Host $_.Exception.Message -ForegroundColor Red

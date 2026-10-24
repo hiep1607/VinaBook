@@ -1,4 +1,5 @@
 import { fakeAsync, flushMicrotasks, TestBed, tick } from '@angular/core/testing';
+import { NgZone } from '@angular/core';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ChatbotService } from './chatbot.service';
 
@@ -12,6 +13,7 @@ describe('ChatbotService transport recovery', () => {
     service = TestBed.inject(ChatbotService);
     http = TestBed.inject(HttpTestingController);
     fetchSpy = spyOn(window, 'fetch');
+    spyOn(window, 'matchMedia').and.returnValue({ matches: false } as MediaQueryList);
   });
   afterEach(() => http.verify({ ignoreCancelled: true }));
 
@@ -103,6 +105,98 @@ describe('ChatbotService transport recovery', () => {
     expect(completed).toBeTrue();
     tick(60000);
     expect(failure).toBeFalse();
+  }));
+
+  it('reveals Vietnamese text progressively and exposes actions only on completion', fakeAsync(() => {
+    const response = { answer: 'Mình gợi ý một vài cuốn sách phù hợp với bạn nhé. 📚',
+      provider: 'gemini', fallback: false, messageId: 'answer-1', intent: 'DISCOVER_BOOKS',
+      products: [{ id: 7 }], chips: ['Tình bạn'],
+      actions: [{ type: 'VIEW_PRODUCT', productId: 7, label: 'Xem sách' }] };
+    streamFrame('event:done\ndata:' + JSON.stringify(response) + '\n\n');
+    const messages: any[] = [];
+    let completed = false;
+    service.ask('Gợi ý sách', []).subscribe({ next: message => messages.push(message), complete: () => completed = true });
+    flushMicrotasks();
+    expect(messages.length).toBe(1);
+    expect(messages[0].text.length).toBeGreaterThan(0);
+    expect(messages[0].text.length).toBeLessThan(response.answer.length);
+    expect(messages[0].streaming).toBeTrue();
+    expect(messages[0].actions).toBeUndefined();
+    expect(messages[0].products).toBeUndefined();
+    expect(messages[0].chips).toBeUndefined();
+    expect(messages[0].messageId).toBeUndefined();
+    expect(completed).toBeFalse();
+    tick(48);
+    expect(messages.length).toBeGreaterThan(1);
+    expect(messages[messages.length - 1].text.length).toBeLessThan(response.answer.length);
+    tick(5000);
+    const final = messages[messages.length - 1];
+    expect(final.text).toBe(response.answer);
+    expect(final.streaming).toBeFalse();
+    expect(final.products).toEqual(response.products);
+    expect(final.actions).toEqual(response.actions);
+    expect(final.chips).toEqual(response.chips);
+    expect(final.messageId).toBe('answer-1');
+    expect(completed).toBeTrue();
+    messages.forEach(message => expect(/[\uD800-\uDBFF]$/.test(message.text)).toBeFalse());
+    http.expectNone('/api/chat');
+  }));
+
+  it('also reveals the JSON fallback progressively without sending a second turn', fakeAsync(() => {
+    fetchSpy.and.returnValue(Promise.reject(new Error('stream unavailable')));
+    const messages: any[] = [];
+    let completed = false;
+    service.ask('Tìm sách', []).subscribe({ next: message => messages.push(message), complete: () => completed = true });
+    flushMicrotasks();
+    http.expectOne('/api/chat').flush({ answer: 'Đây là những cuốn sách bạn có thể tham khảo.', provider: 'gemini', fallback: false });
+    flushMicrotasks();
+    expect(messages[0].streaming).toBeTrue();
+    expect(completed).toBeFalse();
+    tick(5000);
+    expect(messages[messages.length - 1].text).toBe('Đây là những cuốn sách bạn có thể tham khảo.');
+    expect(messages[messages.length - 1].streaming).toBeFalse();
+    expect(completed).toBeTrue();
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
+  }));
+
+  it('stops revealing on unsubscribe without leaking a finished answer to another account', fakeAsync(() => {
+    streamFrame('event:done\ndata:{"answer":"Nội dung đang trả lời cho tài khoản hiện tại.","provider":"gemini","fallback":false}\n\n');
+    const messages: any[] = [];
+    let completed = false;
+    const request = service.ask('Tìm sách', []).subscribe({ next: message => messages.push(message), complete: () => completed = true });
+    flushMicrotasks();
+    expect(messages[0].streaming).toBeTrue();
+    const count = messages.length;
+    request.unsubscribe();
+    tick(60000);
+    expect(messages.length).toBe(count);
+    expect(completed).toBeFalse();
+    http.expectNone('/api/chat');
+  }));
+
+  it('notifies Angular for each reveal frame when fetch resolves outside its zone', fakeAsync(() => {
+    streamFrame('event:done\ndata:{"answer":"Một câu trả lời cần hiện dần.","provider":"gemini","fallback":false}\n\n');
+    const zone = TestBed.inject(NgZone);
+    const zones: boolean[] = [];
+    zone.runOutsideAngular(() => service.ask('Tìm sách', []).subscribe(message => zones.push(NgZone.isInAngularZone())));
+    flushMicrotasks();
+    tick(5000);
+    expect(zones.length).toBeGreaterThan(1);
+    expect(zones.every(inZone => inZone)).toBeTrue();
+  }));
+
+  it('respects reduced motion by showing the validated answer immediately', fakeAsync(() => {
+    (window.matchMedia as jasmine.Spy).and.returnValue({ matches: true } as MediaQueryList);
+    streamFrame('event:done\ndata:{"answer":"Gợi ý sách cho bạn.","provider":"gemini","fallback":false}\n\n');
+    const messages: any[] = [];
+    let completed = false;
+    service.ask('Gợi ý sách', []).subscribe({ next: message => messages.push(message), complete: () => completed = true });
+    flushMicrotasks();
+    expect(messages.length).toBe(1);
+    expect(messages[0].text).toBe('Gợi ý sách cho bạn.');
+    expect(messages[0].streaming).toBeFalse();
+    expect(completed).toBeTrue();
+    tick(60000);
   }));
 
   it('aborts pending transport when the account or widget unsubscribes', fakeAsync(() => {

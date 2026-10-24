@@ -19,15 +19,15 @@ Bấm đúp **`start-vinabook.cmd`** trong thư mục gốc dự án. Không c�
 - Cần MySQL chạy trên cổng `3306`, database `book` đã có dữ liệu, JDK 17 và Node/npm (đã kiểm tra với Node 16.20.2, npm 8.19.4).
 - Script tìm JDK từ `JAVA_HOME` hoặc Java trên `PATH`; không cần đặt lại mỗi terminal.
 - Backend được clean/build trong `VinaBookStore/target-runtime`, tách khỏi `target` của IDE để tránh controller `.class` cũ. Không dùng `maven.test.skip`.
-- Frontend dùng `npm ci` với lockfile khi dependency thiếu hoặc thay đổi; các lần sau không cài lại nếu dependency hợp lệ.
-- Chờ backend, bundle Angular và API proxy trả lời thành công rồi mới mở `http://localhost:4200`.
+- Hai giao diện dùng `npm ci` với lockfile khi dependency thiếu hoặc thay đổi; các lần sau không cài lại nếu dependency hợp lệ.
+- Khởi động cả storefront tại `http://localhost:4200/` và admin tại `http://localhost:4300/login`; chờ hai bundle Angular, backend và API proxy sẵn sàng rồi mở cả hai trang. Dùng `start-vinabook.cmd -NoBrowser` nếu chỉ muốn chạy dịch vụ.
 - Nếu đã chạy, script dùng lại dịch vụ; nếu cổng bị chiếm hoặc có lỗi, script báo lỗi thay vì tự tắt tiến trình khác.
-- Dịch vụ chạy trong hai cửa sổ thu nhỏ. Đóng cửa sổ dịch vụ để dừng. Log nằm trong `.run-logs/backend.log`, `.run-logs/storefront.log`, `.run-logs/install.log`.
+- Ba dịch vụ chạy nền, không bật cửa sổ terminal. Log nằm trong `.run-logs/backend.log`, `.run-logs/storefront.log`, `.run-logs/admin.log`; log cài dependency riêng tại `storefront-install.log` và `admin-install.log` trong cùng thư mục.
 - MySQL chưa chạy: mở **Services**, Start dịch vụ MySQL rồi chạy lại. Script không tự cài MySQL, tạo/import/xóa database hoặc yêu cầu quyền admin.
 - Launcher nạp cấu hình backend từ `VinaBookStore/.env.local`, gồm `JWT_SECRET`, `AI_PROVIDER`, `AI_MODEL` và các khóa AI; không ghi giá trị bí mật vào log. Biến môi trường đã đặt trước khi chạy được ưu tiên hơn file.
 - Có thể đặt `DB_USERNAME`, `DB_PASSWORD` trước khi chạy nếu khác cấu hình local. Đặt `JWT_SECRET` riêng trong file cấu hình hoặc biến môi trường.
 - Launcher kiểm tra `/api/chat/status` và báo lỗi nếu backend đang chạy khác provider đã cấu hình hoặc AI chưa được bật. Khi thay cấu hình, khởi động lại backend; script không tự tắt dịch vụ đang chạy.
-- Chỉ chạy storefront + backend; admin vẫn chạy riêng theo hướng dẫn bên dưới.
+- Chạy lại launcher sẽ dùng lại từng dịch vụ đang sẵn sàng; không mở thêm server trùng cổng. Admin cài dependency với `--legacy-peer-deps` để tương thích Angular 12.
 
 **Giới hạn dependency:** Angular 12 đã cũ. Lucide được khóa ở `1.0.0`; `.npmrc` lưu `legacy-peer-deps=true` vì peer range của thư viện yêu cầu Angular mới hơn. Đây là cấu hình tương thích tạm đã kiểm tra build, không phải nâng cấp Angular hay khắc phục toàn bộ cảnh báo dependency. Không dùng `npm audit fix --force`.
 

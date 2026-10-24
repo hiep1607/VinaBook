@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Observable, Subscriber, Subscription } from 'rxjs';
 import { map, tap, timeout } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -72,7 +72,7 @@ export class ChatbotService {
     this.sessionKey = 'vinabook_chat_id_v3:' + (email ? 'user:' + encodeURIComponent(email) : 'guest');
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private zone: NgZone) {}
 
   greeting(): ChatMessage {
     return {
@@ -202,7 +202,21 @@ export class ChatbotService {
   }
 
   private async reveal(response: ChatApiResponse, observer: Subscriber<ChatMessage>, signal: AbortSignal): Promise<void> {
-    if (!signal.aborted && !observer.closed) observer.next(this.fromResponse(response));
+    const message = this.fromResponse(response);
+    // Animate only the final, validated answer. Product cards and actions become
+    // available together after the text, including when transport falls back to JSON.
+    const characters = Array.from(message.text || '');
+    const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (!reducedMotion) {
+      const step = Math.max(2, Math.ceil(characters.length / 160));
+      for (let end = step; end < characters.length; end += step) {
+        if (signal.aborted || observer.closed) return;
+        this.zone.run(() => observer.next({ from: 'bot', text: characters.slice(0, end).join(''),
+          streaming: true, source: message.source, provider: message.provider, intent: message.intent }));
+        await this.pause(24);
+      }
+    }
+    if (!signal.aborted && !observer.closed) this.zone.run(() => observer.next(message));
   }
 
   restoreActions(message: ChatMessage): Observable<ChatMessage> {
