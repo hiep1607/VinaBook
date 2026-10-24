@@ -414,6 +414,10 @@ public class ChatBuiltinTools {
         List<Product> matched=ChatPreparedTopics.take(state,currentCatalog,data);
         boolean prepared=matched!=null;
         if(!prepared)matched=levelEligible(search.search(query,criteria,eligible),state.level);
+        if(!state.preparedTopicChoice.isBlank()) {
+            Map<Long,List<String>> topicLabels=data.topicLabels(currentCatalog);
+            matched.removeIf(book->!preparedTopicEvidence(state.preparedTopicChoice,book,topicLabels));
+        }
         // Validated source quotes retain narrow user subjects even if the planner
         // summarizes them as a broad shelf. Keep them across price-only refinements.
         boolean changedTopic=java.util.stream.Stream.of("query","topics")

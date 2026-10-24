@@ -905,6 +905,19 @@ class ChatStructuredPipelineTest {
         assertThat(response.getExecution()).containsEntry("preparedTopic","hit");
         assertThat(response.getProducts().stream().mapToLong(ChatProductDto::getPrice).sum()).isLessThanOrEqualTo(80000);
     }
+    @Test void refreshedTopicStillRequiresItsFullSubjectInsteadOfScatteredGenericWords() {
+        catalog.clear();
+        catalog.add(book(1,"Những người bạn","Truyện về tình bạn giữa những người trẻ.",50000));
+        catalog.add(book(2,"Bạn thời nhỏ","Câu chuyện về tình bạn từ thời thơ ấu.",60000));
+        catalog.add(book(3,"Tâm linh","Dành cho bạn đọc quan tâm đến đời sống tinh thần.",70000));
+        offer("Tình bạn");
+        var saved=state.preparedTopics.get("Tình bạn");
+        state.preparedTopics.put("Tình bạn",new ChatPreparedTopics.Selection(
+            System.currentTimeMillis()-ChatPreparedTopics.TTL_MS-1,saved.constraints(),saved.rankedIds(),saved.revisions()));
+        var response=send("1");
+        assertThat(response.getExecution()).containsEntry("preparedTopic","miss");
+        assertThat(ids(response)).containsExactly(1L,2L);
+    }
     @Test void expiredPreviewFallsBackToFreshRetrieval() {
         offer("Truyện trinh thám");
         var saved=state.preparedTopics.get("Truyện trinh thám");

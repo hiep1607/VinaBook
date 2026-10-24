@@ -252,3 +252,5 @@ Chi tiết cấu hình, retention và giới hạn triển khai: [operations.md]
 - Chọn một hướng vừa hiển thị luôn là refine nên không bị AI mode=new xóa preview hoặc điều kiện cũ. Thông báo sửa kế hoạch cho tham số không hợp lệ liệt kê đúng các tên tham số được công cụ chấp nhận.
 
 - Chọn số/tên của một chủ đề đã hiển thị được chuẩn hóa về đúng nhãn ở backend sau bước AI, tránh AI diễn đạt lại thành bộ lọc khác. Lựa chọn kèm giá hoặc số cuốn vẫn giữ đầy đủ bước hiểu điều kiện bổ sung.
+
+- Khi preview hết hạn hoặc dữ liệu thay đổi, lần tra lại chủ đề vẫn dùng cùng tiêu chí bằng chứng nội dung/nhãn đã duyệt như menu ban đầu. Các từ rời như “bạn đọc” và “tinh thần” không chứng minh chủ đề “tình bạn”.
