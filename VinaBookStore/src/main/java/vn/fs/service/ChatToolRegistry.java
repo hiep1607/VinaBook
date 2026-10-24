@@ -29,7 +29,7 @@ public class ChatToolRegistry {
         if (tool == null || arguments == null || !arguments.isObject())
             throw new IllegalArgumentException("Unknown tool or invalid arguments");
         arguments.fieldNames().forEachRemaining(key -> {
-            if (!tool.parameters().containsKey(key)) throw new IllegalArgumentException("Unknown argument");
+            if (!tool.parameters().containsKey(key)) throw new IllegalArgumentException("Unknown argument for "+name+"; allowed: "+String.join(", ",tool.parameters().keySet()));
         });
         tool.parameters().forEach((key, spec) -> {
             JsonNode value = arguments.get(key);

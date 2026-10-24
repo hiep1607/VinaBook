@@ -77,6 +77,18 @@ class ChatSemanticRoutingTest {
         assertThat(response.getChips()).isEmpty();assertThat(state.topicSuggestions).containsExactly("Khoa học","Lập trình");
         verifyNoInteractions(products,cart);
     }
+    @Test void pureVisibleComparisonUsesCanonicalReadArgumentsAfterAiInterpretation() throws Exception {
+        state.shortlist=new ArrayList<>(List.of(57L,58L));state.displayed=new ArrayList<>(state.shortlist);
+        next.put("intent","COMPARE_BOOKS").putNull("reply");
+        next.set("calls",mapper.valueToTree(List.of(Map.of("tool","getProducts","arguments",
+            Map.of("reference","focus","field","table","limit",2)))));
+        var request=new ChatRequestDto();request.setMessage("So sánh hai cuốn vừa gợi ý giúp mình.");
+        var plan=understanding.understand(request,state,List.of());
+        assertThat(mapper.convertValue(plan.path("calls").get(0).path("arguments"),Map.class))
+            .containsOnlyKeys("reference","field","count").containsEntry("reference","selection")
+            .containsEntry("field","table").containsEntry("count",2);
+        verify(ai).completeStructured(anyString(),anyList(),anyString(),any());verifyNoInteractions(products,cart);
+    }
     @Test void translationOfProvidedTextDoesNotBecomeABookSearch() {
         next.put("intent","UNKNOWN").put("reply","Câu này nghĩa là: Bạn muốn tìm hiểu thêm điều gì về cuốn sách?");
         assertThat(send("Dịch câu 'What would you like to know about the book?' giúp mình").getAnswer()).contains("Bạn muốn tìm hiểu thêm");

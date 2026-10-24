@@ -247,3 +247,8 @@ Chi tiết cấu hình, retention và giới hạn triển khai: [operations.md]
 - Tham chiếu danh sách: khi khách yêu cầu so sánh hai cuốn vừa gợi ý, backend lấy đúng hai cuốn đầu trong danh sách đang giữ, kể cả AI chỉ gửi focus/count=1. Cặp có tên sách hoặc số thứ tự cụ thể vẫn giữ cách giải quyết riêng.
 - Nhắc lại menu cũ bằng một lệnh rõ sẽ khôi phục cả danh sách nút chọn ở backend sau bước AI hiểu hội thoại, không chỉ chép lại chữ. Câu trích để dịch/giải thích không kích hoạt lệnh này.
 - Với một chủ đề duy nhất, metadata AND/OR tương đương nên không làm mất nhóm sách đã kiểm chứng; các thay đổi thật về giá, kho, nội dung hay điều kiện vẫn buộc tra lại.
+
+- Lệnh so sánh danh sách rõ ràng được chuẩn hóa thành getProducts/reference=selection/field=table sau khi AI đọc câu hỏi; không mang theo tham số lẫn từ công cụ khác. Lệnh có thêm tên sách, điều kiện hay nội dung trích vẫn qua bộ hiểu thông thường.
+- Chọn một hướng vừa hiển thị luôn là refine nên không bị AI mode=new xóa preview hoặc điều kiện cũ. Thông báo sửa kế hoạch cho tham số không hợp lệ liệt kê đúng các tên tham số được công cụ chấp nhận.
+
+- Chọn số/tên của một chủ đề đã hiển thị được chuẩn hóa về đúng nhãn ở backend sau bước AI, tránh AI diễn đạt lại thành bộ lọc khác. Lựa chọn kèm giá hoặc số cuốn vẫn giữ đầy đủ bước hiểu điều kiện bổ sung.

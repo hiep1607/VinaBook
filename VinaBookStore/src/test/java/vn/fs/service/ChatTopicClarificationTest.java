@@ -111,6 +111,14 @@ class ChatTopicClarificationTest {
         var request=new ChatRequestDto();request.setMessage(specific);
         assertThat(ChatTopicClarification.sources(request,state)).isNotEmpty();
     }
+    @Test void pureChoicesDoNotConsumeAdditionalBudgetOrBookCountClauses() {
+        state.topicSuggestions=List.of("Trinh thám","Khoa học");
+        assertThat(ChatTopicClarification.pureChoice("2",state)).isEqualTo("Khoa học");
+        assertThat(ChatTopicClarification.pureChoice("2, chỉ dưới 50k",state)).isEmpty();
+        assertThat(ChatTopicClarification.pureChoice("2, lấy 2 cuốn",state)).isEmpty();
+        assertThat(ChatTopicClarification.pureChoice("cuốn thứ hai",state)).isEmpty();
+        assertThat(ChatTopicClarification.pureChoice("Dịch câu chọn hướng thứ hai",state)).isEmpty();
+    }
     @Test void staleContextOutsideLastFourTurnsIsNotUsed() {
         prior("Mình sắp đi làm lần đầu","Ừ");
         for(int i=0;i<4;i++)prior("Câu khác "+i,"Trả lời");

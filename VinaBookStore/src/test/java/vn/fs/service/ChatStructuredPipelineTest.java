@@ -821,7 +821,7 @@ class ChatStructuredPipelineTest {
     }
     @Test void singleTopicMatchMetadataDoesNotInvalidateAnEquivalentPreparedSelection() {
         topicCatalog();offer("Truyện trinh thám|Truyện phiêu lưu|Khoa học");
-        nextMode="refine";nextTool="recommendBooks";nextArgs=mapper.createObjectNode();
+        nextMode="new";nextTool="recommendBooks";nextArgs=mapper.createObjectNode();
         nextSet=mapper.createObjectNode();nextSet.set("topics",mapper.valueToTree(List.of("Truyện phiêu lưu")));
         nextSet.put("topicMatch","all");
         var response=send("2");
@@ -829,6 +829,15 @@ class ChatStructuredPipelineTest {
         assertThat(ids(response)).containsExactly(5L,7L);
         assertThat(ChatPreparedTopics.constraints(Map.of("topics",List.of("a","b"),"topicMatch","all")))
             .isNotEqualTo(ChatPreparedTopics.constraints(Map.of("topics",List.of("a","b"),"topicMatch","any")));
+    }
+    @Test void pureRenderedChoiceKeepsItsLabelEvenIfAiParaphrasesItAndStartsANewTask() {
+        topicCatalog();nextSet.put("maxPrice",100000);offer("Truyện trinh thám|Truyện phiêu lưu|Khoa học");
+        nextMode="new";nextTool="recommendBooks";nextArgs=mapper.createObjectNode();
+        nextSet=mapper.createObjectNode().put("query","phiêu lưu");
+        var response=send("2");
+        assertThat(response.getExecution()).containsEntry("preparedTopic","hit");
+        assertThat(ids(response)).containsExactly(5L,7L);
+        assertThat(state.toolSearch).containsEntry("maxPrice",100000).containsEntry("query","Truyện phiêu lưu");
     }
     @Test void comparingTwoJustSuggestedBooksUsesTheVisibleListEvenWhenPlannerSendsFocus() {
         topics("trinh thám");var shown=ids(send("Gợi ý truyện trinh thám"));

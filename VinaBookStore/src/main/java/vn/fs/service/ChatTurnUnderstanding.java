@@ -237,6 +237,26 @@ public class ChatTurnUnderstanding {
             recall.set("calls",mapper.valueToTree(List.of(Map.of("tool","respond","arguments",
                 Map.of("kind","clarify","topic","preferences","menu","recall")))));
         }
+        String chosenTopic=ChatTopicClarification.pureChoice(request.getMessage(),state);
+        if(registry.supports("recommendBooks") && !chosenTopic.isBlank()) {
+            ObjectNode selection=(ObjectNode)root;
+            selection.putNull("reply");selection.put("intent","DISCOVER_BOOKS").put("contextMode","refine");
+            selection.set("set",mapper.createObjectNode().set("topics",mapper.valueToTree(List.of(chosenTopic))));
+            selection.set("clear",mapper.createArrayNode());selection.put("evidence",ChatTurnContext.CURRENT_MESSAGE);
+            selection.putNull("memoryNote");
+            selection.set("calls",mapper.valueToTree(List.of(Map.of("tool","recommendBooks","arguments",Map.of()))));
+        }
+        if(registry.supports("getProducts") && state.shortlist.size()>=2
+                && ChatConversationSupport.confirmedListComparison(request.getMessage(),new ChatIntentService())) {
+            ObjectNode comparison=(ObjectNode)root;
+            comparison.putNull("reply");comparison.put("intent","COMPARE_BOOKS").put("contextMode","current");
+            comparison.set("set",mapper.createObjectNode());comparison.set("clear",mapper.createArrayNode());
+            comparison.put("evidence",ChatTurnContext.CURRENT_MESSAGE);comparison.putNull("memoryNote");
+            Integer count=new ChatIntentService().bookCount(request.getMessage());
+            Map<String,Object> args=new LinkedHashMap<>(Map.of("reference","selection","field","table"));
+            if(count!=null && count>=2)args.put("count",Math.min(count,8));
+            comparison.set("calls",mapper.valueToTree(List.of(Map.of("tool","getProducts","arguments",args))));
+        }
         // Inspecting a book, policy or account never replaces reading constraints.
         // Some providers otherwise emit mode=new or echo an old filter into set.
         Set<String> contextualReads=Set.of("getProducts","bookReviews","getPolicy","listCategories","getCart","getMyOrders","getOrderDetail");

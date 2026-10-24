@@ -130,6 +130,14 @@ final class ChatTopicClarification {
         return "";
     }
 
+    static String pureChoice(String message,ChatDialogueMemory.State state) {
+        String selected=choice(message,state);
+        if(selected.isBlank())return "";
+        ChatIntentService language=new ChatIntentService();
+        String q=language.normalize(message).replaceAll("[.!?]","").strip();
+        return !q.contains(",") && !q.contains(";") || q.equals(language.normalize(selected))?selected:"";
+    }
+
     static boolean requestsMoreTopics(String message) {
         String q=new ChatIntentService().normalize(message);
         return ChatBookFacts.has(q,"(?:them|nhieu hon|khac)(?: cac| vai| nhieu| nhung)? (?:chu de|huong|the loai)|(?:chu de|huong|the loai)(?: nao)? (?:khac|nao nua)|con (?:chu de|huong|the loai) nao");

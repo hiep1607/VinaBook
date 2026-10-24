@@ -55,6 +55,14 @@ final class ChatConversationSupport {
             && !ChatBookFacts.has(q,"tra hang|doi tra|hoan tien|don hang|gio hang|thanh toan|giao hang");
     }
 
+    static boolean confirmedListComparison(String message,ChatIntentService language) {
+        String q=language.normalize(message);
+        return q.matches("(?:(?:ban|shop) )?so sanh (?:giup (?:minh|toi) )?"
+            +"(?:hai|ba|bon|[2-8]|cac|nhung) (?:cuon|quyen|sach)(?: sach)? "
+            +"(?:nay|do|ay|vua goi y|vua gioi thieu|vua xem|trong danh sach)"
+            +"(?: (?:giup minh|giup toi|nhe|di|voi))*[.!?]*");
+    }
+
     static boolean pluralReference(String message, ChatIntentService language) {
         return ChatBookFacts.has(language.normalize(message),"nhung cuon|cac cuon|may cuon|nhung sach|cac sach|danh sach|goi y do|lua chon do|trong so do|ca [0-9]+ cuon"
             +"|(?:hai|ba|bon|nam|[2-9]) (?:cuon|quyen|sach) (?:do|nay|ay|vua xem|vua gioi thieu|vua goi y)"

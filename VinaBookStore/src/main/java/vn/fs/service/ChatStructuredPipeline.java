@@ -102,8 +102,12 @@ public class ChatStructuredPipeline implements ChatPlanner {
                     ChatIntentService language=new ChatIntentService();
                     boolean selectedTopic=topics.isArray() && topics.size()==1 && normalized.equals(language.normalize(topics.get(0).asText()));
                     boolean selectedQuery=normalized.equals(language.normalize(plan.path("set").path("query").asText()));
-                    if(!choice.isBlank() && (selectedTopic || selectedQuery))
+                    if(!choice.isBlank() && (selectedTopic || selectedQuery)) {
                         working.preparedTopicChoice=choice;
+                        // A rendered topic selection refines this conversation;
+                        // provider mode=new must not discard its verified pool.
+                        ((com.fasterxml.jackson.databind.node.ObjectNode)plan).put("contextMode","refine");
+                    }
                 }
                 boolean usesCart=false;
                 for(JsonNode call:plan.path("calls"))usesCart|=Set.of("getCart","prepareCartChange","prepareClearCart").contains(call.path("tool").asText())
