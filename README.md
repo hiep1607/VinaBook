@@ -19,7 +19,7 @@ Bấm đúp **`start-vinabook.cmd`** trong thư mục gốc dự án. Không c�
 - Cần MySQL chạy trên cổng `3306`, database `book` đã có dữ liệu, JDK 17 và Node/npm (đã kiểm tra với Node 16.20.2, npm 8.19.4).
 - Script tìm JDK từ `JAVA_HOME` hoặc Java trên `PATH`; không cần đặt lại mỗi terminal.
 - Backend được clean/build trong `VinaBookStore/target-runtime`, tách khỏi `target` của IDE để tránh controller `.class` cũ. Không dùng `maven.test.skip`.
-- Hai giao diện dùng `npm ci` với lockfile khi dependency thiếu hoặc thay đổi; các lần sau không cài lại nếu dependency hợp lệ.
+- Hai giao diện dùng `npm ci` với lockfile khi dependency thiếu hoặc thay đổi; các lần sau không cài lại nếu dependency hợp lệ. Launcher nhận marker của phiên bản cũ để tránh cài lại thư viện không đổi. Khi cần cài, thư mục `node_modules` cũ được giữ trong `.run-logs/` trước khi cài vào thư mục sạch, tránh lỗi Windows `EPERM` khi npm xóa tệp đang bị giữ; nếu cài thất bại, thư mục cũ được khôi phục. Chỉ cho một launcher hoạt động tại một thời điểm.
 - Khởi động cả storefront tại `http://localhost:4200/` và admin tại `http://localhost:4300/login`; chờ hai bundle Angular, backend và API proxy sẵn sàng rồi mở cả hai trang. Dùng `start-vinabook.cmd -NoBrowser` nếu chỉ muốn chạy dịch vụ.
 - Nếu đã chạy, script dùng lại dịch vụ; nếu cổng bị chiếm hoặc có lỗi, script báo lỗi thay vì tự tắt tiến trình khác.
 - Ba dịch vụ chạy nền, không bật cửa sổ terminal. Log nằm trong `.run-logs/backend.log`, `.run-logs/storefront.log`, `.run-logs/admin.log`; log cài dependency riêng tại `storefront-install.log` và `admin-install.log` trong cùng thư mục.

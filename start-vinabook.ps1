@@ -35,40 +35,83 @@ function Test-Port([int]$Port) {
 function Test-Http([string]$Url, [switch]$Json) {
     try {
         $accept = if ($Json) { 'application/json' } else { 'text/html, */*' }
-        $r = Invoke-WebRequest $Url -UseBasicParsing -TimeoutSec 5 -Headers @{ Accept = $accept }
+        $probeUrl = $Url -replace '^http://localhost:', 'http://127.0.0.1:'
+        $r = Invoke-WebRequest $probeUrl -UseBasicParsing -TimeoutSec 10 -Headers @{ Accept = $accept }
         if ($r.StatusCode -ne 200) { return $false }
         if ($Json) { return ($r.Headers['Content-Type'] -match 'application/json') }
         return $true
     } catch { return $false }
 }
 
-function Wait-Service([string]$Url, [System.Diagnostics.Process]$Process, [string]$Log, [switch]$Json) {
-    $deadline = (Get-Date).AddMinutes(5)
+function Wait-Service([string]$Url, [System.Diagnostics.Process]$Process, [string]$Log, [switch]$Json, [int]$TimeoutSeconds = 300) {
+    $deadline = (Get-Date).AddSeconds($TimeoutSeconds)
     while ((Get-Date) -lt $deadline) {
         if (Test-Http $Url -Json:$Json) { return }
-        $Process.Refresh()
-        if ($Process.HasExited) { throw "Tien trinh dung. Xem log: $Log" }
+        if ($null -ne $Process) {
+            $Process.Refresh()
+            if ($Process.HasExited) { throw "Tien trinh dung. Xem log: $Log" }
+        }
         Start-Sleep -Seconds 2
     }
-    throw "Qua 5 phut van chua san sang: $Url. Xem log: $Log"
+    throw "Qua $TimeoutSeconds giay van chua san sang: $Url. Xem log: $Log"
+}
+
+function Get-DependencyHash([string]$Path) {
+    $algorithm = [Security.Cryptography.SHA256]::Create()
+    $stream = [IO.File]::OpenRead($Path)
+    try { return [BitConverter]::ToString($algorithm.ComputeHash($stream)).Replace('-', '') }
+    finally { $stream.Dispose(); $algorithm.Dispose() }
+}
+function Save-DependencyDirectory([string]$Directory, [string]$Name) {
+    $workspacePrefix = [IO.Path]::GetFullPath($root).TrimEnd('\') + '\'
+    $modules = [IO.Path]::GetFullPath((Join-Path $Directory 'node_modules'))
+    $backup = [IO.Path]::GetFullPath((Join-Path $logs ($Name + '-dependencies-' + (Get-Date -Format 'yyyyMMdd-HHmmss-fff') + '-' + [Guid]::NewGuid().ToString('N').Substring(0, 6))))
+    foreach ($targetPath in @($modules, $backup)) {
+        if (!$targetPath.StartsWith($workspacePrefix, [StringComparison]::OrdinalIgnoreCase)) {
+            throw 'Duong dan dependency nam ngoai thu muc du an; dung thao tac.'
+        }
+    }
+    if (Test-Path -LiteralPath $modules) {
+        # npm ci deletes node_modules in place. Windows may keep individual files
+        # open, so preserve the directory before installing into a fresh location.
+        try {
+            [IO.Directory]::Move($modules, $backup)
+        } catch {
+            throw "Windows dang giu thu vien $Name. Thu muc cu van duoc giu nguyen. Dong trinh build/kiem thu cua du an roi chay lai. Chi tiet: $($_.Exception.Message)"
+        }
+        return $backup
+    }
+    return $null
 }
 
 function Sync-Dependencies([string]$Directory, [string]$Name, [switch]$LegacyPeerDeps) {
     $lock = Join-Path $Directory 'package-lock.json'
     $hasLock = (Test-Path -LiteralPath $lock) -and ((Get-Item -LiteralPath $lock).Length -gt 2)
-    $hash = if ($hasLock) { (Get-FileHash -LiteralPath $lock).Hash } else { 'no-lockfile' }
-    $hash = $hash + '|' + (Get-FileHash -LiteralPath (Join-Path $Directory 'package.json')).Hash + '|legacy=' + $LegacyPeerDeps.IsPresent
+    $baseHash = if ($hasLock) { (Get-DependencyHash $lock) } else { 'no-lockfile' }
+    $baseHash += '|' + (Get-DependencyHash (Join-Path $Directory 'package.json'))
+    $hash = $baseHash + '|legacy=' + $LegacyPeerDeps.IsPresent
     $stamp = Join-Path $Directory 'node_modules/.vinabook-dependencies'
     $cli = Join-Path $Directory 'node_modules/.bin/ng.cmd'
-    if (!(Test-Path -LiteralPath $cli) -or !(Test-Path -LiteralPath $stamp) -or ((Get-Content -LiteralPath $stamp -Raw).Trim() -ne $hash)) {
-        Write-Host "Dang dong bo dependency $Name..."
-        $command = if ($hasLock) { 'npm ci --no-audit --no-fund' } else { 'npm install --no-audit --no-fund' }
-        if ($LegacyPeerDeps) { $command += ' --legacy-peer-deps' }
-        $install = Start-Logged $Directory $command ($Name + '-install')
-        $install.WaitForExit()
-        if ($install.ExitCode -ne 0) { throw "Cai dependency $Name loi (exit $($install.ExitCode)). Xem: $(Join-Path $logs ($Name + '-install.log'))" }
-        Set-Content -LiteralPath $stamp -Value $hash -Encoding ASCII
+    $savedHash = if (Test-Path -LiteralPath $stamp) { (Get-Content -LiteralPath $stamp -Raw).Trim() } else { '' }
+    if ((Test-Path -LiteralPath $cli) -and ($savedHash -eq $hash -or $savedHash -eq $baseHash)) {
+        # Upgrade the previous launcher marker without reinstalling unchanged packages.
+        if ($savedHash -ne $hash) { Set-Content -LiteralPath $stamp -Value $hash -Encoding ASCII }
+        return
     }
+    Write-Host "Dang dong bo dependency $Name..."
+    $backup = Save-DependencyDirectory $Directory $Name
+    $command = if ($hasLock) { 'npm ci --no-audit --no-fund' } else { 'npm install --no-audit --no-fund' }
+    if ($LegacyPeerDeps) { $command += ' --legacy-peer-deps' }
+    $install = Start-Logged $Directory $command ($Name + '-install')
+    $install.WaitForExit()
+    if ($install.ExitCode -ne 0) {
+        if ($backup) {
+            $failed = Save-DependencyDirectory $Directory ($Name + '-failed')
+            [IO.Directory]::Move($backup, (Join-Path $Directory 'node_modules'))
+        }
+        throw "Cai dependency $Name loi (exit $($install.ExitCode)). Thu vien cu duoc giu lai. Xem: $(Join-Path $logs ($Name + '-install.log'))"
+    }
+    Set-Content -LiteralPath $stamp -Value $hash -Encoding ASCII
 }
 
 function Start-Logged([string]$Directory, [string]$Command, [string]$Name) {
@@ -78,7 +121,13 @@ function Start-Logged([string]$Directory, [string]$Command, [string]$Name) {
     return $process
 }
 
+$launcherLock = $null
 try {
+    try {
+        $launcherLock = [IO.File]::Open((Join-Path $logs 'launcher.lock'), [IO.FileMode]::OpenOrCreate, [IO.FileAccess]::ReadWrite, [IO.FileShare]::None)
+    } catch [IO.IOException] {
+        throw 'Mot lan khoi dong VinaBook khac dang chay. Cho lan do hoan tat; khong can bam lai.'
+    }
     if (!(Test-Port 3306)) {
         throw 'MySQL chua chay tren cong 3306. Mo Services, Start dich vu MySQL, roi chay lai. Database book can duoc import tu db/01-schema-seed.sql lan dau.'
     }
@@ -109,7 +158,7 @@ try {
         $backend = Start-Logged (Join-Path $root 'VinaBookStore') ('mvnw.cmd "-Dvinabook.build.directory=' + $build + '" clean spring-boot:run') 'backend'
         Wait-Service 'http://localhost:8080/api/products' $backend (Join-Path $logs 'backend.log') -Json
     }
-    $chatStatus = Invoke-RestMethod -Uri 'http://localhost:8080/api/chat/status' -TimeoutSec 10
+    $chatStatus = Invoke-RestMethod -Uri 'http://127.0.0.1:8080/api/chat/status' -TimeoutSec 10
     $expectedProvider = if ($env:AI_PROVIDER) { $env:AI_PROVIDER.Trim().ToLowerInvariant() } else { 'local' }
     if ($chatStatus.provider -ne $expectedProvider -or ($expectedProvider -ne 'local' -and -not $chatStatus.aiEnabled)) {
         throw "Backend chatbot dang chay sai cau hinh (hien tai: $($chatStatus.provider), yeu cau: $expectedProvider). Khoi dong lai backend voi VinaBookStore/.env.local; script khong tu tat tien trinh dang chay."
@@ -134,8 +183,8 @@ try {
         }
     }
     foreach ($app in $started) { Wait-Service $app.Url $app.Process $app.Log }
-    if (!(Test-Http 'http://localhost:4200/api/products' -Json)) { throw "Storefront khong ket noi duoc API. Xem log trong $logs" }
-    if (!(Test-Http 'http://localhost:4300/login')) { throw "Trang dang nhap admin chua san sang. Xem log trong $logs" }
+    Wait-Service 'http://localhost:4200/api/products' $null (Join-Path $logs 'storefront.log') -Json -TimeoutSeconds 45
+    Wait-Service 'http://localhost:4300/login' $null (Join-Path $logs 'admin.log') -TimeoutSeconds 45
     Write-Host 'Cua hang san sang: http://localhost:4200/' -ForegroundColor Green
     Write-Host 'Quan tri san sang: http://localhost:4300/login' -ForegroundColor Green
     Write-Host "Log: $logs"
@@ -147,4 +196,6 @@ try {
 } catch {
     Write-Host $_.Exception.Message -ForegroundColor Red
     exit 1
+} finally {
+    if ($null -ne $launcherLock) { $launcherLock.Dispose() }
 }

@@ -62,3 +62,11 @@ Không dùng tài khoản hoặc mật khẩu seed local trên web public. Tạo
 Mapping `products.description` dùng TEXT để giữ mô tả HTML dài hơn 255 ký tự. Database đã có cột VARCHAR cần áp dụng `db/19-product-description-text.sql` vào đúng database trước khi validate. Migration mở rộng kiểu cột và giữ dữ liệu hiện có.
 
 Boolean có default dùng kiểu do dialect chọn và `@ColumnDefault`, thay vì nhúng `boolean default false` trong columnDefinition. Cách này giữ default false và tương thích validate với metadata BIT của MySQL cho `automation_preferences.cart_price_changes` và `orders.stock_reserved`; không thay đổi dữ liệu hiện có.
+
+## Launcher local trên Windows (25/10/2026)
+
+Bấm `start-vinabook.cmd` để chạy backend, storefront 4200 và admin 4300; dùng `-NoBrowser` khi không cần mở tab. Launcher dùng lại dịch vụ và dependency đang hợp lệ, nhận marker dependency của phiên bản trước và ngăn hai lần khởi động chạy đồng thời.
+
+Khi dependency thực sự cần cài, launcher đổi tên nguyên thư mục `node_modules` sang bản giữ tại `.run-logs/` rồi mới cài vào thư mục sạch. Nó không cho npm xóa từng tệp cũ tại chỗ, khôi phục thư mục trước nếu cài thất bại và kiểm tra đường dẫn nằm trong dự án trước khi di chuyển. Nếu Windows giữ khóa khiến cả thư mục không thể đổi tên, launcher dừng trước khi cài và giữ nguyên tệp; cần đóng tiến trình build/test đang giữ thư viện rồi chạy lại. Không cần xóa thư viện thủ công hoặc chạy toàn bộ launcher bằng quyền Administrator.
+
+Hash dependency dùng SHA256 của .NET để tương thích phiên PowerShell mở từ CMD. Readiness gọi IPv4 127.0.0.1 và chờ API/login tối đa 45 giây sau khi bundle sẵn sàng để tránh báo lỗi trong lúc dev server vừa biên dịch lại. Log ở `.run-logs/backend.log`, `storefront.log`, `admin.log` và các tệp `*-install.log`.
