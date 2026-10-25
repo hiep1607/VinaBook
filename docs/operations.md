@@ -70,3 +70,8 @@ Bấm `start-vinabook.cmd` để chạy backend, storefront 4200 và admin 4300;
 Khi dependency thực sự cần cài, launcher đổi tên nguyên thư mục `node_modules` sang bản giữ tại `.run-logs/` rồi mới cài vào thư mục sạch. Nó không cho npm xóa từng tệp cũ tại chỗ, khôi phục thư mục trước nếu cài thất bại và kiểm tra đường dẫn nằm trong dự án trước khi di chuyển. Nếu Windows giữ khóa khiến cả thư mục không thể đổi tên, launcher dừng trước khi cài và giữ nguyên tệp; cần đóng tiến trình build/test đang giữ thư viện rồi chạy lại. Không cần xóa thư viện thủ công hoặc chạy toàn bộ launcher bằng quyền Administrator.
 
 Hash dependency dùng SHA256 của .NET để tương thích phiên PowerShell mở từ CMD. Readiness gọi IPv4 127.0.0.1 và chờ API/login tối đa 45 giây sau khi bundle sẵn sàng để tránh báo lỗi trong lúc dev server vừa biên dịch lại. Log ở `.run-logs/backend.log`, `storefront.log`, `admin.log` và các tệp `*-install.log`.
+
+
+### Tắt VinaBook local
+
+Bấm `stop-vinabook.cmd` cạnh file khởi động. Script nhận diện tiến trình theo đường dẫn dự án và lệnh Angular serve/Spring Boot, dừng cả launcher đang khởi động cùng các worker npm/Maven liên quan. Nó kiểm tra thời điểm tạo tiến trình trước khi dừng để tránh PID đã được tái sử dụng; không tắt tiến trình khác chỉ vì dùng cổng 4200/4300/8080. Chạy lại khi đã tắt không gây lỗi. MySQL, trình duyệt và Azure tiếp tục hoạt động.

@@ -14,7 +14,7 @@ Storefront lấy catalog từ `GET /api/products`; vì vậy MySQL và backend p
 
 ### Chạy nhanh trên Windows
 
-Bấm đúp **`start-vinabook.cmd`** trong thư mục gốc dự án. Không cần sửa đường dẫn nếu di chuyển thư mục.
+Bấm đúp **`start-vinabook.cmd`** trong thư mục gốc dự án. Không cần sửa đường dẫn nếu di chuyển thư mục. Bấm đúp **`stop-vinabook.cmd`** trong cùng thư mục để tắt backend, storefront và admin local. Có thể tắt cả khi launcher đang khởi động; MySQL, trình duyệt, ứng dụng khác và web Azure được giữ nguyên.
 
 - Cần MySQL chạy trên cổng `3306`, database `book` đã có dữ liệu, JDK 17 và Node/npm (đã kiểm tra với Node 16.20.2, npm 8.19.4).
 - Script tìm JDK từ `JAVA_HOME` hoặc Java trên `PATH`; không cần đặt lại mỗi terminal.
