@@ -18,7 +18,7 @@
 - Tìm kiếm realtime, lịch sử tối đa 8 truy vấn.
 - Toast toàn cục; chatbot V2 có SSE, phân loại ý định, lọc theo ngân sách/chủ đề/tác giả, so sánh và hỏi tiếp theo ngữ cảnh, chính sách từ backend, tra tối đa 3 đơn gần nhất theo JWT, thêm giỏ có xác nhận và feedback hữu ích/chưa hữu ích.
 - Header responsive, menu mobile, footer dùng chung và hỗ trợ keyboard/reduced motion ở các control chính.
-- Bộ đổi màu giao diện gồm editorial, ocean, forest và berry; lựa chọn được lưu trên thiết bị.
+- Bộ đổi màu giao diện gồm editorial, ocean, forest và berry; lựa chọn được lưu trên thiết bị. Nút bảng màu ở góc trái dưới luôn có trên các trang, gồm chi tiết sách, giỏ hàng và thanh toán; trên mobile nút tự nâng để tránh thanh mua hàng.
 - Giao diện storefront dùng hệ token modern editorial bám màu xanh logo, container 1280px thống nhất, chuyển cảnh route ngắn và scroll reveal bằng IntersectionObserver. Bìa sách dùng `object-fit: contain` để không cắt nội dung.
 
 ## Admin

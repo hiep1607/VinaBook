@@ -6,7 +6,6 @@ import {
   ViewChild
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
 
 import { FabCollisionService } from 'src/app/services/fab-collision.service';
 import { MotionService } from 'src/app/services/motion.service';
@@ -30,8 +29,7 @@ export class ThemeSwitcherComponent implements AfterViewInit, OnDestroy {
   constructor(
     public themeService: ThemeService,
     private collision: FabCollisionService,
-    private motion: MotionService,
-    private router: Router
+    private motion: MotionService
   ) {}
 
   /** Nâng FAB lên trên CTA khi có va chạm ở mobile (xem FabCollisionService). */
@@ -55,7 +53,6 @@ export class ThemeSwitcherComponent implements AfterViewInit, OnDestroy {
   get themes(): Theme[] {
     return this.themeService.themes;
   }
-  get purchaseRoute(): boolean { return /^\/(?:cart|checkout|product\/\d+|orders\/\d+)(?:[/?#]|$)/.test(this.router.url); }
 
   toggle(): void {
     this.open = !this.open;
