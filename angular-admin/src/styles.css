@@ -1,7 +1,9 @@
+:root { --admin-font-family: "Be Vietnam Pro", "Segoe UI", sans-serif; }
 html, body { min-height: 100%; scroll-behavior: smooth; }
-body { margin: 0; background: #f4f7f5; color: #172a23; font-family: "Be Vietnam Pro", "Segoe UI", sans-serif; }
+body { margin: 0; background: #f4f7f5; color: #172a23; font-family: var(--admin-font-family); }
 button, input, textarea, select { font-family: inherit; }
-.mat-typography, .mat-table, .mat-form-field { font-family: "Be Vietnam Pro", "Segoe UI", sans-serif !important; }
+.tooltip, .popover { font-family: var(--admin-font-family); }
+.mat-typography, .mat-table, .mat-form-field { font-family: var(--admin-font-family) !important; }
 .container-fluid { padding-left: 32px; padding-right: 32px; }
 .card { border: 1px solid #e0e7e3; border-radius: 16px; box-shadow: 0 10px 34px rgba(25,47,38,.06); }
 .card-header { border-bottom: 1px solid #e5ebe8; background: #fff; }

@@ -49,7 +49,7 @@ body {
 body {
     background-color: #eee;
     height: 100vh;
-    font-family: Roboto, Arial, sans-serif;
+    font-family: var(--admin-font-family);
     background: linear-gradient(to top, #fff 10%, rgba(93, 42, 141, 0.4) 90%) no-repeat
 }
 
@@ -69,7 +69,7 @@ body {
 }
 
 .h4 {
-    font-family: 'Work+Sans', sans-serif
+    font-family: inherit
 }
 
 .input-field {
@@ -93,7 +93,7 @@ input {
     box-shadow: none;
     width: 100%;
     padding: 0px 2px;
-    font-family: 'Work+Sans', sans-serif
+    font-family: inherit
 }
 
 .fa-eye-slash.btn {
