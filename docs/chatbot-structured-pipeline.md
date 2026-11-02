@@ -38,8 +38,8 @@ JSON gồm đúng các trường:
 - clear: trường khách muốn bỏ; chỉ clear mới xóa điều kiện đã lưu.
 - evidence: chuỗi `current_message` là con trỏ nguồn chung cho patch; backend tự gắn nguyên văn tin nhắn hiện tại cho từng trường set/clear trước khi kiểm tra và lưu nguồn.
 - memoryNote: ghi chú ngữ nghĩa gồm text/evidence từ lời khách hoặc null; evidence dùng cùng con trỏ `current_message`. Thiếu căn cứ thì bỏ ghi chú, không làm hỏng kế hoạch hợp lệ.
-- reply: lời trả lời trực tiếp hoặc null. Không cần dữ liệu cửa hàng thì dùng reply với calls rỗng. Intent mô tả ý câu, không tự bắt buộc gọi công cụ (ví dụ ý tưởng đọc chung vẫn có thể là DISCOVER_BOOKS). Backend bỏ patch/ghi chú và giữ mode current của nhánh này; không trộn reply với công cụ hoặc đổi ngữ cảnh mua/đọc.
-- calls: tối đa ba công cụ đã đăng ký, chỉ một bước tìm sách cho số lượng/ngân sách chung; khi có calls thì reply=null.
+- reply: lời trả lời trực tiếp với calls rỗng; kế hoạch công cụ mới bỏ trường này. Backend vẫn đọc được kế hoạch cũ có reply=null. Intent mô tả ý câu, không tự bắt buộc gọi công cụ (ví dụ ý tưởng đọc chung vẫn có thể là DISCOVER_BOOKS). Backend bỏ patch/ghi chú và giữ mode current của nhánh này; không trộn reply với công cụ hoặc đổi ngữ cảnh mua/đọc.
+- calls: tối đa ba công cụ đã đăng ký, chỉ một bước tìm sách cho số lượng/ngân sách chung.
 
 Chào hỏi, hỏi khả năng hỗ trợ, giải nghĩa/dịch phần chữ đã có hoặc gợi mở hướng đọc chung có thể trả lời bằng reply. Giá, tồn kho, nội dung/nhận xét sách cần nguồn, sách có bán, chính sách, giỏ và đơn phải dùng công cụ. Không áp dụng bộ định tuyến từ khóa trước AI; các nhánh tham chiếu/lệnh cũ là dự phòng khi provider lỗi. Bước đọc ý dùng tối đa15 giây trong ngân sách chung45 giây. `execution.tool=conversation` và `dataAccess=none` cho biết nhánh trả lời không đọc catalog/giỏ; lịch sử, xác thực và lưu hội thoại vẫn do backend quản lý để giữ kín API key.
 
@@ -55,6 +55,16 @@ Schema provider ràng buộc envelope, intent, mode, số công cụ và các ki
 set/evidence là map thưa để tránh tự điền hàng chục trường tùy chọn.
 Schema chi tiết của bộ lọc đi cùng prompt; ChatTurnContext kiểm tra tên trường,
 kiểu, enum, phạm vi và nguồn trước khi ghép. Tham số công cụ được registry kiểm tra riêng.
+
+### Đồng bộ hợp đồng đầu ra ngày 01/11/2026
+
+Schema gửi provider ràng buộc hai nhánh loại trừ nhau: reply văn bản với calls rỗng, hoặc không có reply với ít nhất một công cụ. Tham số lượt đầu dùng map thưa thay cho map gộp tất cả tham số của các công cụ; tên và quy tắc của từng công cụ vẫn đi cùng prompt. Registry tiếp tục kiểm tra đúng tên, kiểu, enum và phạm vi trước khi thực thi.
+
+Nếu kế hoạch một công cụ bị từ chối, lần sửa JSON nhận schema chi tiết riêng của đúng công cụ đó. Ví dụ nhánh prepareCartChange chỉ nhận các tham số của giỏ, không nhận field/count của getProducts; các công cụ khác vẫn có thể được chọn nếu cần sửa cách hiểu. Chỉ một công cụ được mở rộng schema mỗi lần sửa để giữ kích thước nhỏ. Schema liệt kê mọi biến thể tham số ngay lượt đầu đã bị Gemini từ chối HTTP 400 trong kiểm tra local, nên không dùng cấu trúc đó. Các lớp kiểm tra nguồn dữ kiện, ID, số lượng, quyền tài khoản và bước xác nhận ở backend vẫn giữ nguyên.
+
+Khi contextMode=current, set lặp lại đúng các giá trị đã xác nhận trong toolSearch được coi là không thay đổi và bỏ khỏi patch. Giá trị mới/khác, trường lạ và mọi clear vẫn phải qua kiểm tra cũ; không tự đổi current thành refine để chấp nhận thay đổi không hợp lệ. Điều này tránh thất bại khi AI chỉ nhắc lại ngân sách/chủ đề cũ trong lúc khách chọn sách hoặc hỏi thông tin.
+
+Các lỗi Direct reply requires text and no tool calls, Unknown argument for prepareCartChange và Use refine to change constraints là lỗi hợp đồng/kế hoạch AI, không đồng nghĩa với hết quota hoặc timeout của provider. HTTP thành công và outcome=success ở gateway chỉ xác nhận Gemini đã trả văn bản; kế hoạch đó còn phải được backend kiểm tra trước khi thực thi.
 Backend vẫn kiểm tra kiểu/enum/phạm vi, tiền và số lượng trong nguồn, phiên bản và tham chiếu.
 Con trỏ nguồn tránh lỗi AI chép sai dấu câu hoặc trích nhầm lượt cũ; chỉ tên `current_message` được phân giải.
 Trích dẫn nguyên văn vẫn được backend chấp nhận để tương thích; giá trị trích dẫn sai và các con trỏ khác vẫn bị từ chối.

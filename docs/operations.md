@@ -25,6 +25,20 @@ Trước khi triển khai: sao lưu DB, đối chiếu schema/migration đã áp
 
 AI có deadline 45 giây; vector truy vấn tối đa 2,5 giây và nằm trong thời gian còn lại. SSE gửi tiến độ theo giai đoạn và chỉ trả văn bản đã kiểm tra ở `done`. Client dùng một deadline 60 giây cho cả stream và JSON dự phòng. Executor/queue có giới hạn; đóng kết nối sẽ hủy công việc còn chờ. Xóa cuộc trò chuyện phối hợp với commit để lượt đang chạy không ghi lại lịch sử đã xóa.
 
+### Kết nối Gemini và chuyển key (01/11/2026)
+
+Gemini giới hạn theo project, không theo số API key. Nhiều key cùng project không tăng quota; các project khác nhau vẫn có thể cùng gặp 503 khi model quá tải. Phân biệt 429 (quota/tốc độ) với 503 (dịch vụ không sẵn sàng). Không tự đổi model hoặc bật model dự phòng.
+
+Các key khỏe được luân phiên chủ động sau mỗi lần gọi AI, không chờ lỗi/quota: K1 → K2 → K3 → … → K1. Một câu chat có thể gồm nhiều lần gọi (đọc ý, sửa JSON nếu cần, viết lời giải thích), và các lần đó cũng được chia qua key kế tiếp. Sau khi chuyển key dự phòng thành công, con trỏ đi tiếp sau key thực sự đã trả lời; không bắt đầu lại ngay ở key dự phòng vừa dùng. Con trỏ chung dùng thao tác atomic, không ghi đè lượt phân bổ của hội thoại đang chạy đồng thời. Key đang cooldown được bỏ qua; nếu chỉ còn một key khỏe thì vẫn dùng key đó theo giới hạn retry/deadline. Log chỉ ghi số slot; không lưu key hay con trỏ luân phiên vào bộ nhớ hội thoại.
+
+Mốc 15 giây là deadline chung của bước hiểu yêu cầu, không phải hạn mức theo key của Google; chuyển key không khởi động lại đồng hồ này. Ngân sách cả lượt vẫn là 45 giây. Bộ nhớ và lịch sử được backend nạp/lưu theo cuộc trò chuyện, nên đổi key không xóa ngữ cảnh.
+
+Mỗi lần gọi AI chỉ thử một request cho mỗi key khả dụng; nếu chỉ còn một key, được thử lại một lần khi lỗi tạm thời. Không còn lặp ba request trên từng key ở các bước phụ. Có backoff kèm jitter khi gặp 5xx; 429 chuyển sang key chưa bị giới hạn và tôn trọng Retry-After hoặc google.rpc.RetryInfo. Thiếu gợi ý chờ thì dùng 60 giây; hết quota ngày chờ đến nửa đêm Pacific. Không thử lại payload 400 không hợp lệ bằng key khác, ngoại trừ mã API_KEY_INVALID.
+
+AI_GEMINI_ATTEMPT_TIMEOUT_MILLIS mặc định 10000, giới hạn 250–30000 ms, đặt giới hạn cho một lần HTTP. Ngân sách từng bước và cả lượt vẫn giữ nguyên; dành tối đa 2,5 giây (hoặc một phần ba thời gian còn lại) cho lần chuyển key. Việc hết deadline của một bước hoặc người dùng hủy không khóa nhầm key cho lượt tiếp theo. Khi tất cả key đều trả 503 và không cấu hình model dự phòng, model nghỉ ngắn 2 giây hoặc lâu hơn theo Retry-After, thay vì khóa từng key 15 giây.
+
+Log gemini_call ghi model, số HTTP attempt, thời gian và kết quả; gemini_key_failure phân biệt timeout, kết nối, HTTP status, loại quota và thời gian chờ. Không ghi key, nội dung prompt hoặc nguyên văn phản hồi lỗi của provider. Một câu chat có thể gồm nhiều bước AI; số attempt trong log thuộc từng lần gọi, không phải số tin nhắn khách gửi.
+
 Lịch sử ban đầu tối đa 25 lượt. `GET /api/chat/conversation/page?sessionId=...&before=...&limit=25` tải trang cũ bằng ID exchange. Tài khoản và guest session có scope khác nhau. Chỉ khôi phục các thao tác an toàn với giá/tồn mới; thao tác hủy đơn, đánh giá hoặc gửi yêu cầu phải được mở lại từ yêu cầu mới.
 
 `GET /api/chat/admin/metrics?days=30` tổng hợp SQL trong khoảng 1–365 ngày, mặc định 30 ngày. Telemetry không chứa nội dung chat; bảng hội thoại riêng có lưu câu hỏi/câu trả lời và snapshot để khôi phục ngữ cảnh. Nội dung đơn hàng và input nhận diện nhạy cảm bị loại khỏi transcript chung.

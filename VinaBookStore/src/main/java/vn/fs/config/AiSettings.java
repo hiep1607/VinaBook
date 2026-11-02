@@ -22,6 +22,7 @@ public class AiSettings {
 	private String geminiApiKey4 = "";
 	private String baseUrl = "";
 	private int timeoutSeconds = 25;
+	private int geminiAttemptTimeoutMillis = 10000;
 	private int maxOutputTokens = 4096;
 	private double temperature = 0.35;
 	private int rateLimitPerMinute = 20;
@@ -63,6 +64,8 @@ public class AiSettings {
 	public void setBaseUrl(String baseUrl) { this.baseUrl = baseUrl; }
 	public int getTimeoutSeconds() { return timeoutSeconds; }
 	public void setTimeoutSeconds(int timeoutSeconds) { this.timeoutSeconds = timeoutSeconds; }
+	public int getGeminiAttemptTimeoutMillis() { return geminiAttemptTimeoutMillis; }
+	public void setGeminiAttemptTimeoutMillis(int value) { this.geminiAttemptTimeoutMillis = value; }
 	public int getMaxOutputTokens() { return maxOutputTokens; }
 	public void setMaxOutputTokens(int maxOutputTokens) { this.maxOutputTokens = maxOutputTokens; }
 	public double getTemperature() { return temperature; }

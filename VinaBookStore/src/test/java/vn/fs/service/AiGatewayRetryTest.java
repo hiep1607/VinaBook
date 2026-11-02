@@ -25,9 +25,11 @@ class AiGatewayRetryTest {
     void bindsFourNamedKeySlotsFromSpringProperties() {
         AiSettings settings = new Binder(new MapConfigurationPropertySource(Map.of(
                 "ai.gemini-api-key1", "first", "ai.gemini-api-key2", "second",
-                "ai.gemini-api-key3", "third", "ai.gemini-api-key4", "fourth")))
+                "ai.gemini-api-key3", "third", "ai.gemini-api-key4", "fourth",
+                "ai.gemini-attempt-timeout-millis", "2500")))
                 .bind("ai", Bindable.of(AiSettings.class)).get();
         assertThat(settings.getGeminiApiKeys()).containsExactly("first", "second", "third", "fourth");
+        assertThat(settings.getGeminiAttemptTimeoutMillis()).isEqualTo(2500);
     }
 
     @Test
@@ -76,10 +78,9 @@ class AiGatewayRetryTest {
             assertThat(gateway.complete("system", List.of(), "question")).isEqualTo("backup answer");
             assertThat(gateway.modelUsed()).isEqualTo("backup-model");
             assertThat(requests).containsExactly(
-                    "/models/test-model:generateContent", "/models/test-model:generateContent",
                     "/models/test-model:generateContent", "/models/backup-model:generateContent");
             assertThat(gateway.complete("system", List.of(), "next question")).isEqualTo("backup answer");
-            assertThat(requests).hasSize(5);
+            assertThat(requests).hasSize(3);
         } finally {
             server.stop(0);
         }
@@ -170,7 +171,7 @@ class AiGatewayRetryTest {
     }
 
     @Test
-    void worksWithNumberedKeysOnlyAndSwitchesAfter503Retries() throws Exception {
+    void worksWithNumberedKeysOnlyWithoutRepeating503OnTheSameKey() throws Exception {
         List<String> seen = new CopyOnWriteArrayList<>();
         HttpServer server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
         server.createContext("/models/test-model:generateContent", exchange -> {
@@ -191,7 +192,7 @@ class AiGatewayRetryTest {
             AiGateway gateway = new AiGateway(settings, new ObjectMapper());
             assertThat(gateway.isConfigured()).isTrue();
             assertThat(gateway.complete("system", List.of(), "question")).isEqualTo("OK");
-            assertThat(seen).containsExactly("first", "first", "first", "second");
+            assertThat(seen).containsExactly("first", "second");
         } finally {
             server.stop(0);
         }

@@ -5,10 +5,13 @@ import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.net.http.HttpTimeoutException;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -108,6 +111,7 @@ public class AiGateway {
 	public void beginStageBudget(int seconds) { stageDeadline.set(System.nanoTime()+Duration.ofSeconds(seconds).toNanos()); }
 	public void endStageBudget() { stageDeadline.remove(); }
 	private Duration requestTimeout() {
+		if (Thread.currentThread().isInterrupted()) throw new IllegalStateException("Yêu cầu AI đã bị gián đoạn");
 		long remaining=turnDeadline.get()==null?Long.MAX_VALUE:turnDeadline.get()-System.nanoTime();
 		if(stageDeadline.get()!=null)remaining=Math.min(remaining,stageDeadline.get()-System.nanoTime());
 		if(remaining<=0)throw new IllegalStateException("AI stage/turn deadline exceeded");
@@ -195,7 +199,7 @@ public class AiGateway {
                 throw new IllegalStateException("Dịch vụ AI đang chờ phục hồi");
             try {return callGeminiModel(primary, body, false);}
             catch(AiHttpException failure) {
-                if(failure.status==503)geminiModelCooldowns.put(primary,System.currentTimeMillis()+15000L);
+                if(failure.status==503)geminiModelCooldowns.put(primary,System.currentTimeMillis()+Math.max(2000L,failure.retryAfterMillis));
                 throw failure;
             }
 		}
@@ -223,56 +227,108 @@ public class AiGateway {
 		String url = join(defaultBase("https://generativelanguage.googleapis.com/v1beta"), endpoint);
 		IllegalStateException lastFailure = null;
 		List<String> keys = settings.getGeminiApiKeys();
-		int firstKey = Math.floorMod(nextGeminiKey.getAndIncrement(), keys.size());
+		int rotationTicket = nextGeminiKey.getAndIncrement();
+		int firstKey = Math.floorMod(rotationTicket, keys.size());
+		List<Integer> candidates = new ArrayList<>();
 		for (int offset = 0; offset < keys.size(); offset++) {
-			requestTimeout();
-			int keyIndex = (firstKey + offset) % keys.size();
-			String key = keys.get(keyIndex);
-			String cooldownKey = targetModel + "\u0000" + key;
-			if (geminiKeyCooldowns.getOrDefault(cooldownKey, 0L) > System.currentTimeMillis()) continue;
-			try {
-				JsonNode json = post(url, body, Map.of("x-goog-api-key", key), outputSchema.get()==null?3:1);
-				if (json == null) throw new IllegalStateException("Gemini trả về JSON rỗng");
-				List<String> text = new ArrayList<>();
-				for (JsonNode candidate : json.path("candidates")) {
-					for (JsonNode part : candidate.path("content").path("parts")) {
-						if (!part.path("thought").asBoolean(false) && part.path("text").isTextual())
-							text.add(part.path("text").asText());
+			int index = (firstKey + offset) % keys.size();
+			if (geminiKeyCooldowns.getOrDefault(targetModel + "\u0000" + keys.get(index), 0L) <= System.currentTimeMillis())
+				candidates.add(index);
+		}
+		// One request per available key. A sole healthy key gets one bounded
+		// retry for transient errors, never three retries multiplied by every key.
+		if (candidates.size() == 1) candidates.add(candidates.get(0));
+		long started = System.nanoTime(), retryDelay = 0;
+		int attempts = 0, usedSlot = 0;
+		boolean succeeded = false;
+		try {
+			for (int offset = 0; offset < candidates.size(); offset++) {
+				requestTimeout();
+				int keyIndex = candidates.get(offset);
+				String key = keys.get(keyIndex);
+				String cooldownKey = targetModel + "\u0000" + key;
+				if (geminiKeyCooldowns.getOrDefault(cooldownKey, 0L) > System.currentTimeMillis()) continue;
+				if (retryDelay > 0) {
+					// Leave time for useful work rather than sleeping through a stage.
+					if (requestTimeout().toMillis() <= retryDelay + 250) break;
+					try { Thread.sleep(retryDelay); }
+					catch (InterruptedException interrupted) {
+						Thread.currentThread().interrupt();
+						throw new IllegalStateException("Yêu cầu AI đã bị gián đoạn", interrupted);
 					}
 				}
-				String answer = String.join("\n", text).trim();
-				if (answer.isEmpty()) {
-					lastFailure = new IllegalStateException("Gemini không trả về nội dung");
+				retryDelay = 0;
+				try {
+					attempts++;
+					JsonNode json = post(url, body, Map.of("x-goog-api-key", key), geminiAttemptTimeout(offset + 1 < candidates.size()));
+					if (json == null) throw new IllegalStateException("Gemini trả về JSON rỗng");
+					List<String> text = new ArrayList<>();
+					for (JsonNode candidate : json.path("candidates")) {
+						for (JsonNode part : candidate.path("content").path("parts")) {
+							if (!part.path("thought").asBoolean(false) && part.path("text").isTextual())
+								text.add(part.path("text").asText());
+						}
+					}
+					String answer = String.join("\n", text).trim();
+					if (answer.isEmpty()) {
+						lastFailure = new IllegalStateException("Gemini không trả về nội dung");
+						geminiKeyCooldowns.put(cooldownKey, System.currentTimeMillis() + 15_000L);
+						log.warn("gemini_key_failure slot={} reason=empty_response finishReason={}", keyIndex + 1,
+								json.path("candidates").path(0).path("finishReason").asText("unknown"));
+						continue;
+					}
+					geminiKeyCooldowns.remove(cooldownKey);
+					modelUsed.set(targetModel);
+					usedSlot = keyIndex + 1;
+					// Rotate past the key that actually answered, including failover.
+					// Never overwrite reservations made by concurrent conversations.
+					int skipped = Math.floorMod(keyIndex - firstKey, keys.size());
+					if (skipped > 0) nextGeminiKey.compareAndSet(rotationTicket + 1, rotationTicket + skipped + 1);
+					succeeded = true;
+					return answer;
+				} catch (AiHttpException ex) {
+					if (!canTryNextGeminiKey(ex)) throw ex;
+					lastFailure = ex;
+					log.warn("gemini_key_failure slot={} reason=http status={} quota={} retryAfterMs={}", keyIndex + 1, ex.status,
+							ex.status == 429 ? (ex.dailyQuota ? "daily" : "rate") : "none", ex.retryAfterMillis);
+					long now = System.currentTimeMillis();
+					if (ex.dailyQuota) geminiKeyCooldowns.put(cooldownKey, nextGeminiDailyReset());
+					else if (ex.status == 429) geminiKeyCooldowns.put(cooldownKey, now + Math.max(1000L, ex.retryAfterMillis > 0 ? ex.retryAfterMillis : 60_000L));
+					else if (ex.invalidKey || ex.status == 401 || ex.status == 402 || ex.status == 403)
+						geminiKeyCooldowns.put(cooldownKey, now + 600_000L);
+					else retryDelay = Math.max(ex.retryAfterMillis, Math.min(2000L, 500L << Math.min(offset, 2)) + ThreadLocalRandom.current().nextLong(150L));
+					if (stopOn503 && ex.status == 503) break;
+				} catch (AiTransportException ex) {
+					// An attempt timeout still leaves a slice for the next key. An
+					// exhausted caller stage remains its own deadline, not a bad key.
+					requestTimeout();
+					lastFailure = ex;
+					log.warn("gemini_key_failure slot={} reason={}", keyIndex + 1, ex.timeout ? "timeout" : "connection");
+					retryDelay = 100L;
+				} catch (IllegalStateException ex) {
+					// Our optional-stage deadline is not a provider/key failure. Do
+					// not cool down a working key or penalize the following turn.
+					requestTimeout();
+					lastFailure = ex;
 					geminiKeyCooldowns.put(cooldownKey, System.currentTimeMillis() + 15_000L);
-					log.warn("gemini_key_failure slot={} reason=empty_response finishReason={}", keyIndex + 1,
-							json.path("candidates").path(0).path("finishReason").asText("unknown"));
-					continue;
+					log.warn("gemini_key_failure slot={} reason=invalid_response exceptionType={}",
+							keyIndex + 1, ex.getClass().getSimpleName());
 				}
-				geminiKeyCooldowns.remove(cooldownKey);
-				modelUsed.set(targetModel);
-				return answer;
-			} catch (AiHttpException ex) {
-				if (!canTryNextGeminiKey(ex)) throw ex;
-				lastFailure = ex;
-				log.warn("gemini_key_failure slot={} reason=http status={}", keyIndex + 1, ex.status);
-				long now = System.currentTimeMillis();
-				long cooldownUntil = ex.dailyQuota ? nextGeminiDailyReset()
-						: now + (ex.status == 429 ? 60_000L
-						: (ex.invalidKey || ex.status == 401 || ex.status == 402 || ex.status == 403 ? 600_000L : 15_000L));
-				geminiKeyCooldowns.put(cooldownKey, cooldownUntil);
-				if (stopOn503 && ex.status == 503) break;
-			} catch (IllegalStateException ex) {
-				// Our optional-stage deadline is not a provider/key failure. Do
-				// not cool down a working key or penalize the following turn.
-				requestTimeout();
-				lastFailure = ex;
-				geminiKeyCooldowns.put(cooldownKey, System.currentTimeMillis() + 15_000L);
-				log.warn("gemini_key_failure slot={} reason=invalid_response exceptionType={}",
-						keyIndex + 1, ex.getClass().getSimpleName());
 			}
+			if (lastFailure != null) throw lastFailure;
+			throw new IllegalStateException("Các khóa Gemini đang tạm thời bị giới hạn; vui lòng thử lại sau");
+		} finally {
+			log.info("gemini_call model={} startSlot={} usedSlot={} attempts={} elapsedMs={} outcome={}", targetModel, firstKey + 1, usedSlot, attempts,
+					(System.nanoTime() - started) / 1000000L, succeeded ? "success" : "failed");
 		}
-		if (lastFailure != null) throw lastFailure;
-		throw new IllegalStateException("Các khóa Gemini đang tạm thời bị giới hạn; vui lòng thử lại sau");
+	}
+
+	private Duration geminiAttemptTimeout(boolean hasNextKey) {
+		long available = requestTimeout().toMillis();
+		long maximum = Math.max(250L, Math.min(30000L, settings.getGeminiAttemptTimeoutMillis()));
+		// Reserve up to 1/3 of a bounded stage (at most 2.5s) for failover.
+		if (hasNextKey) available -= Math.min(2500L, available / 3);
+		return Duration.ofMillis(Math.max(1L, Math.min(maximum, available)));
 	}
 
 	private boolean canTryNextGeminiKey(AiHttpException ex) {
@@ -305,41 +361,53 @@ public class AiGateway {
 	}
 
 	private JsonNode post(String url, Object body, Map<String, String> headers) {
-		return post(url, body, headers, 1);
+		return post(url, body, headers, requestTimeout());
 	}
 
-	private JsonNode post(String url, Object body, Map<String, String> headers, int maxAttempts) {
+	private JsonNode post(String url, Object body, Map<String, String> headers, Duration attemptTimeout) {
 		try {
+			Duration remaining = requestTimeout();
 			HttpRequest.Builder request = HttpRequest.newBuilder(URI.create(url))
-					.timeout(requestTimeout())
+					.timeout(attemptTimeout.compareTo(remaining) < 0 ? attemptTimeout : remaining)
 					.header("Content-Type", "application/json");
 			headers.forEach(request::header);
 			String serializedBody=mapper.writeValueAsString(body);
-			for (int attempt = 0; attempt < maxAttempts; attempt++) {
-				HttpRequest prepared=request.timeout(requestTimeout()).POST(HttpRequest.BodyPublishers.ofString(serializedBody)).build();
-				HttpResponse<String> response = client.send(prepared,
-						HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
-				int status = response.statusCode();
-				if (status >= 200 && status < 300) return mapper.readTree(response.body());
-				if (attempt + 1 < maxAttempts && (status == 408 || status == 500 || status == 502
-						|| status == 503 || status == 504)) {
-					Thread.sleep(Math.min((500L << attempt) + ThreadLocalRandom.current().nextLong(250L),requestTimeout().toMillis()));
-					continue;
-				}
-				String errorBody = response.body().toLowerCase(Locale.ROOT);
-				throw new AiHttpException(status,
-						status == 400 && errorBody.contains("api_key_invalid"),
-						status == 429 && (errorBody.contains("perday") || errorBody.contains("per day")
-								|| errorBody.contains("daily")));
-			}
-			throw new IllegalStateException("Nhà cung cấp AI không phản hồi sau khi thử lại");
+			HttpRequest prepared=request.POST(HttpRequest.BodyPublishers.ofString(serializedBody)).build();
+			HttpResponse<String> response = client.send(prepared,
+					HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+			int status = response.statusCode();
+			if (status >= 200 && status < 300) return mapper.readTree(response.body());
+			String errorBody = response.body().toLowerCase(Locale.ROOT);
+			throw new AiHttpException(status,
+					status == 400 && errorBody.contains("api_key_invalid"),
+					status == 429 && (errorBody.contains("perday") || errorBody.contains("per day")
+							|| errorBody.contains("daily")), retryAfterMillis(response));
 		} catch (InterruptedException ex) {
 			Thread.currentThread().interrupt();
 			throw new IllegalStateException("Yêu cầu AI đã bị gián đoạn", ex);
 		} catch (Exception ex) {
 			if (ex instanceof IllegalStateException) throw (IllegalStateException) ex;
-			throw new IllegalStateException("Không thể kết nối nhà cung cấp AI", ex);
+			throw new AiTransportException(ex);
 		}
+	}
+
+	private long retryAfterMillis(HttpResponse<String> response) {
+		long delay = 0;
+		String header = response.headers().firstValue("Retry-After").orElse("").trim();
+		try { delay = (long)Math.ceil(Double.parseDouble(header) * 1000); }
+		catch (NumberFormatException ignored) {
+			try { delay = ZonedDateTime.parse(header, DateTimeFormatter.RFC_1123_DATE_TIME).toInstant().toEpochMilli() - System.currentTimeMillis(); }
+			catch (java.time.format.DateTimeParseException absent) { /* No valid header. */ }
+		}
+		try {
+			for (JsonNode detail : mapper.readTree(response.body()).path("error").path("details")) {
+				if (!detail.path("@type").asText().endsWith("google.rpc.RetryInfo")) continue;
+				String seconds = detail.path("retryDelay").asText("");
+				if (seconds.matches("[0-9]+(?:\\.[0-9]+)?s"))
+					delay = Math.max(delay, (long)Math.ceil(Double.parseDouble(seconds.substring(0, seconds.length() - 1)) * 1000));
+			}
+		} catch (Exception ignored) { /* Error bodies are optional and never logged. */ }
+		return Math.max(0, Math.min(86_400_000L, delay));
 	}
 
 	private List<Map<String, String>> conversation(List<ChatTurnDto> history, String latest, boolean gemini) {
@@ -387,11 +455,20 @@ public class AiGateway {
 		private final int status;
 		private final boolean invalidKey;
 		private final boolean dailyQuota;
-		private AiHttpException(int status, boolean invalidKey, boolean dailyQuota) {
+		private final long retryAfterMillis;
+		private AiHttpException(int status, boolean invalidKey, boolean dailyQuota, long retryAfterMillis) {
 			super("Nhà cung cấp AI trả về mã " + status);
 			this.status = status;
 			this.invalidKey = invalidKey;
 			this.dailyQuota = dailyQuota;
+			this.retryAfterMillis = retryAfterMillis;
+		}
+	}
+	private static final class AiTransportException extends IllegalStateException {
+		private final boolean timeout;
+		private AiTransportException(Exception cause) {
+			super("Không thể kết nối nhà cung cấp AI", cause);
+			timeout = cause instanceof HttpTimeoutException;
 		}
 	}
 }

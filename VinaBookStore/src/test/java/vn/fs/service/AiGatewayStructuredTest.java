@@ -49,7 +49,7 @@ class AiGatewayStructuredTest {
         try {
             AiGateway gateway=gateway(server);
             assertThatThrownBy(()->gateway.completeStructured("system",List.of(),"question",mapper.createObjectNode())).isInstanceOf(IllegalStateException.class);
-            assertThat(requests).hasSize(1);
+            assertThat(requests).hasSize(2);
         } finally {server.stop(0);}
     }
     @Test void optionalStageTimeoutDoesNotConsumeTheNextStageBudget() throws Exception {

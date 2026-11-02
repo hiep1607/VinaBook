@@ -62,7 +62,7 @@ public class ChatTurnUnderstanding {
             repair.put("onlyCurrentEvidenceSource",request.getMessage());
             try {
                 return validate(ai.completeStructured(prompt+" Sửa kế hoạch theo validationIssue. Chỉ trả JSON đúng contract.",
-                    List.of(),mapper.writeValueAsString(repair),schema()),request,state,facts);
+                    List.of(),mapper.writeValueAsString(repair),repairSchema(raw)),request,state,facts);
             } catch(IllegalArgumentException second) {
                 log.info("chat_understanding_rejected validation={}",second.getMessage());throw second;
             }
@@ -156,7 +156,7 @@ public class ChatTurnUnderstanding {
             “dịch câu ...”, “ý câu bạn vừa nói là gì?”: dịch/giải thích phần chữ đã có, không tìm sách mới.
             Bạn chỉ có các chức năng nằm trong danh sách công cụ. Không hứa đã mua/hủy/gửi gì khi chưa thực thi.
             Trả lời trực tiếp KHÔNG được khẳng định giá/tồn kho/đơn/chính sách hiện hành hay nội dung sách chưa có nguồn.
-            Khi CẦN dữ liệu thật hoặc chức năng cửa hàng: reply=null, chọn calls hợp lệ (tối đa3).
+            Khi CẦN dữ liệu thật hoặc chức năng cửa hàng: bỏ trường reply, chọn calls hợp lệ (tối đa3).
             Giá, tồn kho, thông tin/nhận xét sách, sách có bán, tìm/so sánh sách, chính sách, giỏ/đơn phải gọi công cụ tương ứng.
             Cùng một sách hỏi nhiều dữ kiện thì dùng một getProducts field=detail, không tách nhiều lần gọi cùng sách.
             Backend sẽ lấy dữ liệu SAU quyết định này. Không cần chọn sẵn sách hoặc biết catalog trước khi gọi.
@@ -171,7 +171,7 @@ public class ChatTurnUnderstanding {
             không tự đoán khách thích thiếu nhi hay một thể loại duy nhất, không hỏi lại trống “bạn thích thể loại gì”.
             Giữ ngân sách/số cuốn nếu khách đã nói; các hướng chỉ là lựa chọn mềm, chưa thành sở thích xác nhận.
             Quy tắc này chỉ áp dụng khi khách có nhu cầu chọn sách; lời chào/hỏi khả năng/giải nghĩa vẫn reply tự nhiên.
-            “Gợi ý vài thể loại sách đang có để mình chọn” cũng phải gọi respond menu=browse, reply=null;
+            “Gợi ý vài thể loại sách đang có để mình chọn” cũng phải gọi respond menu=browse, bỏ trường reply;
             không liệt kê thể loại cửa hàng bằng reply chưa tra dữ liệu. Backend sẽ trả danh sách đánh số cùng nút chọn.
             Với số thứ tự/tên trong topicSuggestions, chọn recommendBooks với set.topics=[hướng được chọn],
             contextMode=refine và giữ các ràng buộc khác; không đáp lời chào hoặc hỏi lại nhu cầu đã rõ.
@@ -292,6 +292,16 @@ public class ChatTurnUnderstanding {
                 }
             }
         }
+        if("current".equals(root.path("contextMode").asText()) && root.path("set").isObject()) {
+            // Echoing a confirmed value is not a reading-context change. New
+            // values and explicit clears must still pass the original guards.
+            List<String> echoed=new ArrayList<>();
+            root.path("set").fields().forEachRemaining(field->{
+                if(ChatTurnContext.FIELDS.contains(field.getKey()) && state.toolSearch.containsKey(field.getKey())
+                        && mapper.valueToTree(state.toolSearch.get(field.getKey())).equals(field.getValue()))echoed.add(field.getKey());
+            });
+            ((ObjectNode)root.path("set")).remove(echoed);
+        }
         context.resolveEvidence(root,request.getMessage());
         context.omitUnmentioned(root);
         context.validate(root,request.getMessage(),state.contextVersion);
@@ -336,6 +346,19 @@ public class ChatTurnUnderstanding {
     }
 
     ObjectNode schema() {
+        return schema(Set.of());
+    }
+
+    ObjectNode repairSchema(String invalidPlan) {
+        try {
+            JsonNode calls=mapper.readTree(invalidPlan).path("calls");
+            if(calls.isArray() && calls.size()==1 && registry.supports(calls.get(0).path("tool").asText()))
+                return schema(Set.of(calls.get(0).path("tool").asText()));
+        } catch(Exception ignored) { }
+        return schema();
+    }
+
+    ObjectNode schema(Set<String> detailedTools) {
         ObjectNode root=mapper.createObjectNode().put("type","object").put("additionalProperties",false);
         ObjectNode props=mapper.createObjectNode();
         ObjectNode reply=mapper.createObjectNode();reply.set("type",mapper.valueToTree(List.of("string","null")));
@@ -356,20 +379,56 @@ public class ChatTurnUnderstanding {
         ObjectNode note=mapper.createObjectNode();note.set("type",mapper.valueToTree(List.of("object","null")));
         note.set("properties",mapper.valueToTree(Map.of("text",Map.of("type","string"),"evidence",Map.of("type","string","enum",List.of(ChatTurnContext.CURRENT_MESSAGE)))));
         note.set("required",mapper.valueToTree(List.of("text","evidence")));note.put("additionalProperties",false);props.set("memoryNote",note);
-        Map<String,Object> argProps=new LinkedHashMap<>();List<String> tools=new ArrayList<>();
+        ArrayNode alternatives=mapper.createArrayNode();
+        List<String> otherTools=new ArrayList<>();
         for(Map<String,Object> definition:structuredDefinitions()) {
-            tools.add((String)definition.get("name"));
+            String tool=(String)definition.get("name");
+            if(!detailedTools.contains(tool)) {otherTools.add(tool);continue;}
             @SuppressWarnings("unchecked") Map<String,ChatTool.Parameter> parameters=(Map<String,ChatTool.Parameter>)definition.get("parameters");
-            parameters.forEach((key,spec)->argProps.putIfAbsent(key,Map.of("type",List.of(spec.type(),"null"))));
+            ObjectNode argProps=mapper.createObjectNode();List<String> requiredArgs=new ArrayList<>();
+            parameters.forEach((key,spec)->{
+                ObjectNode parameter=mapper.createObjectNode();
+                parameter.put("type",spec.type());
+                if(!spec.values().isEmpty()) {
+                    // Choice fields are optional; omit them when unknown.
+                    // Gemini string enums cannot contain a JSON null value.
+                    parameter.put("type",spec.type());parameter.set("enum",mapper.valueToTree(spec.values()));
+                }
+                argProps.set(key,parameter);
+                if(spec.required())requiredArgs.add(key);
+            });
+            ObjectNode arguments=mapper.createObjectNode().put("type","object").put("additionalProperties",false);
+            if(argProps.isEmpty())arguments.put("additionalProperties",true);
+            else arguments.set("properties",argProps);
+            if(!requiredArgs.isEmpty())arguments.set("required",mapper.valueToTree(requiredArgs));
+            ObjectNode variant=mapper.createObjectNode().put("type","object").put("additionalProperties",false);
+            ObjectNode callProps=mapper.createObjectNode();
+            callProps.set("tool",mapper.createObjectNode().put("type","string").set("enum",mapper.valueToTree(List.of(tool))));
+            callProps.set("arguments",arguments);variant.set("properties",callProps);
+            variant.set("required",mapper.valueToTree(List.of("tool","arguments")));alternatives.add(variant);
         }
-        // Keep the provider schema small. The registry checks each capability's
-        // exact parameters and enum/range rules before any tool is executed.
-        ObjectNode call=mapper.createObjectNode().put("type","object").put("additionalProperties",false);
-        call.set("properties",mapper.valueToTree(Map.of("tool",Map.of("type","string","enum",tools),
-            "arguments",Map.of("type","object","properties",argProps,"additionalProperties",false))));
-        call.set("required",mapper.valueToTree(List.of("tool","arguments")));
+        if(!otherTools.isEmpty()) {
+            ObjectNode generic=mapper.createObjectNode().put("type","object").put("additionalProperties",false);
+            generic.set("properties",mapper.valueToTree(Map.of("tool",Map.of("type","string","enum",otherTools),
+                "arguments",Map.of("type","object","additionalProperties",true))));
+            generic.set("required",mapper.valueToTree(List.of("tool","arguments")));alternatives.add(generic);
+        }
+        // Do not advertise a union of unrelated arguments on the initial call.
+        // On repair, constrain the single invalid capability precisely while
+        // retaining other registered tools if the interpretation must change.
+        ObjectNode call=alternatives.size()==1?(ObjectNode)alternatives.get(0):mapper.createObjectNode().set("anyOf",alternatives);
         props.set("calls",mapper.createObjectNode().put("type","array").put("minItems",0).put("maxItems",3).set("items",call));
         List<String> required=new ArrayList<>(ROOT);required.add("reply");
-        root.set("properties",props);root.set("required",mapper.valueToTree(required));return root;
+        root.set("properties",props);root.set("required",mapper.valueToTree(required));
+        // Complete alternatives keep the exclusive reply/tool contract local
+        // to each branch rather than relying on sibling-schema intersections.
+        ObjectNode conversation=root.deepCopy(),tools=root.deepCopy();
+        conversation.with("properties").set("reply",mapper.createObjectNode().put("type","string"));
+        conversation.with("properties").set("calls",mapper.createObjectNode().put("type","array").put("maxItems",0)
+            .set("items",mapper.createObjectNode().put("type","object")));
+        tools.with("properties").remove("reply");
+        tools.set("required",mapper.valueToTree(ROOT));
+        ((ObjectNode)tools.path("properties").path("calls")).put("minItems",1);
+        return mapper.createObjectNode().put("type","object").set("anyOf",mapper.createArrayNode().add(conversation).add(tools));
     }
 }
